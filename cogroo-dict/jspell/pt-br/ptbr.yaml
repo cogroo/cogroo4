@@ -1,0 +1,308 @@
+META:
+ LANG: Português
+ VARIANT: Brasileiro
+ IDS: [ptbr, pt_BR]
+ SNDCLASSES: [[x,ch],[ss,ç]]
+ TAG:
+   CAT:
+     card:
+     nc: [G, N, GR]
+     adj: [G, N, GR]
+     a_nc: [G, N, GR]
+     adv: [SUBCAT]
+     v: 
+       T:
+         vpp: [G, P, N]
+         '-': [P, N]
+     "-": [C, G, P, N]
+ PROPS:
+  LA: Necessita artigo
+  T: Tempo
+  Prep: Preposição (contracção)
+  N: Número
+  SEM: Semântica
+  CAT: Categoria
+  F: Ocorrências (Frequência)
+  FSEM: Função semântica do sufixo
+  Adv: Advérbio (contracção)
+  C: Caso latino
+  Pdem2: Pronome demonstrativo (contracção)
+  TR: Transitividade
+  Pind: Pronome indefinido (contracção)
+  GR: Grau
+  P: Pessoa
+  ABR: Abreviatura
+  Verb: Do verbo
+  Pdem: Pronome demonstrativo (contracção)
+  Prep2: Preposição (contracção)
+  Art: Artigo (contracção)
+  Ppes: Pronome pessoal (contracção)
+  BRAS: Origem brasileira
+  I: Nível de irregularidade
+  SUBCAT: Sub-categoria
+  CLA: Classificação
+  G: Género
+  rad: Lema
+  PFSEM: Função semântica do prefixo
+  ORIG: Origem
+  unknown: Palavra sugerida
+  AO90: Apontador para a palavra no Acordo Ortográfico de 1990
+  PREAO90: Apontador para a palavra pré Acordo Ortográfico de 1990
+  EQ90: Apontador para grafia alternativa no Acordo Ortográfico de 1990
+  PT: apontador para a versão portuguesa (estrangeirismos)
+  AP: ??
+  AN: ??
+
+LA:
+ 1: sim
+
+Prep:
+ em: em
+ por: por
+ de: de
+ a: a
+ com: com
+
+T-TAG:
+ inf: N
+ ppa: PP
+ g:   G
+ p:   IH
+ pp:  IP
+ pi:  II
+ pmp: IM
+ f:   IF
+ pc:  SH
+ pic: SI
+ fc:  PI
+ i:   MH
+ c:   CH
+ ip:  PI
+
+T:
+ ip:  infinitivo pessoal
+ inf: infinitivo
+ pp:  pretérito perfeito
+ ppa: particípio passado
+ pc:  presente do conjuntivo
+ pic: pretérito imperfeito do conjuntivo
+ c:   condicional
+ p:   presente
+ fc:  futuro do conjuntivo
+ g:   gerúndio
+ pmp: pretérito mais que perfeito
+ pi:  pretérito imperfeito
+ f:   futuro
+ i:   imperativo
+
+N-TAG: { n: N, p: P, _: I, s: S }
+N:
+ n: neutro
+ p: plural
+ _: indefinido
+ s: singular
+
+SEM:
+ rio: rio
+ mes: mês
+ livro: obra literária
+ po: povo
+ ter: localidade
+ country: país
+ n: número romano
+ mar: referente a marca
+ p: nome português
+ p1: nome estrangeiro
+ pl: planeta
+ sigla: sigla
+ mitol: seres mitológicos
+ cont: continente
+ cid: cidade
+ lingua: língua
+ instituicao: instituição
+ servico: serviço
+ proj: Projecto
+
+CAT-TAG:
+ np:   NP
+ nc:   NC
+ v:    V
+ adj:  AJ
+ card: DNCNP
+ nord: DNO
+ ppes: PS
+ prel: PR
+ ppos: PP
+ pdem: PD
+ pint: PI
+ pind: PF
+
+CAT:
+ punct: pontuação
+ punct2d: aspas
+ punctg: ponto de exclamação
+ puncth: ponto de interrogação
+ punct1a: vírgula
+ punctj: reticências
+ punct1c: dois pontos
+ punct2e: abertura de parêntesis
+ punct1b: ponto e vírgula
+ puncti: ponto final
+ ppos: pronome possessivo
+ pind: pronome indefinido
+ pdem: pronome demonstrativo
+ pint: pronome interrogativo
+ ppes: pronome pessoal
+ prel: pronome relativo
+ prep: preposição
+ in: interjeição
+ conj-s: conjunção subordinativa
+ conj-c: conjunção coordenativa
+ nc: substantivo comum
+ np: nome próprio
+ adj: adjectivo
+ a_nc: substantivo/adjectivo
+ art: artigo
+ pass: partícula apassivante
+ v: verbo
+ cp: contracção
+ punct2f: fecho de parêntesis
+ card: cardinal
+ nord: ordinal
+ adv: advérbio
+
+F:
+ 0: pouco frequente
+ 1: razoavelmente frequente
+ 2: muito frequente
+
+FSEM:
+ vel: -vel
+ dd: -idade
+ mente: -mente (forma adjectival como lema)
+ vmente: -mente (forma verbal como lema)
+ ismo: -ismo
+ ista: -ista
+
+Adv:
+ a: a
+ onde: onde
+ ali: ali
+ algures: algures
+ aqui: aqui
+ outrora: outrora
+
+C:
+ n: nominativo
+ a: acusativo
+ g: genitivo
+ d: dativo
+
+Pdem2:
+ outro: outro
+
+TR:
+ _: transitivo/intransitivo
+ i: intransitivo
+ t: transitivo
+
+Pind:
+ algo: algo
+ outro: outro
+ outrem: outrem
+ algum: algum
+ o: o
+
+GR-TAG: { sup: s, dim: d }
+GR:
+ sup: superlativo
+ dim: diminutivo
+
+P:
+ 1:   primeira
+ 3:   terceira
+ 2:   segunda
+ 1_3: primeira/terceira
+
+ABR:
+ 1: Sim
+
+Verb:
+ haver: haver
+
+Pdem:
+ isto: isto
+ isso: isso
+ esse: esse
+ aquele: aquele
+ aquilo: aquilo
+ este: este
+
+Prep2:
+ entre: entre
+
+Art:
+ as: as
+ a: a
+ um: um
+ o: o
+
+Ppes:
+ sigo:  sigo
+ ele:   ele
+ te:    te
+ tigo:  tigo
+ nosco: nosco
+ me:    me
+ vosco: vosco
+ lhe:   lhe
+ migo:  migo
+
+BRAS:
+ 1: sim
+
+I:
+ 4: 4
+ 3: 3
+
+SUBCAT:
+ lug: advérbio de lugar
+ lugar: advérbio de lugar
+ tempo: advérbio de tempo
+ neg: advérbio de negação
+ quant: advérbio de quantidade
+ modo: advérbio de modo
+
+CLA:
+ def: definido
+ indef: indefinido
+
+G-TAG: { n: N, m: M, 2: 2, _: I, f: F }
+G:
+ n: neutro
+ m: masculino
+ 2: ambos
+ _: indefinido
+ f: feminino
+
+PFSEM:
+ outra: re-
+
+ORIG:
+ ing: inglesa
+ lat: latina
+ fra: francesa
+ esp: espanhola
+ pol: polaca
+ rus: russa
+ ita: italiana
+ ale: alemã
+ jap: japonesa
+ isl: islandêsa
+ nor: norueguesa
+ cor: coreana
+ gre: grega
+
+unknown:
+ 1: sugerida
+

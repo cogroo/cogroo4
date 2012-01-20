@@ -1,0 +1,31 @@
+README
+======
+
+This derives from JSpell PT dictionary and was modified according to Cogroo requirements.
+Original file: http://natura.di.uminho.pt/download/sources/Dictionaries/jspell/jspell.pt-20120118.tar.gz
+
+Hunspell installation
+=====================
+
+Follow Hunspell instructions.
+
+JSpell installation
+===================
+
+Install Perl module Lingua::JSpell. To do that, first install Lingua::Jspell
+	cpan Lingua::Jspell
+
+Install JSpell:
+	Download binaries from http://natura.di.uminho.pt/wiki/doku.php?id=ferramentas:jspell
+	Before build, the source needs a patch (at least version 1.3.0 needs it)
+		Replace every occurrence of 'getline' by 'jgetline' to solve name conflict.
+	Build it.
+	
+JSpell dictionary installation (required after every dictionary change)
+==============================
+
+For each dictionary
+	make install 
+
+
+ 
