@@ -8,17 +8,18 @@
 use jspell::dict;
 use Data::Dumper;
 
-mkdir("target");
-
-$dic = jspell::dict::init("../pt-br/ptbr.dic") or die "nao abriu port.dic";
+$dic = jspell::dict::init("../pt-br/sample.dic") or die "nao abriu port.dic";
 $pt_dict = jspell::new("ptbr") or die "nao abriu";
-open (PWT, '>', 'target/WordPrimitiveTag_ptBR.txt');
-open (WPT,'>', 'target/PrimitiveWordTag_ptBR.txt');
-open (TAG,'>', 'target/TAG_ptPT.txt');
 
-my %wpt;
-my %pwt;
-my %tags;
+open (SIMPLE, '>:encoding(UTF-8)', '../../target/tagdict.txt');
+#open (WPT, '>:encoding(UTF-8)', '../../target/wpt.txt');
+#open (PWT,'>', '../../target/PrimitiveWordTag_ptBR.txt');
+#open (TAG,'>', '../../target/TAG_ptPT.txt');
+
+my %simple;
+#my %wpt;
+#my %pwt;
+#my %tags;
 
 $dic->foreach_word(
 	sub {
@@ -41,12 +42,13 @@ $dic->foreach_word(
 							$rad = $v;
 						}
 						elsif($k ne "SEM" && $k ne "PREAO90") {
-						    $analisis .= "$k:$v ";
-						    $tags{"$k:$v"} = 1;
+						    $analisis .= "$k:$v|";
+						    #$tags{"$k:$v"} = 1;
 						}
 					}
-					$wpt{$dword}{"$rad\t$analisis"}=1;
-					$pwt{$rad}{"$dword\t$analisis"}=1;
+					#$wpt{$dword}{"$rad\t$analisis"}=1;
+					#$pwt{$rad}{"$dword\t$analisis"}=1;
+					$simple{$dword} .= $analisis . " ";
 					$analisis = '';
 				}
 			}#foreach
@@ -54,24 +56,28 @@ $dic->foreach_word(
 	}#sub
 );
 
-for my $dword ( sort keys %wpt ) {
-	for my $a ( keys %{$wpt{$dword}} ) {
-		print WPT "$dword\t$a\n";
-	}
+for my $dword ( sort keys %simple ) {
+	print SIMPLE "$dword $simple{$dword}\n";	
 }
 
-for my $primitive ( sort keys %pwt ) {
-	for my $a ( keys %{$pwt{$primitive}} ) {
-		print PWT "$primitive\t$a\n";
-	}
-}
+#for my $dword ( sort keys %wpt ) {
+#	for my $a ( keys %{$wpt{$dword}} ) {
+#		print WPT "$dword\t$a\n";
+#	}
+#}
 
-for my $t ( sort keys %tags ) {
-		print TAG "$t\n";
-}
+#for my $primitive ( sort keys %pwt ) {
+#	for my $a ( keys %{$pwt{$primitive}} ) {
+#		print PWT "$primitive\t$a\n";
+#	}
+#}
 
+#for my $t ( sort keys %tags ) {
+#		print TAG "$t\n";
+#}
 
-close WPT or die "bad WPT: $! $?";
-close PWT or die "bad PWT: $! $?";
-close TAG or die "bad TAG: $! $?";
+close SIMPLE or die "bad WPT: $! $?";
+#close WPT or die "bad WPT: $! $?";
+#close PWT or die "bad PWT: $! $?";
+#close TAG or die "bad TAG: $! $?";
 
