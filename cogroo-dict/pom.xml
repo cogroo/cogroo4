@@ -1,4 +1,6 @@
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<parent>
 		<artifactId>cogroo</artifactId>
 		<groupId>br.ccsl.cogroo</groupId>
@@ -9,4 +11,79 @@
 	<groupId>br.ccsl.cogroo</groupId>
 	<artifactId>cogroo-dict</artifactId>
 	<packaging>pom</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>br.ccsl.cogroo</groupId>
+			<artifactId>cogroo-common</artifactId>
+			<version>4.0.0-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create target dir</id>
+						<phase>initialize</phase>
+						<configuration>
+							<tasks>
+								<mkdir dir="${project.build.outputDirectory}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create jspell dict</id>
+						<phase>compile</phase>
+						<configuration>
+							<tasks>
+								<exec executable="perl" dir="jspell/scripts">
+						            <arg value="create_dictionaries.pl"/>
+          						</exec>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<mainClass>opennlp.tools.cmdline.CLI</mainClass>
+							<arguments>
+								<argument>DictionaryBuilder</argument>
+								<argument>-inputFile</argument>
+								<argument>${project.basedir}/abbr/pt-br/abbr.txt</argument>
+								<argument>-outputFile</argument>
+								<argument>${project.build.outputDirectory}/abbr.xml</argument>
+								<argument>-encoding</argument>
+								<argument>UTF-8</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
