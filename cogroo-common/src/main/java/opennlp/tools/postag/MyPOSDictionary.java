@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import opennlp.tools.postag.ExtendedPOSDictionary.Triple;
+import opennlp.tools.postag.POSDictionary;
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.interpreters.TagInterpreterI;
 
@@ -117,7 +118,6 @@ public class MyPOSDictionary extends POSDictionary {
 //    return tag;
 //  }
 
-  @Override
   void addTags(String word, String... tags) {
     super.addTags(word, tags);
     for (String t : tags) {

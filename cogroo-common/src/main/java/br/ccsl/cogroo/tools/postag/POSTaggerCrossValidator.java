@@ -20,6 +20,7 @@ package br.ccsl.cogroo.tools.postag;
 import java.io.IOException;
 
 import opennlp.tools.dictionary.Dictionary;
+import opennlp.tools.postag.POSTaggerFactory;
 import opennlp.tools.postag.MyPOSDictionary;
 import opennlp.tools.postag.POSDictionary;
 import opennlp.tools.postag.POSEvaluator;
@@ -104,8 +105,10 @@ public class POSTaggerCrossValidator {
         System.err.print("done");
         dict = extDict;
       }
+      
+      PortugueseFactory f = new PortugueseFactory(ngramDict, dict);
 
-      POSModel model = POSTaggerME.train(languageCode, trainingSampleStream, params,
+      POSModel model = POSTaggerME.train(languageCode, trainingSampleStream, params, f,
           dict, ngramDict);
 
       POSEvaluator evaluator = new POSEvaluator(new POSTaggerME(model), listeners);
