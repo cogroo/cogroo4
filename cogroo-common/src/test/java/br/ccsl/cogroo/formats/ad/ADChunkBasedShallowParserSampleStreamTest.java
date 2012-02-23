@@ -35,38 +35,30 @@ public class ADChunkBasedShallowParserSampleStreamTest {
 
   @Test
   public void testSimpleCount() throws IOException {
-    assertEquals(4, samples.size());
+    assertEquals(6, samples.size());
   }
 
   @Test
   public void testChunks() throws IOException {
 
     assertEquals("Inicia", samples.get(0).getSentence()[0]);
-    assertEquals("v-fin|B-VP", samples.get(0).getTags()[0]);
-    assertEquals("B-NP", samples.get(0).getPreds()[2]);
+    assertEquals("B-VP", samples.get(0).getTags()[0]);
+    assertEquals("B-P", samples.get(0).getPreds()[0]);
 
     assertEquals("em", samples.get(0).getSentence()[1]);
-    assertEquals("prp", samples.get(0).getTags()[1]);
-    assertEquals("B-PP", samples.get(0).getPreds()[1]);
+    assertEquals("O", samples.get(0).getTags()[1]);
+    assertEquals("O", samples.get(0).getPreds()[1]);
 
-    assertEquals("o", samples.get(0).getSentence()[2]);
-    assertEquals("art", samples.get(0).getTags()[2]);
-    assertEquals("B-NP", samples.get(0).getPreds()[2]);
-
-    assertEquals("próximo", samples.get(0).getSentence()[3]);
-    assertEquals("adj", samples.get(0).getTags()[3]);
-    assertEquals("I-NP", samples.get(0).getPreds()[3]);
-    
-    assertEquals("Casas", samples.get(3).getSentence()[0]);
-    assertEquals("n", samples.get(3).getTags()[0]);
-    assertEquals("B-NP", samples.get(3).getPreds()[0]);
+    assertEquals("galpão", samples.get(3).getSentence()[2]);
+    assertEquals("B-NP", samples.get(3).getTags()[2]);
+    assertEquals("B-SUBJ", samples.get(3).getPreds()[2]);
 
   }
 
   @Before
   public void setup() throws IOException {
     InputStream in = ADChunkBasedShallowParserSampleStreamTest.class
-        .getResourceAsStream("/opennlp/tools/formats/ad.sample");
+        .getResourceAsStream("/br/ccsl/cogroo/formats/ad/ad.sample");
 
     ADChunkBasedShallowParserSampleStream stream = new ADChunkBasedShallowParserSampleStream(in, "UTF-8", "SUBJ,P", false, false, false);
 

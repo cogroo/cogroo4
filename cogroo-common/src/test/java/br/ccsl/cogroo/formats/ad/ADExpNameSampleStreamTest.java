@@ -40,7 +40,7 @@ public class ADExpNameSampleStreamTest {
 
   @Test
   public void testSimpleCount() throws IOException {
-    assertEquals(4, samples.size());
+    assertEquals(6, samples.size());
   }
 
   @Test
@@ -104,7 +104,7 @@ public class ADExpNameSampleStreamTest {
   @Before
   public void setup() throws IOException {
     InputStream in = ADExpNameSampleStreamTest.class
-        .getResourceAsStream("/opennlp/tools/formats/ad.sample");
+        .getResourceAsStream("/br/ccsl/cogroo/formats/ad/ad.sample");
 
     ADExpNameSampleStream stream = new ADExpNameSampleStream(
         new PlainTextByLineStream(in, "UTF-8"), null);
@@ -117,7 +117,7 @@ public class ADExpNameSampleStreamTest {
     }
 
     in = ADExpNameSampleStreamTest.class
-        .getResourceAsStream("/opennlp/tools/formats/ad.sample");
+        .getResourceAsStream("/br/ccsl/cogroo/formats/ad/ad.sample");
 
     Set<String> tags = new HashSet<String>();
     tags.add("adv");
