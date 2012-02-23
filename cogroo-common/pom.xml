@@ -17,8 +17,8 @@
 	<dependencies>
 		<dependency>
 			  <groupId>org.apache.opennlp</groupId>
-			  <artifactId>opennlp-tools-mod</artifactId>
-			  <version>1.5.3-incubating-SNAPSHOT</version>
+			  <artifactId>opennlp-tools</artifactId>
+			  <version>1.5.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
