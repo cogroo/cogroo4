@@ -41,10 +41,8 @@ import br.ccsl.cogroo.cmdline.featurizer.FeaturizerCrossValidatorTool;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerEvaluatorTool;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerMETool;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerTrainerTool;
-import br.ccsl.cogroo.cmdline.postag.POSTaggerCrossValidatorTool;
 import br.ccsl.cogroo.formats.FeatureSampleStreamFactory;
 import br.ccsl.cogroo.formats.ad.ADFeatureSampleStreamFactory;
-import br.ccsl.cogroo.tools.featurizer.FeatureSampleStream;
 
 public final class CLI {
   
@@ -63,8 +61,6 @@ public final class CLI {
     
     // Dictionary Builder
     tools.add(new POSDictionaryBuilderTool());
-    
-    tools.add(new POSTaggerCrossValidatorTool());
     
     //Featurizer
     tools.add(new FeaturizerMETool());
