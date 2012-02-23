@@ -18,18 +18,18 @@
 package br.ccsl.cogroo.formats.ad;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.nio.charset.Charset;
 import java.util.Set;
 
-import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.ArgumentParser;
 import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
-import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.formats.LanguageSampleStreamFactory;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.ObjectStream;
+import opennlp.tools.util.PlainTextByLineStream;
 
 /**
  * A Factory to create a Arvores Deitadas NameSampleStream from the command line
@@ -52,7 +52,7 @@ public class ADContractionNameSampleStreamFactory extends
   }
 
   public static void registerFactory() {
-    StreamFactoryRegistry.registerFactory(ChunkSample.class, "adcon",
+    StreamFactoryRegistry.registerFactory(NameSample.class, "adcon",
         new ADContractionNameSampleStreamFactory(Parameters.class));
   }
 
@@ -66,15 +66,14 @@ public class ADContractionNameSampleStreamFactory extends
 
     language = params.getLang();
 
-    Charset encoding = params.getEncoding();
-
     Set<String> tagSet = null;
 
-    if (encoding == null) {
-      throw new TerminateToolException(1);
-    }
+    FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
 
-    return new ADContractionNameSampleStream(CmdLineUtil.openInFile(params
-        .getData()), encoding.name(), tagSet);
+    ObjectStream<String> lineStream = new PlainTextByLineStream(
+        sampleDataIn.getChannel(), params.getEncoding());
+
+
+    return new ADContractionNameSampleStream(lineStream, tagSet);
   }
 }
