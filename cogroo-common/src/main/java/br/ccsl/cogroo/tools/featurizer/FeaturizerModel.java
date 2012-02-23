@@ -75,7 +75,6 @@ public class FeaturizerModel extends BaseModel {
 
     artifactMap.put(FEATURIZER_MODEL_ENTRY_NAME, featurizerModel);
 
-    loadArtifactSerializers();
     checkArtifactMap();
   }
 
@@ -87,9 +86,6 @@ public class FeaturizerModel extends BaseModel {
   public FeaturizerModel(InputStream in) throws IOException,
       InvalidFormatException {
     super(COMPONENT_NAME, in);
-    loadArtifactSerializers();
-    finishLoadingArtifacts(in);
-    checkArtifactMap();
   }
 
   @Override
