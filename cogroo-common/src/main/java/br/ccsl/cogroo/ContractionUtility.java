@@ -3,6 +3,7 @@ package br.ccsl.cogroo;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import opennlp.tools.formats.ad.PortugueseContractionUtility;
 
@@ -24,5 +25,9 @@ public class ContractionUtility extends PortugueseContractionUtility {
       return REVERSE_CONTRACTIONS.get(lowercase);
     }
     return null;
+  }
+  
+  public static Set<String> getContractionSet() {
+    return REVERSE_CONTRACTIONS.keySet();
   }
 }
