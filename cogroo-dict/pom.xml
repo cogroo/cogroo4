@@ -31,7 +31,7 @@
 						<phase>initialize</phase>
 						<configuration>
 							<tasks>
-								<mkdir dir="${project.build.outputDirectory}" />
+								<mkdir dir="${project.build.directory}" />
 							</tasks>
 						</configuration>
 						<goals>
@@ -40,7 +40,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
@@ -58,14 +58,14 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.1.1</version>
 				<executions>
 					<execution>
-						<phase>generate-sources</phase>
+						<phase>compile</phase>
 						<goals>
 							<goal>java</goal>
 						</goals>
@@ -76,7 +76,7 @@
 								<argument>-inputFile</argument>
 								<argument>${project.basedir}/abbr/pt-br/abbr.txt</argument>
 								<argument>-outputFile</argument>
-								<argument>${project.build.outputDirectory}/abbr.xml</argument>
+								<argument>${project.build.directory}/abbr.xml</argument>
 								<argument>-encoding</argument>
 								<argument>UTF-8</argument>
 							</arguments>
