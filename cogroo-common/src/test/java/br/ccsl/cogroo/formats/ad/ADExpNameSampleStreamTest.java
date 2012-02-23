@@ -26,15 +26,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import opennlp.tools.formats.ad.ADParagraphStreamTest;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import br.ccsl.cogroo.formats.ad.ADExpNameSampleStream;
 
 public class ADExpNameSampleStreamTest {
 
@@ -106,7 +103,7 @@ public class ADExpNameSampleStreamTest {
 
   @Before
   public void setup() throws IOException {
-    InputStream in = ADParagraphStreamTest.class
+    InputStream in = ADExpNameSampleStreamTest.class
         .getResourceAsStream("/opennlp/tools/formats/ad.sample");
 
     ADExpNameSampleStream stream = new ADExpNameSampleStream(
@@ -119,7 +116,7 @@ public class ADExpNameSampleStreamTest {
       sample = stream.read();
     }
 
-    in = ADParagraphStreamTest.class
+    in = ADExpNameSampleStreamTest.class
         .getResourceAsStream("/opennlp/tools/formats/ad.sample");
 
     Set<String> tags = new HashSet<String>();

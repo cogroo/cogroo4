@@ -6,12 +6,11 @@ import java.util.Set;
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.sentdetect.SDContextGenerator;
 import opennlp.tools.sentdetect.SentenceDetectorFactory;
+import opennlp.tools.sentdetect.lang.Factory;
 import opennlp.tools.util.model.ArtifactProvider;
 
 public class PortuguesSentenceDetectorFactory extends SentenceDetectorFactory {
 
-  private static final char[] ptEosCharacters = new char[] { '.', '?', '!',
-      ';', ':', '(', ')', '«', '»', '\'', '"' };
   private char[] eos;
 
   public PortuguesSentenceDetectorFactory(ArtifactProvider artifactProvider) {
@@ -26,7 +25,7 @@ public class PortuguesSentenceDetectorFactory extends SentenceDetectorFactory {
     if(eosCharacters != null) {
       this.eos = eosCharacters;
     } else {
-      this.eos = ptEosCharacters;
+      this.eos = Factory.ptEosCharacters;
     }
   }
 

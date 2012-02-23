@@ -25,12 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opennlp.tools.chunker.ChunkSample;
-import opennlp.tools.formats.ad.ADParagraphStreamTest;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import br.ccsl.cogroo.formats.ad.ADChunkBasedShallowParserSampleStream;
 
 public class ADChunkBasedShallowParserSampleStreamTest {
 
@@ -68,8 +65,8 @@ public class ADChunkBasedShallowParserSampleStreamTest {
 
   @Before
   public void setup() throws IOException {
-    InputStream in = ADParagraphStreamTest.class
-	.getResourceAsStream("/opennlp/tools/formats/ad.sample");
+    InputStream in = ADChunkBasedShallowParserSampleStreamTest.class
+        .getResourceAsStream("/opennlp/tools/formats/ad.sample");
 
     ADChunkBasedShallowParserSampleStream stream = new ADChunkBasedShallowParserSampleStream(in, "UTF-8", "SUBJ,P", false, false, false);
 
