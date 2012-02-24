@@ -31,7 +31,7 @@
 						<phase>initialize</phase>
 						<configuration>
 							<tasks>
-								<mkdir dir="${project.build.directory}" />
+								<mkdir dir="${project.build.directory}/contractionRes" />
 							</tasks>
 						</configuration>
 						<goals>
@@ -65,6 +65,7 @@
 				<version>1.1.1</version>
 				<executions>
 					<execution>
+						<id>abbr</id>
 						<phase>compile</phase>
 						<goals>
 							<goal>java</goal>
@@ -79,6 +80,42 @@
 								<argument>${project.build.directory}/abbr.xml</argument>
 								<argument>-encoding</argument>
 								<argument>UTF-8</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>cont</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<mainClass>br.ccsl.cogroo.cmdline.CLI</mainClass>
+							<arguments>
+								<argument>AbbreviationDictionaryBuilder</argument>
+								<argument>-outputFile</argument>
+								<argument>${project.build.directory}/contractionRes/cont.dictionary</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>pos</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<mainClass>br.ccsl.cogroo.cmdline.CLI</mainClass>
+							<arguments>
+								<argument>POSDictionaryBuilder</argument>
+								<argument>-inputFile</argument>
+								<argument>${project.build.directory}/tagdict.txt</argument>
+								<argument>-outputFile</argument>
+								<argument>${project.build.directory}/tagdict.xml</argument>
+								<argument>-allowInvalidFeats</argument>
+								<argument>true</argument>
+								<argument>-corpus</argument>
+								<argument>${env.CORPUS_ROOT}/Bosque/Bosque_CF_8.0.ad.txt</argument>
 							</arguments>
 						</configuration>
 					</execution>
