@@ -38,6 +38,8 @@ import opennlp.tools.cmdline.namefind.TokenNameFinderCrossValidatorTool;
 import opennlp.tools.cmdline.namefind.TokenNameFinderEvaluatorTool;
 import opennlp.tools.cmdline.namefind.TokenNameFinderTool;
 import opennlp.tools.cmdline.namefind.TokenNameFinderTrainerTool;
+import opennlp.tools.cmdline.postag.POSTaggerCrossValidatorTool;
+import opennlp.tools.cmdline.postag.POSTaggerTrainerTool;
 import opennlp.tools.util.Version;
 import br.ccsl.cogroo.cmdline.dictionary.AbbreviationDictionaryBuilderTool;
 import br.ccsl.cogroo.cmdline.dictionary.POSDictionaryBuilderTool;
@@ -48,6 +50,8 @@ import br.ccsl.cogroo.cmdline.featurizer.FeaturizerMETool;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerTrainerTool;
 import br.ccsl.cogroo.formats.FeatureSampleStreamFactory;
 import br.ccsl.cogroo.formats.ad.ADContractionNameSampleStreamFactory;
+import br.ccsl.cogroo.formats.ad.ADExPOSSampleStreamFactory;
+import br.ccsl.cogroo.formats.ad.ADExpNameSampleStreamFactory;
 import br.ccsl.cogroo.formats.ad.ADFeatureSampleStreamFactory;
 
 public final class CLI {
@@ -57,10 +61,12 @@ public final class CLI {
   private static Map<String, AbstractCmdLineTool> toolLookupMap;
   
   static {
-    // registry other types
+    // Register other types
     FeatureSampleStreamFactory.registerFactory();
     ADFeatureSampleStreamFactory.registerFactory();
     ADContractionNameSampleStreamFactory.registerFactory();
+    ADExpNameSampleStreamFactory.registerFactory();
+    ADExPOSSampleStreamFactory.registerFactory();
     
     toolLookupMap = new LinkedHashMap<String, AbstractCmdLineTool>();
     
@@ -81,7 +87,11 @@ public final class CLI {
     tools.add(new TokenNameFinderTool());
     tools.add(new TokenNameFinderTrainerTool());
     tools.add(new TokenNameFinderEvaluatorTool());
-    tools.add(new TokenNameFinderCrossValidatorTool()); 
+    tools.add(new TokenNameFinderCrossValidatorTool());
+    
+    // tagger
+    tools.add(new POSTaggerTrainerTool());
+    tools.add(new POSTaggerCrossValidatorTool());
     
     for (AbstractCmdLineTool tool : tools) {
       toolLookupMap.put(tool.getName(), tool);

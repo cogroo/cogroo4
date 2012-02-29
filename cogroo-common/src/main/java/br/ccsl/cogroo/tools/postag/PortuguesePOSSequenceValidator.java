@@ -48,7 +48,7 @@ public class PortuguesePOSSequenceValidator implements SequenceValidator<String>
     
     // validate B- and I-
     if(!validOutcome(outcome, outcomesSequence)) {
-      System.err.println("# invalid: " + word + " " + outcome + " seq.: " + Arrays.toString(outcomesSequence));
+      //System.err.println("# invalid: " + word + " " + outcome + " seq.: " + Arrays.toString(outcomesSequence));
       return false;
     }
     

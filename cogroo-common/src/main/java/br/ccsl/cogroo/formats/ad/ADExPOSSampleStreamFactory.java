@@ -20,9 +20,6 @@ package br.ccsl.cogroo.formats.ad;
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import opennlp.tools.cmdline.ArgumentParser;
 import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
@@ -30,18 +27,15 @@ import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
 import opennlp.tools.formats.LanguageSampleStreamFactory;
-import opennlp.tools.namefind.NameSample;
+import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 
 /**
- * A Factory to create a Arvores Deitadas NameSampleStream from the command line
- * utility. This outcomes everything that has a "_
- * <p>
  * <b>Note:</b> Do not use this class, internal use only!
  */
-public class ADExpNameSampleStreamFactory extends
-    LanguageSampleStreamFactory<NameSample> {
+public class ADExPOSSampleStreamFactory extends
+    LanguageSampleStreamFactory<POSSample> {
 
   interface Parameters {
     @ParameterDescription(valueName = "charsetName", description = "encoding for reading and writing text, if absent the system default is used.")
@@ -53,38 +47,39 @@ public class ADExpNameSampleStreamFactory extends
     @ParameterDescription(valueName = "language", description = "language which is being processed.")
     String getLang();
 
-    @ParameterDescription(valueName = "tags", description = "comma separated outcome tags, if not specified all will be included")
-    @OptionalParameter
-    String getTags();
+    @ParameterDescription(valueName = "expandME", description = "expand multiword expressions.")
+    @OptionalParameter(defaultValue = "false")
+    Boolean getExpandME();
+
+    @ParameterDescription(valueName = "includeFeatures", description = "combine POS Tags with word features, like number and gender.")
+    @OptionalParameter(defaultValue = "false")
+    Boolean getIncludeFeatures();
   }
 
   public static void registerFactory() {
-    StreamFactoryRegistry.registerFactory(NameSample.class, "adexp",
-        new ADExpNameSampleStreamFactory(Parameters.class));
+    StreamFactoryRegistry.registerFactory(POSSample.class, "adex",
+        new ADExPOSSampleStreamFactory(Parameters.class));
   }
 
-  protected <P> ADExpNameSampleStreamFactory(Class<P> params) {
+  protected <P> ADExPOSSampleStreamFactory(Class<P> params) {
     super(params);
   }
 
-  public ObjectStream<NameSample> create(String[] args) {
+  public ObjectStream<POSSample> create(String[] args) {
 
     Parameters params = ArgumentParser.parse(args, Parameters.class);
 
     language = params.getLang();
 
-    String tags = params.getTags();
-    Set<String> tagSet = null;
-    if (tags != null) {
-      tagSet = new HashSet<String>();
-      tagSet.addAll(Arrays.asList(tags.split(",")));
-    }
-    
     FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
 
     ObjectStream<String> lineStream = new PlainTextByLineStream(
         sampleDataIn.getChannel(), params.getEncoding());
 
-    return new ADExpNameSampleStream(lineStream, tagSet);
+    ADExPOSSampleStream sentenceStream = new ADExPOSSampleStream(lineStream,
+        params.getExpandME(), params.getIncludeFeatures());
+
+    return sentenceStream;
   }
+
 }
