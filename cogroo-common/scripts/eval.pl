@@ -118,7 +118,8 @@ sub evaluate() {
 		$opt{c} = $cut;
 		
 		my %result = eval_unit::exec(\%opt, \%extraOpt, *LOG);
-	
+		$result{'cutoff'} = $cut;		
+		
 		if(@keys == 0) {
 			@keys = keys %result;
 			my $hLine = join "\t", @keys;
