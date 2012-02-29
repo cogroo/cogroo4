@@ -51,6 +51,15 @@ EOF
 	exit;
 }
 
+sub printToLog {
+	my $fhLog = shift;
+	my $info = shift;
+	print $info;
+	if($fhLog) {
+		print $fhLog $info;
+	}
+}
+
 sub evaluate() {
 	
 	# create the basic command
@@ -81,24 +90,25 @@ sub evaluate() {
 		}
 	}
 	
+	my $folder = "eval/". $opt{t} . "/";
 	
-	my $folder = "eval/". createBaseReportName();
-	
-	if (-e $folder) {
- 		print "Folder exists, will use it: $folder";
+	if (-e ($folder . "/logs")) {
+ 		print "Folder exists, will use it: $folder\n";
  	}  else {
 		print "will create eval folder: $folder \n";
-		make_path($folder) || die "Unable to create directory <$!>\n";
+		make_path($folder . "/logs") || die "Unable to create directory <$!>\n";
  	}
+ 	
+ 	my $id = createRunId();
 	
-	open (LOG, ">$folder/log.txt");
-	open (TABLE, ">$folder/table.txt");
+	open (LOG, ">$folder/logs/$id.txt");
+	open (TABLE, ">>$folder/table.txt");
 	
 	# print the command to a log file inside the folder
 	
-	print LOG "Option hash in eval.pl\n";
-	print LOG Dumper( \%opt );
-	print LOG "\n";
+	printToLog (LOG, "Option hash in eval.pl\n");
+	printToLog (LOG, Dumper( \%opt ));
+	printToLog (LOG, "\n");
 
 	$opt{e} = 1;
 	
@@ -109,11 +119,15 @@ sub evaluate() {
 			push(@cutoffArr, $i);	
 		}
 	} else {
-		die "not implemented \n";
+		die "-v option not implemented \n";
 	}
+	
+	printToLog (LOG, "will use the following cutoff: ");
+	printToLog (LOG, Dumper(\@cutoffArr));
 	
 	my @keys;
 	
+	print TABLE "=== $id ===\n\n";
 	foreach my $cut (@cutoffArr) {
 		$opt{c} = $cut;
 		
@@ -133,12 +147,13 @@ sub evaluate() {
 		my $l = join "\t", @line;
 		print TABLE $l . "\n";
 	}
+	print TABLE "\n\n";
 	
 	close LOG;
 	close TABLE;
 }
 
-sub createBaseReportName() {
+sub createRunId() {
 	my $o;
 	if($opt{o}) {
 		$o = $opt{o};
@@ -147,7 +162,7 @@ sub createBaseReportName() {
 		$o = 'NONE';
 	}
 		# sent_MAXENT_DIC,FAC_pa_120228-070420
-	my $name = $opt{t} . '/' . $opt{a} . '-' . $o . '-' . $opt{v};# . '-' . getTime();
+	my $name = $opt{t} . '-' . $opt{d} . '-' . $opt{a} . '-' . $o . '-' . $opt{v};# . '-' . getTime();
 }
 
 sub getTime() {
