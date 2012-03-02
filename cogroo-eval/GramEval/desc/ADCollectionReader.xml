@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>cogroo.uima.readers.ADCollectionReader</implementationName>
+  <processingResourceMetaData>
+    <name>ADCollectionReader</name>
+    <description>Reads the AD Portuguese corpora.</description>
+    <version>0.0.1</version>
+    <vendor/>
+    <configurationParameters>
+      <configurationParameter>
+        <name>InputDirectory</name>
+        <description>Directory containing input files</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>Encoding</name>
+        <description>Character encoding for the documents.  If not specified,
+                   the default system encoding will be used.  Note that this parameter
+                   only applies if there is no CAS Initializer provided; otherwise,
+                   it is the CAS Initializer's responsibility to deal with character
+                   encoding issues.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>Language</name>
+        <description>ISO language code for the documents</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>BrowseSubdirectories</name>
+        <description>True means include files of subdirectories, recursively, of the input directory.</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>InputDirectory</name>
+        <value>
+          <string>/Users/wcolen/Documents/wrks/corpuswrk/Corpus/Metro/Final</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>BrowseSubdirectories</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>Encoding</name>
+        <value>
+          <string>UTF-8</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>Language</name>
+        <value>
+          <string>pt</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="cogroo.uima.TypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</collectionReaderDescription>

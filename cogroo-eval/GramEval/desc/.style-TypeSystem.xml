@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <style type="cogroo.uima.GoldenSentence" style="BACKGROUND" color="-4787530" layer="0"/>
+    <style type="cogroo.uima.GoldenParagraph" style="BACKGROUND" color="-4795150" layer="0"/>
+    <style type="uima.tcas.DocumentAnnotation" style="BACKGROUND" color="-856650" layer="0"/>
+    <style type="cogroo.uima.GoldenGrammarError" style="BACKGROUND" color="-870730" layer="0"/>
+    <shown type="cogroo.uima.GoldenGrammarError" visible="true"/>
+</config>

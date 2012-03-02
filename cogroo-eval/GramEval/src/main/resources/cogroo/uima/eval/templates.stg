@@ -1,0 +1,254 @@
+header(corpus) ::= <<
+<html>
+  <head>
+  	<title>Grammar Checker Evalutaion Report - $corpus$</title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  	<meta name="language" content="pt-br"/>
+  
+	<link rel="stylesheet" type="text/css" href="css/header.css" />
+	<link rel="stylesheet" type="text/css" href="css/footer.css" />
+	<link rel="stylesheet" type="text/css" href="css/tabela.css"  />
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu.css" />
+	
+  	<link rel="stylesheet" type="text/css" href="css/dataTables_table_jui.css" />
+	<link rel="stylesheet" type="text/css" href="css/dataTables_table.css" />
+	<script src="js/onoff.js" type="text/javascript"></script>
+  
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+>>
+
+title(corpus, type, date, data, sentences) ::= <<
+  </head>
+
+  <body>
+  	<div id="header">
+  		<div class="login_roundcorner login">$date$</div>
+  		<div id="logoCogroo"><a href="" title="CoGrOO Comunidade" id="logoCogrooLink"></a></div>
+  		<div id="logoBROffice">
+  			<h1>Corpus $corpus$</h1>
+  			<h2>$type$</h2>
+  		</div>
+  	</div>
+  	<div id="content">
+  		<h1>Índice</h1>
+  <ul id="sitemap">
+    <li><a href="#Overall">Visão Geral</a></li>
+    <li>
+    <ul>
+      <li><a href="#Resumo">Resumo</a></li>
+      <li><a href="#ResumoDistrib">Distribuição de erros gramaticais no córpus</a></li>
+      <li><a href="#ResumoDesempenho">Desempenho do corretor no córpus</a></li>
+      <li><a href="#ResumoConjuntos">Conjuntos Target e Selected no córpus</a></li>
+      <li><a href="#ResumoRazãoFP">Falsos Positivos por categoria</a></li>
+      <li><a href="#ResumoNãoCobertas">Categorias não cobertas</a></li>
+    </ul>
+    </li>
+    <li>This is a test. </li>
+  </ul>
+>>
+
+chart(id) ::= <<
+		<div id="$id$"></div>
+>>
+
+overall(summary, details, target, selected, tp, targetMin, selectedMin, tpMin, sentences, categoriesDesc, uncovered, data) ::= <<
+  		<a name="Overall"></a>
+  		<h1>Visão Geral</h1>
+  		
+  		<a name="Resumo"></a>
+  		<h2>Resumo</h2>
+  		  		<p>
+  			The program counted $sentences$ sentences with $target$ grammar errors according to $corpus$ corpus. 
+  			CoGrOO found $selected$ grammar errors of which $tp$ were correct. 
+  			The evaluation presents the precision, recall and F1 rates, both overall (TOTAL) and for each of the grammar error categories in the data. 
+  			Only grammar error categories that are present in the corpus data or in the predicted output will be mentioned in the evaluation overview. 
+  			The zero scores for some categories can be explained by the fact that there are some grammar errors in this data but none of them was detected by CoGrOO. 
+  		<p>
+  		
+  		<p>Passe o mouse para uma descrição da categoria:<br>
+		$categoriesDesc:{s|<span style="font-weight:bold;" title="$s.b$">$s.a$</span>}; separator=", "$.</p>
+		
+		<div class="white_box">
+  		<pre>
+$summary$
+  		</pre>
+  		</div>
+  		
+$details:{s|
+<h3><b>$s.desc$</b><sup><a name="$s.id$" onclick="onOff('$s.id$'); return false" href="#$s.id$">exibir/fechar</a></sup></h3>
+<div style="display: none;" id="$s.id$" class="white_box">
+<pre>
+$s.data$
+</pre>
+</div>
+}; separator=""$
+  		
+  		<a name="ResumoDistrib"></a>
+  		<h2>Distribuição de erros gramaticais no corpus $corpus$</h2>
+  		<p>Neste gráfico vemos a distribuição de erros no Corpus $corpus$. Os erros foram manualmente anotados.</p>
+      	<div id="overall_pie"></div>
+      	
+      	<a name="ResumoDesempenho"></a>
+  		<h2>Desempenho do CoGrOO no Corpus $corpus$</h2>
+  		<p>Este gráfico mostra o desempenho do CoGrOO no corpus $corpus$. 
+  		Precisão é a proporção de itens selecionados corretamente pelo corretor gramatical: P=TP/TP+FP.
+  		Cobertura é a proporção de erros gramaticais do corpus que foram corretamente marcados pelo corretor gramatical: R=TP/Target
+  		</p>
+  		<p><b>Nota:</b> categorias em que o CoGrOO não pontuou foram omitidas.</p>
+  		
+    	<div id="overall_coll"></div>
+		
+		<a name="ResumoConjuntos"></a>
+		<h2>Conjuntos Target e Selected no Corpus $corpus$</h2>
+  		<p>Existem $target$ erros gramaticais no córpus (target). 
+  		O CoGrOO marcou $selected$ erros (selected). 
+  		$tp$ elementos estão na interseção (tp).
+  		</p>
+      	<!--<img src="http://chart.apis.google.com/chart?chs=620x372&cht=v&chco=FF6342,ADDE63&chds=0,$target$&chd=t:$selected$,$target$,-1,$tp$,-1,-1,-1&chdl=Selected|Target&chtt=Venn+-+Total&chts=676767,12.833" width="620" height="372" alt="Venn+-+Total" />-->
+		<!--<img src="http://chart.apis.google.com/chart?chs=620x372&cht=v&chco=FF6342,ADDE63&chds=0,$selected$&chd=t:$selected$,$target$,-1,$tp$,-1,-1,-1&chdl=Selected|Target&chtt=Venn+-+Total&chts=676767,12.833" width="620" height="372" alt="Venn+-+Total" />-->
+		    <img src="https://chart.googleapis.com/chart?cht=v&chs=620x372&chd=t:$selectedMin$,$targetMin$,0,$tpMin$&chdl=Selected|Target" width="620" height="372" alt="Venn+-+Total"/>
+		<a name="ResumoRazãoFP"></a>
+		
+		<h2>Falsos Positivos por categoria</h2>
+		<div id="overall_fpRatio"></div>
+
+		<a name="ResumoNaoCobertas"></a>		
+		<h2>Categorias descobertas</h2>
+		<p>As seguintes categorias estão presentes no córpus mas o CoGrOO não possui regras que as contemple:<br>
+		$uncovered:{s|<span style="font-weight:bold;" title="$s.b$">$s.a$</span>}; separator=", "$.</p>
+		
+		<div id="coveredCat"></div>
+		
+		<a name="detalhes"></a>		
+		<h2>Detalhes das categorias</h2>
+		
+		$data:{s|
+			
+			<h3>$s.cat$ - Conjuntos Target e Selected no Corpus $corpus$</h3>
+			<p>target: $s.target$; selected: $s.selected$; tp: $s.tp$.</p>
+		<!--<img src="http://chart.apis.google.com/chart?chs=620x372&cht=v&chco=FF6342,ADDE63&chds=0,$s.target$&chd=t:$s.selected$,$s.target$,-1,$s.tp$,-1,-1,-1&chdl=Selected|Target&chtt=Venn+-+$s.cat$&chts=676767,12.833" width="620" height="372" alt="Venn+-+Total" />-->
+		<!--<img src="http://chart.apis.google.com/chart?chs=620x372&cht=v&chco=FF6342,ADDE63&chds=0,$s.selected$&chd=t:$s.selected$,$s.target$,-1,$s.tp$,-1,-1,-1&chdl=Selected|Target&chtt=Venn+-+$s.cat$&chts=676767,12.833" width="620" height="372" alt="Venn+-+$s.cat$" />-->
+		    <img src="https://chart.googleapis.com/chart?cht=v&chs=620x372&chd=t:$s.selectedMin$,$s.targetMin$,0,$s.tpMin$&chdl=Selected|Target" width="620" height="372" alt="Venn+-+Total"/>		
+		}; separator=""$
+>>
+
+pieScriptA(data, sliceVisibilityThreshold) ::= <<
+    <script type="text/javascript">
+    
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1', {'packages':['corechart']});
+      
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawPie);
+      
+      // Callback that creates and populates a data table, 
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawPie() {
+
+      // Create our data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Categorias');
+      data.addColumn('number', 'Erros Gramaticais');
+      data.addRows([
+$data:{s|['$s.cat$', $s.target$]}; separator=", "$
+      ]);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('overall_pie'));
+      chart.draw(data, {width: 800, height: 480, sliceVisibilityThreshold: $sliceVisibilityThreshold$, title: 'Distribuição de Erros Gramaticais no Corpus.'});
+    }
+    </script>
+>>
+
+pieScriptGeneral(uniqueId, col1, col2, data, title) ::= <<
+    <script type="text/javascript">
+    
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1', {'packages':['corechart']});
+      
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawPie$uniqueId$);
+      
+      // Callback that creates and populates a data table, 
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawPie$uniqueId$() {
+
+      // Create our data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', '$col1$');
+      data.addColumn('number', '$col2$');
+      data.addRows([
+$data:{s|['$s.a$', $s.b$]}; separator=", "$
+      ]);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('$uniqueId$'));
+      chart.draw(data, {width: 800, height: 480, title: '$title$'});
+    }
+    </script>
+>>
+
+genFPRatio(rows, r) ::= <<
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawFPRatioScript);
+      function drawFPRatioScript() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Categoria');
+        data.addColumn('number', 'FP');
+        data.addRows($rows$);
+        
+        $r:{s|
+        	data.setValue($i0$, 0, '$s.a$'); 
+        	data.setValue($i0$, 1, $s.b$); 
+        	}; separator=""$
+        
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('overall_fpRatio'));
+        chart.draw(data, {width: 800, height: 480, title: 'Falsos Positivos por categoria',
+                          hAxis: {titleTextStyle: {color: 'red'}},
+                          vAxis: {logScale: true}
+                         });
+      }
+    </script>
+>>
+
+collAllScript(rows, overall, data) ::= <<
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawCollAllScript);
+      function drawCollAllScript() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Categoria');
+        data.addColumn('number', 'Precisão');
+        data.addColumn('number', 'Cobertura');
+        data.addRows($rows$);
+        
+        data.setValue(0, 0, '$overall.cat$'); 
+        data.setValue(0, 1, $overall.pre$); 
+        data.setValue(0, 2, $overall.rec$);
+        
+        $data:{s|
+        	data.setValue($i$, 0, '$s.cat$'); 
+        	data.setValue($i$, 1, $s.pre$); 
+        	data.setValue($i$, 2, $s.rec$);
+        	}; separator=""$
+        
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('overall_coll'));
+        chart.draw(data, {width: 800, height: 480, title: 'Precisão e Cobertura',
+                          hAxis: {title: 'Categoria', titleTextStyle: {color: 'red'}}
+                         });
+      }
+    </script>
+>>
+
+close() ::= <<
+  </body>
+</html>
+>>
