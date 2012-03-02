@@ -1,0 +1,1 @@
+mvn -e -q exec:java "-Dexec.mainClass=cogroo.MultiCogroo" "-Dexec.args=$*"
