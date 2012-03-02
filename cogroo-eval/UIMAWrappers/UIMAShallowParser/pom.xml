@@ -1,0 +1,264 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cogroo.uima</groupId>
+	<artifactId>UIMAShallowParser</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<uima.componentID>UIMAShallowParser</uima.componentID>
+		<uima.datapath>$main_root</uima.datapath>
+		<uima.mainComponent>desc/UIMAShallowParser.xml</uima.mainComponent>
+	</properties>
+	<repositories>
+
+		<repository>
+			<id>ApacheIncubatorRepository</id>
+			<url>
+				http://people.apache.org/repo/m2-incubating-repository/
+			</url>
+		</repository>
+
+		<repository>
+			<id>Cogroo Release</id>
+			<url>
+				http://ccsl.ime.usp.br/cogroo/maven/release/
+			</url>
+		</repository>
+
+		<repository>
+			<id>Cogroo Snapshot</id>
+			<url>
+				http://ccsl.ime.usp.br/cogroo/maven/snapshot/
+			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+	</repositories>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimaj-core</artifactId>
+			<version>2.3.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimaj-document-annotation</artifactId>
+			<version>2.3.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.opennlp</groupId>
+			<artifactId>opennlp-uima</artifactId>
+			<version>1.5.3-SNAPSHOT</version>
+		</dependency>
+
+		<!-- pear -->
+		<dependency>
+			<groupId>ant-contrib</groupId>
+			<artifactId>ant-contrib</artifactId>
+			<version>1.0b3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>properties-maven-plugin</artifactId>
+			<version>1.0-alpha-2</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<inherited>true</inherited>
+				<executions>
+
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.basedir}/lib</outputDirectory>
+							<includeScope>runtime</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<id>clean-res</id>
+						<phase>clean</phase>
+						<configuration>
+							<tasks>
+								<delete dir="${basedir}/resources" includeemptydirs="true" />
+								<delete dir="${basedir}/lib" includeemptydirs="true" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+
+			<!-- pear -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<inherited>true</inherited>
+				<executions>
+					<!-- <execution> <id>clean-res</id> <phase>clean</phase> <configuration> 
+						<tasks> <delete dir="${basedir}/resources" includeemptydirs="true" /> <delete 
+						dir="${basedir}/lib" includeemptydirs="true" /> </tasks> </configuration> 
+						<goals> <goal>run</goal> </goals> </execution> <execution> <id>create-res</id> 
+						<phase>process-test-resources</phase> <configuration> <tasks> <copy todir="${basedir}/resources" 
+						flatten="true"> <fileset dir="${basedir}/res" /> <fileset dir="${project.build.directory}/others/resources" 
+						/> </copy> </tasks> </configuration> <goals> <goal>run</goal> </goals> </execution> -->
+					<execution>
+						<id>create-classpath</id>
+						<phase>generate-test-resources</phase>
+						<configuration>
+							<tasks>
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties"
+									classpathref="maven.compile.classpath" />
+								<echo>******** AQUI *********</echo>
+								<fileset id="lib.contents" dir="${basedir}/lib"
+									includes="*.jar" />
+								<property name="prop.dist.contents" refid="lib.contents" />
+								<propertyregex property="pear.classpath" input="${prop.dist.contents}"
+									regexp="\b([^;]+;?)" replace="$main_root/lib/\1" casesensitive="false" />
+								<echo>${pear.classpath}</echo>
+								<mkdir dir="${project.build.directory}"/>
+								<propertyfile
+									file="${project.build.directory}/pearclasspath.properties">
+									<entry key="pear.classpath" value="${pear.classpath}" />
+								</propertyfile>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>commons-net</groupId>
+						<artifactId>commons-net</artifactId>
+						<version>1.4.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-commons-net</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+				</dependencies>
+
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${uima.componentID}.pear</file>
+									<type>pear</type><!--or specify your required extension -->
+									<classifier>uima-pear</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<id>read-project-properties</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${project.build.directory}/pearclasspath.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.uima</groupId>
+				<artifactId>PearPackagingMavenPlugin</artifactId>
+				<version>2.3.1</version>
+				<extensions>true</extensions>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<classpath>
+								${pear.classpath}
+								</classpath>
+							<mainComponentDesc>
+								<!-- PEAR file main component descriptor -->
+								${uima.mainComponent}
+							</mainComponentDesc>
+							<componentId>
+								<!-- PEAR file component ID -->
+								${uima.componentID}
+							</componentId>
+							<datapath>
+								<!-- PEAR file UIMA datapath settings -->
+								${uima.datapath}
+							</datapath>
+						</configuration>
+						<goals>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.uima</groupId>
+						<artifactId>PearPackagingMavenPlugin</artifactId>
+						<version>2.3.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>
