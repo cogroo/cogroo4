@@ -1,0 +1,33 @@
+#!/bin/sh
+
+installModule()
+{
+  PEAR="/Users/wcolen/Documents/wrks/corpuswrk/$1/target/$1.pear"
+  echo "###############################################################################"
+  echo "#"
+  echo "# Will install $PEAR"
+  echo "#"
+  echo "###############################################################################"
+  
+  mvn -e -q clean install exec:java -Dmaven.test.skip "-Dexec.mainClass=uima.Installer" "-Dexec.args=$PEAR /Users/wcolen/Documents/wrks/_REPO"
+  
+  if [ $? -ne 0 ]
+	then
+  		echo "ERROR running installation"
+  		exit $?
+  	fi
+  
+}
+
+mvn -f pom-evaluators.xml $*
+
+if [ $? -ne 0 ]
+then
+  echo "ERROR running maven"
+  exit $?
+fi
+
+installModule BaselineCogrooAE
+installModule Cogroo3AE
+
+exit $?

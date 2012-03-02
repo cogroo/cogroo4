@@ -1,0 +1,21 @@
+#!/bin/sh
+
+DESC_PATH=../GramEval/desc/
+
+if [ "$1" = "metro" ]; then
+   DESC=CPE_AD_Metro.xml
+fi
+if [ "$1" = "bosque" ]; then
+   DESC=CPE_AD.xml
+fi
+if [ "$1" = "probi" ]; then
+   DESC=CPE_Probi.xml
+fi
+
+UIMA_HOME=~/programs/apache-uima
+export UIMA_HOME
+
+mvn -f ../GramEval/pom.xml -e -q exec:java -Dmaven.test.skip -DsystemProperties="file.encoding=UTF-8" "-Dexec.mainClass=cogroo.uima.SimpleRunCPE" "-Dexec.args=${DESC_PATH}${DESC}"
+
+# sh ~/programs/apache-uima/bin/runCPE.sh ${DESC_PATH}${DESC}
+
