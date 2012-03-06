@@ -17,13 +17,13 @@ public class ResultsTest {
   private static Cogroo baseline;
   private static MultiCogroo multi;
 
-  @BeforeClass
+//  @BeforeClass
   public static void loadCogroo() {
     multi = new MultiCogroo(new LegacyRuntimeConfiguration("/Users/wcolen/Documents/wrks/corpuswrk/BaselineCogrooAE/target/cogroo"));
     baseline = new Cogroo(new LegacyRuntimeConfiguration("/Users/wcolen/Documents/wrks/corpuswrk/BaselineCogrooAE/target/cogroo"));
   }
   
-  @Test
+//  @Test
   public void test01() {
     String text = "As menina vão chegar cedo.";
     

@@ -43,6 +43,10 @@
 
 	<modules>
 		<module>UIMAWrappers</module>
+		<module>GramEval</module>
+		<module>Cogroo3AE</module>
+		<module>BaselineCogrooAE</module>
+		<module>TypeSystem</module>
 	</modules>
 
 </project>

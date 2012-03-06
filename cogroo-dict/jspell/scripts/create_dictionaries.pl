@@ -20,11 +20,13 @@ open (SIMPLE, '>:encoding(UTF-8)', '../../target/tagdict.txt');
 #open (WPT, '>:encoding(UTF-8)', '../../target/wpt.txt');
 #open (PWT,'>', '../../target/PrimitiveWordTag_ptBR.txt');
 open (TAG,'>', '../../target/TAG_ptPT.txt');
+open (CON,'>', '../../target/contractions.txt');
 
 my %simple;
 #my %wpt;
 #my %pwt;
 my %tags;
+my %con;
 
 # features to add. Only if 1 will add
 %features = (
@@ -73,42 +75,27 @@ $dic->foreach_word(
 			# list of derived words
 			my @der = $pt_dict->der($word);
 			foreach $dword (@der) {
-				#if($dword !~ /\w-\w/) {
 					# gets its analisis and put to a string
 					my @fea = $pt_dict->fea($dword);
 					my $analisis;
 					my $rad;
 					foreach $key (@fea) {
-					
 						while ( ($k,$v) = each %$key ) {
 							if( $k eq "rad" ) {
 								$rad = $v;
 							}
 						    elsif( !defined($features{$k}) ) {
-							#else {
 							    $analisis .= "$k:$v|";
 							    $tags{"$k:$v"} = 1;
 							}
 						}
-						#if($analisis =~ m/CAT:a_nc/ ) {
-						#	$analisis =~ s/CAT:a_nc/CAT:nc/;
-						#	
-						#	#$wpt{$dword}{"$rad\t$analisis"}=1;
-						#	#$pwt{$rad}{"$dword\t$analisis"}=1;
-						#	$simple{$dword}{$analisis} = 1;
-						#	
-						#	$analisis =~ s/CAT:nc/CAT:adj/;
-						#} 
-						
 						$rad =~ s/ /_/g;
-						
-						#$wpt{$dword}{"$rad\t$analisis"}=1;
-						#$pwt{$rad}{"$dword\t$analisis"}=1;
 						$simple{$dword}{"$rad>$analisis"} = 1;
-						
+						if($analisis =~ /CAT:cp/) {
+							$con{$dword} = 1;
+						}
 						$analisis = '';
 					}
-				#}
 			}#foreach
 		}
 	}#sub

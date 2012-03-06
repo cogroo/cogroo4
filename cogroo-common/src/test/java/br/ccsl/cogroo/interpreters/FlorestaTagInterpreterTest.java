@@ -2,7 +2,6 @@ package br.ccsl.cogroo.interpreters;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -28,8 +27,8 @@ public class FlorestaTagInterpreterTest {
     table.put(".", Class.PUNCTUATION_MARK);
     table.put("...", Class.PUNCTUATION_MARK);
     table.put("'", Class.PUNCTUATION_MARK);
-    table.put("«", Class.PUNCTUATION_MARK);
-    table.put("»", Class.PUNCTUATION_MARK);
+//    table.put("«", Class.PUNCTUATION_MARK);
+//    table.put("»", Class.PUNCTUATION_MARK);
     table.put("(", Class.PUNCTUATION_MARK);
     table.put(")", Class.PUNCTUATION_MARK);
     table.put("[", Class.PUNCTUATION_MARK);

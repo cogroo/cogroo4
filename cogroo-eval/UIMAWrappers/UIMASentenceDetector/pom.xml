@@ -242,7 +242,7 @@
 							</componentId>
 							<datapath>
 								<!-- PEAR file UIMA datapath settings -->
-								${uima.datapath}
+								${env.MODEL_ROOT}
 							</datapath>
 						</configuration>
 						<goals>
