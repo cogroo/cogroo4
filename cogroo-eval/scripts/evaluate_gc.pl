@@ -64,7 +64,7 @@ sub evaluate {
 	# create a temp folder and set the envvar REPO there.
 	
 	$ENV{'MODEL_ROOT'} = tempdir;
-	
+	$ENV{'UIMA_DATAPATH'} = $ENV{'MODEL_ROOT'};
 	
 	my $dir = getcwd;
 	chdir('../../cogroo-common');
