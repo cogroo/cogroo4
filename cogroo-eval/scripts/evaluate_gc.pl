@@ -68,6 +68,7 @@ sub evaluate {
 	$ENV{'MODEL_ROOT'} = $tempDir;
 	$ENV{'UIMA_DATAPATH'} = $tempDir;
 	$ENV{'UIMA_JVM_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'UIMA_JVM_OPTS'};
+	$ENV{'MAVEN_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'MAVEN_OPTS'};
 	
 	my $dir = getcwd;
 	chdir('../../cogroo-common');
