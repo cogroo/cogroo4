@@ -168,14 +168,16 @@
 						</goals>
 					</execution>
 					<execution>
-						<id>create-res</id>
+						<id>create-data</id>
 						<phase>process-test-resources</phase>
 						<configuration>
 							<tasks>
-								<!-- <copy todir="${basedir}/resources" flatten="true">
-									<fileset dir="${basedir}/res" />
-									<fileset dir="${project.build.directory}/others/resources" />
-								</copy> -->
+								<copy todir="${basedir}/resources/data">
+									<fileset dir="target/cogroo/data" />
+								</copy>
+								<copy todir="${basedir}/resources/rules">
+									<fileset dir="target/cogroo/rules" />
+								</copy>
 							</tasks>
 						</configuration>
 						<goals>

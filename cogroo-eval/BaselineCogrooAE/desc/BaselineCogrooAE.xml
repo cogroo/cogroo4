@@ -32,7 +32,7 @@
       <nameValuePair>
         <name>ResourcesDir</name>
         <value>
-          <string>/Users/wcolen/Documents/wrks/corpuswrk/cogroo3/CoGrOOBase/target/CoGrOOBase-3.1.3a-SNAPSHOT-bin</string>
+          <string>resources</string>
         </value>
       </nameValuePair>
       <nameValuePair>
