@@ -105,7 +105,7 @@
 	</build>
 	
 	<modules>
-		<module>../cogroo-dict</module>
+<!-- 		<module>../cogroo-dict</module> -->
 		<module>../cogroo-common</module>
 	</modules>
 
