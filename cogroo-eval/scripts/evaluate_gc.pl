@@ -72,7 +72,7 @@ sub evaluate {
 	chdir($dir);
 	
 	#my %baseline = cpe::evaluateBaseline('eval');
-	installRequiredPears();
+	cpe::installRequiredPears();
 	my %r = cpe::evaluateUsingModel('eval', $conf);
 	
 	return %r;
