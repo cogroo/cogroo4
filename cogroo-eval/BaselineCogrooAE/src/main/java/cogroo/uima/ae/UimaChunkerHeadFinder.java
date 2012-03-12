@@ -44,8 +44,7 @@ public class UimaChunkerHeadFinder extends AnnotationService implements
 
 
   public UimaChunkerHeadFinder() throws AnnotationServiceException {
-    super(
-        "/Users/wcolen/Documents/wrks/_REPO/UIMAChunkerHeadFinder/UIMAChunkerHeadFinder_pear.xml");
+    super("UIMAChunkerHeadFinder");
   }
 
   public void process(Sentence text) {

@@ -28,7 +28,7 @@ public class UimaMultiWordExp extends AnnotationService implements
   
 
   public UimaMultiWordExp() throws AnnotationServiceException{
-    super("/Users/wcolen/Documents/wrks/_REPO/UIMAMultiWordExp/UIMAMultiWordExp_pear.xml");
+    super("UIMAMultiWordExp");
 
   }
 

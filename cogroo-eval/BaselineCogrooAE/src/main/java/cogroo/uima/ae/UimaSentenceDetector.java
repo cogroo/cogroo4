@@ -18,7 +18,7 @@ public class UimaSentenceDetector extends AnnotationService implements
   
 
   public UimaSentenceDetector() throws AnnotationServiceException{
-    super("/Users/wcolen/Documents/wrks/_REPO/UIMASentenceDetector/UIMASentenceDetector_pear.xml");
+    super("UIMASentenceDetector");
 
   }
 

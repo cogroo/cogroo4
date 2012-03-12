@@ -26,7 +26,8 @@ public abstract class AnnotationService {
 
   public AnnotationService(String descriptor) throws AnnotationServiceException {
     try {
-      loadDescriptor(new File(descriptor));
+      String fName = getRepoPath() + "/" + descriptor + "/" + descriptor + "_pear.xml";
+      loadDescriptor(new File(fName));
     } catch (Exception e) {
       throw new AnnotationServiceException("Error loading descriptor: "
           + descriptor, e);
@@ -49,7 +50,11 @@ public abstract class AnnotationService {
     initTypes(cas.getTypeSystem());
 
   }
-
+  
+  private static String getRepoPath() {
+    return System.getenv("REPO_ROOT");
+  }
+ 
   protected abstract void initTypes(TypeSystem typeSystem);
 
 }

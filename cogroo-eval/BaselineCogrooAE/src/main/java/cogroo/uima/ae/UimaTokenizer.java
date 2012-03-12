@@ -25,7 +25,7 @@ public class UimaTokenizer extends AnnotationService implements
   
 
   public UimaTokenizer() throws AnnotationServiceException{
-    super("/Users/wcolen/Documents/wrks/_REPO/UIMATokenizer/UIMATokenizer_pear.xml");
+    super("UIMATokenizer");
 
   }
 

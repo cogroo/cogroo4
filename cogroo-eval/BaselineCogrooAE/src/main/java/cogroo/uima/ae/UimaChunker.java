@@ -45,7 +45,7 @@ public class UimaChunker extends AnnotationService implements
   
 
   public UimaChunker() throws AnnotationServiceException{
-    super("/Users/wcolen/Documents/wrks/_REPO/UIMAChunker/UIMAChunker_pear.xml");
+    super("UIMAChunker");
     noum.setClazz(Class.NOUN);
     verb.setClazz(Class.VERB);
   }

@@ -30,7 +30,7 @@ public class UimaContraction extends AnnotationService implements
   protected static final Logger LOGGER = Logger.getLogger(UimaContraction.class);
   
   public UimaContraction() throws AnnotationServiceException{
-    super("/Users/wcolen/Documents/wrks/_REPO/UIMAContraction/UIMAContraction_pear.xml");
+    super("UIMAContraction");
 
   }
 

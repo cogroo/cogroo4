@@ -50,8 +50,7 @@ public class UimaShallowParser extends AnnotationService implements
 
 
   public UimaShallowParser() throws AnnotationServiceException {
-    super(
-        "/Users/wcolen/Documents/wrks/_REPO/UIMAShallowParser/UIMAShallowParser_pear.xml");
+    super("UIMAShallowParser");
     
     SUBJ = new SyntacticTag();
     SUBJ.setSyntacticFunction(SyntacticFunction.SUBJECT);
