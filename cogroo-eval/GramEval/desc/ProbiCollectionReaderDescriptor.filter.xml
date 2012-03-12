@@ -1,50 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
-  <primitive>true</primitive>
-  <annotatorImplementationName>cogroo.uima.ae.Cogroo3AE</annotatorImplementationName>
-  <analysisEngineMetaData>
-    <name>Cogroo3AE</name>
+  <implementationName>cogroo.uima.readers.probi.ProbiCollectionReader</implementationName>
+  <processingResourceMetaData>
+    <name>ProbiCollectionReaderDescriptor</name>
     <description/>
-    <version>3.1.0</version>
+    <version>1.0</version>
     <vendor/>
     <configurationParameters>
       <configurationParameter>
-        <name>BySentences</name>
-        <type>Boolean</type>
-        <multiValued>false</multiValued>
-        <mandatory>false</mandatory>
-      </configurationParameter>
-      <configurationParameter>
-        <name>ResourcesDir</name>
+        <name>InputFile</name>
         <type>String</type>
         <multiValued>false</multiValued>
         <mandatory>true</mandatory>
       </configurationParameter>
       <configurationParameter>
-        <name>RulesToIgnore</name>
+        <name>Encoding</name>
         <type>String</type>
-        <multiValued>true</multiValued>
-        <mandatory>false</mandatory>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>Language</name>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
       </configurationParameter>
     </configurationParameters>
     <configurationParameterSettings>
       <nameValuePair>
-        <name>ResourcesDir</name>
+        <name>InputFile</name>
         <value>
-          <string>resources</string>
+          <string>${corpus}</string>
         </value>
       </nameValuePair>
       <nameValuePair>
-        <name>BySentences</name>
+        <name>Encoding</name>
         <value>
-          <boolean>false</boolean>
+          <string>UTF-8</string>
         </value>
       </nameValuePair>
       <nameValuePair>
-        <name>RulesToIgnore</name>
+        <name>Language</name>
         <value>
-          <array/>
+          <string>pt</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>
@@ -64,9 +63,9 @@
     </capabilities>
     <operationalProperties>
       <modifiesCas>true</modifiesCas>
-      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
-      <outputsNewCASes>false</outputsNewCASes>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
     </operationalProperties>
-  </analysisEngineMetaData>
+  </processingResourceMetaData>
   <resourceManagerConfiguration/>
-</analysisEngineDescription>
+</collectionReaderDescription>

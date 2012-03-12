@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use lib "scripts";
+use lib 'scripts';
 require eval_unit;
 
 use File::Path qw(make_path remove_tree);

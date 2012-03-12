@@ -8,7 +8,6 @@
   <modules>
   	<module>../BaselineCogrooAE</module>
   	<module>../Cogroo3AE</module>
-  	<module>../cogroo3/CoGrOOBase</module>
   	<module>../GramEval</module>
   	<module>../TypeSystem</module>
   </modules>

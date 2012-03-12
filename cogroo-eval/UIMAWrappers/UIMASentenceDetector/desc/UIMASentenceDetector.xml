@@ -40,7 +40,7 @@
         <name>SentenceModel</name>
         <description/>
         <fileResourceSpecifier>
-          <fileUrl>./pt-sent.model</fileUrl>
+          <fileUrl>pt-sent.model</fileUrl>
         </fileResourceSpecifier>
         <implementationName>opennlp.uima.sentdetect.SentenceModelResourceImpl</implementationName>
       </externalResource>

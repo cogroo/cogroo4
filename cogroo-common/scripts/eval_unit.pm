@@ -23,14 +23,35 @@ use constant {
 	CIE  => CORPUS_ROOT . "/selva_cie.ad",
 
 	ENCODING   => "ISO-8859-1",
-	MOD_PREFIX => "model/pt-",
-	MOD_SUFIX  => ".bin"
+	MOD_PREFIX => "pt-",
+	MOD_SUFIX  => ".model"
 };
 
 my %opt;
 my %extraOpt;
 
 my $fhLog;
+
+sub getCorpusPath {
+	my $name = shift;
+	if($name eq 'cf') {
+		return CF;
+	} elsif($name eq 'cp') {
+		return CP;
+	} elsif($name eq 'cfcp') {
+		return CFCP;
+	} elsif($name eq 'vcf') {
+		return VCF;
+	} elsif($name eq 'ama') {
+		return AMA;
+	} elsif($name eq 'lit') {
+		return LIT;
+	} elsif($name eq 'cie') {
+		return CIE;
+	} else {
+		die "invalid corpus name\n";
+	}
+}
 
 sub printToLog {
 	my $info = shift;
@@ -184,14 +205,14 @@ sub exec() {
 	# Create model file name
 	my $model = '';
 	if ( $opt{f} ) {
-		$model = MOD_PREFIX . $opt{t} . MOD_SUFIX;
+		$model = $ENV{'MODEL_ROOT'} . '/' . MOD_PREFIX . $opt{t} . MOD_SUFIX;
 	}
 	else {
 		$model = get_temp_filename();
 	}
 	
 	# create corpus args
-	my $data = $opt{d}->();
+	my $data = getCorpusPath($opt{d});
 	die "The parameter -d corpus name is mandatory." if $data eq '';
 	
 	my $extraOption = '';
