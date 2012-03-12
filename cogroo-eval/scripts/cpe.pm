@@ -278,6 +278,7 @@ sub evaluateUsingModel {
 sub init() {
 	checkVars();
 	install("../../../cogroo3/pom.xml");
+	install("../UIMAWrappers/pom.xml");
 	install("../UIMAAutomation/pom-evaluators.xml");
 	installPearByPath("../Cogroo3AE/target/Cogroo3AE.pear");
 	
