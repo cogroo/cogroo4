@@ -58,7 +58,7 @@ sub installPearByPath {
 	my $pear = shift;
 	printToLog("Will install pear: $pear\n");
 	
-	my $command = 'mvn -f ../UIMAAutomation/pom.xml -e -q clean install exec:java -Dmaven.test.skip "-Dexec.mainClass=uima.Installer" "-Dexec.args=' . $pear . ' ' . $ENV{'REPO_ROOT'} . '"';
+	my $command = 'mvn -f ../UIMAAutomation/pom.xml -e -q clean install exec:java -Dmaven.test.skip "-Dexec.mainClass=uima.Installer" "-Dexec.args=' . $pear . ' ' . $ENV{'REPO_ROOT'} . '" -DUIMA_DATAPATH';
 
 	printToLog("command: $command\n");
 	
@@ -85,6 +85,9 @@ sub installPearByPath {
 
 sub installPearByName {
 	my $tool = shift;
+	printToLog("Will create pear: $tool\n");
+	install("../UIMAWrappers/UIMA$tool/pom.xml");
+	
 	printToLog("Will install pear: $tool\n");
 	
 	my $pear = "../UIMAWrappers/UIMA$tool/target/UIMA$tool.pear";
@@ -285,7 +288,6 @@ sub installRequiredPears {
 sub init() {
 	checkVars();
 	install("../../../cogroo3/pom.xml");
-	install("../UIMAWrappers/pom.xml");
 	install("../UIMAAutomation/pom-evaluators.xml");
 	installPearByPath("../Cogroo3AE/target/Cogroo3AE.pear");
 }
