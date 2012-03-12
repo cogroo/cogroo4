@@ -51,7 +51,10 @@ public class BaselineCogrooAE extends JCasAnnotator_ImplBase {
 	  public void initialize(UimaContext aContext) throws ResourceInitializationException {
 		  
 
-		  String pathToResources = ((String) aContext.getConfigParameterValue(PARAM_RESOURCESPATH)).trim();
+	    String pathToResources = aContext.getDataPath() + "/" + ((String) aContext.getConfigParameterValue(PARAM_RESOURCESPATH)).trim();
+        
+        System.out.println("Path to resources: " + pathToResources);
+        
 		  
 		  String[] rulesToIgnore = (String[]) aContext.getConfigParameterValue(PARAM_RULESTOIGNORE);
 		    
