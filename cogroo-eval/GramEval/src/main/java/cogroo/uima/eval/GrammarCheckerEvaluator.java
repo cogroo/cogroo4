@@ -1,14 +1,18 @@
 package cogroo.uima.eval;
 
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import net.sf.antcontrib.property.PathToFileSet;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.AnalysisComponent;
@@ -57,8 +61,10 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
     String pathToHtmltDetails = htmlReportPath + "/" + corpusName + "-Details.html";
 
     try {
-      mReportDetails = new BufferedWriter(new FileWriter(pathToReportDetails));
-      mReportF = new BufferedWriter(new FileWriter(pathToReportFMeasure));
+      mReportDetails = new BufferedWriter(new OutputStreamWriter(
+          new FileOutputStream(pathToReportDetails), "UTF-8"));
+      mReportF = new BufferedWriter(new OutputStreamWriter(
+          new FileOutputStream(pathToReportFMeasure), "UTF-8"));
       mHtmlWriter = new HtmlWriter(pathToHtmlFMeasure, "Analysis", corpusName);
       mReportDetails
           .append("Type\tID\tTarget Err\tTarget Cat\tPred Err\tPred Cat\tRule\tRule Group\tSentence\n");

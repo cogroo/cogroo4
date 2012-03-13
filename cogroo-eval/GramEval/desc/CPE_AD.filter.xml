@@ -15,7 +15,7 @@
                 <nameValuePair>
                     <name>Encoding</name>
                     <value>
-                        <string>ISO-8859-1</string>
+                        <string>${encoding}</string>
                     </value>
                 </nameValuePair>
             </configurationParameterSettings>

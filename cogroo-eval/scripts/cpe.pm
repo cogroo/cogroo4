@@ -103,6 +103,7 @@ sub prepareCPE {
 	# obter path report
 	my $report = shift;
 	my $corpusName = shift;
+	my $encoding = shift;
 	
 	make_path($report);
 	
@@ -111,7 +112,8 @@ sub prepareCPE {
 		'corpus' =>	$ENV{'CORPUS_ROOT'} . '/' . $corpus, 
 		'gcPear' => $ENV{'REPO_ROOT'} . "/$cas/$cas\_pear.xml",
 		'report' => $report,
-		'corpusName' => $corpusName );
+		'corpusName' => $corpusName,
+		'encoding' => $encoding );
 		
 	# abrir Probi.filter e salvar em target
 	filterFile("../GramEval/desc/ProbiCollectionReaderDescriptor.filter.xml", "../GramEval/desc/ProbiCollectionReaderDescriptor.svnignore.xml", \%replace);
@@ -156,17 +158,17 @@ sub evaluate {
 	my %res;
 
 	my $report =  $reportPath . '/probi';
-	prepareCPE("Probi_From_MDB.txt", $gc, $report, 'PROBI');
+	prepareCPE("Probi_From_MDB.txt", $gc, $report, 'PROBI', 'UTF-8');
 	executeCPE("CPE_Probi");
 	$res{'probi'} = readCPEResults("$report/PROBI-FMeasure.txt");
 	
 	$report =  $reportPath . '/metro';
-	prepareCPE("Metro", $gc, $report, 'Metro');
+	prepareCPE("Metro", $gc, $report, 'Metro', 'UTF-8');
 	executeCPE("CPE_AD");
 	$res{'metro'} = readCPEResults("$report/Metro-FMeasure.txt");
 	
 	$report =  $reportPath . '/bosque';
-	prepareCPE("Bosque", $gc, $report, 'Bosque');
+	prepareCPE("Bosque", $gc, $report, 'Bosque', 'ISO-8859-1');
 	executeCPE("CPE_AD");
 	$res{'bosque'} = readCPEResults("$report/Bosque-FMeasure.txt");
 	
