@@ -273,10 +273,6 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
   
   public List<String> getSentenceContext(String sentence, int index) {
     List<String> preds = new ArrayList<String>();
-    String prefix = sentence.substring(0, index);
-    String suffix = sentence.substring(index);
-    preds.add("p=" + prefix);
-    preds.add("s=" + suffix);
     if (index > 0) {
       addCharPreds("p1", sentence.charAt(index - 1), preds);
       if (index > 1) {
@@ -291,7 +287,7 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
     else {
       preds.add("p1=bok");
     }
-    addCharPreds("f1", sentence.charAt(index), preds);
+    //addCharPreds("f1", sentence.charAt(index), preds);
     if (index+1 < sentence.length()) {
       addCharPreds("f2", sentence.charAt(index + 1), preds);
       preds.add("f12=" + sentence.charAt(index) + sentence.charAt(index + 1));
@@ -302,18 +298,6 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
     if (sentence.charAt(0) == '&' && sentence.charAt(sentence.length() - 1) == ';') {
       preds.add("cc");//character code
     }
-    
-//    if(index == sentence.length() - 1) {
-//      if(inducedAbbreviations.contains(sentence)) {
-//        preds.add("pabb");
-//      }
-//     
-//    }
-    
-    
-//    if(inducedAbbreviations.contains(sentence)) {
-//      preds.add("abb");
-//    }
 
     return preds;
   }
