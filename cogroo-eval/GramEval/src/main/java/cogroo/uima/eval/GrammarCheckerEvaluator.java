@@ -23,6 +23,8 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import com.google.common.base.Objects;
+
 import cogroo.uima.GoldenGrammarError;
 import cogroo.uima.GoldenSentence;
 import cogroo.uima.GrammarError;
@@ -190,9 +192,6 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
       }
     }
     for (ReportEntry reportEntry : entries) {
-      if(reportEntry.docText.contains("Através de sua conexão com nosso")) {
-        System.out.println("aqui");
-      }
       writeToReport(reportEntry);
     }
 
@@ -245,16 +244,42 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
       this.docText = docText;
     }
 
-    public int compareTo(ReportEntry arg0) {
-      if(arg0 == this) {
+    public int compareTo(ReportEntry other) {
+      if(other == this) {
         return 0;
       } else {
-        int val = selectedError.getType().compareTo(arg0.selectedError.getType());
-        if(val == 0) {
-          val = this.hashCode() - arg0.hashCode();
+        int val = selectedError.getType().compareTo(other.selectedError.getType());
+        if(val != 0) {
+          return val;
+        } 
+        int minThis = getMinError(selectedError, targetError, predictedError);
+        int minOther = getMinError(selectedError, targetError, predictedError);
+        if(minThis != minOther) {
+          return minThis - minOther;
         }
-        return val;
+        return this.hashCode() - other.hashCode();
       }
+    }
+    
+    @Override
+    public int hashCode() {
+      return Objects.hashCode(type, selectedError, targetError, predictedError,
+          rule, docText);
+    }
+
+    private int getMinError(Error selectedError2, Error targetError2,
+        Error predictedError2) {
+      int min = Integer.MAX_VALUE;
+      if(selectedError2 != null && selectedError2.getStart() < min) {
+        min = selectedError2.getStart();
+      }
+      if(targetError2 != null && targetError2.getStart() < min) {
+        min = targetError2.getStart();
+      }
+      if(predictedError2 != null && predictedError2.getStart() < min) {
+        min = predictedError2.getStart();
+      }
+      return min;
     }
 
   }
