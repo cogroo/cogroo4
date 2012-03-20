@@ -213,6 +213,7 @@ sub readCPEResults {
 		$result{'target'} = $1;
 		$result{'selected'} = $2;
 		$result{'tp'} = $3;
+		$result{'fp'} = $result{'selected'} - $result{'tp'};
 	} else {
 		die "could not extract data from report: $reportPath";
 	}

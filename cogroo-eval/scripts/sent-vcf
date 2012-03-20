@@ -6,3 +6,11 @@ sent-vcf-perceptron-sd_factory,sd_abb-gp-0
 sent-vcf-perceptron-sd_factory-gp-0
 sent-vcf-perceptron-sd_abb-gp-0
 sent-vcf-perceptron-none-gp-0
+sent-cf-maxent-sd_factory,sd_abb-gp-4
+sent-cf-maxent-sd_factory-gp-4
+sent-cf-maxent-sd_abb-gp-4
+sent-cf-maxent-none-gp-2
+sent-cf-perceptron-sd_factory,sd_abb-gp-0
+sent-cf-perceptron-sd_factory-gp-0
+sent-cf-perceptron-sd_abb-gp-0
+sent-cf-perceptron-none-gp-0
