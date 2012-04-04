@@ -302,6 +302,7 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
 					}  else if(t instanceof Mood) {
 						m.setMood((Mood)t);
 					}  else if(t instanceof Finiteness) {
+					    m.setClazz(Class.VERB);
 						m.setFiniteness((Finiteness)t);
 					}  else if(t instanceof Punctuation) {
 						m.setPunctuation((Punctuation)t);

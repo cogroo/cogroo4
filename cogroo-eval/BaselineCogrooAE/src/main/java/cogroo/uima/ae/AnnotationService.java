@@ -27,6 +27,7 @@ public abstract class AnnotationService {
   public AnnotationService(String descriptor) throws AnnotationServiceException {
     try {
       String fName = getRepoPath() + "/" + descriptor + "/" + descriptor + "_pear.xml";
+      System.out.println("Will load pear from " + fName);
       loadDescriptor(new File(fName));
     } catch (Exception e) {
       throw new AnnotationServiceException("Error loading descriptor: "
