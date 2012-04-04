@@ -70,6 +70,8 @@ public class MultiCogroo implements CogrooI {
     
     protected Merger merger;
 
+    private PostPOSTagger postPOSTagger;
+
     protected static final Logger LOGGER = Logger.getLogger(MultiCogroo.class);
     
     public MultiCogroo() {
@@ -122,6 +124,9 @@ public class MultiCogroo implements CogrooI {
                 LOGGER.debug("   [Tagger]\t\tmodel loaded in\t["
                         + (System.nanoTime() - start) / 1000000 + "ms]");
             }
+            
+            
+            postPOSTagger = new PostPOSTagger();
             
             start = System.nanoTime();
             this.chunker = new MultiChunker(config);
@@ -213,6 +218,9 @@ public class MultiCogroo implements CogrooI {
                       return null;
                     }
                     
+                    if(MultiCogrooSettings.TOK) {
+                      this.postPOSTagger.process(sentence);
+                    }
 //                    this.merger.generalizePOSTags(sentence, this.tagDictionary);
                     
                     this.chunker.process(sentence);
@@ -252,8 +260,8 @@ public class MultiCogroo implements CogrooI {
                         break;
                     }
                 }
-            } catch (RuntimeException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+              LOGGER.error("Error processing text: " + text + " sentences: " + sentences, e);
             }
             LOGGER.debug("Check sentence time: " + (System.nanoTime() - start)
                     / 1000 + "us");
@@ -277,10 +285,11 @@ public class MultiCogroo implements CogrooI {
         String input = kb.nextLine();
         while (!input.equals("q")) {
             if (input.equals("0")) {
-//                input = "Vestia-se à Luís XV";
+                //input = "couves-flores, amores-perfeitos, gentis-homens, quintas-feiras, guarda-roupas, alto-falantes, reco-recos, águas-de-colônia, cavalos-vapor, palavras-chave, bota-fora, saca-rolhas, louva-a-deus";
 //                input = "Os olhos das meninas são bonitos nas estrelas.";
-              input = "Estes são os jogadores a quem entregaremos o prêmio.";
-              
+//              input = "Os inimigos que eram fácil derrotar estão próximo.";
+              //input = "A construção do trecho inicial da Linha 5-Lilás.";
+              input = "problemas político-econômicos";
               //114: Jamais ocorreu-nos tal idéia.
               //115: Júlio namorou com Marina durante três anos.
               //
@@ -298,7 +307,9 @@ public class MultiCogroo implements CogrooI {
                     System.out.println(mistake.toString());
                 }
                 for (Sentence s : cr.sentences) {
+                    System.out.println(s.getSentence());
                     System.out.println(s.getSyntaxTree());
+                    System.out.println(s);
                 }
             } catch(Exception e) {
                 e.printStackTrace();
