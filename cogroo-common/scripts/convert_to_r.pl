@@ -145,7 +145,7 @@ foreach my $cv (@cutoffValues) {
 			$pref = '\\underline{' . $pref;
 			$suf = $suf . "}";
 		}
-		push(@v, sprintf("$pref%.2f$suf", $fm));
+		push(@v, sprintf("$pref%.3f$suf", $fm));
 	}
 	print TEX join(' & ', @v) . "\\\\ \n";
 }
@@ -174,7 +174,9 @@ foreach my $e (@exp) {
 		my $ct = shift(@{$table{$e}{'cutoff'}});
 		my $fm = shift(@{$table{$e}{'F-Measure'}});
 		my $s = shift(@{$table{$e}{'model_size'}});
-		print COM "$e, $ct, $fm, $s, '$hn{$e}'\n";
+		if($ct <= 32){
+			print COM "$e, $ct, $fm, $s, '$hn{$e}'\n";
+		}
 	}
 }
 
@@ -184,6 +186,7 @@ undef %table;
 %table = %{ thaw($storedTable) };
 
 open SIZE, ">$path/size_f.table";
+open BEST, ">$path/best.txt";
 
 print SIZE "exp, f, size, cutoff\n";
 foreach my $e (@exp) {
@@ -199,9 +202,11 @@ foreach my $e (@exp) {
 		}
 	}
 	print SIZE "$e, $maxFm, $s, $ct\n";
+	print BEST toConfiguration($e, $ct). "\n";
 }
 
 close SIZE;
+close BEST;
 
 # Now we can create the R script :)
 
@@ -332,6 +337,7 @@ sub putData {
 sub processName {
 	my $name = shift;
 	$name =~ s/([-,])SD_/$1/g;
+	$name =~ s/([-,])TOK_/$1/g;
 	$name =~ s/-gp$//g;
 	$name =~ s/-ap$//g;
 	$name =~ s/_//g;
@@ -379,4 +385,16 @@ sub generateHumanNames {
 	}
 	
 	return @names;
+}
+
+sub toConfiguration {
+	my $exp = shift;
+	my $cut = shift;
+	my @parts = split('\.',$exp);
+	
+	my $opt = join(',', @parts[3..(@parts-1)]);
+	$opt =~ s/ABB/SD_ABB/;
+	$opt =~ s/ALPHAOPT/TOK_ALPHAOPT/;
+	
+	return lc($parts[0]) . '-' . lc($parts[1]) . '-' . lc($parts[2]) . "-$opt-gp-$cut";
 }
