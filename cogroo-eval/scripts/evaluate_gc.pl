@@ -12,6 +12,7 @@ use File::Temp qw/ tempfile tempdir /;
 use Cwd;
 use File::Path qw(make_path);
 use Storable qw(freeze thaw);
+use File::Copy::Recursive qw(dircopy);
 my $common = "$Bin/../../cogroo-common/scripts"; 
 
 use lib "$Bin/../../cogroo-common/scripts";
@@ -57,6 +58,40 @@ sub parseConfig {
 	return %o;	
 }
 
+my $baselineModels;
+
+sub createBaseline {
+	# a list with the baseline configuration
+	my $file = shift;
+	
+	# we will create a folder with the baseline models, they will be copied to the test folder latter
+	
+	open (LIST, $file)  or die("Could not open list file. $!");
+	
+	$baselineModels = tempdir;
+	$ENV{'MODEL_ROOT'} = $baselineModels;
+	
+	my $dir = getcwd;
+	chdir('../../cogroo-common');
+
+	while (my $conf = <LIST>) {
+    	$conf =~ s/^\s+|\s+$//g;
+    	my @confs = split(/\n/,$conf);
+    	foreach my $c (@confs) {
+    	    print "will build baseline model: $c \n";
+			my %opt = parseConfig($c);
+			# faltam: c, p, f 
+			$opt{'p'} = 8;
+			$opt{'f'} = 1;
+	
+			# this will build the model
+			eval_unit::exec(\%opt, \%extraOpt);
+    	}
+	}
+	chdir($dir);	
+	close LIST;
+}
+
 sub evaluate {
 	my $conf = shift;
 	my %opt = parseConfig($conf);
@@ -70,17 +105,45 @@ sub evaluate {
 	my $tempDir = tempdir;
 	$ENV{'MODEL_ROOT'} = $tempDir;
 	$ENV{'UIMA_DATAPATH'} = $tempDir;
+	$ENV{'REPO_ROOT'} = tempdir;
 	$ENV{'UIMA_JVM_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'UIMA_JVM_OPTS'};
 	$ENV{'MAVEN_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'MAVEN_OPTS'};
 	
 	my $dir = getcwd;
 	chdir('../../cogroo-common');
+	# this will build the model
 	eval_unit::exec(\%opt, \%extraOpt);
 	chdir($dir);
 	
-	#my %baseline = cpe::evaluateBaseline('eval');
+	# copy baseline models to $tempdir
+	if(defined $baselineModels) {
+		my $num_of_files_and_dirs = dircopy($baselineModels,$tempDir);
+		print "Copied $num_of_files_and_dirs models to $tempDir \n";		
+	}
+	
 	cpe::installRequiredPears();
 	my %r = cpe::evaluateUsingModel('eval', processName($conf));
+	
+	return %r;
+}
+
+sub evaluateBaseline {
+	my $name = shift;
+	my $tempDir = tempdir;
+	$ENV{'MODEL_ROOT'} = $tempDir;
+	$ENV{'UIMA_DATAPATH'} = $tempDir;
+	$ENV{'REPO_ROOT'} = tempdir;
+	$ENV{'UIMA_JVM_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'UIMA_JVM_OPTS'};
+	$ENV{'MAVEN_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'MAVEN_OPTS'};
+	
+	# copy baseline models to $tempdir
+	if(defined $baselineModels) {
+		my $num_of_files_and_dirs = dircopy($baselineModels,$tempDir);
+		print "Copied $num_of_files_and_dirs models to $tempDir \n";		
+	}
+	
+	cpe::installRequiredPears();
+	my %r = cpe::evaluateUsingModel('eval', $name);
 	
 	return %r;
 }
@@ -88,21 +151,25 @@ sub evaluate {
 sub evaluateListFromFile {
 	my $file = shift;
 	
-	open (LIST, $file)  or die("Could not open list file. $!");
+	open (CONF, $file)  or die("Could not open list file. $!");
 	
 	my %results;
 
-	foreach my $line (<LIST>) {
+	while (my $line = <CONF>) {
     	$line =~ s/^\s+|\s+$//g;
-    	print "will evaluate $line \n";
-		my %newResult = evaluate($line);
-		%results = (%results, %newResult);
+    	my @confs = split(/\n/,$line);
+    	foreach my $c (@confs) {
+    	    print "will evaluate $c \n";
+			my %newResult = evaluate($c);
+			%results = (%results, %newResult);	
+    	}
 	}
 	
-	close LIST;
+	close CONF;
 	
 	return %results;
 }
+
 
 sub printReport {
 	my %table = %{$_[0]};
@@ -114,6 +181,18 @@ sub printReport {
 	my @col = qw(target tp fp);
 	
 	my @expNames = sort keys %table;
+	
+	# remove baseline and add it to the begin 
+	my $removedBaseline = 0;
+	for(my $i = 0; $i < @expNames; $i++) {
+		if($expNames[$i] eq 'baseline') {
+			splice(@expNames, $i,1);
+			$removedBaseline = 1;
+		}
+	}
+	if($removedBaseline) {
+		unshift(@expNames, 'baseline')
+	}
 	
 	my @hNames = generateHumanNames(\@expNames);
 
@@ -169,14 +248,140 @@ sub printReport {
 	close REP;
 }
 
+sub printDetailedReport {
+	my %table = %{$_[0]};
+	my $file = $_[1];
+	
+	open (REP, ">$file") or die("Could not create report file. $!");;
+	
+	my @corpus = qw(metro probi bosque);
+	my @col = qw(target tp fp);
+	my @signs = qw(+ -);
+	
+	my @expNames = sort keys %table;
+	
+	# remove baseline and add it to the begin 
+	my $removedBaseline = 0;
+	for(my $i = 0; $i < @expNames; $i++) {
+		if($expNames[$i] eq 'baseline') {
+			splice(@expNames, $i,1);
+			$removedBaseline = 1;
+		}
+	}
+	if($removedBaseline) {
+		unshift(@expNames, 'baseline')
+	}
+	
+	my @hNames = generateHumanNames(\@expNames);
+
+	my $r = 
+'\begin{table}[h!]
+ 	\begin{center}
+    	\begin{tabular}{c|r|r|r|r|r|r|r|}
+        	\cline{2-8}
+        	& \multicolumn{3}{|c|}{Metro} & \multicolumn{3}{|c|}{Probi} & Bosque \\\\ \\hline
+        	\multicolumn{1}{|c|}{Experiment} & \multicolumn{1}{|c|}{Target} & \multicolumn{1}{|c|}{TP} & \multicolumn{1}{|c|}{FP} & \multicolumn{1}{|c|}{Target} & \multicolumn{1}{|c|}{TP} & \multicolumn{1}{|c|}{FP} & \multicolumn{1}{|c|}{FP} \\\\ \\hline \\hline
+    		';
+	my %first;
+	for(my $i = 0; $i < @expNames; $i++) {
+		my $exp = $expNames[$i];
+		if($expNames[$i] eq 'baseline') {
+			$r .= "\\multicolumn{1}{|c|}{$hNames[$i]} ";	
+		} else {
+			$r .= "\\multicolumn{1}{|c|}{\\multirow{3}{*}{$hNames[$i]}} ";			
+		}
+        
+		foreach my $c (@corpus) {
+			if($c eq 'bosque') {
+				my $d = 'fp';
+				$r .= "& $table{$exp}{$c}{$d} ";
+			} else {
+				foreach my $d (@col) {
+					if($d eq 'target') {
+						if(!defined $first{$c}){
+							my $size = (@expNames * 3) - 2;
+							$r .= "& \\multicolumn{1}{|c|}{\\multirow{$size}{*}{$table{$exp}{$c}{$d}}} ";
+							$first{$c} = 1;							
+						} else {
+							$r .= "& ";	
+						}
+					} else {
+						$r .= "& $table{$exp}{$c}{$d} ";
+					}
+				}
+			}
+		}
+		if($expNames[$i] ne 'baseline') {
+			$r .= "\\\\ \n";
+			foreach my $sign(@signs) {
+				$r .= "    		\\multicolumn{1}{|c|}{} ";
+				foreach my $c (@corpus) {
+					my $c = $c . "-c";
+					if($c eq 'bosque-c') {
+						my $d = 'fp';
+						if($table{$exp}{$c}{$d}{$sign} > 0) {
+							$r .= "& \\textit{$sign$table{$exp}{$c}{$d}{$sign}} ";	
+						} else {
+							$r .= "& ";							
+						}
+					} else {
+						foreach my $d (@col) {
+							if($d eq 'target') {
+								$r .= "& ";	
+							} else {
+								if($table{$exp}{$c}{$d}{$sign} > 0) {
+									$r .= "& \\textit{$sign$table{$exp}{$c}{$d}{$sign}} ";	
+								} else {
+									$r .= "& ";
+								}								
+							}
+						}
+					}
+				}
+				if($sign ne $signs[@signs-1]) {
+					$r .= "\\\\ \n";
+				}		
+			}
+		}
+		#$r .= "\\\\ \n";
+
+
+		
+		if($i < @expNames - 1) {
+			$r .= "\\\\ \\cline{1-1} \\cline{3-4} \\cline{6-8} \n    		";	
+		} else {
+			$r .= "\\\\ \\hline \n    		";
+		}
+		
+    }
+    
+    $r .= 
+'    	\end{tabular}
+    \caption{TODO}
+   \label{tb:TODO}
+	\end{center}
+\end{table}';
+	
+	print REP $r;
+	
+	close REP;
+}
+
 sub processName {
 	my $name = shift;
 	$name =~ s/sd_//g;
 	$name =~ s/-gp$//g;
 	$name =~ s/-ap$//g;
+	
+	$name =~ s/SENT_//g;
+	$name =~ s/TOK_//g;
+	
 	$name =~ s/_//g;
 	$name =~ s/,/./g;
 	$name =~ s/-/./g;
+	$name =~ s/GP //g;
+	$name =~ s/SENT //g;
+	$name =~ s/TOK //g;
 	$name =~ s/^\s+|\s+$//g;
 	return $name;
 }
@@ -226,6 +431,87 @@ sub generateHumanNames {
 	return @names;
 }
 
+my %data;
+
+$data{'exp1'}{'metro'}{'target'} = 333;
+$data{'exp1'}{'metro'}{'tp'} = 10;
+$data{'exp1'}{'metro'}{'fp'} = 100;
+$data{'exp1'}{'metro-c'}{'tp'}{'-'} = 10;
+$data{'exp1'}{'metro-c'}{'tp'}{'+'} = 10;
+$data{'exp1'}{'metro-c'}{'fp'}{'-'} = 10;
+$data{'exp1'}{'metro-c'}{'fp'}{'+'} = 10;
+
+
+$data{'exp1'}{'probi'}{'target'} = 333;
+$data{'exp1'}{'probi'}{'tp'} = 10;
+$data{'exp1'}{'probi'}{'fp'} = 100;
+$data{'exp1'}{'probi-c'}{'tp'}{'-'} = 10;
+$data{'exp1'}{'probi-c'}{'tp'}{'+'} = 10;
+$data{'exp1'}{'probi-c'}{'fp'}{'-'} = 10;
+$data{'exp1'}{'probi-c'}{'fp'}{'+'} = 10;
+
+$data{'exp1'}{'bosque'}{'target'} = 333;
+$data{'exp1'}{'bosque'}{'tp'} = 10;
+$data{'exp1'}{'bosque'}{'fp'} = 100;
+$data{'exp1'}{'bosque-c'}{'tp'}{'-'} = 10;
+$data{'exp1'}{'bosque-c'}{'tp'}{'+'} = 10;
+$data{'exp1'}{'bosque-c'}{'fp'}{'-'} = 10;
+$data{'exp1'}{'bosque-c'}{'fp'}{'+'} = 10;
+
+$data{'a1'}{'metro'}{'target'} = 333;
+$data{'a1'}{'metro'}{'tp'} = 10;
+$data{'a1'}{'metro'}{'fp'} = 100;
+$data{'a1'}{'metro-c'}{'tp'}{'-'} = 10;
+$data{'a1'}{'metro-c'}{'tp'}{'+'} = 10;
+$data{'a1'}{'metro-c'}{'fp'}{'-'} = 10;
+$data{'a1'}{'metro-c'}{'fp'}{'+'} = 10;
+
+
+$data{'a1'}{'probi'}{'target'} = 333;
+$data{'a1'}{'probi'}{'tp'} = 10;
+$data{'a1'}{'probi'}{'fp'} = 100;
+$data{'a1'}{'probi-c'}{'tp'}{'-'} = 10;
+$data{'a1'}{'probi-c'}{'tp'}{'+'} = 10;
+$data{'a1'}{'probi-c'}{'fp'}{'-'} = 10;
+$data{'a1'}{'probi-c'}{'fp'}{'+'} = 10;
+
+$data{'a1'}{'bosque'}{'target'} = 333;
+$data{'a1'}{'bosque'}{'tp'} = 10;
+$data{'a1'}{'bosque'}{'fp'} = 100;
+$data{'a1'}{'bosque-c'}{'tp'}{'-'} = 10;
+$data{'a1'}{'bosque-c'}{'tp'}{'+'} = 10;
+$data{'a1'}{'bosque-c'}{'fp'}{'-'} = 10;
+$data{'a1'}{'bosque-c'}{'fp'}{'+'} = 10;
+
+
+
+$data{'baseline'}{'metro'}{'target'} = 333;
+$data{'baseline'}{'metro'}{'tp'} = 10;
+$data{'baseline'}{'metro'}{'fp'} = 100;
+$data{'baseline'}{'metro-c'}{'tp'}{'-'} = 10;
+$data{'baseline'}{'metro-c'}{'tp'}{'+'} = 10;
+$data{'baseline'}{'metro-c'}{'fp'}{'-'} = 10;
+$data{'baseline'}{'metro-c'}{'fp'}{'+'} = 10;
+
+
+$data{'baseline'}{'probi'}{'target'} = 333;
+$data{'baseline'}{'probi'}{'tp'} = 10;
+$data{'baseline'}{'probi'}{'fp'} = 100;
+$data{'baseline'}{'probi-c'}{'tp'}{'-'} = 10;
+$data{'baseline'}{'probi-c'}{'tp'}{'+'} = 10;
+$data{'baseline'}{'probi-c'}{'fp'}{'-'} = 10;
+$data{'baseline'}{'probi-c'}{'fp'}{'+'} = 10;
+
+$data{'baseline'}{'bosque'}{'target'} = 333;
+$data{'baseline'}{'bosque'}{'tp'} = 10;
+$data{'baseline'}{'bosque'}{'fp'} = 100;
+$data{'baseline'}{'bosque-c'}{'tp'}{'-'} = 10;
+$data{'baseline'}{'bosque-c'}{'tp'}{'+'} = 10;
+$data{'baseline'}{'bosque-c'}{'fp'}{'-'} = 10;
+$data{'baseline'}{'bosque-c'}{'fp'}{'+'} = 10;
+
+# printDetailedReport(\%data, "table_teste.txt");
+
 
 $ENV{'REPO_ROOT'} = tempdir;
 
@@ -233,9 +519,25 @@ init();
 cpe::init();
 
 my $reportsPath = 'eval';
+my %eval;
 
-my %eval = (evaluateListFromFile($ARGV[0]), cpe::evaluateBaseline($reportsPath));
+if(1) {
+	# use this to evaluate baseline x new modules
+	if(@ARGV > 1 && $ARGV[1] ne '') {
+		createBaseline($ARGV[1]);
+	}
+	my %baselineEval = evaluateBaseline('baseline');
+	my %fromfileEval = evaluateListFromFile($ARGV[0]);
+	%eval = (%baselineEval, %fromfileEval);
+} else {
+	# use this to evaluate cogroo3 x new baseline (code changes)
+	
+	my %baselineEval = cpe::evaluateCogroo3($reportsPath, 'baseline');
+	my %fromfileEval = evaluateBaseline('new');
+	%eval = (%baselineEval, %fromfileEval);
+}
 
 print Dumper(\%eval);
 
 printReport(\%eval, "$reportsPath/".$ARGV[0].'.txt');
+printDetailedReport(\%eval, "$reportsPath/".$ARGV[0].'_detailed.txt');

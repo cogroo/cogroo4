@@ -42,7 +42,7 @@
         <name>TokenModel</name>
         <description/>
         <fileResourceSpecifier>
-          <fileUrl>file:/Users/wcolen/Documents/wrks/_MODELS/pt-token.model</fileUrl>
+          <fileUrl>pt-tok.model</fileUrl>
         </fileResourceSpecifier>
         <implementationName>opennlp.uima.tokenize.TokenizerModelResourceImpl</implementationName>
       </externalResource>

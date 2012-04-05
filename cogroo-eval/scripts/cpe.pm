@@ -6,9 +6,11 @@
 
 package cpe;
 
+use FindBin qw($Bin);
 use Data::Dumper;
 use File::Path qw(make_path);
 use strict 'vars';
+require changes;
 
 sub checkVars {
 	
@@ -150,6 +152,40 @@ sub executeCPE {
 	
 }
 
+sub generateCogrooReport {
+	
+	my $data = shift;
+	my $report = shift;	
+	my $path = "../BaselineCogrooAE/target/cogroo";
+	configureMultiProperties(1);
+		
+	my $desc = "$path $data $report";
+		
+	printToLog("Will process report using MultiCogroo \n");
+	
+	my $command = 'mvn -f ../BaselineCogrooAE/pom.xml -e -q install exec:java -Dmaven.test.skip -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
+
+	my @res = `$command 2>&1`;
+
+	my $err = 0;
+	foreach my $line (@res) {
+		if($line =~ m/An exception occured while executing/) {
+			$err = 1;
+		}
+	}
+	
+	if($err) {
+		my $log = "=== Failed to execute command ===\n\n";
+		$log .= join "\t", @res;
+		printToLog($log . "\n\n");
+		
+		die "Failed to execute command";
+	}
+	
+}
+
+my %baselineVars;
+
 sub evaluate {
 	my $gc = shift;
 	my $reportPath = shift;
@@ -171,6 +207,44 @@ sub evaluate {
 	prepareCPE("Bosque", $gc, $report, 'Bosque', 'ISO-8859-1');
 	executeCPE("CPE_AD");
 	$res{'bosque'} = readCPEResults("$report/Bosque-FMeasure.txt");
+	
+	if($reportPath !~ m/baseline/) {
+		print " will include new cogroo output to report ...\n";
+		printVars();
+		
+		# compare results
+		$res{'probi-c'} = changes::changes("eval/baseline/probi/PROBI-Details.txt", "$reportPath/probi/PROBI-Details.txt", "$reportPath/probi/diff.txt");
+		$res{'metro-c'} = changes::changes("eval/baseline/metro/Metro-Details.txt", "$reportPath/metro/Metro-Details.txt", "$reportPath/metro/diff.txt");
+		$res{'bosque-c'} = changes::changes("eval/baseline/bosque/Bosque-Details.txt", "$reportPath/bosque/Bosque-Details.txt", "$reportPath/bosque/diff.txt");
+		
+		if(1) {
+			# execute new cogroo to get the reports...
+			generateCogrooReport("$reportPath/probi/diff.txt", "$reportPath/probi/diff-new.txt");
+			generateCogrooReport("$reportPath/metro/diff.txt", "$reportPath/metro/diff-new.txt");
+			generateCogrooReport("$reportPath/bosque/diff.txt", "$reportPath/bosque/diff-new.txt");
+			
+			# restore baseline and execute
+			$ENV{'MODEL_ROOT'} = $baselineVars{'MODEL_ROOT'};
+			$ENV{'UIMA_HOME'} = $baselineVars{'UIMA_HOME'};
+			$ENV{'CORPUS_ROOT'} = $baselineVars{'CORPUS_ROOT'};
+			$ENV{'REPO_ROOT'} = $baselineVars{'REPO_ROOT'};
+			
+			print " will include baseline output to report ...\n";
+			printVars();
+			
+			generateCogrooReport("$reportPath/probi/diff.txt", "$reportPath/probi/diff-baseline.txt");
+			generateCogrooReport("$reportPath/metro/diff.txt", "$reportPath/metro/diff-baseline.txt");
+			generateCogrooReport("$reportPath/bosque/diff.txt", "$reportPath/bosque/diff-baseline.txt");
+		}
+		
+	} else {
+		print "Saving baseline models vars...\n";
+		printVars();
+		$baselineVars{'MODEL_ROOT'} = $ENV{'MODEL_ROOT'};
+		$baselineVars{'UIMA_HOME'} = $ENV{'UIMA_HOME'};
+		$baselineVars{'CORPUS_ROOT'} = $ENV{'CORPUS_ROOT'};
+		$baselineVars{'REPO_ROOT'} = $ENV{'REPO_ROOT'}; 
+	}
 	
 	return \%res;
 }
@@ -194,7 +268,15 @@ sub configureMultiProperties {
 	
 	if($useModels) {
 		if (-e "$modelRoot/pt-sent.model") {
+			print "found sentence detector model\n";
 	 		$replace{'sent'} = 'true';
+	 	}		
+	}
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-tok.model") {
+			print "found tokenizer model\n";
+	 		$replace{'tok'} = 'true';
 	 	}		
 	}
 	
@@ -253,25 +335,27 @@ sub printToLog {
 
 sub evaluateCogroo3 {
 	my $evalPath = shift;
+	my $name = shift;
 	my %res;
-	$res{'cogroo3'} = evaluate("Cogroo3AE", "$evalPath/cogroo3");
+	$res{$name} = evaluate("Cogroo3AE", "$evalPath/$name");
 	return %res;
 }
 
-sub evaluateBaseline {
-	my $evalPath = shift;
-	my %res;
-	configureMultiProperties(0);
-	install("../BaselineCogrooAE/pom.xml");
-	installPearByPath("../BaselineCogrooAE/target/BaselineCogrooAE.pear");
-	$res{'baseline'} = evaluate("BaselineCogrooAE", "$evalPath/baseline");
-	printToLog Dumper( \%res );
-	return %res;
-}
+#sub evaluateBaseline {#
+#	my $evalPath = shift;
+#	my %res;
+#	configureMultiProperties(0);
+#	install("../BaselineCogrooAE/pom.xml");
+#	installPearByPath("../BaselineCogrooAE/target/BaselineCogrooAE.pear");
+#	$res{'baseline'} = evaluate("BaselineCogrooAE", "$evalPath/baseline");
+#	printToLog Dumper( \%res );
+#	return %res;
+#}
 
 sub evaluateUsingModel {
 	my $evalPath = shift;
 	my $name = shift;
+
 	my %res;
 	configureMultiProperties(1);
 	install("../BaselineCogrooAE/pom.xml");
@@ -281,10 +365,22 @@ sub evaluateUsingModel {
 	return %res;
 }
 
+sub printVars {
+	print "... Using this vars ... \n";
+	
+	print "MODEL_ROOT: " . $ENV{'MODEL_ROOT'} . "\n";
+	print "UIMA_HOME: " . $ENV{'UIMA_HOME'} . "\n";
+	print "CORPUS_ROOT: " . $ENV{'CORPUS_ROOT'} . "\n";
+	print "REPO_ROOT: " . $ENV{'REPO_ROOT'} . "\n"; 
+}
+
 sub installRequiredPears {
 	my $modelRoot = $ENV{'MODEL_ROOT'};
 	if (-e "$modelRoot/pt-sent.model") {
 	 	installPearByName('SentenceDetector');
+	}	
+	if (-e "$modelRoot/pt-tok.model") {
+	 	installPearByName('Tokenizer');
 	}	
 }
 
