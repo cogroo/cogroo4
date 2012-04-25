@@ -27,8 +27,8 @@ import opennlp.tools.tokenize.TokenizerModel;
 
 public class RuntimeLanguageLoader implements LanguageLoader {
 
-  public static final String SENT = "model/pt-sent.model";
-  public static final String TOK = "model/pt-token.model";
+  public static final String SENT = "/Users/wcolen/Documents/wrks/___MODELS/pt-sent.model";
+  public static final String TOK = "/Users/wcolen/Documents/wrks/___MODELS/pt-token.model";
   public static final String PROP = "model/pt-prop.model";
   public static final String EXP = "model/pt-exp.model";
   public static final String CON = "model/pt-con.model";
