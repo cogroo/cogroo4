@@ -118,6 +118,15 @@ public class PostPOSTagger implements ProcessingEngine {
         if(Number.PLURAL.equals(a.getNumberE()) || Number.PLURAL.equals(b.getNumberE())) {
           ret.setNumber(Number.PLURAL);
         }
+      } else if(aClass.equals(Class.ADJECTIVE) && bClass.equals(Class.NOUN)) {
+        ret = b.clone();
+        ret.setClazz(Class.ADJECTIVE);
+        if(Gender.FEMALE.equals(a.getGenderE()) || Gender.FEMALE.equals(b.getGenderE())) {
+          ret.setGender(Gender.NEUTRAL);
+        }
+        if(Number.PLURAL.equals(a.getNumberE()) || Number.PLURAL.equals(b.getNumberE())) {
+          ret.setNumber(Number.PLURAL);
+        }
       } else if(aClass.equals(Class.VERB) || aClass.equals(Class.PREPOSITION)) {
         ret = b.clone();
         ret.setGender(Gender.MALE);
@@ -126,17 +135,37 @@ public class PostPOSTagger implements ProcessingEngine {
       } else if(bClass.equals(Class.NOUN)) {
         ret = b;
       }
+      
+      if(isVariable(aClass) && isVariable(bClass)) {
+        Gender aGender = a.getGenderE();
+        Gender bGender = b.getGenderE();
+        
+        Number aNumber = a.getNumberE();
+        Number bNumber = b.getNumberE();
+        
+        if(aGender != null && bGender != null) {
+          if(!aGender.equals(bGender)) {
+            ret.setGender(Gender.NEUTRAL);
+          }
+        }
+        
+        if(aNumber != null && bNumber != null) {
+          if(!aNumber.equals(bNumber)) {
+            ret.setNumber(Number.NEUTRAL);
+          }
+        }
+      }
     }
     
-    System.out.print("assertEquals(\"" + ti.serialize(ret) + "\", merge(\"");
-    System.out.print(ti.serialize(a));
-    System.out.print('"');
-    System.out.print(", ");
-    System.out.print('"');
-    System.out.print(ti.serialize(b));
-    System.out.print("\"));");
-    
-    System.out.println();
+//    System.out.print("assertEquals(\"" + ti.serialize(ret) + "\", merge(\"");
+//    System.out.print(ti.serialize(a));
+//    System.out.print('"');
+//    System.out.print(", ");
+//    System.out.print('"');
+//    System.out.print(ti.serialize(b));
+//    System.out.print("\"));");
+//    
+//    System.out.println();
     
     return ret;
   }
