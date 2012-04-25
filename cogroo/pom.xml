@@ -48,6 +48,20 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>snapshots.apache.org</id>
+			<name>Apache Snapshot Repository</name>
+			<url>http://repository.apache.org/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	
 	<build>
 		<plugins>
@@ -107,6 +121,7 @@
 	<modules>
 <!-- 		<module>../cogroo-dict</module> -->
 		<module>../cogroo-common</module>
+		<module>../cogroo-base</module>
 	</modules>
 
 </project>
