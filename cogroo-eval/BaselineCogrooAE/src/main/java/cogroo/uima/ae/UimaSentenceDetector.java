@@ -3,6 +3,8 @@ package cogroo.uima.ae;
 import java.util.ArrayList;
 import java.util.List;
 
+import opennlp.tools.util.Span;
+
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
@@ -45,6 +47,7 @@ public class UimaSentenceDetector extends AnnotationService implements
     while(iterator.hasNext()) {
       Annotation  a = iterator.next();
       Sentence s = new Sentence();
+      s.setSpan(new Span(a.getBegin(), a.getEnd()));
       s.setSentence(a.getCoveredText());
       s.setOffset(a.getBegin());
       sentences.add(s);

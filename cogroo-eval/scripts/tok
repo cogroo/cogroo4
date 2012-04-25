@@ -1,0 +1,16 @@
+tok-vcf-perceptron-SD_ABB,TOK_ALPHAOPT-gp-0
+tok-vcf-perceptron-TOK_ALPHAOPT-gp-0
+tok-vcf-maxent-SD_ABB,TOK_ALPHAOPT-gp-4
+tok-vcf-maxent-TOK_ALPHAOPT-gp-4
+tok-vcf-maxent-SD_ABB-gp-4
+tok-vcf-maxent-NONE-gp-4
+tok-vcf-perceptron-NONE-gp-0
+tok-vcf-perceptron-SD_ABB-gp-0
+tok-cf-perceptron-SD_ABB-gp-0
+tok-cf-perceptron-SD_ABB,TOK_ALPHAOPT-gp-0
+tok-cf-perceptron-TOK_ALPHAOPT-gp-0
+tok-cf-perceptron-NONE-gp-2
+tok-cf-maxent-SD_ABB,TOK_ALPHAOPT-gp-2
+tok-cf-maxent-TOK_ALPHAOPT-gp-2
+tok-cf-maxent-SD_ABB-gp-4
+tok-cf-maxent-NONE-gp-2

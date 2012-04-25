@@ -1,0 +1,94 @@
+*******************************************************************************
+  === False Positives ===
+*******************************************************************************
+
+In baseline: 0 In new: 0
+
+There are 16 removed entries: 
+
+[baseline] FP	CF70-3			«A explicação	con	xml:114	determinante singular + substantivo plural	«A explicação da reviravolta não reside em uma pretensa especificidade brasileira, que seria um coquetel de leviandade, inconstância e pusilanimidade, tudo ao som de salsa», ironiza o editorial.
+[baseline] FP	CF246-2			«Eles dão	cov	xml:118	sujeito singular + verbo plural	«Eles dão comida pra gente nesse lugar?
+[baseline] FP	CF397-2			,5 tonelada	con	xml:115	Concordância Numeral-Substantivo	Cada obra consome 1,5 tonelada de aço (US$ 6 mil) mais US$ 10 mil de mão-de-obra.
+[baseline] FP	CF404-4			O Palmeiras	con	xml:114	determinante singular + substantivo plural	O Palmeiras/Parmalat que está em terceiro lugar na classificação geral, tenta defender sua invencibilidade no torneio diante do Flamengo, no Rio.
+[baseline] FP	CF438-5			,23 ponto	con	xml:115	Concordância Numeral-Substantivo	Esses índices revelam queda de inflação de 0,23 ponto percentual em São Paulo e 0,59 ponto percentual no Rio, em comparação com o período anterior.
+[baseline] FP	CF438-5			,59 ponto	con	xml:115	Concordância Numeral-Substantivo	Esses índices revelam queda de inflação de 0,23 ponto percentual em São Paulo e 0,59 ponto percentual no Rio, em comparação com o período anterior.
+[baseline] FP	CF471-1			«A proposta	con	xml:114	determinante singular + substantivo plural	«A proposta da Anfavea é uma indexação disfarçada».
+[baseline] FP	CF488-3			«D+»	con	xml:124	pronome + verbo de ligação + adjetivo predicativo	Primeiramente, gostaria de dizer que o vosso caderno é «D+»!!!
+[baseline] FP	CF605-3			muitos»	con	xml:124	pronome + verbo de ligação + adjetivo predicativo	O prazo é curto e os adversários são muitos», disse Covas.
+[baseline] FP	CF684-2			da candidatura Covas	con	xml:114	determinante singular + substantivo plural	Além do PSDB e do PFL, coligou-se em torno da candidatura Covas o pequeno PV.
+[baseline] FP	CF732-1			vice-prefeito afirmaram	cov	xml:118	sujeito singular + verbo plural	Quatro vereadores na cidade e o vice-prefeito afirmaram que votarão em Fernando Henrique Cardoso, embora seus partidos (PMDB e PPR) tenham candidatos próprios a presidente.
+[baseline] FP	CF753-2			From Nashville To Memphis» trazem	cov	xml:118	sujeito singular + verbo plural	Os cinco CDs de «Elvis: From Nashville To Memphis» trazem o essencial do cantor na década de 60
+[baseline] FP	CF772-5			«Já estamos	cov	xml:118	sujeito singular + verbo plural	«Já estamos contentes por ter chegado às oitavas-de-final», disse Phillip Trent, 24, que assistiu o jogo ao lado do amigo Brian Fagerburg, 24.
+[baseline] FP	CF780-2			,2 tonelada	con	xml:115	Concordância Numeral-Substantivo	Mas há a pesca comercial de atum controlada por norte-americanos de origem portuguesa, chineses de Taiwan e sul-coreanos em embarcações de 1,2 tonelada que valem até US$ 13 milhões.
+[baseline] FP	CF795-5			«A reação	con	xml:114	determinante singular + substantivo plural	«A reação do público é imprevisível», disse.
+[baseline] FP	CF946-7			,08 m.	con	xml:115	Concordância Numeral-Substantivo	Sua virtude: 2,08 m.
+
+There are 42 new entries: 
+
+[new] FP	CF2-1			«Confissões	con	xml:114	determinante singular + substantivo plural	«Confissões» chega a Portugal
+[new] FP	CF2-2			«Confissões	con	xml:114	determinante singular + substantivo plural	Desde o último dia 13, «Confissões de Adolescente» pode ser vista pelos teens portugueses.
+[new] FP	CF10-1			«normas	con	xml:114	determinante singular + substantivo plural	Prandi disse ainda que a empresa está elaborando «normas factíveis de serem executadas para a solução ou minimização dos problemas» existentes no local.
+[new] FP	CF79-3			1,8 milhão	con	xml:115	Concordância Numeral-Substantivo	A conta, paga pelo embaixador, ultrapassou US$ 1,4 mil (CR$ 1,8 milhão).
+[new] FP	CF145-3			«Queremos saber	cov	xml:118	sujeito singular + verbo plural	«Queremos saber se o bicho de São Paulo e o do Rio são ramificações de uma grande organização criminosa.
+[new] FP	CF162-6			«Irmãos	con	xml:114	determinante singular + substantivo plural	Semana que vem, começa a reescrever «Irmãos Coragem», novela de Janete Clair que a Globo exibiu com enorme sucesso entre junho de 1970 e julho de 1971.
+[new] FP	CF178-3			«Vamos reduzir	cov	xml:118	sujeito singular + verbo plural	«Vamos reduzir o número de expositores para cem.
+[new] FP	CF184-3			TVA/ESPN abrem	cov	xml:118	sujeito singular + verbo plural	A TVs Bandeirantes e TVA/ESPN abrem espaço para o futebol americano hoje.
+[new] FP	CF215-5			 Os valores	con	xml:114	determinante singular + substantivo plural	Parágrafo 5º -- Os valores das parcelas referentes a benefícios pagos com atraso pela Previdência Social, por sua responsabilidade, serão atualizados monetariamente pelos índices previstos no art. 41, Parágrafo 7º, da Lei nº 8.213, de 1991, com as alterações da Lei nº 8.542, de 1992, até o mês de fevereiro de 1994, e convertidas em URV, pelo valor em cruzeiros reais do equivalente em URV no dia 28 de fevereiro de 1994.
+[new] FP	CF221-4			«recomendações	con	xml:114	determinante singular + substantivo plural	O diretor-geral da PF, coronel Wilson Romão, disse que recebeu «recomendações expressas para investigar tudo a fundo».
+[new] FP	CF225-1			«reformas	con	xml:114	determinante singular + substantivo plural	Elas não apenas restringem a liberdade e o futuro dos que tentam deixar Cuba como também oferecem expectativa de «reformas democráticas forçadas» aos que ficam na ilha.
+[new] FP	CF233-2			«Foram	cov	xml:118	sujeito singular + verbo plural	«Foram reabilitados 65 pontos da cidades, usados como pontos de venda de drogas e que viraram quiosques de flores», conta Maia.
+[new] FP	CF250-1			«Queremos	cov	xml:118	sujeito singular + verbo plural	«Queremos também negociar com as indústrias rentabilidade mínima de 15%», diz Araújo.
+[new] FP	CF253-1			3,3 bilhões	con	xml:114	determinante singular + substantivo plural	O número é a soma dos US$ 8,6 bilhões arrecadados mais US$ 3,3 bilhões de dívidas das empresas (transferidas para os novos controladores) mais US$ 3 bilhões que o governo deixou de investir.
+[new] FP	CF258-2			«Gostamos	cov	xml:118	sujeito singular + verbo plural	«Gostamos de gente que cala a boca e faz seu trabalho, como Ronaldo.
+[new] FP	CF273-1			«desapareceram	cov	xml:118	sujeito singular + verbo plural	Seria uma repetição do que ocorreu em 1989, durante o Plano Verão, quando «desapareceram» 51,87 % de inflação do índice oficial de correção monetária.
+[new] FP	CF293-2			ao brancos	con	xml:114	determinante singular + substantivo plural	Vera Lucia Vassouras, que é negra e se diz militante do PDT, sustenta que os autores do livro «em nenhum momento afirmaram que os negros são geneticamente inferiores ao brancos».
+[new] FP	CF335-3			«Queremos lotar	cov	xml:118	sujeito singular + verbo plural	«Queremos lotar dois ônibus com a 80 pessoas e fechar o hotel», disse o administrador de empresas E., 31, um dos organizadores.
+[new] FP	CF487-3			«Existem	cov	xml:118	sujeito singular + verbo plural	«Existem algumas opções de como fazer isso», disse Sérgio Amaral, chefe de gabinete do ministro Rubens Ricupero.
+[new] FP	CF493-2			«Montes	con	xml:114	determinante singular + substantivo plural	«Montes» reúne materiais e fotos
+[new] FP	CF493-12			«Exercícios	con	xml:21	adjetivo + substantivo	O trabalho faz parte do projeto «Exercícios Visuais» do Sesc Pompéia, que visa a ocupação inusual de espaços da ex-fábrica.
+[new] FP	CF505-2			1.600 missões	con	xml:114	determinante singular + substantivo plural	Quem prefere as missões espaciais tem à disposição cerca de oito horas de informações sobre 1.600 missões, incluindo o programa Apollo e o passeio do astronauta Neil Armstrong na Lua.
+[new] FP	CF518-3			2,43 toneladas	con	xml:115	Concordância Numeral-Substantivo	A média diária de negócios com o metal em maio foi de 2,43 toneladas.
+[new] FP	CF518-5			6,6 toneladas	con	xml:114	determinante singular + substantivo plural	A média diária naquele mês foi de 6,6 toneladas, segundo dados da Bolsa de Mercadorias & Futuros.
+[new] FP	CF543-5			«Deixamos	cov	xml:118	sujeito singular + verbo plural	«Deixamos claro a Havelange que a Uefa só consideraria a possibilidade de lançar um candidato se ele declinasse de sua candidatura.»
+[new] FP	CF557-4			«Estamos	cov	xml:118	sujeito singular + verbo plural	«Estamos assustados», afirmou o diretor do hospital, Aloysio Campos da Paz, professor visitante das universidades de Oxford (Inglaterra), Stanford, Harvard e Nova York (EUA).
+[new] FP	CF592-3			«leituras	con	xml:114	determinante singular + substantivo plural	O próprio nome da banda, segundo Ann Marie, vem de «leituras sistemáticas de Sartre, Marx, Kafka».
+[new] FP	CF592-4			«planetas	con	xml:114	determinante singular + substantivo plural	Significa «planetas bacanas».
+[new] FP	CF630-1			«rodovia	con	xml:114	determinante singular + substantivo plural	Um acidente envolvendo um caminhão e um ônibus, na última sexta-feira, matou 16 estudantes, três motoristas e deixou nove feridos no km 5,4 da estrada, que é chamada de «rodovia da morte».
+[new] FP	CF638-1			«Queríamos manter	cov	xml:118	sujeito singular + verbo plural	«Queríamos manter um lugar no pódio.»
+[new] FP	CF659-1			«Somos quercistas	cov	xml:118	sujeito singular + verbo plural	«Somos quercistas no atual momento.
+[new] FP	CF659-5			«Temos	cov	xml:118	sujeito singular + verbo plural	«Temos vértebra política, não somos geléia.
+[new] FP	CF717-4			O Viola	con	xml:114	determinante singular + substantivo plural	«O Viola ou o Ronaldão seria um 'black man' perfeito» disse um dos modelos masculinos da Ford, que também não quis se identificar.
+[new] FP	CF728-1			«pares	con	xml:114	determinante singular + substantivo plural	Gianetti da Fonseca afirmou que a avaliação tem que ser feita por «pares» (pesquisadores da mesma área), que não façam parte do grupo analisado.
+[new] FP	CF839-4			«Vivemos	cov	xml:118	sujeito singular + verbo plural	«Vivemos ainda dias difíceis, num contexto econômico, social e político em que as necessidades básicas de nossas forças ( ...) têm sofrido severamente as agruras que toda nação atravessa», disse, em saudação enviada ao Exército.
+[new] FP	CF852-8			«superdegustadores	con	xml:114	determinante singular + substantivo plural	Parece que a Universidade Yale, aquela que nos deu o inesquecível George Bush, comprovou a existência de «superdegustadores», ou seja pessoas que possuem um número de papilas gustativas muito além do normal.
+[new] FP	CF933-8			«Ficaram	cov	xml:118	sujeito singular + verbo plural	«Ficaram de fora de nossa regulamentação», disse à Folha Antonio Henrique Pedrosa Neto, diretor do CFM.
+[new] FP	CF938-1			A Times	con	xml:114	determinante singular + substantivo plural	«A Times Square é também um ponto de encontro e uma alternativa teen», afirma o diretor da Multiplan.
+[new] FP	CF942-2			«Olhos	con	xml:114	determinante singular + substantivo plural	Em «Olhos de Serpente» (Snake Eyes) de Abel Ferrara, Madonna faz o papel dela mesma: uma falsa atriz, falsa loira, que paga para estar num filme.
+[new] FP	CF942-5			«Olhos	con	xml:114	determinante singular + substantivo plural	«Olhos de Serpente» é o filme dentro do filme dentro do filme.
+[new] FP	CF942-7			«Olhos	con	xml:114	determinante singular + substantivo plural	Eddie também está em crise com sua mulher (interpretada pela mulher de Abel Ferrara) e não resiste à tentação da atriz, que paga para ele filmar (Madonna é produtora de «Olhos de Serpente»).
+[new] FP	CF961-1			 O senhor	con	xml:114	determinante singular + substantivo plural	Folha -- O senhor foi indiciado em inquérito da Polícia Federal por manipulação de arbitragem, estelionato e formação de quadrilha.
+
+*******************************************************************************
+  === False Negatives ===
+*******************************************************************************
+
+In baseline: 0 In new: 0
+
+There are 0 removed entries: 
+
+
+There are 0 new entries: 
+
+
+*******************************************************************************
+  === True Positives ===
+*******************************************************************************
+
+In baseline: 0 In new: 0
+
+There are 0 removed entries: 
+
+
+There are 0 new entries: 
+
+

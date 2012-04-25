@@ -7,6 +7,7 @@
 # usage: perl evaluate_gc.pl sent-vcf
 
 use FindBin qw($Bin);
+use Test::Deep qw(cmp_deeply);
 use Data::Dumper;
 use File::Temp qw/ tempfile tempdir /;
 use Cwd;
@@ -148,6 +149,26 @@ sub evaluateBaseline {
 	return %r;
 }
 
+sub loadOrderFromFile {
+	my $file = shift;
+	
+	open (CONF, $file)  or die("Could not open list file. $!");
+	
+	my @order;
+	push(@order, 'baseline');
+	while (my $line = <CONF>) {
+    	$line =~ s/^\s+|\s+$//g;
+    	my @confs = split(/\n/,$line);
+    	foreach my $c (@confs) {
+			push(@order, processName($c));
+    	}
+	}
+	
+	close CONF;
+	
+	return @order;	
+}
+
 sub evaluateListFromFile {
 	my $file = shift;
 	
@@ -250,7 +271,8 @@ sub printReport {
 
 sub printDetailedReport {
 	my %table = %{$_[0]};
-	my $file = $_[1];
+	my @order = @{$_[1]};
+	my $file = $_[2];
 	
 	open (REP, ">$file") or die("Could not create report file. $!");;
 	
@@ -258,7 +280,7 @@ sub printDetailedReport {
 	my @col = qw(target tp fp);
 	my @signs = qw(+ -);
 	
-	my @expNames = sort keys %table;
+	my @expNames = @order;
 	
 	# remove baseline and add it to the begin 
 	my $removedBaseline = 0;
@@ -268,11 +290,43 @@ sub printDetailedReport {
 			$removedBaseline = 1;
 		}
 	}
-	if($removedBaseline) {
-		unshift(@expNames, 'baseline')
-	}
 	
 	my @hNames = generateHumanNames(\@expNames);
+	
+	if($removedBaseline) {
+		unshift(@expNames, 'baseline');
+		unshift(@hNames, 'BASELINE');
+	}
+	
+	
+	my %translation;
+	for(my $i; $i < @expNames; $i++) {
+		$translation{$expNames[$i]} = $hNames[$i];
+	}
+	
+	# combine similar lines...
+	# name -> similar names
+	my %combined;
+	my %repeated;
+	for(my $i = 0; $i < @expNames - 1 ; $i++) {
+		my $exp = $expNames[$i];
+		if($exp ne 'baseline') {
+			if(!$repeated{$exp}) {
+				push(@{$combined{$exp}}, $exp);
+				for(my $j = $i + 1; $j < @expNames; $j++) {
+					my $next = $expNames[$j];
+					if(!$repeated{$next} && cmp_deeply($table{$exp}, $table{$next})) {
+						$repeated{$next} = 1;
+						push(@{$combined{$exp}}, $next);
+					}
+				}
+			}			
+		} else {
+			push(@{$combined{$exp}}, $exp);
+		}
+	}
+	
+	print Dumper(\%combined);
 
 	my $r = 
 '\begin{table}[h!]
@@ -285,74 +339,93 @@ sub printDetailedReport {
 	my %first;
 	for(my $i = 0; $i < @expNames; $i++) {
 		my $exp = $expNames[$i];
-		if($expNames[$i] eq 'baseline') {
-			$r .= "\\multicolumn{1}{|c|}{$hNames[$i]} ";	
-		} else {
-			$r .= "\\multicolumn{1}{|c|}{\\multirow{3}{*}{$hNames[$i]}} ";			
-		}
-        
-		foreach my $c (@corpus) {
-			if($c eq 'bosque') {
-				my $d = 'fp';
-				$r .= "& $table{$exp}{$c}{$d} ";
+		if($combined{$exp}) {
+			if($expNames[$i] eq 'baseline') {
+				$r .= "\\multicolumn{1}{|l|}{$hNames[$i]} ";	
 			} else {
-				foreach my $d (@col) {
-					if($d eq 'target') {
-						if(!defined $first{$c}){
-							my $size = (@expNames * 3) - 2;
-							$r .= "& \\multicolumn{1}{|c|}{\\multirow{$size}{*}{$table{$exp}{$c}{$d}}} ";
-							$first{$c} = 1;							
+				$r .= "\\multicolumn{1}{|l|}{\\multirow{3}{7cm}{";
+				my @arr;
+				foreach(@{$combined{$exp}}) {
+					push(@arr, $translation{$_});
+				}
+				$r .= join " \\newline ", @arr;
+				
+				$r .= "}} ";			
+			}
+	        
+			foreach my $c (@corpus) {
+				if($c eq 'bosque') {
+					my $d = 'fp';
+					$r .= "& $table{$exp}{$c}{$d} ";
+				} else {
+					foreach my $d (@col) {
+						if($d eq 'target') {
+							if(!defined $first{$c}){
+								my $size = ((keys %combined) * 3) - 2;
+								foreach(keys %combined) {
+									my @arr = @{$combined{$_}};
+									if(@arr > 3) {
+										$size += @arr - 3;
+									}
+								}
+								
+								$r .= "& \\multicolumn{1}{|c|}{\\multirow{$size}{*}{$table{$exp}{$c}{$d}}} ";
+								$first{$c} = 1;							
+							} else {
+								$r .= "& ";	
+							}
 						} else {
-							$r .= "& ";	
+							$r .= "& $table{$exp}{$c}{$d} ";
 						}
-					} else {
-						$r .= "& $table{$exp}{$c}{$d} ";
 					}
 				}
 			}
-		}
-		if($expNames[$i] ne 'baseline') {
-			$r .= "\\\\ \n";
-			foreach my $sign(@signs) {
-				$r .= "    		\\multicolumn{1}{|c|}{} ";
-				foreach my $c (@corpus) {
-					my $c = $c . "-c";
-					if($c eq 'bosque-c') {
-						my $d = 'fp';
-						if($table{$exp}{$c}{$d}{$sign} > 0) {
-							$r .= "& \\textit{$sign$table{$exp}{$c}{$d}{$sign}} ";	
-						} else {
-							$r .= "& ";							
-						}
-					} else {
-						foreach my $d (@col) {
-							if($d eq 'target') {
-								$r .= "& ";	
+			if($expNames[$i] ne 'baseline') {
+				$r .= "\\\\ \n";
+				foreach my $sign(@signs) {
+					$r .= "    		\\multicolumn{1}{|c|}{} ";
+					foreach my $c (@corpus) {
+						my $c = $c . "-c";
+						if($c eq 'bosque-c') {
+							my $d = 'fp';
+							if($table{$exp}{$c}{$d}{$sign} > 0) {
+								$r .= "& \\textit{$sign$table{$exp}{$c}{$d}{$sign}} ";	
 							} else {
-								if($table{$exp}{$c}{$d}{$sign} > 0) {
-									$r .= "& \\textit{$sign$table{$exp}{$c}{$d}{$sign}} ";	
+								$r .= "& ";							
+							}
+						} else {
+							foreach my $d (@col) {
+								if($d eq 'target') {
+									$r .= "& ";	
 								} else {
-									$r .= "& ";
-								}								
+									if($table{$exp}{$c}{$d}{$sign} > 0) {
+										$r .= "& \\textit{$sign$table{$exp}{$c}{$d}{$sign}} ";	
+									} else {
+										$r .= "& ";
+									}								
+								}
 							}
 						}
 					}
+					if($sign ne $signs[@signs-1]) {
+						$r .= "\\\\ \n";
+					}		
 				}
-				if($sign ne $signs[@signs-1]) {
-					$r .= "\\\\ \n";
-				}		
+			}
+			$r .= "\\\\ \n";
+	
+			if($expNames[$i] ne 'baseline') {
+				for(my $i = 3; $i < @{$combined{$exp}}; $i++) {
+					$r .= "    		\\multicolumn{1}{|c|}{} & & & & & & & \\\\ \n";
+				}
+			}
+			
+			if($i < (keys %combined)) {
+				$r .= "    		\\cline{1-1} \\cline{3-4} \\cline{6-8} \n    		";	
+			} else {
+				$r .= "    		\\hline \n    		";
 			}
 		}
-		#$r .= "\\\\ \n";
-
-
-		
-		if($i < @expNames - 1) {
-			$r .= "\\\\ \\cline{1-1} \\cline{3-4} \\cline{6-8} \n    		";	
-		} else {
-			$r .= "\\\\ \\hline \n    		";
-		}
-		
     }
     
     $r .= 
@@ -432,59 +505,174 @@ sub generateHumanNames {
 }
 
 my %data;
-
-$data{'exp1'}{'metro'}{'target'} = 333;
-$data{'exp1'}{'metro'}{'tp'} = 10;
-$data{'exp1'}{'metro'}{'fp'} = 100;
-$data{'exp1'}{'metro-c'}{'tp'}{'-'} = 10;
-$data{'exp1'}{'metro-c'}{'tp'}{'+'} = 10;
-$data{'exp1'}{'metro-c'}{'fp'}{'-'} = 10;
-$data{'exp1'}{'metro-c'}{'fp'}{'+'} = 10;
+my @forder;
 
 
-$data{'exp1'}{'probi'}{'target'} = 333;
-$data{'exp1'}{'probi'}{'tp'} = 10;
-$data{'exp1'}{'probi'}{'fp'} = 100;
-$data{'exp1'}{'probi-c'}{'tp'}{'-'} = 10;
-$data{'exp1'}{'probi-c'}{'tp'}{'+'} = 10;
-$data{'exp1'}{'probi-c'}{'fp'}{'-'} = 10;
-$data{'exp1'}{'probi-c'}{'fp'}{'+'} = 10;
-
-$data{'exp1'}{'bosque'}{'target'} = 333;
-$data{'exp1'}{'bosque'}{'tp'} = 10;
-$data{'exp1'}{'bosque'}{'fp'} = 100;
-$data{'exp1'}{'bosque-c'}{'tp'}{'-'} = 10;
-$data{'exp1'}{'bosque-c'}{'tp'}{'+'} = 10;
-$data{'exp1'}{'bosque-c'}{'fp'}{'-'} = 10;
-$data{'exp1'}{'bosque-c'}{'fp'}{'+'} = 10;
-
-$data{'a1'}{'metro'}{'target'} = 333;
-$data{'a1'}{'metro'}{'tp'} = 10;
-$data{'a1'}{'metro'}{'fp'} = 100;
-$data{'a1'}{'metro-c'}{'tp'}{'-'} = 10;
-$data{'a1'}{'metro-c'}{'tp'}{'+'} = 10;
-$data{'a1'}{'metro-c'}{'fp'}{'-'} = 10;
-$data{'a1'}{'metro-c'}{'fp'}{'+'} = 10;
+push(@forder, 'sent-cf-maxent-sd_factory,sd_abb-gp-4');
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'target'} = 333;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'tp'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'fp'} = 100;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'-'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'+'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'-'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'+'} = 10;
 
 
-$data{'a1'}{'probi'}{'target'} = 333;
-$data{'a1'}{'probi'}{'tp'} = 10;
-$data{'a1'}{'probi'}{'fp'} = 100;
-$data{'a1'}{'probi-c'}{'tp'}{'-'} = 10;
-$data{'a1'}{'probi-c'}{'tp'}{'+'} = 10;
-$data{'a1'}{'probi-c'}{'fp'}{'-'} = 10;
-$data{'a1'}{'probi-c'}{'fp'}{'+'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'target'} = 333;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'tp'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'fp'} = 100;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'-'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'+'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'-'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'+'} = 10;
 
-$data{'a1'}{'bosque'}{'target'} = 333;
-$data{'a1'}{'bosque'}{'tp'} = 10;
-$data{'a1'}{'bosque'}{'fp'} = 100;
-$data{'a1'}{'bosque-c'}{'tp'}{'-'} = 10;
-$data{'a1'}{'bosque-c'}{'tp'}{'+'} = 10;
-$data{'a1'}{'bosque-c'}{'fp'}{'-'} = 10;
-$data{'a1'}{'bosque-c'}{'fp'}{'+'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'target'} = 333;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'tp'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'fp'} = 100;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'-'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'+'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'-'} = 10;
+$data{'sent-cf-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'+'} = 10;
 
 
+push(@forder, 'sent-vcf-maxent-sd_factory,sd_abb-gp-4');
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'target'} = 333;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'tp'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'fp'} = 100;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'-'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'+'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'-'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'+'} = 10;
 
+
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'target'} = 333;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'tp'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'fp'} = 100;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'-'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'+'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'-'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'+'} = 10;
+
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'target'} = 333;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'tp'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'fp'} = 100;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'-'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'+'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'-'} = 10;
+$data{'sent-vcf-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'+'} = 10;
+
+
+push(@forder, 'sent-ama-maxent-sd_factory,sd_abb-gp-4');
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'target'} = 333;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'tp'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'fp'} = 100;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'-'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'+'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'-'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'+'} = 10;
+
+
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'target'} = 333;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'tp'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'fp'} = 100;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'-'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'+'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'-'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'+'} = 10;
+
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'target'} = 333;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'tp'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'fp'} = 100;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'-'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'+'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'-'} = 10;
+$data{'sent-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'+'} = 11;
+
+#
+push(@forder, 'tok-ama-maxent-sd_factory,sd_abb-gp-4');
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'target'} = 333;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'tp'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'fp'} = 100;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'-'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'+'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'-'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'+'} = 10;
+
+
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'target'} = 333;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'tp'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'fp'} = 100;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'-'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'+'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'-'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'+'} = 10;
+
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'target'} = 333;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'tp'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'fp'} = 100;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'-'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'+'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'-'} = 10;
+$data{'tok-ama-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'+'} = 11;
+#
+
+#
+push(@forder, 'tok-a1-maxent-sd_factory,sd_abb-gp-4');
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'target'} = 333;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'tp'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'fp'} = 100;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'-'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'+'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'-'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'+'} = 10;
+
+
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'target'} = 333;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'tp'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'fp'} = 100;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'-'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'+'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'-'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'+'} = 10;
+
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'target'} = 333;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'tp'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'fp'} = 100;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'-'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'+'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'-'} = 10;
+$data{'tok-a1-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'+'} = 11;
+#
+
+#
+push(@forder, 'tok-a2-maxent-sd_factory,sd_abb-gp-4');
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'target'} = 333;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'tp'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'metro'}{'fp'} = 100;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'-'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'tp'}{'+'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'-'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'metro-c'}{'fp'}{'+'} = 10;
+
+
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'target'} = 333;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'tp'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'probi'}{'fp'} = 100;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'-'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'tp'}{'+'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'-'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'probi-c'}{'fp'}{'+'} = 10;
+
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'target'} = 333;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'tp'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'bosque'}{'fp'} = 100;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'-'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'tp'}{'+'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'-'} = 10;
+$data{'tok-a2-maxent-sd_factory,sd_abb-gp-4'}{'bosque-c'}{'fp'}{'+'} = 11;
+#
+
+push(@forder, 'baseline');
 $data{'baseline'}{'metro'}{'target'} = 333;
 $data{'baseline'}{'metro'}{'tp'} = 10;
 $data{'baseline'}{'metro'}{'fp'} = 100;
@@ -510,13 +698,17 @@ $data{'baseline'}{'bosque-c'}{'tp'}{'+'} = 10;
 $data{'baseline'}{'bosque-c'}{'fp'}{'-'} = 10;
 $data{'baseline'}{'bosque-c'}{'fp'}{'+'} = 10;
 
-# printDetailedReport(\%data, "table_teste.txt");
+# printDetailedReport(\%data, \@forder, "table_teste.txt");
 
 
 $ENV{'REPO_ROOT'} = tempdir;
 
 init();
 cpe::init();
+
+my @order = loadOrderFromFile($ARGV[0]);
+
+print "order: \n" . Dumper(\%order);
 
 my $reportsPath = 'eval';
 my %eval;
@@ -540,4 +732,4 @@ if(1) {
 print Dumper(\%eval);
 
 printReport(\%eval, "$reportsPath/".$ARGV[0].'.txt');
-printDetailedReport(\%eval, "$reportsPath/".$ARGV[0].'_detailed.txt');
+printDetailedReport(\%eval, \@order, "$reportsPath/".$ARGV[0].'_detailed.txt');

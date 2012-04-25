@@ -1,0 +1,22 @@
+\begin{table}[h!]
+ 	\begin{center}
+    	\begin{tabular}{c|r|r|r|r|r|r|r|}
+        	\cline{2-8}
+        	& \multicolumn{3}{|c|}{Metro} & \multicolumn{3}{|c|}{Probi} & Bosque \\ \hline
+        	\multicolumn{1}{|c|}{Experiment} & \multicolumn{1}{|c|}{Target} & \multicolumn{1}{|c|}{TP} & \multicolumn{1}{|c|}{FP} & \multicolumn{1}{|c|}{Target} & \multicolumn{1}{|c|}{TP} & \multicolumn{1}{|c|}{FP} & \multicolumn{1}{|c|}{FP} \\ \hline \hline
+    		\multicolumn{1}{|l|}{BASELINE} & \multicolumn{1}{|c|}{\multirow{8}{*}{333}} & 10 & 100 & \multicolumn{1}{|c|}{\multirow{8}{*}{333}} & 10 & 100 & 100 \\ 
+    		\cline{1-1} \cline{3-4} \cline{6-8} 
+    		\multicolumn{1}{|l|}{\multirow{3}{7cm}{SENT CF \newline SENT VCF}} & & 10 & 100 & & 10 & 100 & 100 \\ 
+    		\multicolumn{1}{|c|}{} & & \textit{+10} & \textit{+10} & & \textit{+10} & \textit{+10} & \textit{+10} \\ 
+    		\multicolumn{1}{|c|}{} & & \textit{-10} & \textit{-10} & & \textit{-10} & \textit{-10} & \textit{-10} \\ 
+    		\cline{1-1} \cline{3-4} \cline{6-8} 
+    		\multicolumn{1}{|l|}{\multirow{3}{7cm}{SENT AMA \newline TOK AMA \newline TOK A1 \newline TOK A2}} & & 10 & 100 & & 10 & 100 & 100 \\ 
+    		\multicolumn{1}{|c|}{} & & \textit{+10} & \textit{+10} & & \textit{+10} & \textit{+10} & \textit{+11} \\ 
+    		\multicolumn{1}{|c|}{} & & \textit{-10} & \textit{-10} & & \textit{-10} & \textit{-10} & \textit{-10} \\ 
+    		\multicolumn{1}{|c|}{} & & & & & & & \\ 
+    		\hline 
+    		    	\end{tabular}
+    \caption{TODO}
+   \label{tb:TODO}
+	\end{center}
+\end{table}

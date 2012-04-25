@@ -1,0 +1,16 @@
+sent-vcf-perceptron-ACP-gp-0
+sent-vcf-perceptron-ACP,SD_ABB-gp-0
+sent-vcf-maxent-ACP-gp-4
+sent-vcf-maxent-ACP,SD_ABB-gp-4
+sent-vcf-perceptron-SD_ABB-gp-0
+sent-vcf-perceptron-NONE-gp-0
+sent-vcf-maxent-SD_ABB-gp-8
+sent-vcf-maxent-NONE-gp-8
+sent-cf-maxent-ACP,SD_ABB-gp-4
+sent-cf-perceptron-ACP-gp-2
+sent-cf-perceptron-ACP,SD_ABB-gp-2
+sent-cf-maxent-SD_ABB-gp-4
+sent-cf-maxent-ACP-gp-2
+sent-cf-perceptron-SD_ABB-gp-0
+sent-cf-perceptron-NONE-gp-0
+sent-cf-maxent-NONE-gp-2

@@ -1,0 +1,459 @@
+compare FP 
+In baseline: 552 In new: 549
+
+There are 21 removed entries: 
+
+[baseline] FP	PROBI_77-9			Juca agradavam	cov	xml:118	sujeito singular + verbo plural	Os planos do Dr. Juca agradavam à parentela.
+Flat structure for: Os planos do Dr. Juca agradavam à parentela.
+Os [o DET_M_P_] planos [plano N_M_P_] do [de PRP_] do [o DET_M_S_] Dr [dr N_M/F_S_] . [. -PNT_ABS_] Juca [ PROP_M_S_] agradavam [agradar V_IMPF_3P_IND_VFIN_] à [a PRP_] à [a DET_F_S_] parentela [parentela N_F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER Os] [NOUN planos] ] ] [PREPOSITION de] [NP [DETERMINER o] [NOUN Dr] ] [PUNCTUATION_MARK .] [SUBJ [NP [PROPER_NOUN Juca] ] ] [VERB [VP [VERB agradavam] ] ] [PREPOSITION a] [NP [DETERMINER a] [NOUN parentela] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_15-45			Campinas localiza	cov	xml:117	sujeito plural + verbo singular	Campinas localiza-se no Estado de São Paulo.
+Flat structure for: Campinas localiza-se no Estado de São Paulo.
+Campinas [campina N_F_P_] localiza [localizar V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] no [em PRP_] no [o DET_M_S_] Estado [estado N_M_S_] de [de PRP_] São Paulo [são N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [NOUN Campinas] ] ] [VERB [VP [VERB localiza] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION em] [NP [DETERMINER o] [NOUN Estado] ] [PREPOSITION de] [NP [NOUN São] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_68-26			Ninguém falou-nos	cop|pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Ninguém falou-nos, outrora, com tanta propriedade e delicadeza.
+Flat structure for: Ninguém falou-nos, outrora, com tanta propriedade e delicadeza.
+Ninguém [ninguém SPEC_M_S_] falou [falar V_PS_3S_IND_VFIN_] -nos [-nos PERS_M/F_1P_ACC_] , [, -PNT_NSEP_] outrora [outrora ADV_] , [, -PNT_NSEP_] com [com PRP_] tanta [tanto DET_F_S_] propriedade [propriedade N_F_S_] e [e KC_] delicadeza [delicadeza N_F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [SPECIFIER Ninguém] ] ] [VERB [VP [VERB falou] ] ] [NP [PERSONAL_PRONOUN -nos] ] [PUNCTUATION_MARK ,] [ADVERB outrora] [PUNCTUATION_MARK ,] [PREPOSITION com] [NP [DETERMINER tanta] [NOUN propriedade] ] [COORDINATING_CONJUNCTION e] [NP [NOUN delicadeza] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_70-10			filho queriam	cov	xml:118	sujeito singular + verbo plural	O pai e o filho queriam-se muito.
+Flat structure for: O pai e o filho queriam-se muito.
+O [o DET_M_S_] pai [pai N_M_S_] e [e KC_] o [o DET_M_S_] filho [filho N_M_S_] queriam [querer V_IMPF_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] muito [muito ADV_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER O] [NOUN pai] ] ] [COORDINATING_CONJUNCTION e] [SUBJ [NP [DETERMINER o] [NOUN filho] ] ] [VERB [VP [VERB queriam] ] ] [NP [PERSONAL_PRONOUN -se] ] [ADVERB muito] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_cop_107-10			aqui paga-se	cop	xml:67	advérbio + verbo + pronome oblíquo	Aqui faz-se, aqui paga-se.
+Flat structure for: Aqui faz-se, aqui paga-se.
+Aqui [aqui ADV_] faz [fazer V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] , [, -PNT_NSEP_] aqui [aqui ADV_] paga [pagar V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Aqui] [VERB [VP [VERB faz] ] ] [NP [PERSONAL_PRONOUN -se] ] [PUNCTUATION_MARK ,] [ADVERB aqui] [VERB [VP [VERB paga] ] ] [SUBJ [NP [PERSONAL_PRONOUN -se] ] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_89-5			ou divertem-se	cop	xml:73	só, ou, ora ou quer + pronome oblíquo	Vocês estudam ou divertem-se?
+Flat structure for: Vocês estudam ou divertem-se?
+Vocês [você PERS_M/F_3P_NOM_] estudam [estudar V_PR_3P_IND_VFIN_] ou [ou KC_] divertem [divertir V_PR_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] ? [? -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [PERSONAL_PRONOUN Vocês] ] ] [VERB [VP [VERB estudam] ] ] [COORDINATING_CONJUNCTION ou] [VERB [VP [VERB divertem] ] ] [SUBJ [NP [PERSONAL_PRONOUN -se] ] ] [PUNCTUATION_MARK ?] ]
+
+[baseline] FP	PROBI_17-69			Como livrar-nos	cop	xml:67	advérbio + verbo + pronome oblíquo	Como livrar-nos da praga dos carros?
+Flat structure for: Como livrar-nos da praga dos carros?
+Como [como ADV_] livrar [livrar V_INF_] -nos [-nos PERS_M/F_1P_ACC_] da praga [de PRP_] da praga [a DET_F_S_] dos [de PRP_] dos [o DET_M_P_] carros [carro N_M_P_] ? [? -PNT_ABS_] 
+Syntax tree: [S [ADVERB Como] [VP [VERB livrar] ] [NP [PERSONAL_PRONOUN -nos] ] [PREPOSITION de] [DETERMINER a] [PREPOSITION de] [NP [DETERMINER os] [NOUN carros] ] [PUNCTUATION_MARK ?] ]
+
+[baseline] FP	PROBI_70-64			ou restituir-se	cop	xml:73	só, ou, ora ou quer + pronome oblíquo	O possuidor turbado, ou esbulhado, poderá manter-se, ou restituir-se, por sua própria força, contanto que o faça logo.
+Flat structure for: O possuidor turbado, ou esbulhado, poderá manter-se, ou restituir-se, por sua própria força, contanto que o faça logo.
+O [o DET_M_S_] possuidor [possuidor N_M_S_] turbado [turbar V_M_S_PCP_] , [, -PNT_NSEP_] ou [ou KC_] esbulhado [ ADV_] , [, -PNT_NSEP_] poderá [poder V_FUT_3S_IND_VFIN_] manter [manter V_INF_] -se [se PERS_M/F_3S/P_ACC_] , [, -PNT_NSEP_] ou [ou KC_] restituir [restituir V_INF_] -se [se PERS_M/F_3S/P_ACC_] , [, -PNT_NSEP_] por [por PRP_] sua [seu DET_F_S_] própria [próprio ADJ_F_S_] força [força N_F_S_] , [, -PNT_NSEP_] contanto [contanto N_M_S_] que [que SPEC_M/F_S/P_] o [o DET_M_S_] faça [fazer V_PR_3S_SUBJ_VFIN_] logo [logo ADV_] . [. -PNT_ABS_] 
+Syntax tree: [S [NP [DETERMINER O] [NOUN possuidor] [VERB turbado] ] [PUNCTUATION_MARK ,] [COORDINATING_CONJUNCTION ou] [ADVERB esbulhado] [PUNCTUATION_MARK ,] [VERB [VP [VERB poderá] ] ] [VP [VERB manter] ] [NP [PERSONAL_PRONOUN -se] ] [PUNCTUATION_MARK ,] [COORDINATING_CONJUNCTION ou] [VP [VERB restituir] ] [NP [PERSONAL_PRONOUN -se] ] [PUNCTUATION_MARK ,] [PREPOSITION por] [NP [DETERMINER sua] [ADJECTIVE própria] [NOUN força] ] [PUNCTUATION_MARK ,] [NP [NOUN contanto] ] [SPECIFIER que] [NP [DETERMINER o] ] [VERB [VP [VERB faça] ] ] [ADVERB logo] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_cop_108-2			sempre dispus-me	cop	xml:67	advérbio + verbo + pronome oblíquo	Por que persegues-me, se eu sempre dispus-me a o ajudar?
+Flat structure for: Por que persegues-me, se eu sempre dispus-me a o ajudar?
+Por [por PRP_] que [que SPEC_M/F_S/P_] persegues [perseguir V_PR_2S_IND_VFIN_] -me [eu PERS_M/F_1S_DAT_] , [, -PNT_NSEP_] se [se KS_] eu [eu PERS_M/F_1S_NOM_] sempre [sempre ADV_] dispus [dispor V_PS_1S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] a [a PRP_] o [o DET_M_S_] ajudar [ajudar V_INF_] ? [? -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Por] [SPECIFIER que] [VERB [VP [VERB persegues] ] ] [NP [PERSONAL_PRONOUN -me] ] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION se] [SUBJ [NP [PERSONAL_PRONOUN eu] ] ] [ADVERB sempre] [VERB [VP [VERB dispus] ] ] [NP [PERSONAL_PRONOUN -me] ] [PREPOSITION a] [NP [DETERMINER o] [VERB ajudar] ] [PUNCTUATION_MARK ?] ]
+
+[baseline] FP	PROBI_53-33			como estar-se	cop	xml:67	advérbio + verbo + pronome oblíquo	Pareceu-lhe a morte agradável como o perfume da mirra, ou como estar-se num dia de vento, ao abrigo de um toldo.
+Flat structure for: Pareceu-lhe a morte agradável como o perfume da mirra, ou como estar-se num dia de vento, ao abrigo de um toldo.
+Pareceu [parecer V_PS_3S_IND_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] a [a DET_F_S_] morte [morte N_F_S_] agradável [agradável ADJ_M/F_S_] como [como ADV_] o [o DET_M_S_] perfume [perfume N_M_S_] da mirra [de PRP_] da mirra [a DET_M/F_S/P_] , [, -PNT_NSEP_] ou [ou KC_] como [como ADV_] estar [estar V_INF_] -se [se PERS_M/F_3S/P_ACC_] num [em PRP_] num [um DET_M_S_] dia [dia N_M_S_] de [de PRP_] vento [vento N_M_S_] , [, -PNT_NSEP_] ao [a PRP_] ao [o DET_M_S_] abrigo [abrigo N_M_S_] de [de PRP_] um [um DET_M_S_] toldo [toldo N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [VERB [VP [VERB Pareceu] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [SUBJ [NP [DETERMINER a] [NOUN morte] [ADJECTIVE agradável] ] ] [ADVERB como] [NP [DETERMINER o] [NOUN perfume] ] [PREPOSITION de] [DETERMINER a] [PUNCTUATION_MARK ,] [COORDINATING_CONJUNCTION ou] [ADVERB como] [VP [VERB estar] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION em] [NP [DETERMINER um] [NOUN dia] ] [PREPOSITION de] [NP [NOUN vento] ] [PUNCTUATION_MARK ,] [PREPOSITION a] [NP [DETERMINER o] [NOUN abrigo] ] [PREPOSITION de] [NP [DETERMINER um] [NOUN toldo] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_85-64			Tudo tendo-se	cop	xml:71	pronome indefinido + verbo + pronome oblíquo	Tudo tendo-se acalmado, pudemos voltar às atividades normais.
+Flat structure for: Tudo tendo-se acalmado, pudemos voltar às atividades normais.
+Tudo [tudo SPEC_M_S_] tendo [ter V_GER_] -se [se PERS_M/F_3S/P_ACC_] acalmado [acalmar V_M_S_PCP_] , [, -PNT_NSEP_] pudemos [poder V_PS_1P_IND_VFIN_] voltar [voltar V_INF_] às [a PRP_] às [o DET_F_P_] atividades [atividade N_F_P_] normais [normal ADJ_M/F_P_] . [. -PNT_ABS_] 
+Syntax tree: [S [SPECIFIER Tudo] [VP [VERB tendo] ] [NP [PERSONAL_PRONOUN -se] ] [VERB acalmado] [PUNCTUATION_MARK ,] [VERB [VP [VERB pudemos] ] ] [VP [VERB voltar] ] [PREPOSITION a] [NP [DETERMINER as] [NOUN atividades] [ADJECTIVE normais] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_67-74			Nenhum detento evadiu-se	cop	xml:63	palavras de sentido negativo + substantivo + verbo + pronome oblíquo	Nenhum detento evadiu-se do presídio.
+Flat structure for: Nenhum detento evadiu-se do presídio.
+Nenhum [nenhum DET_M_S_] detento [detento N_M_S_] evadiu [evadir V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] do [de PRP_] do [o DET_M_S_] presídio [presídio N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER Nenhum] [NOUN detento] ] ] [VERB [VP [VERB evadiu] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION de] [NP [DETERMINER o] [NOUN presídio] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_2-32			selvagem mediram	cov	xml:118	sujeito singular + verbo plural	A fera e o selvagem mediram-se mutuamente, com os olhos nos olhos um do outro.
+Flat structure for: A fera e o selvagem mediram-se mutuamente, com os olhos nos olhos um do outro.
+A [o DET_F_S_] fera [fera N_F_S_] e [e KC_] o [o DET_M_S_] selvagem [selvagem N_M/F_S_] mediram [medir V_PS/MQP_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] mutuamente [mutuamente ADV_] , [, -PNT_NSEP_] com [com PRP_] os [o DET_M_P_] olhos [olho N_M_P_] nos [em PRP_] nos [o DET_M_P_] olhos [olho N_M_P_] um [um NUM_M/F_S_] do [de PRP_] do [o DET_M_S_] outro [outro DET_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER A] [NOUN fera] ] ] [COORDINATING_CONJUNCTION e] [SUBJ [NP [DETERMINER o] [NOUN selvagem] ] ] [VERB [VP [VERB mediram] ] ] [NP [PERSONAL_PRONOUN -se] ] [ADVERB mutuamente] [PUNCTUATION_MARK ,] [PREPOSITION com] [NP [DETERMINER os] [NOUN olhos] ] [PREPOSITION em] [NP [DETERMINER os] [NOUN olhos] [NUMERAL um] ] [PREPOSITION de] [NP [DETERMINER o] [DETERMINER outro] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_62-75			no deserto queimado os fugitivos agarram	cov	xml:118	sujeito singular + verbo plural	Miudinhos, perdidos no deserto queimado os fugitivos agarram-se, somaram as suas desgraças e os seus pavores.
+Flat structure for: Miudinhos, perdidos no deserto queimado os fugitivos agarram-se, somaram as suas desgraças e os seus pavores.
+Miudinhos [ PROP_M_S_] , [, -PNT_NSEP_] perdidos [perder V_M_P_PCP_] no [em PRP_] no [o DET_M_S_] deserto [deserto ADJ_M_S_] queimado [queimado N_M_S_] os [o DET_M_P_] fugitivos [fugitivo N_M_P_] agarram [agarrar V_PR_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] , [, -PNT_NSEP_] somaram [somar V_PS/MQP_3P_IND_VFIN_] as [o DET_F_P_] suas [seu DET_F_P_] desgraças [desgraça N_F_P_] e [e KC_] os [o DET_M_P_] seus [seu DET_M_P_] pavores [pavor N_M_P_] . [. -PNT_ABS_] 
+Syntax tree: [S [NP [PROPER_NOUN Miudinhos] ] [PUNCTUATION_MARK ,] [VERB perdidos] [PREPOSITION em] [NP [DETERMINER o] [ADJECTIVE deserto] [NOUN queimado] ] [SUBJ [NP [DETERMINER os] [NOUN fugitivos] ] ] [VERB [VP [VERB agarram] ] ] [NP [PERSONAL_PRONOUN -se] ] [PUNCTUATION_MARK ,] [VERB [VP [VERB somaram] ] ] [NP [DETERMINER as] [DETERMINER suas] [NOUN desgraças] ] [COORDINATING_CONJUNCTION e] [NP [DETERMINER os] [DETERMINER seus] [NOUN pavores] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_62-19			não ferir-te	cop|pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Meu intento era não ferir-te.
+Flat structure for: Meu intento era não ferir-te.
+Meu [meu DET_M_S_] intento [intento N_M_S_] era [ser V_IMPF_3S_IND_VFIN_] não [não ADV_] ferir [ferir V_INF_] -te [tu PERS_M/F_2S_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER Meu] [NOUN intento] ] ] [VERB [VP [VERB era] ] ] [ADVERB não] [VP [VERB ferir] ] [NP [PERSONAL_PRONOUN -te] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_53-13			não dar-lhe	cop|pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Para não dar-lhe explicações, fugiu.
+Flat structure for: Para não dar-lhe explicações, fugiu.
+Para [para PRP_] não [não ADV_] dar [dar V_INF_] -lhe [ele PERS_M/F_3S_DAT_] explicações [explicações N_F_P_] , [, -PNT_NSEP_] fugiu [fugir V_PS_3S_IND_VFIN_] . [. -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Para] [ADVERB não] [VP [VERB dar] ] [NP [PERSONAL_PRONOUN -lhe] ] [NP [NOUN explicações] ] [PUNCTUATION_MARK ,] [VERB [VP [VERB fugiu] ] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_77-90			Sandra e Isabel cumprimentavam	cov	xml:118	sujeito singular + verbo plural	Sandra e Isabel cumprimentavam-se efusivamente.
+Flat structure for: Sandra e Isabel cumprimentavam-se efusivamente.
+Sandra [sandra PROP_F_S_] e [e KC_] Isabel [ PROP_M/F_S_] cumprimentavam [cumprimentar V_IMPF_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] efusivamente [efusivamente ADV_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [PROPER_NOUN Sandra] [COORDINATING_CONJUNCTION e] ] ] [SUBJ [NP [PROPER_NOUN Isabel] ] ] [VERB [VP [VERB cumprimentavam] ] ] [NP [PERSONAL_PRONOUN -se] ] [ADVERB efusivamente] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_32-22			Enfim deixaram	cov	xml:118	sujeito singular + verbo plural	Enfim deixaram-nos entrar.
+Flat structure for: Enfim deixaram-nos entrar.
+Enfim [ DET_M_S_] deixaram [deixar V_PS/MQP_3P_IND_VFIN_] -nos [-nos PERS_M/F_1P_ACC_] entrar [entrar V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER Enfim] ] ] [VERB [VP [VERB deixaram] ] ] [NP [PERSONAL_PRONOUN -nos] ] [VP [VERB entrar] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_3-46			quer salvar-se	cop	xml:73	só, ou, ora ou quer + pronome oblíquo	A maior parte dos homens não quer salvar-se.
+Flat structure for: A maior parte dos homens não quer salvar-se.
+A [o DET_F_S_] maior [grande ADJ_M/F_S_] parte [parte N_F_S_] dos [de PRP_] dos [o DET_M_P_] homens [homem N_M_P_] não [não ADV_] quer [querer V_PR_3S_IND_VFIN_] salvar [salvar V_INF_] -se [se PERS_M/F_3S/P_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER A] [ADJECTIVE maior] [NOUN parte] ] ] [PREPOSITION de] [NP [DETERMINER os] [NOUN homens] ] [ADVERB não] [VERB [VP [VERB quer] ] ] [VP [VERB salvar] ] [NP [PERSONAL_PRONOUN -se] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_75-15			Os direitos alheios cabe	cov	xml:117	sujeito plural + verbo singular	Os direitos alheios cabe-me defender.
+Flat structure for: Os direitos alheios cabe-me defender.
+Os [o DET_M_P_] direitos [direito ADJ_M_P_] alheios [alheio N_M_P_] cabe [caber V_PR_3S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] defender [defender V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER Os] [ADJECTIVE direitos] [NOUN alheios] ] ] [VERB [VP [VERB cabe] ] ] [NP [PERSONAL_PRONOUN -me] ] [VP [VERB defender] ] [PUNCTUATION_MARK .] ]
+
+[baseline] FP	PROBI_85-72			jamais queixar-se	cop|pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Um cavaleiro não deve jamais queixar-se.
+Flat structure for: Um cavaleiro não deve jamais queixar-se.
+Um [um DET_M_S_] cavaleiro [cavaleiro N_M_S_] não [não ADV_] deve [dever V_PR_3S_IND_VFIN_] jamais [jamais ADV_] queixar [queixar V_INF_] -se [se PERS_M/F_3S/P_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER Um] [NOUN cavaleiro] ] ] [ADVERB não] [VERB [VP [VERB deve] ] ] [ADVERB jamais] [VP [VERB queixar] ] [NP [PERSONAL_PRONOUN -se] ] [PUNCTUATION_MARK .] ]
+
+
+There are 18 new entries: 
+
+[new] FP	PROBI_38-99			da União R$ 2,5 milhões	con	xml:114	determinante singular + substantivo plural	Isso custou aos cofres da União R$ 2,5 milhões.
+Flat structure for: Isso custou aos cofres da União R$ 2,5 milhões.
+Isso [isso SPEC_M_S_] custou [custar V_PS_3S_IND_VFIN_] aos [a PRP_] aos [o DET_M_P_] cofres [cofre N_M_P_] da União [de PRP_] da União [a DET_F_S_] R$ 2 [R$ N_M_S_] ,5 [ NUM_M_P_] milhões [milhão N_M_P_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [SPECIFIER Isso] ] ] [VERB [VP [VERB custou] ] ] [PREPOSITION a] [NP [DETERMINER os] [NOUN cofres] ] [PREPOSITION de] [NP [DETERMINER a] [NOUN R$] ] [NP [NUMERAL ,5] [NOUN milhões] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_21-1			a causas	con	xml:114	determinante singular + substantivo plural	Dediquei-me a causas nobres.
+Flat structure for: Dediquei-me a causas nobres.
+Dediquei [dedicar V_PS_1S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] a [a PRP_] causas [causa N_F_P_] nobres [nobre ADJ_M/F_P_] . [. -PNT_ABS_] 
+Syntax tree: [S [VERB [VP [VERB Dediquei] ] ] [NP [PERSONAL_PRONOUN -me] ] [PREPOSITION a] [NP [NOUN causas] [ADJECTIVE nobres] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_cop_108-27			homens feriram-	con	xml:17	substantivo + adjetivo	Soube que os homens feriram-se.
+Flat structure for: Soube que os homens feriram-se.
+Soube [saber V_PS_3S_IND_VFIN_] que [que KS_] os [o DET_M_P_] homens [homem N_M_P_] feriram [ferir V_PS/MQP_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [VERB [VP [VERB Soube] ] ] [SUBORDINATING_CONJUNCTION que] [SUBJ [NP [DETERMINER os] [NOUN homens] ] ] [VERB [VP [VERB feriram] ] ] [NP [PERSONAL_PRONOUN -se] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_83-13			a regimes	con	xml:114	determinante singular + substantivo plural	Todas as dietas para emagrecer exibem um traço comum: azedam o humor de quem aceita submeter-se a regimes de inanição.
+Flat structure for: Todas as dietas para emagrecer exibem um traço comum:
+Todas [todo DET_F_P_] as [o DET_F_P_] dietas [dieta N_F_P_] para [para PRP_] emagrecer [emagrecer V_INF_] exibem [exibir V_PR_3P_IND_VFIN_] um [um DET_M_S_] traço [traço N_M_S_] comum [comum ADJ_M/F_S_] : [: -PNT_REL_] 
+Syntax tree: [S [VP [DETERMINER Todas] ] [NP [DETERMINER as] [NOUN dietas] ] [PREPOSITION para] [NP [VERB emagrecer] ] [VERB [VP [VERB exibem] ] ] [NP [DETERMINER um] [NOUN traço] [ADJECTIVE comum] ] [PUNCTUATION_MARK :] ]Flat structure for: azedam o humor de quem aceita submeter-se a regimes de inanição.
+Todas  [azedar V_PR_3P_IND_VFIN_] s [o DET_M_S_] dieta [humor N_M_S_]  p [de PRP_] ra e [quem SPEC_M/F_S/P_] agrece [aceitar V_PR_3S_IND_VFIN_]  exibem  [submeter V_INF_] um  [se PERS_M/F_3S/P_ACC_] r [a PRP_] ço comu [regime N_M_P_] :  [de PRP_] zedam o  [inanição N_F_S_] h [. -PNT_ABS_] 
+Syntax tree: [S [VERB [VP [VERB azedam] ] ] [NP [DETERMINER o] [NOUN humor] ] [PREPOSITION de] [SUBJ [SPECIFIER quem] ] [VERB [VP [VERB aceita] ] ] [VP [VERB submeter] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [NOUN regimes] ] [PREPOSITION de] [NP [NOUN inanição] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_60-88			a favor	con	xml:114	determinante singular + substantivo plural	Mais de um deputado e mais de um senador manifestaram-se a favor do projeto.
+Flat structure for: Mais de um deputado e mais de um senador manifestaram-se a favor do projeto.
+Mais [mais ADV_] de [de PRP_] um [um DET_M_S_] deputado [deputado N_M_S_] e [e KC_] mais [mais ADV_] de [de PRP_] um [um DET_M_S_] senador [senador N_M_S_] manifestaram [manifestar V_PS/MQP_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] favor [favor N_M_S_] do [de PRP_] do [o DET_M_S_] projeto [projeto N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Mais] [PREPOSITION de] [NP [DETERMINER um] [NOUN deputado] ] [COORDINATING_CONJUNCTION e] [ADVERB mais] [PREPOSITION de] [NP [DETERMINER um] [NOUN senador] ] [VERB [VP [VERB manifestaram] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [NOUN favor] ] [PREPOSITION de] [NP [DETERMINER o] [NOUN projeto] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_cop_108-16			a respeito	con	xml:114	determinante singular + substantivo plural	Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.
+Flat structure for: Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.
+Se [se KS_] ninguém [ninguém SPEC_M_S_] me [eu PERS_M/F_1S_ACC_] disse [dizer V_PS_3S_IND_VFIN_] a [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] se [se KS_] precisei [precisar V_PS_1S_IND_VFIN_] lutar [lutar V_INF_] para [para PRP_] encontrá [ V_INF_] -la [-la PERS_F_3S_ACC_] nada [nada SPEC_M_S_] falou [falar V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] respeito [respeito N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBORDINATING_CONJUNCTION Se] [SUBJ [NP [SPECIFIER ninguém] ] ] [NP [PERSONAL_PRONOUN me] ] [VERB [VP [VERB disse] ] ] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION se] [VERB [VP [VERB precisei] ] ] [VP [VERB lutar] ] [PREPOSITION para] [VP [VERB encontrá] ] [NP [PERSONAL_PRONOUN -la] ] [SPECIFIER nada] [VERB [VP [VERB falou] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [NOUN respeito] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_38-94			Isabel largou-	cov	xml:118	sujeito singular + verbo plural	Isabel largou-se dos braços do pai e correu ao encontro da mãe.
+Flat structure for: Isabel largou-se dos braços do pai e correu ao encontro da mãe.
+Isabel [ PROP_M/F_S_] largou [largar V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] dos [de PRP_] dos [o DET_M_P_] braços [braço N_M_P_] do [de PRP_] do [o DET_M_S_] pai [pai N_M_S_] e [e KC_] correu [correr V_PS_3S_IND_VFIN_] ao [a PRP_] ao [o DET_M_S_] encontro [encontro N_M_S_] da mãe [de PRP_] da mãe [ela PERS_F_3S_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [PROPER_NOUN Isabel] ] ] [VERB [VP [VERB largou] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION de] [NP [DETERMINER os] [NOUN braços] ] [PREPOSITION de] [NP [DETERMINER o] [NOUN pai] ] [COORDINATING_CONJUNCTION e] [VERB [VP [VERB correu] ] ] [PREPOSITION a] [NP [DETERMINER o] [NOUN encontro] ] [PREPOSITION de] [NP [PERSONAL_PRONOUN a] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_24-20			os Deus	con	xml:95	artigo plural + substantivo singular	E como em ambos os meios havia pecado, castiga-os Deus a ambos.
+Flat structure for: E como em ambos os meios havia pecado, castiga-os Deus a ambos.
+E [e KC_] como [como ADV_] em [em PRP_] ambos [ambos DET_M_P_] os [o DET_M_P_] meios [meio N_M_P_] havia [há PRP_] pecado [pecado N_M_S_] , [, -PNT_NSEP_] castiga [castigar V_PR_3S_IND_VFIN_] -os [eles PERS_M/F_3S/P_ACC_] Deus [deus N_M_S_] a [a PRP_] ambos [ambos DET_M_P_] . [. -PNT_ABS_] 
+Syntax tree: [S [COORDINATING_CONJUNCTION E] [ADVERB como] [PREPOSITION em] [NP [DETERMINER ambos] [DETERMINER os] [NOUN meios] ] [PREPOSITION havia] [NP [NOUN pecado] ] [PUNCTUATION_MARK ,] [VERB [VP [VERB castiga] ] ] [NP [PERSONAL_PRONOUN -os] ] [NP [NOUN Deus] ] [PREPOSITION a] [DETERMINER ambos] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_83-20			a favor	con	xml:114	determinante singular + substantivo plural	Todas as oito nações manifestaram-se a favor do projeto.
+Flat structure for: Todas as oito nações manifestaram-se a favor do projeto.
+Todas [todo DET_F_P_] as [o DET_F_P_] oito [oito NUM_M/F_P_] nações [nação N_F_P_] manifestaram [manifestar V_PS/MQP_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] favor [favor N_M_S_] do [de PRP_] do [o DET_M_S_] projeto [projeto N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [DETERMINER Todas] [NP [DETERMINER as] [NUMERAL oito] [NOUN nações] ] [VERB [VP [VERB manifestaram] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [NOUN favor] ] [PREPOSITION de] [NP [DETERMINER o] [NOUN projeto] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_cra_116-53			Emília resignou-	cov	xml:118	sujeito singular + verbo plural	Emília resignou-se a sorte.
+Flat structure for: Emília resignou-se a sorte.
+Emília [emília PROP_M/F_S_] resignou [resignar V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a DET_F_S_] sorte [sorte N_F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [PROPER_NOUN Emília] ] ] [VERB [VP [VERB resignou] ] ] [NP [PERSONAL_PRONOUN -se] ] [NP [DETERMINER a] [NOUN sorte] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_cov_111-80			a passos	con	xml:114	determinante singular + substantivo plural	Minas Gerais industrializam-se a passos largos.
+Flat structure for: Minas Gerais industrializam-se a passos largos.
+Minas [mina N_F_P_] Gerais [geral ADJ_M/F_P_] industrializam [industrializar V_PR_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] passos [passo N_M_P_] largos [largo ADJ_M_P_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [NOUN Minas] [ADJECTIVE Gerais] ] ] [VERB [VP [VERB industrializam] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [NOUN passos] [ADJECTIVE largos] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_cop_108-32			nos cansaço	con	xml:95	artigo plural + substantivo singular	Tudo causava-nos cansaço.
+Flat structure for: Tudo causava-nos cansaço.
+Tudo [tudo SPEC_M_S_] causava [causar V_IMPF_3S_IND_VFIN_] -nos [-nos PERS_M/F_1P_ACC_] cansaço [cansaço N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [SPECIFIER Tudo] ] ] [VERB [VP [VERB causava] ] ] [NP [PERSONAL_PRONOUN -nos] ] [NP [NOUN cansaço] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_cop_107-22			nos aquelas	con	xml:114	determinante singular + substantivo plural	De vez em quando torturavam-nos aquelas lembranças!
+Flat structure for: De vez em quando torturavam-nos aquelas lembranças!
+De [de PRP_] vez [vez N_F_S_] em [em PRP_] quando [quando ADV_] torturavam [torturar V_IMPF_3P_IND_VFIN_] -nos [-nos PERS_M/F_1P_ACC_] aquelas [aquele DET_F_P_] lembranças [lembrança N_F_P_] ! [! -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION De] [NP [NOUN vez] ] [PREPOSITION em] [ADVERB quando] [VERB [VP [VERB torturavam] ] ] [NP [PERSONAL_PRONOUN -nos] ] [NP [DETERMINER aquelas] [NOUN lembranças] ] [PUNCTUATION_MARK !] ]
+
+[new] FP	PROBI_82-41			no-lo aplicaram	cov	xml:118	sujeito singular + verbo plural	Tentamos evitar o trote, mas no-lo aplicaram assim mesmo.
+Flat structure for: Tentamos evitar o trote, mas no-lo aplicaram assim mesmo.
+Tentamos [tentar V_PR_1P_IND_VFIN_] evitar [evitar V_INF_] o [o DET_M_S_] trote [trote N_M_S_] , [, -PNT_NSEP_] mas [mas KC_] no [em PRP_] no [o DET_M_S_] -lo [-lo PERS_M/F_3S_ACC_] aplicaram [aplicar V_PS/MQP_3P_IND_VFIN_] assim [assim ADV_] mesmo [mesmo ADV_] . [. -PNT_ABS_] 
+Syntax tree: [S [VERB [VP [VERB Tentamos] ] ] [VP [VERB evitar] ] [NP [DETERMINER o] [NOUN trote] ] [PUNCTUATION_MARK ,] [COORDINATING_CONJUNCTION mas] [PREPOSITION em] [DETERMINER o] [NP [PERSONAL_PRONOUN -lo] ] [VERB [VP [VERB aplicaram] ] ] [ADVERB assim] [ADVERB mesmo] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_62-52			a passos	con	xml:114	determinante singular + substantivo plural	Minas Gerais industrializa-se a passos largos.
+Flat structure for: Minas Gerais industrializa-se a passos largos.
+Minas [mina N_F_P_] Gerais [geral ADJ_M/F_P_] industrializa [industrializar V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] passos [passo N_M_P_] largos [largo ADJ_M_P_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [NOUN Minas] [ADJECTIVE Gerais] ] ] [VERB [VP [VERB industrializa] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [NOUN passos] [ADJECTIVE largos] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_cov_111-61			a favor	con	xml:114	determinante singular + substantivo plural	Mais de um deputado e mais de um senador manifestou-se a favor do
+Flat structure for: Mais de um deputado e mais de um senador manifestou-se a favor do
+Mais [mais ADV_] de [de PRP_] um [um DET_M_S_] deputado [deputado N_M_S_] e [e KC_] mais [mais ADV_] de [de PRP_] um [um DET_M_S_] senador [senador N_M_S_] manifestou [manifestar V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] favor [favor N_M_S_] do [de PRP_] do [o DET_M_S_] 
+Syntax tree: [S [ADVERB Mais] [PREPOSITION de] [NP [DETERMINER um] [NOUN deputado] ] [COORDINATING_CONJUNCTION e] [ADVERB mais] [PREPOSITION de] [NP [DETERMINER um] [NOUN senador] ] [VERB [VP [VERB manifestou] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [NOUN favor] ] [PREPOSITION de] [NP [DETERMINER o] ] ]
+
+[new] FP	PROBI_cop_107-43			sol os pássaros debandam	cov	xml:118	sujeito singular + verbo plural	Em pondo-se o sol os pássaros debandam.
+Flat structure for: Em pondo-se o sol os pássaros debandam.
+Em [em PRP_] pondo [pôr V_GER_] -se [se PERS_M/F_3S/P_ACC_] o [o DET_M_S_] sol [sol N_M_S_] os [o DET_M_P_] pássaros [pássaro N_M_P_] debandam [debandar V_PR_3P_IND_VFIN_] . [. -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Em] [VP [VERB pondo] ] [NP [PERSONAL_PRONOUN -se] ] [NP [DETERMINER o] [NOUN sol] ] [SUBJ [NP [DETERMINER os] [NOUN pássaros] ] ] [VERB [VP [VERB debandam] ] ] [PUNCTUATION_MARK .] ]
+
+[new] FP	PROBI_58-3			a andar	con	xml:114	determinante singular + substantivo plural	Quem espera por sapatos de defunto arrisca-se a andar toda a vida descalço.
+Flat structure for: Quem espera por sapatos de defunto arrisca-se a andar toda a vida descalço.
+Quem [quem SPEC_M/F_S/P_] espera [esperar V_PR_3S_IND_VFIN_] por [por PRP_] sapatos [sapato N_M_P_] de [de PRP_] defunto [defunto N_M_S_] arrisca [arriscar V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] andar [andar V_INF_] toda [toda ADV_] a [a DET_F_S_] vida [vida N_F_S_] descalço [descalço ADJ_M/F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [SPECIFIER Quem] ] ] [VERB [VP [VERB espera] ] ] [PREPOSITION por] [NP [NOUN sapatos] ] [PREPOSITION de] [NP [NOUN defunto] ] [VERB [VP [VERB arrisca] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [VP [VERB andar] ] [ADVERB toda] [NP [DETERMINER a] [NOUN vida] [ADJECTIVE descalço] ] [PUNCTUATION_MARK .] ]
+
+
+compare FN 
+In baseline: 2283 In new: 2312
+
+There are 0 removed entries: 
+
+
+There are 29 new entries: 
+
+[new] FN	PROBI_cop_107-4	A festa que realizou-se ontem acabou tarde.	cop					A festa que realizou-se ontem acabou tarde.
+Flat structure for: A festa que realizou-se ontem acabou tarde.
+A [o DET_F_S_] festa [festa N_F_S_] que [que SPEC_M/F_S/P_] realizou [realizar V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] ontem [ontem ADV_] acabou [acabar V_PS_3S_IND_VFIN_] tarde [tarde ADV_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER A] [NOUN festa] ] ] [NP [SPECIFIER que] ] [VERB [VP [VERB realizou] ] ] [SUBJ [NP [PERSONAL_PRONOUN -se] ] ] [ADVERB ontem] [VERB [VP [VERB acabou] ] ] [ADVERB tarde] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-10	Aqui faz-se, aqui paga-se.	cop					Aqui faz-se, aqui paga-se.
+Flat structure for: Aqui faz-se, aqui paga-se.
+Aqui [aqui ADV_] faz [fazer V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] , [, -PNT_NSEP_] aqui [aqui ADV_] paga [pagar V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Aqui] [VERB [VP [VERB faz] ] ] [NP [PERSONAL_PRONOUN -se] ] [PUNCTUATION_MARK ,] [ADVERB aqui] [VERB [VP [VERB paga] ] ] [SUBJ [NP [PERSONAL_PRONOUN -se] ] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-90	Para isso necessitava de um fato qualquer que convencesse-lhe de ir.	cop					Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+Flat structure for: Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+Para [para PRP_] isso [isso SPEC_M_S_] necessitava [necessitar V_IMPF_3S_IND_VFIN_] de [de PRP_] um [um DET_M_S_] fato [fato N_M_S_] qualquer [qualquer DET_M/F_S_] que [que KS_] convencesse [convencer V_IMPF_3S_SUBJ_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] de [de PRP_] ir [ir V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Para] [SUBJ [SPECIFIER isso] ] [VERB [VP [VERB necessitava] ] ] [PREPOSITION de] [NP [DETERMINER um] [NOUN fato] ] [VP [DETERMINER qualquer] ] [SUBORDINATING_CONJUNCTION que] [VERB [VP [VERB convencesse] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [PREPOSITION de] [VP [VERB ir] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-65	Não devo-lhe falar a verdade, para não a ferir.	cop					Não devo-lhe falar a verdade, para não a ferir.
+Flat structure for: Não devo-lhe falar a verdade, para não a ferir.
+Não [não ADV_] devo [dever V_PR_1S_IND_VFIN_] -lhe [ele PERS_M/F_3S/P_DAT_] falar [falar V_INF_] a [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] para [para PRP_] não [não ADV_] a [a PRP_] ferir [ferir V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Não] [VERB [VP [VERB devo] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [VP [VERB falar] ] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [PREPOSITION para] [ADVERB não] [PREPOSITION a] [VP [VERB ferir] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_con_105-62	Por favor, dê-me trezentas gramas de azeitona!	con					Por favor, dê-me trezentas gramas de azeitona!
+Flat structure for: Por favor, dê-me trezentas gramas de azeitona!
+Por [por PRP_] favor [favor N_M_S_] , [, -PNT_NSEP_] dê [dê N_M_S_] -me [eu PERS_M/F_1S_ACC_] trezentas [trezentos NUM_M_S_] gramas [grama N_M/F_P_] de [de PRP_] azeitona [azeitona N_F_S_] ! [! -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Por] [NP [NOUN favor] ] [PUNCTUATION_MARK ,] [NP [NOUN dê] ] [PERSONAL_PRONOUN -me] [NP [NUMERAL trezentas] [NOUN gramas] ] [PREPOSITION de] [NP [NOUN azeitona] ] [PUNCTUATION_MARK !] ]
+
+[new] FN	PROBI_cop_108-5	Quando falava-se no assunto, todos se calavam.	cop					Quando falava-se no assunto, todos se calavam.
+Flat structure for: Quando falava-se no assunto, todos se calavam.
+Quando [quando ADV_] falava [falar V_IMPF_1/3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] no [em PRP_] no [o DET_M_S_] assunto [assunto N_M_S_] , [, -PNT_NSEP_] todos [todo DET_M_P_] se [se PERS_M/F_3S/P_ACC_] calavam [calar V_IMPF_3P_IND_VFIN_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Quando] [VERB [VP [VERB falava] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION em] [NP [DETERMINER o] [NOUN assunto] ] [PUNCTUATION_MARK ,] [NP [DETERMINER todos] ] [SUBJ [NP [PERSONAL_PRONOUN se] ] ] [VERB [VP [VERB calavam] ] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-11	Aqui vive-se com sacrifício, mas em harmonia.	cop					Aqui vive-se com sacrifício, mas em harmonia.
+Flat structure for: Aqui vive-se com sacrifício, mas em harmonia.
+Aqui [aqui ADV_] vive [viver V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] com [com PRP_] sacrifício [sacrifício N_M_S_] , [, -PNT_NSEP_] mas [mas KC_] em [em PRP_] harmonia [harmonia N_F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Aqui] [VERB [VP [VERB vive] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION com] [NP [NOUN sacrifício] ] [PUNCTUATION_MARK ,] [COORDINATING_CONJUNCTION mas] [PREPOSITION em] [NP [NOUN harmonia] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_108-1	Por que olhas-me com tanta desconfiança?	cop					Por que olhas-me com tanta desconfiança?
+Flat structure for: Por que olhas-me com tanta desconfiança?
+Por [por PRP_] que [que SPEC_M/F_S/P_] olhas [olhar V_PR_2S_IND_VFIN_] -me [eu PERS_M/F_1S_DAT_] com [com PRP_] tanta [tanto DET_F_S_] desconfiança [desconfiança N_F_S_] ? [? -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Por] [SPECIFIER que] [VERB [VP [VERB olhas] ] ] [NP [PERSONAL_PRONOUN -me] ] [PREPOSITION com] [NP [DETERMINER tanta] [NOUN desconfiança] ] [PUNCTUATION_MARK ?] ]
+
+[new] FN	PROBI_cop_107-52	Gostaríamos que avisassem-nos sobre a reunião.	cop					Gostaríamos que avisassem-nos sobre a reunião.
+Flat structure for: Gostaríamos que avisassem-nos sobre a reunião.
+Gostaríamos [gostar V_COND_1P_VFIN_] que [que KS_] avisassem [avisar V_IMPF_3P_SUBJ_VFIN_] -nos [-nos PERS_M/F_1P_ACC_] sobre [sobre PRP_] a [a DET_F_S_] reunião [reunião N_F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [VERB [VP [VERB Gostaríamos] ] ] [SUBORDINATING_CONJUNCTION que] [VERB [VP [VERB avisassem] ] ] [NP [PERSONAL_PRONOUN -nos] ] [PREPOSITION sobre] [NP [DETERMINER a] [NOUN reunião] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cov_109-11	A maior parte recusaram-se a segui-lo.	cov					A maior parte recusaram-se a segui-lo.
+Flat structure for: A maior parte recusaram-se a segui-lo.
+A [o DET_F_S_] maior [grande ADJ_M/F_S_] parte [parte N_F_S_] recusaram [recusar V_PS/MQP_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] segui [seguir V_PS_1S_IND_VFIN_] -lo [-lo PERS_M_3S_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER A] [ADJECTIVE maior] [NOUN parte] ] ] [VERB [VP [VERB recusaram] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [VERB [VP [VERB segui] ] ] [NP [PERSONAL_PRONOUN -lo] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-59	Mestre Romão ordenou que levassem-lhe o cravo para a sala do fundo.	cop					Mestre Romão ordenou que levassem-lhe o cravo para a sala do fundo.
+Flat structure for: Mestre Romão ordenou que levassem-lhe o cravo para a sala do fundo.
+Mestre [mestre N_M_S_] Romão [ PROP_M_S_] ordenou [ordenar V_PS_3S_IND_VFIN_] que [que KS_] levassem [levar V_IMPF_3P_SUBJ_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] o [o DET_M_S_] cravo [cravo N_M_S_] para [para PRP_] a [a DET_F_S_] sala [sala N_F_S_] do [de PRP_] do [o DET_M_S_] fundo [fundo N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [NP [NOUN Mestre] ] [SUBJ [NP [PROPER_NOUN Romão] ] ] [VERB [VP [VERB ordenou] ] ] [SUBORDINATING_CONJUNCTION que] [VERB [VP [VERB levassem] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [NP [DETERMINER o] [NOUN cravo] ] [PREPOSITION para] [NP [DETERMINER a] [NOUN sala] ] [PREPOSITION de] [NP [DETERMINER o] [NOUN fundo] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_pro_132-37	Não devo-lhe falar a verdade, para não a ferir.	pro					Não devo-lhe falar a verdade, para não a ferir.
+Flat structure for: Não devo-lhe falar a verdade, para não a ferir.
+Não [não ADV_] devo [dever V_PR_1S_IND_VFIN_] -lhe [ele PERS_M/F_3S/P_DAT_] falar [falar V_INF_] a [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] para [para PRP_] não [não ADV_] a [a PRP_] ferir [ferir V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Não] [VERB [VP [VERB devo] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [VP [VERB falar] ] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [PREPOSITION para] [ADVERB não] [PREPOSITION a] [VP [VERB ferir] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_pro_132-51	Para isso necessitava de um fato qualquer que convencesse-lhe de ir.	pro					Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+Flat structure for: Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+Para [para PRP_] isso [isso SPEC_M_S_] necessitava [necessitar V_IMPF_3S_IND_VFIN_] de [de PRP_] um [um DET_M_S_] fato [fato N_M_S_] qualquer [qualquer DET_M/F_S_] que [que KS_] convencesse [convencer V_IMPF_3S_SUBJ_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] de [de PRP_] ir [ir V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Para] [SUBJ [SPECIFIER isso] ] [VERB [VP [VERB necessitava] ] ] [PREPOSITION de] [NP [DETERMINER um] [NOUN fato] ] [VP [DETERMINER qualquer] ] [SUBORDINATING_CONJUNCTION que] [VERB [VP [VERB convencesse] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [PREPOSITION de] [VP [VERB ir] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_108-16	Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.	cop					Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.
+Flat structure for: Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.
+Se [se KS_] ninguém [ninguém SPEC_M_S_] me [eu PERS_M/F_1S_ACC_] disse [dizer V_PS_3S_IND_VFIN_] a [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] se [se KS_] precisei [precisar V_PS_1S_IND_VFIN_] lutar [lutar V_INF_] para [para PRP_] encontrá [ V_INF_] -la [-la PERS_F_3S_ACC_] nada [nada SPEC_M_S_] falou [falar V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] respeito [respeito N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBORDINATING_CONJUNCTION Se] [SUBJ [NP [SPECIFIER ninguém] ] ] [NP [PERSONAL_PRONOUN me] ] [VERB [VP [VERB disse] ] ] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION se] [VERB [VP [VERB precisei] ] ] [VP [VERB lutar] ] [PREPOSITION para] [VP [VERB encontrá] ] [NP [PERSONAL_PRONOUN -la] ] [SPECIFIER nada] [VERB [VP [VERB falou] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [NOUN respeito] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_108-25	Só não o chamei louco, porque quero-lhe muito bem.	cop					Só não o chamei louco, porque quero-lhe muito bem.
+Flat structure for: Só não o chamei louco, porque quero-lhe muito bem.
+Só [só ADV_] não [não ADV_] o [ele PERS_M_3S_ACC_] chamei [chamar V_PS_1S_IND_VFIN_] louco [louco ADJ_M/F_S_] , [, -PNT_NSEP_] porque [porque KS_] quero [querer V_PR_1S_IND_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] muito [muito ADV_] bem [bem ADV_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Só] [ADVERB não] [NP [PERSONAL_PRONOUN o] ] [VERB [VP [VERB chamei] ] ] [ADJECTIVE louco] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION porque] [VERB [VP [VERB quero] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [ADVERB muito] [ADVERB bem] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_108-2	Por que persegues-me, se eu sempre dispus-me a o ajudar?	cop					Por que persegues-me, se eu sempre dispus-me a o ajudar?
+Flat structure for: Por que persegues-me, se eu sempre dispus-me a o ajudar?
+Por [por PRP_] que [que SPEC_M/F_S/P_] persegues [perseguir V_PR_2S_IND_VFIN_] -me [eu PERS_M/F_1S_DAT_] , [, -PNT_NSEP_] se [se KS_] eu [eu PERS_M/F_1S_NOM_] sempre [sempre ADV_] dispus [dispor V_PS_1S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] a [a PRP_] o [o DET_M_S_] ajudar [ajudar V_INF_] ? [? -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Por] [SPECIFIER que] [VERB [VP [VERB persegues] ] ] [NP [PERSONAL_PRONOUN -me] ] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION se] [SUBJ [NP [PERSONAL_PRONOUN eu] ] ] [ADVERB sempre] [VERB [VP [VERB dispus] ] ] [NP [PERSONAL_PRONOUN -me] ] [PREPOSITION a] [NP [DETERMINER o] [VERB ajudar] ] [PUNCTUATION_MARK ?] ]
+
+[new] FN	PROBI_cop_107-66	Não diga-lhe nada.	cop					Não diga-lhe nada.
+Flat structure for: Não diga-lhe nada.
+Não [não ADV_] diga [dizer V_PR_1/3S_SUBJ_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] nada [nada SPEC_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Não] [VERB [VP [VERB diga] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [SPECIFIER nada] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-54	Jamais considerei-me singular.	cop					Jamais considerei-me singular.
+Flat structure for: Jamais considerei-me singular.
+Jamais [jamais ADV_] considerei [considerar V_PS_1S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] singular [singular ADJ_M/F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Jamais] [VERB [VP [VERB considerei] ] ] [NP [PERSONAL_PRONOUN -me] [ADJECTIVE singular] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-25	Devo-lhe dizer que não posso-me trair.	cop					Devo-lhe dizer que não posso-me trair.
+Flat structure for: Devo-lhe dizer que não posso-me trair.
+Devo [dever V_PR_1S_IND_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] dizer [dizer V_INF_] que [que KS_] não [não ADV_] posso [poder V_PR_1S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] trair [trair V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [VERB [VP [VERB Devo] ] ] [SUBJ [NP [PERSONAL_PRONOUN -lhe] ] ] [VP [VERB dizer] ] [SUBORDINATING_CONJUNCTION que] [ADVERB não] [VERB [VP [VERB posso] ] ] [NP [PERSONAL_PRONOUN -me] ] [VP [VERB trair] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-64	Não chegou-se a nenhuma conclusão lógica sobre a solução do problema.	cop					Não chegou-se a nenhuma conclusão lógica sobre a solução do problema.
+Flat structure for: Não chegou-se a nenhuma conclusão lógica sobre a solução do problema.
+Não [não ADV_] chegou [chegar V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] nenhuma [nenhum DET_F_S_] conclusão [conclusão N_F_S_] lógica [lógico ADJ_F_S_] sobre [sobre PRP_] a [a DET_F_S_] solução [solução N_F_S_] do [de PRP_] do [o DET_M_S_] problema [problema N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Não] [VERB [VP [VERB chegou] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [DETERMINER nenhuma] [NOUN conclusão] [ADJECTIVE lógica] ] [PREPOSITION sobre] [NP [DETERMINER a] [NOUN solução] ] [PREPOSITION de] [NP [DETERMINER o] [NOUN problema] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_108-7	Quem perturbava-nos tanto?	cop					Quem perturbava-nos tanto?
+Flat structure for: Quem perturbava-nos tanto?
+Quem [quem SPEC_M/F_S/P_] perturbava [perturbar V_IMPF_3S_IND_VFIN_] -nos [-nos PERS_M/F_1P_ACC_] tanto [tanto ADV_] ? [? -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [SPECIFIER Quem] ] ] [VERB [VP [VERB perturbava] ] ] [NP [PERSONAL_PRONOUN -nos] ] [ADVERB tanto] [PUNCTUATION_MARK ?] ]
+
+[new] FN	PROBI_cop_108-36	Vilela não respondeu-lhe.	cop					Vilela não respondeu-lhe.
+Flat structure for: Vilela não respondeu-lhe.
+Vilela [ PROP_M/F_S_] não [não ADV_] respondeu [responder V_PS_3S_IND_VFIN_] -lhe [ele PERS_M/F_3S/P_DAT_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [PROPER_NOUN Vilela] ] ] [ADVERB não] [VERB [VP [VERB respondeu] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_108-14	Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.	cop					Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.
+Flat structure for: Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.
+Se [se KS_] ninguém [ninguém SPEC_M_S_] disse [dizer V_PS_3S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] a [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] se [se KS_] precisei [precisar V_PS_1S_IND_VFIN_] lutar [lutar V_INF_] para [para PRP_] encontrá [ V_INF_] -la [-la PERS_F_3S_ACC_] nada [nada SPEC_M_S_] se [se PERS_M/F_3S/P_ACC_] falou [falar V_PS_3S_IND_VFIN_] a [a PRP_] respeito [respeito N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBORDINATING_CONJUNCTION Se] [SUBJ [NP [SPECIFIER ninguém] ] ] [VERB [VP [VERB disse] ] ] [NP [PERSONAL_PRONOUN -me] ] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION se] [VERB [VP [VERB precisei] ] ] [VP [VERB lutar] ] [PREPOSITION para] [VP [VERB encontrá] ] [NP [PERSONAL_PRONOUN -la] ] [NP [SPECIFIER nada] ] [NP [PERSONAL_PRONOUN se] ] [VERB [VP [VERB falou] ] ] [PREPOSITION a] [NP [NOUN respeito] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-48	Este é um trabalho que absorve-me muito.	cop					Este é um trabalho que absorve-me muito.
+Flat structure for: Este é um trabalho que absorve-me muito.
+Este [este DET_M_S_] é [ser V_PR_3S_IND_VFIN_] um [um DET_M_S_] trabalho [trabalho N_M_S_] que [que SPEC_M/F_S/P_] absorve [absorver V_PR_3S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] muito [muito ADV_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER Este] ] ] [VERB [VP [VERB é] ] ] [NP [DETERMINER um] [NOUN trabalho] ] [NP [SPECIFIER que] ] [VERB [VP [VERB absorve] ] ] [NP [PERSONAL_PRONOUN -me] ] [ADVERB muito] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-98	Por artes não sabe-se de que cabeça, tenciona-se limitar as oportunidades de reunião.	cop					Por artes não sabe-se de que cabeça, tenciona-se limitar as oportunidades de reunião.
+Flat structure for: Por artes não sabe-se de que cabeça, tenciona-se limitar as oportunidades de reunião.
+Por [por PRP_] artes [arte N_F_P_] não [não ADV_] sabe [saber V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] de [de PRP_] que [que KS_] cabeça [cabeça N_F_S_] , [, -PNT_NSEP_] tenciona [tencionar V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] limitar [limitar V_INF_] as [o DET_F_P_] oportunidades [oportunidade N_F_P_] de [de PRP_] reunião [reunião N_F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Por] [NP [NOUN artes] ] [ADVERB não] [VERB [VP [VERB sabe] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION de] [SUBORDINATING_CONJUNCTION que] [NP [NOUN cabeça] ] [PUNCTUATION_MARK ,] [VERB [VP [VERB tenciona] ] ] [SUBJ [NP [PERSONAL_PRONOUN -se] ] ] [VP [VERB limitar] ] [NP [DETERMINER as] [NOUN oportunidades] ] [PREPOSITION de] [NP [NOUN reunião] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_108-32	Tudo causava-nos cansaço.	cop					Tudo causava-nos cansaço.
+Flat structure for: Tudo causava-nos cansaço.
+Tudo [tudo SPEC_M_S_] causava [causar V_IMPF_3S_IND_VFIN_] -nos [-nos PERS_M/F_1P_ACC_] cansaço [cansaço N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [SPECIFIER Tudo] ] ] [VERB [VP [VERB causava] ] ] [NP [PERSONAL_PRONOUN -nos] ] [NP [NOUN cansaço] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-22	De vez em quando torturavam-nos aquelas lembranças!	cop					De vez em quando torturavam-nos aquelas lembranças!
+Flat structure for: De vez em quando torturavam-nos aquelas lembranças!
+De [de PRP_] vez [vez N_F_S_] em [em PRP_] quando [quando ADV_] torturavam [torturar V_IMPF_3P_IND_VFIN_] -nos [-nos PERS_M/F_1P_ACC_] aquelas [aquele DET_F_P_] lembranças [lembrança N_F_P_] ! [! -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION De] [NP [NOUN vez] ] [PREPOSITION em] [ADVERB quando] [VERB [VP [VERB torturavam] ] ] [NP [PERSONAL_PRONOUN -nos] ] [NP [DETERMINER aquelas] [NOUN lembranças] ] [PUNCTUATION_MARK !] ]
+
+[new] FN	PROBI_pro_132-56	Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.	pro					Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.
+Flat structure for: Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.
+Se [se KS_] ninguém [ninguém SPEC_M_S_] disse [dizer V_PS_3S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] a [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] se [se KS_] precisei [precisar V_PS_1S_IND_VFIN_] lutar [lutar V_INF_] para [para PRP_] encontrá [ V_INF_] -la [-la PERS_F_3S_ACC_] nada [nada SPEC_M_S_] se [se PERS_M/F_3S/P_ACC_] falou [falar V_PS_3S_IND_VFIN_] a [a PRP_] respeito [respeito N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBORDINATING_CONJUNCTION Se] [SUBJ [NP [SPECIFIER ninguém] ] ] [VERB [VP [VERB disse] ] ] [NP [PERSONAL_PRONOUN -me] ] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION se] [VERB [VP [VERB precisei] ] ] [VP [VERB lutar] ] [PREPOSITION para] [VP [VERB encontrá] ] [NP [PERSONAL_PRONOUN -la] ] [NP [SPECIFIER nada] ] [NP [PERSONAL_PRONOUN se] ] [VERB [VP [VERB falou] ] ] [PREPOSITION a] [NP [NOUN respeito] ] [PUNCTUATION_MARK .] ]
+
+[new] FN	PROBI_cop_107-61	Na verdade, sempre pediram-me o mesmo trabalho.	cop					Na verdade, sempre pediram-me o mesmo trabalho.
+Flat structure for: Na verdade, sempre pediram-me o mesmo trabalho.
+Na [em PRP_] Na [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] sempre [sempre ADV_] pediram [pedir V_PS/MQP_3P_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] o [o DET_M_S_] mesmo [mesmo DET_M_S_] trabalho [trabalho N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Em] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [ADVERB sempre] [VERB [VP [VERB pediram] ] ] [NP [PERSONAL_PRONOUN -me] ] [NP [DETERMINER o] [DETERMINER mesmo] [NOUN trabalho] ] [PUNCTUATION_MARK .] ]
+
+
+compare TP 
+In baseline: 333 In new: 304
+
+There are 29 removed entries: 
+
+[baseline] TP	PROBI_cop_107-4	que realizou-se ontem	cop	que realizou-se ontem	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	A festa que realizou-se ontem acabou tarde.
+Flat structure for: A festa que realizou-se ontem acabou tarde.
+A [o DET_F_S_] festa [festa N_F_S_] que [que SPEC_M/F_S/P_] realizou [realizar V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] ontem [ontem ADV_] acabou [acabar V_PS_3S_IND_VFIN_] tarde [tarde ADV_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER A] [NOUN festa] ] ] [NP [SPECIFIER que] ] [VERB [VP [VERB realizou] ] ] [SUBJ [NP [PERSONAL_PRONOUN -se] ] ] [ADVERB ontem] [VERB [VP [VERB acabou] ] ] [ADVERB tarde] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_107-10	Aqui faz-se	cop	Aqui faz-se	cop	xml:67	advérbio + verbo + pronome oblíquo	Aqui faz-se, aqui paga-se.
+Flat structure for: Aqui faz-se, aqui paga-se.
+Aqui [aqui ADV_] faz [fazer V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] , [, -PNT_NSEP_] aqui [aqui ADV_] paga [pagar V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Aqui] [VERB [VP [VERB faz] ] ] [NP [PERSONAL_PRONOUN -se] ] [PUNCTUATION_MARK ,] [ADVERB aqui] [VERB [VP [VERB paga] ] ] [SUBJ [NP [PERSONAL_PRONOUN -se] ] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_107-90	que convencesse-lhe de	cop	que convencesse-lhe de	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+Flat structure for: Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+Para [para PRP_] isso [isso SPEC_M_S_] necessitava [necessitar V_IMPF_3S_IND_VFIN_] de [de PRP_] um [um DET_M_S_] fato [fato N_M_S_] qualquer [qualquer DET_M/F_S_] que [que KS_] convencesse [convencer V_IMPF_3S_SUBJ_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] de [de PRP_] ir [ir V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Para] [SUBJ [SPECIFIER isso] ] [VERB [VP [VERB necessitava] ] ] [PREPOSITION de] [NP [DETERMINER um] [NOUN fato] ] [VP [DETERMINER qualquer] ] [SUBORDINATING_CONJUNCTION que] [VERB [VP [VERB convencesse] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [PREPOSITION de] [VP [VERB ir] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_107-65	Não devo-lhe	cop	Não devo-lhe	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Não devo-lhe falar a verdade, para não a ferir.
+Flat structure for: Não devo-lhe falar a verdade, para não a ferir.
+Não [não ADV_] devo [dever V_PR_1S_IND_VFIN_] -lhe [ele PERS_M/F_3S/P_DAT_] falar [falar V_INF_] a [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] para [para PRP_] não [não ADV_] a [a PRP_] ferir [ferir V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Não] [VERB [VP [VERB devo] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [VP [VERB falar] ] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [PREPOSITION para] [ADVERB não] [PREPOSITION a] [VP [VERB ferir] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_con_105-62	trezentas gramas	con	trezentas gramas	con	xml:115	Concordância Numeral-Substantivo	Por favor, dê-me trezentas gramas de azeitona!
+Flat structure for: Por favor, dê-me trezentas gramas de azeitona!
+Por [por PRP_] favor [favor N_M_S_] , [, -PNT_NSEP_] dê [dê N_M_S_] -me [eu PERS_M/F_1S_ACC_] trezentas [trezentos NUM_M_S_] gramas [grama N_M/F_P_] de [de PRP_] azeitona [azeitona N_F_S_] ! [! -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Por] [NP [NOUN favor] ] [PUNCTUATION_MARK ,] [NP [NOUN dê] ] [PERSONAL_PRONOUN -me] [NP [NUMERAL trezentas] [NOUN gramas] ] [PREPOSITION de] [NP [NOUN azeitona] ] [PUNCTUATION_MARK !] ]
+
+[baseline] TP	PROBI_cop_108-5	Quando falava-se no	cop	Quando falava-se no	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Quando falava-se no assunto, todos se calavam.
+Flat structure for: Quando falava-se no assunto, todos se calavam.
+Quando [quando ADV_] falava [falar V_IMPF_1/3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] no [em PRP_] no [o DET_M_S_] assunto [assunto N_M_S_] , [, -PNT_NSEP_] todos [todo DET_M_P_] se [se PERS_M/F_3S/P_ACC_] calavam [calar V_IMPF_3P_IND_VFIN_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Quando] [VERB [VP [VERB falava] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION em] [NP [DETERMINER o] [NOUN assunto] ] [PUNCTUATION_MARK ,] [NP [DETERMINER todos] ] [SUBJ [NP [PERSONAL_PRONOUN se] ] ] [VERB [VP [VERB calavam] ] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_107-11	Aqui vive-se	cop	Aqui vive-se	cop	xml:67	advérbio + verbo + pronome oblíquo	Aqui vive-se com sacrifício, mas em harmonia.
+Flat structure for: Aqui vive-se com sacrifício, mas em harmonia.
+Aqui [aqui ADV_] vive [viver V_PR_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] com [com PRP_] sacrifício [sacrifício N_M_S_] , [, -PNT_NSEP_] mas [mas KC_] em [em PRP_] harmonia [harmonia N_F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Aqui] [VERB [VP [VERB vive] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION com] [NP [NOUN sacrifício] ] [PUNCTUATION_MARK ,] [COORDINATING_CONJUNCTION mas] [PREPOSITION em] [NP [NOUN harmonia] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_108-1	que olhas-me com	cop	que olhas-me com	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Por que olhas-me com tanta desconfiança?
+Flat structure for: Por que olhas-me com tanta desconfiança?
+Por [por PRP_] que [que SPEC_M/F_S/P_] olhas [olhar V_PR_2S_IND_VFIN_] -me [eu PERS_M/F_1S_DAT_] com [com PRP_] tanta [tanto DET_F_S_] desconfiança [desconfiança N_F_S_] ? [? -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Por] [SPECIFIER que] [VERB [VP [VERB olhas] ] ] [NP [PERSONAL_PRONOUN -me] ] [PREPOSITION com] [NP [DETERMINER tanta] [NOUN desconfiança] ] [PUNCTUATION_MARK ?] ]
+
+[baseline] TP	PROBI_cop_107-52	que avisassem-nos sobre	cop	que avisassem-nos sobre	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Gostaríamos que avisassem-nos sobre a reunião.
+Flat structure for: Gostaríamos que avisassem-nos sobre a reunião.
+Gostaríamos [gostar V_COND_1P_VFIN_] que [que KS_] avisassem [avisar V_IMPF_3P_SUBJ_VFIN_] -nos [-nos PERS_M/F_1P_ACC_] sobre [sobre PRP_] a [a DET_F_S_] reunião [reunião N_F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [VERB [VP [VERB Gostaríamos] ] ] [SUBORDINATING_CONJUNCTION que] [VERB [VP [VERB avisassem] ] ] [NP [PERSONAL_PRONOUN -nos] ] [PREPOSITION sobre] [NP [DETERMINER a] [NOUN reunião] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cov_109-11	A maior parte recusaram	cov	A maior parte recusaram	cov	xml:118	sujeito singular + verbo plural	A maior parte recusaram-se a segui-lo.
+Flat structure for: A maior parte recusaram-se a segui-lo.
+A [o DET_F_S_] maior [grande ADJ_M/F_S_] parte [parte N_F_S_] recusaram [recusar V_PS/MQP_3P_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] segui [seguir V_PS_1S_IND_VFIN_] -lo [-lo PERS_M_3S_ACC_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBJ [NP [DETERMINER A] [ADJECTIVE maior] [NOUN parte] ] ] [VERB [VP [VERB recusaram] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [VERB [VP [VERB segui] ] ] [NP [PERSONAL_PRONOUN -lo] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_107-59	que levassem-lhe o	cop	que levassem-lhe o	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Mestre Romão ordenou que levassem-lhe o cravo para a sala do fundo.
+Flat structure for: Mestre Romão ordenou que levassem-lhe o cravo para a sala do fundo.
+Mestre [mestre N_M_S_] Romão [ PROP_M_S_] ordenou [ordenar V_PS_3S_IND_VFIN_] que [que KS_] levassem [levar V_IMPF_3P_SUBJ_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] o [o DET_M_S_] cravo [cravo N_M_S_] para [para PRP_] a [a DET_F_S_] sala [sala N_F_S_] do [de PRP_] do [o DET_M_S_] fundo [fundo N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [NP [NOUN Mestre] ] [SUBJ [NP [PROPER_NOUN Romão] ] ] [VERB [VP [VERB ordenou] ] ] [SUBORDINATING_CONJUNCTION que] [VERB [VP [VERB levassem] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [NP [DETERMINER o] [NOUN cravo] ] [PREPOSITION para] [NP [DETERMINER a] [NOUN sala] ] [PREPOSITION de] [NP [DETERMINER o] [NOUN fundo] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_pro_132-37	Não devo-lhe	pro	Não devo-lhe	pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Não devo-lhe falar a verdade, para não a ferir.
+Flat structure for: Não devo-lhe falar a verdade, para não a ferir.
+Não [não ADV_] devo [dever V_PR_1S_IND_VFIN_] -lhe [ele PERS_M/F_3S/P_DAT_] falar [falar V_INF_] a [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] para [para PRP_] não [não ADV_] a [a PRP_] ferir [ferir V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Não] [VERB [VP [VERB devo] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [VP [VERB falar] ] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [PREPOSITION para] [ADVERB não] [PREPOSITION a] [VP [VERB ferir] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_pro_132-51	que convencesse-lhe de	pro	que convencesse-lhe de	pro	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+Flat structure for: Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+Para [para PRP_] isso [isso SPEC_M_S_] necessitava [necessitar V_IMPF_3S_IND_VFIN_] de [de PRP_] um [um DET_M_S_] fato [fato N_M_S_] qualquer [qualquer DET_M/F_S_] que [que KS_] convencesse [convencer V_IMPF_3S_SUBJ_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] de [de PRP_] ir [ir V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Para] [SUBJ [SPECIFIER isso] ] [VERB [VP [VERB necessitava] ] ] [PREPOSITION de] [NP [DETERMINER um] [NOUN fato] ] [VP [DETERMINER qualquer] ] [SUBORDINATING_CONJUNCTION que] [VERB [VP [VERB convencesse] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [PREPOSITION de] [VP [VERB ir] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_108-16	nada falou-se	cop	nada falou-se	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.
+Flat structure for: Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.
+Se [se KS_] ninguém [ninguém SPEC_M_S_] me [eu PERS_M/F_1S_ACC_] disse [dizer V_PS_3S_IND_VFIN_] a [a DET_F_S_] verdade [verdade N_F_S_] , [, -PNT_NSEP_] se [se KS_] precisei [precisar V_PS_1S_IND_VFIN_] lutar [lutar V_INF_] para [para PRP_] encontrá [ V_INF_] -la [-la PERS_F_3S_ACC_] nada [nada SPEC_M_S_] falou [falar V_PS_3S_IND_VFIN_] -se [se PERS_M/F_3S/P_ACC_] a [a PRP_] respeito [respeito N_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [SUBORDINATING_CONJUNCTION Se] [SUBJ [NP [SPECIFIER ninguém] ] ] [NP [PERSONAL_PRONOUN me] ] [VERB [VP [VERB disse] ] ] [NP [DETERMINER a] [NOUN verdade] ] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION se] [VERB [VP [VERB precisei] ] ] [VP [VERB lutar] ] [PREPOSITION para] [VP [VERB encontrá] ] [NP [PERSONAL_PRONOUN -la] ] [SPECIFIER nada] [VERB [VP [VERB falou] ] ] [NP [PERSONAL_PRONOUN -se] ] [PREPOSITION a] [NP [NOUN respeito] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_108-25	porque quero-lhe muito	cop	porque quero-lhe muito	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Só não o chamei louco, porque quero-lhe muito bem.
+Flat structure for: Só não o chamei louco, porque quero-lhe muito bem.
+Só [só ADV_] não [não ADV_] o [ele PERS_M_3S_ACC_] chamei [chamar V_PS_1S_IND_VFIN_] louco [louco ADJ_M/F_S_] , [, -PNT_NSEP_] porque [porque KS_] quero [querer V_PR_1S_IND_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] muito [muito ADV_] bem [bem ADV_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Só] [ADVERB não] [NP [PERSONAL_PRONOUN o] ] [VERB [VP [VERB chamei] ] ] [ADJECTIVE louco] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION porque] [VERB [VP [VERB quero] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [ADVERB muito] [ADVERB bem] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_108-2	que persegues-me,	cop	que persegues-me,	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Por que persegues-me, se eu sempre dispus-me a o ajudar?
+Flat structure for: Por que persegues-me, se eu sempre dispus-me a o ajudar?
+Por [por PRP_] que [que SPEC_M/F_S/P_] persegues [perseguir V_PR_2S_IND_VFIN_] -me [eu PERS_M/F_1S_DAT_] , [, -PNT_NSEP_] se [se KS_] eu [eu PERS_M/F_1S_NOM_] sempre [sempre ADV_] dispus [dispor V_PS_1S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] a [a PRP_] o [o DET_M_S_] ajudar [ajudar V_INF_] ? [? -PNT_ABS_] 
+Syntax tree: [S [PREPOSITION Por] [SPECIFIER que] [VERB [VP [VERB persegues] ] ] [NP [PERSONAL_PRONOUN -me] ] [PUNCTUATION_MARK ,] [SUBORDINATING_CONJUNCTION se] [SUBJ [NP [PERSONAL_PRONOUN eu] ] ] [ADVERB sempre] [VERB [VP [VERB dispus] ] ] [NP [PERSONAL_PRONOUN -me] ] [PREPOSITION a] [NP [DETERMINER o] [VERB ajudar] ] [PUNCTUATION_MARK ?] ]
+
+[baseline] TP	PROBI_cop_107-66	Não diga-lhe	cop	Não diga-lhe	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Não diga-lhe nada.
+Flat structure for: Não diga-lhe nada.
+Não [não ADV_] diga [dizer V_PR_1/3S_SUBJ_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] nada [nada SPEC_M_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Não] [VERB [VP [VERB diga] ] ] [NP [PERSONAL_PRONOUN -lhe] ] [SPECIFIER nada] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_107-54	Jamais considerei-me	cop	Jamais considerei-me	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Jamais considerei-me singular.
+Flat structure for: Jamais considerei-me singular.
+Jamais [jamais ADV_] considerei [considerar V_PS_1S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] singular [singular ADJ_M/F_S_] . [. -PNT_ABS_] 
+Syntax tree: [S [ADVERB Jamais] [VERB [VP [VERB considerei] ] ] [NP [PERSONAL_PRONOUN -me] [ADJECTIVE singular] ] [PUNCTUATION_MARK .] ]
+
+[baseline] TP	PROBI_cop_107-25	não posso-me	cop	não posso-me	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Devo-lhe dizer que não posso-me trair.
+Flat structure for: Devo-lhe dizer que não posso-me trair.
+Devo [dever V_PR_1S_IND_VFIN_] -lhe [ele PERS_M/F_3S_DAT_] dizer [dizer V_INF_] que [que KS_] não [não ADV_] posso [poder V_PR_1S_IND_VFIN_] -me [eu PERS_M/F_1S_ACC_] trair [trair V_INF_] . [. -PNT_ABS_] 
+Syntax tree: [S [VERB [VP [VERB Devo] ] ] [SUBJ [NP [PERSONAL_PRONOUN -lhe] ] ] [VP [VERB dizer] ] [SUBORDINATING_CONJUNCTION que] [ADVERB não] [VERB [VP [VERB posso] ] ] [NP [PERSONAL_PRONOUN -me]

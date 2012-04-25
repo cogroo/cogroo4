@@ -1,0 +1,124 @@
+compare FP 
+In baseline: 552 In new: 549
+
+There are 21 removed entries: 
+
+[baseline] FP	PROBI_77-9			Juca agradavam	cov	xml:118	sujeito singular + verbo plural	Os planos do Dr. Juca agradavam à parentela.
+[baseline] FP	PROBI_15-45			Campinas localiza	cov	xml:117	sujeito plural + verbo singular	Campinas localiza-se no Estado de São Paulo.
+[baseline] FP	PROBI_68-26			Ninguém falou-nos	cop|pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Ninguém falou-nos, outrora, com tanta propriedade e delicadeza.
+[baseline] FP	PROBI_70-10			filho queriam	cov	xml:118	sujeito singular + verbo plural	O pai e o filho queriam-se muito.
+[baseline] FP	PROBI_cop_107-10			aqui paga-se	cop	xml:67	advérbio + verbo + pronome oblíquo	Aqui faz-se, aqui paga-se.
+[baseline] FP	PROBI_89-5			ou divertem-se	cop	xml:73	só, ou, ora ou quer + pronome oblíquo	Vocês estudam ou divertem-se?
+[baseline] FP	PROBI_17-69			Como livrar-nos	cop	xml:67	advérbio + verbo + pronome oblíquo	Como livrar-nos da praga dos carros?
+[baseline] FP	PROBI_70-64			ou restituir-se	cop	xml:73	só, ou, ora ou quer + pronome oblíquo	O possuidor turbado, ou esbulhado, poderá manter-se, ou restituir-se, por sua própria força, contanto que o faça logo.
+[baseline] FP	PROBI_cop_108-2			sempre dispus-me	cop	xml:67	advérbio + verbo + pronome oblíquo	Por que persegues-me, se eu sempre dispus-me a o ajudar?
+[baseline] FP	PROBI_53-33			como estar-se	cop	xml:67	advérbio + verbo + pronome oblíquo	Pareceu-lhe a morte agradável como o perfume da mirra, ou como estar-se num dia de vento, ao abrigo de um toldo.
+[baseline] FP	PROBI_85-64			Tudo tendo-se	cop	xml:71	pronome indefinido + verbo + pronome oblíquo	Tudo tendo-se acalmado, pudemos voltar às atividades normais.
+[baseline] FP	PROBI_67-74			Nenhum detento evadiu-se	cop	xml:63	palavras de sentido negativo + substantivo + verbo + pronome oblíquo	Nenhum detento evadiu-se do presídio.
+[baseline] FP	PROBI_2-32			selvagem mediram	cov	xml:118	sujeito singular + verbo plural	A fera e o selvagem mediram-se mutuamente, com os olhos nos olhos um do outro.
+[baseline] FP	PROBI_62-75			no deserto queimado os fugitivos agarram	cov	xml:118	sujeito singular + verbo plural	Miudinhos, perdidos no deserto queimado os fugitivos agarram-se, somaram as suas desgraças e os seus pavores.
+[baseline] FP	PROBI_62-19			não ferir-te	cop|pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Meu intento era não ferir-te.
+[baseline] FP	PROBI_53-13			não dar-lhe	cop|pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Para não dar-lhe explicações, fugiu.
+[baseline] FP	PROBI_77-90			Sandra e Isabel cumprimentavam	cov	xml:118	sujeito singular + verbo plural	Sandra e Isabel cumprimentavam-se efusivamente.
+[baseline] FP	PROBI_32-22			Enfim deixaram	cov	xml:118	sujeito singular + verbo plural	Enfim deixaram-nos entrar.
+[baseline] FP	PROBI_3-46			quer salvar-se	cop	xml:73	só, ou, ora ou quer + pronome oblíquo	A maior parte dos homens não quer salvar-se.
+[baseline] FP	PROBI_75-15			Os direitos alheios cabe	cov	xml:117	sujeito plural + verbo singular	Os direitos alheios cabe-me defender.
+[baseline] FP	PROBI_85-72			jamais queixar-se	cop|pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Um cavaleiro não deve jamais queixar-se.
+
+There are 18 new entries: 
+
+[new] FP	PROBI_38-99			da União R$ 2,5 milhões	con	xml:114	determinante singular + substantivo plural	Isso custou aos cofres da União R$ 2,5 milhões.
+[new] FP	PROBI_21-1			a causas	con	xml:114	determinante singular + substantivo plural	Dediquei-me a causas nobres.
+[new] FP	PROBI_cop_108-27			homens feriram-	con	xml:17	substantivo + adjetivo	Soube que os homens feriram-se.
+[new] FP	PROBI_83-13			a regimes	con	xml:114	determinante singular + substantivo plural	Todas as dietas para emagrecer exibem um traço comum: azedam o humor de quem aceita submeter-se a regimes de inanição.
+[new] FP	PROBI_60-88			a favor	con	xml:114	determinante singular + substantivo plural	Mais de um deputado e mais de um senador manifestaram-se a favor do projeto.
+[new] FP	PROBI_cop_108-16			a respeito	con	xml:114	determinante singular + substantivo plural	Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.
+[new] FP	PROBI_38-94			Isabel largou-	cov	xml:118	sujeito singular + verbo plural	Isabel largou-se dos braços do pai e correu ao encontro da mãe.
+[new] FP	PROBI_24-20			os Deus	con	xml:95	artigo plural + substantivo singular	E como em ambos os meios havia pecado, castiga-os Deus a ambos.
+[new] FP	PROBI_83-20			a favor	con	xml:114	determinante singular + substantivo plural	Todas as oito nações manifestaram-se a favor do projeto.
+[new] FP	PROBI_cra_116-53			Emília resignou-	cov	xml:118	sujeito singular + verbo plural	Emília resignou-se a sorte.
+[new] FP	PROBI_cov_111-80			a passos	con	xml:114	determinante singular + substantivo plural	Minas Gerais industrializam-se a passos largos.
+[new] FP	PROBI_cop_108-32			nos cansaço	con	xml:95	artigo plural + substantivo singular	Tudo causava-nos cansaço.
+[new] FP	PROBI_cop_107-22			nos aquelas	con	xml:114	determinante singular + substantivo plural	De vez em quando torturavam-nos aquelas lembranças!
+[new] FP	PROBI_82-41			no-lo aplicaram	cov	xml:118	sujeito singular + verbo plural	Tentamos evitar o trote, mas no-lo aplicaram assim mesmo.
+[new] FP	PROBI_62-52			a passos	con	xml:114	determinante singular + substantivo plural	Minas Gerais industrializa-se a passos largos.
+[new] FP	PROBI_cov_111-61			a favor	con	xml:114	determinante singular + substantivo plural	Mais de um deputado e mais de um senador manifestou-se a favor do
+[new] FP	PROBI_cop_107-43			sol os pássaros debandam	cov	xml:118	sujeito singular + verbo plural	Em pondo-se o sol os pássaros debandam.
+[new] FP	PROBI_58-3			a andar	con	xml:114	determinante singular + substantivo plural	Quem espera por sapatos de defunto arrisca-se a andar toda a vida descalço.
+
+compare FN 
+In baseline: 2283 In new: 2312
+
+There are 0 removed entries: 
+
+
+There are 29 new entries: 
+
+[new] FN	PROBI_cop_107-4	A festa que realizou-se ontem acabou tarde.	cop					A festa que realizou-se ontem acabou tarde.
+[new] FN	PROBI_cop_107-10	Aqui faz-se, aqui paga-se.	cop					Aqui faz-se, aqui paga-se.
+[new] FN	PROBI_cop_107-90	Para isso necessitava de um fato qualquer que convencesse-lhe de ir.	cop					Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+[new] FN	PROBI_cop_107-65	Não devo-lhe falar a verdade, para não a ferir.	cop					Não devo-lhe falar a verdade, para não a ferir.
+[new] FN	PROBI_con_105-62	Por favor, dê-me trezentas gramas de azeitona!	con					Por favor, dê-me trezentas gramas de azeitona!
+[new] FN	PROBI_cop_108-5	Quando falava-se no assunto, todos se calavam.	cop					Quando falava-se no assunto, todos se calavam.
+[new] FN	PROBI_cop_107-11	Aqui vive-se com sacrifício, mas em harmonia.	cop					Aqui vive-se com sacrifício, mas em harmonia.
+[new] FN	PROBI_cop_108-1	Por que olhas-me com tanta desconfiança?	cop					Por que olhas-me com tanta desconfiança?
+[new] FN	PROBI_cop_107-52	Gostaríamos que avisassem-nos sobre a reunião.	cop					Gostaríamos que avisassem-nos sobre a reunião.
+[new] FN	PROBI_cov_109-11	A maior parte recusaram-se a segui-lo.	cov					A maior parte recusaram-se a segui-lo.
+[new] FN	PROBI_cop_107-59	Mestre Romão ordenou que levassem-lhe o cravo para a sala do fundo.	cop					Mestre Romão ordenou que levassem-lhe o cravo para a sala do fundo.
+[new] FN	PROBI_pro_132-37	Não devo-lhe falar a verdade, para não a ferir.	pro					Não devo-lhe falar a verdade, para não a ferir.
+[new] FN	PROBI_pro_132-51	Para isso necessitava de um fato qualquer que convencesse-lhe de ir.	pro					Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+[new] FN	PROBI_cop_108-16	Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.	cop					Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.
+[new] FN	PROBI_cop_108-25	Só não o chamei louco, porque quero-lhe muito bem.	cop					Só não o chamei louco, porque quero-lhe muito bem.
+[new] FN	PROBI_cop_108-2	Por que persegues-me, se eu sempre dispus-me a o ajudar?	cop					Por que persegues-me, se eu sempre dispus-me a o ajudar?
+[new] FN	PROBI_cop_107-66	Não diga-lhe nada.	cop					Não diga-lhe nada.
+[new] FN	PROBI_cop_107-54	Jamais considerei-me singular.	cop					Jamais considerei-me singular.
+[new] FN	PROBI_cop_107-25	Devo-lhe dizer que não posso-me trair.	cop					Devo-lhe dizer que não posso-me trair.
+[new] FN	PROBI_cop_107-64	Não chegou-se a nenhuma conclusão lógica sobre a solução do problema.	cop					Não chegou-se a nenhuma conclusão lógica sobre a solução do problema.
+[new] FN	PROBI_cop_108-7	Quem perturbava-nos tanto?	cop					Quem perturbava-nos tanto?
+[new] FN	PROBI_cop_108-36	Vilela não respondeu-lhe.	cop					Vilela não respondeu-lhe.
+[new] FN	PROBI_cop_108-14	Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.	cop					Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.
+[new] FN	PROBI_cop_107-48	Este é um trabalho que absorve-me muito.	cop					Este é um trabalho que absorve-me muito.
+[new] FN	PROBI_cop_107-98	Por artes não sabe-se de que cabeça, tenciona-se limitar as oportunidades de reunião.	cop					Por artes não sabe-se de que cabeça, tenciona-se limitar as oportunidades de reunião.
+[new] FN	PROBI_cop_108-32	Tudo causava-nos cansaço.	cop					Tudo causava-nos cansaço.
+[new] FN	PROBI_cop_107-22	De vez em quando torturavam-nos aquelas lembranças!	cop					De vez em quando torturavam-nos aquelas lembranças!
+[new] FN	PROBI_pro_132-56	Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.	pro					Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.
+[new] FN	PROBI_cop_107-61	Na verdade, sempre pediram-me o mesmo trabalho.	cop					Na verdade, sempre pediram-me o mesmo trabalho.
+
+compare TP 
+In baseline: 333 In new: 304
+
+There are 29 removed entries: 
+
+[baseline] TP	PROBI_cop_107-4	que realizou-se ontem	cop	que realizou-se ontem	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	A festa que realizou-se ontem acabou tarde.
+[baseline] TP	PROBI_cop_107-10	Aqui faz-se	cop	Aqui faz-se	cop	xml:67	advérbio + verbo + pronome oblíquo	Aqui faz-se, aqui paga-se.
+[baseline] TP	PROBI_cop_107-90	que convencesse-lhe de	cop	que convencesse-lhe de	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+[baseline] TP	PROBI_cop_107-65	Não devo-lhe	cop	Não devo-lhe	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Não devo-lhe falar a verdade, para não a ferir.
+[baseline] TP	PROBI_con_105-62	trezentas gramas	con	trezentas gramas	con	xml:115	Concordância Numeral-Substantivo	Por favor, dê-me trezentas gramas de azeitona!
+[baseline] TP	PROBI_cop_108-5	Quando falava-se no	cop	Quando falava-se no	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Quando falava-se no assunto, todos se calavam.
+[baseline] TP	PROBI_cop_107-11	Aqui vive-se	cop	Aqui vive-se	cop	xml:67	advérbio + verbo + pronome oblíquo	Aqui vive-se com sacrifício, mas em harmonia.
+[baseline] TP	PROBI_cop_108-1	que olhas-me com	cop	que olhas-me com	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Por que olhas-me com tanta desconfiança?
+[baseline] TP	PROBI_cop_107-52	que avisassem-nos sobre	cop	que avisassem-nos sobre	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Gostaríamos que avisassem-nos sobre a reunião.
+[baseline] TP	PROBI_cov_109-11	A maior parte recusaram	cov	A maior parte recusaram	cov	xml:118	sujeito singular + verbo plural	A maior parte recusaram-se a segui-lo.
+[baseline] TP	PROBI_cop_107-59	que levassem-lhe o	cop	que levassem-lhe o	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Mestre Romão ordenou que levassem-lhe o cravo para a sala do fundo.
+[baseline] TP	PROBI_pro_132-37	Não devo-lhe	pro	Não devo-lhe	pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Não devo-lhe falar a verdade, para não a ferir.
+[baseline] TP	PROBI_pro_132-51	que convencesse-lhe de	pro	que convencesse-lhe de	pro	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Para isso necessitava de um fato qualquer que convencesse-lhe de ir.
+[baseline] TP	PROBI_cop_108-16	nada falou-se	cop	nada falou-se	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Se ninguém me disse a verdade, se precisei lutar para encontrá-la nada falou-se a respeito.
+[baseline] TP	PROBI_cop_108-25	porque quero-lhe muito	cop	porque quero-lhe muito	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Só não o chamei louco, porque quero-lhe muito bem.
+[baseline] TP	PROBI_cop_108-2	que persegues-me,	cop	que persegues-me,	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Por que persegues-me, se eu sempre dispus-me a o ajudar?
+[baseline] TP	PROBI_cop_107-66	Não diga-lhe	cop	Não diga-lhe	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Não diga-lhe nada.
+[baseline] TP	PROBI_cop_107-54	Jamais considerei-me	cop	Jamais considerei-me	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Jamais considerei-me singular.
+[baseline] TP	PROBI_cop_107-25	não posso-me	cop	não posso-me	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Devo-lhe dizer que não posso-me trair.
+[baseline] TP	PROBI_cop_107-64	Não chegou-se	cop	Não chegou-se	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Não chegou-se a nenhuma conclusão lógica sobre a solução do problema.
+[baseline] TP	PROBI_cop_108-7	Quem perturbava-nos tanto	cop	Quem perturbava-nos tanto	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Quem perturbava-nos tanto?
+[baseline] TP	PROBI_cop_108-36	não respondeu-lhe	cop	não respondeu-lhe	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Vilela não respondeu-lhe.
+[baseline] TP	PROBI_cop_108-14	ninguém disse-me	cop	ninguém disse-me	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.
+[baseline] TP	PROBI_cop_107-48	que absorve-me muito	cop	que absorve-me muito	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	Este é um trabalho que absorve-me muito.
+[baseline] TP	PROBI_cop_107-98	não sabe-se	cop	não sabe-se	cop	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Por artes não sabe-se de que cabeça, tenciona-se limitar as oportunidades de reunião.
+[baseline] TP	PROBI_cop_108-32	Tudo causava-nos	cop	Tudo causava-nos	cop	xml:71	pronome indefinido + verbo + pronome oblíquo	Tudo causava-nos cansaço.
+[baseline] TP	PROBI_cop_107-22	quando torturavam-nos aquelas	cop	quando torturavam-nos aquelas	cop	xml:65	pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo	De vez em quando torturavam-nos aquelas lembranças!
+[baseline] TP	PROBI_pro_132-56	ninguém disse-me	pro	ninguém disse-me	pro	xml:61	palavras de sentido negativo + verbo + pronome oblíquo	Se ninguém disse-me a verdade, se precisei lutar para encontrá-la nada se falou a respeito.
+[baseline] TP	PROBI_cop_107-61	sempre pediram-me	cop	sempre pediram-me	cop	xml:67	advérbio + verbo + pronome oblíquo	Na verdade, sempre pediram-me o mesmo trabalho.
+
+There are 0 new entries: 
+
+

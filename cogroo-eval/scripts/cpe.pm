@@ -217,6 +217,7 @@ sub evaluate {
 		$res{'metro-c'} = changes::changes("eval/baseline/metro/Metro-Details.txt", "$reportPath/metro/Metro-Details.txt", "$reportPath/metro/diff.txt");
 		$res{'bosque-c'} = changes::changes("eval/baseline/bosque/Bosque-Details.txt", "$reportPath/bosque/Bosque-Details.txt", "$reportPath/bosque/diff.txt");
 		
+		# change to 0 to evaluate cogroo3, to 1 to evaluate new
 		if(1) {
 			# execute new cogroo to get the reports...
 			generateCogrooReport("$reportPath/probi/diff.txt", "$reportPath/probi/diff-new.txt");
