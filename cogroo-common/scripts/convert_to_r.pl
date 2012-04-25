@@ -186,7 +186,6 @@ undef %table;
 %table = %{ thaw($storedTable) };
 
 open SIZE, ">$path/size_f.table";
-open BEST, ">$path/best.txt";
 
 print SIZE "exp, f, size, cutoff\n";
 foreach my $e (@exp) {
@@ -202,14 +201,79 @@ foreach my $e (@exp) {
 		}
 	}
 	print SIZE "$e, $maxFm, $s, $ct\n";
-	print BEST toConfiguration($e, $ct). "\n";
 }
 
 close SIZE;
+
+
+undef %table;
+%table = %{ thaw($storedTable) };
+
+open SIZE_TEX, ">$path/size_f.tex";
+open BEST, ">$path/best.txt";
+
+print SIZE_TEX << "EOF";
+\\begin{table}[h!]
+\\begin{center}
+    \\begin{tabular}{|c|r|r|}
+        \\hline
+        Experiment & \$F_1\$ (\\%) & Model Size (kB) \\\\ \\hline
+EOF
+
+{
+	my %sizeTable;
+	foreach my $e (@exp) {
+		my $ct = -1;
+		my $maxFm = -1;
+		my $s = -1;
+		while(@{$table{$e}{'F-Measure'}} > 0) {
+			my $fm = shift(@{$table{$e}{'F-Measure'}});
+			if($fm > $maxFm) {
+				$maxFm = $fm;
+				$ct = shift(@{$table{$e}{'cutoff'}});
+				$s = shift(@{$table{$e}{'model_size'}});	
+			}
+		}
+		$sizeTable{$e}{'fm'} = $maxFm;
+		$sizeTable{$e}{'s'} = $s;
+		$sizeTable{$e}{'ct'} = $ct;
+		#print SIZE_TEX sprintf("$e & %.3f & $s \\\\", $maxFm);
+	}
+
+	sub my_sort {
+  		# got hash keys $a and $b automatically
+  		return $sizeTable{$b}{'fm'} <=> $sizeTable{$a}{'fm'};
+	}
+		
+	my @sortedExp = sort my_sort @exp;
+	my @hSortedExp = generateHumanNames(\@sortedExp);
+	
+	for(my $i = 0; $i < @sortedExp; $i++) {
+		my $e = $hSortedExp[$i];
+		my $o = $sortedExp[$i];
+		my $maxFm = $sizeTable{$sortedExp[$i]}{'fm'};
+		my $s = $sizeTable{$sortedExp[$i]}{'s'} / 1024;
+		print SIZE_TEX sprintf("        $e & %.3f & %d \\\\ \n", $maxFm, $s);
+		print BEST toConfiguration($o, $sizeTable{$o}{'ct'}) . "\n";		
+	}
+}
+print SIZE_TEX << "EOF";
+        \\hline
+    \\end{tabular}
+   \\caption{Size of the best TODO model of each experiment. Lines are sorted by \$F_1\$}
+   \\label{tb:TODO}
+\\end{center}
+\\end{table}
+EOF
+
+close SIZE_TEX;
 close BEST;
+
 
 # Now we can create the R script :)
 
+undef %table;
+%table = %{ thaw($storedTable) };
 
 open R, ">$path/graphics.R";
 
