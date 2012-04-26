@@ -256,7 +256,7 @@ sub exec() {
 	
 	if ( $opt{t} eq 'con' ) {
 		$trCommand .=
-		    "scripts/cogroo TokenNameFinderTrainer.ad "
+		    "scripts/cogroo TokenNameFinderTrainer.adcon "
 		  . "$basicCommand "
 		  . ENCODING
 		  . " -data $data -model $model $extraOption";
