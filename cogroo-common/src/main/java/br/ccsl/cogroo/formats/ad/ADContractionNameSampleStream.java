@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
+
+import br.ccsl.cogroo.ContractionUtility;
 
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
@@ -31,6 +34,7 @@ import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.formats.ad.PortugueseContractionUtility;
+import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
@@ -66,6 +70,7 @@ public class ADContractionNameSampleStream implements ObjectStream<NameSample> {
    * To keep the last left contraction part
    */
   private String leftContractionPart = null;
+  private static final Pattern underlinePattern = Pattern.compile("[_]+");
 
   /**
    * The tags we are looking for
@@ -167,10 +172,22 @@ public class ADContractionNameSampleStream implements ObjectStream<NameSample> {
 
       if (leafTag != null) {
         if (leafTag.contains("<sam->")) {
-          String[] lexemes = leaf.getLexeme().split("_");
+          String[] lexemes = underlinePattern.split(leaf.getLexeme());
           if (lexemes.length > 1) {
             for (int i = 0; i < lexemes.length - 1; i++) {
               sentence.add(lexemes[i]);
+              
+              String[] conts = ContractionUtility.expand(lexemes[i]);
+              if(conts != null) {
+                int end = sentence.size();
+                int start = end - 1;
+                Span s = new Span(start, end, "default");
+                names.add(s);
+                {
+                  Span[] ss = {s};
+                  System.out.println(Arrays.toString(Span.spansToStrings(ss, sentence.toArray(new String[sentence.size()]))));
+                }
+              }
             }
           }
           leftContractionPart = lexemes[lexemes.length - 1];
@@ -205,19 +222,34 @@ public class ADContractionNameSampleStream implements ObjectStream<NameSample> {
       String tag = leaf.getSecondaryTag();
       String right = leaf.getLexeme();
       if (tag != null && tag.contains("<-sam>")) {
-        right = leaf.getLexeme();
-        String c = PortugueseContractionUtility.toContraction(
-            leftContractionPart, right);
+        String[] parts = underlinePattern.split(leaf.getLexeme());
+        if(parts != null) {
+          // try to join only the first
+          String c = PortugueseContractionUtility.toContraction(
+              leftContractionPart, parts[0]);
 
-        if (c != null) {
-          sentence.add(c);
-          names.add(new Span(sentence.size() - 1, sentence.size()));
+          if (c != null) {
+            sentence.add(c);
+            names.add(new Span(sentence.size() - 1, sentence.size(), "default"));
+          }
+          
+          for (int i = 1; i < parts.length; i++) {
+            sentence.add(parts[i]);
+          }
         } else {
-          System.err.println("missing " + leftContractionPart + " + " + right);
-          sentence.add(leftContractionPart);
-          sentence.add(right);
-        }
+          right = leaf.getLexeme();
+          String c = PortugueseContractionUtility.toContraction(
+              leftContractionPart, right);
 
+          if (c != null) {
+            sentence.add(c);
+            names.add(new Span(sentence.size() - 1, sentence.size(), "default"));
+          } else {
+            System.err.println("missing " + leftContractionPart + " + " + right);
+            sentence.add(leftContractionPart);
+            sentence.add(right);
+          }
+        }
       } else {
         System.err.println("unmatch" + leftContractionPart + " + " + right);
       }
