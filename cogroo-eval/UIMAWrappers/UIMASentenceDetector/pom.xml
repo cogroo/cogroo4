@@ -4,6 +4,13 @@
 	<groupId>cogroo.uima</groupId>
 	<artifactId>SentenceDetector</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<parent>
+		<groupId>br.ccsl.cogroo</groupId>
+		<artifactId>cogroo-eval-uimawrappers</artifactId>
+		<version>4.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
 
 	<properties>
 		<uima.componentID>UIMASentenceDetector</uima.componentID>

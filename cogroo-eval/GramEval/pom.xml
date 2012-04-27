@@ -5,6 +5,13 @@
 	<artifactId>GramEval</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<parent>
+		<artifactId>cogroo-eval</artifactId>
+		<groupId>br.ccsl.cogroo</groupId>
+		<relativePath>..</relativePath>
+		<version>4.0.0-SNAPSHOT</version>
+	</parent>
+
 	<properties>
 		<uima.componentID>GramEval</uima.componentID>
 		<uima.datapath>$main_root</uima.datapath>
