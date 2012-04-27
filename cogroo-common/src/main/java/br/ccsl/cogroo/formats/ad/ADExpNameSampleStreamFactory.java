@@ -85,6 +85,6 @@ public class ADExpNameSampleStreamFactory extends
     ObjectStream<String> lineStream = new PlainTextByLineStream(
         sampleDataIn.getChannel(), params.getEncoding());
 
-    return new ADExpNameSampleStream(lineStream, tagSet);
+    return new ADExpNameSampleStream(lineStream, tagSet, true);
   }
 }

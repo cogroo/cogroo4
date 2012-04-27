@@ -107,7 +107,7 @@ public class ADExpNameSampleStreamTest {
         .getResourceAsStream("/br/ccsl/cogroo/formats/ad/ad.sample");
 
     ADExpNameSampleStream stream = new ADExpNameSampleStream(
-        new PlainTextByLineStream(in, "UTF-8"), null);
+        new PlainTextByLineStream(in, "UTF-8"), null, true);
 
     NameSample sample = stream.read();
 
@@ -122,7 +122,7 @@ public class ADExpNameSampleStreamTest {
     Set<String> tags = new HashSet<String>();
     tags.add("adv");
     stream = new ADExpNameSampleStream(new PlainTextByLineStream(in, "UTF-8"),
-        tags);
+        tags, true);
 
     sample = stream.read();
 

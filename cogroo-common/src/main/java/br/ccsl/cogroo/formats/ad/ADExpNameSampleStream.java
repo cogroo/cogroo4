@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
@@ -72,6 +74,8 @@ public class ADExpNameSampleStream implements ObjectStream<NameSample> {
    */
   private Set<String> tags;
 
+  private final boolean useAdaptativeFeatures;
+
   /**
    * Creates a new {@link NameSample} stream from a line stream, i.e.
    * {@link ObjectStream}< {@link String}>, that could be a
@@ -82,9 +86,11 @@ public class ADExpNameSampleStream implements ObjectStream<NameSample> {
    * @param tags
    *          the tags we are looking for, or null for all
    */
-  public ADExpNameSampleStream(ObjectStream<String> lineStream, Set<String> tags) {
+  public ADExpNameSampleStream(ObjectStream<String> lineStream,
+      Set<String> tags, boolean useAdaptativeFeatures) {
     this.adSentenceStream = new ADSentenceStream(lineStream);
     this.tags = tags;
+    this.useAdaptativeFeatures = useAdaptativeFeatures;
   }
 
   /**
@@ -98,8 +104,8 @@ public class ADExpNameSampleStream implements ObjectStream<NameSample> {
    *          the tags we are looking for, or null for all
    */
   public ADExpNameSampleStream(InputStream in, String charsetName,
-      Set<String> tags) {
-
+      Set<String> tags, boolean useAdaptativeFeatures) {
+    this.useAdaptativeFeatures = useAdaptativeFeatures;
     try {
       this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(
           in, charsetName));
@@ -110,19 +116,99 @@ public class ADExpNameSampleStream implements ObjectStream<NameSample> {
     }
   }
 
+  int textID = -1;
+
   public NameSample read() throws IOException {
 
     Sentence paragraph;
     while ((paragraph = this.adSentenceStream.read()) != null) {
+
+      boolean clearData = false;
+
+      if (useAdaptativeFeatures) {
+        int currentTextID = getTextID(paragraph);
+        if (currentTextID != textID) {
+          clearData = true;
+          textID = currentTextID;
+        }
+      } else {
+        clearData = true;
+      }
+
       Node root = paragraph.getRoot();
       List<String> sentence = new ArrayList<String>();
       List<Span> names = new ArrayList<Span>();
       process(root, sentence, names);
 
       return new NameSample(sentence.toArray(new String[sentence.size()]),
-          names.toArray(new Span[names.size()]), true);
+          names.toArray(new Span[names.size()]), clearData);
     }
     return null;
+  }
+
+  enum Type {
+    ama, cie, lit
+  }
+
+  private Type corpusType = null;
+
+  private Pattern metaPattern;
+
+  private int textIdMeta2 = -1;
+  private String textMeta2 = "";
+
+  private int getTextID(Sentence paragraph) {
+
+    String meta = paragraph.getMetadata();
+
+    if (corpusType == null) {
+      if (meta.startsWith("LIT")) {
+        corpusType = Type.lit;
+        metaPattern = Pattern.compile("^([a-zA-Z\\-]+)(\\d+).*?p=(\\d+).*");
+      } else if (meta.startsWith("CIE")) {
+        corpusType = Type.cie;
+        metaPattern = Pattern.compile("^.*?source=\"(.*?)\".*");
+      } else { // ama
+        corpusType = Type.ama;
+        metaPattern = Pattern.compile("^(?:[a-zA-Z\\-]*(\\d+)).*?p=(\\d+).*");
+      }
+    }
+
+    if (corpusType.equals(Type.lit)) {
+      Matcher m2 = metaPattern.matcher(meta);
+      if (m2.matches()) {
+        String textId = m2.group(1);
+        if (!textId.equals(textMeta2)) {
+          textIdMeta2++;
+          textMeta2 = textId;
+        }
+        return textIdMeta2;
+      } else {
+        throw new RuntimeException("Invalid metadata: " + meta);
+      }
+    } else if (corpusType.equals(Type.cie)) {
+      Matcher m2 = metaPattern.matcher(meta);
+      if (m2.matches()) {
+        String textId = m2.group(1);
+        if (!textId.equals(textMeta2)) {
+          textIdMeta2++;
+          textMeta2 = textId;
+        }
+        return textIdMeta2;
+      } else {
+        throw new RuntimeException("Invalid metadata: " + meta);
+      }
+    } else if (corpusType.equals(Type.ama)) {
+      Matcher m2 = metaPattern.matcher(meta);
+      if (m2.matches()) {
+        return Integer.parseInt(m2.group(1));
+        // currentPara = Integer.parseInt(m.group(2));
+      } else {
+        throw new RuntimeException("Invalid metadata: " + meta);
+      }
+    }
+
+    return 0;
   }
 
   /**
