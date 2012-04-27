@@ -16,27 +16,36 @@ import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Tense;
 
 public interface TagInterpreterI {
 
-	MorphologicalTag parseMorphologicalTag(String tagString);
-	ChunkTag parseChunkTag(String tagString);
-	SyntacticTag parseSyntacticTag(String tagString);
-	
-	String serialize(MorphologicalTag tag);
-	
-	String serialize(ChunkTag tag);
-	
-	String serialize(SyntacticTag tag);
-	
-	String serialize(SyntacticFunction tag);
-	
-	String serialize(ChunkFunction tag);
-	String serialize(Class tag);
-	String serialize(Gender tag);
-	String serialize(Number tag);
-	String serialize(Case tag);
-	String serialize(Person tag);
-	String serialize(Tense tag);
-	String serialize(Mood tag);
-	String serialize(Punctuation tag);
-	
+  MorphologicalTag parseMorphologicalTag(String tagString);
+
+  ChunkTag parseChunkTag(String tagString);
+
+  SyntacticTag parseSyntacticTag(String tagString);
+
+  String serialize(MorphologicalTag tag);
+
+  String serialize(ChunkTag tag);
+
+  String serialize(SyntacticTag tag);
+
+  String serialize(SyntacticFunction tag);
+
+  String serialize(ChunkFunction tag);
+
+  String serialize(Class tag);
+
+  String serialize(Gender tag);
+
+  String serialize(Number tag);
+
+  String serialize(Case tag);
+
+  String serialize(Person tag);
+
+  String serialize(Tense tag);
+
+  String serialize(Mood tag);
+
+  String serialize(Punctuation tag);
 
 }

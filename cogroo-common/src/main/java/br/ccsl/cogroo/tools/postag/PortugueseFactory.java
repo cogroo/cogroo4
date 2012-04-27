@@ -39,7 +39,7 @@ public class PortugueseFactory extends POSTaggerFactory {
   public POSContextGenerator getPOSContextGenerator(int cacheSize) {
     return new PortuguesePOSContextGenerator(cacheSize, getDictionary());
   }
-  
+
   @Override
   public POSContextGenerator getPOSContextGenerator() {
     return new PortuguesePOSContextGenerator(getDictionary());

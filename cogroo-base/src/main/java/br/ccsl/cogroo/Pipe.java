@@ -19,7 +19,7 @@ public class Pipe {
 
   protected static final Logger LOGGER = Logger.getLogger(Pipe.class);
   private SentenceDetectorME sentenceDetector;
-  
+
   public Pipe() throws FileNotFoundException {
     InputStream modelIn = new FileInputStream("models/pt-sent.bin");
 
@@ -33,42 +33,42 @@ public class Pipe {
     }
 
   }
-  
-  public Span[] analyze (String text) {
+
+  public Span[] analyze(String text) {
     Span sentences[] = sentenceDetector.sentPosDetect(text);
-    if ( LOGGER.isDebugEnabled() ) {
-      LOGGER.debug("Found sentences: " + Arrays.toString( Span.spansToStrings(sentences, text)) );
+    if (LOGGER.isDebugEnabled()) {
+      LOGGER.debug("Found sentences: "
+          + Arrays.toString(Span.spansToStrings(sentences, text)));
     }
-    
+
     return sentences;
   }
 
   /**
    * @param args
-   * @throws FileNotFoundException 
+   * @throws FileNotFoundException
    */
   public static void main(String[] args) throws FileNotFoundException {
-   
+
     long start = System.nanoTime();
     Pipe pipe = new Pipe();
-    
+
     System.out.println("Loading time ["
-            + ((System.nanoTime() - start) / 1000000) + "ms]");
+        + ((System.nanoTime() - start) / 1000000) + "ms]");
     Scanner kb = new Scanner(System.in);
     System.out.print("Enter the sentence: ");
     String input = kb.nextLine();
     while (!input.equals("q")) {
-        if (input.equals("0")) {
-            input = "Fomos levados à crer que os menino são burro de doer. As menina chegaram.";
-        }
-        
-        pipe.analyze(input);
+      if (input.equals("0")) {
+        input = "Fomos levados à crer que os menino são burro de doer. As menina chegaram.";
+      }
 
-        System.out.print("Enter the sentence: ");
-        input = kb.nextLine();
+      pipe.analyze(input);
+
+      System.out.print("Enter the sentence: ");
+      input = kb.nextLine();
     }
-    
-    
+
   }
 
 }

@@ -33,7 +33,7 @@ public class FeaturizerModelLoader extends ModelLoader<FeaturizerModel> {
   public FeaturizerModelLoader() {
     super("Featurizer");
   }
-  
+
   @Override
   protected FeaturizerModel loadModel(InputStream modelIn) throws IOException {
     return new FeaturizerModel(modelIn);

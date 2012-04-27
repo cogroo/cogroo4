@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 package br.ccsl.cogroo.tools.featurizer;
 
 import java.util.ArrayList;
@@ -25,7 +24,8 @@ import java.util.regex.Pattern;
 /**
  * A context generator for the Featurizer.
  */
-public class DefaultFeaturizerContextGenerator implements FeaturizerContextGenerator {
+public class DefaultFeaturizerContextGenerator implements
+    FeaturizerContextGenerator {
 
   protected final String SE = "*SE*";
   protected final String SB = "*SB*";
@@ -34,7 +34,6 @@ public class DefaultFeaturizerContextGenerator implements FeaturizerContextGener
 
   private static Pattern hasCap = Pattern.compile("[A-Z]");
   private static Pattern hasNum = Pattern.compile("[0-9]");
-
 
   protected static String[] getPrefixes(String lex) {
     String[] prefs = new String[PREFIX_LENGTH];
@@ -52,44 +51,51 @@ public class DefaultFeaturizerContextGenerator implements FeaturizerContextGener
     return suffs;
   }
 
-  public String[] getContext(int index, WordTag[] sequence, String[] priorDecisions, Object[] additionalContext) {
+  public String[] getContext(int index, WordTag[] sequence,
+      String[] priorDecisions, Object[] additionalContext) {
     String[] w = new String[sequence.length];
     String[] t = new String[sequence.length];
     WordTag.extract(sequence, w, t);
-    return getContext(index,w,t,priorDecisions);
+    return getContext(index, w, t, priorDecisions);
   }
 
   /**
-   * Returns the context for making a pos tag decision at the specified token index given the specified tokens and previous tags.
-   * @param i The index of the token for which the context is provided.
-   * @param toks The tokens in the sentence.
-   * @param tags pos-tags
-   * @param preds The tags assigned to the previous words in the sentence.
-   * @return The context for making a pos tag decision at the specified token index given the specified tokens and previous tags.
+   * Returns the context for making a pos tag decision at the specified token
+   * index given the specified tokens and previous tags.
+   * 
+   * @param i
+   *          The index of the token for which the context is provided.
+   * @param toks
+   *          The tokens in the sentence.
+   * @param tags
+   *          pos-tags
+   * @param preds
+   *          The tags assigned to the previous words in the sentence.
+   * @return The context for making a pos tag decision at the specified token
+   *         index given the specified tokens and previous tags.
    */
   public String[] getContext(int i, String[] toks, String[] tags, String[] preds) {
 
     // Words in a 5-word window
     String w_2, w_1, w0, w1, w2;
-    
+
     // Tags in a 5-word window
     String t_2, t_1, t0, t1, t2;
-    
+
     // Previous predictions
     String p_2, p_1;
-    
-    w_2 = w_1 = w0 = w1 = w2 = null; 
+
+    w_2 = w_1 = w0 = w1 = w2 = null;
     t_2 = t_1 = t0 = t1 = t2 = null;
     p_1 = p_2 = null;
-    
+
     String lex = toks[i];
-    
+
     if (i < 2) {
       w_2 = "w_2=bos";
       t_2 = "t_2=bos";
       p_2 = "p_2=bos";
-    }
-    else {
+    } else {
       w_2 = "w_2=" + toks[i - 2];
       t_2 = "t_2=" + tags[i - 2];
       p_2 = "p_2" + preds[i - 2];
@@ -99,8 +105,7 @@ public class DefaultFeaturizerContextGenerator implements FeaturizerContextGener
       w_1 = "w_1=bos";
       t_1 = "t_1=bos";
       p_1 = "p_1=bos";
-    }
-    else {
+    } else {
       w_1 = "w_1=" + toks[i - 1];
       t_1 = "t_1=" + tags[i - 1];
       p_1 = "p_1=" + preds[i - 1];
@@ -112,8 +117,7 @@ public class DefaultFeaturizerContextGenerator implements FeaturizerContextGener
     if (i + 1 >= toks.length) {
       w1 = "w1=eos";
       t1 = "t1=eos";
-    }
-    else {
+    } else {
       w1 = "w1=" + toks[i + 1];
       t1 = "t1=" + tags[i + 1];
     }
@@ -121,106 +125,79 @@ public class DefaultFeaturizerContextGenerator implements FeaturizerContextGener
     if (i + 2 >= toks.length) {
       w2 = "w2=eos";
       t2 = "t2=eos";
-    }
-    else {
+    } else {
       w2 = "w2=" + toks[i + 2];
       t2 = "t2=" + tags[i + 2];
     }
 
     String[] features = new String[] {
-        //add word features
-        w_2,
-        w_1,
-        w0,
-        w1,
+        // add word features
+        w_2, w_1, w0, w1,
         w2,
         w_1 + w0,
         w0 + w1,
 
-        //add tag features
-        t_2,
-        t_1,
-        t0,
-        t1,
-        t2,
-        t_2 + t_1,
-        t_1 + t0,
-        t0 + t1,
-        t1 + t2,
+        // add tag features
+        t_2, t_1, t0, t1, t2, t_2 + t_1, t_1 + t0, t0 + t1, t1 + t2,
         t_2 + t_1 + t0,
         t_1 + t0 + t1,
         t0 + t1 + t2,
 
-        //add pred tags
+        // add pred tags
         p_2,
         p_1,
         p_2 + p_1,
 
-        //add pred and tag
-        p_1 + t_2,
-        p_1 + t_1,
-        p_1 + t0,
-        p_1 + t1,
-        p_1 + t2,
-        p_1 + t_2 + t_1,
-        p_1 + t_1 + t0,
-        p_1 + t0 + t1,
-        p_1 + t1 + t2,
-        p_1 + t_2 + t_1 + t0,
-        p_1 + t_1 + t0 + t1,
-        p_1 + t0 + t1 + t2,
+        // add pred and tag
+        p_1 + t_2, p_1 + t_1, p_1 + t0, p_1 + t1, p_1 + t2, p_1 + t_2 + t_1,
+        p_1 + t_1 + t0, p_1 + t0 + t1, p_1 + t1 + t2, p_1 + t_2 + t_1 + t0,
+        p_1 + t_1 + t0 + t1, p_1 + t0 + t1 + t2,
 
-        //add pred and word
-        p_1 + w_2,
-        p_1 + w_1,
-        p_1 + w0,
-        p_1 + w1,
-        p_1 + w2,
-        p_1 + w_1 + w0,
-        p_1 + w0 + w1
-    };
-
+        // add pred and word
+        p_1 + w_2, p_1 + w_1, p_1 + w0, p_1 + w1, p_1 + w2, p_1 + w_1 + w0,
+        p_1 + w0 + w1 };
 
     List<String> e = new ArrayList<String>();
-    
-      // do some basic suffix analysis
-      String[] suffs = getSuffixes(lex);
-      for (int j = 0; j < suffs.length; j++) {
-        e.add("suf=" + suffs[j]);
-      }
 
-      String[] prefs = getPrefixes(lex);
+    // do some basic suffix analysis
+    String[] suffs = getSuffixes(lex);
+    for (int j = 0; j < suffs.length; j++) {
+      e.add("suf=" + suffs[j]);
+    }
+
+    String[] prefs = getPrefixes(lex);
+    for (int j = 0; j < prefs.length; j++) {
+      e.add("pre=" + prefs[j]);
+    }
+    // see if the word has any special characters
+    if (lex.indexOf('-') != -1) {
+      e.add("h");
+    }
+
+    if ("prop".equals(tags[i]) && lex.contains("_")) {
+      String fn = lex.substring(0, lex.indexOf("_"));
+      String[] nprefs = getSuffixes(fn);
       for (int j = 0; j < prefs.length; j++) {
-        e.add("pre=" + prefs[j]);
+        e.add("nsuf=" + nprefs[j]);
       }
-      // see if the word has any special characters
-      if (lex.indexOf('-') != -1) {
-        e.add("h");
-      }
-      
-      if("prop".equals(tags[i]) && lex.contains("_")) {
-        String fn = lex.substring(0, lex.indexOf("_"));
-        String[] nprefs = getSuffixes(fn);
-        for (int j = 0; j < prefs.length; j++) {
-          e.add("nsuf=" + nprefs[j]);
-        }
-      }
+    }
 
-      if (hasCap.matcher(lex).find()) {
-        e.add("c");
-      }
+    if (hasCap.matcher(lex).find()) {
+      e.add("c");
+    }
 
-      if (hasNum.matcher(lex).find()) {
-        e.add("d");
-      }
-      // end suffix
-      
+    if (hasNum.matcher(lex).find()) {
+      e.add("d");
+    }
+    // end suffix
+
     String[] suffixContexts = e.toArray(new String[e.size()]);
-    
+
     String[] context = new String[suffixContexts.length + features.length];
     System.arraycopy(features, 0, context, 0, features.length);
-    System.arraycopy(suffixContexts, 0, context, features.length, suffixContexts.length);
-    
+    System.arraycopy(suffixContexts, 0, context, features.length,
+        suffixContexts.length);
+
     return context;
   }
 

@@ -40,8 +40,8 @@ public class JspellTagInterpreter implements TagInterpreterI {
   static {
 
     /* ********************************
-     * Morphologic 
-     ********************************/
+     * Morphologic******************************
+     */
     Map<Enum<?>, String> menumElements = new HashMap<Enum<?>, String>();
 
     /* Class */
@@ -57,25 +57,25 @@ public class JspellTagInterpreter implements TagInterpreterI {
     menumElements.put(Class.COORDINATING_CONJUNCTION, "CAT:conj-c");
     menumElements.put(Class.INTERJECTION, "CAT:in");
     menumElements.put(Class.PREFIX, "CAT:pref");
-    
+
     /* Gender */
     menumElements.put(Gender.MALE, "G:m");
     menumElements.put(Gender.FEMALE, "G:f");
     menumElements.put(Gender.NEUTRAL, "G:n");
-    
+
     /* Number */
     menumElements.put(Number.SINGULAR, "N:s");
     menumElements.put(Number.PLURAL, "N:p");
     menumElements.put(Number.NEUTRAL, "N:n");
-    
+
     /* Case */
     menumElements.put(Case.ACCUSATIVE, "C:a");
     menumElements.put(Case.DATIVE, "C:d");
     menumElements.put(Case.NOMINATIVE, "C:n");
     menumElements.put(Case.PREPOSITIVE, "C:g");
-//    menumElements.put(Case.ACCUSATIVE_DATIVE, "ACC/DAT");
-//    menumElements.put(Case.NOMINATIVE_PREPOSITIVE, "NOM/PIV");
-    
+    // menumElements.put(Case.ACCUSATIVE_DATIVE, "ACC/DAT");
+    // menumElements.put(Case.NOMINATIVE_PREPOSITIVE, "NOM/PIV");
+
     /* Person */
     menumElements.put(Person.FIRST, "P:1");
     menumElements.put(Person.SECOND, "P:2");
@@ -89,19 +89,19 @@ public class JspellTagInterpreter implements TagInterpreterI {
     menumElements.put(Tense.PRETERITO_MAIS_QUE_PERFEITO, "T:pmp");
     menumElements.put(Tense.FUTURE, "T:f");
     menumElements.put(Tense.CONDITIONAL, "T:c");
-    //menumElements.put(Tense.PRETERITO_PERFEITO_MAIS_QUE_PERFEITO, "T:pmp");
+    // menumElements.put(Tense.PRETERITO_PERFEITO_MAIS_QUE_PERFEITO, "T:pmp");
 
     /* Mood */
-    
-//    menumElements.put(Mood.INDICATIVE, "IND");
-//    menumElements.put(Mood.SUBJUNCTIVE, "SUBJ");
+
+    // menumElements.put(Mood.INDICATIVE, "IND");
+    // menumElements.put(Mood.SUBJUNCTIVE, "SUBJ");
     menumElements.put(Mood.IMPERATIVE, "T:i");
-    
+
     /* Punctuation */
-//    menumElements.put(Punctuation.ABS, "ABS");
-//    menumElements.put(Punctuation.NSEP, "NSEP");
-//    menumElements.put(Punctuation.BIN, "BIN");
-//    menumElements.put(Punctuation.REL, "REL");
+    // menumElements.put(Punctuation.ABS, "ABS");
+    // menumElements.put(Punctuation.NSEP, "NSEP");
+    // menumElements.put(Punctuation.BIN, "BIN");
+    // menumElements.put(Punctuation.REL, "REL");
 
     ENUM_MTAG_PARTS = Collections.unmodifiableMap(menumElements);
 
@@ -116,13 +116,13 @@ public class JspellTagInterpreter implements TagInterpreterI {
       stringMElements.put(ENUM_MTAG_PARTS.get(tagE),
           Collections.unmodifiableList(values));
     }
-    
+
     // gender
     ArrayList<Enum<?>> _Gn = new ArrayList<Enum<?>>();
     _Gn.add(Gender.NEUTRAL);
     stringMElements.put("G:2", Collections.unmodifiableList(_Gn));
     stringMElements.put("G:_", Collections.unmodifiableList(_Gn));
-    
+
     // number
     ArrayList<Enum<?>> _Nn = new ArrayList<Enum<?>>();
     _Nn.add(Number.NEUTRAL);
@@ -135,7 +135,7 @@ public class JspellTagInterpreter implements TagInterpreterI {
     ArrayList<Enum<?>> _Ns = new ArrayList<Enum<?>>();
     _Ns.add(Number.SINGULAR);
     stringMElements.put("DN:s", Collections.unmodifiableList(_Ns));
-    
+
     // person
     ArrayList<Enum<?>> _P1 = new ArrayList<Enum<?>>();
     _P1.add(Person.FIRST);
@@ -152,22 +152,24 @@ public class JspellTagInterpreter implements TagInterpreterI {
 
     // Tense
     ArrayList<Enum<?>> _Tfc = new ArrayList<Enum<?>>();
-    _Tfc.add(Tense.FUTURE);_Tfc.add(Mood.SUBJUNCTIVE);
+    _Tfc.add(Tense.FUTURE);
+    _Tfc.add(Mood.SUBJUNCTIVE);
     stringMElements.put("T:fc", Collections.unmodifiableList(_Tfc));
 
     ArrayList<Enum<?>> _Tpc = new ArrayList<Enum<?>>();
-    _Tpc.add(Tense.PRESENT);_Tpc.add(Mood.SUBJUNCTIVE);
+    _Tpc.add(Tense.PRESENT);
+    _Tpc.add(Mood.SUBJUNCTIVE);
     stringMElements.put("T:pc", Collections.unmodifiableList(_Tpc));
 
     ArrayList<Enum<?>> _Tpic = new ArrayList<Enum<?>>();
-    _Tpic.add(Tense.PRETERITO_IMPERFEITO);_Tpic.add(Mood.SUBJUNCTIVE);
+    _Tpic.add(Tense.PRETERITO_IMPERFEITO);
+    _Tpic.add(Mood.SUBJUNCTIVE);
     stringMElements.put("T:pic", Collections.unmodifiableList(_Tpic));
 
     // indicative we to using software
-    String[] ind = {"T:f", "T:p", "T:pi", "T:pmp", "T:pp"};
+    String[] ind = { "T:f", "T:p", "T:pi", "T:pmp", "T:pp" };
     MOOD_INDICATIVE = Collections.unmodifiableList(Arrays.asList(ind));
-    
-    
+
     MTAG_PARTS_ENUM = Collections.unmodifiableMap(stringMElements);
 
   }
@@ -207,10 +209,10 @@ public class JspellTagInterpreter implements TagInterpreterI {
             m.setNumber((Number) t);
           } else if (t instanceof Case) {
             m.setCase((Case) t);
-          } else if (t instanceof Person){
+          } else if (t instanceof Person) {
             m.setPerson((Person) t);
-          } else if (t instanceof Tense){
-            if(MOOD_INDICATIVE.contains(tag)) {
+          } else if (t instanceof Tense) {
+            if (MOOD_INDICATIVE.contains(tag)) {
               m.setMood(Mood.INDICATIVE);
             }
             m.setTense((Tense) t);
@@ -226,11 +228,9 @@ public class JspellTagInterpreter implements TagInterpreterI {
             m.setClazz(Class.PUNCTUATION_MARK);
           } else if ("CAT:v".equals(tag) && m.getClazzE() == null) {
             m.setClazz(Class.FINITIVE_VERB);
-          } else if ("CAT:ppos".equals(tag) || 
-              "CAT:pind".equals(tag) || 
-              "CAT:pdem".equals(tag) || 
-              "CAT:pint".equals(tag) || 
-              "CAT:prel".equals(tag)) {
+          } else if ("CAT:ppos".equals(tag) || "CAT:pind".equals(tag)
+              || "CAT:pdem".equals(tag) || "CAT:pint".equals(tag)
+              || "CAT:prel".equals(tag)) {
             m.setClazz(Class.PRONOUN);
           } else if ("CAT:card".equals(tag) || "CAT:nord".equals(tag)) {
             m.setClazz(Class.NUMERAL);
@@ -240,17 +240,17 @@ public class JspellTagInterpreter implements TagInterpreterI {
             return null; // ignore this tag
           }
         } else if (tag.startsWith("T:")) {
-          if(MOOD_INDICATIVE.contains(tag)) {
+          if (MOOD_INDICATIVE.contains(tag)) {
             m.setMood(Mood.INDICATIVE);
           }
-          if((Class.FINITIVE_VERB.equals(m.getClazzE()) || m.getClazzE() == null)){
+          if ((Class.FINITIVE_VERB.equals(m.getClazzE()) || m.getClazzE() == null)) {
             if ("T:inf".equals(tag) || "T:ip".equals(tag)) {
               m.setClazz(Class.INFINITIVE_VERB);
             } else if ("T:ppa".equals(tag)) {
               m.setClazz(Class.PARTICIPLE_VERB);
             } else if ("T:g".equals(tag)) {
               m.setClazz(Class.GERUND_VERB);
-            }            
+            }
           }
         }
 
@@ -274,28 +274,32 @@ public class JspellTagInterpreter implements TagInterpreterI {
     if (m.toString() == null || m.toString().length() == 0) {
       LOGGER.error("Invalid MorphologicalTag: " + tagString);
     }
-    
+
     // post process
-    if(m.getGenderE() == null && m.getNumberE() != null) {
-      if(Class.NOUN.equals(m.getClazzE()) || Class.NOUN_ADJECTIVE.equals(m.getClazzE())|| Class.NUMERAL.equals(m.getClazzE())) {
+    if (m.getGenderE() == null && m.getNumberE() != null) {
+      if (Class.NOUN.equals(m.getClazzE())
+          || Class.NOUN_ADJECTIVE.equals(m.getClazzE())
+          || Class.NUMERAL.equals(m.getClazzE())) {
         m.setGender(Gender.NEUTRAL);
-      } else if(Class.PROPER_NOUN.equals(m.getClazzE())) {
+      } else if (Class.PROPER_NOUN.equals(m.getClazzE())) {
         m.setGender(Gender.MALE);
       }
     }
-    
-    if(m.getNumberE() == null && m.getGenderE() != null) {
-      if(Class.NOUN.equals(m.getClazzE()) || Class.NOUN_ADJECTIVE.equals(m.getClazzE())|| Class.NUMERAL.equals(m.getClazzE())) {
+
+    if (m.getNumberE() == null && m.getGenderE() != null) {
+      if (Class.NOUN.equals(m.getClazzE())
+          || Class.NOUN_ADJECTIVE.equals(m.getClazzE())
+          || Class.NUMERAL.equals(m.getClazzE())) {
         m.setNumber(Number.NEUTRAL);
-      }else if(Class.PROPER_NOUN.equals(m.getClazzE())) {
+      } else if (Class.PROPER_NOUN.equals(m.getClazzE())) {
         m.setNumber(Number.SINGULAR);
       }
     }
-    
-    if(m.getTense() != null && Class.NOUN.equals(m.getClazzE())) {
+
+    if (m.getTense() != null && Class.NOUN.equals(m.getClazzE())) {
       m.setClazz(Class.INFINITIVE_VERB);
     }
-    
+
     synchronized (cache) {
       if (!cache.containsKey(tagString)) {
         cache.put(tagString, m.clone());

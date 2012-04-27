@@ -22,7 +22,7 @@ public class PortuguesSentenceDetectorFactory extends SentenceDetectorFactory {
       boolean useTokenEnd, Dictionary abbreviationDictionary,
       char[] eosCharacters) {
     super(languageCode, useTokenEnd, abbreviationDictionary, eosCharacters);
-    if(eosCharacters != null) {
+    if (eosCharacters != null) {
       this.eos = eosCharacters;
     } else {
       this.eos = Factory.ptEosCharacters;

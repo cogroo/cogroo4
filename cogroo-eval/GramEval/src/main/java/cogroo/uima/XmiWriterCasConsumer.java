@@ -42,13 +42,14 @@ import org.xml.sax.SAXException;
  * <p>
  * This CAS Consumer takes one parameter:
  * <ul>
- * <li><code>OutputDirectory</code> - path to directory into which output files will be written</li>
+ * <li><code>OutputDirectory</code> - path to directory into which output files
+ * will be written</li>
  * </ul>
  */
 public class XmiWriterCasConsumer extends CasConsumer_ImplBase {
   /**
-   * Name of configuration parameter that must be set to the path of a directory into which the
-   * output files will be written.
+   * Name of configuration parameter that must be set to the path of a directory
+   * into which the output files will be written.
    */
   public static final String PARAM_OUTPUTDIR = "OutputDirectory";
 
@@ -66,7 +67,8 @@ public class XmiWriterCasConsumer extends CasConsumer_ImplBase {
 
   /**
    * Processes the CAS which was populated by the TextAnalysisEngines. <br>
-   * In this case, the CAS is converted to XMI and written into the output file .
+   * In this case, the CAS is converted to XMI and written into the output file
+   * .
    * 
    * @param aCAS
    *          a CAS which has been populated by the TAEs
@@ -87,7 +89,8 @@ public class XmiWriterCasConsumer extends CasConsumer_ImplBase {
     }
 
     // retreive the filename of the input file from the CAS
-    FSIterator it = jcas.getAnnotationIndex(SourceDocumentInformation.type).iterator();
+    FSIterator it = jcas.getAnnotationIndex(SourceDocumentInformation.type)
+        .iterator();
     File outFile = null;
     if (it.hasNext()) {
       SourceDocumentInformation fileLoc = (SourceDocumentInformation) it.next();
@@ -100,28 +103,28 @@ public class XmiWriterCasConsumer extends CasConsumer_ImplBase {
         }
         outFileName += ".xmi";
         outFile = new File(mOutputDir, outFileName);
-        modelFileName = mOutputDir.getAbsolutePath() + "/" + inFile.getName() + ".ecore";
+        modelFileName = mOutputDir.getAbsolutePath() + "/" + inFile.getName()
+            + ".ecore";
       } catch (MalformedURLException e1) {
         // invalid URL, use default processing below
       }
     }
 
     if (outFile == null) {
-    	FSIterator s = jcas.getAnnotationIndex(GoldenSentence.type).iterator();
-    	if(s.hasNext()) {
-    		GoldenSentence st = (GoldenSentence) s.next();
-    		String id = st.getId();
-    		id = id.substring(0,id.indexOf("-"));
-    		
-    		if(id != null && id.length() > 0) {
-    			outFile = new File(mOutputDir, id + ".xmi");     	
-    		}
-    	}
-    	
-      
+      FSIterator s = jcas.getAnnotationIndex(GoldenSentence.type).iterator();
+      if (s.hasNext()) {
+        GoldenSentence st = (GoldenSentence) s.next();
+        String id = st.getId();
+        id = id.substring(0, id.indexOf("-"));
+
+        if (id != null && id.length() > 0) {
+          outFile = new File(mOutputDir, id + ".xmi");
+        }
+      }
+
     }
     if (outFile == null) {
-      outFile = new File(mOutputDir, "doc" + mDocNum++ + ".xmi");     
+      outFile = new File(mOutputDir, "doc" + mDocNum++ + ".xmi");
     }
     // serialize XCAS and write to output file
     try {
@@ -145,7 +148,8 @@ public class XmiWriterCasConsumer extends CasConsumer_ImplBase {
    * 
    * @throws ResourceProcessException
    */
-  private void writeXmi(CAS aCas, File name, String modelFileName) throws IOException, SAXException {
+  private void writeXmi(CAS aCas, File name, String modelFileName)
+      throws IOException, SAXException {
     FileOutputStream out = null;
 
     try {

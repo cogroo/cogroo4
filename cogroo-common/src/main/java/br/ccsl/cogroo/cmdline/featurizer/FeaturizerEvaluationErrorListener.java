@@ -25,12 +25,13 @@ import br.ccsl.cogroo.tools.featurizer.FeatureSample;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerEvaluationMonitor;
 
 /**
- * A default implementation of {@link EvaluationMonitor} that prints
- * to an output stream.
+ * A default implementation of {@link EvaluationMonitor} that prints to an
+ * output stream.
  * 
  */
 public class FeaturizerEvaluationErrorListener extends
-    EvaluationErrorPrinter<FeatureSample> implements FeaturizerEvaluationMonitor {
+    EvaluationErrorPrinter<FeatureSample> implements
+    FeaturizerEvaluationMonitor {
 
   /**
    * Creates a listener that will print to System.err
@@ -48,9 +49,8 @@ public class FeaturizerEvaluationErrorListener extends
 
   @Override
   public void missclassified(FeatureSample reference, FeatureSample prediction) {
-    printError(reference.getFeatures(),
-        prediction.getFeatures(), reference, prediction,
-        reference.getSentence());
+    printError(reference.getFeatures(), prediction.getFeatures(), reference,
+        prediction, reference.getSentence());
   }
 
 }

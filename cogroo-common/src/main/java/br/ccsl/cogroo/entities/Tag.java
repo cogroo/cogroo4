@@ -32,29 +32,30 @@ import java.io.Serializable;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
 
 /**
- * Represents a classification of a token (or chunk) according to its morphological or syntactical classification.
+ * Represents a classification of a token (or chunk) according to its
+ * morphological or syntactical classification.
  * 
  * @author William Colen
  */
 public abstract class Tag implements Serializable {
 
-	/**
+  /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	
-//	protected String tag;
-//
-//	public Tag(String tagAsString) {
-//		this.tag = tagAsString;
-//	}
-	
-	public boolean match(Tag tag) {
-		return this.toString().equals(tag.toString());
-	}
-	
-	public abstract boolean match(TagMask tagMask);
+  private static final long serialVersionUID = 1L;
 
-	public abstract String toVerboseString();
+  // protected String tag;
+  //
+  // public Tag(String tagAsString) {
+  // this.tag = tagAsString;
+  // }
+
+  public boolean match(Tag tag) {
+    return this.toString().equals(tag.toString());
+  }
+
+  public abstract boolean match(TagMask tagMask);
+
+  public abstract String toVerboseString();
 
 }

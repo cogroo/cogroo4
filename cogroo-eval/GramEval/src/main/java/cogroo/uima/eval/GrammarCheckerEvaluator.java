@@ -57,10 +57,14 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
     String textReportPath = ((String) aContext
         .getConfigParameterValue(PARAM_TEXTREPORTPATH)).trim();
 
-    String pathToReportFMeasure = textReportPath + "/" + corpusName + "-FMeasure.txt";
-    String pathToReportDetails = textReportPath + "/" + corpusName + "-Details.txt";
-    String pathToHtmlFMeasure = htmlReportPath + "/" + corpusName + "-FMeasure.html";
-    String pathToHtmltDetails = htmlReportPath + "/" + corpusName + "-Details.html";
+    String pathToReportFMeasure = textReportPath + "/" + corpusName
+        + "-FMeasure.txt";
+    String pathToReportDetails = textReportPath + "/" + corpusName
+        + "-Details.txt";
+    String pathToHtmlFMeasure = htmlReportPath + "/" + corpusName
+        + "-FMeasure.html";
+    String pathToHtmltDetails = htmlReportPath + "/" + corpusName
+        + "-Details.html";
 
     try {
       mReportDetails = new BufferedWriter(new OutputStreamWriter(
@@ -83,8 +87,8 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
     List<Error> sentences = new ArrayList<Error>();
 
     String docText = aJCas.getDocumentText();
-    
-    if(docText.contains("de segunda à sexta-feira")) {
+
+    if (docText.contains("de segunda à sexta-feira")) {
       System.out.println("aqui");
     }
 
@@ -203,7 +207,7 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
 
   private void addFP(String type, String rule) {
     mFMeasure.addFP(type);
-    if(rule == null) {
+    if (rule == null) {
       System.out.println("aqui");
     }
     mFMeasureRules.addFP(rule);
@@ -211,7 +215,7 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
 
   private void addTP(String type, String rule) {
     mFMeasure.addTP(type);
-    if(rule == null) {
+    if (rule == null) {
       System.out.println("aqui");
     }
     mFMeasureRules.addTP(rule);
@@ -233,8 +237,8 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
     public final String rule;
     public final String docText;
 
-    public ReportEntry(String type, Error selected, Error target, Error predicted, String rule,
-        String docText) {
+    public ReportEntry(String type, Error selected, Error target,
+        Error predicted, String rule, String docText) {
       super();
       this.type = type;
       this.selectedError = selected;
@@ -245,22 +249,23 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
     }
 
     public int compareTo(ReportEntry other) {
-      if(other == this) {
+      if (other == this) {
         return 0;
       } else {
-        int val = selectedError.getType().compareTo(other.selectedError.getType());
-        if(val != 0) {
+        int val = selectedError.getType().compareTo(
+            other.selectedError.getType());
+        if (val != 0) {
           return val;
-        } 
+        }
         int minThis = getMinError(selectedError, targetError, predictedError);
         int minOther = getMinError(selectedError, targetError, predictedError);
-        if(minThis != minOther) {
+        if (minThis != minOther) {
           return minThis - minOther;
         }
         return this.hashCode() - other.hashCode();
       }
     }
-    
+
     @Override
     public int hashCode() {
       return Objects.hashCode(type, selectedError, targetError, predictedError,
@@ -270,13 +275,13 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
     private int getMinError(Error selectedError2, Error targetError2,
         Error predictedError2) {
       int min = Integer.MAX_VALUE;
-      if(selectedError2 != null && selectedError2.getStart() < min) {
+      if (selectedError2 != null && selectedError2.getStart() < min) {
         min = selectedError2.getStart();
       }
-      if(targetError2 != null && targetError2.getStart() < min) {
+      if (targetError2 != null && targetError2.getStart() < min) {
         min = targetError2.getStart();
       }
-      if(predictedError2 != null && predictedError2.getStart() < min) {
+      if (predictedError2 != null && predictedError2.getStart() < min) {
         min = predictedError2.getStart();
       }
       return min;
@@ -370,14 +375,18 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
     try {
       String summary = mFMeasure.toString();
       mReportF.write(summary);
-      
+
       List<Detail> details = new ArrayList<HtmlWriter.Detail>();
-      
-      details.add(new Detail("summaryCat", "Verdadeiros positivos, falsos positivos e target por categoria",  mFMeasure.toFP_TP_Target_Table()));
-      details.add(new Detail("summaryRules", "Verdadeiros positivos e falsos positivos por regra",  mFMeasureRules.toFP_TP_Table()));
-      
-      mHtmlWriter.addData(summary,details,
-          mFMeasure.getData(), mFMeasure.getSentences());
+
+      details.add(new Detail("summaryCat",
+          "Verdadeiros positivos, falsos positivos e target por categoria",
+          mFMeasure.toFP_TP_Target_Table()));
+      details.add(new Detail("summaryRules",
+          "Verdadeiros positivos e falsos positivos por regra", mFMeasureRules
+              .toFP_TP_Table()));
+
+      mHtmlWriter.addData(summary, details, mFMeasure.getData(),
+          mFMeasure.getSentences());
       mHtmlWriter.render();
 
     } catch (Exception e1) {

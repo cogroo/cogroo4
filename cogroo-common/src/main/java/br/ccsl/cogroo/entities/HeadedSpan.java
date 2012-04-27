@@ -15,34 +15,33 @@
  * limitations under the License.
  */
 
-
 package br.ccsl.cogroo.entities;
 
 import opennlp.tools.util.Span;
 
 public class HeadedSpan extends Span {
-  
-  
-  
+
   private int headPosition = -1;
 
   public HeadedSpan(int s, int e, String type) {
-    super(s,e,type);
-  }
-  
-  /**
-   * Initializes a new Span Object.
-   *
-   * @param s start of span.
-   * @param e end of span.
-   */
-  public HeadedSpan(int s, int e) {
-    super(s,e);
+    super(s, e, type);
   }
 
   /**
-   * Initializes a new Span object with an existing Span
-   * which is shifted by an offset.
+   * Initializes a new Span Object.
+   * 
+   * @param s
+   *          start of span.
+   * @param e
+   *          end of span.
+   */
+  public HeadedSpan(int s, int e) {
+    super(s, e);
+  }
+
+  /**
+   * Initializes a new Span object with an existing Span which is shifted by an
+   * offset.
    * 
    * @param span
    * @param offset
@@ -54,11 +53,11 @@ public class HeadedSpan extends Span {
   public void setHead(int headPosition) {
     this.headPosition = headPosition;
   }
-  
+
   public boolean equals(Object o) {
 
     boolean result = super.equals(o);
-    if(result == true) {
+    if (result == true) {
       if (o instanceof HeadedSpan) {
         HeadedSpan s = (HeadedSpan) o;
 
@@ -68,20 +67,20 @@ public class HeadedSpan extends Span {
 
     return result;
   }
-  
+
   /**
    * Generates a human readable string.
    */
   public String toString() {
     StringBuffer toStringBuffer = new StringBuffer(25);
-    if(getType() != null) {
+    if (getType() != null) {
       toStringBuffer.append(getType());
       toStringBuffer.append('-');
     }
     toStringBuffer.append(getStart());
     toStringBuffer.append("..");
     toStringBuffer.append(getEnd());
-    if(headPosition >= 0) {
+    if (headPosition >= 0) {
       toStringBuffer.append("-");
       toStringBuffer.append(headPosition);
     }

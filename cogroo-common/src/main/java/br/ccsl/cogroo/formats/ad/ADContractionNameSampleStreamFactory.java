@@ -73,7 +73,6 @@ public class ADContractionNameSampleStreamFactory extends
     ObjectStream<String> lineStream = new PlainTextByLineStream(
         sampleDataIn.getChannel(), params.getEncoding());
 
-
     return new ADContractionNameSampleStream(lineStream, tagSet);
   }
 }

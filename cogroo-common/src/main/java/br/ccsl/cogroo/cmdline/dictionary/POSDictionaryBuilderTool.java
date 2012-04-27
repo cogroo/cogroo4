@@ -71,7 +71,7 @@ public class POSDictionaryBuilderTool extends AbstractBasicCmdLineTool {
     try {
 
       // load corpus tags
-      
+
       ADFeaturizerSampleStream sentenceStream = new ADFeaturizerSampleStream(
           new FileInputStream(corpusFile), "ISO-8859-1", false);
       Set<String> knownFeats = new HashSet<String>();
@@ -87,7 +87,8 @@ public class POSDictionaryBuilderTool extends AbstractBasicCmdLineTool {
       out = new FileOutputStream(dictOutFile);
 
       ExtendedPOSDictionary dict = MyPOSDictionary.parseOneEntryPerLine(in,
-          new JspellTagInterpreter(), new FlorestaTagInterpreter(), knownFeats, knownPostags, params.getAllowInvalidFeats());
+          new JspellTagInterpreter(), new FlorestaTagInterpreter(), knownFeats,
+          knownPostags, params.getAllowInvalidFeats());
 
       dict.serialize(out);
 

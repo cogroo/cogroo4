@@ -19,6 +19,7 @@ package br.ccsl.cogroo.tools.featurizer;
 
 import opennlp.tools.util.eval.EvaluationMonitor;
 
-public interface FeaturizerEvaluationMonitor extends EvaluationMonitor<FeatureSample> {
+public interface FeaturizerEvaluationMonitor extends
+    EvaluationMonitor<FeatureSample> {
 
 }

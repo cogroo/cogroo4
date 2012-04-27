@@ -31,35 +31,34 @@ import opennlp.tools.util.Span;
 import br.ccsl.cogroo.entities.Token;
 
 /**
- * Extend {@link Token} to make it mutable.
- * <b>Should remove this.</b>
+ * Extend {@link Token} to make it mutable. <b>Should remove this.</b>
  * 
  * @author William Colen
  */
 public class TokenCogroo extends Token {
 
-	/**
-	 * Id for serialization.
-	 */
-	private static final long serialVersionUID = -2944811931433416577L;
+  /**
+   * Id for serialization.
+   */
+  private static final long serialVersionUID = -2944811931433416577L;
 
-	public TokenCogroo(Span span) {
-		super(span);
-	}
+  public TokenCogroo(Span span) {
+    super(span);
+  }
 
-	public TokenCogroo(String lexeme, Span span) {
-		super(span);
-		this.lexeme = lexeme;
-	}
-	
-	public TokenCogroo(String token, int start) {
-		this.lexeme = token;
-		this.span = new Span(start, start + token.length());
-	}
-	
-	@Override
-	public void setLexeme(String lexeme) {
-		this.lexeme = lexeme;
-	}
+  public TokenCogroo(String lexeme, Span span) {
+    super(span);
+    this.lexeme = lexeme;
+  }
+
+  public TokenCogroo(String token, int start) {
+    this.lexeme = token;
+    this.span = new Span(start, start + token.length());
+  }
+
+  @Override
+  public void setLexeme(String lexeme) {
+    this.lexeme = lexeme;
+  }
 
 }

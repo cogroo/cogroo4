@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-
 package opennlp.tools.postag;
 
-public interface ExtendedTagDictionary extends TagDictionary{
+public interface ExtendedTagDictionary extends TagDictionary {
 
   public String[] getCompleteTag(String word);
-  
+
   public String[] getFeatureTag(String word);
-  
+
   public String[] getFeatureTag(String word, String tag);
-  
+
   public String getLemma(String word, String tag);
 }

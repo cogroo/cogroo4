@@ -36,13 +36,13 @@ interface POSDictionaryBuilderParams extends EncodingParameter {
 
   @ParameterDescription(valueName = "in", description = "Plain file with one entry per line")
   File getInputFile();
-  
+
   @ParameterDescription(valueName = "corpus", description = "Corpus file to validate the tags")
   File getCorpus();
 
   @ParameterDescription(valueName = "out", description = "The dictionary file.")
   File getOutputFile();
-  
+
   @ParameterDescription(valueName = "allowInvalidFeats", description = "If to allow invalid features.")
   @OptionalParameter(defaultValue = "false")
   Boolean getAllowInvalidFeats();

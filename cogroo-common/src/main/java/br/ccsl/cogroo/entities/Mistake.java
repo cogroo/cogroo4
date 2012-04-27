@@ -27,7 +27,6 @@
 
 package br.ccsl.cogroo.entities;
 
-
 /**
  * Represents one grammar error.
  * 
@@ -35,19 +34,19 @@ package br.ccsl.cogroo.entities;
  * 
  */
 public interface Mistake {
-	
-	public String getRuleIdentifier();
 
-	public String getLongMessage();
-	
-	public String getShortMessage();
+  public String getRuleIdentifier();
 
-	public String[] getSuggestions();
+  public String getLongMessage();
 
-	public int getStart();
+  public String getShortMessage();
 
-	public int getEnd();
-	
-	public String getFullMessage();
+  public String[] getSuggestions();
+
+  public int getStart();
+
+  public int getEnd();
+
+  public String getFullMessage();
 
 }

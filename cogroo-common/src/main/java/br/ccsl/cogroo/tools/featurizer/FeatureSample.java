@@ -26,7 +26,7 @@ import java.util.List;
  * Class for holding features for a single unit of text.
  */
 public class FeatureSample {
-	
+
   private final List<String> sentence;
   private final List<String> tags;
   private final List<String> feats;
@@ -39,15 +39,18 @@ public class FeatureSample {
    * @param tags
    *          POS Tags for the sentence
    * @param feats
-   *          Feature tags 
+   *          Feature tags
    */
   public FeatureSample(String[] sentence, String[] tags, String[] feats) {
-    
+
     validateArguments(sentence.length, tags.length, feats.length);
-    
-    this.sentence = Collections.unmodifiableList(new ArrayList<String>(Arrays.asList(sentence)));
-    this.tags = Collections.unmodifiableList(new ArrayList<String>(Arrays.asList(tags)));
-    this.feats = Collections.unmodifiableList(new ArrayList<String>(Arrays.asList(feats)));
+
+    this.sentence = Collections.unmodifiableList(new ArrayList<String>(Arrays
+        .asList(sentence)));
+    this.tags = Collections.unmodifiableList(new ArrayList<String>(Arrays
+        .asList(tags)));
+    this.feats = Collections.unmodifiableList(new ArrayList<String>(Arrays
+        .asList(feats)));
   }
 
   /**
@@ -60,15 +63,17 @@ public class FeatureSample {
    * @param feats
    *          Feature tags
    */
-  public FeatureSample(List<String> sentence, List<String> tags, List<String> feats) {
-    
+  public FeatureSample(List<String> sentence, List<String> tags,
+      List<String> feats) {
+
     validateArguments(sentence.size(), tags.size(), feats.size());
-    
-    this.sentence = Collections.unmodifiableList(new ArrayList<String>((sentence)));
+
+    this.sentence = Collections.unmodifiableList(new ArrayList<String>(
+        (sentence)));
     this.tags = Collections.unmodifiableList(new ArrayList<String>((tags)));
     this.feats = Collections.unmodifiableList(new ArrayList<String>((feats)));
   }
- 
+
   /** Gets the training sentence */
   public String[] getSentence() {
     return sentence.toArray(new String[sentence.size()]);
@@ -78,29 +83,31 @@ public class FeatureSample {
   public String[] getTags() {
     return tags.toArray(new String[tags.size()]);
   }
-  
+
   /** Gets the feature tags */
   public String[] getFeatures() {
     return feats.toArray(new String[feats.size()]);
   }
-  
-  private static void validateArguments(int sentenceSize, int tagsSize, int featsSize) throws IllegalArgumentException {
+
+  private static void validateArguments(int sentenceSize, int tagsSize,
+      int featsSize) throws IllegalArgumentException {
     if (sentenceSize != tagsSize || tagsSize != featsSize)
       throw new IllegalArgumentException(
           "All arrays must have the same length!");
   }
-  
+
   @Override
   public String toString() {
-	    
-	    StringBuilder featsString = new StringBuilder();
-	    
-	    for (int ci=0; ci < feats.size(); ci++) {
-        featsString.append(sentence.get(ci)).append(" ").append(tags.get(ci)).append(" ").append(feats.get(ci)).append("\n");
-	    }
-	    return featsString.toString();
-	  }
-  
+
+    StringBuilder featsString = new StringBuilder();
+
+    for (int ci = 0; ci < feats.size(); ci++) {
+      featsString.append(sentence.get(ci)).append(" ").append(tags.get(ci))
+          .append(" ").append(feats.get(ci)).append("\n");
+    }
+    return featsString.toString();
+  }
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -115,5 +122,5 @@ public class FeatureSample {
       return false;
     }
   }
-  
+
 }

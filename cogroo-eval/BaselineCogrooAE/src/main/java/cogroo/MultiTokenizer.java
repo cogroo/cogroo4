@@ -14,7 +14,7 @@ public class MultiTokenizer implements ProcessingEngine {
   private ProcessingEngine tok;
 
   public MultiTokenizer(RuntimeConfigurationI config) {
-    if(MultiCogrooSettings.TOK) {
+    if (MultiCogrooSettings.TOK) {
       try {
         LOGGER.info("Loading *NEW* tokenizer");
         this.tok = new UimaTokenizer();

@@ -79,7 +79,7 @@ public class ADExpNameSampleStreamFactory extends
       tagSet = new HashSet<String>();
       tagSet.addAll(Arrays.asList(tags.split(",")));
     }
-    
+
     FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
 
     ObjectStream<String> lineStream = new PlainTextByLineStream(

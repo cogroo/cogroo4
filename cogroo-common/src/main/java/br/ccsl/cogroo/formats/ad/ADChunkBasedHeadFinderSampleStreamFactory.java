@@ -65,11 +65,11 @@ public class ADChunkBasedHeadFinderSampleStreamFactory extends
     @ParameterDescription(valueName = "end", description = "index of last sentence")
     @OptionalParameter
     Integer getEnd();
-    
+
     @ParameterDescription(valueName = "cgTags", description = "use CG tags instead of floresta")
     @OptionalParameter(defaultValue = "false")
     Boolean getUseCGTags();
-    
+
     @ParameterDescription(valueName = "expandME", description = "expand multiword expressions")
     @OptionalParameter(defaultValue = "false")
     Boolean getExpandME();
@@ -101,7 +101,8 @@ public class ADChunkBasedHeadFinderSampleStreamFactory extends
     Charset encoding = params.getEncoding();
 
     ADChunkBasedHeadFinderSampleStream sampleStream = new ADChunkBasedHeadFinderSampleStream(
-        CmdLineUtil.openInFile(params.getData()), encoding.name(), params.getUseCGTags(), params.getExpandME());
+        CmdLineUtil.openInFile(params.getData()), encoding.name(),
+        params.getUseCGTags(), params.getExpandME());
 
     if (params.getStart() != null && params.getStart() > -1) {
       sampleStream.setStart(params.getStart());

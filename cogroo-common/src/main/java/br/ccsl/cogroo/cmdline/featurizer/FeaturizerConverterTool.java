@@ -24,7 +24,8 @@ import br.ccsl.cogroo.tools.featurizer.FeatureSample;
  * Tool to convert multiple data formats into native OpenNLP featurizer training
  * format.
  */
-public class FeaturizerConverterTool extends AbstractConverterTool<FeatureSample> {
+public class FeaturizerConverterTool extends
+    AbstractConverterTool<FeatureSample> {
 
   public FeaturizerConverterTool() {
     super(FeatureSample.class);

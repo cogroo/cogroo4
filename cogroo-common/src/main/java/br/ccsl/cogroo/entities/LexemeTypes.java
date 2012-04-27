@@ -28,33 +28,38 @@
 package br.ccsl.cogroo.entities;
 
 /**
- * <b>[Development]</b> Describe the possible classification of a lexeme: word, compound word, punctuation mark,
- * other marks, number, hyphen. <br/>
- * It is required only while performing Corpus sentence realization (from corpus notation to plain text).
+ * <b>[Development]</b> Describe the possible classification of a lexeme: word,
+ * compound word, punctuation mark, other marks, number, hyphen. <br/>
+ * It is required only while performing Corpus sentence realization (from corpus
+ * notation to plain text).
  * 
  * @author William Colen
- *
+ * 
  */
 public enum LexemeTypes {
-	/** */
-	WORD,
-	
-	/** */
-	COMPOUND_WORD_SEQUENCE,
-	
-	/** Closing: new old"  
-	 * <p>normal punctuation: It is it, isn't it?</p>*/
-	OPENING_PUNCTUATION_MARK,
-	
-	/** Opening: The "new  */
-	CLOSING_PUNCTUATION_MARK,
-	
-	/** Things like --  */
-	ANOTHER_MARK,
-	
-	/** */
-	NUMBER,	 
-	
-	/** */
-	HYPHEN
+  /** */
+  WORD,
+
+  /** */
+  COMPOUND_WORD_SEQUENCE,
+
+  /**
+   * Closing: new old"
+   * <p>
+   * normal punctuation: It is it, isn't it?
+   * </p>
+   */
+  OPENING_PUNCTUATION_MARK,
+
+  /** Opening: The "new */
+  CLOSING_PUNCTUATION_MARK,
+
+  /** Things like -- */
+  ANOTHER_MARK,
+
+  /** */
+  NUMBER,
+
+  /** */
+  HYPHEN
 }

@@ -32,31 +32,38 @@ public class FeaturizerEventStream extends opennlp.model.AbstractEventStream {
   private Event[] events;
   private int ei;
 
-  
   /**
-   * Creates a new event stream based on the specified data stream using the specified context generator.
-   * @param d The data stream for this event stream.
-   * @param cg The context generator which should be used in the creation of events for this event stream.
+   * Creates a new event stream based on the specified data stream using the
+   * specified context generator.
+   * 
+   * @param d
+   *          The data stream for this event stream.
+   * @param cg
+   *          The context generator which should be used in the creation of
+   *          events for this event stream.
    */
-  public FeaturizerEventStream(ObjectStream<FeatureSample> d, FeaturizerContextGenerator cg) {
+  public FeaturizerEventStream(ObjectStream<FeatureSample> d,
+      FeaturizerContextGenerator cg) {
     this.cg = cg;
     data = d;
     ei = 0;
     addNewEvents();
   }
-  
+
   /**
    * Creates a new event stream based on the specified data stream.
-   * @param d The data stream for this event stream.
+   * 
+   * @param d
+   *          The data stream for this event stream.
    */
   public FeaturizerEventStream(ObjectStream<FeatureSample> d) {
     this(d, new DefaultFeaturizerContextGenerator());
   }
 
   public Event next() {
-    
+
     hasNext();
-    
+
     return events[ei++];
   }
 
@@ -69,24 +76,24 @@ public class FeaturizerEventStream extends opennlp.model.AbstractEventStream {
   }
 
   private void addNewEvents() {
-    
+
     FeatureSample sample;
     try {
       sample = data.read();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    
+
     if (sample != null) {
       events = new Event[sample.getSentence().length];
       String[] toksArray = sample.getSentence();
       String[] tagsArray = sample.getTags();
       String[] predsArray = sample.getFeatures();
       for (int ei = 0, el = events.length; ei < el; ei++) {
-        events[ei] = new Event(predsArray[ei], cg.getContext(ei,toksArray,tagsArray,predsArray));
+        events[ei] = new Event(predsArray[ei], cg.getContext(ei, toksArray,
+            tagsArray, predsArray));
       }
-    }
-    else {
+    } else {
       events = new Event[0];
     }
   }

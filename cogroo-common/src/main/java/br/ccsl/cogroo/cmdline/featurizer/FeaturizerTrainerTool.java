@@ -33,9 +33,9 @@ import br.ccsl.cogroo.tools.featurizer.FeatureSample;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerME;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerModel;
 
-public class FeaturizerTrainerTool
-    extends AbstractTrainerTool<FeatureSample, TrainerToolParams> {
-  
+public class FeaturizerTrainerTool extends
+    AbstractTrainerTool<FeatureSample, TrainerToolParams> {
+
   interface TrainerToolParams extends TrainingParams, TrainingToolParams {
   }
 
@@ -55,7 +55,7 @@ public class FeaturizerTrainerTool
     super.run(format, args);
 
     mlParams = CmdLineUtil.loadTrainingParameters(params.getParams(), false);
-    if(mlParams == null) {
+    if (mlParams == null) {
       mlParams = ModelUtil.createTrainingParameters(params.getIterations(),
           params.getCutoff());
     }
@@ -67,23 +67,25 @@ public class FeaturizerTrainerTool
     try {
       ExtendedPOSDictionary tagdict = null;
       if (params.getDict() != null) {
-        tagdict = ExtendedPOSDictionary.create(new FileInputStream(params.getDict()));
+        tagdict = ExtendedPOSDictionary.create(new FileInputStream(params
+            .getDict()));
       }
-      
+
       model = FeaturizerME.train(factory.getLang(), sampleStream,
           new DefaultFeaturizerContextGenerator(), mlParams, tagdict);
-      
+
     } catch (IOException e) {
-      throw new TerminateToolException(-1, "IO error while reading training data or indexing data: " + e.getMessage());
-    }
-    finally {
+      throw new TerminateToolException(-1,
+          "IO error while reading training data or indexing data: "
+              + e.getMessage());
+    } finally {
       try {
         sampleStream.close();
       } catch (IOException e) {
         // sorry that this can fail
       }
     }
-    
+
     CmdLineUtil.writeModel("Featurizer", modelOutFile, model);
   }
 }

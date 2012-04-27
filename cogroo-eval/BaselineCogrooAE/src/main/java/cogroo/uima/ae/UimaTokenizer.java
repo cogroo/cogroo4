@@ -29,17 +29,17 @@ public class UimaTokenizer extends AnnotationService implements
 
   private Type tokenType;
   private Type sentenceType;
-  
+
   private static final Set<String> PRONOMES_OBLIQUOS_ATONOS;
-  
+
   static {
     String[] arr = { "me", "te", "se", "o", "a", "lhe", "nos", "vos", "os",
         "as", "lhes", "lo" };
-    PRONOMES_OBLIQUOS_ATONOS = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(arr)));
+    PRONOMES_OBLIQUOS_ATONOS = Collections.unmodifiableSet(new HashSet<String>(
+        Arrays.asList(arr)));
   }
-  
 
-  public UimaTokenizer() throws AnnotationServiceException{
+  public UimaTokenizer() throws AnnotationServiceException {
     super("UIMATokenizer");
 
   }
@@ -61,63 +61,62 @@ public class UimaTokenizer extends AnnotationService implements
     // ************************************
     // Extract the result using annotated CAS
     // ************************************
-    
-    FSIterator<Annotation> iterator = cas.getAnnotationIndex(tokenType).iterator();
+
+    FSIterator<Annotation> iterator = cas.getAnnotationIndex(tokenType)
+        .iterator();
     List<Token> tokens = new ArrayList<Token>();
     boolean foundHyphen = false;
-    while(iterator.hasNext()) {
-      Annotation  a = iterator.next();
+    while (iterator.hasNext()) {
+      Annotation a = iterator.next();
       String tokStr = a.getCoveredText();
       Span tokSpan = new Span(a.getBegin(), a.getEnd());
-      
-/*    if(!MultiCogrooSettings.PRE) {
-        if(tokStr != null && foundHyphen && PRONOMES_OBLIQUOS_ATONOS.contains(tokStr.toLowerCase())) {
-//          System.out.println("found pronome obliquo");
-          foundHyphen = false;
-          tokStr = '-' + tokStr;
-          tokSpan = new Span(tokSpan.getStart() - 1, tokSpan.getEnd());
-//          System.out.println("tokStr: " + tokStr);
-//          System.out.println("tokSpan: " + tokSpan);
-          
-          TokenCogroo lt = (TokenCogroo)tokens.get(tokens.size()-1);
-          lt.setLexeme(lt.getLexeme().substring(0, lt.getLexeme().length() - 1));
-          lt.setSpan(new Span(lt.getSpan().getStart(), lt.getSpan().getEnd() -1));
-//          System.out.println("replace tok: " + lt);
-          tokens.set(tokens.size()-1,lt);
-        } else if(foundHyphen) {
-          foundHyphen = false;
-//          System.out.println("reset foundHyphen");
-        } else if(tokStr.endsWith("-")) {
-//          System.out.println("found hyphen: " + tokStr);
-          foundHyphen = true;
-        }       
-      }*/
-      
+
+      /*
+       * if(!MultiCogrooSettings.PRE) { if(tokStr != null && foundHyphen &&
+       * PRONOMES_OBLIQUOS_ATONOS.contains(tokStr.toLowerCase())) { //
+       * System.out.println("found pronome obliquo"); foundHyphen = false;
+       * tokStr = '-' + tokStr; tokSpan = new Span(tokSpan.getStart() - 1,
+       * tokSpan.getEnd()); // System.out.println("tokStr: " + tokStr); //
+       * System.out.println("tokSpan: " + tokSpan);
+       * 
+       * TokenCogroo lt = (TokenCogroo)tokens.get(tokens.size()-1);
+       * lt.setLexeme(lt.getLexeme().substring(0, lt.getLexeme().length() - 1));
+       * lt.setSpan(new Span(lt.getSpan().getStart(), lt.getSpan().getEnd()
+       * -1)); // System.out.println("replace tok: " + lt);
+       * tokens.set(tokens.size()-1,lt); } else if(foundHyphen) { foundHyphen =
+       * false; // System.out.println("reset foundHyphen"); } else
+       * if(tokStr.endsWith("-")) { // System.out.println("found hyphen: " +
+       * tokStr); foundHyphen = true; } }
+       */
+
       TokenCogroo t = new TokenCogroo(tokStr, tokSpan);
       tokens.add(t);
     }
-    
-    if(!MultiCogrooSettings.PRE) {
+
+    if (!MultiCogrooSettings.PRE) {
       boolean restart = true;
       int start = 1;
-      while(restart) {
+      while (restart) {
         restart = false;
-        for(int i = start; i < tokens.size() - 1 && !restart; i++) {
-          if("-".equals(tokens.get(i).getLexeme())) {
-            if(!hasCharacterBetween(tokens.get(i-1), tokens.get(i)) && !hasCharacterBetween(tokens.get(i), tokens.get(i+1))) {
-              Token a = tokens.get(i-1);
-              Token b = tokens.get(i+1);
-              if(PRONOMES_OBLIQUOS_ATONOS.contains(b.getLexeme().toLowerCase())) {
+        for (int i = start; i < tokens.size() - 1 && !restart; i++) {
+          if ("-".equals(tokens.get(i).getLexeme())) {
+            if (!hasCharacterBetween(tokens.get(i - 1), tokens.get(i))
+                && !hasCharacterBetween(tokens.get(i), tokens.get(i + 1))) {
+              Token a = tokens.get(i - 1);
+              Token b = tokens.get(i + 1);
+              if (PRONOMES_OBLIQUOS_ATONOS
+                  .contains(b.getLexeme().toLowerCase())) {
                 // remove the "-"
-                b.setSpan(new Span(b.getSpan().getStart() - 1, b.getSpan().getEnd()));
+                b.setSpan(new Span(b.getSpan().getStart() - 1, b.getSpan()
+                    .getEnd()));
                 b.setLexeme("-" + b.getLexeme());
                 tokens.remove(i);
                 restart = true;
-                start = i+1;
+                start = i + 1;
               }
             }
           }
-        }      
+        }
       }
     }
 
@@ -126,11 +125,11 @@ public class UimaTokenizer extends AnnotationService implements
     cas.reset();
 
   }
-  
+
   private boolean hasCharacterBetween(Token a, Token b) {
     int aEnd = a.getSpan().getEnd();
     int bStart = b.getSpan().getStart();
-    if(aEnd == bStart) {
+    if (aEnd == bStart) {
       return false;
     }
     return true;
@@ -138,20 +137,19 @@ public class UimaTokenizer extends AnnotationService implements
 
   @Override
   protected void initTypes(TypeSystem typeSystem) {
-    sentenceType = cas.getTypeSystem().getType("opennlp.uima.Sentence");  
-    tokenType = cas.getTypeSystem().getType("opennlp.uima.Token");    
+    sentenceType = cas.getTypeSystem().getType("opennlp.uima.Sentence");
+    tokenType = cas.getTypeSystem().getType("opennlp.uima.Token");
   }
-  
+
   private void updateCas(Sentence sentence, JCas cas) {
     cas.reset();
     cas.setDocumentText(sentence.getSentence());
-    
+
     AnnotationFS a = cas.getCas().createAnnotation(sentenceType,
         sentence.getOffset(),
         sentence.getOffset() + sentence.getSentence().length());
 
     cas.getIndexRepository().addFS(a);
   }
-
 
 }

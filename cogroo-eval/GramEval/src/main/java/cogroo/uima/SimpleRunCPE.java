@@ -32,9 +32,10 @@ import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.util.XMLInputSource;
 
 /**
- * Main Class that runs a Collection Processing Engine (CPE). This class reads a CPE Descriptor as a
- * command-line argument and instantiates the CPE. It also registers a callback listener with the
- * CPE, which will print progress and statistics to System.out.
+ * Main Class that runs a Collection Processing Engine (CPE). This class reads a
+ * CPE Descriptor as a command-line argument and instantiates the CPE. It also
+ * registers a callback listener with the CPE, which will print progress and
+ * statistics to System.out.
  * 
  * 
  */
@@ -48,7 +49,7 @@ public class SimpleRunCPE extends Thread {
    * Start time of CPE initialization
    */
   private long mStartTime;
-  
+
   /**
    * Start time of the processing
    */
@@ -72,7 +73,7 @@ public class SimpleRunCPE extends Thread {
     // parse CPE descriptor
     System.out.println("Parsing CPE Descriptor");
     CpeDescription cpeDesc = UIMAFramework.getXMLParser().parseCpeDescription(
-            new XMLInputSource(args[0]));
+        new XMLInputSource(args[0]));
     // instantiate CPE
     System.out.println("Instantiating CPE");
     mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
@@ -87,7 +88,8 @@ public class SimpleRunCPE extends Thread {
     // Allow user to abort by pressing Enter
     System.out.println("To abort processing, type \"abort\" and press enter.");
     while (true) {
-      String line = new BufferedReader(new InputStreamReader(System.in)).readLine();
+      String line = new BufferedReader(new InputStreamReader(System.in))
+          .readLine();
       if ("abort".equals(line) && mCPE.isProcessing()) {
         System.out.println("Aborting...");
         mCPE.stop();
@@ -101,7 +103,7 @@ public class SimpleRunCPE extends Thread {
    */
   private static void printUsageMessage() {
     System.out.println(" Arguments to the program are as follows : \n"
-            + "args[0] : path to CPE descriptor file");
+        + "args[0] : path to CPE descriptor file");
   }
 
   /**
@@ -129,7 +131,7 @@ public class SimpleRunCPE extends Thread {
      * 
      * @see org.apache.uima.collection.processing.StatusCallbackListener#initializationComplete()
      */
-    public void initializationComplete() {      
+    public void initializationComplete() {
       System.out.println("CPM Initialization Complete");
       mInitCompleteTime = System.currentTimeMillis();
     }
@@ -162,14 +164,15 @@ public class SimpleRunCPE extends Thread {
         System.out.print("; " + size + " characters");
       }
       System.out.println();
-      long initTime = mInitCompleteTime - mStartTime; 
+      long initTime = mInitCompleteTime - mStartTime;
       long processingTime = time - mInitCompleteTime;
       long elapsedTime = initTime + processingTime;
       System.out.println("Total Time Elapsed: " + elapsedTime + " ms ");
       System.out.println("Initialization Time: " + initTime + " ms");
       System.out.println("Processing Time: " + processingTime + " ms");
-      
-      System.out.println("\n\n ------------------ PERFORMANCE REPORT ------------------\n");
+
+      System.out
+          .println("\n\n ------------------ PERFORMANCE REPORT ------------------\n");
       System.out.println(mCPE.getPerformanceReport().toString());
       // stop the JVM. Otherwise main thread will still be blocked waiting for
       // user to press Enter.
@@ -213,7 +216,8 @@ public class SimpleRunCPE extends Thread {
      * @param aCas
      *          CAS corresponding to the completed processing
      * @param aStatus
-     *          EntityProcessStatus that holds the status of all the events for aEntity
+     *          EntityProcessStatus that holds the status of all the events for
+     *          aEntity
      */
     public void entityProcessComplete(CAS aCas, EntityProcessStatus aStatus) {
       if (aStatus.isException()) {

@@ -16,7 +16,8 @@ import org.apache.uima.util.XMLInputSource;
 
 public abstract class AnnotationService {
 
-  protected static final Logger logger = Logger.getLogger(AnnotationService.class);
+  protected static final Logger logger = Logger
+      .getLogger(AnnotationService.class);
 
   /** The TextAnnotator Analyzer */
   protected AnalysisEngine ae = null;
@@ -26,7 +27,8 @@ public abstract class AnnotationService {
 
   public AnnotationService(String descriptor) throws AnnotationServiceException {
     try {
-      String fName = getRepoPath() + "/" + descriptor + "/" + descriptor + "_pear.xml";
+      String fName = getRepoPath() + "/" + descriptor + "/" + descriptor
+          + "_pear.xml";
       System.out.println("Will load pear from " + fName);
       loadDescriptor(new File(fName));
     } catch (Exception e) {
@@ -51,11 +53,11 @@ public abstract class AnnotationService {
     initTypes(cas.getTypeSystem());
 
   }
-  
+
   private static String getRepoPath() {
     return System.getenv("REPO_ROOT");
   }
- 
+
   protected abstract void initTypes(TypeSystem typeSystem);
 
 }

@@ -48,12 +48,12 @@ public class ADContractionNameSampleStreamTest {
     assertEquals("no", samples.get(0).getSentence()[1]);
     assertEquals("no", samples.get(0).getSentence()[10]);
     assertEquals("Com", samples.get(1).getSentence()[0]);
-//    assertEquals("relação", samples.get(1).getSentence()[1]);
-//    assertEquals("à", samples.get(1).getSentence()[2]);
+    // assertEquals("relação", samples.get(1).getSentence()[1]);
+    // assertEquals("à", samples.get(1).getSentence()[2]);
     assertEquals("mais_de", samples.get(2).getSentence()[4]);
     assertEquals("da", samples.get(2).getSentence()[7]);
     assertEquals("num", samples.get(3).getSentence()[25]);
-    
+
   }
 
   @Test
@@ -104,8 +104,8 @@ public class ADContractionNameSampleStreamTest {
 
     Set<String> tags = new HashSet<String>();
     tags.add("adv");
-    stream = new ADContractionNameSampleStream(new PlainTextByLineStream(in, "UTF-8"),
-        tags);
+    stream = new ADContractionNameSampleStream(new PlainTextByLineStream(in,
+        "UTF-8"), tags);
 
     sample = stream.read();
 

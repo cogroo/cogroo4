@@ -12,10 +12,10 @@ import org.junit.Test;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class;
 
 public class FlorestaTagInterpreterTest {
-  
+
   private static Map<String, Class> table = new HashMap<String, Class>();
   private TagInterpreterI ti = new FlorestaTagInterpreter();
-  
+
   static {
     table.put("-", Class.PUNCTUATION_MARK);
     table.put("--", Class.PUNCTUATION_MARK);
@@ -27,8 +27,8 @@ public class FlorestaTagInterpreterTest {
     table.put(".", Class.PUNCTUATION_MARK);
     table.put("...", Class.PUNCTUATION_MARK);
     table.put("'", Class.PUNCTUATION_MARK);
-//    table.put("«", Class.PUNCTUATION_MARK);
-//    table.put("»", Class.PUNCTUATION_MARK);
+    // table.put("«", Class.PUNCTUATION_MARK);
+    // table.put("»", Class.PUNCTUATION_MARK);
     table.put("(", Class.PUNCTUATION_MARK);
     table.put(")", Class.PUNCTUATION_MARK);
     table.put("[", Class.PUNCTUATION_MARK);
@@ -47,7 +47,8 @@ public class FlorestaTagInterpreterTest {
     table.put("np", Class.NOUN);
     table.put("num", Class.NUMERAL);
     table.put("pp", Class.PREPOSITION);
-    table.put("pron", Class.PRONOUN); // don't happen, added only for compatibility
+    table.put("pron", Class.PRONOUN); // don't happen, added only for
+                                      // compatibility
     table.put("pron-det", Class.PRONOUN);
     table.put("pron-indp", Class.PRONOUN);
     table.put("pron-pers", Class.PERSONAL_PRONOUN);
@@ -59,26 +60,27 @@ public class FlorestaTagInterpreterTest {
     table.put("v-pcp", Class.PARTICIPLE_VERB);
     table.put("vp", Class.INFINITIVE_VERB);
 
-
   }
 
   @Test
   public void testParseMorphologicalTag() {
-    
+
     // class
     for (String tag : table.keySet()) {
-      if(table.get(tag) != null)
-        assertEquals("Failed to parse class tag: " + tag, table.get(tag), ti.parseMorphologicalTag(tag).getClazzE());
+      if (table.get(tag) != null)
+        assertEquals("Failed to parse class tag: " + tag, table.get(tag), ti
+            .parseMorphologicalTag(tag).getClazzE());
     }
   }
-  
+
   @Test
   public void testSerializeTag() {
     Set<Class> classes = new HashSet<Class>(table.values());
     for (Class classTag : classes) {
-      if(!classTag.equals(Class.PUNCTUATION_MARK)) {
+      if (!classTag.equals(Class.PUNCTUATION_MARK)) {
         String value = ti.serialize(classTag);
-        assertEquals("Failed to parse class tag: " + classTag, classTag, table.get(value));        
+        assertEquals("Failed to parse class tag: " + classTag, classTag,
+            table.get(value));
       }
     }
   }

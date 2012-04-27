@@ -121,21 +121,21 @@ public class FeaturizerModel extends BaseModel {
           modelTags.add(tag);
         }
 
-//        if (!modelTags.containsAll(dictTags)) {
-          for (String d : dictTags) {
-            if (!modelTags.contains(d)) {
-              poisoned.add(d);
-            }
+        // if (!modelTags.containsAll(dictTags)) {
+        for (String d : dictTags) {
+          if (!modelTags.contains(d)) {
+            poisoned.add(d);
           }
-          this.poisonedDictionaryTags = Collections.unmodifiableSet(poisoned);
-          if(poisonedDictionaryTags.size() > 0) {
-            System.err
-                .println("WARNING: Tag dictioinary contains tags which are unkown by the model! "
-                    + this.poisonedDictionaryTags.toString());
-          }
-          // throw new InvalidFormatException("Tag dictioinary contains tags " +
-          // "which are unkown by the model! " + unknownTag.toString());
-//        }
+        }
+        this.poisonedDictionaryTags = Collections.unmodifiableSet(poisoned);
+        if (poisonedDictionaryTags.size() > 0) {
+          System.err
+              .println("WARNING: Tag dictioinary contains tags which are unkown by the model! "
+                  + this.poisonedDictionaryTags.toString());
+        }
+        // throw new InvalidFormatException("Tag dictioinary contains tags " +
+        // "which are unkown by the model! " + unknownTag.toString());
+        // }
       } else {
         throw new InvalidFormatException(
             "Abbreviations dictionary has wrong type!");

@@ -55,11 +55,11 @@ import br.ccsl.cogroo.formats.ad.ADExpNameSampleStreamFactory;
 import br.ccsl.cogroo.formats.ad.ADFeatureSampleStreamFactory;
 
 public final class CLI {
-  
+
   public static final String CMD = "cogroo-common";
-  
+
   private static Map<String, AbstractCmdLineTool> toolLookupMap;
-  
+
   static {
     // Register other types
     FeatureSampleStreamFactory.registerFactory();
@@ -67,51 +67,52 @@ public final class CLI {
     ADContractionNameSampleStreamFactory.registerFactory();
     ADExpNameSampleStreamFactory.registerFactory();
     ADExPOSSampleStreamFactory.registerFactory();
-    
+
     toolLookupMap = new LinkedHashMap<String, AbstractCmdLineTool>();
-    
+
     List<AbstractCmdLineTool> tools = new LinkedList<AbstractCmdLineTool>();
-    
+
     // Dictionary Builder
     tools.add(new POSDictionaryBuilderTool());
-    
-    //Featurizer
+
+    // Featurizer
     tools.add(new FeaturizerMETool());
     tools.add(new FeaturizerTrainerTool());
     tools.add(new FeaturizerEvaluatorTool());
     tools.add(new FeaturizerCrossValidatorTool());
     tools.add(new FeaturizerConverterTool());
-    
+
     // Contraction
     tools.add(new AbbreviationDictionaryBuilderTool());
     tools.add(new TokenNameFinderTool());
     tools.add(new TokenNameFinderTrainerTool());
     tools.add(new TokenNameFinderEvaluatorTool());
     tools.add(new TokenNameFinderCrossValidatorTool());
-    
+
     // tagger
     tools.add(new POSTaggerTrainerTool());
     tools.add(new POSTaggerCrossValidatorTool());
-    
+
     for (AbstractCmdLineTool tool : tools) {
       toolLookupMap.put(tool.getName(), tool);
     }
-    
+
     toolLookupMap = Collections.unmodifiableMap(toolLookupMap);
   }
-  
+
   /**
    * @return a set which contains all tool names
    */
   public static Set<String> getToolNames() {
     return toolLookupMap.keySet();
   }
-  
+
   private static void usage() {
-    System.out.print("CoGrOO Common " + Version.currentVersion().toString() + ". ");
+    System.out.print("CoGrOO Common " + Version.currentVersion().toString()
+        + ". ");
     System.out.println("Usage: " + CMD + " TOOL");
     System.out.println("where TOOL is one of:");
-    
+
     // distance of tool name from line start
     int numberOfSpaces = -1;
     for (String toolName : toolLookupMap.keySet()) {
@@ -120,35 +121,35 @@ public final class CLI {
       }
     }
     numberOfSpaces = numberOfSpaces + 4;
-    
+
     for (CmdLineTool tool : toolLookupMap.values()) {
-      
+
       System.out.print("  " + tool.getName());
-      
+
       for (int i = 0; i < Math.abs(tool.getName().length() - numberOfSpaces); i++) {
         System.out.print(" ");
       }
-      
+
       System.out.println(tool.getShortDescription());
     }
-    
+
     System.out.println("All tools print help when invoked with help parameter");
     System.out.println("Example: opennlp SimpleTokenizer help");
   }
-  
+
   public static void main(String[] args) {
-    
+
     if (args.length == 0) {
       usage();
       System.exit(0);
     }
-    
-    String toolArguments[] = new String[args.length -1];
+
+    String toolArguments[] = new String[args.length - 1];
     System.arraycopy(args, 1, toolArguments, 0, toolArguments.length);
 
     String toolName = args[0];
 
-    //check for format
+    // check for format
     String formatName = StreamFactoryRegistry.DEFAULT_FORMAT;
     int idx = toolName.indexOf(".");
     if (-1 < idx) {
@@ -156,21 +157,22 @@ public final class CLI {
       toolName = toolName.substring(0, idx);
     }
     CmdLineTool tool = toolLookupMap.get(toolName);
-    
+
     try {
       if (null == tool) {
-        throw new TerminateToolException(1, "Tool " + toolName + " is not found.");
+        throw new TerminateToolException(1, "Tool " + toolName
+            + " is not found.");
       }
 
-      if (0 == toolArguments.length ||
-          0 < toolArguments.length && "help".equals(toolArguments[0])) {
-          if (tool instanceof TypedCmdLineTool) {
-            System.out.println(((TypedCmdLineTool) tool).getHelp(formatName));
-          } else if (tool instanceof BasicCmdLineTool) {
-            System.out.println(tool.getHelp());
-          }
+      if (0 == toolArguments.length || 0 < toolArguments.length
+          && "help".equals(toolArguments[0])) {
+        if (tool instanceof TypedCmdLineTool) {
+          System.out.println(((TypedCmdLineTool) tool).getHelp(formatName));
+        } else if (tool instanceof BasicCmdLineTool) {
+          System.out.println(tool.getHelp());
+        }
 
-          System.exit(0);
+        System.exit(0);
       }
 
       if (tool instanceof TypedCmdLineTool) {
@@ -179,17 +181,18 @@ public final class CLI {
         if (-1 == idx) {
           ((BasicCmdLineTool) tool).run(toolArguments);
         } else {
-          throw new TerminateToolException(1, "Tool " + toolName + " does not support formats.");
+          throw new TerminateToolException(1, "Tool " + toolName
+              + " does not support formats.");
         }
       } else {
-        throw new TerminateToolException(1, "Tool " + toolName + " is not supported.");
+        throw new TerminateToolException(1, "Tool " + toolName
+            + " is not supported.");
       }
-    }
-    catch (TerminateToolException e) {
-      
+    } catch (TerminateToolException e) {
+
       if (e.getMessage() != null)
         System.err.println(e.getMessage());
-      
+
       System.exit(e.getCode());
     }
   }

@@ -10,14 +10,14 @@ import cogroo.uima.ae.UimaChunker;
 import cogroo.uima.ae.UimaChunkerHeadFinder;
 
 public class MultiChunker implements ProcessingEngine {
-  
+
   private ProcessingEngine chunker;
   private ProcessingEngine chunkerHeadFinder;
-  
+
   protected static final Logger LOGGER = Logger.getLogger(MultiChunker.class);
 
   public MultiChunker(RuntimeConfigurationI config) {
-    if(MultiCogrooSettings.CHUNKER) {
+    if (MultiCogrooSettings.CHUNKER) {
       try {
         LOGGER.info("Loading *NEW* Chunker");
         this.chunker = new UimaChunker();
@@ -33,7 +33,7 @@ public class MultiChunker implements ProcessingEngine {
 
   public void process(Sentence text) {
     this.chunker.process(text);
-    if(chunkerHeadFinder != null) {
+    if (chunkerHeadFinder != null) {
       this.chunkerHeadFinder.process(text);
     }
   }

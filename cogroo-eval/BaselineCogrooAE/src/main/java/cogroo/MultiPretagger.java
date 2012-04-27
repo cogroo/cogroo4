@@ -11,13 +11,13 @@ import cogroo.uima.ae.UimaContraction;
 import cogroo.uima.ae.UimaMultiWordExp;
 
 public class MultiPretagger implements ProcessingEngine {
-  
+
   private ProcessingEngine me;
   private ProcessingEngine con;
   protected static final Logger LOGGER = Logger.getLogger(MultiPretagger.class);
-  
+
   public MultiPretagger(RuntimeConfigurationI config) {
-    if(MultiCogrooSettings.PRE) {
+    if (MultiCogrooSettings.PRE) {
       try {
         LOGGER.info("Loading *NEW* PreTagger");
         this.me = new UimaMultiWordExp();

@@ -16,7 +16,8 @@ import org.apache.uima.util.XMLInputSource;
 
 public abstract class AnnotationService {
 
-  protected static final Logger logger = Logger.getLogger(AnnotationService.class);
+  protected static final Logger logger = Logger
+      .getLogger(AnnotationService.class);
 
   /** The TextAnnotator Analyzer */
   protected AnalysisEngine ae = null;

@@ -32,14 +32,16 @@ import br.ccsl.cogroo.tools.featurizer.FeatureSampleStream;
 /**
  * Factory producing OpenNLP {@link FeatureSampleStream}s.
  */
-public class FeatureSampleStreamFactory extends LanguageSampleStreamFactory<FeatureSample> {
+public class FeatureSampleStreamFactory extends
+    LanguageSampleStreamFactory<FeatureSample> {
 
   interface Parameters extends LanguageFormatParams {
   }
 
   public static void registerFactory() {
     StreamFactoryRegistry.registerFactory(FeatureSample.class,
-        StreamFactoryRegistry.DEFAULT_FORMAT, new FeatureSampleStreamFactory(Parameters.class));
+        StreamFactoryRegistry.DEFAULT_FORMAT, new FeatureSampleStreamFactory(
+            Parameters.class));
   }
 
   protected <P> FeatureSampleStreamFactory(Class<P> params) {
@@ -54,8 +56,8 @@ public class FeatureSampleStreamFactory extends LanguageSampleStreamFactory<Feat
     CmdLineUtil.checkInputFile("Data", params.getData());
     FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
 
-    ObjectStream<String> lineStream = new PlainTextByLineStream(sampleDataIn
-        .getChannel(), params.getEncoding());
+    ObjectStream<String> lineStream = new PlainTextByLineStream(
+        sampleDataIn.getChannel(), params.getEncoding());
 
     return new FeatureSampleStream(lineStream);
   }

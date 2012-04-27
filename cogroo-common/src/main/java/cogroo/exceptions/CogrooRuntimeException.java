@@ -1,8 +1,6 @@
 package cogroo.exceptions;
 
-public class CogrooRuntimeException extends
-    InternationalizedRuntimeException {
-
+public class CogrooRuntimeException extends InternationalizedRuntimeException {
 
   private static final long serialVersionUID = -6275921375016678991L;
 
@@ -44,8 +42,8 @@ public class CogrooRuntimeException extends
    *          The arguments to the message. <code>null</code> may be used if the
    *          message has no arguments.
    */
-  public CogrooRuntimeException(String aResourceBundleName,
-      String aMessageKey, Object[] aArguments) {
+  public CogrooRuntimeException(String aResourceBundleName, String aMessageKey,
+      Object[] aArguments) {
     super(aResourceBundleName, aMessageKey, aArguments);
   }
 
@@ -66,8 +64,8 @@ public class CogrooRuntimeException extends
    *          the original exception that caused this exception to be thrown, if
    *          any
    */
-  public CogrooRuntimeException(String aResourceBundleName,
-      String aMessageKey, Object[] aArguments, Throwable aCause) {
+  public CogrooRuntimeException(String aResourceBundleName, String aMessageKey,
+      Object[] aArguments, Throwable aCause) {
     super(aResourceBundleName, aMessageKey, aArguments, aCause);
   }
 

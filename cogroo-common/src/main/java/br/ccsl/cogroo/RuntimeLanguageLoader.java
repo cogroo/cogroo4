@@ -24,7 +24,6 @@ import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 
-
 public class RuntimeLanguageLoader implements LanguageLoader {
 
   public static final String SENT = "/Users/wcolen/Documents/wrks/___MODELS/pt-sent.model";
@@ -36,15 +35,14 @@ public class RuntimeLanguageLoader implements LanguageLoader {
   public static final String CHK = "model/pt-chk.model";
   public static final String SP = "model/pt-sp.model";
 
-
   public SentenceDetector getSentenceDetector() {
     InputStream modelIn;
     try {
       modelIn = new FileInputStream(SENT);
     } catch (FileNotFoundException e) {
       Object[] args = { SENT };
-      throw new CogrooRuntimeException(
-          ExceptionMessages.MODEL_FILE_NOT_FOUND, args, e);
+      throw new CogrooRuntimeException(ExceptionMessages.MODEL_FILE_NOT_FOUND,
+          args, e);
     }
     SentenceModel model = null;
     try {
@@ -68,8 +66,8 @@ public class RuntimeLanguageLoader implements LanguageLoader {
       modelIn = new FileInputStream(TOK);
     } catch (FileNotFoundException e) {
       Object[] args = { TOK };
-      throw new CogrooRuntimeException(
-          ExceptionMessages.MODEL_FILE_NOT_FOUND, args, e);
+      throw new CogrooRuntimeException(ExceptionMessages.MODEL_FILE_NOT_FOUND,
+          args, e);
     }
     TokenizerModel model = null;
     try {
@@ -94,8 +92,8 @@ public class RuntimeLanguageLoader implements LanguageLoader {
       modelIn = new FileInputStream(PROP);
     } catch (FileNotFoundException e) {
       Object[] args = { PROP };
-      throw new CogrooRuntimeException(
-          ExceptionMessages.MODEL_FILE_NOT_FOUND, args, e);
+      throw new CogrooRuntimeException(ExceptionMessages.MODEL_FILE_NOT_FOUND,
+          args, e);
     }
     TokenNameFinderModel model = null;
     try {
@@ -119,8 +117,8 @@ public class RuntimeLanguageLoader implements LanguageLoader {
       modelIn = new FileInputStream(EXP);
     } catch (FileNotFoundException e) {
       Object[] args = { EXP };
-      throw new CogrooRuntimeException(
-          ExceptionMessages.MODEL_FILE_NOT_FOUND, args, e);
+      throw new CogrooRuntimeException(ExceptionMessages.MODEL_FILE_NOT_FOUND,
+          args, e);
     }
     TokenNameFinderModel model = null;
     try {
@@ -144,8 +142,8 @@ public class RuntimeLanguageLoader implements LanguageLoader {
       modelIn = new FileInputStream(CON);
     } catch (FileNotFoundException e) {
       Object[] args = { CON };
-      throw new CogrooRuntimeException(
-          ExceptionMessages.MODEL_FILE_NOT_FOUND, args, e);
+      throw new CogrooRuntimeException(ExceptionMessages.MODEL_FILE_NOT_FOUND,
+          args, e);
     }
     TokenNameFinderModel model = null;
     try {
@@ -170,8 +168,8 @@ public class RuntimeLanguageLoader implements LanguageLoader {
       modelIn = new FileInputStream(POS);
     } catch (FileNotFoundException e) {
       Object[] args = { POS };
-      throw new CogrooRuntimeException(
-          ExceptionMessages.MODEL_FILE_NOT_FOUND, args, e);
+      throw new CogrooRuntimeException(ExceptionMessages.MODEL_FILE_NOT_FOUND,
+          args, e);
     }
     POSModel model = null;
     try {
@@ -196,8 +194,8 @@ public class RuntimeLanguageLoader implements LanguageLoader {
       modelIn = new FileInputStream(CHK);
     } catch (FileNotFoundException e) {
       Object[] args = { CHK };
-      throw new CogrooRuntimeException(
-          ExceptionMessages.MODEL_FILE_NOT_FOUND, args, e);
+      throw new CogrooRuntimeException(ExceptionMessages.MODEL_FILE_NOT_FOUND,
+          args, e);
     }
     ChunkerModel model = null;
     try {
@@ -221,8 +219,8 @@ public class RuntimeLanguageLoader implements LanguageLoader {
       modelIn = new FileInputStream(SP);
     } catch (FileNotFoundException e) {
       Object[] args = { SP };
-      throw new CogrooRuntimeException(
-          ExceptionMessages.MODEL_FILE_NOT_FOUND, args, e);
+      throw new CogrooRuntimeException(ExceptionMessages.MODEL_FILE_NOT_FOUND,
+          args, e);
     }
     ChunkerModel model = null;
     try {

@@ -63,11 +63,11 @@ public class ADChunkBasedShallowParserSampleStreamFactory extends
     @ParameterDescription(valueName = "end", description = "index of last sentence")
     @OptionalParameter
     Integer getEnd();
-    
+
     @ParameterDescription(valueName = "cgTags", description = "use CG tags instead of floresta")
     @OptionalParameter(defaultValue = "false")
     Boolean getUseCGTags();
-    
+
     @ParameterDescription(valueName = "expandME", description = "expand multiword expressions")
     @OptionalParameter(defaultValue = "false")
     Boolean getExpandME();
@@ -92,7 +92,8 @@ public class ADChunkBasedShallowParserSampleStreamFactory extends
 
     ADChunkBasedShallowParserSampleStream sampleStream = new ADChunkBasedShallowParserSampleStream(
         CmdLineUtil.openInFile(params.getData()), encoding.name(),
-        params.getFunctTags(), params.getIsIncludePOSTags(), params.getUseCGTags(), params.getExpandME());
+        params.getFunctTags(), params.getIsIncludePOSTags(),
+        params.getUseCGTags(), params.getExpandME());
 
     if (params.getStart() != null && params.getStart() > -1) {
       sampleStream.setStart(params.getStart());

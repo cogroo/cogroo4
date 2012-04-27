@@ -20,36 +20,50 @@ package br.ccsl.cogroo.tools.featurizer;
 import opennlp.tools.util.Sequence;
 
 /**
- * The interface for featurizers which provide feature annotation for a sequence of tokens.
+ * The interface for featurizers which provide feature annotation for a sequence
+ * of tokens.
  */
 public interface Featurizer {
 
   /**
-   * Generates chunk tags for the given sequence returning the result in an array.
-   *
-   * @param toks an array of the tokens or words of the sequence.
-   * @param tags an array of the pos tags of the sequence.
+   * Generates chunk tags for the given sequence returning the result in an
+   * array.
+   * 
+   * @param toks
+   *          an array of the tokens or words of the sequence.
+   * @param tags
+   *          an array of the pos tags of the sequence.
    * 
    * @return an array of feature tags for each token in the sequence.
    */
   public String[] featurize(String[] toks, String tags[]);
-  
+
   /**
-   * Returns the top k chunk sequences for the specified sentence with the specified pos-tags
-   * @param sentence The tokens of the sentence.
-   * @param tags The pos-tags for the specified sentence.
+   * Returns the top k chunk sequences for the specified sentence with the
+   * specified pos-tags
+   * 
+   * @param sentence
+   *          The tokens of the sentence.
+   * @param tags
+   *          The pos-tags for the specified sentence.
    * 
    * @return the top k feature sequences for the specified sentence.
    */
   public Sequence[] topKSequences(String[] sentence, String[] tags);
 
   /**
-   * Returns the top k chunk sequences for the specified sentence with the specified pos-tags
-   * @param sentence The tokens of the sentence.
-   * @param tags The pos-tags for the specified sentence.
-   * @param minSequenceScore A lower bound on the score of a returned sequence.
+   * Returns the top k chunk sequences for the specified sentence with the
+   * specified pos-tags
+   * 
+   * @param sentence
+   *          The tokens of the sentence.
+   * @param tags
+   *          The pos-tags for the specified sentence.
+   * @param minSequenceScore
+   *          A lower bound on the score of a returned sequence.
    * 
    * @return the top k feature sequences for the specified sentence.
    */
-  public Sequence[] topKSequences(String[] sentence, String[] tags, double minSequenceScore);
+  public Sequence[] topKSequences(String[] sentence, String[] tags,
+      double minSequenceScore);
 }

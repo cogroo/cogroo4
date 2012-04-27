@@ -38,7 +38,7 @@ public class UimaShallowParser extends AnnotationService implements
   private Type chunkType;
   private Feature chunktagFeature;
   // private Feature chunkheadFeature;
-  
+
   private final SyntacticTag SUBJ;
   private final SyntacticTag MV;
   private final SyntacticTag NONE;
@@ -48,13 +48,12 @@ public class UimaShallowParser extends AnnotationService implements
   protected static final Logger LOGGER = Logger
       .getLogger(UimaShallowParser.class);
 
-
   public UimaShallowParser() throws AnnotationServiceException {
     super("UIMAShallowParser");
-    
+
     SUBJ = new SyntacticTag();
     SUBJ.setSyntacticFunction(SyntacticFunction.SUBJECT);
-    
+
     MV = new SyntacticTag();
     MV.setSyntacticFunction(SyntacticFunction.VERB);
 
@@ -65,7 +64,7 @@ public class UimaShallowParser extends AnnotationService implements
   public void process(Sentence text) {
 
     ExpandedSentence extSentence = new ExpandedSentence(text);
-    
+
     // ************************************
     // Add text to the CAS
     // ************************************
@@ -83,11 +82,11 @@ public class UimaShallowParser extends AnnotationService implements
     // Extract the result using annotated CAS
     // ************************************
 
-    //List<Token> tokens = text.getTokens();
+    // List<Token> tokens = text.getTokens();
 
     FSIterator<Annotation> iterator = cas.getAnnotationIndex(chunkType)
         .iterator();
-    
+
     // tenho criar um por tag...
 
     List<SyntacticChunk> sentenceSyntacticChunks = new ArrayList<SyntacticChunk>();
@@ -96,18 +95,19 @@ public class UimaShallowParser extends AnnotationService implements
       String uimatag = a.getStringValue(chunktagFeature);
       SyntacticTag st = create(uimatag);
       Span s = new Span(a.getBegin(), a.getEnd());
-      
+
       ArrayList<Chunk> childChunks = new ArrayList<Chunk>();
       SyntacticChunk syntacticChunk = new SyntacticChunk(childChunks);
       syntacticChunk.setSyntacticTag(st);
-      
+
       for (int i = 0; i < text.getTokens().size(); i++) {
         Token token = text.getTokens().get(i);
-        if(s.intersects(extSentence.getTokenSpan(i))) {
-          
+        if (s.intersects(extSentence.getTokenSpan(i))) {
+
           // checks if it is the same chunk
-          if(childChunks.size() > 0) {
-            if(!token.getChunk().equals(childChunks.get(childChunks.size() - 1))) {
+          if (childChunks.size() > 0) {
+            if (!token.getChunk().equals(
+                childChunks.get(childChunks.size() - 1))) {
               childChunks.add(token.getChunk());
             }
           } else {
@@ -118,30 +118,31 @@ public class UimaShallowParser extends AnnotationService implements
       }
       sentenceSyntacticChunks.add(syntacticChunk);
     }
-    
+
     for (Token token : text.getTokens()) {
-      if(token.getSyntacticTag() == null) {
-        SyntacticChunk sc = new SyntacticChunk(Collections.singletonList(token.getChunk()));
+      if (token.getSyntacticTag() == null) {
+        SyntacticChunk sc = new SyntacticChunk(Collections.singletonList(token
+            .getChunk()));
         sc.setSyntacticTag(none);
         token.setSyntacticChunk(sc);
         sentenceSyntacticChunks.add(sc);
       }
     }
-    
-//    for (Chunk chunk : text.getChunks()) {
-//      if(chunk.getSyntacticTag() == null) {
-//        chunk.setSyntacticTag(none);
-//      }
-//    }
+
+    // for (Chunk chunk : text.getChunks()) {
+    // if(chunk.getSyntacticTag() == null) {
+    // chunk.setSyntacticTag(none);
+    // }
+    // }
 
     text.setSyntacticChunks(sentenceSyntacticChunks);
-    
+
     cas.reset();
 
   }
-  
+
   static SyntacticTag none;
-  
+
   static {
     none = new SyntacticTag();
     none.setSyntacticFunction(SyntacticFunction.NONE);
@@ -154,9 +155,9 @@ public class UimaShallowParser extends AnnotationService implements
 
   private SyntacticTag create(String uimatag) {
     SyntacticTag s = new SyntacticTag();
-    if("SUBJ".equals(uimatag)) {
+    if ("SUBJ".equals(uimatag)) {
       s.setSyntacticFunction(SyntacticFunction.SUBJECT);
-    } else if("P".equals(uimatag)) {
+    } else if ("P".equals(uimatag)) {
       s.setSyntacticFunction(SyntacticFunction.VERB);
     } else {
       s.setSyntacticFunction(SyntacticFunction.NONE);
@@ -179,10 +180,12 @@ public class UimaShallowParser extends AnnotationService implements
   private void updateCas(ExpandedSentence sentence, JCas cas) {
     cas.reset();
     cas.setDocumentText(sentence.getExtendedSentence());
-    
-    AnnotationFS sentenceAnnotation = cas.getCas().createAnnotation(sentenceType,
+
+    AnnotationFS sentenceAnnotation = cas.getCas().createAnnotation(
+        sentenceType,
         sentence.getSent().getOffset(),
-        sentence.getSent().getOffset() + sentence.getExtendedSentence().length());
+        sentence.getSent().getOffset()
+            + sentence.getExtendedSentence().length());
 
     cas.getIndexRepository().addFS(sentenceAnnotation);
 
@@ -195,7 +198,7 @@ public class UimaShallowParser extends AnnotationService implements
           .getMorphologicalTag().getClazzE();
       String tag;
       if (c != null) {
-        if(t.getMorphologicalTag().getClazzE().equals(Class.VERB)) {
+        if (t.getMorphologicalTag().getClazzE().equals(Class.VERB)) {
           tag = floresta.serialize(t.getMorphologicalTag().getFinitenessE());
         } else {
           tag = floresta.serialize(t.getMorphologicalTag().getClazzE());
@@ -204,13 +207,14 @@ public class UimaShallowParser extends AnnotationService implements
         tag = t.getLexeme();
       }
       String chunk = floresta.serialize(t.getChunkTag());
-      if(tag == null || tag.isEmpty()) {
+      if (tag == null || tag.isEmpty()) {
         throw new RuntimeException("tag was empty!");
       }
-      if(chunk == null || chunk.isEmpty()) {
+      if (chunk == null || chunk.isEmpty()) {
         throw new RuntimeException("chunk was empty!");
       }
-      tokenAnnotation.setStringValue(postagFeature, tag + "|" + chunk.replace("*", ""));
+      tokenAnnotation.setStringValue(postagFeature,
+          tag + "|" + chunk.replace("*", ""));
       cas.getIndexRepository().addFS(tokenAnnotation);
     }
   }

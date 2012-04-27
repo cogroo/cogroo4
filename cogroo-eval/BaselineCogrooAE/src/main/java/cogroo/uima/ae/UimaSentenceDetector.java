@@ -17,9 +17,8 @@ public class UimaSentenceDetector extends AnnotationService implements
     SentenceDetectorI {
 
   private Type sentenceType;
-  
 
-  public UimaSentenceDetector() throws AnnotationServiceException{
+  public UimaSentenceDetector() throws AnnotationServiceException {
     super("UIMASentenceDetector");
 
   }
@@ -42,10 +41,11 @@ public class UimaSentenceDetector extends AnnotationService implements
     // ************************************
     // Extract the result using annotated CAS
     // ************************************
-    
-    FSIterator<Annotation> iterator = cas.getAnnotationIndex(sentenceType).iterator();
-    while(iterator.hasNext()) {
-      Annotation  a = iterator.next();
+
+    FSIterator<Annotation> iterator = cas.getAnnotationIndex(sentenceType)
+        .iterator();
+    while (iterator.hasNext()) {
+      Annotation a = iterator.next();
       Sentence s = new Sentence();
       s.setSpan(new Span(a.getBegin(), a.getEnd()));
       s.setSentence(a.getCoveredText());
@@ -60,13 +60,12 @@ public class UimaSentenceDetector extends AnnotationService implements
 
   @Override
   protected void initTypes(TypeSystem typeSystem) {
-    sentenceType = cas.getTypeSystem().getType("opennlp.uima.Sentence");    
+    sentenceType = cas.getTypeSystem().getType("opennlp.uima.Sentence");
   }
-  
+
   public static void main(String[] args) throws AnnotationServiceException {
     UimaSentenceDetector sd = new UimaSentenceDetector();
     System.out.println(sd.process("O sr. José chegou. Vamos sair."));
   }
-
 
 }

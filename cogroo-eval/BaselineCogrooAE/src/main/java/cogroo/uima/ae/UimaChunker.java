@@ -24,36 +24,34 @@ import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class;
 import cogroo.ExpandedSentence;
 
-public class UimaChunker extends AnnotationService implements
-    ProcessingEngine {
+public class UimaChunker extends AnnotationService implements ProcessingEngine {
 
   private Type tokenType;
   private Type sentenceType;
-  
+
   private Feature postagFeature;
-  
+
   private Type chunkType;
   private Feature chunktagFeature;
-//  private Feature chunkheadFeature;
-  
+  // private Feature chunkheadFeature;
+
   private TagInterpreterI floresta = new FlorestaTagInterpreter();
-  
+
   protected static final Logger LOGGER = Logger.getLogger(UimaChunker.class);
-  
+
   private TagMask noum = new TagMask();
   private TagMask verb = new TagMask();
-  
 
-  public UimaChunker() throws AnnotationServiceException{
+  public UimaChunker() throws AnnotationServiceException {
     super("UIMAChunker");
     noum.setClazz(Class.NOUN);
     verb.setClazz(Class.VERB);
   }
 
   public void process(Sentence text) {
-    
+
     ExpandedSentence extSentence = new ExpandedSentence(text);
-    
+
     // ************************************
     // Add text to the CAS
     // ************************************
@@ -70,51 +68,51 @@ public class UimaChunker extends AnnotationService implements
     // ************************************
     // Extract the result using annotated CAS
     // ************************************
-    
+
     List<Token> tokens = text.getTokens();
-    
-    FSIterator<Annotation> iterator = cas.getAnnotationIndex(chunkType).iterator();
+
+    FSIterator<Annotation> iterator = cas.getAnnotationIndex(chunkType)
+        .iterator();
     List<Chunk> chunks = new ArrayList<Chunk>();
     int lastToken = 0;
-    while(iterator.hasNext()) {
-      Annotation  a = iterator.next();
+    while (iterator.hasNext()) {
+      Annotation a = iterator.next();
       String uimatag = a.getStringValue(chunktagFeature);
-      if(uimatag.equals("NP") || uimatag.equals("VP")) {
+      if (uimatag.equals("NP") || uimatag.equals("VP")) {
         int start = -1;
         List<Token> chunkTokens = new ArrayList<Token>();
         // will find the region
-        for(int i = lastToken; i < tokens.size(); i++) {
+        for (int i = lastToken; i < tokens.size(); i++) {
           Token t = tokens.get(i);
           boolean found = false;
-//          boolean isHead = false;
+          // boolean isHead = false;
           boolean isBoundary = false;
-          if(a.getBegin() == extSentence.getTokenSpan(i).getStart()) {
+          if (a.getBegin() == extSentence.getTokenSpan(i).getStart()) {
             found = true;
             start = i;
             isBoundary = true;
-          } else if(a.getEnd() == extSentence.getTokenSpan(i).getEnd()) {
+          } else if (a.getEnd() == extSentence.getTokenSpan(i).getEnd()) {
             found = true;
-            lastToken = i+1;
-          } else if(start >= 0) {
+            lastToken = i + 1;
+          } else if (start >= 0) {
             found = true;
           }
-          if(found) {
-            /*if(mt == null) {
-              if(uimatag.equals("NP") && t.getMorphologicalTag().match(noum) ||
-                  uimatag.equals("VP") && t.getMorphologicalTag().match(verb)) {
-                isHead = true;
-                mt = t.getMorphologicalTag();
-              }
-            }*/
+          if (found) {
+            /*
+             * if(mt == null) { if(uimatag.equals("NP") &&
+             * t.getMorphologicalTag().match(noum) || uimatag.equals("VP") &&
+             * t.getMorphologicalTag().match(verb)) { isHead = true; mt =
+             * t.getMorphologicalTag(); } }
+             */
             ChunkTag tag = create(uimatag, isBoundary, false);
             t.setChunkTag(tag);
             chunkTokens.add(t);
-            if(a.getEnd() == extSentence.getTokenSpan(i).getEnd()) {
+            if (a.getEnd() == extSentence.getTokenSpan(i).getEnd()) {
               break;
             }
           }
         }
-        if(chunkTokens.size() > 0) {
+        if (chunkTokens.size() > 0) {
           ChunkCogroo c = new ChunkCogroo(chunkTokens, start);
           for (Token t : chunkTokens) {
             t.setChunk(c);
@@ -128,7 +126,7 @@ public class UimaChunker extends AnnotationService implements
     }
     for (int j = 0; j < tokens.size(); j++) {
       Token t = tokens.get(j);
-      if(t.getChunk() == null) {
+      if (t.getChunk() == null) {
         List<Token> cl = new ArrayList<Token>(1);
         cl.add(t);
         ChunkTag ct = new ChunkTag();
@@ -140,7 +138,7 @@ public class UimaChunker extends AnnotationService implements
         chunks.add(c);
       }
     }
-    
+
     text.setTokens(tokens);
     text.setChunks(chunks);
     cas.reset();
@@ -148,14 +146,14 @@ public class UimaChunker extends AnnotationService implements
   }
 
   private ChunkTag create(String uimatag, boolean isBoundary, boolean isHead) {
-    if(isBoundary) {
+    if (isBoundary) {
       uimatag = "B-" + uimatag;
     } else {
       uimatag = "I-" + uimatag;
     }
-    if(isHead) {
+    if (isHead) {
       uimatag = "*" + uimatag;
-    } else if(uimatag.equals("B-VP")) {
+    } else if (uimatag.equals("B-VP")) {
       uimatag = "*" + uimatag;
     }
     return floresta.parseChunkTag(uimatag);
@@ -163,36 +161,39 @@ public class UimaChunker extends AnnotationService implements
 
   @Override
   protected void initTypes(TypeSystem typeSystem) {
-    sentenceType = cas.getTypeSystem().getType("opennlp.uima.Sentence");  
-    
-    tokenType = cas.getTypeSystem().getType("opennlp.uima.Token"); 
+    sentenceType = cas.getTypeSystem().getType("opennlp.uima.Sentence");
+
+    tokenType = cas.getTypeSystem().getType("opennlp.uima.Token");
     postagFeature = tokenType.getFeatureByBaseName("pos");
-    
+
     chunkType = cas.getTypeSystem().getType("opennlp.uima.Chunk");
     chunktagFeature = chunkType.getFeatureByBaseName("type");
-//    chunkheadFeature = chunkType.getFeatureByBaseName("head");
+    // chunkheadFeature = chunkType.getFeatureByBaseName("head");
   }
-  
+
   private void updateCas(ExpandedSentence sentence, JCas cas) {
-    
+
     cas.reset();
     cas.setDocumentText(sentence.getExtendedSentence());
-    
-    AnnotationFS sentenceAnnotation = cas.getCas().createAnnotation(sentenceType,
+
+    AnnotationFS sentenceAnnotation = cas.getCas().createAnnotation(
+        sentenceType,
         sentence.getSent().getOffset(),
-        sentence.getSent().getOffset() + sentence.getExtendedSentence().length());
-    
+        sentence.getSent().getOffset()
+            + sentence.getExtendedSentence().length());
+
     cas.getIndexRepository().addFS(sentenceAnnotation);
-    
+
     for (int i = 0; i < sentence.getSent().getTokens().size(); i++) {
       Token t = sentence.getSent().getTokens().get(i);
       AnnotationFS tokenAnnotation = cas.getCas().createAnnotation(tokenType,
           sentence.getTokenSpan(i).getStart(),
           sentence.getTokenSpan(i).getEnd());
-      br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class c = t.getMorphologicalTag().getClazzE();
+      br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class c = t
+          .getMorphologicalTag().getClazzE();
       String tag;
-      if(c != null) {
-        if(t.getMorphologicalTag().getClazzE().equals(Class.VERB)) {
+      if (c != null) {
+        if (t.getMorphologicalTag().getClazzE().equals(Class.VERB)) {
           tag = floresta.serialize(t.getMorphologicalTag().getFinitenessE());
         } else {
           tag = floresta.serialize(t.getMorphologicalTag().getClazzE());
@@ -200,13 +201,12 @@ public class UimaChunker extends AnnotationService implements
       } else {
         tag = t.getLexeme();
       }
-      if(tag == null || tag.isEmpty()) {
+      if (tag == null || tag.isEmpty()) {
         throw new RuntimeException("tag was empty!");
       }
       tokenAnnotation.setStringValue(postagFeature, tag);
       cas.getIndexRepository().addFS(tokenAnnotation);
     }
   }
-
 
 }

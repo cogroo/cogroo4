@@ -49,8 +49,8 @@ public class ADExpNameSampleStreamTest {
     assertEquals("no", samples.get(0).getSentence()[1]);
     assertEquals("no", samples.get(0).getSentence()[11]);
     assertEquals("Com", samples.get(1).getSentence()[0]);
-//    assertEquals("relação", samples.get(1).getSentence()[1]);
-//    assertEquals("à", samples.get(1).getSentence()[2]);
+    // assertEquals("relação", samples.get(1).getSentence()[1]);
+    // assertEquals("à", samples.get(1).getSentence()[2]);
     assertEquals("mais", samples.get(2).getSentence()[4]);
     assertEquals("de", samples.get(2).getSentence()[5]);
     assertEquals("da", samples.get(2).getSentence()[8]);
@@ -85,7 +85,7 @@ public class ADExpNameSampleStreamTest {
     assertEquals(new Span(8, 10, "adv"), samples.get(3).getNames()[0]);
 
   }
-  
+
   @Test
   public void testAdv() throws IOException {
 

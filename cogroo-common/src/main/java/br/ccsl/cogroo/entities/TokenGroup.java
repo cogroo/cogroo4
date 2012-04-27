@@ -33,8 +33,8 @@ import java.util.List;
  * A {@link Token} group.
  * 
  * @author Marcelo Suzumura
- *
+ * 
  */
 public interface TokenGroup {
-	public List<Token> getTokens();
+  public List<Token> getTokens();
 }

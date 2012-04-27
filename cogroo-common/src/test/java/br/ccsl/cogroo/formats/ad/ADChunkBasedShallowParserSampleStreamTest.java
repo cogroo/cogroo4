@@ -49,7 +49,7 @@ public class ADChunkBasedShallowParserSampleStreamTest {
     assertEquals("O", samples.get(0).getTags()[1]);
     assertEquals("O", samples.get(0).getPreds()[1]);
 
-//    assertEquals("galpão", samples.get(3).getSentence()[2]);
+    // assertEquals("galpão", samples.get(3).getSentence()[2]);
     assertEquals("B-NP", samples.get(3).getTags()[2]);
     assertEquals("B-SUBJ", samples.get(3).getPreds()[2]);
 
@@ -60,7 +60,8 @@ public class ADChunkBasedShallowParserSampleStreamTest {
     InputStream in = ADChunkBasedShallowParserSampleStreamTest.class
         .getResourceAsStream("/br/ccsl/cogroo/formats/ad/ad.sample");
 
-    ADChunkBasedShallowParserSampleStream stream = new ADChunkBasedShallowParserSampleStream(in, "UTF-8", "SUBJ,P", false, false, false);
+    ADChunkBasedShallowParserSampleStream stream = new ADChunkBasedShallowParserSampleStream(
+        in, "UTF-8", "SUBJ,P", false, false, false);
 
     ChunkSample sample = stream.read();
 

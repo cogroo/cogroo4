@@ -10,27 +10,28 @@ import opennlp.tools.tokenize.TokenizerFactory;
 import opennlp.tools.util.model.ArtifactProvider;
 
 public class PortugueseTokenizerFactory extends TokenizerFactory {
-  
+
   public PortugueseTokenizerFactory(ArtifactProvider artifactProvider) {
     super(artifactProvider);
   }
-  
+
   public PortugueseTokenizerFactory(String languageCode,
       Dictionary abbreviationDictionary, boolean useAlphaNumericOptimization,
       Pattern alphaNumericPattern) {
-    super(languageCode,abbreviationDictionary,useAlphaNumericOptimization,alphaNumericPattern);
+    super(languageCode, abbreviationDictionary, useAlphaNumericOptimization,
+        alphaNumericPattern);
   }
-  
+
   @Override
   public TokenContextGenerator getContextGenerator() {
     Dictionary dic = this.getAbbreviationDictionary();
     Set<String> abbSet;
-    if(dic != null) {
+    if (dic != null) {
       abbSet = dic.asStringSet();
     } else {
       abbSet = Collections.emptySet();
     }
-    
+
     TokenContextGenerator cg = new PortugueseTokenContextGenerator(abbSet);
     return cg;
   }

@@ -27,7 +27,7 @@ import opennlp.tools.util.StringUtil;
 
 /**
  * Generate event contexts for maxent decisions for sentence detection.
- *
+ * 
  */
 public class PortugueseSDContextGenerator implements SDContextGenerator {
 
@@ -46,37 +46,42 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
   private char[] eosCharacters;
 
   /**
-   * Creates a new <code>SDContextGenerator</code> instance with
-   * no induced abbreviations.
-   *
+   * Creates a new <code>SDContextGenerator</code> instance with no induced
+   * abbreviations.
+   * 
    * @param eosCharacters
    */
   public PortugueseSDContextGenerator(char[] eosCharacters) {
-    this(Collections.<String>emptySet(), eosCharacters);
+    this(Collections.<String> emptySet(), eosCharacters);
   }
 
   /**
-   * Creates a new <code>SDContextGenerator</code> instance which uses
-   * the set of induced abbreviations.
-   *
-   * @param inducedAbbreviations a <code>Set</code> of Strings
-   * representing induced abbreviations in the training data.
-   * Example: &quot;Mr.&quot;
-   *
+   * Creates a new <code>SDContextGenerator</code> instance which uses the set
+   * of induced abbreviations.
+   * 
+   * @param inducedAbbreviations
+   *          a <code>Set</code> of Strings representing induced abbreviations
+   *          in the training data. Example: &quot;Mr.&quot;
+   * 
    * @param eosCharacters
    */
-  public PortugueseSDContextGenerator(Set<String> inducedAbbreviations, char[] eosCharacters) {
+  public PortugueseSDContextGenerator(Set<String> inducedAbbreviations,
+      char[] eosCharacters) {
     this.inducedAbbreviations = inducedAbbreviations;
     this.eosCharacters = eosCharacters;
     buf = new StringBuffer();
     collectFeats = new ArrayList<String>();
   }
 
-  /* (non-Javadoc)
-   * @see opennlp.tools.sentdetect.SDContextGenerator#getContext(java.lang.StringBuffer, int)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * opennlp.tools.sentdetect.SDContextGenerator#getContext(java.lang.StringBuffer
+   * , int)
    */
   public String[] getContext(CharSequence sb, int position) {
-    
+
     /**
      * String preceding the eos character in the eos token.
      */
@@ -101,14 +106,16 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
     { // compute space previous and space next features.
       if (position > 0 && StringUtil.isWhitespace(sb.charAt(position - 1)))
         collectFeats.add("sp");
-      if (position < lastIndex && StringUtil.isWhitespace(sb.charAt(position + 1)))
+      if (position < lastIndex
+          && StringUtil.isWhitespace(sb.charAt(position + 1)))
         collectFeats.add("sn");
       collectFeats.add("eos=" + sb.charAt(position));
     }
     int prefixStart = previousSpaceIndex(sb, position);
 
     int c = position;
-    { ///assign prefix, stop if you run into a period though otherwise stop at space
+    { // /assign prefix, stop if you run into a period though otherwise stop at
+      // space
       while (--c > prefixStart) {
         for (int eci = 0, ecl = eosCharacters.length; eci < ecl; eci++) {
           if (sb.charAt(c) == eosCharacters[eci]) {
@@ -118,10 +125,12 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
           }
         }
       }
-      prefix = new StringBuffer(sb.subSequence(prefixStart, position)).toString().trim();
+      prefix = new StringBuffer(sb.subSequence(prefixStart, position))
+          .toString().trim();
     }
     int prevStart = previousSpaceIndex(sb, prefixStart);
-    previous = new StringBuffer(sb.subSequence(prevStart, prefixStart)).toString().trim();
+    previous = new StringBuffer(sb.subSequence(prevStart, prefixStart))
+        .toString().trim();
 
     int suffixEnd = nextSpaceIndex(sb, position, lastIndex);
     {
@@ -140,15 +149,17 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
     if (position == lastIndex) {
       suffix = "";
       next = "";
-    }
-    else {
-      suffix = new StringBuilder(sb.subSequence(position + 1, suffixEnd)).toString().trim();
-      next = new StringBuilder(sb.subSequence(suffixEnd + 1, nextEnd)).toString().trim();
+    } else {
+      suffix = new StringBuilder(sb.subSequence(position + 1, suffixEnd))
+          .toString().trim();
+      next = new StringBuilder(sb.subSequence(suffixEnd + 1, nextEnd))
+          .toString().trim();
     }
 
-    collectFeatures(prefix,suffix,previous,next, sb.charAt(position));
+    collectFeatures(prefix, suffix, previous, next, sb.charAt(position));
     int sentEnd = Math.max(position + 1, suffixEnd);
-    collectFeats.addAll(getSentenceContext(sb.subSequence(prefixStart, sentEnd).toString(), position - prefixStart));
+    collectFeats.addAll(getSentenceContext(sb.subSequence(prefixStart, sentEnd)
+        .toString(), position - prefixStart));
 
     String[] context = new String[collectFeats.size()];
     context = collectFeats.toArray(context);
@@ -157,14 +168,20 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
   }
 
   /**
-   * Determines some of the features for the sentence detector and adds them to list features.
-   *
-   * @param prefix String preceeding the eos character in the eos token.
-   * @param suffix String following the eos character in the eos token.
-   * @param previous Space delimited token preceeding token containing eos character.
-   * @param next Space delimited token following token containsing eos character.
+   * Determines some of the features for the sentence detector and adds them to
+   * list features.
+   * 
+   * @param prefix
+   *          String preceeding the eos character in the eos token.
+   * @param suffix
+   *          String following the eos character in the eos token.
+   * @param previous
+   *          Space delimited token preceeding token containing eos character.
+   * @param next
+   *          Space delimited token following token containsing eos character.
    */
-  protected void collectFeatures(String prefix, String suffix, String previous, String next, char eosChar) {
+  protected void collectFeatures(String prefix, String suffix, String previous,
+      String next, char eosChar) {
     buf.append("x=");
     buf.append(prefix);
     collectFeats.add(buf.toString());
@@ -178,8 +195,9 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
         collectFeats.add("xabbrev");
       }
       char c = prefix.charAt(0);
-      if(prefix.length() == 1 && Character.isLetter(c) && Character.isUpperCase(c) && eosChar == '.') {
-        //looks like name abb
+      if (prefix.length() == 1 && Character.isLetter(c)
+          && Character.isUpperCase(c) && eosChar == '.') {
+        // looks like name abb
         collectFeats.add("xnabb");
       }
     }
@@ -229,10 +247,13 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
   }
 
   /**
-   * Finds the index of the nearest space before a specified index which is not itself preceded by a space.
-   *
-   * @param sb   The string buffer which contains the text being examined.
-   * @param seek The index to begin searching from.
+   * Finds the index of the nearest space before a specified index which is not
+   * itself preceded by a space.
+   * 
+   * @param sb
+   *          The string buffer which contains the text being examined.
+   * @param seek
+   *          The index to begin searching from.
    * @return The index which contains the nearest space.
    */
   private static final int previousSpaceIndex(CharSequence sb, int seek) {
@@ -247,22 +268,27 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
     }
     return 0;
   }
-  
+
   /**
    * Finds the index of the nearest space after a specified index.
-   *
-   * @param sb The string buffer which contains the text being examined.
-   * @param seek The index to begin searching from.
-   * @param lastIndex The highest index of the StringBuffer sb.
+   * 
+   * @param sb
+   *          The string buffer which contains the text being examined.
+   * @param seek
+   *          The index to begin searching from.
+   * @param lastIndex
+   *          The highest index of the StringBuffer sb.
    * @return The index which contains the nearest space.
    */
-  private static final int nextSpaceIndex(CharSequence sb, int seek, int lastIndex) {
+  private static final int nextSpaceIndex(CharSequence sb, int seek,
+      int lastIndex) {
     seek++;
     char c;
     while (seek < lastIndex) {
       c = sb.charAt(seek);
       if (StringUtil.isWhitespace(c)) {
-        while (sb.length() > seek + 1 && StringUtil.isWhitespace(sb.charAt(seek + 1)))
+        while (sb.length() > seek + 1
+            && StringUtil.isWhitespace(sb.charAt(seek + 1)))
           seek++;
         return seek;
       }
@@ -270,38 +296,36 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
     }
     return lastIndex;
   }
-  
+
   public List<String> getSentenceContext(String sentence, int index) {
     List<String> preds = new ArrayList<String>();
     if (index > 0) {
       addCharPreds("p1", sentence.charAt(index - 1), preds);
       if (index > 1) {
         addCharPreds("p2", sentence.charAt(index - 2), preds);
-        preds.add("p21=" + sentence.charAt(index - 2) + sentence.charAt(index - 1));
-      }
-      else {
+        preds.add("p21=" + sentence.charAt(index - 2)
+            + sentence.charAt(index - 1));
+      } else {
         preds.add("p2=bok");
       }
       preds.add("p1f1=" + sentence.charAt(index - 1) + sentence.charAt(index));
-    }
-    else {
+    } else {
       preds.add("p1=bok");
     }
-    //addCharPreds("f1", sentence.charAt(index), preds);
-    if (index+1 < sentence.length()) {
+    // addCharPreds("f1", sentence.charAt(index), preds);
+    if (index + 1 < sentence.length()) {
       addCharPreds("f2", sentence.charAt(index + 1), preds);
       preds.add("f12=" + sentence.charAt(index) + sentence.charAt(index + 1));
-    }
-    else {
+    } else {
       preds.add("f2=bok");
     }
-    if (sentence.charAt(0) == '&' && sentence.charAt(sentence.length() - 1) == ';') {
-      preds.add("cc");//character code
+    if (sentence.charAt(0) == '&'
+        && sentence.charAt(sentence.length() - 1) == ';') {
+      preds.add("cc");// character code
     }
 
     return preds;
   }
-
 
   /**
    * Helper function for getContext.
@@ -313,27 +337,20 @@ public class PortugueseSDContextGenerator implements SDContextGenerator {
       if (Character.isUpperCase(c)) {
         preds.add(key + "_caps");
       }
-    }
-    else if (Character.isDigit(c)) {
+    } else if (Character.isDigit(c)) {
       preds.add(key + "_num");
-    }
-    else if (StringUtil.isWhitespace(c)) {
+    } else if (StringUtil.isWhitespace(c)) {
       preds.add(key + "_ws");
-    }
-    else {
-      if (c=='.' || c=='?' || c=='!') {
+    } else {
+      if (c == '.' || c == '?' || c == '!') {
         preds.add(key + "_eos");
-      }
-      else if (c==',' || c==';' || c==':') {
+      } else if (c == ',' || c == ';' || c == ':') {
         preds.add(key + "_reos");
-      }
-      else if (c=='`' || c=='"' || c=='\'') {
+      } else if (c == '`' || c == '"' || c == '\'') {
         preds.add(key + "_quote");
-      }
-      else if (c=='[' || c=='{' || c=='(') {
+      } else if (c == '[' || c == '{' || c == '(') {
         preds.add(key + "_lp");
-      }
-      else if (c==']' || c=='}' || c==')') {
+      } else if (c == ']' || c == '}' || c == ')') {
         preds.add(key + "_rp");
       }
     }

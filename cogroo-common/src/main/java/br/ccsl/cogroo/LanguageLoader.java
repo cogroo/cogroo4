@@ -11,11 +11,11 @@ public interface LanguageLoader {
   public SentenceDetector getSentenceDetector();
 
   public Tokenizer getTokenizer();
-  
+
   public TokenNameFinder getProperNameFinder();
-  
+
   public TokenNameFinder getExpressionFinder();
-  
+
   public TokenNameFinder getContractionFinder();
 
   public POSTagger getPOSTagger();

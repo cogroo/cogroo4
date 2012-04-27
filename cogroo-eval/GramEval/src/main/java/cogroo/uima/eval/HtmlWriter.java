@@ -39,8 +39,9 @@ public class HtmlWriter {
 
   public HtmlWriter(String htmlFile, String type, String corpus)
       throws IOException {
-    
-    mWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFile), "UTF-8"));
+
+    mWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+        htmlFile), "UTF-8"));
     mSTGroup = new STGroupFile(this.getClass().getClassLoader()
         .getResource("cogroo/uima/eval/templates.stg"), "UTF-8", '$', '$');
 
@@ -228,9 +229,9 @@ public class HtmlWriter {
       min = selected;
     }
 
-    st.add("targetMin", totalData.target*10 / min);
-    st.add("selectedMin", (selected*10) / min);
-    st.add("tpMin", (totalData.tp*10) / min);
+    st.add("targetMin", totalData.target * 10 / min);
+    st.add("selectedMin", (selected * 10) / min);
+    st.add("tpMin", (totalData.tp * 10) / min);
 
     List<DataMin> d = new ArrayList<DataMin>();
     for (Data c : data) {
@@ -253,7 +254,7 @@ public class HtmlWriter {
     private int selectedMin;
     private int targetMin;
     private int tpMin;
-    
+
     private String cat;
 
     public DataMin(String cat, int selected, int target, int tp) {
@@ -277,9 +278,9 @@ public class HtmlWriter {
         min = tp;
       }
 
-      this.selectedMin = selected*10 / min;
-      this.targetMin = target*10 / min;
-      this.tpMin = tp*10 / min;
+      this.selectedMin = selected * 10 / min;
+      this.targetMin = target * 10 / min;
+      this.tpMin = tp * 10 / min;
     }
 
     public int getSelectedMin() {
@@ -301,7 +302,7 @@ public class HtmlWriter {
     public int getTarget() {
       return target;
     }
-    
+
     public String getCat() {
       return cat;
     }
@@ -368,28 +369,31 @@ public class HtmlWriter {
       e.printStackTrace();
     }
   }
-  
+
   public static class Detail {
     private String id;
     private String desc;
     private String data;
+
     public Detail(String id, String desc, String data) {
       super();
       this.id = id;
       this.desc = desc;
       this.data = data;
     }
+
     public String getId() {
       return id;
     }
+
     public String getDesc() {
       return desc;
     }
+
     public String getData() {
       return data;
     }
-    
-    
+
   }
 
   public static void main(String[] args) throws IOException {

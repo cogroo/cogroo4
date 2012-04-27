@@ -41,53 +41,62 @@ import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction
  */
 public class SyntacticTag extends Tag {
 
-	public SyntacticFunction getSyntacticFunction() {
-		return syntacticFunction;
-	}
+  public SyntacticFunction getSyntacticFunction() {
+    return syntacticFunction;
+  }
 
-	public void setSyntacticFunction(SyntacticFunction syntacticFunction) {
-		this.syntacticFunction = syntacticFunction;
-	}
+  public void setSyntacticFunction(SyntacticFunction syntacticFunction) {
+    this.syntacticFunction = syntacticFunction;
+  }
 
-	private static final long serialVersionUID = -8695340746088802844L;
-	
-	private SyntacticFunction syntacticFunction;
+  private static final long serialVersionUID = -8695340746088802844L;
 
-	@Override
-	public boolean match(TagMask tagMask) {
-		if (tagMask.getSyntacticFunction() != null ) {
-			SyntacticFunction sf = tagMask.getSyntacticFunction();
-			if (sf.equals(SyntacticFunction.SUBJECT) && this.syntacticFunction.equals(SyntacticFunction.SUBJECT)/*this.tag.equals("SUBJ")*/) {
-				return true;
-			} else if (sf.equals(SyntacticFunction.VERB) && this.syntacticFunction.equals(SyntacticFunction.VERB)/*this.tag.equals("MV")*/) {
-				return true;
-			} else if(sf.equals(SyntacticFunction.NONE) && this.syntacticFunction.equals(SyntacticFunction.NONE))
-				return true;
-		}
-		else if (this.syntacticFunction.equals(SyntacticFunction.NONE))
-			return true;
-		return false;
-	}
+  private SyntacticFunction syntacticFunction;
 
-	@Override
-	public String toVerboseString() {
-		return this.syntacticFunction.name();
-	}
+  @Override
+  public boolean match(TagMask tagMask) {
+    if (tagMask.getSyntacticFunction() != null) {
+      SyntacticFunction sf = tagMask.getSyntacticFunction();
+      if (sf.equals(SyntacticFunction.SUBJECT)
+          && this.syntacticFunction.equals(SyntacticFunction.SUBJECT)/*
+                                                                      * this.tag.
+                                                                      * equals
+                                                                      * ("SUBJ")
+                                                                      */) {
+        return true;
+      } else if (sf.equals(SyntacticFunction.VERB)
+          && this.syntacticFunction.equals(SyntacticFunction.VERB)/*
+                                                                   * this.tag.equals
+                                                                   * ("MV")
+                                                                   */) {
+        return true;
+      } else if (sf.equals(SyntacticFunction.NONE)
+          && this.syntacticFunction.equals(SyntacticFunction.NONE))
+        return true;
+    } else if (this.syntacticFunction.equals(SyntacticFunction.NONE))
+      return true;
+    return false;
+  }
 
-	@Override
-	public String toString() {
-		String tagAsString = "";
-		tagAsString += this.syntacticFunction.name();
-		return tagAsString;
-	}
-	
-	   @Override
-	    public boolean equals(Object obj) {
-	      if (obj instanceof SyntacticTag) {
-	        SyntacticTag that = (SyntacticTag) obj;
-	          return Objects.equal(this.syntacticFunction, that.syntacticFunction);
-	        }
-	        return false;
-	    }
+  @Override
+  public String toVerboseString() {
+    return this.syntacticFunction.name();
+  }
+
+  @Override
+  public String toString() {
+    String tagAsString = "";
+    tagAsString += this.syntacticFunction.name();
+    return tagAsString;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof SyntacticTag) {
+      SyntacticTag that = (SyntacticTag) obj;
+      return Objects.equal(this.syntacticFunction, that.syntacticFunction);
+    }
+    return false;
+  }
 
 }

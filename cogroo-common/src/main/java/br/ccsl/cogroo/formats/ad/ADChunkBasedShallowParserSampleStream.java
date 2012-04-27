@@ -71,7 +71,7 @@ public class ADChunkBasedShallowParserSampleStream implements
   private int end = -1;
 
   private int index = 0;
-  
+
   private boolean useCGTags;
 
   private boolean expandME;
@@ -92,7 +92,8 @@ public class ADChunkBasedShallowParserSampleStream implements
    *          the charset of the Arvores Deitadas Corpus
    */
   public ADChunkBasedShallowParserSampleStream(InputStream in,
-      String charsetName, String commaSeparatedFunctTags, boolean isIncludePOSTags, boolean useCGTag, boolean expandME) {
+      String charsetName, String commaSeparatedFunctTags,
+      boolean isIncludePOSTags, boolean useCGTag, boolean expandME) {
     this.useCGTags = useCGTag;
     this.expandME = expandME;
     try {
@@ -100,7 +101,8 @@ public class ADChunkBasedShallowParserSampleStream implements
           in, charsetName));
       this.isIncludePOSTags = isIncludePOSTags;
 
-      if (commaSeparatedFunctTags == null || commaSeparatedFunctTags.trim().isEmpty()) {
+      if (commaSeparatedFunctTags == null
+          || commaSeparatedFunctTags.trim().isEmpty()) {
         Set<String> functTagsSet = new HashSet<String>();
         functTagsSet.addAll(Arrays.asList(defaultFunctTags));
         functTagSet = Collections.unmodifiableSet(functTagsSet);
@@ -158,20 +160,22 @@ public class ADChunkBasedShallowParserSampleStream implements
               tags, target);
         } else {
           // allways pass isInt false when it is a new node
-          processNode((Node) elements[i], sentence, tags, target, "O", false, null);
+          processNode((Node) elements[i], sentence, tags, target, "O", false,
+              null);
         }
       }
     }
   }
 
   private void processNode(Node node, List<String> sentence, List<String> tags,
-      List<String> target, String functTagParent, boolean isIntermediateFunct, String inheritedTag) {
+      List<String> target, String functTagParent, boolean isIntermediateFunct,
+      String inheritedTag) {
 
     String phraseTag = getChunkTag(node.getSyntacticTag());
     String funcTag = getFunctionTag(node.getSyntacticTag());
-    
+
     boolean inherited = false;
-    if(phraseTag.equals("O") && inheritedTag != null) {
+    if (phraseTag.equals("O") && inheritedTag != null) {
       phraseTag = inheritedTag;
       inherited = true;
     }
@@ -196,7 +200,8 @@ public class ADChunkBasedShallowParserSampleStream implements
             && !phraseTag.equals("O")) {
           isIntermediatePhrase = true;
         }
-        if(inherited && target.size() > 0 && target.get(target.size() - 1).endsWith(phraseTag)) {
+        if (inherited && target.size() > 0
+            && target.get(target.size() - 1).endsWith(phraseTag)) {
           isIntermediatePhrase = true;
         }
 
@@ -223,7 +228,7 @@ public class ADChunkBasedShallowParserSampleStream implements
         phraseTag = "NP";
       }
     }
-    
+
     phraseTag = ADChunkSampleStream.convertPhraseTag(phraseTag);
 
     if (leaf.getSyntacticTag() != null && functTag.equals("O")
@@ -249,21 +254,22 @@ public class ADChunkBasedShallowParserSampleStream implements
 
     sentence.add(leaf.getLexeme());
 
-//    if ("H".equals(leaf.getSyntacticTag())) {
-//      phraseTag = "*" + phraseTag;
-//    }
+    // if ("H".equals(leaf.getSyntacticTag())) {
+    // phraseTag = "*" + phraseTag;
+    // }
 
     if (leaf.getSyntacticTag() == null) {
       tags.add(getTag(leaf.getLexeme(), phraseTag));
     } else {
-      tags.add(getTag(ADChunkSampleStream.convertFuncTag(leaf.getFunctionalTag(), this.useCGTags), phraseTag));
+      tags.add(getTag(ADChunkSampleStream.convertFuncTag(
+          leaf.getFunctionalTag(), this.useCGTags), phraseTag));
     }
 
     target.add(functTag);
   }
-  
+
   private String getTag(String functTag, String phraseTag) {
-    if(isIncludePOSTags) {
+    if (isIncludePOSTags) {
       return functTag + "|" + phraseTag;
     }
     return phraseTag;

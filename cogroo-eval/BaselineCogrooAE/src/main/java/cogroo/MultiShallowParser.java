@@ -9,12 +9,13 @@ import cogroo.uima.ae.AnnotationServiceException;
 import cogroo.uima.ae.UimaShallowParser;
 
 public class MultiShallowParser implements ProcessingEngine {
-  
+
   private ProcessingEngine chunker;
-  protected static final Logger LOGGER = Logger.getLogger(MultiShallowParser.class);
+  protected static final Logger LOGGER = Logger
+      .getLogger(MultiShallowParser.class);
 
   public MultiShallowParser(RuntimeConfigurationI config) {
-    if(MultiCogrooSettings.SP) {
+    if (MultiCogrooSettings.SP) {
       try {
         LOGGER.info("Loading *NEW* shallow parser");
         this.chunker = new UimaShallowParser();

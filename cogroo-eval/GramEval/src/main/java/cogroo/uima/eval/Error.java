@@ -1,7 +1,5 @@
 package cogroo.uima.eval;
 
-
-
 /**
  * Class for storing start and end integer offsets.
  **/
@@ -9,43 +7,50 @@ public class Error implements Comparable<Error> {
 
   private final int start;
   private final int end;
-  
+
   private final String type;
   private String ruleId;
 
   /**
    * Initializes a new Span Object.
-   *
-   * @param s start of span.
-   * @param e end of span.
-   * @param type the type of the span
+   * 
+   * @param s
+   *          start of span.
+   * @param e
+   *          end of span.
+   * @param type
+   *          the type of the span
    */
   public Error(int s, int e, String type) {
-    
-    if (s < 0 || e <0)
-      throw new IllegalArgumentException("start and end index must be zero or greater!");
-    
-    if (s > e) 
-      throw new IllegalArgumentException("start index must not be larger than end index!");
-    
+
+    if (s < 0 || e < 0)
+      throw new IllegalArgumentException(
+          "start and end index must be zero or greater!");
+
+    if (s > e)
+      throw new IllegalArgumentException(
+          "start index must not be larger than end index!");
+
     start = s;
     end = e;
     this.type = type;
   }
-  
+
   /**
    * Initializes a new Span Object.
-   *
-   * @param s start of span.
-   * @param e end of span.
+   * 
+   * @param s
+   *          start of span.
+   * @param e
+   *          end of span.
    */
   public Error(int s, int e) {
     this(s, e, null);
   }
 
   /**
-   * Initializes a new Span object with an existing Span
-   * which is shifted by an offset.
+   * Initializes a new Span object with an existing Span which is shifted by an
+   * offset.
    * 
    * @param span
    * @param offset
@@ -53,10 +58,10 @@ public class Error implements Comparable<Error> {
   public Error(Error span, int offset) {
     this(span.start + offset, span.end + offset, span.getType());
   }
-  
+
   /**
    * Return the start of a span.
-   *
+   * 
    * @return the start of a span.
    **/
   public int getStart() {
@@ -65,7 +70,7 @@ public class Error implements Comparable<Error> {
 
   /**
    * Return the end of a span.
-   *
+   * 
    * @return the end of a span.
    **/
   public int getEnd() {
@@ -78,26 +83,27 @@ public class Error implements Comparable<Error> {
    * @return the type or null if not set
    */
   public String getType() {
-    return type; 
-  }
-  
-  /**
-   * Returns the length of this span.
-   *
-   * @return the length of the span.
-   */
-  public int length() {
-    return end-start;
+    return type;
   }
 
   /**
-   * Returns true if the specified span is contained by this span.
-   * Identical spans are considered to contain each other.
-   *
-   * @param s The span to compare with this span.
-   *
-   * @return true is the specified span is contained by this span;
-   * false otherwise.
+   * Returns the length of this span.
+   * 
+   * @return the length of the span.
+   */
+  public int length() {
+    return end - start;
+  }
+
+  /**
+   * Returns true if the specified span is contained by this span. Identical
+   * spans are considered to contain each other.
+   * 
+   * @param s
+   *          The span to compare with this span.
+   * 
+   * @return true is the specified span is contained by this span; false
+   *         otherwise.
    */
   public boolean contains(Error s) {
     return start <= s.getStart() && s.getEnd() <= end;
@@ -110,11 +116,12 @@ public class Error implements Comparable<Error> {
   /**
    * Returns true if the specified span is the begin of this span and the
    * specified span is contained in this span.
-   *
-   * @param s The span to compare with this span.
-   *
-   * @return true if the specified span starts with this span and is
-   * contained in this span; false otherwise
+   * 
+   * @param s
+   *          The span to compare with this span.
+   * 
+   * @return true if the specified span starts with this span and is contained
+   *         in this span; false otherwise
    */
   public boolean startsWith(Error s) {
     return getStart() == s.getStart() && contains(s);
@@ -122,46 +129,48 @@ public class Error implements Comparable<Error> {
 
   /**
    * Returns true if the specified span intersects with this span.
-   *
-   * @param s The span to compare with this span.
-   *
+   * 
+   * @param s
+   *          The span to compare with this span.
+   * 
    * @return true is the spans overlap; false otherwise.
    */
   public boolean intersects(Error s) {
     int sstart = s.getStart();
-    //either s's start is in this or this' start is in s
-    return this.contains(s) || s.contains(this) ||
-       getStart() <= sstart && sstart < getEnd() ||
-       sstart <= getStart() && getStart() < s.getEnd();
+    // either s's start is in this or this' start is in s
+    return this.contains(s) || s.contains(this) || getStart() <= sstart
+        && sstart < getEnd() || sstart <= getStart() && getStart() < s.getEnd();
   }
 
   /**
    * Returns true is the specified span crosses this span.
-   *
-   * @param s The span to compare with this span.
-   *
+   * 
+   * @param s
+   *          The span to compare with this span.
+   * 
    * @return true is the specified span overlaps this span and contains a
-   * non-overlapping section; false otherwise.
+   *         non-overlapping section; false otherwise.
    */
   public boolean crosses(Error s) {
     int sstart = s.getStart();
-    //either s's start is in this or this' start is in s
-    return !this.contains(s) && !s.contains(this) &&
-       (getStart() <= sstart && sstart < getEnd() ||
-       sstart <= getStart() && getStart() < s.getEnd());
+    // either s's start is in this or this' start is in s
+    return !this.contains(s)
+        && !s.contains(this)
+        && (getStart() <= sstart && sstart < getEnd() || sstart <= getStart()
+            && getStart() < s.getEnd());
   }
 
   /**
    * Retrieves the string covered by the current span of the specified text.
-   *
+   * 
    * @param text
-   *
+   * 
    * @return the substring covered by the current span
    */
   public CharSequence getCoveredText(CharSequence text) {
     if (getEnd() > text.length()) {
-      throw new IllegalArgumentException("The span " + toString() +
-          " is outside the given text!");
+      throw new IllegalArgumentException("The span " + toString()
+          + " is outside the given text!");
     }
 
     return text.subSequence(getStart(), getEnd());
@@ -173,19 +182,15 @@ public class Error implements Comparable<Error> {
   public int compareTo(Error s) {
     if (getStart() < s.getStart()) {
       return -1;
-    }
-    else if (getStart() == s.getStart()) {
+    } else if (getStart() == s.getStart()) {
       if (getEnd() > s.getEnd()) {
         return -1;
-      }
-      else if (getEnd() < s.getEnd()) {
+      } else if (getEnd() < s.getEnd()) {
         return 1;
-      }
-      else {
+      } else {
         return 0;
       }
-    }
-    else {
+    } else {
       return 1;
     }
   }
@@ -197,13 +202,12 @@ public class Error implements Comparable<Error> {
     int res = 23;
     res = res * 37 + getStart();
     res = res * 37 + getEnd();
-    if ( getType() == null) {
+    if (getType() == null) {
       res = res * 37;
-    }
-    else {
+    } else {
       res = res * 37 + getType().hashCode();
     }
-    
+
     return res;
   }
 
@@ -216,16 +220,13 @@ public class Error implements Comparable<Error> {
 
     if (o == this) {
       result = true;
-    }
-    else if (o instanceof Error) {
+    } else if (o instanceof Error) {
       Error s = (Error) o;
 
-      result = (getStart() == s.getStart()) && 
-          (getEnd() == s.getEnd()) &&
-          (getType() != null ? type.equals(s.getType()) : true) &&
-          (s.getType() != null ? s.getType().equals(getType()) : true);
-    }
-    else {
+      result = (getStart() == s.getStart()) && (getEnd() == s.getEnd())
+          && (getType() != null ? type.equals(s.getType()) : true)
+          && (s.getType() != null ? s.getType().equals(getType()) : true);
+    } else {
       result = false;
     }
 
@@ -246,7 +247,7 @@ public class Error implements Comparable<Error> {
 
   /**
    * Converts an array of {@link Error}s to an array of {@link String}s.
-   *
+   * 
    * @param spans
    * @param s
    * @return the strings
@@ -266,10 +267,10 @@ public class Error implements Comparable<Error> {
     StringBuffer cb = new StringBuffer();
     for (int si = 0, sl = spans.length; si < sl; si++) {
       cb.setLength(0);
-      for (int ti=spans[si].getStart();ti<spans[si].getEnd();ti++) {
+      for (int ti = spans[si].getStart(); ti < spans[si].getEnd(); ti++) {
         cb.append(tokens[ti]).append(" ");
       }
-      chunks[si]=cb.substring(0, cb.length()-1);
+      chunks[si] = cb.substring(0, cb.length() - 1);
     }
     return chunks;
   }
@@ -277,7 +278,7 @@ public class Error implements Comparable<Error> {
   public void setRuleId(String ruleId) {
     this.ruleId = ruleId;
   }
-  
+
   public String getRuleId() {
     return this.ruleId;
   }

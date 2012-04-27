@@ -35,74 +35,74 @@ import com.google.common.base.Objects;
 
 /**
  * Implements a {@link Tag} for chunk annotation
+ * 
  * @author William Colen
- *
+ * 
  */
 public class ChunkTag extends Tag {
 
-	/**
-	 * Id for serialization.
-	 */
-	private static final long serialVersionUID = 7032402552075677239L;
+  /**
+   * Id for serialization.
+   */
+  private static final long serialVersionUID = 7032402552075677239L;
 
-	private ChunkFunction chunkFunction;
-	
-	
-	
-	public ChunkFunction getChunkFunction() {
-		return chunkFunction;
-	}
+  private ChunkFunction chunkFunction;
 
-	public void setChunkFunction(ChunkFunction chankFunction) {
-		this.chunkFunction = chankFunction;
-	}
+  public ChunkFunction getChunkFunction() {
+    return chunkFunction;
+  }
 
-		@Override
-	public boolean match(TagMask tagMask) {
-		if(this.chunkFunction != null && tagMask.getChunkFunction() != null) {
-			return this.chunkFunction == tagMask.getChunkFunction();
-		} else if(this.chunkFunction == null && tagMask.getChunkFunction() == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean match(Tag tag) {
-		if(tag instanceof ChunkTag) {
-			ChunkTag chunkTag = (ChunkTag)tag;
-			if(this.chunkFunction != null && chunkTag.getChunkFunction() != null) {
-				return this.chunkFunction == chunkTag.getChunkFunction();
-			} else if(this.chunkFunction == null && chunkTag.getChunkFunction() == null) {
-				return true;
-			} else {
-				return false;
-			}
-			
-		} else {
-			return false;
-		}
-	}
+  public void setChunkFunction(ChunkFunction chankFunction) {
+    this.chunkFunction = chankFunction;
+  }
 
-	@Override
-	public String toVerboseString() {
-		return chunkFunction.name();
-	}
+  @Override
+  public boolean match(TagMask tagMask) {
+    if (this.chunkFunction != null && tagMask.getChunkFunction() != null) {
+      return this.chunkFunction == tagMask.getChunkFunction();
+    } else if (this.chunkFunction == null && tagMask.getChunkFunction() == null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-	@Override
-	public String toString() {
-		String tagAsString = "";
-		tagAsString += this.chunkFunction.name();
-		return tagAsString;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-      if (obj instanceof ChunkTag) {
-        ChunkTag that = (ChunkTag) obj;
-          return Objects.equal(this.chunkFunction, that.chunkFunction);
-        }
+  public boolean match(Tag tag) {
+    if (tag instanceof ChunkTag) {
+      ChunkTag chunkTag = (ChunkTag) tag;
+      if (this.chunkFunction != null && chunkTag.getChunkFunction() != null) {
+        return this.chunkFunction == chunkTag.getChunkFunction();
+      } else if (this.chunkFunction == null
+          && chunkTag.getChunkFunction() == null) {
+        return true;
+      } else {
         return false;
-	}
+      }
+
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public String toVerboseString() {
+    return chunkFunction.name();
+  }
+
+  @Override
+  public String toString() {
+    String tagAsString = "";
+    tagAsString += this.chunkFunction.name();
+    return tagAsString;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof ChunkTag) {
+      ChunkTag that = (ChunkTag) obj;
+      return Objects.equal(this.chunkFunction, that.chunkFunction);
+    }
+    return false;
+  }
 
 }

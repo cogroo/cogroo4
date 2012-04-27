@@ -55,192 +55,194 @@ import br.ccsl.cogroo.tools.featurizer.FeatureSample;
  */
 public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
 
-	private final ObjectStream<ADSentenceStream.Sentence> adSentenceStream;
+  private final ObjectStream<ADSentenceStream.Sentence> adSentenceStream;
 
-	private int start = -1;
-	private int end = -1;
+  private int start = -1;
+  private int end = -1;
 
-	private int index = 0;
+  private int index = 0;
 
   private boolean expandME;
-	
-	/**
-	 * Creates a new {@link NameSample} stream from a line stream, i.e.
-	 * {@link ObjectStream}< {@link String}>, that could be a
-	 * {@link PlainTextByLineStream} object.
-	 * 
-	 * @param lineStream
-	 *          a stream of lines as {@link String}
-	 */
-	public ADFeaturizerSampleStream(ObjectStream<String> lineStream, boolean expandME) {
-	  this.expandME = expandME;
-		this.adSentenceStream = new ADSentenceStream(lineStream);
-	}
 
-	/**
-	 * Creates a new {@link NameSample} stream from a {@link InputStream}
-	 * 
-	 * @param in
-	 *          the Corpus {@link InputStream}
-	 * @param charsetName
-	 *          the charset of the Arvores Deitadas Corpus
-	 */
-	public ADFeaturizerSampleStream(InputStream in, String charsetName, boolean expandME) {
+  /**
+   * Creates a new {@link NameSample} stream from a line stream, i.e.
+   * {@link ObjectStream}< {@link String}>, that could be a
+   * {@link PlainTextByLineStream} object.
+   * 
+   * @param lineStream
+   *          a stream of lines as {@link String}
+   */
+  public ADFeaturizerSampleStream(ObjectStream<String> lineStream,
+      boolean expandME) {
+    this.expandME = expandME;
+    this.adSentenceStream = new ADSentenceStream(lineStream);
+  }
 
-		try {
-		  this.expandME = expandME;
-			this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(
-					in, charsetName));
-		} catch (UnsupportedEncodingException e) {
-			// UTF-8 is available on all JVMs, will never happen
-			throw new IllegalStateException(e);
-		}
-	}
+  /**
+   * Creates a new {@link NameSample} stream from a {@link InputStream}
+   * 
+   * @param in
+   *          the Corpus {@link InputStream}
+   * @param charsetName
+   *          the charset of the Arvores Deitadas Corpus
+   */
+  public ADFeaturizerSampleStream(InputStream in, String charsetName,
+      boolean expandME) {
 
-	public FeatureSample read() throws IOException {
+    try {
+      this.expandME = expandME;
+      this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(
+          in, charsetName));
+    } catch (UnsupportedEncodingException e) {
+      // UTF-8 is available on all JVMs, will never happen
+      throw new IllegalStateException(e);
+    }
+  }
 
-		Sentence paragraph;
-		while ((paragraph = this.adSentenceStream.read()) != null) {
+  public FeatureSample read() throws IOException {
 
-			if (end > -1 && index >= end) {
-				// leave
-				return null;
-			}
+    Sentence paragraph;
+    while ((paragraph = this.adSentenceStream.read()) != null) {
 
-			if (start > -1 && index < start) {
-				index++;
-				// skip this one
-			} else {
-				Node root = paragraph.getRoot();
-				List<String> sentence = new ArrayList<String>();
-				List<String> tags = new ArrayList<String>();
-				List<String> target = new ArrayList<String>();
+      if (end > -1 && index >= end) {
+        // leave
+        return null;
+      }
 
-				processRoot(root, sentence, tags, target);
+      if (start > -1 && index < start) {
+        index++;
+        // skip this one
+      } else {
+        Node root = paragraph.getRoot();
+        List<String> sentence = new ArrayList<String>();
+        List<String> tags = new ArrayList<String>();
+        List<String> target = new ArrayList<String>();
 
-				if (sentence.size() > 0) {
-					index++;
-					return new FeatureSample(sentence, tags, target);
-				}
+        processRoot(root, sentence, tags, target);
 
-			}
+        if (sentence.size() > 0) {
+          index++;
+          return new FeatureSample(sentence, tags, target);
+        }
 
-		}
-		return null;
-	}
+      }
 
-	private void processRoot(Node root, List<String> sentence, List<String> tags,
-			List<String> target) {
-		if (root != null) {
-			TreeElement[] elements = root.getElements();
-			for (int i = 0; i < elements.length; i++) {
-				if (elements[i].isLeaf()) {
-					processLeaf((Leaf) elements[i], false, "O", sentence, tags, target);
-				} else {
-					processNode((Node) elements[i], sentence, tags, target, null);
-				}
-			}
-		}
-	}
+    }
+    return null;
+  }
 
-	private void processNode(Node node, List<String> sentence, List<String> tags,
-			List<String> target, String inheritedTag) {
-		String phraseTag = getChunkTag(node.getSyntacticTag());
-		
-		boolean inherited = false;
-		if(phraseTag.equals("O") && inheritedTag != null) {
-		  phraseTag = inheritedTag;
-		  inherited = true;
-		}
+  private void processRoot(Node root, List<String> sentence, List<String> tags,
+      List<String> target) {
+    if (root != null) {
+      TreeElement[] elements = root.getElements();
+      for (int i = 0; i < elements.length; i++) {
+        if (elements[i].isLeaf()) {
+          processLeaf((Leaf) elements[i], false, "O", sentence, tags, target);
+        } else {
+          processNode((Node) elements[i], sentence, tags, target, null);
+        }
+      }
+    }
+  }
 
-		TreeElement[] elements = node.getElements();
-		for (int i = 0; i < elements.length; i++) {
-			if (elements[i].isLeaf()) {
-				boolean isIntermediate = false;
-				if ( i > 0 && elements[i - 1].isLeaf() && phraseTag != null && !phraseTag.equals("O")) {
-					isIntermediate = true;
-				}
-				if(inherited && target.size() > 0 && target.get(target.size() - 1).endsWith(phraseTag)) {
-				  isIntermediate = true;
-				}
-				processLeaf((Leaf) elements[i], isIntermediate, phraseTag, sentence,
-						tags, target);
-			} else {
-				processNode((Node) elements[i], sentence, tags, target, phraseTag);
-			}
-		}
-	}
+  private void processNode(Node node, List<String> sentence, List<String> tags,
+      List<String> target, String inheritedTag) {
+    String phraseTag = getChunkTag(node.getSyntacticTag());
 
-	private void processLeaf(Leaf leaf, boolean isIntermediate, String phraseTag,
-			List<String> sentence, List<String> tags, List<String> target) {
-		
-	    String featureTag;
-		String lexeme =  leaf.getLexeme();
-		featureTag = leaf.getMorphologicalTag();
-		
-		if(featureTag == null) {
-		  featureTag = "-";
-		} else {
-		  featureTag = featureTag.replace(" ", "_");
-		}
-		
-		String postag;
-		
-		if (leaf.getSyntacticTag() == null) {
-		    postag = leaf.getLexeme();
-		} else {
-		  postag = ADFeaturizerSampleStream.convertFuncTag(leaf.getFunctionalTag());
-		}
+    boolean inherited = false;
+    if (phraseTag.equals("O") && inheritedTag != null) {
+      phraseTag = inheritedTag;
+      inherited = true;
+    }
 
-		if(expandME && lexeme.contains("_") ) {
-          StringTokenizer tokenizer = new StringTokenizer(lexeme, "_");
-          
-          /*if(postag.startsWith("prop")) {
-            sentence.add(tokenizer.nextToken()); 
-            target.add(featureTag);
-            tags.add(postag);
-          } else */if(tokenizer.countTokens() > 0) {
-            List<String> toks = new ArrayList<String>(tokenizer.countTokens());
-            List<String> tagsWithCont = new ArrayList<String>(tokenizer.countTokens());
-            toks.add(tokenizer.nextToken());
-            tagsWithCont.add("B-" + postag);
-            target.add(featureTag);
-            while(tokenizer.hasMoreTokens()) {
-              toks.add(tokenizer.nextToken());
-              tagsWithCont.add("I-" + postag);
-              target.add(featureTag);
-            }
-            
-            sentence.addAll(toks); 
-            tags.addAll(tagsWithCont);
-          } else {
-            sentence.add(lexeme); 
-            target.add(featureTag);
-            tags.add(postag);
-          }
-		} else {
-	        sentence.add(leaf.getLexeme());
-	        target.add(featureTag);
-	        tags.add(postag);		  
-		}
+    TreeElement[] elements = node.getElements();
+    for (int i = 0; i < elements.length; i++) {
+      if (elements[i].isLeaf()) {
+        boolean isIntermediate = false;
+        if (i > 0 && elements[i - 1].isLeaf() && phraseTag != null
+            && !phraseTag.equals("O")) {
+          isIntermediate = true;
+        }
+        if (inherited && target.size() > 0
+            && target.get(target.size() - 1).endsWith(phraseTag)) {
+          isIntermediate = true;
+        }
+        processLeaf((Leaf) elements[i], isIntermediate, phraseTag, sentence,
+            tags, target);
+      } else {
+        processNode((Node) elements[i], sentence, tags, target, phraseTag);
+      }
+    }
+  }
 
-	}
+  private void processLeaf(Leaf leaf, boolean isIntermediate, String phraseTag,
+      List<String> sentence, List<String> tags, List<String> target) {
 
-	
+    String featureTag;
+    String lexeme = leaf.getLexeme();
+    featureTag = leaf.getMorphologicalTag();
+
+    if (featureTag == null) {
+      featureTag = "-";
+    } else {
+      featureTag = featureTag.replace(" ", "_");
+    }
+
+    String postag;
+
+    if (leaf.getSyntacticTag() == null) {
+      postag = leaf.getLexeme();
+    } else {
+      postag = ADFeaturizerSampleStream.convertFuncTag(leaf.getFunctionalTag());
+    }
+
+    if (expandME && lexeme.contains("_")) {
+      StringTokenizer tokenizer = new StringTokenizer(lexeme, "_");
+
+      /*
+       * if(postag.startsWith("prop")) { sentence.add(tokenizer.nextToken());
+       * target.add(featureTag); tags.add(postag); } else
+       */if (tokenizer.countTokens() > 0) {
+        List<String> toks = new ArrayList<String>(tokenizer.countTokens());
+        List<String> tagsWithCont = new ArrayList<String>(
+            tokenizer.countTokens());
+        toks.add(tokenizer.nextToken());
+        tagsWithCont.add("B-" + postag);
+        target.add(featureTag);
+        while (tokenizer.hasMoreTokens()) {
+          toks.add(tokenizer.nextToken());
+          tagsWithCont.add("I-" + postag);
+          target.add(featureTag);
+        }
+
+        sentence.addAll(toks);
+        tags.addAll(tagsWithCont);
+      } else {
+        sentence.add(lexeme);
+        target.add(featureTag);
+        tags.add(postag);
+      }
+    } else {
+      sentence.add(leaf.getLexeme());
+      target.add(featureTag);
+      tags.add(postag);
+    }
+
+  }
 
   private static String convertFuncTag(String t) {
-	  // XXX: this should be removed when using Floresta tagger !
-//	  if("art".equals(t) || "pron-det".equals(t) || "pron-indef".equals(t)) {
-//        t = "det";
-//      }
+    // XXX: this should be removed when using Floresta tagger !
+    // if("art".equals(t) || "pron-det".equals(t) || "pron-indef".equals(t)) {
+    // t = "det";
+    // }
     return t;
   }
 
   private String getChunkTag(String tag) {
-		
-		String phraseTag = tag.substring(tag.lastIndexOf(":") + 1);
 
-		// maybe we should use only np, vp and pp, but will keep ap and advp.
+    String phraseTag = tag.substring(tag.lastIndexOf(":") + 1);
+
+    // maybe we should use only np, vp and pp, but will keep ap and advp.
     if (phraseTag.equals("np") || phraseTag.equals("vp")
         || phraseTag.equals("pp") || phraseTag.equals("ap")
         || phraseTag.equals("advp")) {
@@ -248,23 +250,23 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
     } else {
       phraseTag = "O";
     }
-		return phraseTag;
-	}
+    return phraseTag;
+  }
 
-	public void setStart(int aStart) {
-		this.start = aStart;
-	}
+  public void setStart(int aStart) {
+    this.start = aStart;
+  }
 
-	public void setEnd(int aEnd) {
-		this.end = aEnd;
-	}
+  public void setEnd(int aEnd) {
+    this.end = aEnd;
+  }
 
-	public void reset() throws IOException, UnsupportedOperationException {
-		adSentenceStream.reset();
-	}
+  public void reset() throws IOException, UnsupportedOperationException {
+    adSentenceStream.reset();
+  }
 
-	public void close() throws IOException {
-		adSentenceStream.close();
-	}
+  public void close() throws IOException {
+    adSentenceStream.close();
+  }
 
 }

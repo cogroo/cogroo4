@@ -37,156 +37,159 @@ import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.entities.impl.SyntacticTag;
 
 /**
- * A token is the smallest annotated unit of the text. Examples: "home" "," "." "12.55"
+ * A token is the smallest annotated unit of the text. Examples: "home" "," "."
+ * "12.55"
  * 
  * @author William Colen
- *
+ * 
  */
 public abstract class Token implements Serializable {
 
-	private static final long serialVersionUID = 5748072170017854287L;
+  private static final long serialVersionUID = 5748072170017854287L;
 
-	/**
-	 * The string of the token as it is written in the text.
-	 */
-	protected String lexeme;
-	
-	/**
-	 * A lexeme from which derives the lexeme of this token.
-	 * Example: lexeme = meninas, primitive = menino
-	 */
-	protected String primitive;
+  /**
+   * The string of the token as it is written in the text.
+   */
+  protected String lexeme;
 
-	/**
-	 * States the morphological function of this token.
-	 */
-	protected MorphologicalTag morphologicalTag;
+  /**
+   * A lexeme from which derives the lexeme of this token. Example: lexeme =
+   * meninas, primitive = menino
+   */
+  protected String primitive;
 
-	/**
-	 * States if the token starts a phrase, is part of a phrase,
-	 * or none of them, in the sentence.
-	 */
-	protected ChunkTag chunkTag;
-	
-	/**
-	 * States the chunk that the token is part of.
-	 */
-	protected Chunk chunk;
+  /**
+   * States the morphological function of this token.
+   */
+  protected MorphologicalTag morphologicalTag;
 
-	/**
-	 * States the type of the lexeme.
-	 * Example: a word, a punctuation mark, a number, etc.
-	 */
-	protected LexemeTypes lexemeType;
+  /**
+   * States if the token starts a phrase, is part of a phrase, or none of them,
+   * in the sentence.
+   */
+  protected ChunkTag chunkTag;
 
-	/**
-	 * The indexes, counted by chars, that represents the position of the token in the sentence.
-	 * The first char of the token is the start index and the last char of the token + 1 is the end index.
-	 */
-	protected Span span;
+  /**
+   * States the chunk that the token is part of.
+   */
+  protected Chunk chunk;
 
-	private SyntacticChunk syntacticChunk;
+  /**
+   * States the type of the lexeme. Example: a word, a punctuation mark, a
+   * number, etc.
+   */
+  protected LexemeTypes lexemeType;
 
-	/**
-	 * Constructs a token without a lexeme and with a default span (0, 0).
-	 *
-	 */
-	public Token() {
-		this.span = new Span(0, 0);
-	}
-	
-	/**
-	 * Constructs a token with the given span.
-	 * @param span
-	 */
-	public Token(Span span) {
-		this.span = span;
-	}
+  /**
+   * The indexes, counted by chars, that represents the position of the token in
+   * the sentence. The first char of the token is the start index and the last
+   * char of the token + 1 is the end index.
+   */
+  protected Span span;
 
-	/**
-	 * Constructs a token without a lexeme and with the given span indexes.
-	 * @param start the start index of the span
-	 * @param end the end index of the span
-	 */
-	public Token(int start, int end) {
-		this.span = new Span(start, end);
-	}
-	
-	public String getLexeme() {
-		return this.lexeme;
-	}
-	
-	public abstract void setLexeme(String lexeme);
+  private SyntacticChunk syntacticChunk;
 
-	public String getPrimitive() {
-		return this.primitive;
-	}
-	
-	public void setPrimitive(String primitive) {
-		this.primitive = primitive;
-	}
-	
-	public MorphologicalTag getMorphologicalTag() {
-		return this.morphologicalTag;
-	}
+  /**
+   * Constructs a token without a lexeme and with a default span (0, 0).
+   * 
+   */
+  public Token() {
+    this.span = new Span(0, 0);
+  }
 
-	public void setMorphologicalTag(MorphologicalTag tag) {
-		this.morphologicalTag = tag;
-	}
+  /**
+   * Constructs a token with the given span.
+   * 
+   * @param span
+   */
+  public Token(Span span) {
+    this.span = span;
+  }
 
-	public ChunkTag getChunkTag() {
-		return this.chunkTag;
-	}
+  /**
+   * Constructs a token without a lexeme and with the given span indexes.
+   * 
+   * @param start
+   *          the start index of the span
+   * @param end
+   *          the end index of the span
+   */
+  public Token(int start, int end) {
+    this.span = new Span(start, end);
+  }
 
-	public void setChunkTag(ChunkTag ct) {
-		this.chunkTag = ct;
-	}
-	
-	public void setSpan(Span span) {
-		this.span = span;
-	}
+  public String getLexeme() {
+    return this.lexeme;
+  }
 
-	public SyntacticTag getSyntacticTag() {
-		if(this.getSyntacticChunk() == null) {
-			return null;
-		}
-		return this.getSyntacticChunk().getSyntacticTag();
-	}
+  public abstract void setLexeme(String lexeme);
 
-	public Chunk getChunk() {
-		return this.chunk;
-	}
+  public String getPrimitive() {
+    return this.primitive;
+  }
 
-	public void setChunk(Chunk chunk) {
-		this.chunk = chunk;
-	}
+  public void setPrimitive(String primitive) {
+    this.primitive = primitive;
+  }
 
-	public LexemeTypes getLexemeType() {
-		return this.lexemeType;
-	}
+  public MorphologicalTag getMorphologicalTag() {
+    return this.morphologicalTag;
+  }
 
-	public Span getSpan() {
-		return this.span;
-	}
+  public void setMorphologicalTag(MorphologicalTag tag) {
+    this.morphologicalTag = tag;
+  }
 
-	  @Override
-	  public String toString() {
+  public ChunkTag getChunkTag() {
+    return this.chunkTag;
+  }
 
-	    return Objects.toStringHelper(this)
-	        .add("lxm", lexeme)
-	        .add("pr", primitive)
-	        .add("mp", morphologicalTag)
-            .add("ch", chunkTag)
-            //.add("lexemeType", lexemeType)
-            //.add("span", span)
-            .toString();
-	  }
-	
-	@Override
-	public boolean equals(Object obj) {
-      if (obj instanceof Token) {
-        Token that = (Token) obj;
-          return Objects.equal(this.lexeme, that.lexeme)
+  public void setChunkTag(ChunkTag ct) {
+    this.chunkTag = ct;
+  }
+
+  public void setSpan(Span span) {
+    this.span = span;
+  }
+
+  public SyntacticTag getSyntacticTag() {
+    if (this.getSyntacticChunk() == null) {
+      return null;
+    }
+    return this.getSyntacticChunk().getSyntacticTag();
+  }
+
+  public Chunk getChunk() {
+    return this.chunk;
+  }
+
+  public void setChunk(Chunk chunk) {
+    this.chunk = chunk;
+  }
+
+  public LexemeTypes getLexemeType() {
+    return this.lexemeType;
+  }
+
+  public Span getSpan() {
+    return this.span;
+  }
+
+  @Override
+  public String toString() {
+
+    return Objects.toStringHelper(this).add("lxm", lexeme).add("pr", primitive)
+        .add("mp", morphologicalTag).add("ch", chunkTag)
+        // .add("lexemeType", lexemeType)
+        // .add("span", span)
+        .toString();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Token) {
+      Token that = (Token) obj;
+      return Objects.equal(this.lexeme, that.lexeme)
           && Objects.equal(this.primitive, that.primitive)
           && Objects.equal(this.morphologicalTag, that.morphologicalTag)
           && Objects.equal(this.chunkTag, that.chunkTag)
@@ -194,16 +197,16 @@ public abstract class Token implements Serializable {
           && Objects.equal(this.chunk, that.chunk)
           && Objects.equal(this.lexemeType, that.lexemeType)
           && Objects.equal(this.span, that.span);
-        }
-        return false;
-	}
+    }
+    return false;
+  }
 
-	public void setSyntacticChunk(SyntacticChunk syntacticChunk) {
-		this.syntacticChunk = syntacticChunk;
-	}
-	
-	public SyntacticChunk getSyntacticChunk() {
-		return this.syntacticChunk;
-	}
+  public void setSyntacticChunk(SyntacticChunk syntacticChunk) {
+    this.syntacticChunk = syntacticChunk;
+  }
+
+  public SyntacticChunk getSyntacticChunk() {
+    return this.syntacticChunk;
+  }
 
 }

@@ -37,13 +37,13 @@ import br.ccsl.cogroo.tools.featurizer.FeatureSample;
  * <p>
  * <b>Note:</b> Do not use this class, internal use only!
  */
-public class ADFeatureSampleStreamFactory extends LanguageSampleStreamFactory<FeatureSample> {
+public class ADFeatureSampleStreamFactory extends
+    LanguageSampleStreamFactory<FeatureSample> {
 
   interface Parameters {
-    //all have to be repeated, because encoding is not optional,
-    //according to the check if (encoding == null) { below (now removed)
-    @ParameterDescription(valueName = "charsetName",
-        description = "encoding for reading and writing text, if absent the system default is used.")
+    // all have to be repeated, because encoding is not optional,
+    // according to the check if (encoding == null) { below (now removed)
+    @ParameterDescription(valueName = "charsetName", description = "encoding for reading and writing text, if absent the system default is used.")
     Charset getEncoding();
 
     @ParameterDescription(valueName = "sampleData", description = "data to be used, usually a file name.")
@@ -55,19 +55,19 @@ public class ADFeatureSampleStreamFactory extends LanguageSampleStreamFactory<Fe
     @ParameterDescription(valueName = "start", description = "index of first sentence")
     @OptionalParameter
     Integer getStart();
-    
+
     @ParameterDescription(valueName = "end", description = "index of last sentence")
     @OptionalParameter
     Integer getEnd();
-    
+
     @ParameterDescription(valueName = "expandME", description = "expand multiword expressions.")
-    @OptionalParameter(defaultValue="false")
+    @OptionalParameter(defaultValue = "false")
     Boolean getExpandME();
   }
 
   public static void registerFactory() {
-    StreamFactoryRegistry.registerFactory(FeatureSample.class,
-        "ad", new ADFeatureSampleStreamFactory(Parameters.class));
+    StreamFactoryRegistry.registerFactory(FeatureSample.class, "ad",
+        new ADFeatureSampleStreamFactory(Parameters.class));
   }
 
   protected <P> ADFeatureSampleStreamFactory(Class<P> params) {
@@ -81,11 +81,12 @@ public class ADFeatureSampleStreamFactory extends LanguageSampleStreamFactory<Fe
     language = params.getLang();
 
     FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
-    
-    ObjectStream<String> lineStream = new PlainTextByLineStream(sampleDataIn.getChannel(),
-        params.getEncoding());
 
-    ADFeaturizerSampleStream sentenceStream = new ADFeaturizerSampleStream(lineStream, params.getExpandME());
+    ObjectStream<String> lineStream = new PlainTextByLineStream(
+        sampleDataIn.getChannel(), params.getEncoding());
+
+    ADFeaturizerSampleStream sentenceStream = new ADFeaturizerSampleStream(
+        lineStream, params.getExpandME());
 
     return sentenceStream;
   }

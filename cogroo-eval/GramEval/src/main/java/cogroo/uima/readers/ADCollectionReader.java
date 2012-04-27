@@ -46,8 +46,8 @@ import cogroo.uima.readers.entities.SentenceEx.GrEr;
 import cogroo.uima.readers.entities.Text;
 
 /**
- * A simple collection reader that reads documents from a directory in the filesystem. It can be
- * configured with the following parameters:
+ * A simple collection reader that reads documents from a directory in the
+ * filesystem. It can be configured with the following parameters:
  * <ul>
  * <li><code>InputDirectory</code> - path to directory containing files</li>
  * <li><code>Encoding</code> (optional) - character encoding of the input files</li>
@@ -58,60 +58,63 @@ import cogroo.uima.readers.entities.Text;
  */
 public class ADCollectionReader extends CollectionReader_ImplBase {
   /**
-   * Name of configuration parameter that must be set to the path of a directory containing input
-   * files.
+   * Name of configuration parameter that must be set to the path of a directory
+   * containing input files.
    */
   public static final String PARAM_INPUTDIR = "InputDirectory";
 
   /**
-   * Name of configuration parameter that contains the character encoding used by the input files.
-   * If not specified, the default system encoding will be used.
+   * Name of configuration parameter that contains the character encoding used
+   * by the input files. If not specified, the default system encoding will be
+   * used.
    */
   public static final String PARAM_ENCODING = "Encoding";
 
   /**
-   * Name of optional configuration parameter that contains the language of the documents in the
-   * input directory. If specified this information will be added to the CAS.
+   * Name of optional configuration parameter that contains the language of the
+   * documents in the input directory. If specified this information will be
+   * added to the CAS.
    */
   public static final String PARAM_LANGUAGE = "Language";
 
   /**
-   * Name of optional configuration parameter that indicates including
-   * the subdirectories (recursively) of the current input directory.
+   * Name of optional configuration parameter that indicates including the
+   * subdirectories (recursively) of the current input directory.
    */
   public static final String PARAM_SUBDIR = "BrowseSubdirectories";
-  
+
   private ArrayList<File> mFiles;
 
   private String mEncoding;
 
   private String mLanguage;
-  
+
   private Boolean mRecursive;
 
   private int mCurrentIndex;
-  
+
   private MultiReader mMultiReader;
-  
+
   private Text mNextText;
 
   private int mCurrentText;
-  
+
   /**
    * @see org.apache.uima.collection.CollectionReader_ImplBase#initialize()
    */
   public void initialize() throws ResourceInitializationException {
-    
+
     // check encoding
-//    if( !Charset.defaultCharset().equals(Charset.forName("UTF-8")) )
-//    {
-//      System.out.println("invalid charset: " + Charset.defaultCharset());
-//      throw new ResourceInitializationException();
-//    }
-    
-    File directory = new File(((String) getConfigParameterValue(PARAM_INPUTDIR)).trim());
-    mEncoding  = (String) getConfigParameterValue(PARAM_ENCODING);
-    mLanguage  = (String) getConfigParameterValue(PARAM_LANGUAGE);
+    // if( !Charset.defaultCharset().equals(Charset.forName("UTF-8")) )
+    // {
+    // System.out.println("invalid charset: " + Charset.defaultCharset());
+    // throw new ResourceInitializationException();
+    // }
+
+    File directory = new File(
+        ((String) getConfigParameterValue(PARAM_INPUTDIR)).trim());
+    mEncoding = (String) getConfigParameterValue(PARAM_ENCODING);
+    mLanguage = (String) getConfigParameterValue(PARAM_LANGUAGE);
     mRecursive = (Boolean) getConfigParameterValue(PARAM_SUBDIR);
     if (null == mRecursive) { // could be null if not set, it is optional
       mRecursive = Boolean.FALSE;
@@ -120,22 +123,24 @@ public class ADCollectionReader extends CollectionReader_ImplBase {
 
     // if input directory does not exist or is not a directory, throw exception
     if (!directory.exists() || !directory.isDirectory()) {
-      throw new ResourceInitializationException(ResourceConfigurationException.DIRECTORY_NOT_FOUND,
-              new Object[] { PARAM_INPUTDIR, this.getMetaData().getName(), directory.getPath() });
+      throw new ResourceInitializationException(
+          ResourceConfigurationException.DIRECTORY_NOT_FOUND,
+          new Object[] { PARAM_INPUTDIR, this.getMetaData().getName(),
+              directory.getPath() });
     }
 
     // get list of files in the specified directory, and subdirectories if the
     // parameter PARAM_SUBDIR is set to True
     mFiles = new ArrayList<File>();
     addFilesFromDir(directory);
-    
-	this.mMultiReader = new MultiReader(mFiles, mEncoding);
+
+    this.mMultiReader = new MultiReader(mFiles, mEncoding);
   }
-  
+
   /**
    * This method adds files in the directory passed in as a parameter to mFiles.
-   * If mRecursive is true, it will include all files in all
-   * subdirectories (recursively), as well. 
+   * If mRecursive is true, it will include all files in all subdirectories
+   * (recursively), as well.
    * 
    * @param dir
    */
@@ -154,14 +159,14 @@ public class ADCollectionReader extends CollectionReader_ImplBase {
    * @see org.apache.uima.collection.CollectionReader#hasNext()
    */
   public boolean hasNext() {
-	if(mNextText == null) {
-		try {
-			mNextText = mMultiReader.read();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	return mNextText != null;
+    if (mNextText == null) {
+      try {
+        mNextText = mMultiReader.read();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    return mNextText != null;
   }
 
   /**
@@ -174,61 +179,67 @@ public class ADCollectionReader extends CollectionReader_ImplBase {
     } catch (CASException e) {
       throw new CollectionException(e);
     }
-    
-      // put document in CAS
+
+    // put document in CAS
     jcas.setDocumentText(mNextText.getText());
-    
+
     for (Paragraph para : mNextText.getParagraphs()) {
-		GoldenParagraph p = new GoldenParagraph(jcas);
-		
-		for (SentenceEx sent : para.getSentences()) {
-			GoldenSentence s = new GoldenSentence(jcas);
-			s.setId(sent.getId());
-			s.setBegin(sent.getStart());
-			s.setEnd(sent.getEnd());
-			
-			List<GrEr> grers = sent.getGrammarErrors();
-			if(grers.size() > 0) {
-				FSArray fsarr = new FSArray(jcas, grers.size());
-				for (int j = 0; j < grers.size(); j++) {
-					GoldenGrammarError ge = new GoldenGrammarError(jcas);
-					ge.setBegin(grers.get(j).getStart());
-					ge.setEnd(grers.get(j).getEnd());
-					ge.setCategory(grers.get(j).getCat());
-					ge.setError(grers.get(j).getErr());
-					ge.setReplace(grers.get(j).getRep());
-					ge.addToIndexes();
-					fsarr.set(j, ge);
-				}
-				s.setGoldenGrammarErrors(fsarr);
-			}
-			
-			s.addToIndexes();
-		}
-		
-		p.setId(para.getId());
-		p.setBegin(para.getStart());
-		p.setEnd(para.getEnd());
-		p.addToIndexes();
-	}
+      GoldenParagraph p = new GoldenParagraph(jcas);
+
+      for (SentenceEx sent : para.getSentences()) {
+        GoldenSentence s = new GoldenSentence(jcas);
+        s.setId(sent.getId());
+        s.setBegin(sent.getStart());
+        s.setEnd(sent.getEnd());
+
+        List<GrEr> grers = sent.getGrammarErrors();
+        if (grers.size() > 0) {
+          FSArray fsarr = new FSArray(jcas, grers.size());
+          for (int j = 0; j < grers.size(); j++) {
+            GoldenGrammarError ge = new GoldenGrammarError(jcas);
+            ge.setBegin(grers.get(j).getStart());
+            ge.setEnd(grers.get(j).getEnd());
+            ge.setCategory(grers.get(j).getCat());
+            ge.setError(grers.get(j).getErr());
+            ge.setReplace(grers.get(j).getRep());
+            ge.addToIndexes();
+            fsarr.set(j, ge);
+          }
+          s.setGoldenGrammarErrors(fsarr);
+        }
+
+        s.addToIndexes();
+      }
+
+      p.setId(para.getId());
+      p.setBegin(para.getStart());
+      p.setEnd(para.getEnd());
+      p.addToIndexes();
+    }
 
     // set language if it was explicitly specified as a configuration parameter
     if (mLanguage != null) {
-      ((DocumentAnnotation) jcas.getDocumentAnnotationFs()).setLanguage(mLanguage);
+      ((DocumentAnnotation) jcas.getDocumentAnnotationFs())
+          .setLanguage(mLanguage);
     }
 
-    // Also store location of source document in CAS. This information is critical
-    // if CAS Consumers will need to know where the original document contents are located.
-    // For example, the Semantic Search CAS Indexer writes this information into the
-    // search index that it creates, which allows applications that use the search index to
+    // Also store location of source document in CAS. This information is
+    // critical
+    // if CAS Consumers will need to know where the original document contents
+    // are located.
+    // For example, the Semantic Search CAS Indexer writes this information into
+    // the
+    // search index that it creates, which allows applications that use the
+    // search index to
     // locate the documents that satisfy their semantic queries.
-//    SourceDocumentInformation srcDocInfo = new SourceDocumentInformation(jcas);
-//    srcDocInfo.setUri(file.getAbsoluteFile().toURL().toString());
-//    srcDocInfo.setOffsetInSource(0);
-//    srcDocInfo.setDocumentSize((int) file.length());
-//    srcDocInfo.setLastSegment(mCurrentIndex == mFiles.size());
-//    srcDocInfo.addToIndexes();
-    
+    // SourceDocumentInformation srcDocInfo = new
+    // SourceDocumentInformation(jcas);
+    // srcDocInfo.setUri(file.getAbsoluteFile().toURL().toString());
+    // srcDocInfo.setOffsetInSource(0);
+    // srcDocInfo.setDocumentSize((int) file.length());
+    // srcDocInfo.setLastSegment(mCurrentIndex == mFiles.size());
+    // srcDocInfo.addToIndexes();
+
     mCurrentText++;
     mNextText = mMultiReader.read();
   }
@@ -243,8 +254,9 @@ public class ADCollectionReader extends CollectionReader_ImplBase {
    * @see org.apache.uima.collection.base_cpm.BaseCollectionReader#getProgress()
    */
   public Progress[] getProgress() {
-    return new Progress[] { new ProgressImpl(mCurrentText, -1, Progress.ENTITIES, true)
-    	    /*, new ProgressImpl(mCurrentIndex,mFiles.size(),Progress.ENTITIES)*/};
+    return new Progress[] { new ProgressImpl(mCurrentText, -1,
+        Progress.ENTITIES, true)
+    /* , new ProgressImpl(mCurrentIndex,mFiles.size(),Progress.ENTITIES) */};
   }
 
 }

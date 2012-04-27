@@ -101,35 +101,36 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
       List<String> contractions = new ArrayList<String>();
       List<String> prop = new ArrayList<String>();
       process(root, sentence, tags, contractions, prop);
-      
+
       if (sentence.size() != contractions.size()
           || sentence.size() != prop.size()) {
         throw new IllegalArgumentException(
             "There must be exactly same number of tokens and additional context!");
       }
-      
+
       String[][] ac = new String[sentence.size()][2];
       for (int i = 0; i < ac.length; i++) {
-        if(contractions.get(i) != null) {
+        if (contractions.get(i) != null) {
           ac[i][0] = contractions.get(i);
-//          if(contractions.get(i) != null) {
-//            System.out.println(contractions.get(i) + ": " + sentence.get(i));
-//          }
+          // if(contractions.get(i) != null) {
+          // System.out.println(contractions.get(i) + ": " + sentence.get(i));
+          // }
         }
-        if(prop.get(i) != null) {
+        if (prop.get(i) != null) {
           ac[i][1] = prop.get(i);
-//          if(prop.get(i) != null) {
-//            System.out.println(prop.get(i) + ": " + sentence.get(i));
-//          }
+          // if(prop.get(i) != null) {
+          // System.out.println(prop.get(i) + ": " + sentence.get(i));
+          // }
         }
       }
-//      System.out.println();
+      // System.out.println();
       return new POSSample(sentence, tags, ac);
     }
     return null;
   }
 
-  private void process(Node node, List<String> sentence, List<String> tags, List<String> con, List<String> prop) {
+  private void process(Node node, List<String> sentence, List<String> tags,
+      List<String> con, List<String> prop) {
     if (node != null) {
       for (TreeElement element : node.getElements()) {
         if (element.isLeaf()) {
@@ -140,17 +141,18 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
       }
     }
   }
-  
-  private void processLeaf(Leaf leaf, List<String> sentence, List<String> tags, List<String> con, List<String> prop) {
+
+  private void processLeaf(Leaf leaf, List<String> sentence, List<String> tags,
+      List<String> con, List<String> prop) {
     if (leaf != null) {
       String lexeme = leaf.getLexeme();
       String tag = leaf.getFunctionalTag();
-      
+
       String contraction = null;
-      if(leaf.getSecondaryTag() != null) {
-        if(leaf.getSecondaryTag().contains("<sam->")) {
+      if (leaf.getSecondaryTag() != null) {
+        if (leaf.getSecondaryTag().contains("<sam->")) {
           contraction = "B";
-        } else if(leaf.getSecondaryTag().contains("<-sam>")) {
+        } else if (leaf.getSecondaryTag().contains("<-sam>")) {
           contraction = "E";
         }
       }
@@ -158,7 +160,7 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
       if (tag == null) {
         tag = leaf.getLexeme();
       }
-      
+
       if (isIncludeFeatures && leaf.getMorphologicalTag() != null) {
         tag += " " + leaf.getMorphologicalTag();
       }
@@ -170,7 +172,7 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
       if (expandME && lexeme.contains("_")) {
         StringTokenizer tokenizer = new StringTokenizer(lexeme, "_");
 
-        if("prop".equals(tag)) {
+        if ("prop".equals(tag)) {
           sentence.add(tokenizer.nextToken());
           tags.add(tag);
           con.add(null);
@@ -185,7 +187,7 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
             toks.add(tokenizer.nextToken());
             tagsWithCont.add("I-" + tag);
           }
-          if(contraction != null) {
+          if (contraction != null) {
             con.addAll(Arrays.asList(new String[toks.size() - 1]));
             con.add(contraction);
           } else {
@@ -209,7 +211,7 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
         con.add(contraction);
       }
     }
-    
+
   }
 
   public void reset() throws IOException, UnsupportedOperationException {

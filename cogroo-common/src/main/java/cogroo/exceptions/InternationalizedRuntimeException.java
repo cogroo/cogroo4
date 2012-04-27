@@ -4,8 +4,6 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-
-
 public class InternationalizedRuntimeException extends RuntimeException {
 
   private static final long serialVersionUID = 6486810457574147193L;
@@ -26,27 +24,31 @@ public class InternationalizedRuntimeException extends RuntimeException {
     this(null, null, null, aCause);
   }
 
-  public InternationalizedRuntimeException(String aResourceBundleName, String aMessageKey,
-          Object[] aArguments) {
+  public InternationalizedRuntimeException(String aResourceBundleName,
+      String aMessageKey, Object[] aArguments) {
     this(aResourceBundleName, aMessageKey, aArguments, null);
   }
 
-  public InternationalizedRuntimeException(String aResourceBundleName, String aMessageKey,
-          Object[] aArguments, Throwable aCause) {
+  public InternationalizedRuntimeException(String aResourceBundleName,
+      String aMessageKey, Object[] aArguments, Throwable aCause) {
     super();
     cause = aCause;
     resourceBundleName = aResourceBundleName;
     messageKey = aMessageKey;
     arguments = aArguments;
-    // if null message and mCause is Internationalized exception, "promote" message
+    // if null message and mCause is Internationalized exception, "promote"
+    // message
     if (resourceBundleName == null && messageKey == null) {
       if (cause instanceof InternationalizedException) {
-        resourceBundleName = ((InternationalizedException) cause).getResourceBundleName();
+        resourceBundleName = ((InternationalizedException) cause)
+            .getResourceBundleName();
         messageKey = ((InternationalizedException) cause).getMessageKey();
         arguments = ((InternationalizedException) cause).getArguments();
       } else if (cause instanceof InternationalizedRuntimeException) {
-        resourceBundleName = ((InternationalizedRuntimeException) cause).getResourceBundleName();
-        messageKey = ((InternationalizedRuntimeException) cause).getMessageKey();
+        resourceBundleName = ((InternationalizedRuntimeException) cause)
+            .getResourceBundleName();
+        messageKey = ((InternationalizedRuntimeException) cause)
+            .getMessageKey();
         arguments = ((InternationalizedRuntimeException) cause).getArguments();
       }
     }
@@ -84,7 +86,8 @@ public class InternationalizedRuntimeException extends RuntimeException {
 
     try {
       // locate the resource bundle for this exception's messages
-      ResourceBundle bundle = ResourceBundle.getBundle(getResourceBundleName(), aLocale);
+      ResourceBundle bundle = ResourceBundle.getBundle(getResourceBundleName(),
+          aLocale);
       // retrieve the message from the resource bundle
       String message = bundle.getString(getMessageKey());
       // if arguments exist, use MessageFormat to include them

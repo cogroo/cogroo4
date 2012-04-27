@@ -1,4 +1,3 @@
-
 /* First created by JCasGen Tue May 17 11:07:22 BRT 2011 */
 package cogroo.uima;
 
@@ -13,111 +12,124 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** 
+/**
  * Updated by JCasGen Tue May 17 11:07:22 BRT 2011
- * @generated */
+ * 
+ * @generated
+ */
 public class GoldenGrammarError_Type extends Annotation_Type {
   /** @generated */
-  protected FSGenerator getFSGenerator() {return fsGenerator;}
+  protected FSGenerator getFSGenerator() {
+    return fsGenerator;
+  }
+
   /** @generated */
-  private final FSGenerator fsGenerator = 
-    new FSGenerator() {
-      public FeatureStructure createFS(int addr, CASImpl cas) {
-  			 if (GoldenGrammarError_Type.this.useExistingInstance) {
-  			   // Return eq fs instance if already created
-  		     FeatureStructure fs = GoldenGrammarError_Type.this.jcas.getJfsFromCaddr(addr);
-  		     if (null == fs) {
-  		       fs = new GoldenGrammarError(addr, GoldenGrammarError_Type.this);
-  			   GoldenGrammarError_Type.this.jcas.putJfsFromCaddr(addr, fs);
-  			   return fs;
-  		     }
-  		     return fs;
-        } else return new GoldenGrammarError(addr, GoldenGrammarError_Type.this);
-  	  }
-    };
+  private final FSGenerator fsGenerator = new FSGenerator() {
+    public FeatureStructure createFS(int addr, CASImpl cas) {
+      if (GoldenGrammarError_Type.this.useExistingInstance) {
+        // Return eq fs instance if already created
+        FeatureStructure fs = GoldenGrammarError_Type.this.jcas
+            .getJfsFromCaddr(addr);
+        if (null == fs) {
+          fs = new GoldenGrammarError(addr, GoldenGrammarError_Type.this);
+          GoldenGrammarError_Type.this.jcas.putJfsFromCaddr(addr, fs);
+          return fs;
+        }
+        return fs;
+      } else
+        return new GoldenGrammarError(addr, GoldenGrammarError_Type.this);
+    }
+  };
   /** @generated */
   public final static int typeIndexID = GoldenGrammarError.typeIndexID;
-  /** @generated 
-     @modifiable */
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("cogroo.uima.GoldenGrammarError");
- 
+  /**
+   * @generated
+   * @modifiable
+   */
+  public final static boolean featOkTst = JCasRegistry
+      .getFeatOkTst("cogroo.uima.GoldenGrammarError");
+
   /** @generated */
   final Feature casFeat_category;
   /** @generated */
-  final int     casFeatCode_category;
-  /** @generated */ 
+  final int casFeatCode_category;
+
+  /** @generated */
   public String getCategory(int addr) {
-        if (featOkTst && casFeat_category == null)
+    if (featOkTst && casFeat_category == null)
       jcas.throwFeatMissing("category", "cogroo.uima.GoldenGrammarError");
     return ll_cas.ll_getStringValue(addr, casFeatCode_category);
   }
-  /** @generated */    
+
+  /** @generated */
   public void setCategory(int addr, String v) {
-        if (featOkTst && casFeat_category == null)
+    if (featOkTst && casFeat_category == null)
       jcas.throwFeatMissing("category", "cogroo.uima.GoldenGrammarError");
-    ll_cas.ll_setStringValue(addr, casFeatCode_category, v);}
-    
-  
- 
+    ll_cas.ll_setStringValue(addr, casFeatCode_category, v);
+  }
+
   /** @generated */
   final Feature casFeat_error;
   /** @generated */
-  final int     casFeatCode_error;
-  /** @generated */ 
+  final int casFeatCode_error;
+
+  /** @generated */
   public String getError(int addr) {
-        if (featOkTst && casFeat_error == null)
+    if (featOkTst && casFeat_error == null)
       jcas.throwFeatMissing("error", "cogroo.uima.GoldenGrammarError");
     return ll_cas.ll_getStringValue(addr, casFeatCode_error);
   }
-  /** @generated */    
+
+  /** @generated */
   public void setError(int addr, String v) {
-        if (featOkTst && casFeat_error == null)
+    if (featOkTst && casFeat_error == null)
       jcas.throwFeatMissing("error", "cogroo.uima.GoldenGrammarError");
-    ll_cas.ll_setStringValue(addr, casFeatCode_error, v);}
-    
-  
- 
+    ll_cas.ll_setStringValue(addr, casFeatCode_error, v);
+  }
+
   /** @generated */
   final Feature casFeat_replace;
   /** @generated */
-  final int     casFeatCode_replace;
-  /** @generated */ 
+  final int casFeatCode_replace;
+
+  /** @generated */
   public String getReplace(int addr) {
-        if (featOkTst && casFeat_replace == null)
+    if (featOkTst && casFeat_replace == null)
       jcas.throwFeatMissing("replace", "cogroo.uima.GoldenGrammarError");
     return ll_cas.ll_getStringValue(addr, casFeatCode_replace);
   }
-  /** @generated */    
+
+  /** @generated */
   public void setReplace(int addr, String v) {
-        if (featOkTst && casFeat_replace == null)
+    if (featOkTst && casFeat_replace == null)
       jcas.throwFeatMissing("replace", "cogroo.uima.GoldenGrammarError");
-    ll_cas.ll_setStringValue(addr, casFeatCode_replace, v);}
-    
-  
+    ll_cas.ll_setStringValue(addr, casFeatCode_replace, v);
+  }
 
-
-
-  /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+  /**
+   * initialize variables to correspond with Cas Type and Features
+   * 
+   * @generated
+   */
   public GoldenGrammarError_Type(JCas jcas, Type casType) {
     super(jcas, casType);
-    casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
+    casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl) this.casType,
+        getFSGenerator());
 
- 
-    casFeat_category = jcas.getRequiredFeatureDE(casType, "category", "uima.cas.String", featOkTst);
-    casFeatCode_category  = (null == casFeat_category) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_category).getCode();
+    casFeat_category = jcas.getRequiredFeatureDE(casType, "category",
+        "uima.cas.String", featOkTst);
+    casFeatCode_category = (null == casFeat_category) ? JCas.INVALID_FEATURE_CODE
+        : ((FeatureImpl) casFeat_category).getCode();
 
- 
-    casFeat_error = jcas.getRequiredFeatureDE(casType, "error", "uima.cas.String", featOkTst);
-    casFeatCode_error  = (null == casFeat_error) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_error).getCode();
+    casFeat_error = jcas.getRequiredFeatureDE(casType, "error",
+        "uima.cas.String", featOkTst);
+    casFeatCode_error = (null == casFeat_error) ? JCas.INVALID_FEATURE_CODE
+        : ((FeatureImpl) casFeat_error).getCode();
 
- 
-    casFeat_replace = jcas.getRequiredFeatureDE(casType, "replace", "uima.cas.String", featOkTst);
-    casFeatCode_replace  = (null == casFeat_replace) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_replace).getCode();
+    casFeat_replace = jcas.getRequiredFeatureDE(casType, "replace",
+        "uima.cas.String", featOkTst);
+    casFeatCode_replace = (null == casFeat_replace) ? JCas.INVALID_FEATURE_CODE
+        : ((FeatureImpl) casFeat_replace).getCode();
 
   }
 }
-
-
-
-    

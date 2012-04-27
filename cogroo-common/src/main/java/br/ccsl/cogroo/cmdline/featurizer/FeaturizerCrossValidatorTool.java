@@ -35,10 +35,11 @@ import br.ccsl.cogroo.tools.featurizer.FeatureSample;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerCrossValidator;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerEvaluationMonitor;
 
-public final class FeaturizerCrossValidatorTool
-    extends AbstractCrossValidatorTool<FeatureSample, CVToolParams> {
-  
-  interface CVToolParams extends TrainingParams, CVParams, DetailedFMeasureEvaluatorParams {
+public final class FeaturizerCrossValidatorTool extends
+    AbstractCrossValidatorTool<FeatureSample, CVToolParams> {
+
+  interface CVToolParams extends TrainingParams, CVParams,
+      DetailedFMeasureEvaluatorParams {
   }
 
   public FeaturizerCrossValidatorTool() {
@@ -48,7 +49,7 @@ public final class FeaturizerCrossValidatorTool
   public String getShortDescription() {
     return "K-fold cross validator for the featurizer";
   }
-  
+
   public void run(String format, String[] args) {
     super.run(format, args);
 
@@ -62,31 +63,32 @@ public final class FeaturizerCrossValidatorTool
     if (params.getMisclassified()) {
       listeners.add(new FeaturizerEvaluationErrorListener());
     }
-      
+
     FeaturizerCrossValidator validator;
     try {
       ExtendedPOSDictionary tagdict = null;
       if (params.getDict() != null) {
-        tagdict = ExtendedPOSDictionary.create(new FileInputStream(params.getDict()));
+        tagdict = ExtendedPOSDictionary.create(new FileInputStream(params
+            .getDict()));
       }
-      
-      validator = new FeaturizerCrossValidator(
-          factory.getLang(), mlParams, tagdict,
-          listeners.toArray(new FeaturizerEvaluationMonitor[listeners.size()]));
-      
+
+      validator = new FeaturizerCrossValidator(factory.getLang(), mlParams,
+          tagdict, listeners.toArray(new FeaturizerEvaluationMonitor[listeners
+              .size()]));
+
       validator.evaluate(sampleStream, params.getFolds());
-    }
-    catch (IOException e) {
-      throw new TerminateToolException(-1, "IO error while reading training data or indexing data: " + e.getMessage());
-    }
-    finally {
+    } catch (IOException e) {
+      throw new TerminateToolException(-1,
+          "IO error while reading training data or indexing data: "
+              + e.getMessage());
+    } finally {
       try {
         sampleStream.close();
       } catch (IOException e) {
         // sorry that this can fail
       }
     }
-    
+
     System.out.println(validator.getWordAccuracy());
   }
 }

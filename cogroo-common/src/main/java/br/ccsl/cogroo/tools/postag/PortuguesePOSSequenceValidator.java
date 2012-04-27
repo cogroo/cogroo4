@@ -25,7 +25,8 @@ import java.util.TreeSet;
 import opennlp.tools.postag.POSDictionary;
 import opennlp.tools.util.SequenceValidator;
 
-public class PortuguesePOSSequenceValidator implements SequenceValidator<String> {
+public class PortuguesePOSSequenceValidator implements
+    SequenceValidator<String> {
 
   public POSDictionary tagDictionary;
   private SortedSet<String> unknown;
@@ -37,87 +38,88 @@ public class PortuguesePOSSequenceValidator implements SequenceValidator<String>
 
   public boolean validSequence(int i, String[] inputSequence,
       String[] outcomesSequence, String outcome) {
-    
+
     boolean isValid = false;
     boolean outcomeIsME = false;
     boolean tokExists = false;
-    
+
     String word = inputSequence[i];
-    
-    //System.err.println("# evaluating: " + word + " " + outcome + " seq.: " + Arrays.toString(outcomesSequence));
-    
+
+    // System.err.println("# evaluating: " + word + " " + outcome + " seq.: " +
+    // Arrays.toString(outcomesSequence));
+
     // validate B- and I-
-    if(!validOutcome(outcome, outcomesSequence)) {
-      //System.err.println("# invalid: " + word + " " + outcome + " seq.: " + Arrays.toString(outcomesSequence));
+    if (!validOutcome(outcome, outcomesSequence)) {
+      // System.err.println("# invalid: " + word + " " + outcome + " seq.: " +
+      // Arrays.toString(outcomesSequence));
       return false;
     }
-    
-    if(outcome.startsWith("I-")) {
-      String prev = outcomesSequence[i-1].substring(2);
+
+    if (outcome.startsWith("I-")) {
+      String prev = outcomesSequence[i - 1].substring(2);
       return outcome.substring(2).equals(prev);
     }
 
     if (tagDictionary == null) {
       return true;
     } else {
-      if(isME(outcome)) {
+      if (isME(outcome)) {
         outcomeIsME = true;
         outcome = outcome.substring(2);
-      } else if(i > 0 && outcomesSequence[i - 1].startsWith("B-")) {
+      } else if (i > 0 && outcomesSequence[i - 1].startsWith("B-")) {
         // not valid because there is no ME with size one
         return false;
       }
-      
-      
+
       String[] tags = tagDictionary.getTags(word);
-      
-      if(word.equals(outcome)) {
+
+      if (word.equals(outcome)) {
         isValid = true;
       }
-      
+
       if (tags != null) {
         tokExists = true;
         List<String> tagList = Arrays.asList(tags);
-        if(contains(tagList, outcome)) {
+        if (contains(tagList, outcome)) {
           isValid = true;
-        } 
+        }
       } else {
         String lower = word.toLowerCase();
-        if(!lower.equals(word)) {
+        if (!lower.equals(word)) {
           tokExists = true;
-          if("prop".equals(outcome)) {
+          if ("prop".equals(outcome)) {
             isValid = true;
           }
           tags = tagDictionary.getTags(lower);
-          if (tags != null){
+          if (tags != null) {
             List<String> tagList1 = Arrays.asList(tags);
-            if(contains(tagList1, outcome)) {
+            if (contains(tagList1, outcome)) {
               isValid = true;
             }
           }
-        } 
+        }
       }
-      if(!tokExists) {
+      if (!tokExists) {
         this.unknown.add(word);
         System.err.println("-- unknown: " + word);
         isValid = true;
-      } else if(tokExists && outcomeIsME) {
+      } else if (tokExists && outcomeIsME) {
         isValid = true;
       }
-      
-      if(isValid) {
+
+      if (isValid) {
         System.err.print("validated: " + word + " " + outcome);
-        if(outcomeIsME) {
+        if (outcomeIsME) {
           System.err.println(" (me)");
         } else {
           System.err.println();
         }
       }
-      
+
       return isValid;
     }
   }
-  
+
   @Override
   protected void finalize() throws Throwable {
     super.finalize();
@@ -127,7 +129,7 @@ public class PortuguesePOSSequenceValidator implements SequenceValidator<String>
     }
     System.err.println("... fim ...");
   }
-  
+
   private boolean isME(String outcome) {
     return outcome.startsWith("B-") || outcome.startsWith("I-");
   }
@@ -135,17 +137,16 @@ public class PortuguesePOSSequenceValidator implements SequenceValidator<String>
   protected boolean validOutcome(String outcome, String[] sequence) {
     String prevOutcome = null;
     if (sequence.length > 0) {
-      prevOutcome = sequence[sequence.length-1];
+      prevOutcome = sequence[sequence.length - 1];
     }
-    return validOutcome(outcome,prevOutcome);
+    return validOutcome(outcome, prevOutcome);
   }
-  
+
   private boolean validOutcome(String outcome, String prevOutcome) {
     if (outcome.startsWith("I-")) {
       if (prevOutcome == null) {
         return (false);
-      }
-      else {
+      } else {
         if (!prevOutcome.startsWith("B-")) {
           return (false);
         }
@@ -156,28 +157,30 @@ public class PortuguesePOSSequenceValidator implements SequenceValidator<String>
     }
     return true;
   }
-  
+
   private boolean contains(List<String> tagList, String outcome) {
 
-    if(tagList.contains(outcome)) {
+    if (tagList.contains(outcome)) {
       return true;
     }
-    
-    if(outcome.equals("n-adj")) {
-      if(tagList.contains("n") || tagList.contains("adj")) {
+
+    if (outcome.equals("n-adj")) {
+      if (tagList.contains("n") || tagList.contains("adj")) {
         return true;
       }
-    } else if(outcome.equals("n") || outcome.equals("adj")) {
-      if(tagList.contains("n-adj")) {
+    } else if (outcome.equals("n") || outcome.equals("adj")) {
+      if (tagList.contains("n-adj")) {
         return true;
       }
-    } else if(outcome.contains("=")) {
+    } else if (outcome.contains("=")) {
       String outcomeClass = outcome.substring(0, outcome.indexOf('='));
       for (String tag : tagList) {
-        if(tag.startsWith(outcomeClass) && (tag.contains("/") || outcome.contains("/"))) {
+        if (tag.startsWith(outcomeClass)
+            && (tag.contains("/") || outcome.contains("/"))) {
           String[] outcomeParts = outcome.split("=");
-          String[] tagParts = tag.split("="); // will only check parts without / for simplicity
-          if(outcomeParts.length != tagParts.length) {
+          String[] tagParts = tag.split("="); // will only check parts without /
+                                              // for simplicity
+          if (outcomeParts.length != tagParts.length) {
             return false;
           }
           for (int i = 0; i < outcomeParts.length; i++) {
@@ -195,5 +198,5 @@ public class PortuguesePOSSequenceValidator implements SequenceValidator<String>
     }
     return false;
   }
-  
+
 }

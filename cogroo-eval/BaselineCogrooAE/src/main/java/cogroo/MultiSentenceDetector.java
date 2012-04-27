@@ -11,11 +11,13 @@ import cogroo.uima.ae.AnnotationServiceException;
 import cogroo.uima.ae.UimaSentenceDetector;
 
 public class MultiSentenceDetector implements SentenceDetectorI {
-  
+
   private SentenceDetectorI sd;
-  protected static final Logger LOGGER = Logger.getLogger(MultiSentenceDetector.class);
+  protected static final Logger LOGGER = Logger
+      .getLogger(MultiSentenceDetector.class);
+
   public MultiSentenceDetector(RuntimeConfigurationI config) {
-    if(MultiCogrooSettings.SENT) {
+    if (MultiCogrooSettings.SENT) {
       try {
         LOGGER.info("Loading *NEW* sentence detector");
         this.sd = new UimaSentenceDetector();

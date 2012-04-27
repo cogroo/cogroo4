@@ -34,21 +34,21 @@ public class ProcessReport {
     this.report = report;
     this.output = output;
   }
-  
+
   private void processFile() throws IOException {
     BufferedReader in = new BufferedReader(new InputStreamReader(
         new FileInputStream(this.report), "utf-8"));
-    
+
     BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
         new FileOutputStream(this.output), "utf-8"));
     String line = in.readLine();
-    while(line != null) {
+    while (line != null) {
       out.append(line).append("\n");
       String text = getText(line);
-      if(text != null) {
+      if (text != null) {
         out.append(process(text)).append("\n\n");
       }
-      
+
       line = in.readLine();
     }
     in.close();
@@ -59,18 +59,18 @@ public class ProcessReport {
     CheckerResult results = cogroo.analyseAndCheckText(text);
     StringBuilder sb = new StringBuilder();
     for (Sentence sentence : results.sentences) {
-      sb.append("Flat structure for: ").append(sentence.getSentence()).append("\n");
-       for (Token token : sentence.getTokens()) {
-           // print the text
-         sb.append(text.substring(
-                   token.getSpan().getStart(), 
-                   token.getSpan().getEnd()));
-           // print the lemma
-         sb.append(" [" + token.getPrimitive() + " ");
-           // print the morphological tag, we use a tag interpreter here
-         sb.append("" + mtagToStr(token.getMorphologicalTag()) + "] ");
-       }
-       sb.append("\n").append("Syntax tree: " + sentence.getSyntaxTree());
+      sb.append("Flat structure for: ").append(sentence.getSentence())
+          .append("\n");
+      for (Token token : sentence.getTokens()) {
+        // print the text
+        sb.append(text.substring(token.getSpan().getStart(), token.getSpan()
+            .getEnd()));
+        // print the lemma
+        sb.append(" [" + token.getPrimitive() + " ");
+        // print the morphological tag, we use a tag interpreter here
+        sb.append("" + mtagToStr(token.getMorphologicalTag()) + "] ");
+      }
+      sb.append("\n").append("Syntax tree: " + sentence.getSyntaxTree());
     }
     return sb.toString();
   }
@@ -140,21 +140,16 @@ public class ProcessReport {
 
   /**
    * @param args
-   * @throws IOException 
+   * @throws IOException
    */
   public static void main(String[] args) throws IOException {
     System.out.println("Executing MultiCogroo ProcessReport...");
     System.out.println("  path: " + args[0]);
     System.out.println("    in: " + args[1]);
     System.out.println("   out: " + args[2]);
-    ProcessReport pr = new ProcessReport(
-        args[0],
-        args[1], 
-        args[2]);
+    ProcessReport pr = new ProcessReport(args[0], args[1], args[2]);
 
     pr.processFile();
   }
-
-
 
 }

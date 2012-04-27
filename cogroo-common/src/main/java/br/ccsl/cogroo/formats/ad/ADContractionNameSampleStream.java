@@ -82,7 +82,8 @@ public class ADContractionNameSampleStream implements ObjectStream<NameSample> {
    * @param tags
    *          the tags we are looking for, or null for all
    */
-  public ADContractionNameSampleStream(ObjectStream<String> lineStream, Set<String> tags) {
+  public ADContractionNameSampleStream(ObjectStream<String> lineStream,
+      Set<String> tags) {
     this.adSentenceStream = new ADSentenceStream(lineStream);
     this.tags = tags;
   }
@@ -175,28 +176,29 @@ public class ADContractionNameSampleStream implements ObjectStream<NameSample> {
           leftContractionPart = lexemes[lexemes.length - 1];
           return;
         }
-//        if (leaf.getLexeme().contains("_") && leaf.getLexeme().length() > 3) {
-//          String tag = leaf.getFunctionalTag();
-//          if (tags != null) {
-//            if (tags.contains(tag)) {
-//              namedEntityTag = leaf.getFunctionalTag();
-//            }
-//          } else {
-//            namedEntityTag = leaf.getFunctionalTag();
-//          }
-//        }
+        // if (leaf.getLexeme().contains("_") && leaf.getLexeme().length() > 3)
+        // {
+        // String tag = leaf.getFunctionalTag();
+        // if (tags != null) {
+        // if (tags.contains(tag)) {
+        // namedEntityTag = leaf.getFunctionalTag();
+        // }
+        // } else {
+        // namedEntityTag = leaf.getFunctionalTag();
+        // }
+        // }
       }
 
-//      if (contraction) {
-//        startOfNamedEntity = sentence.size();
-//      }
-//
-      sentence.addAll(Arrays.asList(leaf.getLexeme()));//.split("_")
-//
-//      if (contraction) {
-//        names
-//            .add(new Span(startOfNamedEntity, sentence.size()));
-//      }
+      // if (contraction) {
+      // startOfNamedEntity = sentence.size();
+      // }
+      //
+      sentence.addAll(Arrays.asList(leaf.getLexeme()));// .split("_")
+      //
+      // if (contraction) {
+      // names
+      // .add(new Span(startOfNamedEntity, sentence.size()));
+      // }
 
     } else {
       // will handle the contraction

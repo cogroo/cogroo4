@@ -35,13 +35,11 @@ public class UimaChunkerHeadFinder extends AnnotationService implements
 
   private Type chunkType;
   private Feature chunktagFeature;
-  
 
   private TagInterpreterI floresta = new FlorestaTagInterpreter();
-  
+
   protected static final Logger LOGGER = Logger
       .getLogger(UimaChunkerHeadFinder.class);
-
 
   public UimaChunkerHeadFinder() throws AnnotationServiceException {
     super("UIMAChunkerHeadFinder");
@@ -50,7 +48,7 @@ public class UimaChunkerHeadFinder extends AnnotationService implements
   public void process(Sentence text) {
 
     ExpandedSentence extSentence = new ExpandedSentence(text);
-    
+
     // ************************************
     // Add text to the CAS
     // ************************************
@@ -68,13 +66,13 @@ public class UimaChunkerHeadFinder extends AnnotationService implements
     // Extract the result using annotated CAS
     // ************************************
 
-    //List<Token> tokens = text.getTokens();
+    // List<Token> tokens = text.getTokens();
 
     List<Chunk> chunks = text.getChunks();
-    
+
     FSIterator<Annotation> iterator = cas.getAnnotationIndex(chunkType)
         .iterator();
-    
+
     // tenho criar um por tag...
 
     int lastToken = 0;
@@ -82,71 +80,77 @@ public class UimaChunkerHeadFinder extends AnnotationService implements
       Annotation a = iterator.next();
       boolean isHead = false;
       String uimatag = a.getStringValue(chunktagFeature);
-      if(uimatag != null && uimatag.equals("H")) {
+      if (uimatag != null && uimatag.equals("H")) {
         isHead = true;
       }
-      
+
       Span s = new Span(a.getBegin(), a.getEnd());
-      
+
       for (int i = 0; i < text.getTokens().size(); i++) {
         Token token = text.getTokens().get(i);
-        if(s.intersects(extSentence.getTokenSpan(i))) {
+        if (s.intersects(extSentence.getTokenSpan(i))) {
           token.setChunkTag(create(token.getChunkTag(), isHead));
-          if(isHead) {
+          if (isHead) {
             token.getChunk().setMorphologicalTag(token.getMorphologicalTag());
           }
           break;
-          //boolean isSubjOrMainVerb = st.match(SUBJ) || st.match(MV);
-          
-          /*if ( isSubjOrMainVerb ) {
-              token.getChunk().setSyntacticTag(st);
-          } else if(token.getChunk().getSyntacticTag() == null) {
-              SyntacticTag none = new SyntacticTag();
-              none.setSyntacticFunction(SyntacticFunction.NONE);
-              token.getChunk().setSyntacticTag(none);
-          }*/
+          // boolean isSubjOrMainVerb = st.match(SUBJ) || st.match(MV);
+
+          /*
+           * if ( isSubjOrMainVerb ) { token.getChunk().setSyntacticTag(st); }
+           * else if(token.getChunk().getSyntacticTag() == null) { SyntacticTag
+           * none = new SyntacticTag();
+           * none.setSyntacticFunction(SyntacticFunction.NONE);
+           * token.getChunk().setSyntacticTag(none); }
+           */
         }
       }
-      
 
     }
 
     for (int j = 0; j < text.getChunks().size(); j++) {
       Chunk c = text.getChunks().get(j);
-      if(c.getMorphologicalTag() == null) {
-        if(c.getTokens().size() > 0) {
+      if (c.getMorphologicalTag() == null) {
+        if (c.getTokens().size() > 0) {
           c.setMorphologicalTag(c.getTokens().get(0).getMorphologicalTag());
         } else {
           System.out.println("dude");
         }
       }
     }
-    
+
     cas.reset();
 
   }
-  
+
   final static ChunkTag BOUNDARY_NOUN_PHRASE_MAIN = new ChunkTag();
   final static ChunkTag BOUNDARY_VERB_PHRASE_MAIN = new ChunkTag();
   final static ChunkTag INTERMEDIARY_NOUN_PHRASE_MAIN = new ChunkTag();
-  
+
   static {
-    BOUNDARY_NOUN_PHRASE_MAIN.setChunkFunction(ChunkFunction.BOUNDARY_NOUN_PHRASE_MAIN);
-    BOUNDARY_VERB_PHRASE_MAIN.setChunkFunction(ChunkFunction.BOUNDARY_VERB_PHRASE_MAIN);
-    INTERMEDIARY_NOUN_PHRASE_MAIN.setChunkFunction(ChunkFunction.INTERMEDIARY_NOUN_PHRASE_MAIN);
+    BOUNDARY_NOUN_PHRASE_MAIN
+        .setChunkFunction(ChunkFunction.BOUNDARY_NOUN_PHRASE_MAIN);
+    BOUNDARY_VERB_PHRASE_MAIN
+        .setChunkFunction(ChunkFunction.BOUNDARY_VERB_PHRASE_MAIN);
+    INTERMEDIARY_NOUN_PHRASE_MAIN
+        .setChunkFunction(ChunkFunction.INTERMEDIARY_NOUN_PHRASE_MAIN);
   }
 
   private ChunkTag create(ChunkTag chunkTag, boolean isHead) {
-    if(isHead) {
-      if(chunkTag != null) {
-        if(ChunkFunction.BOUNDARY_NOUN_PHRASE.equals(chunkTag.getChunkFunction())) {
+    if (isHead) {
+      if (chunkTag != null) {
+        if (ChunkFunction.BOUNDARY_NOUN_PHRASE.equals(chunkTag
+            .getChunkFunction())) {
           return BOUNDARY_NOUN_PHRASE_MAIN;
-        } /*else if(ChunkFunction.BOUNDARY_VERB_PHRASE_MAIN.equals(chunkTag.getChunkFunction())) {
-          return BOUNDARY_VERB_PHRASE_MAIN;
-        }*/ else if(ChunkFunction.INTERMEDIARY_NOUN_PHRASE.equals(chunkTag.getChunkFunction())) {
+        } /*
+           * else if(ChunkFunction.BOUNDARY_VERB_PHRASE_MAIN.equals(chunkTag.
+           * getChunkFunction())) { return BOUNDARY_VERB_PHRASE_MAIN; }
+           */else if (ChunkFunction.INTERMEDIARY_NOUN_PHRASE.equals(chunkTag
+            .getChunkFunction())) {
           return INTERMEDIARY_NOUN_PHRASE_MAIN;
         } else {
-          //throw new IllegalArgumentException(chunkTag + " whithout main equivalent");
+          // throw new IllegalArgumentException(chunkTag +
+          // " whithout main equivalent");
         }
       }
     }
@@ -155,9 +159,9 @@ public class UimaChunkerHeadFinder extends AnnotationService implements
 
   private SyntacticTag create(String uimatag) {
     SyntacticTag s = new SyntacticTag();
-    if("SUBJ".equals(uimatag)) {
+    if ("SUBJ".equals(uimatag)) {
       s.setSyntacticFunction(SyntacticFunction.SUBJECT);
-    } else if("P".equals(uimatag)) {
+    } else if ("P".equals(uimatag)) {
       s.setSyntacticFunction(SyntacticFunction.VERB);
     } else {
       s.setSyntacticFunction(SyntacticFunction.NONE);
@@ -181,9 +185,11 @@ public class UimaChunkerHeadFinder extends AnnotationService implements
     cas.reset();
     cas.setDocumentText(sentence.getExtendedSentence());
 
-    AnnotationFS sentenceAnnotation = cas.getCas().createAnnotation(sentenceType,
+    AnnotationFS sentenceAnnotation = cas.getCas().createAnnotation(
+        sentenceType,
         sentence.getSent().getOffset(),
-        sentence.getSent().getOffset() + sentence.getExtendedSentence().length());
+        sentence.getSent().getOffset()
+            + sentence.getExtendedSentence().length());
 
     cas.getIndexRepository().addFS(sentenceAnnotation);
 
@@ -196,7 +202,7 @@ public class UimaChunkerHeadFinder extends AnnotationService implements
           .getMorphologicalTag().getClazzE();
       String tag;
       if (c != null) {
-        if(t.getMorphologicalTag().getClazzE().equals(Class.VERB)) {
+        if (t.getMorphologicalTag().getClazzE().equals(Class.VERB)) {
           tag = floresta.serialize(t.getMorphologicalTag().getFinitenessE());
         } else {
           tag = floresta.serialize(t.getMorphologicalTag().getClazzE());
@@ -205,13 +211,14 @@ public class UimaChunkerHeadFinder extends AnnotationService implements
         tag = t.getLexeme();
       }
       String chunk = floresta.serialize(t.getChunkTag());
-      if(tag == null || tag.isEmpty()) {
+      if (tag == null || tag.isEmpty()) {
         throw new RuntimeException("tag was empty!");
       }
-      if(chunk == null || chunk.isEmpty()) {
+      if (chunk == null || chunk.isEmpty()) {
         throw new RuntimeException("chunk was empty!");
       }
-      tokenAnnotation.setStringValue(postagFeature, tag + "|" + chunk.replace("*", ""));
+      tokenAnnotation.setStringValue(postagFeature,
+          tag + "|" + chunk.replace("*", ""));
       cas.getIndexRepository().addFS(tokenAnnotation);
     }
   }

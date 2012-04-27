@@ -36,92 +36,92 @@ import br.ccsl.cogroo.entities.impl.SyntacticTag;
 import com.google.common.base.Objects;
 
 /**
- * A Chunk is an annotated group of {@link Token}s. The annotation could be SN, SN or Other.
+ * A Chunk is an annotated group of {@link Token}s. The annotation could be SN,
+ * SN or Other.
  */
 public abstract class Chunk implements Serializable, TokenGroup {
 
-	/**
+  /**
 	 * 
 	 */
-	private static final long serialVersionUID = -3742023174482515909L;
+  private static final long serialVersionUID = -3742023174482515909L;
 
-	protected List<Token> tokens;
-	
-	protected int firstToken;
-	
-	protected MorphologicalTag morphologicalTag;
-	
-	/**
-	 * Gets the representation of the sentence as a plain text.
-	 * 
-	 * @return The sentence as a string.
-	 */
-	public abstract String toPlainText();
+  protected List<Token> tokens;
 
-	/**
-	 * Gets the Tokens of this sentence
-	 * 
-	 * @return Array of Tokens
-	 */
-	public List<Token> getTokens() {
-		return this.tokens;
-	}
-	
-	public int getFirstToken() {
-		return this.firstToken;
-	}
-	
-	public void setFirstToken(int firstToken) {
-		this.firstToken = firstToken;
-	}
+  protected int firstToken;
 
-	/**
-	 * @return the morphologicalTag
-	 */
-	public MorphologicalTag getMorphologicalTag() {
-		return this.morphologicalTag;
-	}
+  protected MorphologicalTag morphologicalTag;
 
-	/**
-	 * @param morphologicalTag
-	 *            the morphologicalTag to set
-	 */
-	public void setMorphologicalTag(MorphologicalTag morphologicalTag) {
-		this.morphologicalTag = morphologicalTag;
-	}
+  /**
+   * Gets the representation of the sentence as a plain text.
+   * 
+   * @return The sentence as a string.
+   */
+  public abstract String toPlainText();
 
-	public SyntacticTag getSyntacticTag() {
-		return this.tokens.get(0).getSyntacticTag();
-	}
-	
-	   @Override
-	    public boolean equals(Object obj) {
-	      if (obj instanceof Chunk) {
-	        Chunk that = (Chunk) obj;
-	          return Objects.equal(this.tokens, that.tokens) 
-	          && Objects.equal(this.firstToken, that.firstToken)
-              && Objects.equal(this.morphologicalTag, that.morphologicalTag);
-	        }
-	        return false;
-	    }
-	   
-	   @Override
-	   public String toString() {
+  /**
+   * Gets the Tokens of this sentence
+   * 
+   * @return Array of Tokens
+   */
+  public List<Token> getTokens() {
+    return this.tokens;
+  }
 
-	     return Objects.toStringHelper(this)
-	         .add("tokens", tokens)
-	         .add("morphologicalTag", morphologicalTag)
-	         .add("morphologicalTag", morphologicalTag)
-	         .add("tokens", tokens).toString();
-	   }
+  public int getFirstToken() {
+    return this.firstToken;
+  }
 
-	public Token getMainToken() {
-		for (Token t : this.getTokens()) {
-			if(t.getChunkTag().toString().contains("MAIN")) {
-				return t;
-			}
-		}
-		return this.getTokens().get(0);
-	}
+  public void setFirstToken(int firstToken) {
+    this.firstToken = firstToken;
+  }
+
+  /**
+   * @return the morphologicalTag
+   */
+  public MorphologicalTag getMorphologicalTag() {
+    return this.morphologicalTag;
+  }
+
+  /**
+   * @param morphologicalTag
+   *          the morphologicalTag to set
+   */
+  public void setMorphologicalTag(MorphologicalTag morphologicalTag) {
+    this.morphologicalTag = morphologicalTag;
+  }
+
+  public SyntacticTag getSyntacticTag() {
+    return this.tokens.get(0).getSyntacticTag();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Chunk) {
+      Chunk that = (Chunk) obj;
+      return Objects.equal(this.tokens, that.tokens)
+          && Objects.equal(this.firstToken, that.firstToken)
+          && Objects.equal(this.morphologicalTag, that.morphologicalTag);
+    }
+    return false;
+  }
+
+  @Override
+  public String toString() {
+
+    return Objects.toStringHelper(this).add("tokens", tokens)
+        .add("morphologicalTag", morphologicalTag)
+        .add("morphologicalTag", morphologicalTag).add("tokens", tokens)
+        .toString();
+  }
+
+  public Token getMainToken() {
+    for (Token t : this.getTokens()) {
+      if (t.getChunkTag().toString().contains("MAIN")) {
+        return t;
+      }
+    }
+    return this.getTokens().get(0);
+  }
 
 }
