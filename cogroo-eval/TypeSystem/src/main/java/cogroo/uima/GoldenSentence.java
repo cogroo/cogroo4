@@ -1,4 +1,3 @@
-
 /* First created by JCasGen Tue May 17 11:07:22 BRT 2011 */
 package cogroo.uima;
 
