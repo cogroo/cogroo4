@@ -42,7 +42,7 @@
         <name>ContractionModel</name>
         <description/>
         <fileResourceSpecifier>
-          <fileUrl>file:/Users/wcolen/Documents/wrks/_MODELS/pt-con.model</fileUrl>
+          <fileUrl>pt-con.model</fileUrl>
         </fileResourceSpecifier>
         <implementationName>opennlp.uima.namefind.TokenNameFinderModelResourceImpl</implementationName>
       </externalResource>

@@ -17,23 +17,33 @@ public class MultiPretagger implements ProcessingEngine {
   protected static final Logger LOGGER = Logger.getLogger(MultiPretagger.class);
 
   public MultiPretagger(RuntimeConfigurationI config) {
-    if (MultiCogrooSettings.PRE) {
+    if (MultiCogrooSettings.NF) {
       try {
-        LOGGER.info("Loading *NEW* PreTagger");
+        LOGGER.info("Loading *NEW* NF");
         this.me = new UimaMultiWordExp();
+      } catch (AnnotationServiceException e) {
+        throw new RuntimeException(e);
+      }
+    } else {
+      LOGGER.info("Loading std NF");
+      this.me = config.getNameFinder();
+    }
+    
+    if (MultiCogrooSettings.CON) {
+      try {
+        LOGGER.info("Loading *NEW* CON");
         this.con = new UimaContraction();
       } catch (AnnotationServiceException e) {
         throw new RuntimeException(e);
       }
     } else {
-      LOGGER.info("Loading std PreTagger");
+      LOGGER.info("Loading std CON");
       this.con = new Contraction();
-      this.me = config.getNameFinder();
     }
   }
 
   public void process(Sentence text) {
-    this.me.process(text);
+    //this.me.process(text);
     this.con.process(text);
   }
 

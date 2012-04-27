@@ -93,7 +93,8 @@ public class UimaTokenizer extends AnnotationService implements
       tokens.add(t);
     }
 
-    if (!MultiCogrooSettings.PRE) {
+    //if (!MultiCogrooSettings.PRE) {
+    if(true) {
       boolean restart = true;
       int start = 1;
       while (restart) {

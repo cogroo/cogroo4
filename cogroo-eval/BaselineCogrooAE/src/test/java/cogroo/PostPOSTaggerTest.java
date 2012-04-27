@@ -20,7 +20,7 @@ public class PostPOSTaggerTest {
   @Test
   public void testMerge() {
 
-    assertEquals("n=M=P", merge("n=M=P", "n=F=P"));
+    assertEquals("n=M/F=P", merge("n=M=P", "n=F=P"));
     assertEquals("n=M=P", merge("n=M=P", "adj=M=P"));
     assertEquals("n=M=P", merge("adj=M/F=P", "n=M=P"));
     assertEquals("n=F=P", merge("n=F=P", "n=F=P"));

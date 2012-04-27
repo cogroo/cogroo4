@@ -36,7 +36,7 @@ sub install {
 	my $pom = shift;
 	printToLog("Will install pom: $pom\n");
 
-	my $command = "mvn -e -q -f $pom install -Dmaven.test.skip";
+	my $command = "mvn -e -q -f $pom install -DskipTests";
 
 	my @res = `$command 2>&1`;
 
@@ -60,7 +60,7 @@ sub installPearByPath {
 	my $pear = shift;
 	printToLog("Will install pear: $pear\n");
 	
-	my $command = 'mvn -f ../UIMAAutomation/pom.xml -e -q clean install exec:java -Dmaven.test.skip "-Dexec.mainClass=uima.Installer" "-Dexec.args=' . $pear . ' ' . $ENV{'REPO_ROOT'} . '" -DUIMA_DATAPATH';
+	my $command = 'mvn -f ../UIMAAutomation/pom.xml -e -q clean install exec:java -DskipTests "-Dexec.mainClass=uima.Installer" "-Dexec.args=' . $pear . ' ' . $ENV{'REPO_ROOT'} . '" -DUIMA_DATAPATH';
 
 	printToLog("command: $command\n");
 	
@@ -131,7 +131,7 @@ sub executeCPE {
 	
 	my $desc = "../GramEval/desc/$name.svnignore.xml";
 	
-	my $command = 'mvn -f ../GramEval/pom.xml -e -q exec:java -Dmaven.test.skip -DsystemProperties="file.encoding=UTF-8" "-Dexec.mainClass=cogroo.uima.SimpleRunCPE" "-Dexec.args=' . $desc . '"';
+	my $command = 'mvn -f ../GramEval/pom.xml -e -q exec:java -DskipTests -DsystemProperties="file.encoding=UTF-8" "-Dexec.mainClass=cogroo.uima.SimpleRunCPE" "-Dexec.args=' . $desc . '"';
 
 	my @res = `$command 2>&1`;
 
@@ -163,7 +163,7 @@ sub generateCogrooReport {
 		
 	printToLog("Will process report using MultiCogroo \n");
 	
-	my $command = 'mvn -f ../BaselineCogrooAE/pom.xml -e -q install exec:java -Dmaven.test.skip -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
+	my $command = 'mvn -f ../BaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
 
 	my @res = `$command 2>&1`;
 
@@ -262,7 +262,8 @@ sub configureMultiProperties {
 	my %replace = (
 		'sent' => 'false',
 		'tok' => 'false',
-		'pre' => 'false',
+		'nf' => 'false',
+		'con' => 'false',
 		'chunker' => 'false',
 		'sp' => 'false',
 	);
@@ -278,6 +279,13 @@ sub configureMultiProperties {
 		if (-e "$modelRoot/pt-tok.model") {
 			print "found tokenizer model\n";
 	 		$replace{'tok'} = 'true';
+	 	}		
+	}
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-con.model") {
+			print "found contraction finder model\n";
+	 		$replace{'con'} = 'true';
 	 	}		
 	}
 	
@@ -382,6 +390,9 @@ sub installRequiredPears {
 	}	
 	if (-e "$modelRoot/pt-tok.model") {
 	 	installPearByName('Tokenizer');
+	}		
+	if (-e "$modelRoot/pt-con.model") {
+	 	installPearByName('Contraction');
 	}	
 }
 
