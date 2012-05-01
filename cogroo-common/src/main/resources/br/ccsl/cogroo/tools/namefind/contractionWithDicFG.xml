@@ -1,13 +1,12 @@
 <generators>
   <cache> 
     <generators>
-<!--       <window prevLength = "2" nextLength = "2">           -->
-<!--         <tokenclass/> -->
-<!--       </window> -->
       <window prevLength = "2" nextLength = "2">                
         <suffix/>
       </window>
-      <dictionary dict="cont.dictionary" prefix="cdic"/>
+      <window prevLength = "2" nextLength = "2">                
+        <dictionary dict="cont.dictionary" prefix="cdic"/>
+      </window>
     </generators>
   </cache> 
 </generators>

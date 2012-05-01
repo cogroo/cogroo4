@@ -290,7 +290,7 @@ public class MultiCogroo implements CogrooI {
         // input = "Os olhos das meninas são bonitos nas estrelas.";
         // input = "Os inimigos que eram fácil derrotar estão próximo.";
         // input = "A construção do trecho inicial da Linha 5-Lilás.";
-        input = "Apesar do calorão da noite ele dormia de roupa.";
+        input = "Em São Paulo, primeiro local da América Latina a receber a exposição";
         // 114: Jamais ocorreu-nos tal idéia.
         // 115: Júlio namorou com Marina durante três anos.
         //

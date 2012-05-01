@@ -1,2 +1,4 @@
-con-vcf-perceptron-CON_DIC-gp-0
-con-cf-perceptron-CON_DIC-gp-0
+con-vcf-perceptron-CON_DIC-gp-8
+con-vcf-maxent-CON_DIC-gp-4
+con-cf-perceptron-CON_DIC-gp-128
+con-cf-maxent-CON_DIC-gp-64
