@@ -308,7 +308,7 @@ sub printDetailedReport {
 	# name -> similar names
 	my %combined;
 	my %repeated;
-	for(my $i = 0; $i < @expNames - 1 ; $i++) {
+	for(my $i = 0; $i < @expNames; $i++) {
 		my $exp = $expNames[$i];
 		if($exp ne 'baseline') {
 			if(!$repeated{$exp}) {

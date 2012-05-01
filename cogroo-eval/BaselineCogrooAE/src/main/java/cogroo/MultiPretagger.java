@@ -17,7 +17,7 @@ public class MultiPretagger implements ProcessingEngine {
   protected static final Logger LOGGER = Logger.getLogger(MultiPretagger.class);
 
   public MultiPretagger(RuntimeConfigurationI config) {
-    if (MultiCogrooSettings.NF) {
+    if (MultiCogrooSettings.PROP) {
       try {
         LOGGER.info("Loading *NEW* NF");
         this.me = new UimaMultiWordExp();
@@ -43,7 +43,7 @@ public class MultiPretagger implements ProcessingEngine {
   }
 
   public void process(Sentence text) {
-    //this.me.process(text);
+    this.me.process(text);
     this.con.process(text);
   }
 

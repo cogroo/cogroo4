@@ -1,6 +1,7 @@
 package cogroo.uima.ae;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,10 +52,10 @@ public class UimaMultiWordExp extends AnnotationService implements
 
     FSIterator<Annotation> personIterator = cas.getAnnotationIndex(personType)
         .iterator();
-    FSIterator<Annotation> expIterator = cas.getAnnotationIndex(expType)
-        .iterator();
+//    FSIterator<Annotation> expIterator = cas.getAnnotationIndex(expType)
+//        .iterator();
     List<Span> names = new ArrayList<Span>();
-    List<Span> exp = new ArrayList<Span>();
+//    List<Span> exp = new ArrayList<Span>();
 
     List<Token> tokens = new ArrayList<Token>();
     while (personIterator.hasNext()) {
@@ -63,14 +64,14 @@ public class UimaMultiWordExp extends AnnotationService implements
       names.add(s);
     }
 
-    while (expIterator.hasNext()) {
-      Annotation a = expIterator.next();
-      Span s = new Span(a.getBegin(), a.getEnd());
-      exp.add(s);
-    }
-    List<Span> merged = merge(exp, names);
+//    while (expIterator.hasNext()) {
+//      Annotation a = expIterator.next();
+//      Span s = new Span(a.getBegin(), a.getEnd());
+//      exp.add(s);
+//    }
+//    List<Span> merged = merge(exp, names);
 
-    text.setTokens(groupTokens(text.getTokens(), merged));
+    text.setTokens(groupTokens(text.getSentence(), text.getTokens(), names));
 
     cas.reset();
 
@@ -102,8 +103,56 @@ public class UimaMultiWordExp extends AnnotationService implements
       cas.getIndexRepository().addFS(a);
     }
   }
+  
+  private static List<Token> groupTokens(String text, List<Token> toks, List<Span> charSpans) {
+    if (charSpans == null || charSpans.size() == 0) {
+      return toks;
+    }
+    
+    int lastVisitedTok = 0;
+    List<Span> spans = new ArrayList<Span>(charSpans.size());
+    
+    for (Span ch : charSpans) {
+      System.out.println("looking for: " + ch.getCoveredText(text));
+      Token aToken = toks.get(lastVisitedTok);
+      while (aToken.getSpan().getStart() < ch.getStart()) {
+        lastVisitedTok++;
+        aToken = toks.get(lastVisitedTok);
+      }
+      int start = lastVisitedTok;
+      while (aToken.getSpan().getEnd() < ch.getEnd()) {
+        lastVisitedTok++;
+        aToken = toks.get(lastVisitedTok);
+      }
+      int end = lastVisitedTok;
+      Span tokSpan = new Span(start, end);
+      spans.add(tokSpan);
+    }
+    
+    for(int i = spans.size() - 1; i >=0; i--) {
+      Span span = spans.get(i);
+      if(span.length() > 0) {
+        int s = toks.get(span.getStart()).getSpan().getStart();
+        int e = toks.get(span.getEnd()).getSpan().getEnd();
+        StringBuilder lexeme = new StringBuilder();
+        for(int j = span.getStart(); j < span.getEnd(); j++) {
+          lexeme.append(toks.get(j).getLexeme()).append("_");
+        }
+        lexeme.append(toks.get(span.getEnd()).getLexeme()); 
+        
+        for(int j = span.getEnd(); j >= span.getStart(); j--) {
+          toks.remove(j);
+        }
+        Token t = new TokenCogroo(lexeme.toString(), new Span(s,e));
+        toks.add(span.getStart(), t);
+      }
+    }
+    return toks;
+  }
+  
+  
 
-  private static List<Token> groupTokens(List<Token> toks, List<Span> spans) {
+/*  private static List<Token> groupTokens(List<Token> toks, List<Span> spans) {
     if (spans == null || spans.size() == 0) {
       return toks;
     }
@@ -127,7 +176,7 @@ public class UimaMultiWordExp extends AnnotationService implements
     mergeTokens(grouped, toMerge);
 
     return grouped;
-  }
+  }*/
 
   private static void mergeTokens(List<Token> grouped, List<Integer> toMerge) {
     if (toMerge.size() > 0) {

@@ -3,9 +3,6 @@
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>false</primitive>
   <delegateAnalysisEngineSpecifiers>
-    <delegateAnalysisEngine key="ExpFinder">
-      <import location="ExpFinder.xml"/>
-    </delegateAnalysisEngine>
     <delegateAnalysisEngine key="PersonFinder">
       <import location="PersonNameFinder.xml"/>
     </delegateAnalysisEngine>
@@ -19,7 +16,6 @@
     <configurationParameterSettings/>
     <flowConstraints>
       <fixedFlow>
-        <node>ExpFinder</node>
         <node>PersonFinder</node>
       </fixedFlow>
     </flowConstraints>
@@ -46,15 +42,7 @@
         <name>PersonModel</name>
         <description/>
         <fileResourceSpecifier>
-          <fileUrl>file:/Users/wcolen/Documents/wrks/_MODELS/pt-prop.model</fileUrl>
-        </fileResourceSpecifier>
-        <implementationName>opennlp.uima.namefind.TokenNameFinderModelResourceImpl</implementationName>
-      </externalResource>
-      <externalResource>
-        <name>ExpModel</name>
-        <description/>
-        <fileResourceSpecifier>
-          <fileUrl>file:/Users/wcolen/Documents/wrks/_MODELS/pt-exp.model</fileUrl>
+          <fileUrl>pt-prop.model</fileUrl>
         </fileResourceSpecifier>
         <implementationName>opennlp.uima.namefind.TokenNameFinderModelResourceImpl</implementationName>
       </externalResource>
@@ -63,10 +51,6 @@
       <externalResourceBinding>
         <key>PersonFinder/opennlp.uima.ModelName</key>
         <resourceName>PersonModel</resourceName>
-      </externalResourceBinding>
-      <externalResourceBinding>
-        <key>ExpFinder/opennlp.uima.ModelName</key>
-        <resourceName>ExpModel</resourceName>
       </externalResourceBinding>
     </externalResourceBindings>
   </resourceManagerConfiguration>

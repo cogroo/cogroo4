@@ -61,8 +61,8 @@ public final class MultiCogrooSettings {
   private static final String KEY_TOK = "tok";
   public static final boolean TOK = getBoolean(KEY_TOK);
 
-  private static final String KEY_NF = "nf";
-  public static final boolean NF = getBoolean(KEY_NF);
+  private static final String KEY_PROP = "prop";
+  public static final boolean PROP = getBoolean(KEY_PROP);
 
   private static final String KEY_CON = "con";
   public static final boolean CON = getBoolean(KEY_CON);

@@ -174,9 +174,9 @@ foreach my $e (@exp) {
 		my $ct = shift(@{$table{$e}{'cutoff'}});
 		my $fm = shift(@{$table{$e}{'F-Measure'}});
 		my $s = shift(@{$table{$e}{'model_size'}});
-		if($ct <= 32){
+		#if($ct <= 32){
 			print COM "$e, $ct, $fm, $s, '$hn{$e}'\n";
-		}
+		#}
 	}
 }
 

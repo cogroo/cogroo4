@@ -262,7 +262,7 @@ sub configureMultiProperties {
 	my %replace = (
 		'sent' => 'false',
 		'tok' => 'false',
-		'nf' => 'false',
+		'prop' => 'false',
 		'con' => 'false',
 		'chunker' => 'false',
 		'sp' => 'false',
@@ -279,6 +279,13 @@ sub configureMultiProperties {
 		if (-e "$modelRoot/pt-tok.model") {
 			print "found tokenizer model\n";
 	 		$replace{'tok'} = 'true';
+	 	}		
+	}
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-prop.model") {
+			print "found proper name finder model\n";
+	 		$replace{'prop'} = 'true';
 	 	}		
 	}
 	
@@ -391,6 +398,9 @@ sub installRequiredPears {
 	if (-e "$modelRoot/pt-tok.model") {
 	 	installPearByName('Tokenizer');
 	}		
+	if (-e "$modelRoot/pt-prop.model") {
+	 	installPearByName('MultiWordExp');
+	}			
 	if (-e "$modelRoot/pt-con.model") {
 	 	installPearByName('Contraction');
 	}	
