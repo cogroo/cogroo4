@@ -1,16 +1,12 @@
 <generators>
   <cache> 
     <generators>
-      <window prevLength = "2" nextLength = "2">          
-        <tokenclass/>
-      </window>
+<!--       <window prevLength = "2" nextLength = "2">           -->
+<!--         <tokenclass/> -->
+<!--       </window> -->
       <window prevLength = "2" nextLength = "2">                
-        <token/>
+        <suffix/>
       </window>
-      <definition/>
-      <prevmap/>
-      <bigram/>
-      <sentence begin="true" end="false"/>
       <dictionary dict="cont.dictionary" prefix="cdic"/>
     </generators>
   </cache> 
