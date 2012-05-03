@@ -285,9 +285,9 @@ sub exec() {
 		  . ENCODING
 		  . " -data $data $extraOption";
 		$trCommand .=
-		    "scripts/opennlp POSTaggerTrainer.ad -model $model $base";
+		    "scripts/cogroo POSTaggerTrainer.adexp -model $model $base";
 		$cvCommand .=
-		    "scripts/opennlp POSTaggerCrossValidator.ad $base";
+		    "scripts/cogroo POSTaggerCrossValidator.adexp $base";
 	}
 	
 	my %resCV = executeCV($cvCommand);
