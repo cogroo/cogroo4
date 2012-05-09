@@ -54,6 +54,10 @@ public class ADExPOSSampleStreamFactory extends
     @ParameterDescription(valueName = "includeFeatures", description = "combine POS Tags with word features, like number and gender.")
     @OptionalParameter(defaultValue = "false")
     Boolean getIncludeFeatures();
+    
+    @ParameterDescription(valueName = "addContext", description = "include additional context")
+    @OptionalParameter(defaultValue = "false")
+    Boolean getIncludeAdditionalContext();
   }
 
   public static void registerFactory() {
@@ -77,7 +81,7 @@ public class ADExPOSSampleStreamFactory extends
         sampleDataIn.getChannel(), params.getEncoding());
 
     ADExPOSSampleStream sentenceStream = new ADExPOSSampleStream(lineStream,
-        params.getExpandME(), params.getIncludeFeatures());
+        params.getExpandME(), params.getIncludeFeatures(), params.getIncludeAdditionalContext());
 
     return sentenceStream;
   }

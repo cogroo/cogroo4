@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.google.common.base.Strings;
 
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
@@ -33,6 +37,7 @@ import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
+import opennlp.tools.util.StringUtil;
 
 /**
  * <b>Note:</b> Do not use this class, internal use only!
@@ -42,6 +47,9 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
   private final ObjectStream<ADSentenceStream.Sentence> adSentenceStream;
   private boolean expandME;
   private boolean isIncludeFeatures;
+  private boolean additionalContext;
+  
+  private static final Pattern hyphenPattern = Pattern.compile("((\\p{L}+)-$)|(^-(\\p{L}+)(.*))|((\\p{L}+)-(\\p{L}+)(.*))");
 
   /**
    * Creates a new {@link POSSample} stream from a line stream, i.e.
@@ -58,10 +66,11 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
    *          if true will combine the POS Tag with the feature tags
    */
   public ADExPOSSampleStream(ObjectStream<String> lineStream, boolean expandME,
-      boolean includeFeatures) {
+      boolean includeFeatures, boolean additionalContext) {
     this.adSentenceStream = new ADSentenceStream(lineStream);
     this.expandME = expandME;
     this.isIncludeFeatures = includeFeatures;
+    this.additionalContext = additionalContext;
   }
 
   /**
@@ -79,13 +88,14 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
    *          if true will combine the POS Tag with the feature tags
    */
   public ADExPOSSampleStream(InputStream in, String charsetName,
-      boolean expandME, boolean includeFeatures) {
+      boolean expandME, boolean includeFeatures, boolean additionalContext) {
 
     try {
       this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(
           in, charsetName));
       this.expandME = expandME;
       this.isIncludeFeatures = includeFeatures;
+      this.additionalContext = additionalContext;
     } catch (UnsupportedEncodingException e) {
       // UTF-8 is available on all JVMs, will never happen
       throw new IllegalStateException(e);
@@ -108,23 +118,27 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
             "There must be exactly same number of tokens and additional context!");
       }
 
-      String[][] ac = new String[sentence.size()][2];
-      for (int i = 0; i < ac.length; i++) {
-        if (contractions.get(i) != null) {
-          ac[i][0] = contractions.get(i);
-          // if(contractions.get(i) != null) {
-          // System.out.println(contractions.get(i) + ": " + sentence.get(i));
-          // }
+      if(this.additionalContext) {
+        String[][] ac = new String[sentence.size()][2];
+        for (int i = 0; i < ac.length; i++) {
+          if (contractions.get(i) != null) {
+            ac[i][0] = contractions.get(i);
+            // if(contractions.get(i) != null) {
+            // System.out.println(contractions.get(i) + ": " + sentence.get(i));
+            // }
+          }
+          if (prop.get(i) != null) {
+            ac[i][1] = prop.get(i);
+            // if(prop.get(i) != null) {
+            // System.out.println(prop.get(i) + ": " + sentence.get(i));
+            // }
+          }
         }
-        if (prop.get(i) != null) {
-          ac[i][1] = prop.get(i);
-          // if(prop.get(i) != null) {
-          // System.out.println(prop.get(i) + ": " + sentence.get(i));
-          // }
-        }
+        // System.out.println();
+        return new POSSample(sentence, tags, ac);
+      } else {
+        return new POSSample(sentence, tags);
       }
-      // System.out.println();
-      return new POSSample(sentence, tags, ac);
     }
     return null;
   }
@@ -173,7 +187,7 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
         StringTokenizer tokenizer = new StringTokenizer(lexeme, "_");
 
         if ("prop".equals(tag)) {
-          sentence.add(tokenizer.nextToken());
+          sentence.add(lexeme);
           tags.add(tag);
           con.add(null);
           prop.add("P");
@@ -204,6 +218,59 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
           con.add(contraction);
         }
 
+      } else if(lexeme.contains("-") && lexeme.length() > 1) {
+        Matcher matcher = hyphenPattern.matcher(lexeme);
+
+        String firstTok = null;
+        String hyphen = "-";
+        String secondTok = null;
+        String rest = null;
+
+        if (matcher.matches()) {
+          if (matcher.group(1) != null) {
+            firstTok = matcher.group(2);
+          } else if (matcher.group(3) != null) {
+            secondTok = matcher.group(4);
+            rest = matcher.group(5);
+          } else if (matcher.group(6) != null) {
+            firstTok = matcher.group(7);
+            secondTok = matcher.group(8);
+            rest = matcher.group(9);
+          } else {
+            throw new IllegalStateException("wrong hyphen pattern");
+          }
+
+          if (!Strings.isNullOrEmpty(firstTok)) {
+            sentence.add(firstTok);
+            tags.add(tag);
+            prop.add(null);
+            con.add(contraction);
+          }
+          
+          if (!Strings.isNullOrEmpty(hyphen)) {
+            sentence.add(hyphen);
+            tags.add("-");
+            prop.add(null);
+            con.add(contraction);
+          }
+          if (!Strings.isNullOrEmpty(secondTok)) {
+            sentence.add(secondTok);
+            tags.add(tag);
+            prop.add(null);
+            con.add(contraction);
+          }
+          if (!Strings.isNullOrEmpty(rest)) {
+            sentence.add(rest);
+            tags.add(tag);
+            prop.add(null);
+            con.add(contraction);
+          }
+        } else {
+          sentence.add(lexeme);
+          tags.add(tag);
+          prop.add(null);
+          con.add(contraction);
+        }
       } else {
         sentence.add(lexeme);
         tags.add(tag);

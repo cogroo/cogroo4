@@ -264,6 +264,7 @@ sub configureMultiProperties {
 		'tok' => 'false',
 		'prop' => 'false',
 		'con' => 'false',
+		'pos' => 'false',
 		'chunker' => 'false',
 		'sp' => 'false',
 	);
@@ -293,6 +294,13 @@ sub configureMultiProperties {
 		if (-e "$modelRoot/pt-con.model") {
 			print "found contraction finder model\n";
 	 		$replace{'con'} = 'true';
+	 	}		
+	}
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-pos.model") {
+			print "found POS Tagger (class) model\n";
+	 		$replace{'pos'} = 'true';
 	 	}		
 	}
 	
@@ -403,6 +411,9 @@ sub installRequiredPears {
 	}			
 	if (-e "$modelRoot/pt-con.model") {
 	 	installPearByName('Contraction');
+	}			
+	if (-e "$modelRoot/pt-pos.model") {
+	 	installPearByName('PosTagger');
 	}	
 }
 

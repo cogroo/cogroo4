@@ -68,6 +68,8 @@ public final class MultiCogrooSettings {
   public static final boolean CON = getBoolean(KEY_CON);
   
   // tagger
+  private static final String KEY_TAGGER = "pos";
+  public static final boolean TAGGER = getBoolean(KEY_TAGGER);
 
   private static final String KEY_CHUNKER = "chunker";
   public static final boolean CHUNKER = getBoolean(KEY_CHUNKER);

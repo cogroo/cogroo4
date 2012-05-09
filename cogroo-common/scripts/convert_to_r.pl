@@ -24,6 +24,7 @@ my $folder = $ARGV[2];
 
 my @col;
 
+my $measure = '';
 
 my $experiment = '';
 my %data;
@@ -43,6 +44,11 @@ foreach my $line (<IN>) {
 		for(my $i = 0; $i < @col; $i++) {
 			my $val = $d[$i];
 			if($col[$i] eq 'F-Measure') {
+				$measure = 'F-Measure';
+				$val = $val * 100;
+				push(@{$data{$col[$i]}}, $val);
+			} elsif($col[$i] eq 'Accuracy') {
+				$measure = 'Accuracy';
 				$val = $val * 100;
 				push(@{$data{$col[$i]}}, $val);
 			} elsif ($col[$i] eq 'cutoff') {
@@ -85,7 +91,7 @@ foreach my $cv (@cutoffValues) {
 	print CUT "'$cv', ";
 	my @v;
 	foreach my $e (@exp) {
-		my $fm = shift(@{$table{$e}{'F-Measure'}});
+		my $fm = shift(@{$table{$e}{$measure}});
 		push(@v, $fm);
 	}
 	print CUT join(', ', @v);
@@ -118,9 +124,9 @@ my $maxGlobCut = 0; #int
 
 foreach my $e (@exp) {
 	$maxF{$e} = -1;
-	for(my $i = 0; $i < @{$table{$e}{'F-Measure'}}; $i++) {
-		if ($maxF{$e} < ${$table{$e}{'F-Measure'}}[$i]) {
-			$maxF{$e} = ${$table{$e}{'F-Measure'}}[$i];
+	for(my $i = 0; $i < @{$table{$e}{$measure}}; $i++) {
+		if ($maxF{$e} < ${$table{$e}{$measure}}[$i]) {
+			$maxF{$e} = ${$table{$e}{$measure}}[$i];
 			$maxCut{$e} = $cutoffValues[$i];	
 		}
 	}
@@ -134,7 +140,7 @@ foreach my $cv (@cutoffValues) {
 	print TEX "        	$cv & ";
 	my @v;
 	foreach my $e (@exp) {
-		my $fm = shift(@{$table{$e}{'F-Measure'}});
+		my $fm = shift(@{$table{$e}{$measure}});
 		my $pref = '';
 		my $suf = '';
 		if($maxCut{$e} eq $cv) {
@@ -170,9 +176,9 @@ open COM, ">$path/complete.table";
 print COM "exp, cut, f, size, nn\n";
 
 foreach my $e (@exp) {
-	while(@{$table{$e}{'F-Measure'}} > 0) {
+	while(@{$table{$e}{$measure}} > 0) {
 		my $ct = shift(@{$table{$e}{'cutoff'}});
-		my $fm = shift(@{$table{$e}{'F-Measure'}});
+		my $fm = shift(@{$table{$e}{$measure}});
 		my $s = shift(@{$table{$e}{'model_size'}});
 		#if($ct <= 32){
 			print COM "$e, $ct, $fm, $s, '$hn{$e}'\n";
@@ -192,8 +198,8 @@ foreach my $e (@exp) {
 	my $ct = -1;
 	my $maxFm = -1;
 	my $s = -1;
-	while(@{$table{$e}{'F-Measure'}} > 0) {
-		my $fm = shift(@{$table{$e}{'F-Measure'}});
+	while(@{$table{$e}{$measure}} > 0) {
+		my $fm = shift(@{$table{$e}{$measure}});
 		if($fm > $maxFm) {
 			$maxFm = $fm;
 			$ct = shift(@{$table{$e}{'cutoff'}});
@@ -226,8 +232,8 @@ EOF
 		my $ct = -1;
 		my $maxFm = -1;
 		my $s = -1;
-		while(@{$table{$e}{'F-Measure'}} > 0) {
-			my $fm = shift(@{$table{$e}{'F-Measure'}});
+		while(@{$table{$e}{$measure}} > 0) {
+			my $fm = shift(@{$table{$e}{$measure}});
 			if($fm > $maxFm) {
 				$maxFm = $fm;
 				$ct = shift(@{$table{$e}{'cutoff'}});

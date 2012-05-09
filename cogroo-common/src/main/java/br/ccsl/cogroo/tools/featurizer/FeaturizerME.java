@@ -104,7 +104,7 @@ public class FeaturizerME implements Featurizer {
    *          The size of the beam that should be used when decoding sequences.
    */
   public FeaturizerME(FeaturizerModel model, int beamSize) {
-    this(model, beamSize, null);
+    this(model, beamSize, new DefaultFeaturizerSequenceValidator(model.getTagDictionary(), model.getDictionaryPoisonedTags()));
   }
 
   /**

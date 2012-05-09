@@ -82,7 +82,7 @@ Cutoff=$cutoff";
 }
 
 my %simpleF = ( sent => 1, tok => 1, con => 1, prop => 1 );
-my %simpleA = ( pos => 1 );
+my %simpleA = ( pos => 1, feat => 1 );
 
 sub filter {
 	my %out;

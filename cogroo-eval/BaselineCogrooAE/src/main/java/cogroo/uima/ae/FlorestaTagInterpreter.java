@@ -165,10 +165,10 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
     menumElements.put(Mood.SUBJUNCTIVE, "SUBJ");
     menumElements.put(Mood.IMPERATIVE, "IMP");
     /* Finiteness */
-    menumElements.put(Finiteness.FINITE, "v-fin");
-    menumElements.put(Finiteness.INFINITIVE, "v-inf");
-    menumElements.put(Finiteness.PARTICIPLE, "v-pcp");
-    menumElements.put(Finiteness.GERUND, "v-ger");
+//    menumElements.put(Finiteness.FINITE, "v-fin");
+//    menumElements.put(Finiteness.INFINITIVE, "v-inf");
+//    menumElements.put(Finiteness.PARTICIPLE, "v-pcp");
+//    menumElements.put(Finiteness.GERUND, "v-ger");
     /* Punctuation */
     menumElements.put(Punctuation.ABS, "ABS");
     menumElements.put(Punctuation.NSEP, "NSEP");
@@ -316,14 +316,15 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
           } else if (t instanceof Mood) {
             m.setMood((Mood) t);
           } else if (t instanceof Finiteness) {
-            m.setClazz(Class.VERB);
             m.setFiniteness((Finiteness) t);
           } else if (t instanceof Punctuation) {
             m.setPunctuation((Punctuation) t);
           }
         }
       } else {
-        if ("v-pcp".equals(tag)) {
+        if("art".equals(tag)) {
+          m.setClazz(Class.DETERMINER);
+        }else if ("v-pcp".equals(tag)) {
           m.setClazz(Class.VERB);
           m.setFiniteness(Finiteness.PARTICIPLE);
         } else if ("v-inf".equals(tag)) {

@@ -101,20 +101,20 @@ public class PortuguesePOSSequenceValidator implements
       }
       if (!tokExists) {
         this.unknown.add(word);
-        System.err.println("-- unknown: " + word);
+//        System.err.println("-- unknown: " + word);
         isValid = true;
       } else if (tokExists && outcomeIsME) {
         isValid = true;
       }
 
-      if (isValid) {
-        System.err.print("validated: " + word + " " + outcome);
-        if (outcomeIsME) {
-          System.err.println(" (me)");
-        } else {
-          System.err.println();
-        }
-      }
+//      if (isValid) {
+//        System.err.print("validated: " + word + " " + outcome);
+//        if (outcomeIsME) {
+//          System.err.println(" (me)");
+//        } else {
+//          System.err.println();
+//        }
+//      }
 
       return isValid;
     }
@@ -123,11 +123,11 @@ public class PortuguesePOSSequenceValidator implements
   @Override
   protected void finalize() throws Throwable {
     super.finalize();
-    System.err.println("... palavras desconhecidas ...");
+    System.out.println("... palavras desconhecidas ...");
     for (String unk : this.unknown) {
-      System.err.println(unk);
+      System.out.println(unk);
     }
-    System.err.println("... fim ...");
+    System.out.println("... fim ...");
   }
 
   private boolean isME(String outcome) {

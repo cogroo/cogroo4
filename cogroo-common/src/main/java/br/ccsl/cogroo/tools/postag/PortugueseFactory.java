@@ -17,13 +17,13 @@ import opennlp.tools.util.model.UncloseableInputStream;
 
 public class PortugueseFactory extends POSTaggerFactory {
 
-  private static final String EXTENDED_POSDICT = "EXTENDED_POSDICT";
-  private POSDictionary extendedPOSDict;
+//  private static final String EXTENDED_POSDICT = "EXTENDED_POSDICT";
+//  private POSDictionary extendedPOSDict;
 
   public PortugueseFactory(Dictionary ngramDictionary,
       POSDictionary posDictionary) {
-    super(ngramDictionary, null);
-    this.extendedPOSDict = posDictionary;
+    super(ngramDictionary, posDictionary);
+//    this.posDictionary = posDictionary;
   }
 
   public PortugueseFactory(ArtifactProvider artifactProvider) {
@@ -45,9 +45,19 @@ public class PortugueseFactory extends POSTaggerFactory {
     return new PortuguesePOSContextGenerator(getDictionary());
   }
 
-  public POSDictionary getPOSDictionary() {
-    return (POSDictionary) artifactProvider.getArtifact(EXTENDED_POSDICT);
-  }
+//  public POSDictionary getPOSDictionary() {
+//    if(this.posDictionary == null) {
+//      
+//      if(artifactProvider != null) {
+//        Object obj = artifactProvider.getArtifact(EXTENDED_POSDICT);
+//        if(obj != null) {
+//          this.posDictionary = (POSDictionary) artifactProvider.getArtifact(EXTENDED_POSDICT);
+//        }
+//      }
+//    }
+//      
+//    return this.posDictionary;
+//  }
 
   @Override
   @SuppressWarnings("rawtypes")
@@ -55,15 +65,15 @@ public class PortugueseFactory extends POSTaggerFactory {
     Map<String, ArtifactSerializer> serializers = super
         .createArtifactSerializersMap();
 
-    serializers.put(EXTENDED_POSDICT, new POSDictionarySerializer());
+//    serializers.put(EXTENDED_POSDICT, new POSDictionarySerializer());
     return serializers;
   }
 
   @Override
   public Map<String, Object> createArtifactMap() {
     Map<String, Object> artifactMap = super.createArtifactMap();
-    if (this.extendedPOSDict != null)
-      artifactMap.put(EXTENDED_POSDICT, this.extendedPOSDict);
+//    if (this.posDictionary != null)
+//      artifactMap.put(EXTENDED_POSDICT, this.posDictionary);
     return artifactMap;
   }
 
@@ -80,5 +90,5 @@ public class PortugueseFactory extends POSTaggerFactory {
       artifact.serialize(out);
     }
   }
-
+  
 }

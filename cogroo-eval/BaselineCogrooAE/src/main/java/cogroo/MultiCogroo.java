@@ -119,7 +119,7 @@ public class MultiCogroo implements CogrooI {
       // }
 
       start = System.nanoTime();
-      this.tagger = config.getPOSTagger();
+      this.tagger = new MultiPOSTagger(config);
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug("   [Tagger]\t\tmodel loaded in\t["
             + (System.nanoTime() - start) / 1000000 + "ms]");
@@ -290,7 +290,7 @@ public class MultiCogroo implements CogrooI {
         // input = "Os olhos das meninas são bonitos nas estrelas.";
         // input = "Os inimigos que eram fácil derrotar estão próximo.";
         // input = "A construção do trecho inicial da Linha 5-Lilás.";
-        input = "Em São Paulo, primeiro local da América Latina a receber a exposição";
+        input = "Procura-se uma maneira do mercado funcionar, por favor.";
         // 114: Jamais ocorreu-nos tal idéia.
         // 115: Júlio namorou com Marina durante três anos.
         //
