@@ -35,8 +35,19 @@ public class SentenceDetector implements Analyzer {
       Closeables.closeQuietly(modelIn);
     }
   }
+  
+  public SentenceDetector(SentenceDetectorME sentenceDetector) throws FileNotFoundException {
+    this.sentenceDetector = sentenceDetector;
+  }
 
+  /**
+   * @throws IllegalArgumentException if document text is null.
+   */
   public void analyze(Document document) {
+
+    if (document.getText() == null)
+      throw new IllegalArgumentException("Document text is null.");
+    
     Span[] spans = sentenceDetector.sentPosDetect(document.getText());
 
     List<Sentence> sentences = new ArrayList<Sentence>(spans.length);

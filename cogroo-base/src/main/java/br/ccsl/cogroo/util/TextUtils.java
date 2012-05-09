@@ -50,16 +50,4 @@ public class TextUtils {
     }
     return output.toString();
   }
-
-  public void printLexemes(List<Token> tokens) {
-
-  }
-
-  public void printTags(List<Token> tokens) {
-    System.out.print("Tags: [");
-    for (Token token : tokens) {
-      System.out.print(" " + token.getPOSTag() + ",");
-    }
-    System.out.println("]");
-  }
 }
