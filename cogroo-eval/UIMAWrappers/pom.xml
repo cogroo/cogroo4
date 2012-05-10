@@ -49,6 +49,7 @@
 		<module>UIMASentenceDetector</module>
 		<module>UIMAShallowParser</module>
 		<module>UIMATokenizer</module>
+		<module>UIMAFeaturizer</module>
 	</modules>
 
 

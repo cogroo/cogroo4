@@ -28,7 +28,7 @@ public class PortuguesePOSContextGenerator extends DefaultPOSContextGenerator {
         for (int i = 0; i < ac[index].length; i++) {
           if (ac[index][i] != null) {
             modContext.add("ac=" + ac[index][i]);
-//            System.out.println(sequence[index] + " : " + ac[index][i]);
+            System.out.println(sequence[index] + " : " + ac[index][i]);
           }
         }
         context = modContext.toArray(new String[modContext.size()]);

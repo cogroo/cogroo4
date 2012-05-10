@@ -21,6 +21,7 @@ public class PostPOSTagger implements ProcessingEngine {
 
   // pronomes obliquuos átonos
   private static final Set<String> PRONOMES_OBLIQUOS_ATONOS;
+  private FlorestaTagInterpreter it = new FlorestaTagInterpreter();
 
   static {
     String[] arr = { "me", "te", "se", "o", "a", "lhe", "nos", "vos", "os",
@@ -37,8 +38,15 @@ public class PostPOSTagger implements ProcessingEngine {
     PREFIXOS_HYPHENS = Collections.unmodifiableSet(new HashSet<String>(Arrays
         .asList(pho)));
   }
+  
+  private MorphologicalTag toMorphologicalTag(String tag) {
+    return it.parseMorphologicalTag(tag);
+  }
 
   public void process(Sentence sentence) {
+    for (Token t : sentence.getTokens()) {
+      t.setMorphologicalTag(toMorphologicalTag(t.getOriginalPOSTag()));
+    }
     mergeHyphenedWords(sentence);
   }
 

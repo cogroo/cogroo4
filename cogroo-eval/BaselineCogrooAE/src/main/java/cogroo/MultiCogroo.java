@@ -59,6 +59,8 @@ public class MultiCogroo implements CogrooI {
   // protected ProcessingEngine nameFind;
 
   protected ProcessingEngine tagger;
+  
+  protected ProcessingEngine featurizer;
 
   protected ProcessingEngine chunker;
 
@@ -290,7 +292,7 @@ public class MultiCogroo implements CogrooI {
         // input = "Os olhos das meninas são bonitos nas estrelas.";
         // input = "Os inimigos que eram fácil derrotar estão próximo.";
         // input = "A construção do trecho inicial da Linha 5-Lilás.";
-        input = "Procura-se uma maneira do mercado funcionar, por favor.";
+        input = "O Pedro Silva chegou em volta do mercado.";
         // 114: Jamais ocorreu-nos tal idéia.
         // 115: Júlio namorou com Marina durante três anos.
         //

@@ -1,10 +1,7 @@
 package cogroo.uima.ae;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import opennlp.tools.util.Span;
 
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.Feature;
@@ -17,8 +14,9 @@ import org.apache.uima.jcas.tcas.Annotation;
 import br.usp.pcs.lta.cogroo.entity.Sentence;
 import br.usp.pcs.lta.cogroo.entity.Token;
 import br.usp.pcs.lta.cogroo.entity.impl.runtime.MorphologicalTag;
-import br.usp.pcs.lta.cogroo.entity.impl.runtime.TokenCogroo;
 import br.usp.pcs.lta.cogroo.tools.ProcessingEngine;
+import cogroo.util.EntityUtils;
+import cogroo.util.TypedSpan;
 
 public class UimaPOSTagger extends AnnotationService implements
     ProcessingEngine {
@@ -26,7 +24,8 @@ public class UimaPOSTagger extends AnnotationService implements
   private Type tokenType;
   private Type sentenceType;
   private Feature posFeature;
-  private FlorestaTagInterpreter it = new FlorestaTagInterpreter();
+  private Feature additionalContextFeature;
+  private Feature lexemeFeature;
 
   public UimaPOSTagger() throws AnnotationServiceException {
     super("UimaPOSTagger");
@@ -56,20 +55,55 @@ public class UimaPOSTagger extends AnnotationService implements
 
     int index = 0;
     List<Token> tokens = text.getTokens();
+    
     while (tokenIterator.hasNext()) {
       Annotation a = tokenIterator.next();
       String tag = a.getFeatureValueAsString(posFeature);
       tokens.get(index).setOriginalPOSTag(tag);
-      tokens.get(index).setMorphologicalTag(toMorphologicalTag(tag));
+      //tokens.get(index).setMorphologicalTag(toMorphologicalTag(tag));
       index++;
     }
+    
+    text.setTokens(EntityUtils.groupTokens(text.getSentence(), text.getTokens(), createSpanList(toTokensArray(tokens), toTagsArray(tokens))));
 
     cas.reset();
   }
 
-  private MorphologicalTag toMorphologicalTag(String tag) {
-    
-    return it.parseMorphologicalTag(tag);
+  // this is from opennlp
+  public static List<TypedSpan> createSpanList(String[] toks, String[] tags) {
+
+    // initialize with the list maximum size
+    List<TypedSpan> phrases = new ArrayList<TypedSpan>(toks.length); 
+    String startTag = "";
+    int startIndex = 0;
+    boolean foundPhrase = false;
+
+    for (int ci = 0, cn = tags.length; ci < cn; ci++) {
+      String pred = tags[ci];
+      if(!tags[ci].startsWith("B-") && !tags[ci].startsWith("I-")) {
+        pred = "O";
+      }
+      if (pred.startsWith("B-")
+          || (!pred.equals("I-" + startTag) && !pred.equals("O"))) { // start
+        if (foundPhrase) { // handle the last
+          phrases.add(new TypedSpan(startIndex, ci, startTag));
+        }
+        startIndex = ci;
+        startTag = pred.substring(2);
+        foundPhrase = true;
+      } else if (pred.equals("I-" + startTag)) { // middle
+        // do nothing
+      } else if (foundPhrase) {// end
+        phrases.add(new TypedSpan(startIndex, ci, startTag));
+        foundPhrase = false;
+        startTag = "";
+      }
+    }
+    if (foundPhrase) { // leftover
+      phrases.add(new TypedSpan(startIndex, tags.length, startTag));
+    }
+
+    return phrases;
   }
 
   @Override
@@ -77,6 +111,8 @@ public class UimaPOSTagger extends AnnotationService implements
     sentenceType = cas.getTypeSystem().getType("opennlp.uima.Sentence");
     tokenType = cas.getTypeSystem().getType("opennlp.uima.Token");
     posFeature = tokenType.getFeatureByBaseName("pos");
+    additionalContextFeature = tokenType.getFeatureByBaseName("additionalContext");
+    lexemeFeature = tokenType.getFeatureByBaseName("lexeme");
   }
 
   private void updateCas(Sentence sentence, JCas cas) {
@@ -93,8 +129,28 @@ public class UimaPOSTagger extends AnnotationService implements
       a = cas.getCas().createAnnotation(tokenType,
           t.getSpan().getStart() + sentence.getOffset(),
           t.getSpan().getEnd() + sentence.getOffset());
+      
+      a.setStringValue(additionalContextFeature, t.getAdditionalContext());
+      a.setStringValue(lexemeFeature, t.getLexeme());
 
       cas.getIndexRepository().addFS(a);
     }
+  }
+  
+  
+  private String[] toTagsArray(List<Token> tokens) {
+    String[] tag = new String[tokens.size()];
+    for (int i = 0; i < tokens.size(); i++) {
+      tag[i] = tokens.get(i).getOriginalPOSTag();
+    }
+    return tag;
+  }
+
+  private String[] toTokensArray(List<Token> tokens) {
+    String[] toks = new String[tokens.size()];
+    for (int i = 0; i < tokens.size(); i++) {
+      toks[i] = tokens.get(i).getLexeme();
+    }
+    return toks;
   }
 }

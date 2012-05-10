@@ -45,13 +45,13 @@ public class PortuguesePOSSequenceValidator implements
 
     String word = inputSequence[i];
 
-    // System.err.println("# evaluating: " + word + " " + outcome + " seq.: " +
-    // Arrays.toString(outcomesSequence));
+    System.err.println("# evaluating: " + word + " " + outcome + " seq.: " +
+     Arrays.toString(outcomesSequence));
 
     // validate B- and I-
     if (!validOutcome(outcome, outcomesSequence)) {
-      // System.err.println("# invalid: " + word + " " + outcome + " seq.: " +
-      // Arrays.toString(outcomesSequence));
+      System.err.println("# invalid: " + word + " " + outcome + " seq.: " +
+      Arrays.toString(outcomesSequence));
       return false;
     }
 
@@ -101,20 +101,20 @@ public class PortuguesePOSSequenceValidator implements
       }
       if (!tokExists) {
         this.unknown.add(word);
-//        System.err.println("-- unknown: " + word);
+        System.err.println("-- unknown: " + word);
         isValid = true;
       } else if (tokExists && outcomeIsME) {
         isValid = true;
       }
 
-//      if (isValid) {
-//        System.err.print("validated: " + word + " " + outcome);
-//        if (outcomeIsME) {
-//          System.err.println(" (me)");
-//        } else {
-//          System.err.println();
-//        }
-//      }
+      if (isValid) {
+        System.err.print("validated: " + word + " " + outcome);
+        if (outcomeIsME) {
+          System.err.println(" (me)");
+        } else {
+          System.err.println();
+        }
+      }
 
       return isValid;
     }
@@ -143,18 +143,41 @@ public class PortuguesePOSSequenceValidator implements
   }
 
   private boolean validOutcome(String outcome, String prevOutcome) {
-    if (outcome.startsWith("I-")) {
+    
+    boolean prevIsBoundary = false, isBoundary = false, isIntermediate = false;
+    
+    if(prevOutcome != null) {
+      prevIsBoundary = prevOutcome.startsWith("B-");
+    }
+    
+    if(outcome != null) {
+      isBoundary = outcome.startsWith("B-");    
+      isIntermediate = outcome.startsWith("I-");      
+    }
+    
+    boolean isSameEntity = false;
+    if(prevIsBoundary && isIntermediate) {
+      isSameEntity = prevOutcome.substring(2).equals(outcome.substring(2));
+    }
+    
+    if (isIntermediate) {
       if (prevOutcome == null) {
         return (false);
       } else {
-        if (!prevOutcome.startsWith("B-")) {
-          return (false);
-        }
-        if (!prevOutcome.substring(2).equals(outcome.substring(2))) {
+        if (!isSameEntity) {
           return (false);
         }
       }
+    } else if(isBoundary) {
+      if(prevIsBoundary) {
+        return false; // MWE should have at least two tokens
+      }
     }
+    
+    if(prevIsBoundary && !isIntermediate) {
+      return false; // MWE should have at least two tokens
+    }
+
     return true;
   }
 

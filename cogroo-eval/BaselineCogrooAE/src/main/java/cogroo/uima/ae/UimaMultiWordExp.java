@@ -14,6 +14,8 @@ import org.apache.uima.cas.text.AnnotationFS;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 
+import cogroo.util.EntityUtils;
+
 import br.usp.pcs.lta.cogroo.entity.Sentence;
 import br.usp.pcs.lta.cogroo.entity.Token;
 import br.usp.pcs.lta.cogroo.entity.impl.runtime.TokenCogroo;
@@ -71,7 +73,7 @@ public class UimaMultiWordExp extends AnnotationService implements
 //    }
 //    List<Span> merged = merge(exp, names);
 
-    text.setTokens(groupTokens(text.getSentence(), text.getTokens(), names));
+    text.setTokens(EntityUtils.groupTokensChar(text.getSentence(), text.getTokens(), names, "P"));
 
     cas.reset();
 
@@ -103,53 +105,6 @@ public class UimaMultiWordExp extends AnnotationService implements
       cas.getIndexRepository().addFS(a);
     }
   }
-  
-  private static List<Token> groupTokens(String text, List<Token> toks, List<Span> charSpans) {
-    if (charSpans == null || charSpans.size() == 0) {
-      return toks;
-    }
-    
-    int lastVisitedTok = 0;
-    List<Span> spans = new ArrayList<Span>(charSpans.size());
-    
-    for (Span ch : charSpans) {
-      System.out.println("looking for: " + ch.getCoveredText(text));
-      Token aToken = toks.get(lastVisitedTok);
-      while (aToken.getSpan().getStart() < ch.getStart()) {
-        lastVisitedTok++;
-        aToken = toks.get(lastVisitedTok);
-      }
-      int start = lastVisitedTok;
-      while (aToken.getSpan().getEnd() < ch.getEnd()) {
-        lastVisitedTok++;
-        aToken = toks.get(lastVisitedTok);
-      }
-      int end = lastVisitedTok;
-      Span tokSpan = new Span(start, end);
-      spans.add(tokSpan);
-    }
-    
-    for(int i = spans.size() - 1; i >=0; i--) {
-      Span span = spans.get(i);
-      if(span.length() > 0) {
-        int s = toks.get(span.getStart()).getSpan().getStart();
-        int e = toks.get(span.getEnd()).getSpan().getEnd();
-        StringBuilder lexeme = new StringBuilder();
-        for(int j = span.getStart(); j < span.getEnd(); j++) {
-          lexeme.append(toks.get(j).getLexeme()).append("_");
-        }
-        lexeme.append(toks.get(span.getEnd()).getLexeme()); 
-        
-        for(int j = span.getEnd(); j >= span.getStart(); j--) {
-          toks.remove(j);
-        }
-        Token t = new TokenCogroo(lexeme.toString(), new Span(s,e));
-        toks.add(span.getStart(), t);
-      }
-    }
-    return toks;
-  }
-  
   
 
 /*  private static List<Token> groupTokens(List<Token> toks, List<Span> spans) {
