@@ -37,6 +37,10 @@ public class NameFinder implements Analyzer {
       Closeables.closeQuietly(modelIn);
     }
   }
+  
+  public NameFinder(NameFinderME nameFinder) throws FileNotFoundException {
+    this.nameFinder = nameFinder;
+  }
 
   public void analyze(Document document) {
     List<Sentence> sentences = document.getSentences();

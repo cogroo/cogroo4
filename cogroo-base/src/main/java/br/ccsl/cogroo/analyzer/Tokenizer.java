@@ -36,6 +36,11 @@ public class Tokenizer implements Analyzer {
       Closeables.closeQuietly(modelIn);
     }
   }
+  
+  public Tokenizer(TokenizerME tokenizer) throws FileNotFoundException {
+    this.tokenizer = tokenizer;
+    
+  }
 
   public void analyze(Document document) {
     List<Sentence> sentences = document.getSentences();

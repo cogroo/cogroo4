@@ -36,6 +36,10 @@ public class POSTagger implements Analyzer {
     }
   }
 
+  public POSTagger(POSTaggerME tagger) throws FileNotFoundException {
+    this.tagger = tagger;
+  }
+  
   public void analyze(Document document) {
     List<Sentence> sentences = document.getSentences();
 

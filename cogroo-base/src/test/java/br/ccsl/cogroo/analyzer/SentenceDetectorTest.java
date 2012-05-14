@@ -14,13 +14,12 @@ import static org.mockito.Mockito.*;
 public class SentenceDetectorTest {
 
   private SentenceDetector sentenceDetector;
-  SentenceDetectorME mockedSentenceDetector ;
-  
+  SentenceDetectorME mockedSentenceDetector;
+
   @Before
   public void setUp() throws Exception {
     mockedSentenceDetector = mock(SentenceDetectorME.class);
-    sentenceDetector = new SentenceDetector(mockedSentenceDetector );
-    
+    sentenceDetector = new SentenceDetector(mockedSentenceDetector);
   }
 
   @Test
@@ -28,46 +27,48 @@ public class SentenceDetectorTest {
     Document document = new Document();
     String text = "Este é um teste. Ele contém duas frases.";
     document.setText(text);
-    
-    Span[] spans = {new Span(0, 16), new Span(17, 40)};
-    
+
+    Span[] spans = { new Span(0, 16), new Span(17, 40) };
+
     when(mockedSentenceDetector.sentPosDetect(text)).thenReturn(spans);
-    
+
     sentenceDetector.analyze(document);
-    
+
     assertNotNull(document.getSentences());
     assertEquals(2, document.getSentences().size());
-    
-    assertEquals("Este é um teste.", document.getSentences().get(0).getCoveredSentence(text));
-    assertEquals("Ele contém duas frases.", document.getSentences().get(1).getCoveredSentence(text));
+
+    assertEquals("Este é um teste.", document.getSentences().get(0)
+        .getCoveredSentence(text));
+    assertEquals("Ele contém duas frases.", document.getSentences().get(1)
+        .getCoveredSentence(text));
   }
-  
+
   @Test
   public void testAnalyzeEmpty() {
     Document document = new Document();
     String text = "";
     document.setText(text);
-    
+
     Span[] spans = new Span[0];
-    
+
     when(mockedSentenceDetector.sentPosDetect(text)).thenReturn(spans);
-    
+
     sentenceDetector.analyze(document);
-    
+
     assertNotNull(document.getSentences());
     assertEquals(0, document.getSentences().size());
   }
-  
-  @Test (expected = IllegalArgumentException.class)
+
+  @Test(expected = IllegalArgumentException.class)
   public void testAnalyzeNull() {
     Document document = new Document();
     String text = null;
     document.setText(text);
-    
+
     Span[] spans = new Span[0];
-    
+
     when(mockedSentenceDetector.sentPosDetect(text)).thenReturn(spans);
-    
+
     sentenceDetector.analyze(document);
   }
 }
