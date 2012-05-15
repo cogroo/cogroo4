@@ -17,9 +17,16 @@
 
 package br.ccsl.cogroo.tools.featurizer;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
+
+import opennlp.tools.util.featuregen.StringPattern;
+import opennlp.tools.util.featuregen.TokenClassFeatureGenerator;
 
 /**
  * A context generator for the Featurizer.
@@ -32,8 +39,10 @@ public class DefaultFeaturizerContextGenerator implements
   private static final int PREFIX_LENGTH = 4;
   private static final int SUFFIX_LENGTH = 4;
 
-  private static Pattern hasCap = Pattern.compile("[A-Z]");
-  private static Pattern hasNum = Pattern.compile("[0-9]");
+  private TokenClassFeatureGenerator tokenClassFeatureGenerator = new TokenClassFeatureGenerator();
+  
+  // TODO: this is language dependent!
+  private NumberFormat nf = NumberFormat.getInstance(new Locale("pt"));
 
   protected static String[] getPrefixes(String lex) {
     String[] prefs = new String[PREFIX_LENGTH];
@@ -76,6 +85,113 @@ public class DefaultFeaturizerContextGenerator implements
    */
   public String[] getContext(int i, String[] toks, String[] tags, String[] preds) {
 
+    String lex = toks[i];
+    List<String> e = new ArrayList<String>();
+    
+    createWindowFeats(i, toks, tags, preds, e);
+    
+    createSuffixFeats(i, toks, tags, preds, e);
+    
+    tokenClassFeatureGenerator.createFeatures(e, toks, i, preds);
+    
+    if ("prop".equals(tags[i]) && lex.contains("_")) {
+      createGroupSuffixex(lex, e);
+    }
+
+    // numbers would benefit from this
+    StringPattern sp = StringPattern.recognize(lex);
+    if(sp.containsDigit() && !sp.containsLetters()) {
+      // TODO: make it generic !! this is only for portuguese!
+      String num = lex; // we need only the decimal separator
+      try {
+        Number number = nf.parse(num);
+        if(number != null)  {
+          Double value = Math.abs(number.doubleValue());
+          if(value > 1) {
+            e.add("num=h");
+          } else if(value > 0) {
+            e.add("num=one");
+          } else {
+            e.add("num=zero");
+          }
+        } else {
+          e.add("numNull");
+        }
+      } catch (ParseException e1) {
+        // nothing to do...
+        System.err.println("failed to parse num: " + num);
+        e.add("notNum");
+      }
+    }
+    //
+
+    String[] context = e.toArray(new String[e.size()]);
+
+    return context;
+  }
+  
+  private static final Pattern UNDERLINE_PATTERN = Pattern.compile("_");
+
+  private void createGroupSuffixex(String lex, List<String> e) {
+    String[] parts = UNDERLINE_PATTERN.split(lex);
+    
+    if(parts.length < 2) // this is handled already
+      return;
+    
+    for (int i = 0; i < parts.length; i++) {
+      e.add("prop_" + i + "=" + parts[i]);
+      String prefix = "prsf_" + i + "=";
+      String[] suffixes = getSuffixes(parts[i]);
+      for (String suf : suffixes) {
+        e.add(prefix + suf);
+      }
+    }
+    
+  }
+
+  private void createSuffixFeats(int i, String[] toks, String[] tags,
+      String[] preds, List<String> e) {
+
+    String lex = toks[i];
+    // do some basic suffix analysis
+    String[] suffs = getSuffixes(lex);
+    for (int j = 0; j < suffs.length; j++) {
+      e.add("suf=" + suffs[j]);
+    }
+
+    String[] prefs = getPrefixes(lex);
+    for (int j = 0; j < prefs.length; j++) {
+      e.add("pre=" + prefs[j]);
+    }
+    // see if the word has any special characters
+    if (lex.indexOf('-') != -1) {
+      e.add("h");
+    }
+
+    if ("prop".equals(tags[i]) && lex.contains("_")) {
+      String fn = lex.substring(0, lex.indexOf("_"));
+      String[] nprefs = getSuffixes(fn);
+      for (int j = 0; j < prefs.length; j++) {
+        e.add("nsuf=" + nprefs[j]);
+      }
+    }
+
+    /* this is now done by the class analysis
+     
+    if (hasCap.matcher(lex).find()) {
+      e.add("c");
+    }
+
+    if (hasNum.matcher(lex).find()) {
+      e.add("d");
+    }*/
+    
+  }
+
+  private void createWindowFeats(int i, String[] toks, String[] tags,
+      String[] preds, List<String> feats) {
+
+    String lex = toks[i];
     // Words in a 5-word window
     String w_2, w_1, w0, w1, w2;
 
@@ -88,8 +204,6 @@ public class DefaultFeaturizerContextGenerator implements
     w_2 = w_1 = w0 = w1 = w2 = null;
     t_2 = t_1 = t0 = t1 = t2 = null;
     p_1 = p_2 = null;
-
-    String lex = toks[i];
 
     if (i < 2) {
       w_2 = "w_2=bos";
@@ -157,48 +271,7 @@ public class DefaultFeaturizerContextGenerator implements
         p_1 + w_2, p_1 + w_1, p_1 + w0, p_1 + w1, p_1 + w2, p_1 + w_1 + w0,
         p_1 + w0 + w1 };
 
-    List<String> e = new ArrayList<String>();
-
-    // do some basic suffix analysis
-    String[] suffs = getSuffixes(lex);
-    for (int j = 0; j < suffs.length; j++) {
-      e.add("suf=" + suffs[j]);
-    }
-
-    String[] prefs = getPrefixes(lex);
-    for (int j = 0; j < prefs.length; j++) {
-      e.add("pre=" + prefs[j]);
-    }
-    // see if the word has any special characters
-    if (lex.indexOf('-') != -1) {
-      e.add("h");
-    }
-
-    if ("prop".equals(tags[i]) && lex.contains("_")) {
-      String fn = lex.substring(0, lex.indexOf("_"));
-      String[] nprefs = getSuffixes(fn);
-      for (int j = 0; j < prefs.length; j++) {
-        e.add("nsuf=" + nprefs[j]);
-      }
-    }
-
-    if (hasCap.matcher(lex).find()) {
-      e.add("c");
-    }
-
-    if (hasNum.matcher(lex).find()) {
-      e.add("d");
-    }
-    // end suffix
-
-    String[] suffixContexts = e.toArray(new String[e.size()]);
-
-    String[] context = new String[suffixContexts.length + features.length];
-    System.arraycopy(features, 0, context, 0, features.length);
-    System.arraycopy(suffixContexts, 0, context, features.length,
-        suffixContexts.length);
-
-    return context;
+    feats.addAll(Arrays.asList(features));
   }
 
 }

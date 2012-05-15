@@ -23,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,34 +74,6 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
     this.additionalContext = additionalContext;
   }
 
-  /**
-   * Creates a new {@link POSSample} stream from a {@link InputStream}
-   * 
-   * @param in
-   *          the Corpus {@link InputStream}
-   * @param charsetName
-   *          the charset of the Arvores Deitadas Corpus
-   * @param expandME
-   *          if true will expand the multiword expressions, each word of the
-   *          expression will have the POS Tag that was attributed to the
-   *          expression plus the prefix B- or I- (CONLL convention)
-   * @param includeFeatures
-   *          if true will combine the POS Tag with the feature tags
-   */
-  public ADExPOSSampleStream(InputStream in, String charsetName,
-      boolean expandME, boolean includeFeatures, boolean additionalContext) {
-
-    try {
-      this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(
-          in, charsetName));
-      this.expandME = expandME;
-      this.isIncludeFeatures = includeFeatures;
-      this.additionalContext = additionalContext;
-    } catch (UnsupportedEncodingException e) {
-      // UTF-8 is available on all JVMs, will never happen
-      throw new IllegalStateException(e);
-    }
-  }
 
   public POSSample read() throws IOException {
     Sentence paragraph;

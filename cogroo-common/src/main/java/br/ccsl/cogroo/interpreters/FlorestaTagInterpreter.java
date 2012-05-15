@@ -39,7 +39,7 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
   protected static final Logger LOGGER = Logger
       .getLogger(FlorestaTagInterpreter.class);
 
-  private static final String SEP = "_";
+  private static final String SEP = "=";
 
   static {
     /* ********************************

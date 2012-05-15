@@ -2,21 +2,15 @@ package br.ccsl.cogroo.tools.namefinder;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import br.ccsl.cogroo.formats.ad.ADContractionNameSampleStream;
 
 import opennlp.tools.cmdline.namefind.NameEvaluationErrorListener;
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.namefind.DictionaryNameFinder;
-import opennlp.tools.namefind.DictionaryNameFinderEvaluatorTest;
 import opennlp.tools.namefind.NameSample;
-import opennlp.tools.namefind.NameSampleDataStream;
 import opennlp.tools.namefind.TokenNameFinderEvaluator;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
+import br.ccsl.cogroo.formats.ad.ADContractionNameSampleStream;
 
 public class DictionaryNameFinderTest {
   

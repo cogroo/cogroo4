@@ -26,6 +26,7 @@ import java.util.Set;
 
 import opennlp.tools.postag.ExtendedTagDictionary;
 import opennlp.tools.util.SequenceValidator;
+import opennlp.tools.util.featuregen.StringPattern;
 import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
 
 public class DefaultFeaturizerSequenceValidator implements
@@ -33,9 +34,6 @@ public class DefaultFeaturizerSequenceValidator implements
 
   private ExtendedTagDictionary tagDict = null;
   private Set<String> poisonedTags;
-
-  // public DefaultFeaturizerSequenceValidator() {
-  // }
 
   public DefaultFeaturizerSequenceValidator(ExtendedTagDictionary tagDict,
       Set<String> poisonedTags) {
@@ -46,38 +44,49 @@ public class DefaultFeaturizerSequenceValidator implements
   public boolean validSequence(int i, WordTag[] sequence, String[] s,
       String outcome) {
 
+    String word = sequence[i].getWord();
+    String postag = sequence[i].getPostag();
+
+//    // if isCont, we only validate if this outcome equals to previous
+//    if (postag.startsWith("I-")) {
+//      return s[i - 1].equals(outcome);
+//    }
+//    
+//    if (postag.startsWith("B-") && s[i - 1].startsWith("B-")) {
+//      return false; // MWE should have at least two tokens
+//    }
+    
     if (tagDict == null) {
       return true;
     }
 
-    String word = sequence[i].getWord();
-    String postag = sequence[i].getPostag();
+//    if (postag.startsWith("B-")) {
+//      postag = postag.substring(2);
+//    }
 
-    // if isCont, we only validate if this outcome equals to previous
-    if (postag.startsWith("I-")) {
-      return s[i - 1].equals(outcome);
+    String[] tagsArr = tagDict.getFeatureTag(word, postag);
+    List<String> tags = null;
+    if(tagsArr != null) {
+      tags = filterPoisoned(tagsArr);
     }
+    
+    
+    if(tags == null || tags.size() == 0) {
+      StringPattern pattern = StringPattern.recognize(word);
+      if(!pattern.isAllLowerCaseLetter()) {
+        tagsArr = tagDict.getFeatureTag(word.toLowerCase(), postag);
 
-    if (postag.startsWith("B-")) {
-      postag = postag.substring(2);
+        if(tagsArr != null) {
+          tags = filterPoisoned(tagsArr);
+        }
+        
+      }
     }
-
-    List<String> tags = filterPoisoned(tagDict.getFeatureTag(word, postag));
 
     if (tags != null) {
       // System.err.println("-- eval: " + word + " (" + postag + ") "+ tags +
       // " outcome: " + outcome);
       return matches(outcome, tags);
-    } else {
-      String lower = word.toLowerCase();
-      if (!lower.equals(word)) {
-        tags = filterPoisoned(tagDict.getFeatureTag(lower, postag));
-        if (tags != null) {
-          // System.err.println("-- eval: " + lower + " (" + postag + ") " +
-          // " tags: " + Arrays.toString(tags) + " outcome: " + outcome);
-          return matches(outcome, tags);
-        }
-      }
     }
 
     return true;
@@ -101,7 +110,8 @@ public class DefaultFeaturizerSequenceValidator implements
       if (!this.poisonedTags.contains(tag)) {
         filtered.add(tag);
       } else {
-        System.err.println("found poisoned tag! " + tag);
+        System.err.println("found poisoned tag. Will ignore all! " + tag);
+        return null;
       }
     }
     if (filtered.size() == 0) {
@@ -113,13 +123,16 @@ public class DefaultFeaturizerSequenceValidator implements
   FlorestaTagInterpreter ti = new FlorestaTagInterpreter();
 
   private boolean matches(String outcome, List<String> tags) {
+    if(tags.contains(outcome)) {
+      return true;
+    }
     Set<String> tagParts = new HashSet<String>();
     for (String tag : tags) {
-      tagParts.addAll(Arrays.asList(tag.split("[_/]")));
+      tagParts.addAll(Arrays.asList(tag.split("[_=/]")));
     }
-    for (String part : outcome.split("[_/]")) {
+    for (String part : outcome.split("[_=/]")) {
       if (!tagParts.contains(part)) {
-        // System.err.println("  -- missing: " + part);
+//        System.err.println("  -- missing: " + part);
         return false;
       }
     }

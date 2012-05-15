@@ -77,6 +77,16 @@ public class FeaturizerModel extends BaseModel {
 
     checkArtifactMap();
   }
+  
+  @Override
+  protected void createArtifactSerializers(
+      Map<String, ArtifactSerializer> serializers) {
+
+    super.createArtifactSerializers(serializers);
+    
+    serializers.put("tagdict", new ExtendedTagDictionarySerializer());
+    
+  }
 
   public FeaturizerModel(String languageCode, AbstractModel chunkerModel,
       ExtendedPOSDictionary dict) {

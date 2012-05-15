@@ -11,7 +11,6 @@ import java.util.Set;
 import opennlp.tools.util.Cache;
 
 import org.apache.log4j.Logger;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import br.ccsl.cogroo.entities.impl.ChunkTag;
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
@@ -299,6 +298,11 @@ public class JspellTagInterpreter implements TagInterpreterI {
     if (m.getTense() != null && Class.NOUN.equals(m.getClazzE())) {
       m.setClazz(Class.INFINITIVE_VERB);
     }
+    
+    if(m == null || m.getClazzE() == null) {
+      LOGGER.warn("something wrong with tag: " + tagString);
+    }
+    removeInvalidFeatures(m);
 
     synchronized (cache) {
       if (!cache.containsKey(tagString)) {
@@ -307,6 +311,40 @@ public class JspellTagInterpreter implements TagInterpreterI {
     }
 
     return m;
+  }
+
+  private void removeInvalidFeatures(MorphologicalTag m) {
+    if(m != null && m.getClazzE() != null) {
+      switch (m.getClazzE()) {
+      case ADVERB:
+        m.setCase(null);
+        m.setGender(null);
+        m.setMood(null);
+        m.setNumber(null);
+        m.setPerson(null);
+        m.setPunctuation(null);
+        m.setTense(null);
+        break;
+      case NOUN:
+      case PRONOUN:
+        m.setPerson(null);
+        m.setMood(null);
+        m.setCase(null);
+        break;
+      case FINITIVE_VERB:
+        m.setGender(null);
+        break;
+      case INFINITIVE_VERB:
+        m.setCase(null);
+        m.setGender(null);
+        m.setMood(null);
+        m.setPunctuation(null);
+        m.setTense(null);
+        
+      default:
+        break;
+      }      
+    }
   }
 
   public ChunkTag parseChunkTag(String tagString) {

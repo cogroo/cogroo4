@@ -40,18 +40,12 @@ public class PortuguesePOSSequenceValidator implements
       String[] outcomesSequence, String outcome) {
 
     boolean isValid = false;
-    boolean outcomeIsME = false;
     boolean tokExists = false;
 
     String word = inputSequence[i];
 
-    System.err.println("# evaluating: " + word + " " + outcome + " seq.: " +
-     Arrays.toString(outcomesSequence));
-
     // validate B- and I-
     if (!validOutcome(outcome, outcomesSequence)) {
-      System.err.println("# invalid: " + word + " " + outcome + " seq.: " +
-      Arrays.toString(outcomesSequence));
       return false;
     }
 
@@ -63,15 +57,14 @@ public class PortuguesePOSSequenceValidator implements
     if (tagDictionary == null) {
       return true;
     } else {
-      if (isME(outcome)) {
-        outcomeIsME = true;
-        outcome = outcome.substring(2);
-      } else if (i > 0 && outcomesSequence[i - 1].startsWith("B-")) {
-        // not valid because there is no ME with size one
-        return false;
+      if (outcome.startsWith("B-") || outcome.startsWith("I-")) {
+        return true;
       }
 
       String[] tags = tagDictionary.getTags(word);
+      if (tags == null) {
+        tags = tagDictionary.getTags(word.toLowerCase());
+      }
 
       if (word.equals(outcome)) {
         isValid = true;
@@ -83,37 +76,11 @@ public class PortuguesePOSSequenceValidator implements
         if (contains(tagList, outcome)) {
           isValid = true;
         }
-      } else {
-        String lower = word.toLowerCase();
-        if (!lower.equals(word)) {
-          tokExists = true;
-          if ("prop".equals(outcome)) {
-            isValid = true;
-          }
-          tags = tagDictionary.getTags(lower);
-          if (tags != null) {
-            List<String> tagList1 = Arrays.asList(tags);
-            if (contains(tagList1, outcome)) {
-              isValid = true;
-            }
-          }
-        }
-      }
-      if (!tokExists) {
-        this.unknown.add(word);
-        System.err.println("-- unknown: " + word);
-        isValid = true;
-      } else if (tokExists && outcomeIsME) {
-        isValid = true;
       }
 
-      if (isValid) {
-        System.err.print("validated: " + word + " " + outcome);
-        if (outcomeIsME) {
-          System.err.println(" (me)");
-        } else {
-          System.err.println();
-        }
+      if (!tokExists) {
+        this.unknown.add(word);
+        isValid = true;
       }
 
       return isValid;
@@ -123,18 +90,14 @@ public class PortuguesePOSSequenceValidator implements
   @Override
   protected void finalize() throws Throwable {
     super.finalize();
-    System.out.println("... palavras desconhecidas ...");
-    for (String unk : this.unknown) {
-      System.out.println(unk);
-    }
-    System.out.println("... fim ...");
+    // System.out.println("... palavras desconhecidas ...");
+    // for (String unk : this.unknown) {
+    // System.out.println(unk);
+    // }
+    // System.out.println("... fim ...");
   }
 
-  private boolean isME(String outcome) {
-    return outcome.startsWith("B-") || outcome.startsWith("I-");
-  }
-
-  protected boolean validOutcome(String outcome, String[] sequence) {
+  static boolean validOutcome(String outcome, String[] sequence) {
     String prevOutcome = null;
     if (sequence.length > 0) {
       prevOutcome = sequence[sequence.length - 1];
@@ -142,24 +105,25 @@ public class PortuguesePOSSequenceValidator implements
     return validOutcome(outcome, prevOutcome);
   }
 
-  private boolean validOutcome(String outcome, String prevOutcome) {
-    
-    boolean prevIsBoundary = false, isBoundary = false, isIntermediate = false;
-    
-    if(prevOutcome != null) {
+  static boolean validOutcome(String outcome, String prevOutcome) {
+
+    boolean prevIsBoundary = false, prevIsIntermediate = false, isBoundary = false, isIntermediate = false;
+
+    if (prevOutcome != null) {
       prevIsBoundary = prevOutcome.startsWith("B-");
+      prevIsIntermediate = prevOutcome.startsWith("I-");
     }
-    
-    if(outcome != null) {
-      isBoundary = outcome.startsWith("B-");    
-      isIntermediate = outcome.startsWith("I-");      
+
+    if (outcome != null) {
+      isBoundary = outcome.startsWith("B-");
+      isIntermediate = outcome.startsWith("I-");
     }
-    
+
     boolean isSameEntity = false;
-    if(prevIsBoundary && isIntermediate) {
+    if ((prevIsBoundary || prevIsIntermediate) && isIntermediate) {
       isSameEntity = prevOutcome.substring(2).equals(outcome.substring(2));
     }
-    
+
     if (isIntermediate) {
       if (prevOutcome == null) {
         return (false);
@@ -168,13 +132,13 @@ public class PortuguesePOSSequenceValidator implements
           return (false);
         }
       }
-    } else if(isBoundary) {
-      if(prevIsBoundary) {
+    } else if (isBoundary) {
+      if (prevIsBoundary) {
         return false; // MWE should have at least two tokens
       }
     }
-    
-    if(prevIsBoundary && !isIntermediate) {
+
+    if (prevIsBoundary && !isIntermediate) {
       return false; // MWE should have at least two tokens
     }
 

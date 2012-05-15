@@ -185,7 +185,7 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
     if (featureTag == null) {
       featureTag = "-";
     } else {
-      featureTag = featureTag.replace(" ", "_");
+      featureTag = featureTag.replace(" ", "=");
     }
 
     String postag;

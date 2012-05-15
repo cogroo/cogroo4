@@ -17,13 +17,11 @@ import opennlp.tools.util.model.UncloseableInputStream;
 
 public class PortugueseFactory extends POSTaggerFactory {
 
-//  private static final String EXTENDED_POSDICT = "EXTENDED_POSDICT";
-//  private POSDictionary extendedPOSDict;
+  private static final String EXTENDED_POSDICT = "EXTENDED_POSDICT";
 
   public PortugueseFactory(Dictionary ngramDictionary,
       POSDictionary posDictionary) {
     super(ngramDictionary, posDictionary);
-//    this.posDictionary = posDictionary;
   }
 
   public PortugueseFactory(ArtifactProvider artifactProvider) {
@@ -45,19 +43,19 @@ public class PortugueseFactory extends POSTaggerFactory {
     return new PortuguesePOSContextGenerator(getDictionary());
   }
 
-//  public POSDictionary getPOSDictionary() {
-//    if(this.posDictionary == null) {
-//      
-//      if(artifactProvider != null) {
-//        Object obj = artifactProvider.getArtifact(EXTENDED_POSDICT);
-//        if(obj != null) {
-//          this.posDictionary = (POSDictionary) artifactProvider.getArtifact(EXTENDED_POSDICT);
-//        }
-//      }
-//    }
-//      
-//    return this.posDictionary;
-//  }
+  public POSDictionary getPOSDictionary() {
+    if(this.posDictionary == null) {
+      
+      if(artifactProvider != null) {
+        Object obj = artifactProvider.getArtifact(EXTENDED_POSDICT);
+        if(obj != null) {
+          this.posDictionary = (POSDictionary) artifactProvider.getArtifact(EXTENDED_POSDICT);
+        }
+      }
+    }
+      
+    return this.posDictionary;
+  }
 
   @Override
   @SuppressWarnings("rawtypes")
@@ -65,24 +63,36 @@ public class PortugueseFactory extends POSTaggerFactory {
     Map<String, ArtifactSerializer> serializers = super
         .createArtifactSerializersMap();
 
-//    serializers.put(EXTENDED_POSDICT, new POSDictionarySerializer());
+    serializers.put(EXTENDED_POSDICT, new POSDictionarySerializer(this));
     return serializers;
   }
 
   @Override
   public Map<String, Object> createArtifactMap() {
     Map<String, Object> artifactMap = super.createArtifactMap();
-//    if (this.posDictionary != null)
-//      artifactMap.put(EXTENDED_POSDICT, this.posDictionary);
+    if (this.posDictionary != null)
+      artifactMap.put(EXTENDED_POSDICT, this.posDictionary);
     return artifactMap;
+  }
+  
+  @Override
+  public POSDictionary createPOSDictionary(InputStream in)
+      throws InvalidFormatException, IOException {
+    return super.createPOSDictionary(in);
   }
 
   static class POSDictionarySerializer implements
       ArtifactSerializer<POSDictionary> {
 
+    private POSTaggerFactory factory;
+
+    public POSDictionarySerializer(POSTaggerFactory factory) {
+      this.factory = factory;
+    }
+
     public POSDictionary create(InputStream in) throws IOException,
         InvalidFormatException {
-      return POSDictionary.create(new UncloseableInputStream(in));
+      return factory.createPOSDictionary(new UncloseableInputStream(in));
     }
 
     public void serialize(POSDictionary artifact, OutputStream out)
