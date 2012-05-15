@@ -285,9 +285,19 @@ sub exec() {
 		  . ENCODING
 		  . " -data $data $extraOption";
 		$trCommand .=
-		    "scripts/cogroo POSTaggerTrainer.adex -model $model $base";
+		    "scripts/cogroo POSTaggerTrainer.adex -model $model $base -expandME true -factory br.ccsl.cogroo.tools.postag.PortugueseFactory";
 		$cvCommand .=
-		    "scripts/cogroo POSTaggerCrossValidator.adex $base";
+		    "scripts/cogroo POSTaggerCrossValidator.adex $base -expandME true -factory br.ccsl.cogroo.tools.postag.PortugueseFactory";
+	}
+	
+	if ( $opt{t} eq 'feat' ) {
+		my $base = "$basicCommand "
+		  . ENCODING
+		  . " -data $data $extraOption";
+		$trCommand .=
+		    "scripts/cogroo FeaturizerTrainerME.ad -model $model $base -expandME true";
+		$cvCommand .=
+		    "scripts/cogroo FeaturizerCrossValidator.ad $base -expandME true";
 	}
 	
 	my %resCV = executeCV($cvCommand);
