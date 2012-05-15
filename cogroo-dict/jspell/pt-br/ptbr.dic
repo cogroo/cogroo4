@@ -23772,7 +23772,7 @@ norte/#nm/tS/
 norueguês/#hm/fp/
 nos/CAT=ppes,N=p,P=1,C=a//
 nós/CAT=ppes,N=p,P=1,C=n//
-nosso/CAT=ppos,N=p,P=1,G=m/fp/
+nosso/CAT=ppos,N=s,P=1,G=m/fp/
 nostalgia/#nf/p/
 nostálgico/#hm/fp/
 notabilidade/#nf/p/
@@ -34688,7 +34688,7 @@ vos/CAT=ppes,N=p,P=2,C=a//
 vós/CAT=ppes,N=p,P=2,C=n//
 vosmecê/CAT=ppes//
 vossemecê/CAT=ppes//
-vosso/CAT=ppos,P=2,N=p,G=m/fp/
+vosso/CAT=ppos,P=2,N=s,G=m/fp/
 votação/#nf//
 votante/#hn/p/
 votar/#vn/XYPLcn/
@@ -37917,7 +37917,7 @@ URSS/#tsf/x/#União das Repúblicas Socialistas Soviéticas
 VCI/#tsf//#Via de Cintura Interna
 VIH/#tsm//#Vírus da Imunodeficiência Humana
 VW/#tsm//#VolksWagen (de)
-cm/$centímetro$#nm$ABR=1//
+cm/$centímetro$#nm$ABR=1,N=n//
 dr/$doutor$#nm$ABR=1/p/
 etc/ABR=1//
 eng/$engenheiro$#nm$ABR=1//
@@ -37925,10 +37925,10 @@ ex/$exemplo$#nm$ABR=1//
 exs/$exemplo$#nm$N=p,ABR=1//
 fac/$faculdade$#nf$ABR=1//
 fig/$figura$#nf$ABR=1//
-kg/$quilograma$#nm$ABR=1//
-km/$quilómetro$#nm$ABR=1/p/
+kg/$quilograma$#nm$ABR=1,N=n//
+km/$quilómetro$#nm$ABR=1,N=n/p/
 ln/$logaritmo$#nm$ABR=1//
-mm/$milimetro$#nm$ABR=1//
+mm/$milimetro$#nm$ABR=1,N=n//
 pág/$página$#nf$ABR=1//
 prof/$professor$#nm$ABR=1/p/
 séc/$século$#nm$ABR=1//
@@ -37936,8 +37936,8 @@ sécs/$século$#nm$N=p,ABR=1//
 sr/$senhor$#nm$ABR=1/f/
 Sta/$santo$#nm$ABR=1,G=f//
 Lda/$limitado$#a$ABR=1,G=f//
-MHz/$megahertz$#nm$ABR=1,G=m//
-GHz/$gigahertz$#nm$ABR=1,G=m//
+MHz/$megahertz$#nm$ABR=1,G=m,N=n//
+GHz/$gigahertz$#nm$ABR=1,G=m,N=n//
 
 badmínton/#nm,ORIG=ing//
 ballet/#nm,PT=balé,ORIG=fra//

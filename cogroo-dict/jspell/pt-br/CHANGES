@@ -1,3 +1,7 @@
 2012-01-20
 	removed CAT:con and introduced CAT:conj-s and CAT:conj-c
 	lasers CAT:nm -> CAT:nc
+	
+2012-05-12
+	cm, kg, km, mm, MHz, GHz -> added N:n
+	nosso, vosso -> singular
