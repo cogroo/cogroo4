@@ -84,16 +84,41 @@
 				</executions>
 			</plugin>
 
-			<!-- http://java.net/projects/maven-jaxb2-plugin -->
-			<!-- <plugin> <groupId>org.jvnet.jaxb2.maven2</groupId> <artifactId>maven-jaxb2-plugin</artifactId> 
-				<executions> <execution> <goals> <goal>generate</goal> </goals> </execution> 
-				</executions> <configuration> <schemaDirectory>src/main/schema</schemaDirectory> 
-				<extension>true</extension> <generatePackage>br.usp.pcs.lta.cogroo.tools.checker.rules.model</generatePackage> 
-				</configuration> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> 
-				<artifactId>build-helper-maven-plugin</artifactId> <executions> <execution> 
-				<id>add-source</id> <phase>generate-sources</phase> <goals> <goal>add-source</goal> 
-				</goals> <configuration> <sources> <source>generated-sources/xjc</source> 
-				</sources> </configuration> </execution> </executions> </plugin> -->
+			<plugin>
+				<!-- http://java.net/projects/maven-jaxb2-plugin -->
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaDirectory>src/main/schema</schemaDirectory>
+					<extension>true</extension>
+					<generatePackage>br.ccsl.cogroo.config</generatePackage>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>generated-sources/xjc</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<languageConfiguration xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="languageConfiguration.xsd">
+	<locale>pt_BR</locale>
+	<models>
+		<model type="sentenceDetector">abc</model>
+	</models>
+</languageConfiguration>
