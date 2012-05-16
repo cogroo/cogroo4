@@ -3,6 +3,7 @@ package br.ccsl.cogroo.analyzer;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -35,12 +36,13 @@ public class Pipe implements Analyzer {
   public static void main(String[] args) throws FileNotFoundException {
     long start = System.nanoTime();
     Pipe pipe = new Pipe();
+    OpenNLPComponentFactory factory = OpenNLPComponentFactory.create(new Locale("pt_BR"));
     
-    pipe.add(new SentenceDetector());
-    pipe.add(new Tokenizer());
-    pipe.add(new POSTagger());
-    pipe.add(new NameFinder());
-    pipe.add(new ContractionFinder());
+    pipe.add(factory.createSentenceDetector());
+    pipe.add(factory.createTokenizer());
+    pipe.add(factory.createNameFinder());
+    pipe.add(factory.createContractionFinder());
+    pipe.add(factory.createPOSTagger());
 
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");

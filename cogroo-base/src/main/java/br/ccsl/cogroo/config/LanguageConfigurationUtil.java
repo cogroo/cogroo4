@@ -13,13 +13,18 @@ import javax.xml.bind.Unmarshaller;
 public class LanguageConfigurationUtil {
 
   public static LanguageConfiguration get(Locale locale) throws FileNotFoundException, JAXBException {
-    File file = new File("src/main/schema/example.xml");
-    FileInputStream in = new FileInputStream(file);
     
+    InputStream in = LanguageConfigurationUtil.class.getClassLoader().getResourceAsStream(generateName(locale));
+
     return unmarshal(in);
   }
 
-
+private static String generateName (Locale locale) { 
+  StringBuilder str = new StringBuilder();
+  str.append("models_").append(locale).append(".xml");
+  return str.toString();
+}
+  
   private static LanguageConfiguration unmarshal(InputStream inputStream)
       throws JAXBException {
     String packageName = LanguageConfiguration.class.getPackage().getName();
@@ -30,12 +35,15 @@ public class LanguageConfigurationUtil {
   }
   
   public static void main(String[] args) throws FileNotFoundException, JAXBException {
-    LanguageConfiguration lc = LanguageConfigurationUtil.get(null);
+    LanguageConfiguration lc = LanguageConfigurationUtil.get(new Locale ("pt_BR"));
     
     System.out.println(lc.getLocale());
     
-    System.out.println(lc.getModels().getModel().get(0).getType());
-    System.out.println(lc.getModels().getModel().get(0).getValue());
+    System.out.println(lc.getModel().get(0).getType());
+    System.out.println(lc.getModel().get(0).getValue());
+    
+    System.out.println(lc.getModel().get(1).getType());
+    System.out.println(lc.getModel().get(1).getValue());
   }
 
 }

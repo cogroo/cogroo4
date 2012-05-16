@@ -18,7 +18,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="locale" type="xs:string"></xs:element>
-				<xs:element name="models" type="Models"></xs:element>
+				<xs:element name="model" type="Model" maxOccurs="unbounded" minOccurs="1"></xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -31,9 +31,4 @@
 		</xs:simpleContent>
 	</xs:complexType>
 
-	<xs:complexType name="Models">
-		<xs:sequence>
-			<xs:element name="model" type="Model" maxOccurs="unbounded" minOccurs="1"></xs:element>
-		</xs:sequence>
-	</xs:complexType>
 </xs:schema>

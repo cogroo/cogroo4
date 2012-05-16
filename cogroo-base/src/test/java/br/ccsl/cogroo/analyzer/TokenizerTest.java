@@ -5,7 +5,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,17 +21,14 @@ import opennlp.tools.util.Span;
 
 public class TokenizerTest {
   
+  private static final ArrayList Sentence = null;
   private Tokenizer tokenizer;
   TokenizerME mockedTokenizer;
-  
-  SentenceDetector sentenceDetector;
   
   @Before
   public void setUp() throws Exception {
     mockedTokenizer = mock(TokenizerME.class);
     tokenizer = new Tokenizer(mockedTokenizer);
-    
-    sentenceDetector = new SentenceDetector();
   }
   
   @Test
@@ -37,12 +36,17 @@ public class TokenizerTest {
     Document document = new Document();
     String text = "A menina pequena andava para lá.";
     document.setText(text);
-    sentenceDetector.analyze(document);
     
-    Span[] spans = { new Span(0,1), new Span(2,8), new Span(9,16), new Span (17, 23), new Span (24,28), new Span (29, 31), new Span (31,32)};
+    List<Sentence> sentences = new ArrayList<Sentence>();
     
-    when(mockedTokenizer.tokenizePos(text)).thenReturn(spans);
+    Span spansSentences = new Span(0,32);
+    Sentence sentence = new Sentence(spansSentences);
+    sentences.add(sentence);
     
+    document.setSentences(sentences);
+    
+    Span[] spansTokens = { new Span(0,1), new Span(2,8), new Span(9,16), new Span (17, 23), new Span (24,28), new Span (29, 31), new Span (31,32)};
+    when(mockedTokenizer.tokenizePos(text)).thenReturn(spansTokens);
     tokenizer.analyze(document);
     
     assertEquals(7, document.getSentences().get(0).getTokens().size());
@@ -68,9 +72,6 @@ public class TokenizerTest {
     Span[] spans = new Span[0];
     
     when(mockedTokenizer.tokenizePos(text)).thenReturn(spans);
-    
-    SentenceDetector sentenceDetector = new SentenceDetector();
-    sentenceDetector.analyze(document);
     
     assertNotNull(document.getSentences());
     assertEquals(0, document.getSentences().size());
