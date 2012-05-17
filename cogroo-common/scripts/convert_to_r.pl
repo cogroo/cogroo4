@@ -408,6 +408,10 @@ sub processName {
 	my $name = shift;
 	$name =~ s/([-,])SD_/$1/g;
 	$name =~ s/([-,])TOK_/$1/g;
+	$name =~ s/([-,])POS_/$1/g;
+	$name =~ s/([-,])FEAT_/$1/g;
+	
+	$name =~ s/([-,])DICCUT1/$1MDICT/g;
 	$name =~ s/-gp$//g;
 	$name =~ s/-ap$//g;
 	$name =~ s/_//g;
