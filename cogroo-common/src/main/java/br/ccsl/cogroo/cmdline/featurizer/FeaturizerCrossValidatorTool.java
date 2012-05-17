@@ -68,8 +68,11 @@ public final class FeaturizerCrossValidatorTool extends
     try {
       ExtendedPOSDictionary tagdict = null;
       if (params.getDict() != null) {
+        long start = System.nanoTime();
         tagdict = ExtendedPOSDictionary.create(new FileInputStream(params
             .getDict()));
+        System.out.println("ExtendedPOSDictionary loaded in "
+            + (System.nanoTime() - start) / 1000000 + "ms");
       }
 
       validator = new FeaturizerCrossValidator(factory.getLang(), mlParams,
