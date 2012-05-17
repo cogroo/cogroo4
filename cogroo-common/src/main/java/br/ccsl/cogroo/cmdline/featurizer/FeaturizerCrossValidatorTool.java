@@ -92,6 +92,8 @@ public final class FeaturizerCrossValidatorTool extends
       }
     }
 
-    System.out.println(validator.getWordAccuracy());
+    System.out.println();
+
+    System.out.println("Accuracy: " + validator.getWordAccuracy());
   }
 }
