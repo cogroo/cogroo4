@@ -87,29 +87,29 @@ public class DefaultFeaturizerContextGenerator implements
 
     String lex = toks[i];
     List<String> e = new ArrayList<String>();
-    
+
     createWindowFeats(i, toks, tags, preds, e);
-    
+
     createSuffixFeats(i, toks, tags, preds, e);
-    
+
     tokenClassFeatureGenerator.createFeatures(e, toks, i, preds);
-    
+
     if ("prop".equals(tags[i]) && lex.contains("_")) {
       createGroupSuffixex(lex, e);
     }
 
     // numbers would benefit from this
     StringPattern sp = StringPattern.recognize(lex);
-    if(sp.containsDigit() && !sp.containsLetters()) {
-      // TODO: make it generic !! this is only for portuguese!
+    if (sp.containsDigit() && !sp.containsLetters()) {
+      // TODO: make it generic !! this is only for Portuguese!
       String num = lex; // we need only the decimal separator
       try {
         Number number = nf.parse(num);
-        if(number != null)  {
+        if (number != null) {
           Double value = Math.abs(number.doubleValue());
-          if(value > 1) {
+          if (value > 1) {
             e.add("num=h");
-          } else if(value > 0) {
+          } else if (value > 0) {
             e.add("num=one");
           } else {
             e.add("num=zero");
@@ -129,15 +129,15 @@ public class DefaultFeaturizerContextGenerator implements
 
     return context;
   }
-  
+
   private static final Pattern UNDERLINE_PATTERN = Pattern.compile("_");
 
   private void createGroupSuffixex(String lex, List<String> e) {
     String[] parts = UNDERLINE_PATTERN.split(lex);
-    
-    if(parts.length < 2) // this is handled already
+
+    if (parts.length < 2) // this is handled already
       return;
-    
+
     for (int i = 0; i < parts.length; i++) {
       e.add("prop_" + i + "=" + parts[i]);
       String prefix = "prsf_" + i + "=";
@@ -146,7 +146,6 @@ public class DefaultFeaturizerContextGenerator implements
         e.add(prefix + suf);
       }
     }
-    
   }
 
   private void createSuffixFeats(int i, String[] toks, String[] tags,
@@ -168,30 +167,11 @@ public class DefaultFeaturizerContextGenerator implements
       e.add("h");
     }
 
-    if ("prop".equals(tags[i]) && lex.contains("_")) {
-      String fn = lex.substring(0, lex.indexOf("_"));
-      String[] nprefs = getSuffixes(fn);
-      for (int j = 0; j < prefs.length; j++) {
-        e.add("nsuf=" + nprefs[j]);
-      }
-    }
-
-    /* this is now done by the class analysis
-     
-    if (hasCap.matcher(lex).find()) {
-      e.add("c");
-    }
-
-    if (hasNum.matcher(lex).find()) {
-      e.add("d");
-    }*/
-    
   }
 
   private void createWindowFeats(int i, String[] toks, String[] tags,
       String[] preds, List<String> feats) {
 
-    String lex = toks[i];
     // Words in a 5-word window
     String w_2, w_1, w0, w1, w2;
 
