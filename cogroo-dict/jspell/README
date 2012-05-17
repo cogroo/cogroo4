@@ -25,7 +25,7 @@ JSpell dictionary installation (required after every dictionary change)
 ==============================
 
 For each dictionary
-	make install 
+	sudo make install 
 
 
  
