@@ -94,7 +94,7 @@ public class DefaultFeaturizerContextGenerator implements
 
     tokenClassFeatureGenerator.createFeatures(e, toks, i, preds);
 
-    if ("prop".equals(tags[i]) && lex.contains("_")) {
+    if (lex.contains("_")) {
       createGroupSuffixex(lex, e);
     }
 
@@ -139,7 +139,7 @@ public class DefaultFeaturizerContextGenerator implements
       return;
 
     for (int i = 0; i < parts.length; i++) {
-      e.add("prop_" + i + "=" + parts[i]);
+      e.add("up_" + i + "=" + parts[i]);
       String prefix = "prsf_" + i + "=";
       String[] suffixes = getSuffixes(parts[i]);
       for (String suf : suffixes) {
