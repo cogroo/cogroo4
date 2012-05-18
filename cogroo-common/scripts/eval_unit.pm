@@ -295,9 +295,9 @@ sub exec() {
 		  . ENCODING
 		  . " -data $data $extraOption";
 		$trCommand .=
-		    "scripts/cogroo FeaturizerTrainerME.ad -model $model $base -expandME true";
+		    "scripts/cogroo FeaturizerTrainerME.ad -model $model $base";
 		$cvCommand .=
-		    "scripts/cogroo FeaturizerCrossValidator.ad $base -expandME true";
+		    "scripts/cogroo FeaturizerCrossValidator.ad $base";
 	}
 	
 	my %resCV = executeCV($cvCommand);
