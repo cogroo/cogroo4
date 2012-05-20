@@ -100,7 +100,7 @@ public class ExtendedPOSDictionary implements Iterable<String>,
   static void addTriple(Map<String, List<Triple>> dic, String word,
       Triple triple) {
     if (!dic.containsKey(word)) {
-      dic.put(word, new ArrayList<ExtendedPOSDictionary.Triple>());
+      dic.put(word, new ArrayList<Triple>());
     }
     dic.get(word).add(triple);
   }
@@ -394,68 +394,4 @@ public class ExtendedPOSDictionary implements Iterable<String>,
     return triples;
   }
 
-  static class Triple {
-    private final String clazz;
-    private final String lemma;
-    private final String feats;
-
-    public Triple(String clazz, String lemma, String feats) {
-      this.clazz = clazz;
-      this.lemma = lemma;
-      this.feats = feats;
-    }
-
-    public String getClazz() {
-      return clazz;
-    }
-
-    public String getLemma() {
-      return lemma;
-    }
-
-    public String getFeats() {
-      return feats;
-    }
-
-    @Override
-    public String toString() {
-      return lemma + ": " + clazz + " " + feats;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (o == this) {
-        return true;
-      } else if (o instanceof Triple) {
-        Triple other = (Triple) o;
-
-        if (this.clazz != null) {
-          if (!this.clazz.equals(other.clazz)) {
-            return false;
-          }
-        } else if (other.clazz != null) {
-          return false;
-        }
-
-        if (this.lemma != null) {
-          if (!this.lemma.equals(other.lemma)) {
-            return false;
-          }
-        } else if (other.lemma != null) {
-          return false;
-        }
-
-        if (this.feats != null) {
-          if (!this.feats.equals(other.feats)) {
-            return false;
-          }
-        } else if (other.feats != null) {
-          return false;
-        }
-
-      }
-
-      return true;
-    }
-  }
 }

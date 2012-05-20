@@ -9,8 +9,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
-import opennlp.tools.postag.ExtendedPOSDictionary.Triple;
-import opennlp.tools.postag.POSDictionary;
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.interpreters.TagInterpreterI;
 

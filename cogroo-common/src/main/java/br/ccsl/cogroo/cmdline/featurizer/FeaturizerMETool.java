@@ -78,7 +78,9 @@ public class FeaturizerMETool extends AbstractBasicCmdLineTool {
           String[] feats = Featurizer.featurize(posSample.getSentence(),
               posSample.getTags());
 
-          System.out.println(new FeatureSample(posSample.getSentence(),
+          String[] empty = new String[feats.length];
+          
+          System.out.println(new FeatureSample(posSample.getSentence(), empty,
               posSample.getTags(), feats).toString());
 
           perfMon.incrementCounter();

@@ -9,6 +9,7 @@ import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.postag.POSContextGenerator;
 import opennlp.tools.postag.POSDictionary;
 import opennlp.tools.postag.POSTaggerFactory;
+import opennlp.tools.postag.TagDictionary;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.SequenceValidator;
 import opennlp.tools.util.model.ArtifactProvider;
@@ -20,7 +21,7 @@ public class PortugueseFactory extends POSTaggerFactory {
   private static final String EXTENDED_POSDICT = "EXTENDED_POSDICT";
 
   public PortugueseFactory(Dictionary ngramDictionary,
-      POSDictionary posDictionary) {
+      TagDictionary posDictionary) {
     super(ngramDictionary, posDictionary);
   }
 
@@ -30,7 +31,7 @@ public class PortugueseFactory extends POSTaggerFactory {
 
   @Override
   public SequenceValidator<String> getSequenceValidator() {
-    return new PortuguesePOSSequenceValidator(getPOSDictionary());
+    return new PortuguesePOSSequenceValidator(getTagDictionary());
   }
 
   @Override
@@ -43,7 +44,8 @@ public class PortugueseFactory extends POSTaggerFactory {
     return new PortuguesePOSContextGenerator(getDictionary());
   }
 
-  public POSDictionary getPOSDictionary() {
+  @Override
+  public TagDictionary getTagDictionary() {
     if(this.posDictionary == null) {
       
       if(artifactProvider != null) {
@@ -76,9 +78,9 @@ public class PortugueseFactory extends POSTaggerFactory {
   }
   
   @Override
-  public POSDictionary createPOSDictionary(InputStream in)
+  public TagDictionary createTagDictionary(InputStream in)
       throws InvalidFormatException, IOException {
-    return super.createPOSDictionary(in);
+    return super.createTagDictionary(in);
   }
 
   static class POSDictionarySerializer implements
@@ -92,7 +94,7 @@ public class PortugueseFactory extends POSTaggerFactory {
 
     public POSDictionary create(InputStream in) throws IOException,
         InvalidFormatException {
-      return factory.createPOSDictionary(new UncloseableInputStream(in));
+      return (POSDictionary)factory.createTagDictionary(new UncloseableInputStream(in));
     }
 
     public void serialize(POSDictionary artifact, OutputStream out)

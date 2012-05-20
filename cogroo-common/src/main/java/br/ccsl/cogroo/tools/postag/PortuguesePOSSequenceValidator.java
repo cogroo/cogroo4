@@ -22,16 +22,16 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import opennlp.tools.postag.POSDictionary;
+import opennlp.tools.postag.TagDictionary;
 import opennlp.tools.util.SequenceValidator;
 
 public class PortuguesePOSSequenceValidator implements
     SequenceValidator<String> {
 
-  public POSDictionary tagDictionary;
+  public TagDictionary tagDictionary;
   private SortedSet<String> unknown;
 
-  public PortuguesePOSSequenceValidator(POSDictionary tagDictionary) {
+  public PortuguesePOSSequenceValidator(TagDictionary tagDictionary) {
     unknown = new TreeSet<String>();
     this.tagDictionary = tagDictionary;
   }
@@ -57,7 +57,7 @@ public class PortuguesePOSSequenceValidator implements
     if (tagDictionary == null) {
       return true;
     } else {
-      if (outcome.startsWith("B-") || outcome.startsWith("I-")) {
+      if ((outcome.startsWith("B-") || outcome.startsWith("I-")) && inputSequence.length > 1 ) {
         return true;
       }
 

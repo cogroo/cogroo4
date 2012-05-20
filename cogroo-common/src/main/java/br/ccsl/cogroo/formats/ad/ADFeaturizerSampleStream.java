@@ -115,14 +115,15 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
       } else {
         Node root = paragraph.getRoot();
         List<String> sentence = new ArrayList<String>();
+        List<String> lemma = new ArrayList<String>();
         List<String> tags = new ArrayList<String>();
         List<String> target = new ArrayList<String>();
 
-        processRoot(root, sentence, tags, target);
+        processRoot(root, sentence, lemma, tags, target);
 
         if (sentence.size() > 0) {
           index++;
-          return new FeatureSample(sentence, tags, target);
+          return new FeatureSample(sentence, lemma, tags, target);
         }
 
       }
@@ -131,21 +132,21 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
     return null;
   }
 
-  private void processRoot(Node root, List<String> sentence, List<String> tags,
+  private void processRoot(Node root, List<String> sentence,List<String> lemmas, List<String> tags,
       List<String> target) {
     if (root != null) {
       TreeElement[] elements = root.getElements();
       for (int i = 0; i < elements.length; i++) {
         if (elements[i].isLeaf()) {
-          processLeaf((Leaf) elements[i], false, "O", sentence, tags, target);
+          processLeaf((Leaf) elements[i], false, "O", sentence, lemmas, tags, target);
         } else {
-          processNode((Node) elements[i], sentence, tags, target, null);
+          processNode((Node) elements[i], sentence, lemmas, tags, target, null);
         }
       }
     }
   }
 
-  private void processNode(Node node, List<String> sentence, List<String> tags,
+  private void processNode(Node node, List<String> sentence, List<String> lemmas, List<String> tags,
       List<String> target, String inheritedTag) {
     String phraseTag = getChunkTag(node.getSyntacticTag());
 
@@ -167,18 +168,19 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
             && target.get(target.size() - 1).endsWith(phraseTag)) {
           isIntermediate = true;
         }
-        processLeaf((Leaf) elements[i], isIntermediate, phraseTag, sentence,
+        processLeaf((Leaf) elements[i], isIntermediate, phraseTag, sentence, lemmas,
             tags, target);
       } else {
-        processNode((Node) elements[i], sentence, tags, target, phraseTag);
+        processNode((Node) elements[i], sentence, lemmas, tags, target, phraseTag);
       }
     }
   }
 
   private void processLeaf(Leaf leaf, boolean isIntermediate, String phraseTag,
-      List<String> sentence, List<String> tags, List<String> target) {
+      List<String> sentence, List<String> lemmas, List<String> tags, List<String> target) {
 
     String featureTag;
+    String lemma = leaf.getLemma();
     String lexeme = leaf.getLexeme();
     featureTag = leaf.getMorphologicalTag();
 
@@ -192,11 +194,12 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
 
     if (leaf.getSyntacticTag() == null) {
       postag = leaf.getLexeme();
+      lemma =  leaf.getLexeme();
     } else {
       postag = ADFeaturizerSampleStream.convertFuncTag(leaf.getFunctionalTag());
     }
 
-    if (expandME && lexeme.contains("_")) {
+    if (expandME && lexeme.contains("_") && !"prop".equals(postag)) {
       StringTokenizer tokenizer = new StringTokenizer(lexeme, "_");
 
       /*
@@ -215,15 +218,18 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
           target.add(featureTag);
         }
 
+        lemmas.addAll(toks);
         sentence.addAll(toks);
         tags.addAll(tagsWithCont);
       } else {
         sentence.add(lexeme);
+        lemmas.add(lemma);
         target.add(featureTag);
         tags.add(postag);
       }
     } else {
-      sentence.add(leaf.getLexeme());
+      sentence.add(lexeme);
+      lemmas.add(lemma);
       target.add(featureTag);
       tags.add(postag);
     }

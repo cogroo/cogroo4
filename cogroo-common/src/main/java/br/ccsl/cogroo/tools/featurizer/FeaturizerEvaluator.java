@@ -78,7 +78,7 @@ public class FeaturizerEvaluator extends Evaluator<FeatureSample> {
       }
     }
 
-    FeatureSample result = new FeatureSample(reference.getSentence(),
+    FeatureSample result = new FeatureSample(reference.getSentence(), reference.getLemmas(),
         reference.getTags(), predictedFeatures);
 
     return result;

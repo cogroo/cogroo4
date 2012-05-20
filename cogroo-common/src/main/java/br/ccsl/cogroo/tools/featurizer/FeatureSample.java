@@ -30,6 +30,7 @@ public class FeatureSample {
   private final List<String> sentence;
   private final List<String> tags;
   private final List<String> feats;
+  private final List<String> lemma;
 
   /**
    * Initializes the current instance.
@@ -41,12 +42,14 @@ public class FeatureSample {
    * @param feats
    *          Feature tags
    */
-  public FeatureSample(String[] sentence, String[] tags, String[] feats) {
+  public FeatureSample(String[] sentence, String[] lemma, String[] tags, String[] feats) {
 
-    validateArguments(sentence.length, tags.length, feats.length);
+    validateArguments(sentence.length, lemma.length, tags.length, feats.length);
 
     this.sentence = Collections.unmodifiableList(new ArrayList<String>(Arrays
         .asList(sentence)));
+    this.lemma = Collections.unmodifiableList(new ArrayList<String>(Arrays
+        .asList(lemma)));
     this.tags = Collections.unmodifiableList(new ArrayList<String>(Arrays
         .asList(tags)));
     this.feats = Collections.unmodifiableList(new ArrayList<String>(Arrays
@@ -63,13 +66,15 @@ public class FeatureSample {
    * @param feats
    *          Feature tags
    */
-  public FeatureSample(List<String> sentence, List<String> tags,
+  public FeatureSample(List<String> sentence, List<String> lemma, List<String> tags,
       List<String> feats) {
 
-    validateArguments(sentence.size(), tags.size(), feats.size());
+    validateArguments(sentence.size(), lemma.size(), tags.size(), feats.size());
 
     this.sentence = Collections.unmodifiableList(new ArrayList<String>(
         (sentence)));
+    this.lemma = Collections.unmodifiableList(new ArrayList<String>(
+        (lemma)));
     this.tags = Collections.unmodifiableList(new ArrayList<String>((tags)));
     this.feats = Collections.unmodifiableList(new ArrayList<String>((feats)));
   }
@@ -77,6 +82,11 @@ public class FeatureSample {
   /** Gets the training sentence */
   public String[] getSentence() {
     return sentence.toArray(new String[sentence.size()]);
+  }
+  
+  /** Gets the training sentence */
+  public String[] getLemmas() {
+    return lemma.toArray(new String[lemma.size()]);
   }
 
   /** Gets the POS Tags for the sentence */
@@ -89,9 +99,9 @@ public class FeatureSample {
     return feats.toArray(new String[feats.size()]);
   }
 
-  private static void validateArguments(int sentenceSize, int tagsSize,
+  private static void validateArguments(int sentenceSize, int lemmaSize, int tagsSize,
       int featsSize) throws IllegalArgumentException {
-    if (sentenceSize != tagsSize || tagsSize != featsSize)
+    if (sentenceSize != tagsSize || tagsSize != featsSize || lemmaSize != tagsSize)
       throw new IllegalArgumentException(
           "All arrays must have the same length!");
   }
@@ -102,7 +112,7 @@ public class FeatureSample {
     StringBuilder featsString = new StringBuilder();
 
     for (int ci = 0; ci < feats.size(); ci++) {
-      featsString.append(sentence.get(ci)).append(" ").append(tags.get(ci))
+      featsString.append(sentence.get(ci)).append(" [").append(lemma.get(ci)).append("] ").append(tags.get(ci))
           .append(" ").append(feats.get(ci)).append("\n");
     }
     return featsString.toString();
@@ -117,6 +127,7 @@ public class FeatureSample {
 
       return Arrays.equals(getSentence(), a.getSentence())
           && Arrays.equals(getTags(), a.getTags())
+          && Arrays.equals(getLemmas(), a.getLemmas())
           && Arrays.equals(getFeatures(), a.getFeatures());
     } else {
       return false;

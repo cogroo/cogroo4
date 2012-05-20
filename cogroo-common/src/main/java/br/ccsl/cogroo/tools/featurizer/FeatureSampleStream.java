@@ -43,6 +43,7 @@ public class FeatureSampleStream extends
   public FeatureSample read() throws IOException {
 
     List<String> toks = new ArrayList<String>();
+    List<String> lemmas = new ArrayList<String>();
     List<String> tags = new ArrayList<String>();
     List<String> preds = new ArrayList<String>();
 
@@ -53,15 +54,15 @@ public class FeatureSampleStream extends
         System.err.println("Skipping corrupt line: " + line);
       } else {
         toks.add(parts[0]);
+        lemmas.add(parts[0]); // no lemma info for now
         tags.add(parts[1]);
         preds.add(parts[2]);
+        
       }
     }
 
     if (toks.size() > 0) {
-      return new FeatureSample(toks.toArray(new String[toks.size()]),
-          tags.toArray(new String[tags.size()]), preds.toArray(new String[preds
-              .size()]));
+      return new FeatureSample(toks, lemmas, tags, preds);
     } else {
       return null;
     }
