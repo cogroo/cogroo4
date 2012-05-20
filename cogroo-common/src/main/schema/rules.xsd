@@ -215,14 +215,20 @@
 						</xs:appinfo>
 					</xs:annotation>
 					<xs:restriction base="xs:string">
+					
 						<xs:enumeration value="noun"/>
 						<xs:enumeration value="noun adjective"/>
+						
 						<xs:enumeration value="proper noun"/>
+						
+<!-- 						<xs:enumeration value="independent pronoun"/> -->
+						<xs:enumeration value="personal pronoun"/>
+						<xs:enumeration value="pronoun"/>
+<!-- 						<xs:enumeration value="determiner pronoun"/> -->
+								
 <!-- 						<xs:enumeration value="specifier"/> -->
 <!-- 						<xs:enumeration value="determiner"/> -->
 						<xs:enumeration value="article"/>
-						<xs:enumeration value="personal pronoun"/>
-<!-- 						<xs:enumeration value="determiner pronoun"/> -->
 						<xs:enumeration value="adjective"/>
 						<xs:enumeration value="adverb"/>
 						<xs:enumeration value="infinitive verb"/>
@@ -236,8 +242,7 @@
 <!-- 						<xs:enumeration value="unit"/> -->
 						<xs:enumeration value="finitive verb"/>
 						<xs:enumeration value="participle verb"/>
-						<xs:enumeration value="gerund verb"/>
-						<xs:enumeration value="pronoun"/>						
+						<xs:enumeration value="gerund verb"/>				
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>

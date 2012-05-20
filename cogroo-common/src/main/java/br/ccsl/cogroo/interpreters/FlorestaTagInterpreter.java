@@ -107,7 +107,6 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
     menumElements.put(Class.NOUN, "n");
     menumElements.put(Class.PROPER_NOUN, "prop");
     menumElements.put(Class.ARTICLE, "art");// collision
-    menumElements.put(Class.PERSONAL_PRONOUN, "pron-pers");
     menumElements.put(Class.PREPOSITION, "prp");
     menumElements.put(Class.ADJECTIVE, "adj");
     menumElements.put(Class.ADVERB, "adv");
@@ -124,7 +123,9 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
     menumElements.put(Class.GERUND_VERB, "v-ger");
     menumElements.put(Class.PREFIX, "ec");
     menumElements.put(Class.NOUN_ADJECTIVE, "n-adj");
+    
     menumElements.put(Class.PRONOUN, "pron"); // many
+    menumElements.put(Class.PERSONAL_PRONOUN, "pron-pers");
 
     // removed
     // menumElements.put(Class.UNIT, "uni");//?
@@ -270,6 +271,11 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
     stringMElements.put("$=", Collections.unmodifiableList(others));
     stringMElements.put("$$", Collections.unmodifiableList(others));
     stringMElements.put("$\\", Collections.unmodifiableList(others));
+    
+    ArrayList<Enum<?>> pronouns = new ArrayList<Enum<?>>();
+    pronouns.add(Class.PRONOUN);
+    stringMElements.put("pron-det", Collections.unmodifiableList(pronouns));
+    stringMElements.put("pron-indp", Collections.unmodifiableList(pronouns));
 
     ArrayList<Enum<?>> pp = new ArrayList<Enum<?>>();
     pp.add(Class.PREPOSITION);
@@ -325,9 +331,7 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
           }
         }
       } else {
-        if (tag.startsWith("pron-")) {
-          m.setClazz(Class.PRONOUN);
-        } else if (tag.length() == 1 || "--".equals(tag) || "...".equals(tag)) {
+        if (tag.length() == 1 || "--".equals(tag) || "...".equals(tag)) {
           m.setClazz(Class.PUNCTUATION_MARK);
         } else if ("n:".equals(tag)) {
           m.setClazz(Class.NOUN);

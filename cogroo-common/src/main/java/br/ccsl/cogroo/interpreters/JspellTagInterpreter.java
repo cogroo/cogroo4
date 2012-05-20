@@ -48,7 +48,6 @@ public class JspellTagInterpreter implements TagInterpreterI {
     menumElements.put(Class.NOUN_ADJECTIVE, "CAT:a_nc");
     menumElements.put(Class.PROPER_NOUN, "CAT:np");
     menumElements.put(Class.ARTICLE, "CAT:art");
-    menumElements.put(Class.PERSONAL_PRONOUN, "CAT:ppes");
     menumElements.put(Class.PREPOSITION, "CAT:prep");
     menumElements.put(Class.ADJECTIVE, "CAT:adj");
     menumElements.put(Class.ADVERB, "CAT:adv");
@@ -56,6 +55,8 @@ public class JspellTagInterpreter implements TagInterpreterI {
     menumElements.put(Class.COORDINATING_CONJUNCTION, "CAT:conj-c");
     menumElements.put(Class.INTERJECTION, "CAT:in");
     menumElements.put(Class.PREFIX, "CAT:pref");
+    
+    menumElements.put(Class.PERSONAL_PRONOUN, "CAT:ppes");
 
     /* Gender */
     menumElements.put(Gender.MALE, "G:m");
