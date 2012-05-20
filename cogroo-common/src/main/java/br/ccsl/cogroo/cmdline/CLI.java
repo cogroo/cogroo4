@@ -43,6 +43,7 @@ import opennlp.tools.cmdline.postag.POSTaggerTrainerTool;
 import opennlp.tools.util.Version;
 import br.ccsl.cogroo.cmdline.dictionary.AbbreviationDictionaryBuilderTool;
 import br.ccsl.cogroo.cmdline.dictionary.POSDictionaryBuilderTool;
+import br.ccsl.cogroo.cmdline.dictionary.TabSeparatedPOSDictionaryBuilderTool;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerConverterTool;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerCrossValidatorTool;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerEvaluatorTool;
@@ -74,6 +75,7 @@ public final class CLI {
 
     // Dictionary Builder
     tools.add(new POSDictionaryBuilderTool());
+    tools.add(new TabSeparatedPOSDictionaryBuilderTool());
 
     // Featurizer
     tools.add(new FeaturizerMETool());
