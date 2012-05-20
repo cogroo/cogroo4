@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -13,45 +14,50 @@ import java.util.concurrent.TimeUnit;
 import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
-import opennlp.tools.postag.TagDictionary;
 
+import com.google.common.base.Objects;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.io.ByteStreams;
 
-public class FSADictionary implements TagDictionary {
+public class FSAFeatureDictionary implements FeatureDictionaryI {
 
   private DictionaryLookup dictLookup;
-  private Cache<String, String[]> cache = CacheBuilder.newBuilder()
+
+  private Cache<WordTag, String[]> cache = CacheBuilder.newBuilder()
       .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
-      .build(new CacheLoader<String, String[]>() {
-        public String[] load(String key) {
+      .build(new CacheLoader<WordTag, String[]>() {
+        public String[] load(WordTag key) {
           return lookup(key);
         }
       });
 
-  public FSADictionary(DictionaryLookup dictLookup) {
+  public FSAFeatureDictionary(DictionaryLookup dictLookup) {
     this.dictLookup = dictLookup;
   }
 
-  private String[] lookup(String word) {
+  private String[] lookup(WordTag key) {
     synchronized (dictLookup) {
-      List<WordData> data = dictLookup.lookup(word);
+      List<WordData> data = dictLookup.lookup(key.word);
       if (data.size() > 0) {
-        String[] tags = new String[data.size()];
-        for (int i = 0; i < tags.length; i++) {
-          tags[i] = data.get(i).getTag().toString();
+        final String prefix = key.tag + "#";
+        List<String> tags = new ArrayList<String>(data.size());
+        for (int i = 0; i < data.size(); i++) {
+          String completeTag = data.get(i).getTag().toString();
+          if (completeTag.startsWith(prefix)) {
+            tags.add(completeTag.substring(completeTag.indexOf("#") + 1));
+          }
         }
-        return tags;
+        return tags.toArray(new String[tags.size()]);
       }
     }
     return null;
   }
 
-  public String[] getTags(String word) {
+  public String[] getFeatures(String word, String pos) {
     try {
-      return cache.get(word);
+      return cache.get(new WordTag(word, pos));
     } catch (ExecutionException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -59,7 +65,7 @@ public class FSADictionary implements TagDictionary {
     }
   }
 
-  public static TagDictionary create(String path)
+  public static FeatureDictionaryI create(String path)
       throws IllegalArgumentException, IOException {
     FileInputStream fsaData = new FileInputStream(path);
     FileInputStream featuresData = new FileInputStream(
@@ -78,24 +84,50 @@ public class FSADictionary implements TagDictionary {
     return ByteStreams.toByteArray(featuresData);
   }
 
-  public static FSADictionary create(InputStream fsaData,
+  public static FeatureDictionaryI create(InputStream fsaData,
       InputStream featuresData) throws IllegalArgumentException, IOException {
     DictionaryLookup dictLookup = new DictionaryLookup(Dictionary.readAndClose(
         fsaData, featuresData));
-    return new FSADictionary(dictLookup);
+    return new FSAFeatureDictionary(dictLookup);
   }
 
-  public static TagDictionary create(byte[] dictData, byte[] dictInfo)
+  public static FeatureDictionaryI create(byte[] dictData, byte[] dictInfo)
       throws IllegalArgumentException, IOException {
     return create(new ByteArrayInputStream(dictData), new ByteArrayInputStream(
         dictInfo));
+  }
+
+  private static class WordTag {
+    public final String word;
+    public final String tag;
+
+    public WordTag(String word, String tag) {
+      this.word = word;
+      this.tag = tag;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      } else if (o instanceof WordTag) {
+        return Objects.equal(this.word, ((WordTag) o).word)
+            && Objects.equal(this.tag, ((WordTag) o).tag);
+      }
+      return false;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hashCode(word, tag);
+    }
   }
 
   public static void main(String[] args) throws IllegalArgumentException,
       IOException {
 
     long start = System.nanoTime();
-    FSADictionary td = (FSADictionary) create("fsa_dictionaries/pt_br_feat.dict");
+    FSAFeatureDictionary td = (FSAFeatureDictionary) create("fsa_dictionaries/pt_br_feat.dict");
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
     Scanner kb = new Scanner(System.in);
@@ -105,7 +137,12 @@ public class FSADictionary implements TagDictionary {
       if (input.equals("0")) {
         input = "casa";
       }
-      System.out.println(Arrays.toString(td.getTags(input)));
+      String[] parts = input.split("\\s+");
+      if (parts.length == 2) {
+        System.out.println(Arrays.toString(td.getFeatures(parts[0], parts[1])));
+      } else {
+        System.out.println("invalid... enter a space separated word + postag");
+      }
       System.out.print("Enter a query: ");
       input = kb.nextLine();
     }

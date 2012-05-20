@@ -25,6 +25,7 @@ import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.TrainingParameters;
 import opennlp.tools.util.eval.CrossValidationPartitioner;
 import opennlp.tools.util.eval.Mean;
+import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 
 public class FeaturizerCrossValidator {
 
@@ -33,10 +34,10 @@ public class FeaturizerCrossValidator {
 
   private Mean wordAccuracy = new Mean();
   private FeaturizerEvaluationMonitor[] listeners;
-  private ExtendedPOSDictionary posDict;
+  private FeatureDictionaryI posDict;
 
   public FeaturizerCrossValidator(String languageCode,
-      TrainingParameters params, ExtendedPOSDictionary dict,
+      TrainingParameters params, FeatureDictionaryI dict,
       FeaturizerEvaluationMonitor... listeners) {
 
     this.languageCode = languageCode;
@@ -67,7 +68,7 @@ public class FeaturizerCrossValidator {
 
       FeaturizerModel model = FeaturizerME.train(languageCode,
           trainingSampleStream, new DefaultFeaturizerContextGenerator(),
-          params, this.posDict);
+          params, (ExtendedPOSDictionary)this.posDict);
 
       // do testing
       FeaturizerEvaluator evaluator = new FeaturizerEvaluator(new FeaturizerME(

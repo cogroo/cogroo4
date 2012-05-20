@@ -17,13 +17,15 @@
 
 package opennlp.tools.postag;
 
-public interface ExtendedTagDictionary extends TagDictionary {
+import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
+
+public interface ExtendedTagDictionary extends TagDictionary, FeatureDictionaryI {
 
   public String[] getCompleteTag(String word);
 
   public String[] getFeatureTag(String word);
 
-  public String[] getFeatureTag(String word, String tag);
+//  public String[] getFeatureTag(String word, String tag);
 
   public String getLemma(String word, String tag);
 }

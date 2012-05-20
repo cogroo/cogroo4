@@ -31,6 +31,7 @@ import opennlp.tools.postag.ExtendedPOSDictionary;
 import opennlp.tools.util.eval.EvaluationMonitor;
 import opennlp.tools.util.model.ModelUtil;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerCrossValidatorTool.CVToolParams;
+import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 import br.ccsl.cogroo.tools.featurizer.FeatureSample;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerCrossValidator;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerEvaluationMonitor;
@@ -66,7 +67,7 @@ public final class FeaturizerCrossValidatorTool extends
 
     FeaturizerCrossValidator validator;
     try {
-      ExtendedPOSDictionary tagdict = null;
+      FeatureDictionaryI tagdict = null;
       if (params.getDict() != null) {
         long start = System.nanoTime();
         tagdict = ExtendedPOSDictionary.create(new FileInputStream(params

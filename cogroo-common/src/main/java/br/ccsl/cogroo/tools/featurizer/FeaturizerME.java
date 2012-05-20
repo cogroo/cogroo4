@@ -32,6 +32,7 @@ import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.Sequence;
 import opennlp.tools.util.SequenceValidator;
 import opennlp.tools.util.TrainingParameters;
+import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 
 /**
  * The class represents a maximum-entropy-based chunker. Such a chunker can be
@@ -163,7 +164,7 @@ public class FeaturizerME implements Featurizer {
   public static FeaturizerModel train(String lang,
       ObjectStream<FeatureSample> in,
       FeaturizerContextGenerator contextGenerator, TrainingParameters mlParams,
-      ExtendedPOSDictionary dict) throws IOException {
+      FeatureDictionaryI dict) throws IOException {
 
     Map<String, String> manifestInfoEntries = new HashMap<String, String>();
 
@@ -172,6 +173,6 @@ public class FeaturizerME implements Featurizer {
     AbstractModel maxentModel = TrainUtil.train(es, mlParams.getSettings(),
         manifestInfoEntries);
 
-    return new FeaturizerModel(lang, maxentModel, dict, manifestInfoEntries);
+    return new FeaturizerModel(lang, maxentModel, (ExtendedPOSDictionary)dict, manifestInfoEntries);
   }
 }

@@ -2,7 +2,6 @@ package br.ccsl.cogroo.cmdline.featurizer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -58,7 +57,7 @@ public class CriaListaDeFeatures {
     for (String word : dict) {
       String[] tags = dict.getTags(word);
       for (String tag : tags) {
-        String[] feats = dict.getFeatureTag(word, tag);
+        String[] feats = dict.getFeatures(word, tag);
         if(!tagsDict.containsKey(tag)) {
           tagsDict.put(tag, new TreeSet<String>());
         }

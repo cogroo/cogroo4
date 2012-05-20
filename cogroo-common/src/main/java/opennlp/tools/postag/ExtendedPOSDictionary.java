@@ -301,7 +301,7 @@ public class ExtendedPOSDictionary implements Iterable<String>,
     }
   }
 
-  public String[] getFeatureTag(String word, String tag) {
+  public String[] getFeatures(String word, String tag) {
     List<String> feats = new ArrayList<String>();
     if (caseSensitive) {
       List<Triple> triples = dictionary.get(word);

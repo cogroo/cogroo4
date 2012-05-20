@@ -28,7 +28,6 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedMap;
@@ -49,10 +48,6 @@ import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
 import br.ccsl.cogroo.interpreters.JspellTagInterpreter;
 import br.ccsl.cogroo.interpreters.TagInterpreterI;
 import br.ccsl.cogroo.tools.featurizer.FeatureSample;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 
 public class TabSeparatedPOSDictionaryBuilderTool extends
     AbstractBasicCmdLineTool {
@@ -350,7 +345,7 @@ public class TabSeparatedPOSDictionaryBuilderTool extends
     sb.append(word).append(HT).append(t.getLemma()).append(HT)
         .append(t.getClazz());
     if (t.getFeats() != null && t.getFeats().length() > 0) {
-      sb.append("=").append(t.getFeats());
+      sb.append("#").append(t.getFeats());
     }
     sb.append(NL);
     return sb.toString();

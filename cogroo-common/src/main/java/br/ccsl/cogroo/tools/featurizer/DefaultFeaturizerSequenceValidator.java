@@ -27,15 +27,16 @@ import java.util.Set;
 import opennlp.tools.postag.ExtendedTagDictionary;
 import opennlp.tools.util.SequenceValidator;
 import opennlp.tools.util.featuregen.StringPattern;
+import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
 
 public class DefaultFeaturizerSequenceValidator implements
     SequenceValidator<WordTag> {
 
-  private ExtendedTagDictionary tagDict = null;
+  private FeatureDictionaryI tagDict = null;
   private Set<String> poisonedTags;
 
-  public DefaultFeaturizerSequenceValidator(ExtendedTagDictionary tagDict,
+  public DefaultFeaturizerSequenceValidator(FeatureDictionaryI tagDict,
       Set<String> poisonedTags) {
     this.tagDict = tagDict;
     this.poisonedTags = poisonedTags;
@@ -64,7 +65,7 @@ public class DefaultFeaturizerSequenceValidator implements
 //      postag = postag.substring(2);
 //    }
 
-    String[] tagsArr = tagDict.getFeatureTag(word, postag);
+    String[] tagsArr = tagDict.getFeatures(word, postag);
     List<String> tags = null;
     if(tagsArr != null) {
       tags = filterPoisoned(tagsArr);
@@ -74,7 +75,7 @@ public class DefaultFeaturizerSequenceValidator implements
     if(tags == null || tags.size() == 0) {
       StringPattern pattern = StringPattern.recognize(word);
       if(!pattern.isAllLowerCaseLetter()) {
-        tagsArr = tagDict.getFeatureTag(word.toLowerCase(), postag);
+        tagsArr = tagDict.getFeatures(word.toLowerCase(), postag);
 
         if(tagsArr != null) {
           tags = filterPoisoned(tagsArr);
