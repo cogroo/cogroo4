@@ -33,5 +33,8 @@ interface TrainingParams extends BasicTrainingParams {
   @ParameterDescription(valueName = "dictionaryPath", description = "The XML tag dictionary file")
   @OptionalParameter
   File getDict();
-
+  
+  @ParameterDescription(valueName = "factoryName", description = "A sub-class of POSTaggerFactory where to get implementation and resources.")
+  @OptionalParameter
+  String getFactory();
 }

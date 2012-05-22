@@ -29,7 +29,6 @@ import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
-import br.ccsl.cogroo.tools.featurizer.DefaultFeaturizerSequenceValidator;
 import br.ccsl.cogroo.tools.featurizer.FeatureSample;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerME;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerModel;
@@ -52,9 +51,7 @@ public class FeaturizerMETool extends AbstractBasicCmdLineTool {
           .load(new File(args[0]));
 
       FeaturizerME Featurizer = new FeaturizerME(model,
-          FeaturizerME.DEFAULT_BEAM_SIZE,
-          new DefaultFeaturizerSequenceValidator(model.getTagDictionary(),
-              model.getDictionaryPoisonedTags()));
+          FeaturizerME.DEFAULT_BEAM_SIZE);
 
       ObjectStream<String> lineStream = new PlainTextByLineStream(
           new InputStreamReader(System.in));
@@ -79,7 +76,7 @@ public class FeaturizerMETool extends AbstractBasicCmdLineTool {
               posSample.getTags());
 
           String[] empty = new String[feats.length];
-          
+
           System.out.println(new FeatureSample(posSample.getSentence(), empty,
               posSample.getTags(), feats).toString());
 

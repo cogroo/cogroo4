@@ -28,7 +28,6 @@ import opennlp.tools.cmdline.params.EvaluatorParams;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.eval.EvaluationMonitor;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerEvaluatorTool.EvalToolParams;
-import br.ccsl.cogroo.tools.featurizer.DefaultFeaturizerSequenceValidator;
 import br.ccsl.cogroo.tools.featurizer.FeatureSample;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerEvaluationMonitor;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerEvaluator;
@@ -61,9 +60,7 @@ public final class FeaturizerEvaluatorTool extends
     }
 
     FeaturizerEvaluator evaluator = new FeaturizerEvaluator(new FeaturizerME(
-        model, FeaturizerME.DEFAULT_BEAM_SIZE,
-        new DefaultFeaturizerSequenceValidator(model.getTagDictionary(),
-            model.getDictionaryPoisonedTags())),
+        model, FeaturizerME.DEFAULT_BEAM_SIZE),
         listeners.toArray(new FeaturizerEvaluationMonitor[listeners.size()]));
 
     final PerformanceMonitor monitor = new PerformanceMonitor("sent");
