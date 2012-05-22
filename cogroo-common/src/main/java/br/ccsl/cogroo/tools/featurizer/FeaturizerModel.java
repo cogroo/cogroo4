@@ -19,18 +19,14 @@ package br.ccsl.cogroo.tools.featurizer;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import opennlp.model.AbstractModel;
-import opennlp.tools.postag.ExtendedPOSDictionary;
+import opennlp.tools.util.BaseToolFactory;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.BaseModel;
-import opennlp.tools.util.model.UncloseableInputStream;
+import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 
 /**
  * The {@link FeaturizerModel} is the model used by a learnable
@@ -40,42 +36,32 @@ import opennlp.tools.util.model.UncloseableInputStream;
  */
 public class FeaturizerModel extends BaseModel {
 
-  static class ExtendedTagDictionarySerializer implements
-      ArtifactSerializer<ExtendedPOSDictionary> {
-
-    public ExtendedPOSDictionary create(InputStream in) throws IOException,
-        InvalidFormatException {
-      return ExtendedPOSDictionary.create(new UncloseableInputStream(in));
-    }
-
-    public void serialize(ExtendedPOSDictionary artifact, OutputStream out)
-        throws IOException {
-      artifact.serialize(out);
-    }
-
-    @SuppressWarnings("unchecked")
-    static void register(Map<String, ArtifactSerializer> factories) {
-      factories.put("tagdict", new ExtendedTagDictionarySerializer());
-    }
-  }
-
   private static final String COMPONENT_NAME = "FeaturizerME";
-  private static final String FEATURIZER_MODEL_ENTRY_NAME = "featurizer.model";
-  private static final String TAG_DICTIONARY_ENTRY_NAME = "tags.tagdict";
-  private Set<String> poisonedDictionaryTags;
+  public static final String FEATURIZER_MODEL_ENTRY_NAME = "featurizer.model";
+//  private static final String TAG_DICTIONARY_ENTRY_NAME = "tags.tagdict";
+//  private Set<String> poisonedDictionaryTags;
 
   public FeaturizerModel(String languageCode, AbstractModel featurizerModel,
-      ExtendedPOSDictionary tagDictionary,
-      Map<String, String> manifestInfoEntries) {
+      Map<String, String> manifestInfoEntries, FeaturizerFactory factory) {
 
-    super(COMPONENT_NAME, languageCode, manifestInfoEntries);
-
-    if (tagDictionary != null)
-      artifactMap.put(TAG_DICTIONARY_ENTRY_NAME, tagDictionary);
+    super(COMPONENT_NAME, languageCode, manifestInfoEntries, factory);
+    
+    if (featurizerModel == null)
+      throw new IllegalArgumentException("The featurizerModel param must not be null!");
 
     artifactMap.put(FEATURIZER_MODEL_ENTRY_NAME, featurizerModel);
 
     checkArtifactMap();
+  }
+  
+  public FeaturizerModel(InputStream in) throws IOException,
+      InvalidFormatException {
+    super(COMPONENT_NAME, in);
+  }
+
+  @Override
+  protected Class<? extends BaseToolFactory> getDefaultFactory() {
+    return DefaultFeaturizerFactory.class;
   }
   
   @Override
@@ -84,18 +70,6 @@ public class FeaturizerModel extends BaseModel {
 
     super.createArtifactSerializers(serializers);
     
-    serializers.put("tagdict", new ExtendedTagDictionarySerializer());
-    
-  }
-
-  public FeaturizerModel(String languageCode, AbstractModel chunkerModel,
-      ExtendedPOSDictionary dict) {
-    this(languageCode, chunkerModel, dict, null);
-  }
-
-  public FeaturizerModel(InputStream in) throws IOException,
-      InvalidFormatException {
-    super(COMPONENT_NAME, in);
   }
 
   @Override
@@ -105,54 +79,13 @@ public class FeaturizerModel extends BaseModel {
     if (!(artifactMap.get(FEATURIZER_MODEL_ENTRY_NAME) instanceof AbstractModel)) {
       throw new InvalidFormatException("Featurizer model is incomplete!");
     }
-
-    // Ensure that the tag dictionary is compatible with the model
-    Object tagdictEntry = artifactMap.get(TAG_DICTIONARY_ENTRY_NAME);
-
-    if (tagdictEntry != null) {
-      if (tagdictEntry instanceof ExtendedPOSDictionary) {
-        ExtendedPOSDictionary posDict = (ExtendedPOSDictionary) tagdictEntry;
-
-        Set<String> poisoned = new HashSet<String>();
-
-        Set<String> dictTags = new HashSet<String>();
-
-        for (String word : posDict) {
-          String[] dicTag = posDict.getFeatureTag(word);
-          Collections.addAll(dictTags, dicTag);
-        }
-
-        Set<String> modelTags = new HashSet<String>();
-
-        AbstractModel featsModel = getFeaturizerModel();
-
-        for (int i = 0; i < featsModel.getNumOutcomes(); i++) {
-          String tag = featsModel.getOutcome(i);
-          modelTags.add(tag);
-        }
-
-        // if (!modelTags.containsAll(dictTags)) {
-        for (String d : dictTags) {
-          if (!modelTags.contains(d)) {
-            poisoned.add(d);
-          }
-        }
-        this.poisonedDictionaryTags = Collections.unmodifiableSet(poisoned);
-        if (poisonedDictionaryTags.size() > 0) {
-          System.err
-              .println("WARNING: Tag dictioinary contains tags which are unkown by the model! "
-                  + this.poisonedDictionaryTags.toString());
-        }
-        // throw new InvalidFormatException("Tag dictioinary contains tags " +
-        // "which are unkown by the model! " + unknownTag.toString());
-        // }
-      } else {
-        throw new InvalidFormatException(
-            "Abbreviations dictionary has wrong type!");
-      }
-    }
   }
 
+  
+  public FeaturizerFactory getFactory() {
+    return (FeaturizerFactory) this.toolFactory;
+  }
+  
   public AbstractModel getFeaturizerModel() {
     return (AbstractModel) artifactMap.get(FEATURIZER_MODEL_ENTRY_NAME);
   }
@@ -162,12 +95,14 @@ public class FeaturizerModel extends BaseModel {
    * 
    * @return tag dictionary or null if not used
    */
-  public ExtendedPOSDictionary getTagDictionary() {
-    return (ExtendedPOSDictionary) artifactMap.get(TAG_DICTIONARY_ENTRY_NAME);
+  public FeatureDictionaryI getFeatureDictionary() {
+    if(getFactory() != null)
+      return getFactory().getFeatureDictionary();
+    return null;
   }
 
-  public Set<String> getDictionaryPoisonedTags() {
-    return this.poisonedDictionaryTags;
-  }
+//  public Set<String> getDictionaryPoisonedTags() {
+//    return this.poisonedDictionaryTags;
+//  }
 
 }

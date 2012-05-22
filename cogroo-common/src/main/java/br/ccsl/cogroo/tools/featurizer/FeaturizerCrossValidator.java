@@ -19,7 +19,6 @@ package br.ccsl.cogroo.tools.featurizer;
 
 import java.io.IOException;
 
-import opennlp.tools.postag.ExtendedPOSDictionary;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.TrainingParameters;
@@ -35,15 +34,18 @@ public class FeaturizerCrossValidator {
   private Mean wordAccuracy = new Mean();
   private FeaturizerEvaluationMonitor[] listeners;
   private FeatureDictionaryI posDict;
+  private String factoryClassName;
+  private FeaturizerFactory factory;
 
   public FeaturizerCrossValidator(String languageCode,
       TrainingParameters params, FeatureDictionaryI dict,
-      FeaturizerEvaluationMonitor... listeners) {
+      String factoryClass, FeaturizerEvaluationMonitor... listeners) {
 
     this.languageCode = languageCode;
     this.params = params;
     this.listeners = listeners;
     this.posDict = dict;
+    this.factoryClassName = factoryClass;
   }
 
   /**
@@ -65,16 +67,17 @@ public class FeaturizerCrossValidator {
 
       CrossValidationPartitioner.TrainingSampleStream<FeatureSample> trainingSampleStream = partitioner
           .next();
+      
+      if (this.factory == null) {
+        this.factory = FeaturizerFactory.create(this.factoryClassName, posDict);
+      }
 
       FeaturizerModel model = FeaturizerME.train(languageCode,
-          trainingSampleStream, new DefaultFeaturizerContextGenerator(),
-          params, (ExtendedPOSDictionary)this.posDict);
+          trainingSampleStream, this.params, factory);
 
       // do testing
       FeaturizerEvaluator evaluator = new FeaturizerEvaluator(new FeaturizerME(
-          model, FeaturizerME.DEFAULT_BEAM_SIZE,
-          new DefaultFeaturizerSequenceValidator(this.posDict,
-              model.getDictionaryPoisonedTags())), listeners);
+          model, FeaturizerME.DEFAULT_BEAM_SIZE), listeners);
 
       evaluator.evaluate(trainingSampleStream.getTestSampleStream());
 

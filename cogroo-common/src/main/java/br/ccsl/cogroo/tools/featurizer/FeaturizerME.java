@@ -26,13 +26,11 @@ import opennlp.model.AbstractModel;
 import opennlp.model.EventStream;
 import opennlp.model.MaxentModel;
 import opennlp.model.TrainUtil;
-import opennlp.tools.postag.ExtendedPOSDictionary;
+import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.BeamSearch;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.Sequence;
-import opennlp.tools.util.SequenceValidator;
 import opennlp.tools.util.TrainingParameters;
-import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 
 /**
  * The class represents a maximum-entropy-based chunker. Such a chunker can be
@@ -60,52 +58,16 @@ public class FeaturizerME implements Featurizer {
    * beam size.
    * 
    * @param model
-   *          The model for this chunker.
-   * @param beamSize
-   *          The size of the beam that should be used when decoding sequences.
-   * @param sequenceValidator
-   *          The {@link SequenceValidator} to determines whether the outcome is
-   *          valid for the preceding sequence. This can be used to implement
-   *          constraints on what sequences are valid.
-   */
-  public FeaturizerME(FeaturizerModel model, int beamSize,
-      SequenceValidator<WordTag> sequenceValidator,
-      FeaturizerContextGenerator contextGenerator) {
-    this.model = model.getFeaturizerModel();
-    beam = new BeamSearch<WordTag>(beamSize, contextGenerator, this.model,
-        sequenceValidator, 0);
-  }
-
-  /**
-   * Initializes the current instance with the specified model and the specified
-   * beam size.
-   * 
-   * @param model
-   *          The model for this chunker.
-   * @param beamSize
-   *          The size of the beam that should be used when decoding sequences.
-   * @param sequenceValidator
-   *          The {@link SequenceValidator} to determines whether the outcome is
-   *          valid for the preceding sequence. This can be used to implement
-   *          constraints on what sequences are valid.
-   */
-  public FeaturizerME(FeaturizerModel model, int beamSize,
-      SequenceValidator<WordTag> sequenceValidator) {
-    this(model, beamSize, sequenceValidator,
-        new DefaultFeaturizerContextGenerator());
-  }
-
-  /**
-   * Initializes the current instance with the specified model and the specified
-   * beam size.
-   * 
-   * @param model
-   *          The model for this chunker.
+   *          The model for this featurizer.
    * @param beamSize
    *          The size of the beam that should be used when decoding sequences.
    */
   public FeaturizerME(FeaturizerModel model, int beamSize) {
-    this(model, beamSize, new DefaultFeaturizerSequenceValidator(model.getTagDictionary(), model.getDictionaryPoisonedTags()));
+    FeaturizerFactory factory = model.getFactory();
+    this.model = model.getFeaturizerModel();
+    beam = new BeamSearch<WordTag>(beamSize,
+        factory.getFeaturizerContextGenerator(), this.model,
+        factory.getSequenceValidator(), 0);
   }
 
   /**
@@ -121,8 +83,11 @@ public class FeaturizerME implements Featurizer {
   public String[] featurize(String[] toks, String[] tags) {
     bestSequence = beam.bestSequence(WordTag.create(toks, tags),
         new Object[] {});
-    List<String> c = bestSequence.getOutcomes();
-    return c.toArray(new String[c.size()]);
+    if(bestSequence != null) {
+      List<String> c = bestSequence.getOutcomes();
+      return c.toArray(new String[c.size()]);
+    } else
+      throw new RuntimeException("Could not find best sequence for " + new POSSample(toks, tags));
   }
 
   public Sequence[] topKSequences(String[] sentence, String[] tags) {
@@ -163,16 +128,16 @@ public class FeaturizerME implements Featurizer {
 
   public static FeaturizerModel train(String lang,
       ObjectStream<FeatureSample> in,
-      FeaturizerContextGenerator contextGenerator, TrainingParameters mlParams,
-      FeatureDictionaryI dict) throws IOException {
+      TrainingParameters mlParams,
+      FeaturizerFactory factory) throws IOException {
 
     Map<String, String> manifestInfoEntries = new HashMap<String, String>();
 
-    EventStream es = new FeaturizerEventStream(in, contextGenerator);
+    EventStream es = new FeaturizerEventStream(in, factory.getFeaturizerContextGenerator());
 
     AbstractModel maxentModel = TrainUtil.train(es, mlParams.getSettings(),
         manifestInfoEntries);
 
-    return new FeaturizerModel(lang, maxentModel, (ExtendedPOSDictionary)dict, manifestInfoEntries);
+    return new FeaturizerModel(lang, maxentModel, manifestInfoEntries, factory);
   }
 }

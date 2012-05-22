@@ -1,5 +1,7 @@
 package br.ccsl.cogroo.tools.featurizer;
 
+import com.google.common.base.Objects;
+
 public class WordTag {
 
   private final String word;
@@ -32,5 +34,21 @@ public class WordTag {
       word[i] = wt[i].getWord();
       tag[i] = wt[i].getPostag();
     }
+  }
+  
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    } else if (o instanceof WordTag) {
+      return Objects.equal(this.word, ((WordTag) o).word)
+          && Objects.equal(this.postag, ((WordTag) o).postag);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(word, postag);
   }
 }

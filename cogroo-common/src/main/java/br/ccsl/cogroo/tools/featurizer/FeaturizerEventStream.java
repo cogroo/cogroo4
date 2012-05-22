@@ -50,16 +50,6 @@ public class FeaturizerEventStream extends opennlp.model.AbstractEventStream {
     addNewEvents();
   }
 
-  /**
-   * Creates a new event stream based on the specified data stream.
-   * 
-   * @param d
-   *          The data stream for this event stream.
-   */
-  public FeaturizerEventStream(ObjectStream<FeatureSample> d) {
-    this(d, new DefaultFeaturizerContextGenerator());
-  }
-
   public Event next() {
 
     hasNext();

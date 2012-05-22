@@ -85,49 +85,39 @@ public class DefaultFeaturizerContextGenerator implements
    */
   public String[] getContext(int i, String[] toks, String[] tags, String[] preds) {
 
-    String lex = toks[i];
     List<String> e = new ArrayList<String>();
 
     createWindowFeats(i, toks, tags, preds, e);
-
-    createSuffixFeats(i, toks, tags, preds, e);
-
-    tokenClassFeatureGenerator.createFeatures(e, toks, i, preds);
-
-    if (lex.contains("_")) {
-      createGroupSuffixex(lex, e);
-    }
-
-    // numbers would benefit from this
-    StringPattern sp = StringPattern.recognize(lex);
-    if (sp.containsDigit() && !sp.containsLetters()) {
-      // TODO: make it generic !! this is only for Portuguese!
-      String num = lex; // we need only the decimal separator
-      try {
-        Number number = nf.parse(num);
-        if (number != null) {
-          Double value = Math.abs(number.doubleValue());
-          if (value > 1) {
-            e.add("num=h");
-          } else if (value > 0) {
-            e.add("num=one");
-          } else {
-            e.add("num=zero");
-          }
-        } else {
-          e.add("numNull");
-        }
-      } catch (ParseException e1) {
-        // nothing to do...
-        System.err.println("failed to parse num: " + num);
-        e.add("notNum");
-      }
-    }
-    //
+    
+    if(i > 0)
+      wrappWindowFeatures("prev_", i-1, toks, tags, preds, e);
+    
+    wrappWindowFeatures("", i, toks, tags, preds, e);
+    
+    if(i < toks.length - 1)
+      wrappWindowFeatures("nxt_", i+1, toks, tags, preds, e);
 
     String[] context = e.toArray(new String[e.size()]);
 
     return context;
+  }
+
+  private void wrappWindowFeatures(String prefix, int i, String[] toks,
+      String[] tags, String[] preds, List<String> e) {
+    String lex = toks[i];
+    List<String> features = new ArrayList<String>();
+    
+    createSuffixFeats(i, toks, tags, preds, features);
+    tokenClassFeatureGenerator.createFeatures(features, toks, i, preds);
+    createNumberFeats(i, toks, features);
+    if (lex.contains("_")) {
+      createGroupSuffixex(lex, features);
+    }
+    
+    for (String f : features) {
+      e.add(prefix + f);
+    }
+    
   }
 
   private static final Pattern UNDERLINE_PATTERN = Pattern.compile("_");
@@ -144,6 +134,37 @@ public class DefaultFeaturizerContextGenerator implements
       String[] suffixes = getSuffixes(parts[i]);
       for (String suf : suffixes) {
         e.add(prefix + suf);
+      }
+    }
+  }
+  
+  private void createNumberFeats(int i, String[] toks, List<String> e) {
+    String lex = toks[i];
+    // numbers would benefit from this
+    StringPattern sp = StringPattern.recognize(lex);
+    if (sp.containsDigit() && !sp.containsLetters()) {
+      // TODO: make it generic !! this is only for Portuguese!
+      String num = lex; // we need only the decimal separator
+      try {
+        Number number = nf.parse(num);
+        if (number != null) {
+          Double value = Math.abs(number.doubleValue());
+          if (value >= 2) {
+            e.add("num=h2");
+          } else if (value >= 1) {
+            e.add("num=h1");
+          } else if (value > 0) {
+            e.add("num=h0");
+          } else {
+            e.add("num=zero");
+          }
+        } else {
+          e.add("numNull");
+        }
+      } catch (ParseException e1) {
+        // nothing to do...
+        System.err.println("failed to parse num: " + num);
+        e.add("notNum");
       }
     }
   }

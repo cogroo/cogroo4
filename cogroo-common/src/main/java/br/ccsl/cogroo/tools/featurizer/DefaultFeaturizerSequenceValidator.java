@@ -24,9 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import opennlp.tools.postag.ExtendedTagDictionary;
 import opennlp.tools.util.SequenceValidator;
-import opennlp.tools.util.featuregen.StringPattern;
 import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
 
@@ -65,25 +63,13 @@ public class DefaultFeaturizerSequenceValidator implements
 //      postag = postag.substring(2);
 //    }
 
-    String[] tagsArr = tagDict.getFeatures(word, postag);
+    String[] tagsArr = expandedSearch(word, postag, true);
+    
     List<String> tags = null;
     if(tagsArr != null) {
       tags = filterPoisoned(tagsArr);
     }
     
-    
-    if(tags == null || tags.size() == 0) {
-      StringPattern pattern = StringPattern.recognize(word);
-      if(!pattern.isAllLowerCaseLetter()) {
-        tagsArr = tagDict.getFeatures(word.toLowerCase(), postag);
-
-        if(tagsArr != null) {
-          tags = filterPoisoned(tagsArr);
-        }
-        
-      }
-    }
-
     if (tags != null) {
       // System.err.println("-- eval: " + word + " (" + postag + ") "+ tags +
       // " outcome: " + outcome);
@@ -101,6 +87,22 @@ public class DefaultFeaturizerSequenceValidator implements
   // }
   // return false;
   // }
+
+  private String[] expandedSearch(String word, String postag, boolean recurse) {
+    String[] tagsArr = tagDict.getFeatures(word, postag);
+    if(tagsArr == null || tagsArr.length == 0) {
+      tagsArr = tagDict.getFeatures(word.toLowerCase(), postag);
+    }
+    
+    if((tagsArr == null  || tagsArr.length == 0) && recurse) {
+      if(postag.equals("n-adj")) {
+        tagsArr = expandedSearch(word, "n", false);
+      } else if(postag.equals("n")) {
+        tagsArr = expandedSearch(word, "n-adj", false);
+      }
+    }
+    return tagsArr;
+  }
 
   private List<String> filterPoisoned(String[] featureTag) {
     if (featureTag == null) {
