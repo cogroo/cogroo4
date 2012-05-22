@@ -26,10 +26,12 @@ import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.cmdline.params.TrainingToolParams;
 import opennlp.tools.postag.ExtendedPOSDictionary;
+import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.model.ModelUtil;
 import br.ccsl.cogroo.cmdline.featurizer.FeaturizerTrainerTool.TrainerToolParams;
-import br.ccsl.cogroo.tools.featurizer.DefaultFeaturizerContextGenerator;
+import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 import br.ccsl.cogroo.tools.featurizer.FeatureSample;
+import br.ccsl.cogroo.tools.featurizer.FeaturizerFactory;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerME;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerModel;
 
@@ -59,20 +61,27 @@ public class FeaturizerTrainerTool extends
       mlParams = ModelUtil.createTrainingParameters(params.getIterations(),
           params.getCutoff());
     }
-
+    
     File modelOutFile = params.getModel();
-    CmdLineUtil.checkOutputFile("sentence detector model", modelOutFile);
+    CmdLineUtil.checkOutputFile("featurizer model", modelOutFile);
 
     FeaturizerModel model;
     try {
-      ExtendedPOSDictionary tagdict = null;
+      FeatureDictionaryI tagdict = null;
       if (params.getDict() != null) {
         tagdict = ExtendedPOSDictionary.create(new FileInputStream(params
             .getDict()));
       }
+      
+      FeaturizerFactory  featurizerFactory = null;
+      try {
+        featurizerFactory = FeaturizerFactory.create(params.getFactory(), tagdict);
+      } catch (InvalidFormatException e) {
+        throw new TerminateToolException(-1, e.getMessage());
+      }
 
       model = FeaturizerME.train(factory.getLang(), sampleStream,
-          new DefaultFeaturizerContextGenerator(), mlParams, tagdict);
+           mlParams, featurizerFactory);
 
     } catch (IOException e) {
       throw new TerminateToolException(-1,

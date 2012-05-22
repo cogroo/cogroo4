@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -14,22 +15,24 @@ import java.util.concurrent.TimeUnit;
 import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
+import br.ccsl.cogroo.tools.featurizer.WordTag;
 
-import com.google.common.base.Objects;
+import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.io.ByteStreams;
 
-public class FSAFeatureDictionary implements FeatureDictionaryI {
+public class FSAFeatureDictionary implements FeatureDictionaryI, Iterable<WordTag> {
 
   private DictionaryLookup dictLookup;
 
-  private Cache<WordTag, String[]> cache = CacheBuilder.newBuilder()
+  private Cache<WordTag, Optional<String[]>> cache = CacheBuilder.newBuilder()
       .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
-      .build(new CacheLoader<WordTag, String[]>() {
-        public String[] load(WordTag key) {
-          return lookup(key);
+      .build(new CacheLoader<WordTag, Optional<String[]>>() {
+        public Optional<String[]> load(WordTag key) {
+          String[] val = lookup(key);
+          return Optional.fromNullable(val);
         }
       });
 
@@ -39,9 +42,9 @@ public class FSAFeatureDictionary implements FeatureDictionaryI {
 
   private String[] lookup(WordTag key) {
     synchronized (dictLookup) {
-      List<WordData> data = dictLookup.lookup(key.word);
+      List<WordData> data = dictLookup.lookup(key.getWord());
       if (data.size() > 0) {
-        final String prefix = key.tag + "#";
+        final String prefix = key.getPostag() + "#";
         List<String> tags = new ArrayList<String>(data.size());
         for (int i = 0; i < data.size(); i++) {
           String completeTag = data.get(i).getTag().toString();
@@ -57,7 +60,7 @@ public class FSAFeatureDictionary implements FeatureDictionaryI {
 
   public String[] getFeatures(String word, String pos) {
     try {
-      return cache.get(new WordTag(word, pos));
+      return cache.get(new WordTag(word, pos)).orNull();
     } catch (ExecutionException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -97,37 +100,11 @@ public class FSAFeatureDictionary implements FeatureDictionaryI {
         dictInfo));
   }
 
-  private static class WordTag {
-    public final String word;
-    public final String tag;
-
-    public WordTag(String word, String tag) {
-      this.word = word;
-      this.tag = tag;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      } else if (o instanceof WordTag) {
-        return Objects.equal(this.word, ((WordTag) o).word)
-            && Objects.equal(this.tag, ((WordTag) o).tag);
-      }
-      return false;
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hashCode(word, tag);
-    }
-  }
-
   public static void main(String[] args) throws IllegalArgumentException,
       IOException {
 
     long start = System.nanoTime();
-    FSAFeatureDictionary td = (FSAFeatureDictionary) create("fsa_dictionaries/pt_br_feat.dict");
+    FSAFeatureDictionary td = (FSAFeatureDictionary) create("fsa_dictionaries/featurizer/pt_br_feats.dict");
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
     Scanner kb = new Scanner(System.in);
@@ -146,5 +123,34 @@ public class FSAFeatureDictionary implements FeatureDictionaryI {
       System.out.print("Enter a query: ");
       input = kb.nextLine();
     }
+  }
+  
+  private static class IteratorWrapper implements Iterator<WordTag> {
+    private final Iterator<WordData> innerIterator;
+
+    public IteratorWrapper(Iterator<WordData> iterator) {
+      this.innerIterator = iterator;
+    }
+
+    public boolean hasNext() {
+      return innerIterator.hasNext();
+    }
+
+    public WordTag next() {
+      WordData wd = innerIterator.next();
+      if(wd != null) {
+        String completeTag = wd.getTag().toString();
+        return new WordTag(wd.getWord().toString(), completeTag.substring(completeTag.indexOf("#") + 1));
+      }
+      return null;
+    }
+
+    public void remove() {
+      innerIterator.remove();
+    }
+  }
+
+  public Iterator<WordTag> iterator() {
+    return new IteratorWrapper(this.dictLookup.iterator());
   }
 }

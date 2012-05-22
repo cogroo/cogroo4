@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -15,19 +16,21 @@ import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
 import opennlp.tools.postag.TagDictionary;
 
+import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.io.ByteStreams;
 
-public class FSADictionary implements TagDictionary {
+public class FSADictionary implements TagDictionary, Iterable<String> {
 
   private DictionaryLookup dictLookup;
-  private Cache<String, String[]> cache = CacheBuilder.newBuilder()
+  private Cache<String, Optional<String[]>> cache = CacheBuilder.newBuilder()
       .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
-      .build(new CacheLoader<String, String[]>() {
-        public String[] load(String key) {
-          return lookup(key);
+      .build(new CacheLoader<String, Optional<String[]>>() {
+        public Optional<String[]> load(String key) {
+          String[] val = lookup(key);
+          return Optional.fromNullable(val);
         }
       });
 
@@ -51,7 +54,7 @@ public class FSADictionary implements TagDictionary {
 
   public String[] getTags(String word) {
     try {
-      return cache.get(word);
+      return cache.get(word).orNull();
     } catch (ExecutionException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -91,11 +94,39 @@ public class FSADictionary implements TagDictionary {
         dictInfo));
   }
 
+  private static class IteratorWrapper implements Iterator<String> {
+    private final Iterator<WordData> innerIterator;
+
+    public IteratorWrapper(Iterator<WordData> iterator) {
+      this.innerIterator = iterator;
+    }
+
+    public boolean hasNext() {
+      return innerIterator.hasNext();
+    }
+
+    public String next() {
+      WordData wd = innerIterator.next();
+      if (wd != null) {
+        return wd.getWord().toString();
+      }
+      return null;
+    }
+
+    public void remove() {
+      innerIterator.remove();
+    }
+  }
+
+  public Iterator<String> iterator() {
+    return new IteratorWrapper(this.dictLookup.iterator());
+  }
+
   public static void main(String[] args) throws IllegalArgumentException,
       IOException {
 
     long start = System.nanoTime();
-    FSADictionary td = (FSADictionary) create("fsa_dictionaries/pt_br_feat.dict");
+    FSADictionary td = (FSADictionary) create("fsa_dictionaries/pos/pt_br_jspell.dict");
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
     Scanner kb = new Scanner(System.in);
@@ -103,7 +134,7 @@ public class FSADictionary implements TagDictionary {
     String input = kb.nextLine();
     while (!input.equals("q")) {
       if (input.equals("0")) {
-        input = "casa";
+        input = "\"";
       }
       System.out.println(Arrays.toString(td.getTags(input)));
       System.out.print("Enter a query: ");
