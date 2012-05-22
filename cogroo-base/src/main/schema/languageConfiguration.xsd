@@ -18,7 +18,10 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="locale" type="xs:string"></xs:element>
-				<xs:element name="model" type="Model" maxOccurs="unbounded" minOccurs="1"></xs:element>
+				<xs:element name="model" type="Model"
+					maxOccurs="unbounded" minOccurs="1">
+				</xs:element>
+				<xs:element name="pipe" type="Pipe"></xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -26,9 +29,34 @@
 	<xs:complexType name="Model">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-				<xs:attribute name="type" type="xs:string" use="required"></xs:attribute>
+				<xs:attribute name="type" use="required" type="Analyzer">
+
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
 
+
+	<xs:simpleType name="Analyzer">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:typesafeEnumClass name="Analyzers" />
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sentenceDetector" />
+			<xs:enumeration value="tokenizer" />
+			<xs:enumeration value="nameFinder" />
+			<xs:enumeration value="contractionFinder" />
+			<xs:enumeration value="posTagger" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:complexType name="Pipe">
+		<xs:sequence>
+			<xs:element name="analyzer" type="Analyzer" maxOccurs="unbounded"
+				minOccurs="1"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>

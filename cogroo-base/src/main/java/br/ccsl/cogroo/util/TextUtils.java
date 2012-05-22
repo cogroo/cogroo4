@@ -6,6 +6,9 @@ import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
 
+/**
+ *  The <code>TextUtils</code> class deals with the code printings.  
+ */
 public class TextUtils {
 
   public static String[] tokensToString(List<Token> tokens) {
@@ -19,6 +22,9 @@ public class TextUtils {
     return tokensString;
   }
 
+  /**
+   * @return the <code>String</code> to be printed
+   */
   public static String nicePrint(Document document) {
     StringBuilder output = new StringBuilder();
 

@@ -10,7 +10,11 @@ import br.ccsl.cogroo.text.Token;
 import br.ccsl.cogroo.text.impl.TokenImpl;
 import br.ccsl.cogroo.util.TextUtils;
 
-public class POSTagger implements Analyzer {
+/**
+ *  The <code>POSTagger</code> class analyzes each token of a sentence and classifies it grammatically. 
+ *
+ */
+public class POSTagger implements AnalyzerI {
   private POSTaggerME tagger;
 
   public POSTagger(POSTaggerME tagger) {

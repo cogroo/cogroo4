@@ -8,7 +8,11 @@ import opennlp.tools.util.Span;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 
-public class SentenceDetector implements Analyzer {
+/**
+ *  The <code> SentenceDetector</code> class gets all the sentences in the document text and store them in a list of sentences. 
+ *
+ */
+public class SentenceDetector implements AnalyzerI {
 
   private SentenceDetectorME sentenceDetector;
 

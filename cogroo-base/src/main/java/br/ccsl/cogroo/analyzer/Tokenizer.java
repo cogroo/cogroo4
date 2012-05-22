@@ -10,10 +10,15 @@ import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
 import br.ccsl.cogroo.text.impl.TokenImpl;
 
-public class Tokenizer implements Analyzer {
+/**
+ * The <code>Tokenizer</code> class separates every word in a given sentence and allocates them in a
+ * list of tokens.
+ * 
+ */
+public class Tokenizer implements AnalyzerI {
 
   private TokenizerME tokenizer;
-  
+
   public Tokenizer(TokenizerME tokenizer) {
     this.tokenizer = tokenizer;
   }

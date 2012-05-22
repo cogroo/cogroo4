@@ -11,8 +11,13 @@ import br.ccsl.cogroo.text.Token;
 import br.ccsl.cogroo.text.impl.TokenImpl;
 import br.ccsl.cogroo.util.TextUtils;
 
-public class ContractionFinder implements Analyzer {
-
+/**
+ * The <code>ContractionFinder</code> class searches for contractions in a given
+ * sentence and then expands them to their primitive form.
+ * 
+ */
+public class ContractionFinder implements AnalyzerI {
+  
   private NameFinderME contractionFinder;
 
   public ContractionFinder(NameFinderME contractionFinder) {

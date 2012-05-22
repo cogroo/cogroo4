@@ -11,7 +11,12 @@ import br.ccsl.cogroo.text.Token;
 import br.ccsl.cogroo.text.impl.TokenImpl;
 import br.ccsl.cogroo.util.TextUtils;
 
-public class NameFinder implements Analyzer {
+/**
+ * The <code>NameFinder</code> class searches for subsequent proper nouns in the
+ * document sentences and gathers each of these sets in one word.
+ * 
+ */
+public class NameFinder implements AnalyzerI {
 
   private NameFinderME nameFinder;
 
