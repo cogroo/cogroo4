@@ -5,6 +5,7 @@ import java.util.List;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.util.Span;
 
+import br.ccsl.cogroo.config.Analyzers;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
@@ -44,8 +45,11 @@ public class NameFinder implements AnalyzerI {
           newTokens.remove(j);
         }
         Span span = new Span(start, end);
-        Token token = new TokenImpl(span, name);
+        TokenImpl token = new TokenImpl(span, name);
         newTokens.add(start, token);
+        
+        token.addContext(Analyzers.NAME_FINDER, "P");
+        
       }
       sentence.setTokens(newTokens);
     }

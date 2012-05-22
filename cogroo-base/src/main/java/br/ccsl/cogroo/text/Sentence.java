@@ -1,6 +1,9 @@
 package br.ccsl.cogroo.text;
 
+import java.awt.Component;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Objects;
 
@@ -17,7 +20,9 @@ public class Sentence {
 
   /** the list every token in the sentence */
   private List<Token> tokens;
-
+  
+  private Map<Component, String[]> additionalContext;
+  
   public Sentence(Span span) {
     this(span, null);
   }
@@ -49,7 +54,7 @@ public class Sentence {
   public void setTokens(List<Token> tokens) {
     this.tokens = tokens;
   }
-
+  
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof Sentence) {

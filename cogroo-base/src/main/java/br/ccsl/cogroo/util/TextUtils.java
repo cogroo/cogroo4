@@ -1,10 +1,15 @@
 package br.ccsl.cogroo.util;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import br.ccsl.cogroo.analyzer.AnalyzerI;
+import br.ccsl.cogroo.config.Analyzers;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
+import br.ccsl.cogroo.text.impl.TokenImpl;
 
 /**
  *  The <code>TextUtils</code> class deals with the code printings.  
@@ -22,6 +27,24 @@ public class TextUtils {
     return tokensString;
   }
 
+  public static String[][] additionalContext (List<Token> tokens, List<Analyzers> analyzers) {
+    String[][] additionalContext = new String[tokens.size()][analyzers.size()];
+    
+    for (int i = 0; i < analyzers.size(); i++) {
+      for (int j = 0; j < tokens.size(); j++) {
+        Object object = ((TokenImpl) tokens.get(j)).getAdditionalContext(analyzers.get(i));
+        
+        if (object == null)
+          additionalContext[j][i] = null;
+        else
+          additionalContext[j][i] = (String) object;
+      }
+    }
+    
+    return additionalContext;
+  }
+  
+  
   /**
    * @return the <code>String</code> to be printed
    */
@@ -39,7 +62,7 @@ public class TextUtils {
             .append("\n");
 
         List<Token> tokens = sentence.getTokens();
-
+        
         if (tokens != null) {
           output.append("    Tokens: [");
           for (Token token : tokens) {
@@ -51,6 +74,11 @@ public class TextUtils {
             output.append(" ");
           }
           output.append("]\n\n");
+        }
+        
+        String[][] addcontext = TextUtils.additionalContext(tokens, Arrays.asList(Analyzers.CONTRACTION_FINDER, Analyzers.NAME_FINDER));
+        for (String[] strings : addcontext) {
+          output.append(Arrays.toString(strings)).append("\n");
         }
       }
     }

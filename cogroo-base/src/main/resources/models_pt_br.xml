@@ -7,7 +7,7 @@
 	<model type="tokenizer">models/pt-tok.model</model>
 	<model type="nameFinder">models/pt-prop.model</model>
 	<model type="contractionFinder">models/pt-con.model</model>
-	<model type="posTagger">models/pt-pos-maxent.bin</model>
+	<model type="posTagger">models/pt-pos.model</model>
 
 	<pipe>
 		<analyzer>sentenceDetector</analyzer>
