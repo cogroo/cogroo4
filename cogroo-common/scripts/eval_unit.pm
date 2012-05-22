@@ -161,7 +161,7 @@ sub executeCV {
 		printToLog "Will execute command: $command\n";
 
 		my $start_time = [ Time::HiRes::gettimeofday() ];
-		my @res        = `sh $command 2>&1`;
+		my @res        = `$command 2>&1`;
 		my $diff       = Time::HiRes::tv_interval($start_time);
 
 		checkError(@res);
@@ -180,7 +180,7 @@ sub executeTr {
 	printToLog "Will execute command: $command\n";
 
 	my $start_time = [ Time::HiRes::gettimeofday() ];
-	my @res        = `sh $command 2>&1`;
+	my @res        = `$command 2>&1`;
 	my $diff       = Time::HiRes::tv_interval($start_time);
 
 	print @res;
@@ -190,6 +190,30 @@ sub executeTr {
 	$results{"predicates"} = getNumberOfPreds(@res);
 
 	return %results;
+}
+
+sub createCommand {
+	my $cliTool = shift;
+	my $execArgs = shift;
+	my $properties = shift;
+
+	$ENV{'MAVEN_OPTS'} = "-Xms512m -Xmx2048m -XX:PermSize=256m";
+	
+	my $command = 'mvn -e -o -q exec:java "-Dexec.mainClass=';
+	
+	if($cliTool eq "opennlp") {
+		$command .= 'opennlp.tools.cmdline.CLI';
+	}  else {
+		$command .= 'br.ccsl.cogroo.cmdline.CLI';
+	}
+	
+	$command .= '" "-Dexec.args=' . $execArgs . '"';
+	
+	if(length($properties) > 0) {
+		$command .= ' '. $properties;
+	}
+	
+	return $command;
 }
 
 
@@ -216,68 +240,75 @@ sub exec() {
 	die "The parameter -d corpus name is mandatory." if $data eq '';
 	
 	my $extraOption = '';
+	my $extraProperties = '';
 	if ( $opt{o} ne "" ) {
 		my @tokens = split( /,/, $opt{o} );
 		foreach my $token (@tokens) {
-			$extraOption .= $extraOpt{$token} . ' ';
+			my $val = $extraOpt{$token};
+			if($val =~ m/-D/) {
+				$extraProperties .= $val . ' ';
+			} else {
+				$extraOption .= $val . ' ';	
+			}
 		}
 	}
+	
 	my $basicCommand = " -params $paramsFileName -lang pt -encoding ";
 	my $trCommand = '';
 	my $cvCommand = '';
 	
 	if ( $opt{t} eq 'sent' ) {
 		$trCommand .=
-		    "scripts/opennlp SentenceDetectorTrainer.ad $basicCommand "
+			createCommand('opennlp', "SentenceDetectorTrainer.ad $basicCommand "
 		  . ENCODING
-		  . " -data $data -model $model $extraOption";
+		  . " -data $data -model $model ", $extraProperties);
 		$cvCommand .=
-		    "scripts/opennlp SentenceDetectorCrossValidator.ad $basicCommand "
+		    createCommand('opennlp', "SentenceDetectorCrossValidator.ad $basicCommand "
 		  . ENCODING
-		  . " -data $data $extraOption";
+		  . " -data $data ", $extraProperties);
 	}
 	
 	if ( $opt{t} eq 'tok' ) {
 		$trCommand .=
-		    "scripts/opennlp TokenizerTrainer.ad "
+		    createCommand('opennlp', "TokenizerTrainer.ad "
 		  . "-detokenizer ../../opennlp/opennlp-tools/lang/pt/tokenizer/pt-detokenizer.xml "
 		  . "$basicCommand "
 		  . ENCODING
-		  . " -data $data -model $model $extraOption";
+		  . " -data $data -model $model ", $extraProperties);
 		$cvCommand .=
-		    "scripts/opennlp TokenizerCrossValidator.ad "
+		    createCommand('opennlp', "TokenizerCrossValidator.ad "
 		  . "-detokenizer ../../opennlp/opennlp-tools/lang/pt/tokenizer/pt-detokenizer.xml "
 		  . "$basicCommand "
 		  . ENCODING 
-		  . " -data $data $extraOption";
+		  . " -data $data ", $extraProperties);
 	}
 	
 	
 	
 	if ( $opt{t} eq 'con' ) {
 		$trCommand .=
-		    "scripts/cogroo TokenNameFinderTrainer.adcon "
+		    createCommand('cogroo', " TokenNameFinderTrainer.adcon "
 		  . "$basicCommand "
 		  . ENCODING
-		  . " -data $data -model $model $extraOption";
+		  . " -data $data -model $model ", $extraProperties);
 		$cvCommand .=
-		    "scripts/cogroo TokenNameFinderCrossValidator.adcon "
+		    createCommand('cogroo', " TokenNameFinderCrossValidator.adcon "
 		  . "$basicCommand "
 		  . ENCODING 
-		  . " -data $data $extraOption";
+		  . " -data $data ", $extraProperties);
 	}
 	
 	if ( $opt{t} eq 'prop' ) {
 		$trCommand .=
-		    "scripts/cogroo TokenNameFinderTrainer.adexp "
+		    createCommand('cogroo', " TokenNameFinderTrainer.adexp "
 		  . "$basicCommand "
 		  . ENCODING
-		  . " -tags prop -data $data -model $model $extraOption";
+		  . " -tags prop -data $data -model $model ", $extraProperties);
 		$cvCommand .=
-		    "scripts/cogroo TokenNameFinderCrossValidator.adexp "
+		    createCommand('cogroo', " TokenNameFinderCrossValidator.adexp "
 		  . "$basicCommand "
 		  . ENCODING 
-		  . " -tags prop -data $data $extraOption";
+		  . " -tags prop -data $data ", $extraProperties);
 	}
 	
 	if ( $opt{t} eq 'pos' ) {
@@ -285,9 +316,9 @@ sub exec() {
 		  . ENCODING
 		  . " -data $data $extraOption";
 		$trCommand .=
-		    "scripts/cogroo POSTaggerTrainer.adex -model $model $base -expandME true -factory br.ccsl.cogroo.tools.postag.PortugueseFactory";
+		    createCommand('cogroo', " POSTaggerTrainer.adex -model $model $base -expandME true", $extraProperties);
 		$cvCommand .=
-		    "scripts/cogroo POSTaggerCrossValidator.adex $base -expandME true -factory br.ccsl.cogroo.tools.postag.PortugueseFactory";
+		    createCommand('cogroo', " POSTaggerCrossValidator.adex $base -expandME true", $extraProperties);
 	}
 	
 	if ( $opt{t} eq 'feat' ) {
@@ -295,9 +326,9 @@ sub exec() {
 		  . ENCODING
 		  . " -data $data $extraOption";
 		$trCommand .=
-		    "scripts/cogroo FeaturizerTrainerME.ad -model $model $base";
+		    createCommand('cogroo', " FeaturizerTrainerME.ad -model $model $base", $extraProperties);
 		$cvCommand .=
-		    "scripts/cogroo FeaturizerCrossValidator.ad $base";
+		    createCommand('cogroo', " FeaturizerCrossValidator.ad $base", $extraProperties);
 	}
 	
 	my %resCV = executeCV($cvCommand);
