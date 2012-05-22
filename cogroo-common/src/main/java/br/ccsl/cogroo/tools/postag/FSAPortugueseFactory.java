@@ -1,12 +1,9 @@
 package br.ccsl.cogroo.tools.postag;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Map;
 
 import opennlp.tools.dictionary.Dictionary;
@@ -17,11 +14,8 @@ import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.SequenceValidator;
 import opennlp.tools.util.model.ArtifactProvider;
 import opennlp.tools.util.model.ArtifactSerializer;
-import opennlp.tools.util.model.ModelUtil;
-import opennlp.tools.util.model.UncloseableInputStream;
 import br.ccsl.cogroo.dictionary.FSADictionary;
-
-import com.google.common.io.ByteStreams;
+import br.ccsl.cogroo.util.serializers.ByteArraySerializer;
 
 public class FSAPortugueseFactory extends POSTaggerFactory {
 
@@ -144,19 +138,6 @@ public class FSAPortugueseFactory extends POSTaggerFactory {
       artifactMap.put(FSA_POSDICT, this.dictData);
       artifactMap.put(FSA_DICT_INFO, this.dictInfo);
     return artifactMap;
-  }
-  
-  private static class ByteArraySerializer implements ArtifactSerializer<byte[]> {
-
-    public byte[] create(InputStream in) throws IOException,
-        InvalidFormatException {
-      
-      return ModelUtil.read(in);
-    }
-
-    public void serialize(byte[] artifact, OutputStream out) throws IOException {
-      out.write(artifact);
-    }
   }
   
 }
