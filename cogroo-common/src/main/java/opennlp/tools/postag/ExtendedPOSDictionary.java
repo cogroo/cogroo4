@@ -26,6 +26,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import br.ccsl.cogroo.tools.featurizer.WordTag;
+
 import opennlp.tools.dictionary.serializer.Attributes;
 import opennlp.tools.dictionary.serializer.DictionarySerializer;
 import opennlp.tools.dictionary.serializer.Entry;
@@ -38,7 +40,7 @@ import opennlp.tools.util.StringUtil;
  * Provides a means of determining which tags are valid for a particular word
  * based on a tag dictionary read from a file.
  */
-public class ExtendedPOSDictionary implements Iterable<String>,
+public class ExtendedPOSDictionary implements Iterable<WordTag>,
     ExtendedTagDictionary {
 
   // word => [ tag => [lemma, feature]]
@@ -108,8 +110,8 @@ public class ExtendedPOSDictionary implements Iterable<String>,
   /**
    * Retrieves an iterator over all words in the dictionary.
    */
-  public Iterator<String> iterator() {
-    return dictionary.keySet().iterator();
+  public Iterator<WordTag> iterator() {
+    return new IteratorWrapper();
   }
 
   private static String tagsToString(String tags[]) {
@@ -182,31 +184,31 @@ public class ExtendedPOSDictionary implements Iterable<String>,
     DictionarySerializer.serialize(out, entries, caseSensitive);
   }
 
-  @Override
-  public boolean equals(Object o) {
-
-    if (o == this) {
-      return true;
-    } else if (o instanceof ExtendedPOSDictionary) {
-      ExtendedPOSDictionary dictionary = (ExtendedPOSDictionary) o;
-
-      if (this.dictionary.size() == dictionary.dictionary.size()) {
-
-        for (String word : this) {
-
-          List<Triple> aTriples = this.dictionary.get(word);
-          List<Triple> bTriples = dictionary.dictionary.get(word);
-          if (!aTriples.equals(bTriples)) {
-            return false;
-          }
-        }
-
-        return true;
-      }
-    }
-
-    return false;
-  }
+//  @Override
+//  public boolean equals(Object o) {
+//
+//    if (o == this) {
+//      return true;
+//    } else if (o instanceof ExtendedPOSDictionary) {
+//      ExtendedPOSDictionary dictionary = (ExtendedPOSDictionary) o;
+//
+//      if (this.dictionary.size() == dictionary.dictionary.size()) {
+//
+//        for (String word : this) {
+//
+//          List<Triple> aTriples = this.dictionary.get(word);
+//          List<Triple> bTriples = dictionary.dictionary.get(word);
+//          if (!aTriples.equals(bTriples)) {
+//            return false;
+//          }
+//        }
+//
+//        return true;
+//      }
+//    }
+//
+//    return false;
+//  }
 
   @Override
   public String toString() {
@@ -393,5 +395,33 @@ public class ExtendedPOSDictionary implements Iterable<String>,
     }
     return triples;
   }
+  
+  private class IteratorWrapper implements Iterator<WordTag> {
+    
+    Iterator<String> inner = dictionary.keySet().iterator();
+    String word = null;
+    Iterator<Triple> innerTriple = null;
+    
+    public boolean hasNext() {
+      if(innerTriple != null && innerTriple.hasNext()) {
+        return true;
+      }
+      return inner.hasNext();
+    }
 
+    public WordTag next() {
+      if(innerTriple == null || !innerTriple.hasNext()) {
+        word = inner.next();
+        innerTriple = dictionary.get(word).iterator();
+      }
+      Triple val = innerTriple.next();
+      return new WordTag(word, val.getClazz());
+    }
+
+    public void remove() {
+      // TODO Auto-generated method stub
+      
+    }
+
+  }
 }
