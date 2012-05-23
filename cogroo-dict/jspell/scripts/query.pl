@@ -6,6 +6,9 @@
 use Lingua::Jspell;
 use strict;
 
+use open ':encoding(utf8)';
+use open ':std';
+
 my $dict = Lingua::Jspell->new( "ptbr") || die "could not open ptbr dict";   # select portuguese dictionary
 $dict->setmode({flags => 1});    # show  feature "flag" in output
 
