@@ -3,13 +3,16 @@
 # Load JSpell ptbr dictionary for queries
 # Please install the dictionary first (make install)
 
-use jspell;
+use Lingua::Jspell;
+use strict;
 
-jspell_dict("ptbr") || die "could not open ptbr dict";   # select portuguese dictionary
-setmode("+flags");     # show  feature "flag" in output
+my $dict = Lingua::Jspell->new( "ptbr") || die "could not open ptbr dict";   # select portuguese dictionary
+$dict->setmode({flags => 1});    # show  feature "flag" in output
 
-while(<>){
- chop;
- if($tag){  print join(" ",featags($_)). "\n"}
- else    {  print any2str([fea($_)],1) . "\n"}
+while(<>) {
+	chop;
+	
+	my @fea = $dict->fea($_);
+	
+	print Lingua::Jspell::any2str ( [@fea] , 1) . "\n";
 }
