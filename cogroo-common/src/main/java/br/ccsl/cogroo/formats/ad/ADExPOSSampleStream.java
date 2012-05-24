@@ -18,17 +18,12 @@
 package br.ccsl.cogroo.formats.ad;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.google.common.base.Strings;
 
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
@@ -38,7 +33,8 @@ import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
-import opennlp.tools.util.StringUtil;
+
+import com.google.common.base.Strings;
 
 /**
  * <b>Note:</b> Do not use this class, internal use only!
@@ -49,6 +45,9 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
   private boolean expandME;
   private boolean isIncludeFeatures;
   private boolean additionalContext;
+  
+  // this is used to control changing aspas representation, some sentences we keep as original, others we change to " 
+  private int callsCount = 0;
   
   private static final Pattern hyphenPattern = Pattern.compile("((\\p{L}+)-$)|(^-(\\p{L}+)(.*))|((\\p{L}+)-(\\p{L}+)(.*))");
 
@@ -76,6 +75,9 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
 
 
   public POSSample read() throws IOException {
+    
+    callsCount++;
+    
     Sentence paragraph;
     while ((paragraph = this.adSentenceStream.read()) != null) {
       Node root = paragraph.getRoot();
@@ -129,10 +131,18 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
     }
   }
 
+  
   private void processLeaf(Leaf leaf, List<String> sentence, List<String> tags,
       List<String> con, List<String> prop) {
     if (leaf != null) {
       String lexeme = leaf.getLexeme();
+      
+      // this will change half of the aspas 
+      if("«".equals(lexeme) || "»".equals(lexeme)) {
+        if(callsCount % 2 == 0) {
+          lexeme = "\"";
+        }
+      }
       String tag = leaf.getFunctionalTag();
 
       String contraction = null;
@@ -145,7 +155,7 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
       }
 
       if (tag == null) {
-        tag = leaf.getLexeme();
+        tag = lexeme;
       }
 
       if (isIncludeFeatures && leaf.getMorphologicalTag() != null) {

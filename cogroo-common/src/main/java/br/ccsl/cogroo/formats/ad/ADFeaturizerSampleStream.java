@@ -63,6 +63,9 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
   private int index = 0;
 
   private boolean expandME;
+  
+  // this is used to control changing aspas representation, some sentences we keep as original, others we change to " 
+  private int callsCount = 0;
 
   /**
    * Creates a new {@link NameSample} stream from a line stream, i.e.
@@ -101,6 +104,7 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
 
   public FeatureSample read() throws IOException {
 
+    callsCount++;
     Sentence paragraph;
     while ((paragraph = this.adSentenceStream.read()) != null) {
 
@@ -183,6 +187,13 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
     String lemma = leaf.getLemma();
     String lexeme = leaf.getLexeme();
     featureTag = leaf.getMorphologicalTag();
+    
+    // this will change half of the aspas 
+    if("«".equals(lexeme) || "»".equals(lexeme)) {
+      if(callsCount % 2 == 0) {
+        lexeme = "\"";
+      }
+    }
 
     if (featureTag == null) {
       featureTag = "-";
@@ -193,8 +204,8 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
     String postag;
 
     if (leaf.getSyntacticTag() == null) {
-      postag = leaf.getLexeme();
-      lemma =  leaf.getLexeme();
+      postag = lexeme;
+      lemma =  lexeme;
     } else {
       postag = ADFeaturizerSampleStream.convertFuncTag(leaf.getFunctionalTag());
     }
