@@ -97,7 +97,12 @@ public class DefaultFeaturizerSequenceValidator implements
     if((tagsArr == null  || tagsArr.length == 0) && recurse) {
       if(postag.equals("n-adj")) {
         tagsArr = expandedSearch(word, "n", false);
+        if(tagsArr == null) {
+          tagsArr = expandedSearch(word, "adj", false);
+        }
       } else if(postag.equals("n")) {
+        tagsArr = expandedSearch(word, "n-adj", false);
+      } else if(postag.equals("adj")) {
         tagsArr = expandedSearch(word, "n-adj", false);
       }
     }
