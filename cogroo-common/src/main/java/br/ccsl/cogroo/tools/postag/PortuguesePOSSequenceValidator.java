@@ -61,10 +61,7 @@ public class PortuguesePOSSequenceValidator implements
         return true;
       }
 
-      String[] tags = tagDictionary.getTags(word);
-      if (tags == null) {
-        tags = tagDictionary.getTags(word.toLowerCase());
-      }
+      String[] tags = queryDictionary(word, true);
 
       if (word.equals(outcome)) {
         isValid = true;
@@ -85,6 +82,19 @@ public class PortuguesePOSSequenceValidator implements
 
       return isValid;
     }
+  }
+
+  private String[] queryDictionary(String word, boolean recurse) {
+    String[] tags = tagDictionary.getTags(word);
+    if (tags == null) {
+      tags = tagDictionary.getTags(word.toLowerCase());
+    }
+    if(recurse == true) {
+      if(word.startsWith("-") && word.length() > 1) {
+        tags = queryDictionary(word.substring(1), false);
+      }
+    }
+    return tags;
   }
 
   @Override
