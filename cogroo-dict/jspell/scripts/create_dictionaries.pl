@@ -5,31 +5,46 @@
 # target/WordPrimitiveTag_ptBR
 # target/PrimitiveWordTag_ptBR
 
-use jspell::dict;
+use strict;
+use Lingua::Jspell;
+use Lingua::Jspell::DictManager;
+
 use Data::Dumper;
 use locale;
 use POSIX 'locale_h';
 
+my $isCollectTags = 0;
+my $isCollectContractions = 0;
 
 # ptbr.dic for production, sample.dic for test
 
-$dic = jspell::dict::init("../pt-br/ptbr.dic") or die "nao abriu port.dic";
-$pt_dict = jspell::new("ptbr") or die "nao abriu";
+# this is to iterate the dictionaries
+my $dic = init("../pt-br/ptbr.dic") or die "nao abriu port.dic";
 
-open (SIMPLE, '>:encoding(UTF-8)', '../../target/tagdict.txt');
-#open (WPT, '>:encoding(UTF-8)', '../../target/wpt.txt');
-#open (PWT,'>', '../../target/PrimitiveWordTag_ptBR.txt');
-open (TAG,'>', '../../target/TAG_ptPT.txt');
-open (CON,'>', '../../target/contractions.txt');
+# this is to analyze
+my $pt_dict = Lingua::Jspell->new("ptbr") or die "nao abriu";
 
-my %simple;
-#my %wpt;
-#my %pwt;
+# list of entries
+open (SIMPLE,	'>:encoding(UTF-8)', '../../target/tagdict.txt');
+
+
+if($isCollectTags) {
+	# list of tags
+	open (TAG,		'>:encoding(UTF-8)', '../../target/TAG_ptPT.txt');
+}
+
+if($isCollectContractions) {
+	# the contractions
+	open (CON,		'>:encoding(UTF-8)', '../../target/contractions.txt');
+}
+
+# hash to remove duplicates and sort... is it necessary for simple? maybe we should serialize it directly to make it faster
+
 my %tags;
 my %con;
 
 # features to add. Only if 1 will add
-%features = (
+my %features = (
         ABR => 0,
         SEM => 0,
         PREAO90 => 0,
@@ -69,64 +84,55 @@ $dic->foreach_word(
 	sub {
 		# gets each word from dictionary
 		my $word = shift;
-		# we first consume the begining of the document (comments and affixes)
-		if($word !~ m/^\s/ && $word !~ m/^-e/)
-		{
-			# list of derived words
-			my @der = $pt_dict->der($word);
-			foreach $dword (@der) {
-					# gets its analisis and put to a string
-					my @fea = $pt_dict->fea($dword);
+		# list of derived words
+		my @der = $pt_dict->der($word);
+		foreach my $dword (@der) {
+				# gets the analysis a 
+				my @fea = $pt_dict->fea($dword);
+				foreach my $key (@fea) {
 					my $analisis;
 					my $rad;
-					foreach $key (@fea) {
-						while ( ($k,$v) = each %$key ) {
+					if(!($dword =~ m/\w-\w/ && ${$key}{'CAT'} eq 'v')) { #avoid amar-lhe, amo-lha-ei etc
+						while ( my ($k,$v) = each %$key ) {
 							if( $k eq "rad" ) {
 								$rad = $v;
 							}
 						    elsif( !defined($features{$k}) ) {
 							    $analisis .= "$k:$v|";
-							    $tags{"$k:$v"} = 1;
+							    if($isCollectTags) {
+							    	$tags{"$k:$v"} = 1; # enable to create a log of tags
+							    }
 							}
 						}
 						$rad =~ s/ /_/g;
-						$simple{$dword}{"$rad>$analisis"} = 1;
-						if($analisis =~ /CAT:cp/) {
+						print SIMPLE "$dword $rad>$analisis\n";
+						#$simple{$dword}{"$rad>$analisis"} = 1;
+						if($isCollectContractions && ${$key}{'CAT'} eq 'cp') {
 							$con{$dword} = 1;
-						}
-						$analisis = '';
+						}			
 					}
-			}#foreach
-		}
+				}
+		}#foreach
 	}#sub
 );
 
-for my $dword ( sort keys %simple ) {
-	print SIMPLE "$dword";
-	for my $a ( keys %{$simple{$dword}} ) {
-		print SIMPLE " $a";
+close SIMPLE or die "bad SIMPLE: $! $?";
+
+if($isCollectTags) {
+	for my $t ( sort keys %tags ) {
+			print TAG "$t\n";
 	}
-	print SIMPLE "\n";	
+	
+	close TAG or die "bad TAG: $! $?";
 }
 
-#for my $dword ( sort keys %wpt ) {
-#	for my $a ( keys %{$wpt{$dword}} ) {
-#		print WPT "$dword\t$a\n";
-#	}
-#}
 
-#for my $primitive ( sort keys %pwt ) {
-#	for my $a ( keys %{$pwt{$primitive}} ) {
-#		print PWT "$primitive\t$a\n";
-#	}
-#}
-
-for my $t ( sort keys %tags ) {
-		print TAG "$t\n";
+if($isCollectContractions) {
+	for my $t ( sort keys %con ) {
+			print CON "$t\n";
+	}
+	
+	close CON or die "bad CON: $! $?";
 }
 
-close SIMPLE or die "bad WPT: $! $?";
-#close WPT or die "bad WPT: $! $?";
-#close PWT or die "bad PWT: $! $?";
-#close TAG or die "bad TAG: $! $?";
 
