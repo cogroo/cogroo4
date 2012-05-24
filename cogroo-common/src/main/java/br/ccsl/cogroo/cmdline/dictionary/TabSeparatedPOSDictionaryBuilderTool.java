@@ -236,9 +236,6 @@ public class TabSeparatedPOSDictionaryBuilderTool extends
     Set<String> unknownTags = new TreeSet<String>();
 
     while ((line = lineReader.readLine()) != null) {
-      if(line.startsWith("quem")) {
-        System.out.println("aqui");
-      }
       StringTokenizer whiteSpaceTokenizer = new StringTokenizer(line, " ");
 
       String word = whiteSpaceTokenizer.nextToken();
