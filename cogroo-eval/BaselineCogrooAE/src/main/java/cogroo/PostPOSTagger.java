@@ -15,13 +15,20 @@ import br.usp.pcs.lta.cogroo.tools.ProcessingEngine;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Gender;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Number;
-import cogroo.uima.ae.FlorestaTagInterpreter;
+import br.usp.pcs.lta.cogroo.tools.dictionary.CogrooTagDictionary;
+import br.usp.pcs.lta.cogroo.tools.tagger.CogrooPOSTaggerME;
+import cogroo.uima.interpreters.FlorestaTagInterpreter;
 
 public class PostPOSTagger implements ProcessingEngine {
 
   // pronomes obliquuos átonos
   private static final Set<String> PRONOMES_OBLIQUOS_ATONOS;
   private FlorestaTagInterpreter it = new FlorestaTagInterpreter();
+  private CogrooTagDictionary dict;
+  
+  public PostPOSTagger(CogrooTagDictionary dict) {
+    this.dict = dict;
+  }
 
   static {
     String[] arr = { "me", "te", "se", "o", "a", "lhe", "nos", "vos", "os",
@@ -44,8 +51,18 @@ public class PostPOSTagger implements ProcessingEngine {
   }
 
   public void process(Sentence sentence) {
-    for (Token t : sentence.getTokens()) {
-      t.setMorphologicalTag(toMorphologicalTag(t.getOriginalPOSTag()));
+    if(MultiCogrooSettings.TAGGER) {
+      for (Token t : sentence.getTokens()) {
+        String tag;
+        if(t.getOriginalFeatures() != null) {
+          tag = t.getOriginalPOSTag() + "=" + t.getOriginalFeatures();
+        } else {
+          tag = t.getOriginalPOSTag();
+        }
+        t.setMorphologicalTag(toMorphologicalTag(tag));
+        
+        CogrooPOSTaggerME.setPrimitiveAndGeneralize(t, dict);
+      }
     }
     mergeHyphenedWords(sentence);
   }

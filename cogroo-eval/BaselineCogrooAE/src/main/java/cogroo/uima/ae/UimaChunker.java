@@ -23,6 +23,7 @@ import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class;
 import cogroo.ExpandedSentence;
+import cogroo.uima.interpreters.FlorestaTagInterpreter;
 
 public class UimaChunker extends AnnotationService implements ProcessingEngine {
 

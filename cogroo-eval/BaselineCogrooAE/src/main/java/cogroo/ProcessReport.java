@@ -58,6 +58,10 @@ public class ProcessReport {
   private String process(String text) {
     CheckerResult results = cogroo.analyseAndCheckText(text);
     StringBuilder sb = new StringBuilder();
+    
+    if(results == null) {
+      return "Processing failed: " + text;
+    }
     for (Sentence sentence : results.sentences) {
       sb.append("Flat structure for: ").append(sentence.getSentence())
           .append("\n");
@@ -68,6 +72,11 @@ public class ProcessReport {
         // print the lemma
         sb.append(" [" + token.getPrimitive() + " ");
         // print the morphological tag, we use a tag interpreter here
+        
+        if(token.getMorphologicalTag() == null) {
+          throw new IllegalArgumentException("Morphological tag is missing! " + sentence.toString());
+        }
+        
         sb.append("" + mtagToStr(token.getMorphologicalTag()) + "] ");
       }
       sb.append("\n").append("Syntax tree: " + sentence.getSyntaxTree());

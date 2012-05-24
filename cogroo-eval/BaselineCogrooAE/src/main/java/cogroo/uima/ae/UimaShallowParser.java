@@ -26,6 +26,7 @@ import br.usp.pcs.lta.cogroo.tools.ProcessingEngine;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 import cogroo.ExpandedSentence;
+import cogroo.uima.interpreters.FlorestaTagInterpreter;
 
 public class UimaShallowParser extends AnnotationService implements
     ProcessingEngine {

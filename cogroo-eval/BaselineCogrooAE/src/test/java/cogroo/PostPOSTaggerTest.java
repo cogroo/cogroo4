@@ -13,7 +13,7 @@ import br.usp.pcs.lta.cogroo.entity.Token;
 import br.usp.pcs.lta.cogroo.entity.impl.runtime.MorphologicalTag;
 import br.usp.pcs.lta.cogroo.entity.impl.runtime.TokenCogroo;
 
-import cogroo.uima.ae.FlorestaTagInterpreter;
+import cogroo.uima.interpreters.FlorestaTagInterpreter;
 
 public class PostPOSTaggerTest {
 
@@ -39,7 +39,7 @@ public class PostPOSTaggerTest {
   FlorestaTagInterpreter ti = new FlorestaTagInterpreter();
 
   private String merge(String tagA, String tagB) {
-    PostPOSTagger ppt = new PostPOSTagger();
+    PostPOSTagger ppt = new PostPOSTagger(null);
 
     Token a = new TokenCogroo(new Span(0, 5));
     Token b = new TokenCogroo(new Span(6, 10));
