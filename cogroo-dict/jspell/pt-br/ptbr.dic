@@ -1576,7 +1576,7 @@ americanada/#nf//
 americana/#nf//
 americanice/#nf/p/
 americanizar/#vt/XYPLc/
-americano/#a/pfti/
+americano/#hm/pfit/
 ameríndio/#hm/fp/
 amesquinhar/#vt/XYPLMD/
 amestrar/#vt/XYPLD/
@@ -12338,7 +12338,7 @@ ecrã/#nm/p/
 ectoderme/#nf//
 ectoplasma/#nm//
 ecumenicidade/#nf/p/
-ecuménico/#a/fpH/
+ecumênico/#a/fpH/
 ecumenismo/#nm/p/
 eczema/#nm//
 edema/#nm/p/
@@ -22184,7 +22184,9 @@ mesmeriano/#a//
 mesmerismo/#nm/p/
 mesmidade/#nf/p/
 mesmíssimo/#a//
-mesmo/#a/pfmds/
+mesmo/#hm/pfds/
+mesmo/CAT=pind,G=m,N=s/pf/
+mesmo/#av//
 mês/#nm/p/
 mesopotâmico/#a/f/
 mesozoico/PREAO90=mesozóico,#a/fp/
@@ -34957,6 +34959,7 @@ WWW/#tsf//
 XP/CAT=nc,G=m,N=s//
 XML/#tsm//
 XHTML/#tsm//
+
 #np/CAT=np,SEM=p
 #np1/CAT=np,SEM=p1
 #npm/CAT=np,G=m,SEM=p
@@ -35125,6 +35128,7 @@ Amélia/#npf/
 Américas/#t/
 América/#la,#t,SEM=cont/
 Américo/#npm/
+Americana/#tcf/
 Amesterdão/#tc/
 Amílcar/#npm/
 Amorim/#np/

@@ -328,9 +328,9 @@ P A T I A	>	-IA,A		; "CAT=adj,G=_,N=s"	# telepata
 P A T I A	>	-IA,AS		; "CAT=adj,G=_,N=p"	# telepatas
 
 C U L T U R A   >       -URA,OR         ; "CAT=a_nc,G=m,N=s"     # escultor      
-C U L T U R A   >       -URA,ORA        ; "CAT=a_nc,G=m,N=s"     # escultora  
+C U L T U R A   >       -URA,ORA        ; "CAT=a_nc,G=f,N=s"     # escultora  
 C U L T U R A   >       -URA,ORES       ; "CAT=a_nc,G=m,N=s"     # escultores
-C U L T U R A   >       -URA,ORAS       ; "CAT=a_nc,G=m,N=s"     # escultoras 
+C U L T U R A   >       -URA,ORAS       ; "CAT=a_nc,G=f,N=s"     # escultoras 
 
 C R A C I A     >       -CIA,TA         ; "CAT=a_nc,G=_,N=s"     # democrata
 C R A C I A     >       -CIA,TAS        ; "CAT=a_nc,G=_,N=p"     # democratas
@@ -521,31 +521,31 @@ M	>	-M,NISMOS	; "FSEM=ismo"	# latinismos
 #-----------------------------------------
 # ista
 flag *t:          ; "CAT=nc,N=s"      #ista
-[^CÇÃI]O    >     -O,ISTA       ; "CAT=a_nc,FSEM=ista"  # porto->portista
-C O         >    -CO,QUISTA     ; "CAT=a_nc,FSEM=ista"  # bloco->bloquista
-Ç O         >    -ÇO,CISTA      ; "CAT=a_nc,FSEM=ista"  # adereço->aderecista
-Ç Ã O       >   -ÇÃO,CIONISTA   ; "CAT=a_nc,FSEM=ista"  # abolição->abolicionista
-S Ã O	    >   -SÃO,SIONISTA	; "CAT=a_nc,FSEM=ista"  # percussão->percussionista	
-I O		> -IO,ÍSTA	; "CAT=a_nc,FSEM=ista"	# ensaísta
-[^IÇG] A    >     -A,ISTA       ; "CAT=a_nc,FSEM=ista"  # bomba->bombista
-I A         >     -A,STA        ; "CAT=a_nc,FSEM=ista"  # anarquia->anarquista
-Ç A         >    -ÇA,CISTA      ; "CAT=a_nc,FSEM=ista"  # cobrança->cobrancista
-G A         >     -A,UISTA      ; "CAT=a_nc,FSEM=ista"  # borga->borguista
-E           >     -E,ISTA       ; "CAT=a_nc,FSEM=ista"  # alarme->alarmista
-[LR]        >        ISTA       ; "CAT=a_nc,FSEM=ista"  # flor->florista
+[^CÇÃI]O    >     -O,ISTA       ; "CAT=a_nc,FSEM=ista,G=2"  # porto->portista
+C O         >    -CO,QUISTA     ; "CAT=a_nc,FSEM=ista,G=2"  # bloco->bloquista
+Ç O         >    -ÇO,CISTA      ; "CAT=a_nc,FSEM=ista,G=2"  # adereço->aderecista
+Ç Ã O       >   -ÇÃO,CIONISTA   ; "CAT=a_nc,FSEM=ista,G=2"  # abolição->abolicionista
+S Ã O	    >   -SÃO,SIONISTA	; "CAT=a_nc,FSEM=ista,G=2"  # percussão->percussionista	
+I O			> 	-IO,ÍSTA		; "CAT=a_nc,FSEM=ista,G=2"	# ensaísta
+[^IÇG] A    >     -A,ISTA       ; "CAT=a_nc,FSEM=ista,G=2"  # bomba->bombista
+I A         >     -A,STA        ; "CAT=a_nc,FSEM=ista,G=2"  # anarquia->anarquista
+Ç A         >    -ÇA,CISTA      ; "CAT=a_nc,FSEM=ista,G=2"  # cobrança->cobrancista
+G A         >     -A,UISTA      ; "CAT=a_nc,FSEM=ista,G=2"  # borga->borguista
+E           >     -E,ISTA       ; "CAT=a_nc,FSEM=ista,G=2"  # alarme->alarmista
+[LR]        >        ISTA       ; "CAT=a_nc,FSEM=ista,G=2"  # flor->florista
 
-[^CÇÃ]O     >     -O,ISTAS      ; "CAT=a_nc,N=p,FSEM=ista"  # porto->portistas
-C O         >    -CO,QUISTAS    ; "CAT=a_nc,N=p,FSEM=ista"  # bloco->bloquistas
-Ç O         >    -ÇO,CISTAS     ; "CAT=a_nc,N=p,FSEM=ista"  # adereço->aderecistas
-Ç Ã O       >   -ÇÃO,CIONISTAS  ; "CAT=a_nc,N=p,FSEM=ista"  # abolição->abolicionistas
-S Ã O	    >   -SÃO,SIONISTAS  ; "CAT=a_nc,N=p,FSEM=ista"  # percussão->percussionistas
-I O		> -IO,ÍSTAS	; "CAT=a_nc,N=p,FSEM=ista"	# ensaístas
-[^IÇG] A    >     -A,ISTAS      ; "CAT=a_nc,N=p,FSEM=ista"  # bomba->bombistas
-I A         >     -A,STAS       ; "CAT=a_nc,N=p,FSEM=ista"  # anarquia->anarquistas
-Ç A         >    -ÇA,CISTAS     ; "CAT=a_nc,N=p,FSEM=ista"  # cobrança->cobrancistas
-G A         >     -A,UISTAS     ; "CAT=a_nc,N=p,FSEM=ista"  # borga->borguistas
-E           >     -E,ISTAS      ; "CAT=a_nc,N=p,FSEM=ista"  # alarme->alarmistas
-[LR]        >        ISTAS      ; "CAT=a_nc,N=p,FSEM=ista"  # flor->floristas
+[^CÇÃ]O     >     -O,ISTAS      ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # porto->portistas
+C O         >    -CO,QUISTAS    ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # bloco->bloquistas
+Ç O         >    -ÇO,CISTAS     ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # adereço->aderecistas
+Ç Ã O       >   -ÇÃO,CIONISTAS  ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # abolição->abolicionistas
+S Ã O	    >   -SÃO,SIONISTAS  ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # percussão->percussionistas
+I O			> 	-IO,ÍSTAS		; "CAT=a_nc,N=p,FSEM=ista,G=2"	# ensaístas
+[^IÇG] A    >     -A,ISTAS      ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # bomba->bombistas
+I A         >     -A,STAS       ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # anarquia->anarquistas
+Ç A         >    -ÇA,CISTAS     ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # cobrança->cobrancistas
+G A         >     -A,UISTAS     ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # borga->borguistas
+E           >     -E,ISTAS      ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # alarme->alarmistas
+[LR]        >        ISTAS      ; "CAT=a_nc,N=p,FSEM=ista,G=2"  # flor->floristas
 
 #-----------------------------------------
 # inho
@@ -904,14 +904,14 @@ E R     >  ÍAMOS        ; "P=1,N=p,T=c"
 E R     >  ÍEIS         ; "P=2,N=p,T=c"
 E R     >  IAM          ; "P=3,N=p,T=c"
 E R     >  -R,NDO       ; "T=g"
-E R     >  -ER,IDO      ; "G=m,N=s,T=ppa"
-E R     >  -ER,IDA      ; "G=f,N=s,T=ppa"
-E R     >  -ER,IDOS     ; "G=m,N=p,T=ppa"
-E R     >  -ER,IDAS     ; "G=f,N=p,T=ppa"
-C R E V E R     >  -EVER,ITO      ; "G=m,N=s,T=ppa"
-C R E V E R     >  -EVER,ITA      ; "G=f,N=s,T=ppa"
-C R E V E R     >  -EVER,ITOS     ; "G=m,N=p,T=ppa"
-C R E V E R     >  -EVER,ITAS     ; "G=f,N=p,T=ppa"
+[^C] [^R] [^E] [^V] E R     >  -ER,IDO      ; "G=m,N=s,T=ppa"
+[^C] [^R] [^E] [^V] E R     >  -ER,IDA      ; "G=f,N=s,T=ppa"
+[^C] [^R] [^E] [^V] E R     >  -ER,IDOS     ; "G=m,N=p,T=ppa"
+[^C] [^R] [^E] [^V] E R     >  -ER,IDAS     ; "G=f,N=p,T=ppa"
+C R E V E R     >  -EVER,ITO      ; "G=m,N=s,T=ppa"	# escrever -> escrito
+C R E V E R     >  -EVER,ITA      ; "G=f,N=s,T=ppa"	# escrever -> escrita
+C R E V E R     >  -EVER,ITOS     ; "G=m,N=p,T=ppa" # escrever -> escritos
+C R E V E R     >  -EVER,ITAS     ; "G=f,N=p,T=ppa" # escrever -> escritas
 
 
 
@@ -952,10 +952,12 @@ I R     >  ÍAMOS        ; "P=1,N=p,T=c"
 I R     >  ÍEIS         ; "P=2,N=p,T=c"
 I R     >  IAM          ; "P=3,N=p,T=c"
 I R     >  -R,NDO       ; "T=g"
-I R     >  -R,DO        ; "G=m,N=s,T=ppa"
-I R     >  -R,DA        ; "G=f,N=s,T=ppa"
-I R     >  -R,DOS       ; "G=m,N=p,T=ppa"
-I R     >  -R,DAS       ; "G=f,N=p,T=ppa"
+[^B] [^R] I R     >  -R,DO        ; "G=m,N=s,T=ppa"
+[^B] [^R] I R     >  -R,DA        ; "G=f,N=s,T=ppa"
+[^B] [^R] I R     >  -R,DOS       ; "G=m,N=p,T=ppa"
+[^B] [^R] I R     >  -R,DAS       ; "G=f,N=p,T=ppa"
+B R I R 	> -RIR,ERTO	; "G=m,N=p,T=ppa"
+ 
 #ispell A R > -AR,Á
 #ispell E R > -ER,Ê
 
@@ -1592,7 +1594,7 @@ flag *G:  ;"CAT=adj"          #ice
 Ç O         >    -ÇO,CICE    ; "CAT=nc,G=f,FSEM=ice" # castic,o->casticice
 G O         >    -GO,GUICE   ; "CAT=nc,G=f,FSEM=ice" # antigo->antiguice
 C O         >    -CO,QUICE   ; "CAT=nc,G=f,FSEM=ice" # bacoco->bacoquice
-[^ÇGC]A     >     -A,ICE    ; "CAT=nc,G=f,FSEM=ice" # activo->activice
+[^ÇGC]A     >     -A,ICE     ; "CAT=nc,G=f,FSEM=ice" # activo->activice
 Ç A         >    -ÇA,CICE    ; "CAT=nc,G=f,FSEM=ice" # castic,o->casticice
 G A         >    -GA,GUICE   ; "CAT=nc,G=f,FSEM=ice" # antigo->antiguice
 C A         >    -CA,QUICE   ; "CAT=nc,G=f,FSEM=ice" # bacoco->bacoquice

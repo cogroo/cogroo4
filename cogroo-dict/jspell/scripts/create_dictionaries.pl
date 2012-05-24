@@ -92,7 +92,7 @@ $dic->foreach_word(
 				foreach my $key (@fea) {
 					my $analisis;
 					my $rad;
-					if(!($dword =~ m/\w-\w/ && ${$key}{'CAT'} eq 'v')) { #avoid amar-lhe, amo-lha-ei etc
+					if(!($dword =~ m/\S-\S/ && ${$key}{'CAT'} eq 'v')) { #avoid amar-lhe, amo-lha-ei etc
 						while ( my ($k,$v) = each %$key ) {
 							if( $k eq "rad" ) {
 								$rad = $v;
