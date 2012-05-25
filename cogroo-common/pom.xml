@@ -113,7 +113,7 @@
 				<configuration>
 					<schemaDirectory>src/main/resources/rules/schema</schemaDirectory>
 					<extension>true</extension>
-					<generatePackage>br.usp.pcs.lta.cogroo.tools.checker.rules.model</generatePackage>
+					<generatePackage>br.ccsl.cogroo.tools.checker.rules.model</generatePackage>
 				</configuration>
 			</plugin>
 			<plugin>
