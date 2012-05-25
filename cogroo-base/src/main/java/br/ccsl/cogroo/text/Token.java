@@ -15,5 +15,7 @@ public interface Token {
   public String getLexeme();
 
   public String getPOSTag();
+  
+  public String getFeatures();
 
 }

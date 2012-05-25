@@ -8,6 +8,7 @@
 	<model type="nameFinder">models/pt-prop.model</model>
 	<model type="contractionFinder">models/pt-con.model</model>
 	<model type="posTagger">models/pt-pos.model</model>
+	<model type="featurizer">models/pt-feat.model</model>
 
 	<pipe>
 		<analyzer>sentenceDetector</analyzer>
@@ -15,5 +16,6 @@
 		<analyzer>nameFinder</analyzer>
 		<analyzer>contractionFinder</analyzer>
 		<analyzer>posTagger</analyzer>
+		<analyzer>featurizer</analyzer>
 	</pipe>
 </languageConfiguration>

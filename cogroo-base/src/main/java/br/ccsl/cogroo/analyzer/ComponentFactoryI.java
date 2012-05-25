@@ -34,6 +34,8 @@ public interface ComponentFactoryI {
    */
   public AnalyzerI createPOSTagger();
   
+  public AnalyzerI createFeaturizer();
+  
   /**
    * @return {@link Pipe} according to the corresponding language.
    */

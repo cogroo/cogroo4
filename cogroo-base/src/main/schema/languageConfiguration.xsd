@@ -49,6 +49,7 @@
 			<xs:enumeration value="nameFinder" />
 			<xs:enumeration value="contractionFinder" />
 			<xs:enumeration value="posTagger" />
+			<xs:enumeration value="featurizer" />
 		</xs:restriction>
 	</xs:simpleType>
 

@@ -22,6 +22,8 @@ import br.ccsl.cogroo.config.Analyzers;
 import br.ccsl.cogroo.config.LanguageConfiguration;
 import br.ccsl.cogroo.config.LanguageConfigurationUtil;
 import br.ccsl.cogroo.config.Model;
+import br.ccsl.cogroo.tools.featurizer.FeaturizerME;
+import br.ccsl.cogroo.tools.featurizer.FeaturizerModel;
 
 import com.google.common.io.Closeables;
 
@@ -173,6 +175,29 @@ public class ComponentFactory implements ComponentFactoryI {
     return null;
   }
 
+  public AnalyzerI createFeaturizer() {
+    FeaturizerME featurizer = null;
+    InputStream modelIn = null;
+    
+    if (modelPathMap.containsKey(Analyzers.FEATURIZER)) {
+      try {
+        modelIn = new FileInputStream(modelPathMap.get(Analyzers.FEATURIZER));
+        FeaturizerModel model = new FeaturizerModel(modelIn);
+        featurizer = new FeaturizerME(model);
+      } catch (IOException e) {
+        LOGGER.fatal("Couldn't load Featurizer model!", e);
+      } finally {
+        Closeables.closeQuietly(modelIn);
+      }
+
+      if (featurizer == null)
+        throw new InitializationException("Couldn't load FeaturizerME class");
+
+      return new Featurizer(featurizer);
+    }
+    return null;
+  }
+  
   public AnalyzerI createPipe() {
     Pipe pipe = new Pipe();
 
@@ -192,6 +217,9 @@ public class ComponentFactory implements ComponentFactoryI {
         break;
       case POS_TAGGER:
         pipe.add(this.createPOSTagger());
+        break;
+      case FEATURIZER:
+        pipe.add(this.createFeaturizer());
         break;
       default:
         throw new InitializationException("Unknown analyzer: " + analyzer);

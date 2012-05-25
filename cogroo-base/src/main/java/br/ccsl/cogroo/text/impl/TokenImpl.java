@@ -1,7 +1,5 @@
 package br.ccsl.cogroo.text.impl;
 
-import java.awt.Component;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,17 +29,20 @@ public class TokenImpl implements Token {
   /** Is the morphological tag of the <code>lemma</code> */
   private String tag;
   
+  private String features;
+  
   private Map<Analyzers, Object> additionalContext = new HashMap<Analyzers, Object>();
   
   public TokenImpl(Span span, String lexeme) {
-    this(span, lexeme, null, null);
+    this(span, lexeme, null, null, null);
   }
 
-  public TokenImpl(Span span, String lexeme, String lemma, String tag) {
+  public TokenImpl(Span span, String lexeme, String lemma, String tag, String features) {
     this.span = span;
     this.lexeme = lexeme;
     this.lemma = lemma;
     this.tag = tag;
+    this.features = features;
   }
 
   /*
@@ -89,6 +90,14 @@ public class TokenImpl implements Token {
 
   public void setPOSTag(String tag) {
     this.tag = tag;
+  }
+  
+  public void setFeatures(String features) {
+    this.features = features;
+  }
+  
+  public String getFeatures() {
+    return features;
   }
   
   public void addContext (Analyzers analyzer, Object object) {

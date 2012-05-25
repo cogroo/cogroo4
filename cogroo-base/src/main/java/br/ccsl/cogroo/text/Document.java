@@ -1,7 +1,5 @@
 package br.ccsl.cogroo.text;
 
-import java.awt.Component;
-import java.util.HashMap;
 import java.util.List;
 
 /**
