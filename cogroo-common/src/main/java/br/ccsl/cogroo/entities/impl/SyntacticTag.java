@@ -99,4 +99,8 @@ public class SyntacticTag extends Tag {
     return false;
   }
 
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.syntacticFunction);
+  }
 }

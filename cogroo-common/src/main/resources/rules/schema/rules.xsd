@@ -28,7 +28,7 @@
 
 -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" elementFormDefault="qualified" attributeFormDefault="unqualified" jaxb:extensionBindingPrefixes="xjc" jaxb:version="2.0">
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" jaxb:extensionBindingPrefixes="xjc" jaxb:version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
 	<xs:annotation>
 		<xs:appinfo>
 			<jaxb:globalBindings>
@@ -215,22 +215,34 @@
 						</xs:appinfo>
 					</xs:annotation>
 					<xs:restriction base="xs:string">
+					
 						<xs:enumeration value="noun"/>
+						<xs:enumeration value="noun adjective"/>
+						
 						<xs:enumeration value="proper noun"/>
-						<xs:enumeration value="specifier"/>
-						<xs:enumeration value="determiner"/>
+						
+<!-- 						<xs:enumeration value="independent pronoun"/> -->
 						<xs:enumeration value="personal pronoun"/>
+						<xs:enumeration value="pronoun"/>
+<!-- 						<xs:enumeration value="determiner pronoun"/> -->
+								
+<!-- 						<xs:enumeration value="specifier"/> -->
+<!-- 						<xs:enumeration value="determiner"/> -->
+						<xs:enumeration value="article"/>
 						<xs:enumeration value="adjective"/>
 						<xs:enumeration value="adverb"/>
-						<xs:enumeration value="verb"/>
+						<xs:enumeration value="infinitive verb"/>
 						<xs:enumeration value="numeral"/>
 						<xs:enumeration value="subordinating conjunction"/>
 						<xs:enumeration value="coordinating conjunction"/>
 						<xs:enumeration value="interjection"/>
-						<xs:enumeration value="hyphen separated prefix"/>
+						<xs:enumeration value="prefix"/>
 						<xs:enumeration value="preposition"/>
 						<xs:enumeration value="punctuation mark"/>
-						<xs:enumeration value="unit"/>
+<!-- 						<xs:enumeration value="unit"/> -->
+						<xs:enumeration value="finitive verb"/>
+						<xs:enumeration value="participle verb"/>
+						<xs:enumeration value="gerund verb"/>				
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -327,7 +339,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="Finiteness" minOccurs="0">
+<!-- 			<xs:element name="Finiteness" minOccurs="0">
 				<xs:simpleType>
 					<xs:annotation>
 						<xs:appinfo>
@@ -341,7 +353,7 @@
 						<xs:enumeration value="gerund"/>
 					</xs:restriction>
 				</xs:simpleType>
-			</xs:element>
+			</xs:element> -->
 			<xs:element name="Punctuation" minOccurs="0">
 				<xs:simpleType>
 					<xs:annotation>

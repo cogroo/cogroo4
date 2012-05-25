@@ -27,7 +27,7 @@
     License along with CoGrOO. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<Rules xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Rules.xsd">
+<Rules xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/Rules.xsd">
 	<Rule id="1" active="true">
 		<Method>general</Method>
 		<Type>Crase</Type>
@@ -220,7 +220,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -278,7 +293,12 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>pronoun</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -340,7 +360,12 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>pronoun</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -1595,7 +1620,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
 							<Number>plural</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1620,7 +1645,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>male</Gender>
 							<Number>singular</Number>
 						</TagMask>
@@ -1657,7 +1682,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
 							<Number>plural</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1682,7 +1707,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>male</Gender>
 							<Number>plural</Number>
 						</TagMask>
@@ -1719,7 +1744,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>infinitive verb</Class>
 							<Number>plural</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1744,7 +1769,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>female</Gender>
 							<Number>plural</Number>
 						</TagMask>
@@ -1781,7 +1806,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>infinitive verb</Class>
 							<Number>plural</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1806,7 +1831,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>male</Gender>
 							<Number>plural</Number>
 						</TagMask>
@@ -1843,7 +1868,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>infinitive verb</Class>
 							<Number>plural</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1868,7 +1893,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>female</Gender>
 							<Number>singular</Number>
 						</TagMask>
@@ -1905,7 +1930,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>infinitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1930,7 +1955,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>male</Gender>
 							<Number>singular</Number>
 						</TagMask>
@@ -1967,7 +1992,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>infinitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1992,7 +2017,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>male</Gender>
 							<Number>plural</Number>
 						</TagMask>
@@ -2008,7 +2033,7 @@
 			<Replace index="0">
 				<TagReference index="0">
 					<TagMask>
-						<Class>verb</Class>
+						<Class>infinitive verb</Class>
 						<Number>plural</Number>
 						<Person>third</Person>
 						<Tense>present</Tense>
@@ -2040,7 +2065,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>infinitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -2065,7 +2090,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>female</Gender>
 							<Number>plural</Number>
 						</TagMask>
@@ -2081,7 +2106,7 @@
 			<Replace index="0">
 				<TagReference index="0">
 					<TagMask>
-						<Class>verb</Class>
+						<Class>infinitive verb</Class>
 						<Number>plural</Number>
 						<Person>third</Person>
 						<Tense>present</Tense>
@@ -2113,7 +2138,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>infinitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -2138,7 +2163,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>male</Gender>
 							<Number>plural</Number>
 						</TagMask>
@@ -2154,7 +2179,7 @@
 			<Replace index="0">
 				<TagReference index="0">
 					<TagMask>
-						<Class>verb</Class>
+						<Class>infinitive verb</Class>
 						<Number>plural</Number>
 						<Person>third</Person>
 						<Tense>present</Tense>
@@ -2186,7 +2211,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>infinitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -2211,7 +2236,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 							<Gender>female</Gender>
 							<Number>singular</Number>
 						</TagMask>
@@ -3582,8 +3607,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
-							<Finiteness>infinitive</Finiteness>
+							<Class>infinitive verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -3863,7 +3887,7 @@
 					</Mask>
 					<Mask>
 						<TagMask>
-							<Finiteness>participle</Finiteness>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4091,7 +4115,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4181,7 +4220,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4251,7 +4305,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4337,7 +4406,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4407,7 +4491,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4442,7 +4541,22 @@
 					<Negated>true</Negated>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4507,7 +4621,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4589,7 +4718,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4624,7 +4768,22 @@
 					<Negated>true</Negated>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4697,7 +4856,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4758,7 +4932,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4776,7 +4950,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4853,7 +5042,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4871,7 +5060,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -4935,7 +5139,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -5015,7 +5234,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -5086,7 +5320,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -5169,7 +5418,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -5419,7 +5683,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -7767,7 +8031,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>determiner</Class>
+							<Class>article</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -7985,7 +8249,12 @@
 							<Element>
 								<Mask>
 									<TagMask>
-										<Class>determiner</Class>
+										<Class>article</Class>
+									</TagMask>
+								</Mask>
+								<Mask>
+									<TagMask>
+										<Class>pronoun</Class>
 									</TagMask>
 								</Mask>
 							</Element>
@@ -8242,7 +8511,22 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -8251,8 +8535,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
-							<Finiteness>infinitive</Finiteness>
+							<Class>infinitive verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>
@@ -8261,8 +8544,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>verb</Class>
-							<Finiteness>gerund</Finiteness>
+							<Class>gerund verb</Class>
 						</TagMask>
 					</Mask>
 				</Element>

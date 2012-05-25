@@ -30,6 +30,7 @@ package br.ccsl.cogroo.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import opennlp.tools.util.Span;
 import br.ccsl.cogroo.entities.tree.Node;
 import br.ccsl.cogroo.entities.tree.OldStyleModel;
 
@@ -71,6 +72,8 @@ public class Sentence implements Serializable, TokenGroup {
 
   private int offset;
 
+  private Span span;
+
   /**
    * Gets the representation of the sentence as a plain text.
    * 
@@ -104,6 +107,14 @@ public class Sentence implements Serializable, TokenGroup {
    */
   public void setSentence(String sentence) {
     this.sentence = sentence;
+  }
+
+  public void setSpan(Span aSpan) {
+    this.span = aSpan;
+  }
+
+  public Span getSpan() {
+    return this.span;
   }
 
   /**

@@ -105,4 +105,9 @@ public class ChunkTag extends Tag {
     return false;
   }
 
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(chunkFunction);
+  }
+
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opennlp.tools.util.Span;
-import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.impl.SyntacticTag;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
 import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;

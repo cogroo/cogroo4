@@ -111,7 +111,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<schemaDirectory>src/main/schema</schemaDirectory>
+					<schemaDirectory>src/main/resources/rules/schema</schemaDirectory>
 					<extension>true</extension>
 					<generatePackage>br.usp.pcs.lta.cogroo.tools.checker.rules.model</generatePackage>
 				</configuration>

@@ -62,8 +62,6 @@ public class MorphologicalTag extends Tag implements Cloneable {
   private Mood mood;
   private Punctuation punctuation;
 
-  // private Finiteness finiteness;
-
   // public MorphologicalTag( )
   // {
   // super("");
@@ -137,14 +135,6 @@ public class MorphologicalTag extends Tag implements Cloneable {
     this.person = thePerson;
   }
 
-  // public Finiteness getFinitenessE() {
-  // return this.finiteness;
-  // }
-  //
-  // public void setFiniteness(Finiteness theFiniteness) {
-  // this.finiteness = theFiniteness;
-  // }
-
   public boolean match(MorphologicalTag tag) {
 
     if (tag.getClazzE() != null ^ this.getClazzE() != null) {
@@ -204,11 +194,6 @@ public class MorphologicalTag extends Tag implements Cloneable {
       if (this.getPunctuation() != tag.getPunctuation())
         return false;
     }
-    // if(tag.getFinitenessE() != null ^ this.getFinitenessE() != null) {
-    // return false;
-    // } else if (this.getFinitenessE() != null) {
-    // if( this.getFinitenessE() != tag.getFinitenessE() ) return false;
-    // }
     return true;
   }
 
@@ -285,12 +270,6 @@ public class MorphologicalTag extends Tag implements Cloneable {
         return false;
     }
 
-    // if(tagMask.getFiniteness() != null) {
-    // if( ( this.getFinitenessE() != null || restricted ) &&
-    // this.getFinitenessE() != tagMask.getFiniteness())
-    // return false;
-    // }
-
     if (tagMask.getPunctuation() != null) {
       if ((this.getPunctuation() != null || restricted)
           && this.getPunctuation() != tagMask.getPunctuation())
@@ -350,11 +329,6 @@ public class MorphologicalTag extends Tag implements Cloneable {
         return false;
     }
 
-    // if(tagMask.getFiniteness() != null || restricted ) {
-    // if( this.getFinitenessE() != tagMask.getFiniteness())
-    // return false;
-    // }
-
     if (tagMask.getPunctuation() != null || restricted) {
       if (this.getPunctuation() != tagMask.getPunctuation())
         return false;
@@ -399,10 +373,6 @@ public class MorphologicalTag extends Tag implements Cloneable {
       res.add(this.getMood().toString());
     }
 
-    // if(this.getFinitenessE() != null) {
-    // res.add(this.getFinitenessE().toString() );
-    // }
-
     if (this.getPunctuation() != null) {
       res.add(this.getPunctuation().toString());
     }
@@ -441,10 +411,6 @@ public class MorphologicalTag extends Tag implements Cloneable {
       res.append(this.getMood().value() + ",");
     }
 
-    // if(this.getFinitenessE() != null) {
-    // res.append(this.getFinitenessE().value() + ",");
-    // }
-
     if (this.getPunctuation() != null) {
       res.append(this.getPunctuation().value() + ",");
     }
@@ -452,18 +418,23 @@ public class MorphologicalTag extends Tag implements Cloneable {
     if (res.length() > 0) {
       return res.substring(0, res.length() - 1);
     } else {
-      return null;
+      return "";
     }
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (obj == this)
       return true;
-    if (getClass() != obj.getClass())
+    if (obj == null)
       return false;
-    final MorphologicalTag other = (MorphologicalTag) obj;
-    return this.match(other);
+
+    if (obj.getClass() == getClass()) {
+      final MorphologicalTag other = (MorphologicalTag) obj;
+      return this.match(other);
+    } else {
+      return false;
+    }
   }
 
   @Override

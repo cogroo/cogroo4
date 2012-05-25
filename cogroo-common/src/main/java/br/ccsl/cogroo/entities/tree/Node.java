@@ -1,9 +1,13 @@
 package br.ccsl.cogroo.entities.tree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node extends TreeElement {
+public class Node extends TreeElement implements Serializable {
+
+  private static final long serialVersionUID = 5419391069465738001L;
+
   private List<TreeElement> elems = new ArrayList<TreeElement>();
 
   public void addElement(TreeElement element) {

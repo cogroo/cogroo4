@@ -41,6 +41,8 @@ public interface Mistake {
 
   public String getShortMessage();
 
+  public String getContext();
+
   public String[] getSuggestions();
 
   public int getStart();
