@@ -125,15 +125,15 @@ wordchars        [v-z]        [V-Z]
 prefixes
 
 flag *A:                   # anti
-[^HIRS]	>	ANTI       ; "PFSEM=anti"	# antivenenoso
-R       >       ANTIR      ; "PFSEM=anti"       # antirracismo
-S       >       ANTIS      ; "PFSEM=anti"       # antissemita
-[HI]	>	ANTI\-     ; "PFSEM=anti"	# anti-indu
+[^HIRS]	>		ANTI       ; "PFSEM=anti"	# antivenenoso
+R       >       ANTIR      ; "PFSEM=anti"   # antirracismo
+S       >       ANTIS      ; "PFSEM=anti"   # antissemita
+[HI]	>		ANTI\-     ; "PFSEM=anti"	# anti-indu
 
 
 flag *S:                   # des
-[^H]	>	DES	; "PFSEM=not"       # amarrar -> desamarrar
-H	>    -H,DES	; "PFSEM=not"       # habitar -> desabitar
+[^H]	>	DES		; "PFSEM=not"       # amarrar -> desamarrar
+H		>   -H,DES	; "PFSEM=not"       # habitar -> desabitar
 
 flag *I:                   #in
 [^PLMR]     >      IN         ; "PFSEM=not"    # ex. finito -> infinito
@@ -151,8 +151,8 @@ flag *E:                   #pré- #noispell
 flag *O:                   #pós-   #noispell
     .       >      PÓS\-     ; "PFSEM=pos"       # ex. guerra -> pós-guerra #noispell
 
-flag *u:                   #sub
-[BHR]	    >      SUB\-      ; "PFSEM=sub"	# ex. humano -> sub-humano #noispell
+flag *u:                   #sub		#noispell
+[BHR]	    >      SUB\-      ; "PFSEM=sub"	# ex. humano -> sub-humano
 [^BHR]      >      SUB        ; "PFSEM=sub"	# ex. tribo -> subtribo
 
 flag *x:		# ex-                                     #noispell
@@ -167,33 +167,37 @@ flag *F:  			#ultra super
     .       >      HIPER     ; "PFSEM=hiper"	#
 
 flag *T:
-    .       >      BI        ; "PFSEM=2"	# bicampeão
-    S       >      TRIS      ; "PFSEM=3"	# tricampeão
-    [^S]    >      TRI       ; "PFSEM=3"	# 
-    .       >      TETRA     ; "PFSEM=4"	# tetracampeão
-    .	    > 	   PENTA     ; "PFSEM=5"	# pentacampeão
-    .       >      HEXA	     ; "PFSEM=6"        # hexacampeão
+S		>		BIS		; "PFSEM=2" 	# bissecção
+[^S]    >		BI      ; "PFSEM=2"		# bicampeão
+S       >       TRIS    ; "PFSEM=3"		# trissílabo
+[^S]    >       TRI     ; "PFSEM=3"		# tricampeão
+S		>		TETRAS	; "PFSEM=4"		# tetrassacarídeo
+[^S]	>		TETRA   ; "PFSEM=4"		# tetracampeão
+S		>		PENTAS	; "PFSEM=5"		# pentassépalo
+[^S]    >		PENTA   ; "PFSEM=5"		# pentacampeão
+S		>		HEXA	; "PFSEM=6"		# hexassômico
+[^S]	>		HEXA    ; "PFSEM=6"		# hexacampeão
 
 suffixes
 
 #-----------------------------------------
 # plurais - os mais habituais
 flag *p:         ; "CAT=a_nc,N=s"      #plurais
-[^Ã] [^LSMRNZX] >     S    ; "N=p"         # -> s         ex. pato, patos
-Ã E         >       S    ; "N=p"         # ãe -> ães    ex. mãe, mães
-Ã O         >   -ÃO,ÕES  ; "N=p"         # ão -> ões    ex. leão, leões
-[AU] L      >    -L,IS   ; "N=p"         # al -> ais    ex. animal, animais
-O L         >   -OL,ÓIS  ; "N=p"         # ol -> óis    ex. anzol, anzóis
-[^V] E L    >   -EL,ÉIS  ; "N=p"         # el -> éis    ex. papel, papéis
-[^ÁÉÍÓÚ] V E L > -EL,ÉIS  ; "N=p"         # el -> éis   ex. cascavel, cascavéis
-[ÁÉÍÓÚ] V E L  >  -L,IS   ; "N=p"         # el -> eis   ex. afável, afáveis
-I L         >    -L,S    ; "N=p"         # il -> is     ex. funil, funis
-[^ÁÉÊ] S    >       ES   ; "N=p"         # -> es        ex. deus, deuses
-Á S         >   -ÁS,ASES ; "N=p"         # ás -> ases   ex. gás, gases
-É S         >   -ÉS,ESES ; "N=p"         # és -> eses   ex. revés,reveses
-Ê S         >   -ÊS,ESES ; "N=p"         # ês -> eses   ex. japonês,japoneses
-M           >    -M,NS   ; "N=p"         # m -> ns      ex. jovem, jovens
-[RNZX]      >       ES   ; "N=p"         # -> es        ex. cantor, cantores
+[^Ã] [^LSMRNZX]	>     S    	 ; "N=p"         # -> s         ex. pato, patos
+Ã E         	>     S    	 ; "N=p"         # ãe -> ães    ex. mãe, mães
+Ã O        		>   -ÃO,ÕES  ; "N=p"         # ão -> ões    ex. leão, leões
+[AU] L      	>    -L,IS   ; "N=p"         # al -> ais    ex. animal, animais
+O L         	>   -OL,ÓIS  ; "N=p"         # ol -> óis    ex. anzol, anzóis
+[^V] E L    	>   -EL,ÉIS  ; "N=p"         # el -> éis    ex. papel, papéis
+[^ÁÉÍÓÚ] V E L	>   -EL,ÉIS  ; "N=p"         # el -> éis    ex. cascavel, cascavéis
+[ÁÉÍÓÚ] V E L	>   -L,IS    ; "N=p"         # el -> eis    ex. afável, afáveis
+I L         	>    -L,S    ; "N=p"         # il -> is     ex. funil, funis
+[^ÁÉÊ] S    	>     ES     ; "N=p"         # -> es        ex. deus, deuses
+Á S         	>   -ÁS,ASES ; "N=p"         # ás -> ases   ex. gás, gases
+É S         	>   -ÉS,ESES ; "N=p"         # és -> eses   ex. revés,reveses
+Ê S        		>   -ÊS,ESES ; "N=p"         # ês -> eses   ex. japonês,japoneses
+M           	>    -M,NS   ; "N=p"         # m -> ns      ex. jovem, jovens
+[RNZX]      	>       ES   ; "N=p"         # -> es        ex. cantor, cantores
 
 flag *a:         ; "CAT=a_nc,N=s"      #plurais
 Ã O         >       S    ; "N=p"        # ex. mão, mãos
@@ -235,8 +239,8 @@ E           >    -E,A    ; "G=f"         # e -> a     ex. ele -> ela
 flag *b:         ; "CAT=a_nc,G=m,N=s"  #femininos
 Ã O	>	-O,-	; "G=f"		# alemão -> alemã
 Ã O	>	-O,S	; "G=f,N=p"	# alemão -> alemãs
-E	>	SSA	; "G=f"		# condessa
-E	>	SSAS	; "G=f,N=p"	# condessas
+E	>	SSA		; "G=f"		# conde -> condessa
+E	>	SSAS	; "G=f,N=p"	# condes -> condessas
 
 flag *g:         ; "CAT=a_nc,G=m,N=s"  #femininos
 Ã O         >   -ÃO,OA  ; "G=f"         # ão -> oa     ex. patrão -> patroa

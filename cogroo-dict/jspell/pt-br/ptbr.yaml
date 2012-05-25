@@ -121,7 +121,7 @@ SEM:
  lingua: língua
  instituicao: instituição
  servico: serviço
- proj: Projecto
+ proj: Projeto
 
 CAT-TAG:
  np:   NP
@@ -145,7 +145,7 @@ CAT:
  punct1a: vírgula
  punctj: reticências
  punct1c: dois pontos
- punct2e: abertura de parêntesis
+ punct2e: abertura de parênteses
  punct1b: ponto e vírgula
  puncti: ponto final
  ppos: pronome possessivo
@@ -160,13 +160,13 @@ CAT:
  conj-c: conjunção coordenativa
  nc: substantivo comum
  np: nome próprio
- adj: adjectivo
- a_nc: substantivo/adjectivo
+ adj: adjetivo
+ a_nc: substantivo/adjetivo
  art: artigo
- pass: partícula apassivante
+ pass: partícula apassivadora
  v: verbo
- cp: contracção
- punct2f: fecho de parêntesis
+ cp: contração
+ punct2f: fecho de parênteses
  card: cardinal
  nord: ordinal
  adv: advérbio
@@ -305,4 +305,3 @@ ORIG:
 
 unknown:
  1: sugerida
-

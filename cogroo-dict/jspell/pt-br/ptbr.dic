@@ -2470,6 +2470,7 @@ aportar/#v/XYP/
 aportuguesar/#vt/XYPLSM/
 apor/#vt/KPL/
 após/CAT=prep//
+aposentado/#hm/pf/
 aposentadoria/#nf/p/
 aposentar/#vt/XYPLcMD/
 aposento/#nm/p/
@@ -3048,6 +3049,7 @@ arruaceiro/#hm/pf/
 arruadeira/#nf/p/
 arruar/#vn/XYPLcM/
 arruçar/#vn/XYPL/
+arruda/#nf/p/
 arrudense/#hn/p/
 arruelado/#a//
 arrufada/#nf//
@@ -3435,6 +3437,7 @@ atear/#v/XYLn/
 ateatrado/#a//
 até/CAT=conj-s//
 até/CAT=prep//
+até/#av//
 atediar/#vt/XYPL/
 ateia/$ateu$#nm$G=f/p/
 ateísmo/#nm/pq/
@@ -3871,7 +3874,7 @@ avessar/#vt/XYPL/
 avessas/#nf,N=p//
 avessia/#nf//
 avessidade/#nf/p/
-avesso/#hm/pfmd/
+avesso/#hm/pfd/
 avestruzeiro/#hm//
 avestruz/#nn/p/
 aviador/#hm//
@@ -4131,6 +4134,7 @@ baixinho/#av/pf/
 baixio/#nm/p/
 baixista/#nm//
 baixo/#hm/pfts/
+baixo/#av//
 baixo-relevo/#nm//
 baixos-relevos/#nm,N=p//
 baixote/#a//
@@ -4816,14 +4820,14 @@ bicórneo/#a//
 bicromia/#nf//
 bicudo/#a/fp/
 bidão/#nm/p/
-bidé/#nm/p/
+bidê/PREAO90=bidé,#nm/p/
 bidentado/#a//
 bidimensional/#an/p/
 bidirecional/PREAO90=bidireccional,#a/p/
 biela/#nf/p/
 bielorrusso/#hm/fp/
-bienal/#an/p/
-biénio/#nm/p/
+bienal/#hf2/p/
+biênio/PREAO90=biénio,#nm/p/
 bifacial/#an/p/
 bifana/#nf/p/
 bifeira/#nf//
@@ -5033,8 +5037,8 @@ bloquear/#vt/ZYPLSMDn/
 bloqueio/#nm/pS/
 blusa/#nf/p/
 blusão/#nm/p/
-boa-fé/#nf//
 boa/#hf/pm/
+boa-fé/#nf//
 boa-noite/#nf//
 boa-nova/#nf//
 boas-entradas/#nfp//
@@ -5457,7 +5461,7 @@ brócolos/#n,G=m,N=p//
 bromar/#vt/XYPLc/
 bromato/#nm//
 brometo/#nm/p/
-brómico/#a//
+brômico/PREAO90=brómico,#a//
 bromídrico/#a//
 bromofórmio/#nm//
 bromo/#nm//
@@ -5575,7 +5579,6 @@ burocrático/#a/fpH/
 burocratismo/#nm/p/
 burocratizar/#vt/XYPLcDS/
 burrada/#nf//
-burra/#nf//
 burrão/#nm//
 burreco/#nm//
 burricada/#nf//
@@ -5817,7 +5820,7 @@ caieiro/#nm//
 caimão/#nm//
 caio/#nm//
 caipirada/#nf//
-caipira/#nm//
+caipira/#hm/pG/
 caiporismo/#nm/p/
 caiqueiro/#nm//
 caíque/#nm//
@@ -27069,7 +27072,7 @@ preservativo/#hm/fp/
 presidencial/#an/pti/
 presidência/#nf/pV/
 presidenta/#nf/px/
-presidente/#hm/pTxV/
+presidente/#hm/pxV/
 presidiário/#hm/fpx/
 presidiar/#vt/XYPL/
 presídio/#nm/p/
@@ -30126,6 +30129,7 @@ sacado/#hm//
 sacador/#hm//
 saca/#nf//
 sacana/#a/p/
+sacarídeo/#hm/pT/
 sacarina/#nf//
 sacaroide/PREAO90=sacaróide,#an//
 saca-rolhas/#nm//
@@ -30823,6 +30827,7 @@ sentimentalizar/#vt/XYPL/
 sentinela/#nf/p/
 sentir/#vn,I=3/YLMPB/
 sépala/#nf/p/
+sépalo/#nm/pT/
 separabilidade/#nf/p/
 separadamente/#av//
 separadora/#nf//
@@ -35268,7 +35273,8 @@ Azeitão/#t/
 Azeméis/#t/
 Azerbaijão/#la,#tp/
 Azevedo/#npm/
-Babilónia/#la,#t/
+Babel/#tf/
+Babilónia/#la,#tf/
 Bacelar/#np/
 Bach/#np1/
 Bacon/#np1/
