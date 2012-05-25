@@ -28,16 +28,18 @@
 package br.ccsl.cogroo.tools.checker;
 
 public enum RuleType {
-	/** Java based rule */
-	JAVA, 
-	
-	/** Rule with pattern described in XML that should be applied at token level */
-	XML_GENERAL, 
-	
-	
-	/** Rule with pattern described in XML that should be applied inside tokens of the same phrase */
-	XML_PHRASE_LOCAL, 
-	
-	/** Rule with pattern described in XML that should be applied between phrases */
-	XML_SUBJECT_VERB
+  /** Java based rule */
+  JAVA,
+
+  /** Rule with pattern described in XML that should be applied at token level */
+  XML_GENERAL,
+
+  /**
+   * Rule with pattern described in XML that should be applied inside tokens of
+   * the same phrase
+   */
+  XML_PHRASE_LOCAL,
+
+  /** Rule with pattern described in XML that should be applied between phrases */
+  XML_SUBJECT_VERB
 }

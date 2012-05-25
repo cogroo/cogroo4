@@ -43,104 +43,105 @@ import br.ccsl.cogroo.tools.checker.rules.util.MistakeComparator;
 
 public class CheckerComposite implements Checker {
 
-	private final static String ID_PREFIX = "";
-	private SortedSet<Checker> mChildCheckers;
-	private boolean mAllowOverlaps;
-	protected static final Logger LOGGER = Logger
-			.getLogger(CheckerComposite.class);
+  private final static String ID_PREFIX = "";
+  private SortedSet<Checker> mChildCheckers;
+  private boolean mAllowOverlaps;
+  protected static final Logger LOGGER = Logger
+      .getLogger(CheckerComposite.class);
 
-	private static final MistakeComparator MISTAKE_COMPARATOR = new MistakeComparator();
+  private static final MistakeComparator MISTAKE_COMPARATOR = new MistakeComparator();
 
-	public CheckerComposite(List<Checker> aChildCheckers) {
-		this(aChildCheckers, false);
-	}
-	
-	public CheckerComposite(List<Checker> aChildCheckers, boolean aAllowOverlaps) {
-		SortedSet<Checker> children = new TreeSet<Checker>(
-				new Comparator<Checker>() {
-					public int compare(Checker o1, Checker o2) {
-						if (o1.equals(o2))
-							return 0;
-						
-						if (o2.getPriority() - o1.getPriority() == 0) {
-							return 1;
-						}
-						return o2.getPriority() - o1.getPriority();
-					}
-				});
-		children.addAll(aChildCheckers);
-		mChildCheckers = Collections.unmodifiableSortedSet(children);
-		mAllowOverlaps = aAllowOverlaps;
-	}
+  public CheckerComposite(List<Checker> aChildCheckers) {
+    this(aChildCheckers, false);
+  }
 
-	public String getIdPrefix() {
-		return ID_PREFIX;
-	}
+  public CheckerComposite(List<Checker> aChildCheckers, boolean aAllowOverlaps) {
+    SortedSet<Checker> children = new TreeSet<Checker>(
+        new Comparator<Checker>() {
+          public int compare(Checker o1, Checker o2) {
+            if (o1.equals(o2))
+              return 0;
 
-	public List<Mistake> check(Sentence sentence) {
-		List<Mistake> mistakes = new LinkedList<Mistake>();
+            if (o2.getPriority() - o1.getPriority() == 0) {
+              return 1;
+            }
+            return o2.getPriority() - o1.getPriority();
+          }
+        });
+    children.addAll(aChildCheckers);
+    mChildCheckers = Collections.unmodifiableSortedSet(children);
+    mAllowOverlaps = aAllowOverlaps;
+  }
 
-		boolean[] occupied = new boolean[sentence.getSentence().length()];
+  public String getIdPrefix() {
+    return ID_PREFIX;
+  }
 
-		for (Checker child : mChildCheckers) {
-			List<Mistake> mistakesFromChild = child.check(sentence);
-			mistakes.addAll(addFilteredMistakes(mistakesFromChild, occupied, sentence.getOffset()));
-		}
+  public List<Mistake> check(Sentence sentence) {
+    List<Mistake> mistakes = new LinkedList<Mistake>();
 
-		Collections.sort(mistakes, MISTAKE_COMPARATOR);
+    boolean[] occupied = new boolean[sentence.getSentence().length()];
 
-		return mistakes;
-	}
+    for (Checker child : mChildCheckers) {
+      List<Mistake> mistakesFromChild = child.check(sentence);
+      mistakes.addAll(addFilteredMistakes(mistakesFromChild, occupied,
+          sentence.getOffset()));
+    }
 
-	private List<Mistake> addFilteredMistakes(List<Mistake> mistakes,
-			boolean[] occupied, final int offset) {
-		if (mAllowOverlaps) {
-			return mistakes;
-		}
-		List<Mistake> mistakesNoOverlap = new ArrayList<Mistake>();
-		boolean overlap = false;
-		for (Mistake mistake : mistakes) {
-			overlap = false;
-			for (int i = mistake.getStart(); i < mistake.getEnd(); i++) {
-				if (occupied[i-offset]) {
-					overlap = true;
-				}
-			}
-			if (!overlap) {
-				for (int i = mistake.getStart(); i < mistake.getEnd(); i++) {
-					occupied[i-offset] = true;
-				}
-				mistakesNoOverlap.add(mistake);
-			}
-		}
-		return mistakesNoOverlap;
-	}
+    Collections.sort(mistakes, MISTAKE_COMPARATOR);
 
-	public void ignore(String id) {
-		for (Checker checker : mChildCheckers) {
-			if (id.startsWith(checker.getIdPrefix())) {
-				checker.ignore(id);
-				break;
-			}
-		}
-	}
+    return mistakes;
+  }
 
-	public void resetIgnored() {
-		for (Checker checker : mChildCheckers) {
-			checker.resetIgnored();
-		}
-	}
+  private List<Mistake> addFilteredMistakes(List<Mistake> mistakes,
+      boolean[] occupied, final int offset) {
+    if (mAllowOverlaps) {
+      return mistakes;
+    }
+    List<Mistake> mistakesNoOverlap = new ArrayList<Mistake>();
+    boolean overlap = false;
+    for (Mistake mistake : mistakes) {
+      overlap = false;
+      for (int i = mistake.getStart(); i < mistake.getEnd(); i++) {
+        if (occupied[i - offset]) {
+          overlap = true;
+        }
+      }
+      if (!overlap) {
+        for (int i = mistake.getStart(); i < mistake.getEnd(); i++) {
+          occupied[i - offset] = true;
+        }
+        mistakesNoOverlap.add(mistake);
+      }
+    }
+    return mistakesNoOverlap;
+  }
 
-	public int getPriority() {
-		return 0;
-	}
+  public void ignore(String id) {
+    for (Checker checker : mChildCheckers) {
+      if (id.startsWith(checker.getIdPrefix())) {
+        checker.ignore(id);
+        break;
+      }
+    }
+  }
 
-	public List<RuleDefinitionI> getRulesDefinition() {
-		List<RuleDefinitionI> definitions = new LinkedList<RuleDefinitionI>();
-		for (Checker d : mChildCheckers) {
-			definitions.addAll(d.getRulesDefinition());
-		}
-		return definitions;
-	}
+  public void resetIgnored() {
+    for (Checker checker : mChildCheckers) {
+      checker.resetIgnored();
+    }
+  }
+
+  public int getPriority() {
+    return 0;
+  }
+
+  public List<RuleDefinitionI> getRulesDefinition() {
+    List<RuleDefinitionI> definitions = new LinkedList<RuleDefinitionI>();
+    for (Checker d : mChildCheckers) {
+      definitions.addAll(d.getRulesDefinition());
+    }
+    return definitions;
+  }
 
 }

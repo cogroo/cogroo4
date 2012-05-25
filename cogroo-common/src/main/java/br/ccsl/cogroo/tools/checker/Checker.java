@@ -39,49 +39,50 @@ import br.ccsl.cogroo.entities.Sentence;
  */
 public interface Checker {
 
-	/**
-	 * Each checker should have IDs with a fixed prefix so CheckerComposite can
-	 * route the ignore message to the correct checker.
-	 * 
-	 * @return the id prefix
-	 */
-	public String getIdPrefix();
+  /**
+   * Each checker should have IDs with a fixed prefix so CheckerComposite can
+   * route the ignore message to the correct checker.
+   * 
+   * @return the id prefix
+   */
+  public String getIdPrefix();
 
-	/**
-	 * Check the sentence for errors.
-	 * 
-	 * @param sentence
-	 *            the sentence
-	 * @return errors
-	 */
-	public List<Mistake> check(Sentence sentence);
+  /**
+   * Check the sentence for errors.
+   * 
+   * @param sentence
+   *          the sentence
+   * @return errors
+   */
+  public List<Mistake> check(Sentence sentence);
 
-	/**
-	 * The checker should ignore the rule with the given id. IDs of a checker
-	 * have a fixed prefix.
-	 * 
-	 * @param id
-	 *            the rule id to be ignored
-	 */
-	public void ignore(String id);
+  /**
+   * The checker should ignore the rule with the given id. IDs of a checker have
+   * a fixed prefix.
+   * 
+   * @param id
+   *          the rule id to be ignored
+   */
+  public void ignore(String id);
 
-	/**
-	 * Reset all ignored rules
-	 */
-	public void resetIgnored();
+  /**
+   * Reset all ignored rules
+   */
+  public void resetIgnored();
 
-	/**
-	 * Priority of this checker. The higher is the number the higher is its
-	 * priority
-	 * 
-	 * @return the priority of this checker
-	 */
-	public int getPriority();
-	
-	/**
-	 * Returns the descriptions of the rules implemented by this checker.
-	 * @return a list of descriptions
-	 */
-	public Collection<RuleDefinitionI> getRulesDefinition();
+  /**
+   * Priority of this checker. The higher is the number the higher is its
+   * priority
+   * 
+   * @return the priority of this checker
+   */
+  public int getPriority();
+
+  /**
+   * Returns the descriptions of the rules implemented by this checker.
+   * 
+   * @return a list of descriptions
+   */
+  public Collection<RuleDefinitionI> getRulesDefinition();
 
 }

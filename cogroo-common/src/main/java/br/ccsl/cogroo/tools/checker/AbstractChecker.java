@@ -43,62 +43,64 @@ import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Example;
 
 public abstract class AbstractChecker implements Checker {
 
-	protected static final Logger LOGGER = Logger
-			.getLogger(AbstractChecker.class);
+  protected static final Logger LOGGER = Logger
+      .getLogger(AbstractChecker.class);
 
-	private Set<String> ignored = Collections
-			.synchronizedSet(new HashSet<String>());
+  private Set<String> ignored = Collections
+      .synchronizedSet(new HashSet<String>());
 
-	private Map<String, RuleDefinitionI> definitions = new HashMap<String, RuleDefinitionI>();
+  private Map<String, RuleDefinitionI> definitions = new HashMap<String, RuleDefinitionI>();
 
-	protected boolean isCheckRule(String ruleId) {
-		return !ignored.contains(ruleId);
-	}
+  protected boolean isCheckRule(String ruleId) {
+    return !ignored.contains(ruleId);
+  }
 
-	protected static Example createExample(String incorrect, String correct) {
-		Example e = new Example();
-		e.setIncorrect(incorrect);
-		e.setCorrect(correct);
-		return e;
-	}
+  protected static Example createExample(String incorrect, String correct) {
+    Example e = new Example();
+    e.setIncorrect(incorrect);
+    e.setCorrect(correct);
+    return e;
+  }
 
-	protected Mistake createMistake(String ruleID, String[] suggestions,
-			int start, int end, String text) {
-		RuleDefinitionI ruleDefinition = getRuleDefinition(ruleID);
+  protected Mistake createMistake(String ruleID, String[] suggestions,
+      int start, int end, String text) {
+    RuleDefinitionI ruleDefinition = getRuleDefinition(ruleID);
 
-		return new MistakeImpl(ruleDefinition.getId(),
-				ruleDefinition.getMessage(), ruleDefinition.getShortMessage(),
-				suggestions, start, end, ruleDefinition.getExamples(), text);
-	}
+    return new MistakeImpl(ruleDefinition.getId(), ruleDefinition.getMessage(),
+        ruleDefinition.getShortMessage(), suggestions, start, end,
+        ruleDefinition.getExamples(), text);
+  }
 
-	public void ignore(String id) {
-		ignored.add(id);
-	}
+  public void ignore(String id) {
+    ignored.add(id);
+  }
 
-	public void resetIgnored() {
-		ignored.clear();
-	}
+  public void resetIgnored() {
+    ignored.clear();
+  }
 
-	public AbstractChecker add(RuleDefinitionI ruleDefinition) {
-		this.definitions.put(ruleDefinition.getId(), ruleDefinition);
-		return this;
-	}
-	
-	public RuleDefinitionI getRuleDefinition(String ruleID) {
-		RuleDefinitionI ruleDefinition = definitions.get(ruleID);
-		if (ruleDefinition == null) {
-			LOGGER.fatal("Unknow rule ID: " + ruleID);
-			List<Example> empty = Collections.emptyList();
-			ruleDefinition = new JavaRuleDefinition("-", "-", "-", "-", "-", "-", empty);
-		}
-		return ruleDefinition;
-	}
+  public AbstractChecker add(RuleDefinitionI ruleDefinition) {
+    this.definitions.put(ruleDefinition.getId(), ruleDefinition);
+    return this;
+  }
 
-	public Collection<RuleDefinitionI> getRulesDefinition() {
-		if (definitions.isEmpty()) {
-			LOGGER.fatal("Rules were not defined properly! Please define the rules using the add method of AbstractChecker.");
-		}
-		return definitions.values();
-	}
+  public RuleDefinitionI getRuleDefinition(String ruleID) {
+    RuleDefinitionI ruleDefinition = definitions.get(ruleID);
+    if (ruleDefinition == null) {
+      LOGGER.fatal("Unknow rule ID: " + ruleID);
+      List<Example> empty = Collections.emptyList();
+      ruleDefinition = new JavaRuleDefinition("-", "-", "-", "-", "-", "-",
+          empty);
+    }
+    return ruleDefinition;
+  }
+
+  public Collection<RuleDefinitionI> getRulesDefinition() {
+    if (definitions.isEmpty()) {
+      LOGGER
+          .fatal("Rules were not defined properly! Please define the rules using the add method of AbstractChecker.");
+    }
+    return definitions.values();
+  }
 
 }
