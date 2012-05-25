@@ -25,19 +25,19 @@ import br.ccsl.cogroo.config.Model;
 
 import com.google.common.io.Closeables;
 
-public class OpenNLPComponentFactory implements OpenNLPComponentFactoryI {
+public class ComponentFactory implements ComponentFactoryI {
 
   protected static final Logger LOGGER = Logger
-      .getLogger(OpenNLPComponentFactory.class);
+      .getLogger(ComponentFactory.class);
 
   private LanguageConfiguration lc = null;
   private Map<Analyzers, String> modelPathMap;
 
-  private OpenNLPComponentFactory() {
+  private ComponentFactory() {
 
   }
 
-  private OpenNLPComponentFactory(LanguageConfiguration lc) {
+  private ComponentFactory(LanguageConfiguration lc) {
     this.lc = lc;
 
     modelPathMap = new HashMap<Analyzers, String>(lc.getModel().size());
@@ -47,10 +47,10 @@ public class OpenNLPComponentFactory implements OpenNLPComponentFactoryI {
     }
   }
 
-  public static OpenNLPComponentFactory create(Locale locale) {
-    OpenNLPComponentFactory factory = null;
+  public static ComponentFactory create(Locale locale) {
+    ComponentFactory factory = null;
 
-    factory = new OpenNLPComponentFactory(LanguageConfigurationUtil.get(locale));
+    factory = new ComponentFactory(LanguageConfigurationUtil.get(locale));
 
     return factory;
   }

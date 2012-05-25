@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import br.ccsl.cogroo.analyzer.AnalyzerI;
-import br.ccsl.cogroo.analyzer.OpenNLPComponentFactory;
+import br.ccsl.cogroo.analyzer.ComponentFactory;
 import br.ccsl.cogroo.text.Document;
 
 /**
@@ -21,11 +21,11 @@ public class CLI {
     long start = System.nanoTime();
 
     if (args.length != 1) {
-      System.err.println("Needs an argument");
+      System.err.println("Language is missing! usage: CLI pt_br");
       return;
     }
 
-    OpenNLPComponentFactory factory = OpenNLPComponentFactory
+    ComponentFactory factory = ComponentFactory
         .create(new Locale(args[0]));
 
     AnalyzerI pipe = factory.createPipe();

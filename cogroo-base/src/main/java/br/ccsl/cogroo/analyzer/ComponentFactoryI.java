@@ -1,6 +1,5 @@
 package br.ccsl.cogroo.analyzer;
 
-import opennlp.tools.formats.Conll02NameSampleStream.LANGUAGE;
 
 /**
  *  Creates the analyzers using the OpenNLP components.
@@ -8,7 +7,7 @@ import opennlp.tools.formats.Conll02NameSampleStream.LANGUAGE;
  *  Follows the factory design pattern.
  *
  */
-public interface OpenNLPComponentFactoryI {
+public interface ComponentFactoryI {
   
   /**
    * @return {@link SentenceDetector} if this {@link AnalyzerI} in the corresponding language exists, otherwise <tt>null</tt>.
