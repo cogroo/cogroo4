@@ -31,7 +31,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import br.ccsl.cogroo.entities.Mistake;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Example;
+import br.ccsl.cogroo.tools.checker.rules.model.Example;
 
 /**
  * Implements a {@link Mistake} that represents grammar errors.

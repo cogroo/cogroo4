@@ -30,8 +30,8 @@ package br.ccsl.cogroo.entities.impl;
 import com.google.common.base.Objects;
 
 import br.ccsl.cogroo.entities.Tag;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 
 /**
  * Implements a {@link Tag} for shallow-parser annotation

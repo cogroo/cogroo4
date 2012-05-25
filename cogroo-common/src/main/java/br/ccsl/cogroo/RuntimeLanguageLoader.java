@@ -5,9 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import cogroo.exceptions.ExceptionMessages;
-import cogroo.exceptions.CogrooRuntimeException;
-
 import opennlp.tools.chunker.Chunker;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
@@ -23,6 +20,8 @@ import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
+import cogroo.exceptions.CogrooRuntimeException;
+import cogroo.exceptions.ExceptionMessages;
 
 public class RuntimeLanguageLoader implements LanguageLoader {
 

@@ -45,8 +45,8 @@ import javax.xml.validation.Validator;
 import org.xml.sax.SAXException;
 
 import br.ccsl.cogroo.tools.checker.rules.exception.RulesException;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rule;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rules;
+import br.ccsl.cogroo.tools.checker.rules.model.Rule;
+import br.ccsl.cogroo.tools.checker.rules.model.Rules;
 
 /**
  * Class that provides access to the rules read from a xml file.

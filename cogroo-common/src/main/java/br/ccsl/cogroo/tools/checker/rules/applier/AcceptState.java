@@ -27,8 +27,8 @@
 
 package br.ccsl.cogroo.tools.checker.rules.applier;
 
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.PatternElement;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rule;
+import br.ccsl.cogroo.tools.checker.rules.model.PatternElement;
+import br.ccsl.cogroo.tools.checker.rules.model.Rule;
 
 /**
  * An accept state, that is part of rules DFA. The accept state holds the rule

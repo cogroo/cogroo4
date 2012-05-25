@@ -29,7 +29,7 @@ package br.ccsl.cogroo.dictionary;
 
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.interpreters.TagInterpreterI;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
 
 /**
  * Provides a way of determining which tags are valid for a particular word based on a tag dictionary read

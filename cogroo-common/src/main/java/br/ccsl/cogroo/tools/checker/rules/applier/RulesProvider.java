@@ -29,7 +29,7 @@ package br.ccsl.cogroo.tools.checker.rules.applier;
 
 import org.apache.log4j.Logger;
 
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rules;
+import br.ccsl.cogroo.tools.checker.rules.model.Rules;
 
 /**
  * Singleton objetc that provides access to the {@link Rules}

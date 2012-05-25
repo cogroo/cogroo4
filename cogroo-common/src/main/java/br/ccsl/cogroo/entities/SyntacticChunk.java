@@ -34,9 +34,9 @@ import java.util.List;
 
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.entities.impl.SyntacticTag;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Gender;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Number;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Gender;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Number;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 
 import com.google.common.base.Objects;
 

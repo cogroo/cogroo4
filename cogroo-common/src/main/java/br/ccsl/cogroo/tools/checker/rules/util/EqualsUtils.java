@@ -27,11 +27,11 @@
 
 package br.ccsl.cogroo.tools.checker.rules.util;
 
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Composition;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Element;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Mask;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.PatternElement;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.Composition;
+import br.ccsl.cogroo.tools.checker.rules.model.Element;
+import br.ccsl.cogroo.tools.checker.rules.model.Mask;
+import br.ccsl.cogroo.tools.checker.rules.model.PatternElement;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
 
 /**
  * Utility class to compare patterns {@link Element}s, {@link Composition}s, 

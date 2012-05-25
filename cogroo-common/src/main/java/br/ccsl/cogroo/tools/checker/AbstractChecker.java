@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
 
 import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.impl.MistakeImpl;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Example;
+import br.ccsl.cogroo.tools.checker.rules.model.Example;
 
 public abstract class AbstractChecker implements Checker {
 

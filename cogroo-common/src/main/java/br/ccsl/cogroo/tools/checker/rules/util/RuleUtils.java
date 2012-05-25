@@ -35,21 +35,21 @@ import br.ccsl.cogroo.entities.Sentence;
 import br.ccsl.cogroo.entities.impl.ChunkTag;
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.entities.impl.SyntacticTag;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Composition;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Element;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Mask;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Operator;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.PatternElement;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Reference;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Reference.Property;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rule;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Suggestion;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Suggestion.Replace;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Suggestion.ReplaceMapping;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Suggestion.Swap;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Gender;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Number;
+import br.ccsl.cogroo.tools.checker.rules.model.Composition;
+import br.ccsl.cogroo.tools.checker.rules.model.Element;
+import br.ccsl.cogroo.tools.checker.rules.model.Mask;
+import br.ccsl.cogroo.tools.checker.rules.model.Operator;
+import br.ccsl.cogroo.tools.checker.rules.model.PatternElement;
+import br.ccsl.cogroo.tools.checker.rules.model.Reference;
+import br.ccsl.cogroo.tools.checker.rules.model.Reference.Property;
+import br.ccsl.cogroo.tools.checker.rules.model.Rule;
+import br.ccsl.cogroo.tools.checker.rules.model.Suggestion;
+import br.ccsl.cogroo.tools.checker.rules.model.Suggestion.Replace;
+import br.ccsl.cogroo.tools.checker.rules.model.Suggestion.ReplaceMapping;
+import br.ccsl.cogroo.tools.checker.rules.model.Suggestion.Swap;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Gender;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Number;
 
 /**
  * Set of utility methods, mostly to convert a rule element to a human readable string.

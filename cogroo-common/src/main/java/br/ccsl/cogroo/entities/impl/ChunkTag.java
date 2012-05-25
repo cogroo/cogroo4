@@ -28,8 +28,8 @@
 package br.ccsl.cogroo.entities.impl;
 
 import br.ccsl.cogroo.entities.Tag;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
 
 import com.google.common.base.Objects;
 

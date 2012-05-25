@@ -40,13 +40,13 @@ import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.entities.impl.TokenCogroo;
 import br.ccsl.cogroo.tools.checker.rules.util.RuleUtils;
 import br.ccsl.cogroo.tools.checker.rules.util.TagMaskUtils;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Suggestion;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Suggestion.Replace;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Suggestion.ReplaceMapping;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Suggestion.Swap;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Gender;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Number;
+import br.ccsl.cogroo.tools.checker.rules.model.Suggestion;
+import br.ccsl.cogroo.tools.checker.rules.model.Suggestion.Replace;
+import br.ccsl.cogroo.tools.checker.rules.model.Suggestion.ReplaceMapping;
+import br.ccsl.cogroo.tools.checker.rules.model.Suggestion.Swap;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Gender;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Number;
 
 /**
  * This class makes suggestions to correct the mistakes.

@@ -37,8 +37,8 @@ import br.ccsl.cogroo.entities.Token;
 import br.ccsl.cogroo.tools.checker.AbstractChecker;
 import br.ccsl.cogroo.tools.checker.JavaRuleDefinition;
 import br.ccsl.cogroo.tools.checker.RuleDefinitionI;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Example;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class;
+import br.ccsl.cogroo.tools.checker.rules.model.Example;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Class;
 
 /**
  * 

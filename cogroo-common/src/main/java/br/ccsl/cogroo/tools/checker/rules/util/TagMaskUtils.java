@@ -27,7 +27,7 @@
 
 package br.ccsl.cogroo.tools.checker.rules.util;
 
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
 
 /**
  * Utility methods to work with {@link TagMask}s. Specially to clone a {@link TagMask}

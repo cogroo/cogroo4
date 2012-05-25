@@ -29,7 +29,7 @@ package br.ccsl.cogroo.tools.checker;
 
 import java.util.List;
 
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Example;
+import br.ccsl.cogroo.tools.checker.rules.model.Example;
 
 /**
  * Implementation of RuleDefinitionI to be used in Java based rules. This is

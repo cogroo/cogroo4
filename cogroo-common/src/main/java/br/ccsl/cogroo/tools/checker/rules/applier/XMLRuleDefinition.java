@@ -4,10 +4,10 @@ import java.util.List;
 
 import br.ccsl.cogroo.tools.checker.RuleDefinitionI;
 import br.ccsl.cogroo.tools.checker.RuleType;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Example;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Pattern;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rule;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rule.Method;
+import br.ccsl.cogroo.tools.checker.rules.model.Example;
+import br.ccsl.cogroo.tools.checker.rules.model.Pattern;
+import br.ccsl.cogroo.tools.checker.rules.model.Rule;
+import br.ccsl.cogroo.tools.checker.rules.model.Rule.Method;
 import br.ccsl.cogroo.tools.checker.rules.util.RuleUtils;
 
 public class XMLRuleDefinition implements RuleDefinitionI {

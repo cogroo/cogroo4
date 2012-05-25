@@ -51,11 +51,11 @@ import br.ccsl.cogroo.entities.impl.TokenCogroo;
 import br.ccsl.cogroo.tools.checker.Checker;
 import br.ccsl.cogroo.tools.checker.RuleDefinitionI;
 import br.ccsl.cogroo.tools.checker.rules.util.RuleUtils;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Element;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Mask;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.PatternElement;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rule;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.Element;
+import br.ccsl.cogroo.tools.checker.rules.model.Mask;
+import br.ccsl.cogroo.tools.checker.rules.model.PatternElement;
+import br.ccsl.cogroo.tools.checker.rules.model.Rule;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
 
 /**
  * Applies error rules to a {@link Sentence} object.

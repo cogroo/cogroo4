@@ -32,10 +32,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.PatternElement;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rule;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rules;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rule.Method;
+import br.ccsl.cogroo.tools.checker.rules.model.PatternElement;
+import br.ccsl.cogroo.tools.checker.rules.model.Rule;
+import br.ccsl.cogroo.tools.checker.rules.model.Rules;
+import br.ccsl.cogroo.tools.checker.rules.model.Rule.Method;
 import br.ccsl.cogroo.tools.checker.rules.util.EqualsUtils;
 import br.ccsl.cogroo.tools.checker.rules.util.RuleUtils;
 import br.ccsl.cogroo.tools.checker.rules.util.RulesProperties;

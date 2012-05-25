@@ -27,7 +27,7 @@
 
 package br.ccsl.cogroo.tools.checker.rules.applier;
 
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rules;
+import br.ccsl.cogroo.tools.checker.rules.model.Rules;
 
 /**
  * Interface to classes that provides access to rules.

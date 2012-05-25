@@ -32,8 +32,8 @@ import java.util.List;
 
 import br.ccsl.cogroo.entities.Chunk;
 import br.ccsl.cogroo.entities.Token;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Gender;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Number;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Gender;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Number;
 
 /**
  * Implements a {@link Chunk} - group of {@link Token}s.

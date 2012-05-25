@@ -6,10 +6,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Class;
 import org.junit.Test;
-
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class;
 
 public class FlorestaTagInterpreterTest {
 

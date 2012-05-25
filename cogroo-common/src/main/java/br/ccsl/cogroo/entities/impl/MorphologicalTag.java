@@ -31,15 +31,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ccsl.cogroo.entities.Tag;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Case;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Gender;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Mood;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Number;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Person;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Punctuation;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Tense;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Case;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Class;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Gender;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Mood;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Number;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Person;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Punctuation;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Tense;
 
 /**
  * Implements a {@link Tag} for POS tagging annotation

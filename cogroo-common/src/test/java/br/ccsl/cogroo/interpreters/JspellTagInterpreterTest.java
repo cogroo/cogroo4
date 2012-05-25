@@ -1,19 +1,20 @@
 package br.ccsl.cogroo.interpreters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
 
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Case;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Class;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Gender;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Mood;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Number;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Person;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.Tense;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Case;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Class;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Gender;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Mood;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Number;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Person;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Tense;
 
 public class JspellTagInterpreterTest {
 

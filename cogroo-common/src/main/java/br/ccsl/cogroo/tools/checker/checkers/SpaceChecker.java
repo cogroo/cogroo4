@@ -38,7 +38,7 @@ import br.ccsl.cogroo.entities.Sentence;
 import br.ccsl.cogroo.tools.checker.AbstractChecker;
 import br.ccsl.cogroo.tools.checker.JavaRuleDefinition;
 import br.ccsl.cogroo.tools.checker.RuleDefinitionI;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Example;
+import br.ccsl.cogroo.tools.checker.rules.model.Example;
 
 public class SpaceChecker extends AbstractChecker {
 

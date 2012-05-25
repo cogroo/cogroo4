@@ -29,7 +29,7 @@ package br.ccsl.cogroo.entities;
 
 import java.io.Serializable;
 
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
 
 /**
  * Represents a classification of a token (or chunk) according to its

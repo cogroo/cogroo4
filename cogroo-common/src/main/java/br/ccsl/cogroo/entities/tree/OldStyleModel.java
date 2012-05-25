@@ -7,8 +7,8 @@ import br.ccsl.cogroo.entities.Sentence;
 import br.ccsl.cogroo.entities.Token;
 import br.ccsl.cogroo.entities.impl.ChunkTag;
 import br.ccsl.cogroo.entities.impl.SyntacticTag;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 
 public class OldStyleModel {
 
