@@ -63,25 +63,29 @@ public class ADContractionNameSampleStreamTest {
     assertEquals(46, samples.get(2).getSentence().length);
     assertEquals(32, samples.get(3).getSentence().length);
   }
-
+  
   @Test
   public void testAll() throws IOException {
 
     assertEquals(2, samples.get(0).getNames().length);
-    assertEquals(new Span(1, 2), samples.get(0).getNames()[0]);
-    assertEquals(new Span(10, 11), samples.get(0).getNames()[1]);
+    assertEquals(createSpan(1, 2), samples.get(0).getNames()[0]);
+    assertEquals(createSpan(10, 11), samples.get(0).getNames()[1]);
 
     assertEquals(1, samples.get(1).getNames().length);
-    assertEquals(new Span(2, 3), samples.get(1).getNames()[0]);
+    assertEquals(createSpan(2, 3), samples.get(1).getNames()[0]);
 
     assertEquals(2, samples.get(2).getNames().length);
-    assertEquals(new Span(7, 8), samples.get(2).getNames()[0]);
-    assertEquals(new Span(9, 10), samples.get(2).getNames()[1]);
+    assertEquals(createSpan(7, 8), samples.get(2).getNames()[0]);
+    assertEquals(createSpan(9, 10), samples.get(2).getNames()[1]);
 
     assertEquals(2, samples.get(3).getNames().length);
-    assertEquals(new Span(25, 26), samples.get(3).getNames()[0]);
-    assertEquals(new Span(29, 30), samples.get(3).getNames()[1]);
+    assertEquals(createSpan(25, 26), samples.get(3).getNames()[0]);
+    assertEquals(createSpan(29, 30), samples.get(3).getNames()[1]);
 
+  }
+
+  private static Span createSpan(int i, int j) {
+    return new Span(i, j, "default");
   }
 
   @Before
