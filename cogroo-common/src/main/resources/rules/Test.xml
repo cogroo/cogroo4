@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2008 CoGrOO Team (cogroo AT gmail DOT com)
+    
+    CoGrOO Team (cogroo AT gmail DOT com)
+    LTA, PCS (Computer and Digital Systems Engineering Department),
+    Escola Politécnica da Universidade de São Paulo
+    Av. Prof. Luciano Gualberto, trav. 3, n. 380
+    CEP 05508-900 - São Paulo - SP - BRAZIL
+    
+    http://cogroo.sourceforge.net/
+    
+    This file is part of CoGrOO.
+    
+    CoGrOO is free software; you can redistribute it and/or modify it 
+    under the terms of the GNU Lesser General Public as published by 
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    
+    CoGrOO is distributed in the hope that it will be useful, but 
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with CoGrOO. If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<Rules xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Rules.xsd">
+	<Rule id="1" active="true">
+		<Method>general</Method>
+		<Type/>
+		<Group/>
+		<Message/>
+		<Pattern>
+			<PatternElement><Element>
+				<Mask>
+					<LexemeMask>a</LexemeMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Mask>
+					<LexemeMask>a</LexemeMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Mask>
+					<TagMask>
+						<Class>verb</Class>
+					</TagMask>
+				</Mask>
+			</Element></PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>0</Lower>
+			<Upper>-1</Upper>
+		</Boundaries>
+		<Suggestion/>
+		<Example>
+			<Incorrect/>
+			<Correct/>
+		</Example>
+		<ModificationHistory>
+			<Author/>
+			<Date>2006-09-30T23:40:10.0Z</Date>
+		</ModificationHistory>
+	</Rule>
+	<Rule id="2" active="true">
+		<Method>general</Method>
+		<Type/>
+		<Group/>
+		<Message>O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.</Message>
+		<Pattern>
+			<PatternElement><Element>
+				<Mask>
+					<TagMask>
+						<Class>noun</Class>
+						<Gender>male</Gender>
+						<Number>plural</Number>
+					</TagMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Mask>
+					<TagMask>
+						<Class>adjective</Class>
+						<Gender>male</Gender>
+						<Number>singular</Number>
+					</TagMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Negated>true</Negated>
+				<Mask>
+					<LexemeMask>e</LexemeMask>
+				</Mask>
+				<Mask>
+					<LexemeMask>ou</LexemeMask>
+				</Mask>
+			</Element></PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>0</Lower>
+			<Upper>-1</Upper>
+		</Boundaries>
+		<Suggestion/>
+		<Example>
+			<Incorrect/>
+			<Correct/>
+		</Example>
+		<ModificationHistory>
+			<Author/>
+			<Date>2006-09-30T23:51:10.0Z</Date>
+		</ModificationHistory>
+	</Rule>
+	<Rule id="3" active="true">
+		<Method>general</Method>
+		<Type/>
+		<Group/>
+		<Message/>
+		<Pattern>
+			<PatternElement><Element>
+				<Mask>
+					<LexemeMask>a</LexemeMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Mask>
+					<LexemeMask>a</LexemeMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Mask>
+					<TagMask>
+						<Class>noun</Class>
+						<Gender>male</Gender>
+						<Number>singular</Number>
+					</TagMask>
+				</Mask>
+			</Element></PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>0</Lower>
+			<Upper>-1</Upper>
+		</Boundaries>
+		<Suggestion/>
+		<Example>
+			<Incorrect>O bonito casacos ficaram prontos.</Incorrect>
+			<Correct>Os bonitos casacos ficaram prontos.</Correct>
+		</Example>
+		<ModificationHistory>
+			<Author/>
+			<Date>2006-09-30T23:51:10.0Z</Date>
+		</ModificationHistory>
+	</Rule>
+	<Rule id="4" active="true">
+		<Method>general</Method>
+		<Type/>
+		<Group/>
+		<Message>Pronomes de tratamento não admitem artigo, portanto não haverá crase antes deles. A única exceção é o pronome senhora, que admite artigo e, se houver também preposição, haverá crase. - "a" "a" "Vossa" "(Senhoria|Majestade|Eminência|Excelência|Reverendíssima|Santidade)"</Message>
+		<Pattern>
+			<PatternElement><Element>
+				<Mask>
+					<LexemeMask>a</LexemeMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Mask>
+					<LexemeMask>a</LexemeMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Mask>
+					<LexemeMask>Vossa</LexemeMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Mask>
+					<LexemeMask>Senhoria</LexemeMask>
+				</Mask>
+				<Mask>
+					<LexemeMask>Majestade</LexemeMask>
+				</Mask>
+				<Mask>
+					<LexemeMask>Eminência</LexemeMask>
+				</Mask>
+				<Mask>
+					<LexemeMask>Excelência</LexemeMask>
+				</Mask>
+				<Mask>
+					<LexemeMask>Reverendíssima</LexemeMask>
+				</Mask>
+				<Mask>
+					<LexemeMask>Santidade</LexemeMask>
+				</Mask>
+			</Element></PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>0</Lower>
+			<Upper>-2</Upper>
+		</Boundaries>
+		<Suggestion/>
+		<Example>
+			<Incorrect>Enviei os documentos à Vossa Excelência.</Incorrect>
+			<Correct>Enviei os documentos a Vossa Excelência.</Correct>
+		</Example>
+		<ModificationHistory>
+			<Author>sueli</Author>
+			<Date>2006-09-30T23:51:10.0Z</Date>
+		</ModificationHistory>
+	</Rule>
+	<Rule id="5" active="true">
+		<Method>phrase-local</Method>
+		<Type/>
+		<Group/>
+		<Message>O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.</Message>
+		<Pattern>
+			<PatternElement><Element>
+				<Mask>
+					<TagMask>
+						<Class>noun</Class>
+						<Gender>male</Gender>
+						<Number>singular</Number>
+					</TagMask>
+				</Mask>
+			</Element></PatternElement>
+			<PatternElement><Element>
+				<Mask>
+					<TagMask>
+						<Class>adjective</Class>
+						<Gender>male</Gender>
+						<Number>plural</Number>
+					</TagMask>
+				</Mask>
+			</Element></PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>0</Lower>
+			<Upper>0</Upper>
+		</Boundaries>
+		<Suggestion/>
+		<Example>
+			<Incorrect>O casaco bonitos ficou pronto.</Incorrect>
+			<Correct>O casaco bonito ficou pronto.</Correct>
+		</Example>
+		<ModificationHistory>
+			<Author>sueli</Author>
+			<Date>2006-09-30T23:51:10.0Z</Date>
+		</ModificationHistory>
+	</Rule>
+</Rules>
