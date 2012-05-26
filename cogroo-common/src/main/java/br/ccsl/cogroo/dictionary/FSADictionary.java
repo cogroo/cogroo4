@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -15,30 +17,42 @@ import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
 import opennlp.tools.postag.TagDictionary;
+import br.ccsl.cogroo.tools.checker.rules.dictionary.PairWordPOSTag;
 
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.io.ByteStreams;
 
 public class FSADictionary implements TagDictionary, Iterable<String> {
 
   private DictionaryLookup dictLookup;
-  private Cache<String, Optional<String[]>> cache = CacheBuilder.newBuilder()
+  
+  private Cache<String, Optional<String[]>> tagCache = CacheBuilder.newBuilder()
       .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
       .build(new CacheLoader<String, Optional<String[]>>() {
         public Optional<String[]> load(String key) {
-          String[] val = lookup(key);
+          String[] val = tagLookup(key);
           return Optional.fromNullable(val);
         }
       });
+  
+  private LoadingCache<String, List<PairWordPOSTag>> lemmaTagCache = CacheBuilder.newBuilder()
+      .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
+      .build(
+          new CacheLoader<String, List<PairWordPOSTag>>() {
+            public List<PairWordPOSTag> load(String key) {
+              return lemmaTagLookup(key);
+            }
+          });
 
   public FSADictionary(DictionaryLookup dictLookup) {
     this.dictLookup = dictLookup;
   }
 
-  private String[] lookup(String word) {
+  private String[] tagLookup(String word) {
     synchronized (dictLookup) {
       List<WordData> data = dictLookup.lookup(word);
       if (data.size() > 0) {
@@ -51,15 +65,43 @@ public class FSADictionary implements TagDictionary, Iterable<String> {
     }
     return null;
   }
+  
+  private List<PairWordPOSTag> lemmaTagLookup(String word) {
+    List<PairWordPOSTag> list;
+    synchronized (dictLookup) {
+      List<WordData> data = dictLookup.lookup(word);
+      if (data.size() > 0) {
+        list = new ArrayList<PairWordPOSTag>(data.size());
+        for (int i = 0; i < data.size(); i++) {
+          WordData wd = data.get(i);
+          list.add(new PairWordPOSTag(wd.getStem().toString(), wd.getTag()
+              .toString()));
+        }
+        return Collections.unmodifiableList(list);
+      }
+    }
+    return Collections.emptyList();
+  }
 
   public String[] getTags(String word) {
     try {
-      return cache.get(word).orNull();
+      return tagCache.get(word).orNull();
     } catch (ExecutionException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
       return null;
     }
+  }
+  
+  public List<PairWordPOSTag> getTagsAndLemms(String aWord) {
+    // TODO: acabar isso usando Cache.. Colocar cache no 
+    try {
+      return lemmaTagCache.get(aWord);
+    } catch (ExecutionException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return null;
+    } 
   }
 
   public static TagDictionary create(String path)
@@ -92,6 +134,20 @@ public class FSADictionary implements TagDictionary, Iterable<String> {
       throws IllegalArgumentException, IOException {
     return create(new ByteArrayInputStream(dictData), new ByteArrayInputStream(
         dictInfo));
+  }
+  
+  public static FSADictionary createFromResources(String path)
+      throws IllegalArgumentException, IOException {
+    
+    InputStream dic = FSADictionary.class.getResourceAsStream(path);
+    InputStream info = FSADictionary.class.getResourceAsStream(Dictionary.getExpectedFeaturesName(path));
+    
+    FSADictionary fsa = create(dic, info);
+    
+    dic.close();
+    info.close();
+    
+    return fsa;
   }
 
   private static class IteratorWrapper implements Iterator<String> {

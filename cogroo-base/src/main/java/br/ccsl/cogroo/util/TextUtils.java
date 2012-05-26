@@ -57,7 +57,7 @@ public class TextUtils {
       for (Sentence sentence : document.getSentences()) {
         cont++;
         output.append("  Sentence ").append(cont).append(": ")
-            .append(sentence.getCoveredSentence(document.getText()))
+            .append(sentence.getText())
             .append("\n");
 
         List<Token> tokens = sentence.getTokens();

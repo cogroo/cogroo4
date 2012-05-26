@@ -37,7 +37,7 @@ public class NameFinderTest {
     String[] textArray = text.split(" ");
 
     document.setText(text);
-    Sentence sentence = new Sentence(new Span(0, 33));
+    Sentence sentence = new Sentence(new Span(0, 33),document);
     document.setSentences(Collections.singletonList(sentence));
     Span[] spans = { new Span(1, 4) };
     List<Token> tokens = createTokens(textArray);
@@ -58,7 +58,7 @@ public class NameFinderTest {
     String[] textArray = text.split(" ");
 
     document.setText(text);
-    Sentence sentence = new Sentence(new Span(0, 61));
+    Sentence sentence = new Sentence(new Span(0, 61), document);
     document.setSentences(Collections.singletonList(sentence));
 
     Span[] spans = { new Span(1, 4), new Span(7, 9) };
@@ -83,7 +83,7 @@ public class NameFinderTest {
     String[] textArray = text.split(" ");
 
     document.setText(text);
-    Sentence sentence = new Sentence(new Span(0, 61));
+    Sentence sentence = new Sentence(new Span(0, 61), document);
     document.setSentences(Collections.singletonList(sentence));
 
     Span[] spans = new Span[0];

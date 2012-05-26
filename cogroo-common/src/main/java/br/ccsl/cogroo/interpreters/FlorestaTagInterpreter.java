@@ -307,7 +307,7 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
 
     MorphologicalTag m = new MorphologicalTag();
 
-    String[] tags = tagString.split(SEP);
+    String[] tags = tagString.split("[#=]");
     for (String tag : tags) {
       if (MTAG_PARTS_ENUM.containsKey(tag)) {
         List<Enum<?>> tagE = MTAG_PARTS_ENUM.get(tag);

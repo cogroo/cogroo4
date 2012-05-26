@@ -38,9 +38,9 @@ public class SentenceDetectorTest {
     assertEquals(2, document.getSentences().size());
 
     assertEquals("Este é um teste.", document.getSentences().get(0)
-        .getCoveredSentence(text));
+        .getText());
     assertEquals("Ele contém duas frases.", document.getSentences().get(1)
-        .getCoveredSentence(text));
+        .getText());
   }
 
   @Test

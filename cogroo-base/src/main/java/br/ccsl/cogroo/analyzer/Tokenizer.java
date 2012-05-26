@@ -27,7 +27,7 @@ public class Tokenizer implements AnalyzerI {
     List<Sentence> sentences = document.getSentences();
 
     for (Sentence sentence : sentences) {
-      String sentenceString = sentence.getCoveredSentence(document.getText());
+      String sentenceString = sentence.getText();
       Span tokensSpan[] = tokenizer.tokenizePos(sentenceString);
 
       List<Token> tokens = new ArrayList<Token>(tokensSpan.length);

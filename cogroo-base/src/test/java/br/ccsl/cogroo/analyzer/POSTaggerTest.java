@@ -39,7 +39,7 @@ public class POSTaggerTest {
 
     String[] textArray = text.split(" ");
 
-    Sentence sentence = new Sentence(new Span(0, 41));
+    Sentence sentence = new Sentence(new Span(0, 41), document);
     document.setSentences(Collections.singletonList(sentence));
 
     List<Token> tokens = createTokens(textArray);

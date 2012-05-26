@@ -25,7 +25,7 @@
  * License along with CoGrOO. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package br.ccsl.cogroo.dictionary;
+package br.ccsl.cogroo.tools.checker.rules.dictionary;
 
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.interpreters.TagInterpreterI;

@@ -38,7 +38,6 @@ import opennlp.tools.util.Span;
 
 import org.apache.log4j.Logger;
 
-import br.ccsl.cogroo.dictionary.CogrooTagDictionary;
 import br.ccsl.cogroo.entities.Chunk;
 import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.Sentence;
@@ -51,6 +50,7 @@ import br.ccsl.cogroo.entities.impl.TokenCogroo;
 import br.ccsl.cogroo.tools.checker.Checker;
 import br.ccsl.cogroo.tools.checker.RuleDefinitionI;
 import br.ccsl.cogroo.tools.checker.rules.util.RuleUtils;
+import br.ccsl.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import br.ccsl.cogroo.tools.checker.rules.model.Element;
 import br.ccsl.cogroo.tools.checker.rules.model.Mask;
 import br.ccsl.cogroo.tools.checker.rules.model.PatternElement;

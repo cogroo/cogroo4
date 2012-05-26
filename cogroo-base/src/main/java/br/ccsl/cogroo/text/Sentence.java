@@ -1,13 +1,10 @@
 package br.ccsl.cogroo.text;
 
-import java.awt.Component;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.google.common.base.Objects;
 
 import opennlp.tools.util.Span;
+
+import com.google.common.base.Objects;
 
 /**
  * The <code>Sentence</code> class contains the position of the sentence in the
@@ -21,22 +18,24 @@ public class Sentence {
   /** the list every token in the sentence */
   private List<Token> tokens;
   
-  private Map<Component, String[]> additionalContext;
+  /* a reference to the document that contains this sentence */
+  private Document theDocument;
   
-  public Sentence(Span span) {
-    this(span, null);
+  public Sentence(Span span, Document theDocument) {
+    this(span, null, theDocument);
   }
 
-  public Sentence(Span span, List<Token> tokens) {
+  public Sentence(Span span, List<Token> tokens, Document theDocument) {
     this.span = span;
     this.tokens = tokens;
+    this.theDocument = theDocument;
   }
 
   /**
    * @return the <code>String</code> of the sentence
    */
-  public String getCoveredSentence(String text) {
-    return span.getCoveredText(text).toString();
+  public String getText() {
+    return span.getCoveredText(theDocument.getText()).toString();
   }
 
   public Span getSpan() {

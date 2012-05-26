@@ -42,7 +42,7 @@ public class PipeTest {
         Span[] spans = { new Span(0, 16), new Span(17, 40) };
         
         for (Span span : spans) {
-          Sentence sentence = new Sentence(span); 
+          Sentence sentence = new Sentence(span, document); 
           sentences.add(sentence);
         }
         d.setSentences(sentences);

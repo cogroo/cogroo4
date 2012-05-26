@@ -42,8 +42,8 @@ public class PortugueseTokenContextGenerator extends
 
     if (c == ':' || c == ',' || c == ';') {
       preds.add(key + "_sep");
-    } // else if (c == '»' || c == '«') {
-    // preds.add(key + "_quote");
-    // }
+    } else if (c == '»' || c == '«') {
+     preds.add(key + "_quote");
+    }
   }
 }

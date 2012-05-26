@@ -33,13 +33,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import br.ccsl.cogroo.dictionary.CogrooTagDictionary;
 import br.ccsl.cogroo.entities.Sentence;
 import br.ccsl.cogroo.entities.Token;
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.entities.impl.TokenCogroo;
 import br.ccsl.cogroo.tools.checker.rules.util.RuleUtils;
 import br.ccsl.cogroo.tools.checker.rules.util.TagMaskUtils;
+import br.ccsl.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import br.ccsl.cogroo.tools.checker.rules.model.Suggestion;
 import br.ccsl.cogroo.tools.checker.rules.model.Suggestion.Replace;
 import br.ccsl.cogroo.tools.checker.rules.model.Suggestion.ReplaceMapping;

@@ -36,7 +36,7 @@ public class ContractionFinderTest {
     String text = "A filha dela vai à tarde ao cinema do centro .";
     document.setText(text);
 
-    Sentence sentence = new Sentence(new Span(0, text.length()));
+    Sentence sentence = new Sentence(new Span(0, text.length()),document);
     document.setSentences(Collections.singletonList(sentence));
 
     String[] textArray = text.split(" ");
@@ -63,7 +63,7 @@ public class ContractionFinderTest {
     String text = "A filha de ela vai a a tarde a o cinema de o centro .";
     document.setText(text);
 
-    Sentence sentence = new Sentence(new Span(0, text.length()));
+    Sentence sentence = new Sentence(new Span(0, text.length()), document);
     document.setSentences(Collections.singletonList(sentence));
 
     String[] textArray = text.split(" ");

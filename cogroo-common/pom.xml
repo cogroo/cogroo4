@@ -62,6 +62,15 @@
 	</dependencies>
 
 	<build>
+	<resources>
+		<resource>
+			<targetPath>fsa_dictionaries</targetPath>
+			<directory>fsa_dictionaries</directory>
+		</resource>
+		<resource>
+			<directory>src/main/resources</directory>
+		</resource>
+	</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
