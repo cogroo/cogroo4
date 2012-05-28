@@ -27,7 +27,7 @@ public class TextUtils {
 
   public static String[][] additionalContext(List<Token> tokens,
       List<Analyzers> analyzers) {
-    String[][] additionalContext = new String[tokens.size()][analyzers.size()];
+    String[][] additionalContext = new String[analyzers.size()][tokens.size()];
 
     for (int i = 0; i < analyzers.size(); i++) {
       for (int j = 0; j < tokens.size(); j++) {
@@ -35,9 +35,9 @@ public class TextUtils {
             .getAdditionalContext(analyzers.get(i));
 
         if (object == null)
-          additionalContext[j][i] = null;
+          additionalContext[i][j] = null;
         else
-          additionalContext[j][i] = (String) object;
+          additionalContext[i][j] = (String) object;
       }
     }
 
@@ -95,8 +95,17 @@ public class TextUtils {
 
         String[][] addcontext = TextUtils.additionalContext(tokens,
             Arrays.asList(Analyzers.CONTRACTION_FINDER, Analyzers.NAME_FINDER));
-        for (String[] strings : addcontext) {
-          output.append(Arrays.toString(strings)).append("\n");
+        for (String[] line : addcontext) {
+          for (String col : line) {
+            output.append("[");
+            if(col == null) {
+              output.append("-");
+            } else {
+              output.append(col);
+            }
+            output.append("]");
+          }
+          output.append("\n");
         }
       }
     }

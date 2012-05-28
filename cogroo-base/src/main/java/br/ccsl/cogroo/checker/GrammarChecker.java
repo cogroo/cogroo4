@@ -41,7 +41,7 @@ public class GrammarChecker {
 
     while (!input.equals("q")) {
       if (input.equals("0")) {
-        input = "Fomos levados à crer que os menino são burro de doer. As menina chegaram.";
+        input = "Pesquisa Datafolha publicada hoje revela um dado supreendente: recusando uma postura radical, a esmagadora maioria (77%) dos eleitores quer o PT participando do Governo Fernando Henrique Cardoso.";
       }
 
       Document document = new CheckDocument();
