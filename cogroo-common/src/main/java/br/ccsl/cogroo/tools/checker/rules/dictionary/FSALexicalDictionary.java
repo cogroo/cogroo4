@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import br.ccsl.cogroo.dictionary.FSADictionary;
-import br.ccsl.cogroo.dictionary.FSASynthDictionary;
+import br.ccsl.cogroo.dictionary.impl.FSADictionary;
+import br.ccsl.cogroo.dictionary.impl.FSASynthDictionary;
 
 public class FSALexicalDictionary implements LexicalDictionary {
   

@@ -14,7 +14,7 @@ import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.SequenceValidator;
 import opennlp.tools.util.model.ArtifactProvider;
 import opennlp.tools.util.model.ArtifactSerializer;
-import br.ccsl.cogroo.dictionary.FSADictionary;
+import br.ccsl.cogroo.dictionary.impl.FSADictionary;
 import br.ccsl.cogroo.util.serializers.ByteArraySerializer;
 
 public class FSAPortugueseFactory extends POSTaggerFactory {

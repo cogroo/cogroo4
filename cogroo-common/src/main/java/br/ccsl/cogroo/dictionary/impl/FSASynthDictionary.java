@@ -1,4 +1,4 @@
-package br.ccsl.cogroo.dictionary;
+package br.ccsl.cogroo.dictionary.impl;
 
 import java.io.FileInputStream;
 import java.io.IOException;

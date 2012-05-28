@@ -1,4 +1,4 @@
-package br.ccsl.cogroo.dictionary;
+package br.ccsl.cogroo.dictionary.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
+import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 import br.ccsl.cogroo.tools.featurizer.WordTag;
 
 import com.google.common.base.Optional;
