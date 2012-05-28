@@ -17,6 +17,7 @@ import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
 import opennlp.tools.postag.TagDictionary;
+import br.ccsl.cogroo.dictionary.LemmaDictionaryI;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.PairWordPOSTag;
 
 import com.google.common.base.Optional;
@@ -26,7 +27,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.io.ByteStreams;
 
-public class FSADictionary implements TagDictionary, Iterable<String> {
+public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<String> {
 
   private DictionaryLookup dictLookup;
   
@@ -196,5 +197,10 @@ public class FSADictionary implements TagDictionary, Iterable<String> {
       System.out.print("Enter a query: ");
       input = kb.nextLine();
     }
+  }
+
+  public String[] getLemmas(String word, String tag) {
+    // TODO Auto-generated method stub
+    return null;
   }
 }
