@@ -75,6 +75,18 @@ public class TextUtils {
               output.append("{").append(token.getFeatures()).append("}");
             }
             
+            String[] lemmas = token.getLemmas();
+            
+            if (lemmas != null) {
+              output.append("[");
+              
+              for (int i = 0; i < lemmas.length; i++) {
+                output.append(lemmas[i]);
+              }
+             
+              output.append("]");
+            }
+            
             output.append(" ");
             
           }
