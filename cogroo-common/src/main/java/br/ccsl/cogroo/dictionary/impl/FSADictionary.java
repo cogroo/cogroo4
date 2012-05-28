@@ -17,6 +17,9 @@ import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
 import opennlp.tools.postag.TagDictionary;
+
+import org.apache.log4j.Logger;
+
 import br.ccsl.cogroo.dictionary.LemmaDictionaryI;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.PairWordPOSTag;
 
@@ -29,6 +32,7 @@ import com.google.common.io.ByteStreams;
 
 public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<String> {
 
+  protected static final Logger LOGGER = Logger.getLogger(FSADictionary.class);
   private DictionaryLookup dictLookup;
   
   private Cache<String, Optional<String[]>> tagCache = CacheBuilder.newBuilder()
@@ -88,12 +92,44 @@ public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<
     try {
       return tagCache.get(word).orNull();
     } catch (ExecutionException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      LOGGER.info("Getting tags for word generated an exception: " + word, e);
       return null;
     }
   }
   
+  
+  public String[] getLemmas(String word, String tag) {
+    List<String> output = new ArrayList<String>();
+    try {
+      List<PairWordPOSTag> pairs = lemmaTagCache.get(word);
+      for (PairWordPOSTag pairWordPOSTag : pairs) {
+        boolean match = false;
+        if(pairWordPOSTag.getPosTag().equals(tag)) {
+          match = true;
+        } else {
+          // TODO: this is language specific !!
+          if("n-adj".equals(pairWordPOSTag.getPosTag())) {
+            if("n".equals(tag) || "adj".equals(tag)) {
+              match = true;
+            }
+          } else if("n-adj".equals(tag)) {
+            if("n".equals(pairWordPOSTag.getPosTag()) || "adj".equals(pairWordPOSTag.getPosTag())) {
+              match = true;
+            }
+          } 
+        }
+        if(match)
+          output.add(pairWordPOSTag.getWord());
+      }
+    } catch (ExecutionException e) {
+      LOGGER.info("Getting tags for word generated an exception: " + word, e);
+      return null;
+    }
+    
+    return output.toArray(new String[output.size()]);
+  }
+  
+  /** This is used by rule system */
   public List<PairWordPOSTag> getTagsAndLemms(String aWord) {
     // TODO: acabar isso usando Cache.. Colocar cache no 
     try {
@@ -193,14 +229,9 @@ public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<
       if (input.equals("0")) {
         input = "\"";
       }
-      System.out.println(Arrays.toString(td.getTags(input)));
+      System.out.println(Arrays.toString(td.getLemmas("fomos", "v-fin")));
       System.out.print("Enter a query: ");
       input = kb.nextLine();
     }
-  }
-
-  public String[] getLemmas(String word, String tag) {
-    // TODO Auto-generated method stub
-    return null;
   }
 }
