@@ -25,6 +25,8 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.print.attribute.TextSyntax;
+
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
@@ -94,19 +96,15 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
       }
 
       if(this.additionalContext) {
-        String[][] ac = new String[sentence.size()][2];
-        for (int i = 0; i < ac.length; i++) {
+        String[][] ac = new String[2][sentence.size()];
+        // line 0: contractions
+        // line 1: props
+        for (int i = 0; i < sentence.size(); i++) {
           if (contractions.get(i) != null) {
-            ac[i][0] = contractions.get(i);
-            // if(contractions.get(i) != null) {
-            // System.out.println(contractions.get(i) + ": " + sentence.get(i));
-            // }
+            ac[0][i] = contractions.get(i);
           }
           if (prop.get(i) != null) {
-            ac[i][1] = prop.get(i);
-            // if(prop.get(i) != null) {
-            // System.out.println(prop.get(i) + ": " + sentence.get(i));
-            // }
+            ac[1][i] = prop.get(i);
           }
         }
         // System.out.println();
