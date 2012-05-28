@@ -13,7 +13,8 @@ import br.ccsl.cogroo.text.Document;
  */
 public class CLI {
   /**
-   * @param args the language to be used, "pt_BR" by default
+   * @param args
+   *          the language to be used, "pt_BR" by default
    * @throws FileNotFoundException
    */
   public static void main(String[] args) throws FileNotFoundException {
@@ -25,8 +26,7 @@ public class CLI {
       return;
     }
 
-    ComponentFactory factory = ComponentFactory
-        .create(new Locale(args[0]));
+    ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
 
     AnalyzerI pipe = factory.createPipe();
 

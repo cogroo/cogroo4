@@ -50,6 +50,7 @@
 			<xs:enumeration value="contractionFinder" />
 			<xs:enumeration value="posTagger" />
 			<xs:enumeration value="featurizer" />
+			<xs:enumeration value="lemmatizer" />
 		</xs:restriction>
 	</xs:simpleType>
 

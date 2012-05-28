@@ -3,10 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="languageConfiguration.xsd">
 	<locale>pt_BR</locale>
-	<model type="sentenceDetector">models/en/en-sent.bin</model>
-	<model type="tokenizer">models/en/en-token.bin</model>
-	<model type="posTagger">models/en/en-pos-maxent.bin</model>
-<!-- 	<model type="chunker">models/en-chunker.bin</model> -->
+	<model type="sentenceDetector">/models/en/en-sent.bin</model>
+	<model type="tokenizer">/models/en/en-token.bin</model>
+	<model type="posTagger">/models/en/en-pos-maxent.bin</model>
+<!-- 	<model type="chunker">/models/en-chunker.bin</model> -->
 
 	<pipe>
 		<analyzer>sentenceDetector</analyzer>

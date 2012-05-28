@@ -3,12 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="languageConfiguration.xsd">
 	<locale>pt_BR</locale>
-	<model type="sentenceDetector">models/pt-sent.model</model>
-	<model type="tokenizer">models/pt-tok.model</model>
-	<model type="nameFinder">models/pt-prop.model</model>
-	<model type="contractionFinder">models/pt-con.model</model>
-	<model type="posTagger">models/pt-pos.model</model>
-	<model type="featurizer">models/pt-feat.model</model>
+	<model type="sentenceDetector">/models/pt-sent.model</model>
+	<model type="tokenizer">/models/pt-tok.model</model>
+	<model type="nameFinder">/models/pt-prop.model</model>
+	<model type="contractionFinder">/models/pt-con.model</model>
+	<model type="posTagger">/models/pt-pos.model</model>
+	<model type="featurizer">/models/pt-feat.model</model>
 
 	<pipe>
 		<analyzer>sentenceDetector</analyzer>
@@ -17,5 +17,6 @@
 		<analyzer>contractionFinder</analyzer>
 		<analyzer>posTagger</analyzer>
 		<analyzer>featurizer</analyzer>
+		<analyzer>lemmatizer</analyzer>
 	</pipe>
 </languageConfiguration>

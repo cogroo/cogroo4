@@ -1,6 +1,5 @@
 package br.ccsl.cogroo.analyzer;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -22,6 +21,7 @@ import br.ccsl.cogroo.config.Analyzers;
 import br.ccsl.cogroo.config.LanguageConfiguration;
 import br.ccsl.cogroo.config.LanguageConfigurationUtil;
 import br.ccsl.cogroo.config.Model;
+import br.ccsl.cogroo.dictionary.impl.FSADictionary;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerME;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerModel;
 
@@ -63,8 +63,8 @@ public class ComponentFactory implements ComponentFactoryI {
 
     if (modelPathMap.containsKey(Analyzers.SENTENCE_DETECTOR)) {
       try {
-        modelIn = new FileInputStream(
-            modelPathMap.get(Analyzers.SENTENCE_DETECTOR));
+        modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
+            .get(Analyzers.SENTENCE_DETECTOR));
         SentenceModel model = new SentenceModel(modelIn);
         sentenceDetector = new SentenceDetectorME(model);
       } catch (IOException e) {
@@ -88,7 +88,8 @@ public class ComponentFactory implements ComponentFactoryI {
 
     if (modelPathMap.containsKey(Analyzers.TOKENIZER)) {
       try {
-        modelIn = new FileInputStream(modelPathMap.get(Analyzers.TOKENIZER));
+        modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
+            .get(Analyzers.TOKENIZER));
         TokenizerModel model = new TokenizerModel(modelIn);
         tokenizer = new TokenizerME(model);
       } catch (IOException e) {
@@ -111,7 +112,8 @@ public class ComponentFactory implements ComponentFactoryI {
 
     if (modelPathMap.containsKey(Analyzers.NAME_FINDER)) {
       try {
-        modelIn = new FileInputStream(modelPathMap.get(Analyzers.NAME_FINDER));
+        modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
+            .get(Analyzers.NAME_FINDER));
         TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
         nameFinder = new NameFinderME(model);
       } catch (IOException e) {
@@ -134,8 +136,8 @@ public class ComponentFactory implements ComponentFactoryI {
 
     if (modelPathMap.containsKey(Analyzers.CONTRACTION_FINDER)) {
       try {
-        modelIn = new FileInputStream(
-            modelPathMap.get(Analyzers.CONTRACTION_FINDER));
+        modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
+            .get(Analyzers.CONTRACTION_FINDER));
         TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
         contractionFinder = new NameFinderME(model);
       } catch (IOException e) {
@@ -158,7 +160,8 @@ public class ComponentFactory implements ComponentFactoryI {
 
     if (modelPathMap.containsKey(Analyzers.POS_TAGGER)) {
       try {
-        modelIn = new FileInputStream(modelPathMap.get(Analyzers.POS_TAGGER));
+        modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
+            .get(Analyzers.POS_TAGGER));
         POSModel model = new POSModel(modelIn);
         tagger = new POSTaggerME(model);
       } catch (IOException e) {
@@ -178,10 +181,11 @@ public class ComponentFactory implements ComponentFactoryI {
   public AnalyzerI createFeaturizer() {
     FeaturizerME featurizer = null;
     InputStream modelIn = null;
-    
+
     if (modelPathMap.containsKey(Analyzers.FEATURIZER)) {
       try {
-        modelIn = new FileInputStream(modelPathMap.get(Analyzers.FEATURIZER));
+        modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
+            .get(Analyzers.FEATURIZER));
         FeaturizerModel model = new FeaturizerModel(modelIn);
         featurizer = new FeaturizerME(model);
       } catch (IOException e) {
@@ -197,7 +201,25 @@ public class ComponentFactory implements ComponentFactoryI {
     }
     return null;
   }
-  
+
+  public AnalyzerI createLemmatizer() {
+
+    try {
+      FSADictionary dict = FSADictionary
+          .createFromResources("/fsa_dictionaries/pos/pt_br_jspell.dict");
+      Lemmatizer lemmatizer = new Lemmatizer(dict);
+
+      return lemmatizer;
+
+    } catch (IllegalArgumentException e) {
+      LOGGER.fatal("Couldn't load ");
+      throw new InitializationException("Couldn't load", e);
+    } catch (IOException e) {
+      LOGGER.fatal("Couldn't find the dictionary.");
+      throw new InitializationException("Couldn't locate dictionary", e);
+    }
+  }
+
   public AnalyzerI createPipe() {
     Pipe pipe = new Pipe();
 
@@ -220,6 +242,9 @@ public class ComponentFactory implements ComponentFactoryI {
         break;
       case FEATURIZER:
         pipe.add(this.createFeaturizer());
+        break;
+      case LEMMATIZER:
+        pipe.add(this.createLemmatizer());
         break;
       default:
         throw new InitializationException("Unknown analyzer: " + analyzer);

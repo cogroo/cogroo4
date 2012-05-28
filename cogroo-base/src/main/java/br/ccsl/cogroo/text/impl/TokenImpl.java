@@ -24,7 +24,7 @@ public class TokenImpl implements Token {
   private String lexeme;
   
   /** Is the primitive form of the <code>lemma</code> */
-  private String lemma;
+  private String[] lemmas;
 
   /** Is the morphological tag of the <code>lemma</code> */
   private String tag;
@@ -37,10 +37,10 @@ public class TokenImpl implements Token {
     this(span, lexeme, null, null, null);
   }
 
-  public TokenImpl(Span span, String lexeme, String lemma, String tag, String features) {
+  public TokenImpl(Span span, String lexeme, String[] lemmas, String tag, String features) {
     this.span = span;
     this.lexeme = lexeme;
-    this.lemma = lemma;
+    this.lemmas = lemmas;
     this.tag = tag;
     this.features = features;
   }
@@ -63,12 +63,12 @@ public class TokenImpl implements Token {
    * 
    * @see br.ccsl.cogroo.TokenI#getLemma()
    */
-  public String getLemma() {
-    return lemma;
+  public String[] getLemmas() {
+    return lemmas;
   }
 
-  public void setLemma(String lemma) {
-    this.lemma = lemma;
+  public void setLemmas(String[] lemmas) {
+    this.lemmas = lemmas;
   }
 
   /*
@@ -128,7 +128,7 @@ public class TokenImpl implements Token {
     if (obj instanceof TokenImpl) {
       TokenImpl that = (TokenImpl) obj;
       return Objects.equal(this.lexeme, that.lexeme)
-          && Objects.equal(this.lemma, that.lemma)
+          && Objects.equal(this.lemmas, that.lemmas)
           && Objects.equal(this.span, that.span);
     }
     return false;
@@ -137,13 +137,14 @@ public class TokenImpl implements Token {
   @Override
   public String toString() {
 
-    return Objects.toStringHelper(this).add("lxm", lexeme).add("lm", lemma)
+    return Objects.toStringHelper(this).add("lxm", lexeme).add("lm", lemmas)
     // .add("span", span)
         .toString();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(lexeme, lemma, span);
+    return Objects.hashCode(lexeme, lemmas, span);
   }
+
 }

@@ -10,7 +10,7 @@ public interface Token {
 
   public Span getSpan();
 
-  public String getLemma();
+  public String[] getLemmas();
 
   public String getLexeme();
 

@@ -44,6 +44,15 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>models</directory>
+				<targetPath>models</targetPath>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

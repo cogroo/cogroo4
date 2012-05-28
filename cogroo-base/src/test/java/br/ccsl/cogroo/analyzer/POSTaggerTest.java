@@ -1,8 +1,7 @@
 package br.ccsl.cogroo.analyzer;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class POSTaggerTest {
 
     String[] textArray = text.split(" ");
 
-    Sentence sentence = new Sentence(new Span(0, 41), document);
+    Sentence sentence = new Sentence(new Span(0, 40), document);
     document.setSentences(Collections.singletonList(sentence));
 
     List<Token> tokens = createTokens(textArray);
@@ -48,7 +47,7 @@ public class POSTaggerTest {
     String[] tags = { "art", "n", "adj", "v-fin", "prp", "art", "pron-det",
         "n", "punc" };
 
-    when(mockedTagger.tag(textArray)).thenReturn(tags);
+    when(mockedTagger.tag(any(String[].class), any(Object[].class))).thenReturn(tags);
     tagger.analyze(document);
 
     assertEquals("art", document.getSentences().get(0).getTokens().get(0)

@@ -40,7 +40,7 @@ public class LanguageConfigurationUtil {
         throw new InitializationException("Invalid configuration file.");
       }
     } else
-      throw new InitializationException("Couldn't locate stream.");
+      throw new InitializationException("Couldn't locate stream: " + file);
   }
 
   /**
@@ -53,7 +53,13 @@ public class LanguageConfigurationUtil {
    */
   private static String generateName(Locale locale) {
     StringBuilder str = new StringBuilder();
-    str.append("models_").append(locale).append(".xml");
+    str.append("models_").append(locale.getLanguage());
+    
+    if (locale.getCountry() != null && !locale.getCountry().isEmpty()) 
+      str.append("_").append(locale.getCountry());
+    
+    str.append(".xml");
+    
     return str.toString();
   }
 
