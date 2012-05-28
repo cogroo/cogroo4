@@ -33,7 +33,7 @@ import br.ccsl.cogroo.tools.checker.rules.dictionary.FSALexicalDictionary;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.TagDictionary;
 
 public class GrammarCheckerAnalyzer implements AnalyzerI {
-  
+
   private static final Logger LOGGER = Logger.getLogger(RulesApplier.class);
 
   private CheckerComposite checker;
@@ -44,8 +44,8 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   public GrammarCheckerAnalyzer() throws IllegalArgumentException, IOException {
     RulesProvider xmlProvider = new RulesProvider(RulesXmlAccess.getInstance(),
         false);
-    td = new TagDictionary(new FSALexicalDictionary(),
-        false, new FlorestaTagInterpreter());
+    td = new TagDictionary(new FSALexicalDictionary(), false,
+        new FlorestaTagInterpreter());
 
     RulesTreesBuilder rtb = new RulesTreesBuilder(xmlProvider);
     RulesTreesAccess rta = new RulesTreesFromScratchAccess(rtb);
@@ -57,7 +57,7 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   }
 
   public void analyze(Document document) {
-    if(document instanceof CheckDocument) {
+    if (document instanceof CheckDocument) {
       List<Mistake> mistakes = new ArrayList<Mistake>();
       List<Sentence> sentences = document.getSentences();
       for (Sentence sentence : sentences) {
@@ -65,7 +65,8 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
       }
       ((CheckDocument) document).setMistakes(mistakes);
     } else {
-      throw new IllegalArgumentException("An instance of " + CheckDocument.class + " was expected.");
+      throw new IllegalArgumentException("An instance of "
+          + CheckDocument.class + " was expected.");
     }
   }
 
@@ -83,19 +84,19 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
       typedToken.setLexeme(token.getLexeme());
       typedToken.setMorphologicalTag(createMorphologicalTag(token));
       setPrimitiveAndGeneralize(typedToken, td);
-      
+
       typedTokenList.add(typedToken);
     }
-    
-    typedSentence.setChunks(Collections.<Chunk>emptyList());
-    typedSentence.setSyntacticChunks(Collections.<SyntacticChunk>emptyList());
-    
+
+    typedSentence.setChunks(Collections.<Chunk> emptyList());
+    typedSentence.setSyntacticChunks(Collections.<SyntacticChunk> emptyList());
+
     typedSentence.setTokens(Collections.unmodifiableList(typedTokenList));
-    
-    if(LOGGER.isDebugEnabled()) {
+
+    if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("Typede sentence: " + typedSentence);
     }
-    
+
     return typedSentence;
   }
 
@@ -103,18 +104,25 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     String tag = token.getPOSTag() + "=" + token.getFeatures();
     return ti.parseMorphologicalTag(tag);
   }
-  
-  public static void setPrimitiveAndGeneralize(br.ccsl.cogroo.entities.Token tok, CogrooTagDictionary dict) {
-    Merger.generalizePOSTags(tok.getMorphologicalTag(), dict.getTags(tok.getLexeme(), false));
-    
-    //tokens.get(i).setMorphologicalTag(mt);
+
+  public static void setPrimitiveAndGeneralize(
+      br.ccsl.cogroo.entities.Token tok, CogrooTagDictionary dict) {
+    Merger.generalizePOSTags(tok.getMorphologicalTag(),
+        dict.getTags(tok.getLexeme(), false));
+
+    // tokens.get(i).setMorphologicalTag(mt);
     // Gets the primitive of the token.
-    String[] primitives = dict.getPrimitive(tok.getLexeme(), tok.getMorphologicalTag(), true);
-    if(primitives == null) {
-      primitives = dict.getPrimitive(tok.getLexeme().toLowerCase(), tok.getMorphologicalTag(), true);
+    String[] primitives = dict.getPrimitive(tok.getLexeme(),
+        tok.getMorphologicalTag(), true);
+    if (primitives == null) {
+      primitives = dict.getPrimitive(tok.getLexeme().toLowerCase(),
+          tok.getMorphologicalTag(), true);
     }
-    if(primitives == null) {
-      tok.setPrimitive("");
+    if (primitives == null) {
+      if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("Missing lemma for: " + tok);
+      }
+      tok.setPrimitive(tok.getLexeme());
     } else {
       tok.setPrimitive(primitives[0]);
     }
