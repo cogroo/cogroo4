@@ -30,6 +30,8 @@ package br.ccsl.cogroo.entities.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Objects;
+
 import br.ccsl.cogroo.entities.Tag;
 import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
 import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Case;
@@ -140,7 +142,7 @@ public class MorphologicalTag extends Tag implements Cloneable {
     if (tag.getClazzE() != null ^ this.getClazzE() != null) {
       return false;
     } else if (this.getClazzE() != null) {
-      if (this.getClazzE() != tag.getClazzE())
+      if (!match(this.getClazzE(), tag.getClazzE()))
         return false;
     }
 
@@ -177,7 +179,7 @@ public class MorphologicalTag extends Tag implements Cloneable {
     if (tag.getTense() != null ^ this.getTense() != null) {
       return false;
     } else if (this.getTense() != null) {
-      if (this.getTense() != tag.getTense())
+      if (!match(this.getTense(), tag.getTense()))
         return false;
     }
 
@@ -230,7 +232,7 @@ public class MorphologicalTag extends Tag implements Cloneable {
   public boolean match(TagMask tagMask, boolean restricted) {
     if (tagMask.getClazz() != null) {
       if ((this.getClazzE() != null || restricted)
-          && this.getClazzE() != tagMask.getClazz())
+          && !match( this.getClazzE(), tagMask.getClazz()))
         return false;
     }
 
@@ -260,7 +262,7 @@ public class MorphologicalTag extends Tag implements Cloneable {
 
     if (tagMask.getTense() != null) {
       if ((this.getTense() != null || restricted)
-          && this.getTense() != tagMask.getTense())
+          && !match(this.getTense(), tagMask.getTense()))
         return false;
     }
 
@@ -287,7 +289,7 @@ public class MorphologicalTag extends Tag implements Cloneable {
   // with restricted true, match fails if the tag does not have the property.
   public boolean matchExact(TagMask tagMask, boolean restricted) {
     if (tagMask.getClazz() != null || restricted) {
-      if (this.getClazzE() != tagMask.getClazz())
+      if (!match( this.getClazzE(), tagMask.getClazz()))
         return false;
     }
 
@@ -320,7 +322,7 @@ public class MorphologicalTag extends Tag implements Cloneable {
     }
 
     if (tagMask.getTense() != null || restricted) {
-      if (this.getTense() != tagMask.getTense())
+      if (!match(this.getTense(), tagMask.getTense()))
         return false;
     }
 
@@ -450,5 +452,39 @@ public class MorphologicalTag extends Tag implements Cloneable {
   @Override
   public int hashCode() {
     return this.toString().hashCode();
+  }
+  
+  private boolean match(Class a, Class b) {
+    if(Objects.equal(a, b)) {
+      return true;
+    }
+    if(a != null && a != null) {
+      
+      if(a.equals(Class.NOUN_ADJECTIVE) && (b.equals(Class.NOUN) || b.equals(Class.ADJECTIVE))) {
+        return true;
+      }
+      if(b.equals(Class.NOUN_ADJECTIVE) && (a.equals(Class.NOUN) || a.equals(Class.ADJECTIVE))) {
+        return true;
+      }
+      
+    } 
+    return false;
+  }
+  
+  private boolean match(Tense a, Tense b) {
+    if(Objects.equal(a, b)) {
+      return true;
+    }
+    if(a != null && a != null) {
+      
+      if(a.equals(Tense.PRETERITO_PERFEITO_MAIS_QUE_PERFEITO) && (b.equals(Tense.PRETERITO_PERFEITO) || b.equals(Tense.PRETERITO_MAIS_QUE_PERFEITO))) {
+        return true;
+      }
+      if(b.equals(Tense.PRETERITO_PERFEITO_MAIS_QUE_PERFEITO) && (a.equals(Tense.PRETERITO_PERFEITO) || a.equals(Tense.PRETERITO_MAIS_QUE_PERFEITO))) {
+        return true;
+      }
+      
+    } 
+    return false;
   }
 }
