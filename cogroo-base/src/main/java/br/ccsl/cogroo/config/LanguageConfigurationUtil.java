@@ -9,6 +9,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import com.google.common.io.Closeables;
+
 import br.ccsl.cogroo.analyzer.InitializationException;
 
 /**
@@ -34,13 +36,29 @@ public class LanguageConfigurationUtil {
         .getResourceAsStream(generateName(locale));
 
     if (in != null) {
-      try {
-        return unmarshal(in);
-      } catch (JAXBException e) {
-        throw new InitializationException("Invalid configuration file.");
-      }
+      LanguageConfiguration lc = get(in);
+      Closeables.closeQuietly(in);
+      return lc;
     } else
-      throw new InitializationException("Couldn't locate stream: " + file);
+      throw new InitializationException(
+          "Couldn't locate configuration for locale: " + locale
+              + " The expected file was: " + file);
+  }
+
+  /**
+   * Creates a {@link LanguageConfiguration} from a {@link InputStream}, which
+   * remains opened.
+   * 
+   * @param configuration
+   *          the input stream
+   * @return a {@link LanguageConfiguration}
+   */
+  public static LanguageConfiguration get(InputStream configuration) {
+    try {
+      return unmarshal(configuration);
+    } catch (JAXBException e) {
+      throw new InitializationException("Invalid configuration file.", e);
+    }
   }
 
   /**
@@ -54,12 +72,12 @@ public class LanguageConfigurationUtil {
   private static String generateName(Locale locale) {
     StringBuilder str = new StringBuilder();
     str.append("models_").append(locale.getLanguage());
-    
-    if (locale.getCountry() != null && !locale.getCountry().isEmpty()) 
+
+    if (locale.getCountry() != null && !locale.getCountry().isEmpty())
       str.append("_").append(locale.getCountry());
-    
+
     str.append(".xml");
-    
+
     return str.toString();
   }
 

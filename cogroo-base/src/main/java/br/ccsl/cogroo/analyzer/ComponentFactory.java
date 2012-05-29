@@ -57,9 +57,26 @@ public class ComponentFactory implements ComponentFactoryI {
     return factory;
   }
 
+  /**
+   * Creates a {@link ComponentFactory} from a configuration file. The stream
+   * remains open after execution.
+   * 
+   * @param configuration
+   *          the configuration XML, that conforms with
+   *          languageConfiguration.xsd
+   * @return a {@link ComponentFactory}
+   */
+  public static ComponentFactory create(InputStream configuration) {
+    ComponentFactory factory = null;
+    factory = new ComponentFactory(LanguageConfigurationUtil.get(configuration));
+    return factory;
+  }
+
   public AnalyzerI createSentenceDetector() {
+    long start = System.nanoTime();
     SentenceDetectorME sentenceDetector = null;
     InputStream modelIn = null;
+    AnalyzerI analyzer = null;
 
     if (modelPathMap.containsKey(Analyzers.SENTENCE_DETECTOR)) {
       try {
@@ -77,12 +94,18 @@ public class ComponentFactory implements ComponentFactoryI {
         throw new InitializationException(
             "Couldn't load SentenceDetectorME class");
 
-      return new SentenceDetector(sentenceDetector);
+      analyzer = new SentenceDetector(sentenceDetector);
     }
-    return null;
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized SentenceDetector in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
+    return analyzer;
   }
 
   public AnalyzerI createTokenizer() {
+    long start = System.nanoTime();
+    AnalyzerI analyzer = null;
     TokenizerME tokenizer = null;
     InputStream modelIn = null;
 
@@ -101,12 +124,18 @@ public class ComponentFactory implements ComponentFactoryI {
       if (tokenizer == null)
         throw new InitializationException("Couldn't load TokenizerME class");
 
-      return new Tokenizer(tokenizer);
+      analyzer = new Tokenizer(tokenizer);
     }
-    return null;
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized Tokenizer in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
+    return analyzer;
   }
 
   public AnalyzerI createNameFinder() {
+    long start = System.nanoTime();
+    AnalyzerI analyzer = null;
     NameFinderME nameFinder = null;
     InputStream modelIn = null;
 
@@ -125,12 +154,18 @@ public class ComponentFactory implements ComponentFactoryI {
       if (nameFinder == null)
         throw new InitializationException("Couldn't load NameFinderME class");
 
-      return new NameFinder(nameFinder);
+      analyzer = new NameFinder(nameFinder);
     }
-    return null;
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized NameFinder in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
+    return analyzer;
   }
 
   public AnalyzerI createContractionFinder() {
+    long start = System.nanoTime();
+    AnalyzerI analyzer = null;
     NameFinderME contractionFinder = null;
     InputStream modelIn = null;
 
@@ -149,12 +184,18 @@ public class ComponentFactory implements ComponentFactoryI {
       if (contractionFinder == null)
         throw new InitializationException("Couldn't load NameFinderME class");
 
-      return new ContractionFinder(contractionFinder);
+      analyzer = new ContractionFinder(contractionFinder);
     }
-    return null;
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized ContractionFinder in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
+    return analyzer;
   }
 
   public AnalyzerI createPOSTagger() {
+    long start = System.nanoTime();
+    AnalyzerI analyzer = null;
     POSTaggerME tagger = null;
     InputStream modelIn = null;
 
@@ -173,12 +214,18 @@ public class ComponentFactory implements ComponentFactoryI {
       if (tagger == null)
         throw new InitializationException("Couldn't load POSTaggerME class");
 
-      return new POSTagger(tagger);
+      analyzer = new POSTagger(tagger);
     }
-    return null;
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized POSTagger in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
+    return analyzer;
   }
 
   public AnalyzerI createFeaturizer() {
+    long start = System.nanoTime();
+    AnalyzerI analyzer = null;
     FeaturizerME featurizer = null;
     InputStream modelIn = null;
 
@@ -197,19 +244,25 @@ public class ComponentFactory implements ComponentFactoryI {
       if (featurizer == null)
         throw new InitializationException("Couldn't load FeaturizerME class");
 
-      return new Featurizer(featurizer);
+      analyzer = new Featurizer(featurizer);
     }
-    return null;
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized Featurizer in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
+    return analyzer;
   }
 
   public AnalyzerI createLemmatizer() {
+    long start = System.nanoTime();
+    AnalyzerI analyzer = null;
 
     try {
       FSADictionary dict = FSADictionary
           .createFromResources("/fsa_dictionaries/pos/pt_br_jspell.dict");
       Lemmatizer lemmatizer = new Lemmatizer(dict);
 
-      return lemmatizer;
+      analyzer = lemmatizer;
 
     } catch (IllegalArgumentException e) {
       LOGGER.fatal("Couldn't load ");
@@ -218,9 +271,16 @@ public class ComponentFactory implements ComponentFactoryI {
       LOGGER.fatal("Couldn't find the dictionary.");
       throw new InitializationException("Couldn't locate dictionary", e);
     }
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized Lemmatizer in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
+    
+    return analyzer;
   }
 
   public AnalyzerI createPipe() {
+    long start = System.nanoTime();
     Pipe pipe = new Pipe();
 
     for (Analyzers analyzer : lc.getPipe().getAnalyzer()) {
@@ -249,6 +309,10 @@ public class ComponentFactory implements ComponentFactoryI {
       default:
         throw new InitializationException("Unknown analyzer: " + analyzer);
       }
+    }
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized Pipe and its components in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
     }
     return pipe;
   }

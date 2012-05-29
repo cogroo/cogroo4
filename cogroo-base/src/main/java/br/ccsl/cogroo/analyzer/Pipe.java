@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import br.ccsl.cogroo.text.Document;
-import br.ccsl.cogroo.util.TextUtils;
 
 /**
  * The <code>Pipe</code> class contains a sequence of analyzers.    
@@ -36,7 +35,6 @@ public class Pipe implements AnalyzerI {
       analyzer.analyze(document);
     }
 
-    System.out.println(TextUtils.nicePrint(document));
   }
 
 }
