@@ -197,7 +197,7 @@ sub createCommand {
 	my $execArgs = shift;
 	my $properties = shift;
 
-	$ENV{'MAVEN_OPTS'} = "-Xms512m -Xmx2048m -XX:PermSize=256m";
+	$ENV{'MAVEN_OPTS'} = "-Xms512m -Xmx1800m -XX:PermSize=256m";
 	
 	my $command = 'mvn -e -o -q exec:java "-Dexec.mainClass=';
 	
@@ -316,9 +316,9 @@ sub exec() {
 		  . ENCODING
 		  . " -data $data $extraOption";
 		$trCommand .=
-		    createCommand('cogroo', " POSTaggerTrainer.adex -model $model $base -expandME true", $extraProperties);
+		    createCommand('cogroo', " POSTaggerTrainer.adex -factory br.ccsl.cogroo.tools.postag.PortugueseFactory -model $model $base -expandME true", $extraProperties);
 		$cvCommand .=
-		    createCommand('cogroo', " POSTaggerCrossValidator.adex $base -expandME true", $extraProperties);
+		    createCommand('cogroo', " POSTaggerCrossValidator.adex -factory br.ccsl.cogroo.tools.postag.PortugueseFactory $base -expandME true", $extraProperties);
 	}
 	
 	if ( $opt{t} eq 'feat' ) {
