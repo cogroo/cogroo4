@@ -1,5 +1,6 @@
 package br.ccsl.cogroo.text.impl;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class TokenImpl implements Token {
   
   private String features;
   
-  private Map<Analyzers, Object> additionalContext = new HashMap<Analyzers, Object>();
+  private Map<Analyzers, String> additionalContext = new HashMap<Analyzers, String>();
   
   public TokenImpl(Span span, String lexeme) {
     this(span, lexeme, null, null, null);
@@ -100,11 +101,11 @@ public class TokenImpl implements Token {
     return features;
   }
   
-  public void addContext (Analyzers analyzer, Object object) {
-    additionalContext.put(analyzer, object);
+  public void addContext (Analyzers analyzer, String value) {
+    additionalContext.put(analyzer, value);
   }
   
-  public Object getAdditionalContext(Analyzers analyzer) {
+  public String getAdditionalContext(Analyzers analyzer) {
     return additionalContext.get(analyzer);
   }
   
@@ -137,7 +138,7 @@ public class TokenImpl implements Token {
   @Override
   public String toString() {
 
-    return Objects.toStringHelper(this).add("lxm", lexeme).add("lm", lemmas)
+    return Objects.toStringHelper(this).add("lxm", lexeme).add("lm", Arrays.toString(lemmas)).add("tag", tag).add("feat", features)
     // .add("span", span)
         .toString();
   }

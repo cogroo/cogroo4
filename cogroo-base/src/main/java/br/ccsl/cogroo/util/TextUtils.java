@@ -3,14 +3,13 @@ package br.ccsl.cogroo.util;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
-
 import br.ccsl.cogroo.config.Analyzers;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
-import br.ccsl.cogroo.text.impl.TokenImpl;
+
+import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 
 /**
  * The <code>TextUtils</code> class deals with the code prints.
@@ -35,7 +34,7 @@ public class TextUtils {
 
     for (int i = 0; i < analyzers.size(); i++) {
       for (int j = 0; j < tokens.size(); j++) {
-        Object object = ((TokenImpl) tokens.get(j))
+        Object object = tokens.get(j)
             .getAdditionalContext(analyzers.get(i));
 
         if (object == null)

@@ -1,23 +1,26 @@
 package br.ccsl.cogroo.analyzer;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import opennlp.tools.postag.POSTaggerME;
+import opennlp.tools.util.Span;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import br.ccsl.cogroo.text.Sentence;
-import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Token;
+import br.ccsl.cogroo.text.impl.DocumentImpl;
+import br.ccsl.cogroo.text.impl.SentenceImpl;
 import br.ccsl.cogroo.text.impl.TokenImpl;
-
-import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.util.Span;
 
 public class POSTaggerTest {
   private POSTagger tagger;
@@ -31,14 +34,14 @@ public class POSTaggerTest {
 
   @Test
   public void testAnalyze() throws FileNotFoundException {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
 
     String text = "A menina pequena foi para o seu quarto .";
     document.setText(text);
 
     String[] textArray = text.split(" ");
 
-    Sentence sentence = new Sentence(new Span(0, 40), document);
+    Sentence sentence = new SentenceImpl(new Span(0, 40), document);
     document.setSentences(Collections.singletonList(sentence));
 
     List<Token> tokens = createTokens(textArray);

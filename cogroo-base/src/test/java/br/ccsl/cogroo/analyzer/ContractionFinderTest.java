@@ -1,6 +1,6 @@
 package br.ccsl.cogroo.analyzer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,16 +9,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import opennlp.tools.namefind.NameFinderME;
+import opennlp.tools.util.Span;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import br.ccsl.cogroo.text.Sentence;
-import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Token;
+import br.ccsl.cogroo.text.impl.DocumentImpl;
+import br.ccsl.cogroo.text.impl.SentenceImpl;
 import br.ccsl.cogroo.text.impl.TokenImpl;
-
-import opennlp.tools.namefind.NameFinderME;
-import opennlp.tools.util.Span;
 
 public class ContractionFinderTest {
   private ContractionFinder contractionFinder;
@@ -32,11 +33,11 @@ public class ContractionFinderTest {
 
   @Test
   public void testAnalyze() throws FileNotFoundException {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = "A filha dela vai à tarde ao cinema do centro .";
     document.setText(text);
 
-    Sentence sentence = new Sentence(new Span(0, text.length()),document);
+    Sentence sentence = new SentenceImpl(new Span(0, text.length()),document);
     document.setSentences(Collections.singletonList(sentence));
 
     String[] textArray = text.split(" ");
@@ -59,11 +60,11 @@ public class ContractionFinderTest {
 
   @Test
   public void testAnalyzeNoContractions() throws FileNotFoundException {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = "A filha de ela vai a a tarde a o cinema de o centro .";
     document.setText(text);
 
-    Sentence sentence = new Sentence(new Span(0, text.length()), document);
+    Sentence sentence = new SentenceImpl(new Span(0, text.length()), document);
     document.setSentences(Collections.singletonList(sentence));
 
     String[] textArray = text.split(" ");

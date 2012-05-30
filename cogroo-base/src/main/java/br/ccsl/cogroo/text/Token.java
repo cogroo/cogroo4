@@ -1,5 +1,6 @@
 package br.ccsl.cogroo.text;
 
+import br.ccsl.cogroo.config.Analyzers;
 import opennlp.tools.util.Span;
 
 /**
@@ -15,7 +16,21 @@ public interface Token {
   public String getLexeme();
 
   public String getPOSTag();
-  
+
   public String getFeatures();
+
+  public void setFeatures(String features);
+
+  public void setLemmas(String[] lemmas);
+
+  public void setLexeme(String lexeme);
+
+  public void setPOSTag(String tag);
+
+  public void setSpan(Span span);
+
+  public void addContext(Analyzers contractionFinder, String value);
+
+  public Object getAdditionalContext(Analyzers analyzers);
 
 }

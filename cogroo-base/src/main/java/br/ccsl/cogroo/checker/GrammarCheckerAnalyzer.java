@@ -101,7 +101,11 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   }
 
   private MorphologicalTag createMorphologicalTag(Token token) {
-    String tag = token.getPOSTag() + "=" + token.getFeatures();
+    String tag;
+    if("-".equals(token.getFeatures()))
+      tag = token.getPOSTag();
+    else
+      tag = token.getPOSTag() + "=" + token.getFeatures();
     return ti.parseMorphologicalTag(tag);
   }
 

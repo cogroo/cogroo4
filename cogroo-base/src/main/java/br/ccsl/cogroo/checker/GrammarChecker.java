@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import br.ccsl.cogroo.analyzer.ComponentFactory;
 import br.ccsl.cogroo.analyzer.Pipe;
-import br.ccsl.cogroo.text.Document;
 
 /**
  * 
@@ -41,12 +40,14 @@ public class GrammarChecker {
 
     while (!input.equals("q")) {
       if (input.equals("0")) {
-        input = "Pesquisa Datafolha publicada hoje revela um dado supreendente: recusando uma postura radical, a esmagadora maioria (77%) dos eleitores quer o PT participando do Governo Fernando Henrique Cardoso.";
+        input = "Enviei os documentos à Vossa Excelência. Enviei os documentos à Vossa Santidade.";
       }
 
-      Document document = new CheckDocument();
+      CheckDocument document = new CheckDocument();
       document.setText(input);
       pipe.analyze(document);
+      
+      System.out.println(document);
 
       System.out.print("Enter the sentence: ");
       input = kb.nextLine();

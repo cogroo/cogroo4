@@ -4,75 +4,19 @@ import java.util.List;
 
 import opennlp.tools.util.Span;
 
-import com.google.common.base.Objects;
-
-/**
- * The <code>Sentence</code> class contains the position of the sentence in the
- * text and the list of word in it.
- */
-public class Sentence {
-
-  /** the position of the sentence in the text */
-  private Span span;
-
-  /** the list every token in the sentence */
-  private List<Token> tokens;
-  
-  /* a reference to the document that contains this sentence */
-  private Document theDocument;
-  
-  public Sentence(Span span, Document theDocument) {
-    this(span, null, theDocument);
-  }
-
-  public Sentence(Span span, List<Token> tokens, Document theDocument) {
-    this.span = span;
-    this.tokens = tokens;
-    this.theDocument = theDocument;
-  }
+public interface Sentence {
 
   /**
    * @return the <code>String</code> of the sentence
    */
-  public String getText() {
-    return span.getCoveredText(theDocument.getText()).toString();
-  }
+  public abstract String getText();
 
-  public Span getSpan() {
-    return span;
-  }
+  public abstract Span getSpan();
 
-  public void setSpan(Span span) {
-    this.span = span;
-  }
+  public abstract void setSpan(Span span);
 
-  public List<Token> getTokens() {
-    return tokens;
-  }
+  public abstract List<Token> getTokens();
 
-  public void setTokens(List<Token> tokens) {
-    this.tokens = tokens;
-  }
-  
-  @Override
-  public boolean equals(Object obj) {
-    if (obj instanceof Sentence) {
-      Sentence that = (Sentence) obj;
-      return Objects.equal(this.tokens, that.tokens)
-          && Objects.equal(this.span, that.span);
-    }
-    return false;
-  }
+  public abstract void setTokens(List<Token> tokens);
 
-  @Override
-  public String toString() {
-
-    return Objects.toStringHelper(this).add("span", span).add("tk", tokens)
-        .toString();
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(span, tokens);
-  }
 }

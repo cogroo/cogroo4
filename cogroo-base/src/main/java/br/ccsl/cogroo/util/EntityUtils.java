@@ -60,7 +60,7 @@ public class EntityUtils {
         for (int j = span.getEnd() - 1; j >= span.getStart(); j--) {
           toks.remove(j);
         }
-        TokenImpl t = new TokenImpl(new Span(s, e), lexeme.toString());
+        Token t = new TokenImpl(new Span(s, e), lexeme.toString());
         t.setPOSTag(span.getType());
 
         // if(additionalContext != null) {

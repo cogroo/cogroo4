@@ -1,7 +1,8 @@
 package br.ccsl.cogroo.analyzer;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +14,17 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
+import br.ccsl.cogroo.text.impl.DocumentImpl;
+import br.ccsl.cogroo.text.impl.SentenceImpl;
 import br.ccsl.cogroo.text.impl.TokenImpl;
 
 public class PipeTest {
   private Pipe pipe = new Pipe();
   SentenceDetector mockedSentenceDetector;
   Tokenizer mockedTokenizer;
-  Document document = new Document();
+  DocumentImpl document = new DocumentImpl();
   
   
   @Before
@@ -36,13 +38,13 @@ public class PipeTest {
     doAnswer(new Answer<Void>() {
       public Void answer(InvocationOnMock invocation) {
         Object[] args = invocation.getArguments();
-        Document d = (Document)args[0];
+        DocumentImpl d = (DocumentImpl)args[0];
         
         List<Sentence> sentences = new ArrayList<Sentence>();
         Span[] spans = { new Span(0, 16), new Span(17, 40) };
         
         for (Span span : spans) {
-          Sentence sentence = new Sentence(span, document); 
+          SentenceImpl sentence = new SentenceImpl(span, document); 
           sentences.add(sentence);
         }
         d.setSentences(sentences);
@@ -54,7 +56,7 @@ public class PipeTest {
   doAnswer(new Answer<Void>() {
     public Void answer(InvocationOnMock invocation) {
       Object[] args = invocation.getArguments();
-      Document d = (Document)args[0];
+      DocumentImpl d = (DocumentImpl)args[0];
       
       List<Token> tokens = new ArrayList<Token>();
       

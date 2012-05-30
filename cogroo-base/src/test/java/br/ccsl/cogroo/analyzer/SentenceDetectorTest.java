@@ -8,7 +8,7 @@ import opennlp.tools.util.Span;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.ccsl.cogroo.text.Document;
+import br.ccsl.cogroo.text.impl.DocumentImpl;
 import static org.mockito.Mockito.*;
 
 public class SentenceDetectorTest {
@@ -24,7 +24,7 @@ public class SentenceDetectorTest {
 
   @Test
   public void testAnalyze() {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = "Este é um teste. Ele contém duas frases.";
     document.setText(text);
 
@@ -45,7 +45,7 @@ public class SentenceDetectorTest {
 
   @Test
   public void testAnalyzeEmpty() {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = "";
     document.setText(text);
 
@@ -61,7 +61,7 @@ public class SentenceDetectorTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testAnalyzeNull() {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = null;
     document.setText(text);
 

@@ -5,7 +5,6 @@ import java.util.List;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
-import br.ccsl.cogroo.text.impl.TokenImpl;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerME;
 import br.ccsl.cogroo.util.TextUtils;
 
@@ -30,7 +29,7 @@ public class Featurizer implements AnalyzerI {
       String[] features = featurizer.featurize(TextUtils.tokensToString(tokens), tags);
       
       for (int i = 0; i < features.length; i++)
-      ((TokenImpl)tokens.get(i)).setFeatures(features[i]);
+      tokens.get(i).setFeatures(features[i]);
       
     }
   }

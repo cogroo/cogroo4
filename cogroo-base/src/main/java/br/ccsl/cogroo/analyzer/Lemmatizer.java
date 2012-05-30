@@ -30,7 +30,7 @@ public class Lemmatizer implements AnalyzerI {
           lemmas = dict.getLemmas(word.toLowerCase(), tag);
         }
         
-        ((TokenImpl)tokens.get(i)).setLemmas(lemmas);
+        tokens.get(i).setLemmas(lemmas);
       }
     }
   }

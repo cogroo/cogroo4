@@ -37,7 +37,7 @@ public class POSTagger implements AnalyzerI {
                   Analyzers.CONTRACTION_FINDER, Analyzers.NAME_FINDER)));
 
       for (int i = 0; i < tags.length; i++) {
-        ((TokenImpl) tokens.get(i)).setPOSTag(tags[i]);
+        tokens.get(i).setPOSTag(tags[i]);
       }
       
       EntityUtils.groupTokens(sentence.getText(), tokens, createSpanList(toTokensArray(tokens), toTagsArray(tokens)));

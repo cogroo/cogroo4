@@ -1,10 +1,6 @@
 package br.ccsl.cogroo.analyzer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.util.Span;
@@ -49,7 +45,7 @@ public class ContractionFinder implements AnalyzerI {
 
         for (int j = contractions.length - 1; j >= 0; j--) {
           Span span = new Span(start, end);
-          TokenImpl token = new TokenImpl(span, contractions[j]);
+          Token token = new TokenImpl(span, contractions[j]);
           newTokens.add(start, token);
 
           String caze = null;

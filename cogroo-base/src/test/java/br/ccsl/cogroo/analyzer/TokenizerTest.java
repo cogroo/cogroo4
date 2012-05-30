@@ -1,6 +1,7 @@
 package br.ccsl.cogroo.analyzer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,19 +10,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.util.Span;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
-
-import opennlp.tools.tokenize.TokenizerME;
-import opennlp.tools.util.Span;
+import br.ccsl.cogroo.text.impl.DocumentImpl;
+import br.ccsl.cogroo.text.impl.SentenceImpl;
 
 
 public class TokenizerTest {
   
-  private static final ArrayList Sentence = null;
   private Tokenizer tokenizer;
   TokenizerME mockedTokenizer;
   
@@ -33,14 +34,14 @@ public class TokenizerTest {
   
   @Test
   public void testAnalyze() throws FileNotFoundException {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = "A menina pequena andava para lá.";
     document.setText(text);
     
     List<Sentence> sentences = new ArrayList<Sentence>();
     
     Span spansSentences = new Span(0,32);
-    Sentence sentence = new Sentence(spansSentences, document);
+    Sentence sentence = new SentenceImpl(spansSentences, document);
     sentences.add(sentence);
     
     document.setSentences(sentences);
@@ -63,7 +64,7 @@ public class TokenizerTest {
   
   @Test
   public void testAnalyzeEmpty() throws FileNotFoundException {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = "";
     document.setText(text);
 

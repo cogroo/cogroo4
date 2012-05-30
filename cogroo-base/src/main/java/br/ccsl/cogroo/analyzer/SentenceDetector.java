@@ -7,6 +7,7 @@ import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.util.Span;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
+import br.ccsl.cogroo.text.impl.SentenceImpl;
 
 /**
  *  The <code> SentenceDetector</code> class gets all the sentences in the document text and store them in a list of sentences. 
@@ -34,7 +35,7 @@ public class SentenceDetector implements AnalyzerI {
     List<Sentence> sentences = new ArrayList<Sentence>(spans.length);
 
     for (int i = 0; i < spans.length; i++) {
-      Sentence sentence = new Sentence(spans[i], document);
+      Sentence sentence = new SentenceImpl(spans[i], document);
       sentences.add(sentence);
     }
 

@@ -1,6 +1,6 @@
 package br.ccsl.cogroo.analyzer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,16 +9,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import opennlp.tools.namefind.NameFinderME;
+import opennlp.tools.util.Span;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import br.ccsl.cogroo.text.Sentence;
-import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Token;
+import br.ccsl.cogroo.text.impl.DocumentImpl;
+import br.ccsl.cogroo.text.impl.SentenceImpl;
 import br.ccsl.cogroo.text.impl.TokenImpl;
-
-import opennlp.tools.namefind.NameFinderME;
-import opennlp.tools.util.Span;
 
 public class NameFinderTest {
   private NameFinder nameFinder;
@@ -32,12 +33,12 @@ public class NameFinderTest {
 
   @Test
   public void testAnalyze() throws FileNotFoundException {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = "O Sr. Luis Carlos faleceu ontem .";
     String[] textArray = text.split(" ");
 
     document.setText(text);
-    Sentence sentence = new Sentence(new Span(0, 33),document);
+    Sentence sentence = new SentenceImpl(new Span(0, 33),document);
     document.setSentences(Collections.singletonList(sentence));
     Span[] spans = { new Span(1, 4) };
     List<Token> tokens = createTokens(textArray);
@@ -53,12 +54,12 @@ public class NameFinderTest {
 
   @Test
   public void testAnalyzeManyNames() throws FileNotFoundException {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = "O Sr. Luis Carlos e sua esposa Ana Maria foram para a praia .";
     String[] textArray = text.split(" ");
 
     document.setText(text);
-    Sentence sentence = new Sentence(new Span(0, 61), document);
+    Sentence sentence = new SentenceImpl(new Span(0, 61), document);
     document.setSentences(Collections.singletonList(sentence));
 
     Span[] spans = { new Span(1, 4), new Span(7, 9) };
@@ -78,12 +79,12 @@ public class NameFinderTest {
 
   @Test
   public void testAnalyzeNoNames() throws FileNotFoundException {
-    Document document = new Document();
+    DocumentImpl document = new DocumentImpl();
     String text = "Eles saíram .";
     String[] textArray = text.split(" ");
 
     document.setText(text);
-    Sentence sentence = new Sentence(new Span(0, 61), document);
+    Sentence sentence = new SentenceImpl(new Span(0, 61), document);
     document.setSentences(Collections.singletonList(sentence));
 
     Span[] spans = new Span[0];
