@@ -10,7 +10,6 @@ import br.ccsl.cogroo.config.Analyzers;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
-import br.ccsl.cogroo.text.impl.TokenImpl;
 import br.ccsl.cogroo.util.EntityUtils;
 import br.ccsl.cogroo.util.TextUtils;
 

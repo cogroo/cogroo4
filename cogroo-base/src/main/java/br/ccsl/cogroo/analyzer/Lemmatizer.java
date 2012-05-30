@@ -6,7 +6,6 @@ import br.ccsl.cogroo.dictionary.LemmaDictionaryI;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
-import br.ccsl.cogroo.text.impl.TokenImpl;
 
 public class Lemmatizer implements AnalyzerI {
   private LemmaDictionaryI dict;
