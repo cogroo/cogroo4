@@ -20,17 +20,18 @@ public class Featurizer implements AnalyzerI {
 
     for (Sentence sentence : sentences) {
       List<Token> tokens = sentence.getTokens();
-      
+
       String[] tags = new String[tokens.size()];
-      
+
       for (int i = 0; i < tokens.size(); i++)
         tags[i] = tokens.get(i).getPOSTag();
-      
-      String[] features = featurizer.featurize(TextUtils.tokensToString(tokens), tags);
-      
+
+      String[] features = featurizer.featurize(
+          TextUtils.tokensToString(tokens), tags);
+
       for (int i = 0; i < features.length; i++)
-      tokens.get(i).setFeatures(features[i]);
-      
+        tokens.get(i).setFeatures(features[i]);
+
     }
   }
 }

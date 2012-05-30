@@ -9,6 +9,9 @@
 	<model type="contractionFinder">/models/pt-con.model</model>
 	<model type="posTagger">/models/pt-pos.model</model>
 	<model type="featurizer">/models/pt-feat.model</model>
+	<model type="chunker">/models/pt-chunk.model</model>
+	<model type="headFinder">/models/pt-hf.model</model>
+	<model type="shallowParser">/models/pt-sp.model</model>
 
 	<pipe>
 		<analyzer>sentenceDetector</analyzer>
@@ -18,5 +21,8 @@
 		<analyzer>posTagger</analyzer>
 		<analyzer>featurizer</analyzer>
 		<analyzer>lemmatizer</analyzer>
+		<analyzer>chunker</analyzer>
+		<analyzer>headFinder</analyzer>
+		<analyzer>shallowParser</analyzer>
 	</pipe>
 </languageConfiguration>

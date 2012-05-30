@@ -32,6 +32,8 @@ public class TokenImpl implements Token {
   
   private String features;
   
+  private String chunkTag;
+  
   private Map<Analyzers, String> additionalContext = new HashMap<Analyzers, String>();
   
   public TokenImpl(Span span, String lexeme) {
@@ -99,6 +101,14 @@ public class TokenImpl implements Token {
   
   public String getFeatures() {
     return features;
+  }
+  
+  public String getChunkTag() {
+    return chunkTag;
+  }
+  
+  public void setChunkTag(String chunkTag) {
+    this.chunkTag = chunkTag;
   }
   
   public void addContext (Analyzers analyzer, String value) {

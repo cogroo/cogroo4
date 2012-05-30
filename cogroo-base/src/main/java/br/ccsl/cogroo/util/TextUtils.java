@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.ccsl.cogroo.config.Analyzers;
+import br.ccsl.cogroo.text.Chunk;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
+import br.ccsl.cogroo.text.SyntacticChunk;
 import br.ccsl.cogroo.text.Token;
 
 import com.google.common.base.Joiner;
@@ -34,8 +36,7 @@ public class TextUtils {
 
     for (int i = 0; i < analyzers.size(); i++) {
       for (int j = 0; j < tokens.size(); j++) {
-        Object object = tokens.get(j)
-            .getAdditionalContext(analyzers.get(i));
+        Object object = tokens.get(j).getAdditionalContext(analyzers.get(i));
 
         if (object == null)
           additionalContext[i][j] = null;
@@ -116,8 +117,23 @@ public class TextUtils {
               output.append("\n");
             }
           }
-          
+
         }
+
+        if (sentence.getChunks() != null) {
+          List<Chunk> chunks = sentence.getChunks();
+          for (Chunk chunk : chunks) {
+            output.append(chunk.toString());
+          }
+        }
+        
+        if (sentence.getSyntacticChunks() != null) {
+          List<SyntacticChunk> chunks = sentence.getSyntacticChunks();
+          for (SyntacticChunk sc : chunks) {
+            output.append(sc.toString());
+          }
+        }
+        
         output.append("\n");
       }
     }

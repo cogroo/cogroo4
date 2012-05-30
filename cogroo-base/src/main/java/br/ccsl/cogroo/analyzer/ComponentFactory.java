@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import opennlp.tools.chunker.ChunkerME;
+import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.postag.POSModel;
@@ -275,7 +277,97 @@ public class ComponentFactory implements ComponentFactoryI {
       LOGGER.info("Initialized Lemmatizer in "
           + ((System.nanoTime() - start) / 1000000) + "ms]");
     }
-    
+
+    return analyzer;
+  }
+
+  private AnalyzerI createChunker() {
+    long start = System.nanoTime();
+    AnalyzerI analyzer = null;
+    ChunkerME chunker = null;
+    InputStream modelIn = null;
+
+    if (modelPathMap.containsKey(Analyzers.CHUNKER)) {
+      try {
+        modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
+            .get(Analyzers.CHUNKER));
+        ChunkerModel model = new ChunkerModel(modelIn);
+        chunker = new ChunkerME(model);
+      } catch (IOException e) {
+        LOGGER.fatal("Couldn't load Chunker model!", e);
+      } finally {
+        Closeables.closeQuietly(modelIn);
+      }
+
+      if (chunker == null)
+        throw new InitializationException("Couldn't load ChunkerME class");
+
+      analyzer = new Chunker(chunker);
+    }
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized Chunker in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
+    return analyzer;
+  }
+  
+  private AnalyzerI createHeadFinder() {
+    long start = System.nanoTime();
+    AnalyzerI analyzer = null;
+    ChunkerME headFinder = null;
+    InputStream modelIn = null;
+
+    if (modelPathMap.containsKey(Analyzers.HEAD_FINDER)) {
+      try {
+        modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
+            .get(Analyzers.HEAD_FINDER));
+        ChunkerModel model = new ChunkerModel(modelIn);
+        headFinder = new ChunkerME(model);
+      } catch (IOException e) {
+        LOGGER.fatal("Couldn't load HeadFinder model!", e);
+      } finally {
+        Closeables.closeQuietly(modelIn);
+      }
+
+      if (headFinder == null)
+        throw new InitializationException("Couldn't load ChunkerME class");
+
+      analyzer = new HeadFinder(headFinder);
+    }
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized HeadFinder in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
+    return analyzer;
+  }
+  
+  private AnalyzerI createShallowParser() {
+    long start = System.nanoTime();
+    AnalyzerI analyzer = null;
+    ChunkerME shallowParser = null;
+    InputStream modelIn = null;
+
+    if (modelPathMap.containsKey(Analyzers.SHALLOW_PARSER)) {
+      try {
+        modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
+            .get(Analyzers.SHALLOW_PARSER));
+        ChunkerModel model = new ChunkerModel(modelIn);
+        shallowParser = new ChunkerME(model);
+      } catch (IOException e) {
+        LOGGER.fatal("Couldn't load ShallowParser model!", e);
+      } finally {
+        Closeables.closeQuietly(modelIn);
+      }
+
+      if (shallowParser == null)
+        throw new InitializationException("Couldn't load ChunkerME class");
+
+      analyzer = new ShallowParser(shallowParser);
+    }
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Initialized ShallowParser in "
+          + ((System.nanoTime() - start) / 1000000) + "ms]");
+    }
     return analyzer;
   }
 
@@ -306,6 +398,15 @@ public class ComponentFactory implements ComponentFactoryI {
       case LEMMATIZER:
         pipe.add(this.createLemmatizer());
         break;
+      case CHUNKER:
+        pipe.add(this.createChunker());
+        break;
+      case HEAD_FINDER:
+        pipe.add(this.createHeadFinder());
+        break;
+      case SHALLOW_PARSER:
+        pipe.add(this.createShallowParser());
+        break;
       default:
         throw new InitializationException("Unknown analyzer: " + analyzer);
       }
@@ -316,4 +417,5 @@ public class ComponentFactory implements ComponentFactoryI {
     }
     return pipe;
   }
+
 }

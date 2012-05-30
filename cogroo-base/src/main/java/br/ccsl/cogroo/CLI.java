@@ -7,6 +7,8 @@ import java.util.Scanner;
 import br.ccsl.cogroo.analyzer.AnalyzerI;
 import br.ccsl.cogroo.analyzer.ComponentFactory;
 import br.ccsl.cogroo.text.Document;
+import br.ccsl.cogroo.text.impl.DocumentImpl;
+import br.ccsl.cogroo.util.TextUtils;
 
 /**
  * 
@@ -41,10 +43,12 @@ public class CLI {
         input = "Fomos levados à crer que os menino são burro de doer. As menina chegaram.";
       }
 
-      Document document = new Document();
+      Document document = new DocumentImpl();
       document.setText(input);
       pipe.analyze(document);
-
+      
+      System.out.println(TextUtils.nicePrint(document));
+      
       System.out.print("Enter the sentence: ");
       input = kb.nextLine();
     }

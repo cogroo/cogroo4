@@ -18,6 +18,8 @@ public interface Token {
   public String getPOSTag();
 
   public String getFeatures();
+  
+  public String getChunkTag();
 
   public void setFeatures(String features);
 
@@ -28,6 +30,8 @@ public interface Token {
   public void setPOSTag(String tag);
 
   public void setSpan(Span span);
+  
+  public void setChunkTag(String string);
 
   public void addContext(Analyzers contractionFinder, String value);
 

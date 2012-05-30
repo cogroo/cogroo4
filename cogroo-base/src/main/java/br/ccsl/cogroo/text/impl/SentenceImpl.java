@@ -4,8 +4,10 @@ import java.util.List;
 
 import opennlp.tools.util.Span;
 
+import br.ccsl.cogroo.text.Chunk;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
+import br.ccsl.cogroo.text.SyntacticChunk;
 import br.ccsl.cogroo.text.Token;
 
 import com.google.common.base.Objects;
@@ -21,6 +23,10 @@ public class SentenceImpl implements Sentence {
 
   /** the list every token in the sentence */
   private List<Token> tokens;
+  
+  private List<Chunk> chunks;
+  
+  private List<SyntacticChunk> syntacticChunks;
   
   /* a reference to the document that contains this sentence */
   private Document theDocument;
@@ -70,6 +76,22 @@ public class SentenceImpl implements Sentence {
     this.tokens = tokens;
   }
   
+  public List<Chunk> getChunks() {
+    return chunks;
+  }
+
+  public void setChunks(List<Chunk> chunks) {
+    this.chunks = chunks;
+  }
+  
+  public List<SyntacticChunk> getSyntacticChunks() {
+    return syntacticChunks;
+  }
+
+  public void setSyntacticChunks(List<SyntacticChunk> syntacticChunks) {
+    this.syntacticChunks = syntacticChunks;
+  }
+  
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof SentenceImpl) {
@@ -91,4 +113,5 @@ public class SentenceImpl implements Sentence {
   public int hashCode() {
     return Objects.hashCode(span, tokens);
   }
+
 }

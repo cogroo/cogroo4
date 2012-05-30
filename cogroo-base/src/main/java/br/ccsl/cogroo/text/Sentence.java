@@ -9,14 +9,22 @@ public interface Sentence {
   /**
    * @return the <code>String</code> of the sentence
    */
-  public abstract String getText();
+  public String getText();
 
-  public abstract Span getSpan();
+  public Span getSpan();
 
-  public abstract void setSpan(Span span);
+  public void setSpan(Span span);
 
-  public abstract List<Token> getTokens();
+  public List<Token> getTokens();
 
-  public abstract void setTokens(List<Token> tokens);
+  public void setTokens(List<Token> tokens);
+  
+  public List<Chunk> getChunks();
+  
+  public void setChunks(List<Chunk> chunks);
+  
+  public List<SyntacticChunk> getSyntacticChunks();
+
+  public void setSyntacticChunks(List<SyntacticChunk> syntacticChunks);
 
 }
