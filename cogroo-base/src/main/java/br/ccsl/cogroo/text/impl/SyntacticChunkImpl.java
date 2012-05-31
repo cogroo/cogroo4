@@ -13,9 +13,12 @@ public class SyntacticChunkImpl implements SyntacticChunk {
 
   private Sentence theSentence;
 
-  public SyntacticChunkImpl(Span span, Sentence theSentence) {
-    this.span = span;
+  private String tag;
+
+  public SyntacticChunkImpl(String tag, int start, int end, Sentence theSentence) {
+    this.span = new Span(start, end);
     this.theSentence = theSentence;
+    this.tag = tag;
   }
   
   @Override
@@ -33,12 +36,19 @@ public class SyntacticChunkImpl implements SyntacticChunk {
     return sentence.toString();
   }
 
-  public Span getSpan() {
-    return span;
+  public String getTag() {
+    return tag;
   }
 
-  public void setSpan(Span span) {
-    this.span = span;
+  public void setTag(String tag) {
+    this.tag = tag;
   }
 
+  public int getStart() {
+    return span.getStart();
+  }
+
+  public int getEnd() {
+    return span.getEnd();
+  }
 }

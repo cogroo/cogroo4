@@ -2,8 +2,6 @@ package br.ccsl.cogroo.text;
 
 import java.util.List;
 
-import opennlp.tools.util.Span;
-
 public interface Sentence {
 
   /**
@@ -11,9 +9,11 @@ public interface Sentence {
    */
   public String getText();
 
-  public Span getSpan();
-
-  public void setSpan(Span span);
+  public int getStart();
+  
+  public int getEnd();
+  
+  public void setBoundaries(int start, int end);
 
   public List<Token> getTokens();
 

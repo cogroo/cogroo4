@@ -35,7 +35,7 @@ public class SentenceDetector implements AnalyzerI {
     List<Sentence> sentences = new ArrayList<Sentence>(spans.length);
 
     for (int i = 0; i < spans.length; i++) {
-      Sentence sentence = new SentenceImpl(spans[i], document);
+      Sentence sentence = new SentenceImpl(spans[i].getStart(), spans[i].getEnd(), document);
       sentences.add(sentence);
     }
 

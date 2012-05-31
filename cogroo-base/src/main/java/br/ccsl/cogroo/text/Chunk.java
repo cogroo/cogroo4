@@ -1,12 +1,17 @@
 package br.ccsl.cogroo.text;
 
-import opennlp.tools.util.Span;
 
 public interface Chunk {
+
+  public String getTag();
   
-  public Span getSpan();
+  public void setTag(String tag);
   
-  public void setSpan(Span span);
+  public int getStart();
+  
+  public int getEnd();
+  
+  public void setBoundaries(int start, int end);
   
   public void setHeadIndex(int index);
 }

@@ -44,7 +44,7 @@ public class PipeTest {
         Span[] spans = { new Span(0, 16), new Span(17, 40) };
         
         for (Span span : spans) {
-          SentenceImpl sentence = new SentenceImpl(span, document); 
+          SentenceImpl sentence = new SentenceImpl(span.getStart(), span.getEnd(), document); 
           sentences.add(sentence);
         }
         d.setSentences(sentences);
@@ -60,13 +60,13 @@ public class PipeTest {
       
       List<Token> tokens = new ArrayList<Token>();
       
-      TokenImpl token = new TokenImpl(new Span(0,3), "Uma");
+      TokenImpl token = new TokenImpl(0,3, "Uma");
       tokens.add(token);
       
-      token = new TokenImpl(new Span(3,8), "frase");
+      token = new TokenImpl(3,8, "frase");
       tokens.add(token);
       
-      token = new TokenImpl(new Span(8,9), ".");
+      token = new TokenImpl(8,9, ".");
       tokens.add(token);
       
       d.getSentences().get(0).setTokens(tokens);

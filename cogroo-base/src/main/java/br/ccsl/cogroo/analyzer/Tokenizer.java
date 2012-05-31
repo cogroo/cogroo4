@@ -33,7 +33,7 @@ public class Tokenizer implements AnalyzerI {
       List<Token> tokens = new ArrayList<Token>(tokensSpan.length);
 
       for (int i = 0; i < tokensSpan.length; i++) {
-        Token token = new TokenImpl(tokensSpan[i], tokensSpan[i]
+        Token token = new TokenImpl(tokensSpan[i].getStart(), tokensSpan[i].getEnd() , tokensSpan[i]
             .getCoveredText(sentenceString).toString());
         tokens.add(token);
       }

@@ -14,9 +14,12 @@ public class ChunkImpl implements Chunk {
   private Sentence theSentence;
 
   private int index = -1;
+
+  private String tag;
   
-  public ChunkImpl(Span span, Sentence theSentence) {
-    this.span = span;
+  public ChunkImpl(String tag, int start, int end, Sentence theSentence) {
+    this.tag = tag;
+    this.span = new Span(start, end);
     this.theSentence = theSentence;
   }
   
@@ -37,16 +40,28 @@ public class ChunkImpl implements Chunk {
     return sentence.toString();
   }
 
-  public Span getSpan() {
-    return span;
-  }
-
-  public void setSpan(Span span) {
-    this.span = span;
-  }
-
   public void setHeadIndex(int index) {
     this.index = index;
+  }
+
+  public int getStart() {
+    return span.getStart();
+  }
+
+  public int getEnd() {
+    return span.getEnd();
+  }
+
+  public void setBoundaries(int start, int end) {
+    span = new Span(start, end);
+  }
+
+  public String getTag() {
+    return tag;
+  }
+
+  public void setTag(String tag) {
+    this.tag = tag;
   }
 
 }

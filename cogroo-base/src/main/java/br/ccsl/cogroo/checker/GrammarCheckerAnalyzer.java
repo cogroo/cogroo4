@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import opennlp.tools.util.Span;
+
 import org.apache.log4j.Logger;
 
 import br.ccsl.cogroo.analyzer.AnalyzerI;
@@ -60,10 +62,14 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     if (document instanceof CheckDocument) {
       List<Mistake> mistakes = new ArrayList<Mistake>();
       List<Sentence> sentences = document.getSentences();
+      List<br.ccsl.cogroo.entities.Sentence> legacySentences = new ArrayList<br.ccsl.cogroo.entities.Sentence>();
       for (Sentence sentence : sentences) {
-        mistakes.addAll(this.checker.check(asTypedSentence(sentence)));
+        br.ccsl.cogroo.entities.Sentence legacy = asTypedSentence(sentence);
+        legacySentences.add(legacy);
+        mistakes.addAll(this.checker.check(legacy));
       }
       ((CheckDocument) document).setMistakes(mistakes);
+      ((CheckDocument) document).setSentencesLegacy(legacySentences);
     } else {
       throw new IllegalArgumentException("An instance of "
           + CheckDocument.class + " was expected.");
@@ -73,13 +79,13 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   private br.ccsl.cogroo.entities.Sentence asTypedSentence(Sentence sentence) {
     br.ccsl.cogroo.entities.Sentence typedSentence = new br.ccsl.cogroo.entities.Sentence();
     typedSentence.setSentence(sentence.getText());
-    typedSentence.setOffset(sentence.getSpan().getStart());
-    typedSentence.setSpan(sentence.getSpan());
+    typedSentence.setOffset(sentence.getStart());
+    typedSentence.setSpan(new Span(sentence.getStart(), sentence.getEnd()));
 
     List<br.ccsl.cogroo.entities.Token> typedTokenList = new ArrayList<br.ccsl.cogroo.entities.Token>();
     for (Token token : sentence.getTokens()) {
       br.ccsl.cogroo.entities.Token typedToken = new TokenCogroo(
-          token.getSpan());
+          new Span(token.getStart(), token.getEnd()));
 
       typedToken.setLexeme(token.getLexeme());
       typedToken.setMorphologicalTag(createMorphologicalTag(token));
@@ -102,7 +108,7 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
 
   private MorphologicalTag createMorphologicalTag(Token token) {
     String tag;
-    if("-".equals(token.getFeatures()))
+    if ("-".equals(token.getFeatures()))
       tag = token.getPOSTag();
     else
       tag = token.getPOSTag() + "=" + token.getFeatures();

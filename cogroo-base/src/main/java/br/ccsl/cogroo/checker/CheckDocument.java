@@ -3,6 +3,7 @@ package br.ccsl.cogroo.checker;
 import java.util.List;
 
 import br.ccsl.cogroo.entities.Mistake;
+import br.ccsl.cogroo.entities.Sentence;
 import br.ccsl.cogroo.text.impl.DocumentImpl;
 import br.ccsl.cogroo.util.TextUtils;
 
@@ -14,6 +15,8 @@ public class CheckDocument extends DocumentImpl {
 
   private List<Mistake> mistakes;
 
+  private List<Sentence> sentencesLegacy;
+  
   public List<Mistake> getMistakes() {
     return mistakes;
   }
@@ -33,6 +36,14 @@ public class CheckDocument extends DocumentImpl {
     }
     
     return sb.toString();
+  }
+
+  public List<Sentence> getSentencesLegacy() {
+    return sentencesLegacy;
+  }
+
+  public void setSentencesLegacy(List<Sentence> sentencesLegacy) {
+    this.sentencesLegacy = sentencesLegacy;
   }
 
 }

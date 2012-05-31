@@ -43,8 +43,7 @@ public class NameFinder implements AnalyzerI {
           name = temp + "_" + name;
           newTokens.remove(j);
         }
-        Span span = new Span(start, end);
-        Token token = new TokenImpl(span, name);
+        Token token = new TokenImpl(start, end, name);
         newTokens.add(start, token);
         
         token.addContext(Analyzers.NAME_FINDER, "P");

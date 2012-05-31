@@ -34,7 +34,7 @@ public class HeadFinder implements AnalyzerI {
       heads = headFinder.chunk(tokensString, tags);
       
       for (Chunk chunk : chunks)
-        for (int i = chunk.getSpan().getStart(); i < chunk.getSpan().getEnd(); i++)
+        for (int i = chunk.getStart(); i < chunk.getEnd(); i++)
           if (heads[i].equals("B-H"))
             chunk.setHeadIndex(i);
     }

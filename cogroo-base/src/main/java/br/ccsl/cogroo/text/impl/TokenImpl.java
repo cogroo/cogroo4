@@ -36,29 +36,16 @@ public class TokenImpl implements Token {
   
   private Map<Analyzers, String> additionalContext = new HashMap<Analyzers, String>();
   
-  public TokenImpl(Span span, String lexeme) {
-    this(span, lexeme, null, null, null);
+  public TokenImpl(int start, int end, String lexeme) {
+    this(start, end, lexeme, null, null, null);
   }
 
-  public TokenImpl(Span span, String lexeme, String[] lemmas, String tag, String features) {
-    this.span = span;
+  public TokenImpl(int start, int end, String lexeme, String[] lemmas, String tag, String features) {
+    this.span = new Span(start, end);
     this.lexeme = lexeme;
     this.lemmas = lemmas;
     this.tag = tag;
     this.features = features;
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see br.ccsl.cogroo.TokenI#getSpan()
-   */
-  public Span getSpan() {
-    return span;
-  }
-
-  public void setSpan(Span span) {
-    this.span = span;
   }
 
   /*
@@ -156,6 +143,18 @@ public class TokenImpl implements Token {
   @Override
   public int hashCode() {
     return Objects.hashCode(lexeme, lemmas, span);
+  }
+
+  public int getStart() {
+    return span.getStart();
+  }
+
+  public int getEnd() {
+    return span.getEnd();
+  }
+
+  public void setBoundaries(int start, int end) {
+    span = new Span(start, end);
   }
 
 }

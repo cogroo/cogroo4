@@ -40,8 +40,7 @@ public class TokenizerTest {
     
     List<Sentence> sentences = new ArrayList<Sentence>();
     
-    Span spansSentences = new Span(0,32);
-    Sentence sentence = new SentenceImpl(spansSentences, document);
+    Sentence sentence = new SentenceImpl(0, 32, document);
     sentences.add(sentence);
     
     document.setSentences(sentences);

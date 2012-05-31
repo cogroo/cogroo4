@@ -31,12 +31,12 @@ public class SentenceImpl implements Sentence {
   /* a reference to the document that contains this sentence */
   private Document theDocument;
   
-  public SentenceImpl(Span span, Document theDocument) {
-    this(span, null, theDocument);
+  public SentenceImpl(int start, int end, Document theDocument) {
+    this(start, end, null, theDocument);
   }
 
-  public SentenceImpl(Span span, List<Token> tokens, Document theDocument) {
-    this.span = span;
+  public SentenceImpl(int start, int end, List<Token> tokens, Document theDocument) {
+    this.span = new Span(start, end);
     this.tokens = tokens;
     this.theDocument = theDocument;
   }
@@ -48,19 +48,6 @@ public class SentenceImpl implements Sentence {
     return span.getCoveredText(theDocument.getText()).toString();
   }
 
-  /* (non-Javadoc)
-   * @see br.ccsl.cogroo.text.Sentence#getSpan()
-   */
-  public Span getSpan() {
-    return span;
-  }
-
-  /* (non-Javadoc)
-   * @see br.ccsl.cogroo.text.Sentence#setSpan(opennlp.tools.util.Span)
-   */
-  public void setSpan(Span span) {
-    this.span = span;
-  }
 
   /* (non-Javadoc)
    * @see br.ccsl.cogroo.text.Sentence#getTokens()
@@ -112,6 +99,18 @@ public class SentenceImpl implements Sentence {
   @Override
   public int hashCode() {
     return Objects.hashCode(span, tokens);
+  }
+
+  public int getStart() {
+    return span.getStart();
+  }
+
+  public int getEnd() {
+    return span.getEnd();
+  }
+
+  public void setBoundaries(int start, int end) {
+    span = new Span(start, end);
   }
 
 }

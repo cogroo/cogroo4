@@ -43,12 +43,9 @@ public class Chunker implements AnalyzerI {
       Span[] chunksSpans = ChunkSample.phrasesAsSpanList(tokensString, tags, chunkTags);
       
       for (Span span : chunksSpans) {
-        Chunk chunk = new ChunkImpl(span, sentence);
+        Chunk chunk = new ChunkImpl(span.getType(), span.getStart(), span.getEnd(), sentence);
         chunks.add(chunk);
       }
-      
-      
-      
       sentence.setChunks(chunks);
       
     }

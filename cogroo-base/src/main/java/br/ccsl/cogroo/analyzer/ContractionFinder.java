@@ -41,11 +41,10 @@ public class ContractionFinder implements AnalyzerI {
         String lexeme = sentence.getTokens().get(start).getLexeme();
         String[] contractions = ContractionUtility.expand(lexeme);
 
-        newTokens.remove(start);
+        Token original = newTokens.remove(start);
 
         for (int j = contractions.length - 1; j >= 0; j--) {
-          Span span = new Span(start, end);
-          Token token = new TokenImpl(span, contractions[j]);
+          Token token = new TokenImpl(original.getStart(), original.getEnd(), contractions[j]);
           newTokens.add(start, token);
 
           String caze = null;

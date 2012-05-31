@@ -37,7 +37,7 @@ public class ContractionFinderTest {
     String text = "A filha dela vai à tarde ao cinema do centro .";
     document.setText(text);
 
-    Sentence sentence = new SentenceImpl(new Span(0, text.length()),document);
+    Sentence sentence = new SentenceImpl(0, text.length(),document);
     document.setSentences(Collections.singletonList(sentence));
 
     String[] textArray = text.split(" ");
@@ -64,7 +64,7 @@ public class ContractionFinderTest {
     String text = "A filha de ela vai a a tarde a o cinema de o centro .";
     document.setText(text);
 
-    Sentence sentence = new SentenceImpl(new Span(0, text.length()), document);
+    Sentence sentence = new SentenceImpl(0, text.length(), document);
     document.setSentences(Collections.singletonList(sentence));
 
     String[] textArray = text.split(" ");
@@ -89,8 +89,7 @@ public class ContractionFinderTest {
     int ini = 0;
 
     for (int i = 0; i < textArray.length; i++) {
-      Span span = new Span(ini, ini + textArray[i].length());
-      TokenImpl tokenImpl = new TokenImpl(span, textArray[i]);
+      TokenImpl tokenImpl = new TokenImpl(ini, ini + textArray[i].length(), textArray[i]);
       ini = ini + textArray[i].length() + 1;
       tokens.add(tokenImpl);
     }

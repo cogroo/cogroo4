@@ -37,7 +37,8 @@ public class ShallowParser implements AnalyzerI {
       parsers = shallowParser.chunkAsSpans(tokensString, tags);
 
       for (Span span : parsers) {
-        SyntacticChunk st = new SyntacticChunkImpl(span, sentence);
+        SyntacticChunk st = new SyntacticChunkImpl(span.getType(),
+            span.getStart(), span.getEnd(), sentence);
         syntChunks.add(st);
       }
 

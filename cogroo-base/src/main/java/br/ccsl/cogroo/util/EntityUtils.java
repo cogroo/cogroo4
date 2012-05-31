@@ -22,12 +22,12 @@ public class EntityUtils {
     for (Span ch : charSpans) {
       // System.out.println("looking for: " + ch.getCoveredText(text));
       Token aToken = toks.get(lastVisitedTok);
-      while (aToken.getSpan().getStart() < ch.getStart()) {
+      while (aToken.getStart() < ch.getStart()) {
         lastVisitedTok++;
         aToken = toks.get(lastVisitedTok);
       }
       int start = lastVisitedTok;
-      while (aToken.getSpan().getEnd() < ch.getEnd()) {
+      while (aToken.getEnd() < ch.getEnd()) {
         lastVisitedTok++;
         aToken = toks.get(lastVisitedTok);
       }
@@ -49,18 +49,19 @@ public class EntityUtils {
     for (int i = spans.size() - 1; i >= 0; i--) {
       Span span = spans.get(i);
       if (span.length() > 0) {
-        int s = toks.get(span.getStart()).getSpan().getStart();
-        int e = toks.get(span.getEnd() - 1).getSpan().getEnd();
+        int s = toks.get(span.getStart()).getStart();
+        int e = toks.get(span.getEnd() - 1).getEnd();
         StringBuilder lexeme = new StringBuilder();
         for (int j = span.getStart(); j < span.getEnd() - 1; j++) {
           lexeme.append(toks.get(j).getLexeme()).append("_");
         }
         lexeme.append(toks.get(span.getEnd() - 1).getLexeme());
 
+        List<Token> removeToks = new ArrayList<Token>();
         for (int j = span.getEnd() - 1; j >= span.getStart(); j--) {
-          toks.remove(j);
+          removeToks.add(toks.remove(j));
         }
-        Token t = new TokenImpl(new Span(s, e), lexeme.toString());
+        Token t = new TokenImpl(s, e, lexeme.toString());
         t.setPOSTag(span.getType());
 
         // if(additionalContext != null) {

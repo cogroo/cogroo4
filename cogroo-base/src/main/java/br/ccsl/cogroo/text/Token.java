@@ -1,7 +1,6 @@
 package br.ccsl.cogroo.text;
 
 import br.ccsl.cogroo.config.Analyzers;
-import opennlp.tools.util.Span;
 
 /**
  * The <code>Token</code> interface is responsible for obtaining each component
@@ -9,7 +8,9 @@ import opennlp.tools.util.Span;
  */
 public interface Token {
 
-  public Span getSpan();
+  public int getStart();
+  
+  public int getEnd();
 
   public String[] getLemmas();
 
@@ -29,7 +30,7 @@ public interface Token {
 
   public void setPOSTag(String tag);
 
-  public void setSpan(Span span);
+  public void setBoundaries(int start, int end);
   
   public void setChunkTag(String string);
 

@@ -1,10 +1,13 @@
 package br.ccsl.cogroo.text;
 
-import opennlp.tools.util.Span;
-
 public interface SyntacticChunk {
 
-  public Span getSpan();
-
-  public void setSpan(Span span);
+  public String getTag();
+  
+  public void setTag(String tag);
+  
+  public int getStart();
+  
+  public int getEnd();
+  
 }
