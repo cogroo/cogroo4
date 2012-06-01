@@ -32,7 +32,6 @@ import java.util.List;
 
 import opennlp.tools.util.Span;
 import br.ccsl.cogroo.entities.tree.Node;
-import br.ccsl.cogroo.entities.tree.OldStyleModel;
 
 import com.google.common.base.Objects;
 
@@ -173,7 +172,7 @@ public class Sentence implements Serializable, TokenGroup {
     }
     synchronized (this) {
       if (this.root == null) {
-        this.root = OldStyleModel.createTree(this);
+        this.root = new Node();//OldStyleModel.createTree(this);
       }
       return root;
     }
