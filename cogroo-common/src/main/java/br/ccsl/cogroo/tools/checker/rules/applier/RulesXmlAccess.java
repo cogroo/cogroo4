@@ -27,11 +27,10 @@
 
 package br.ccsl.cogroo.tools.checker.rules.applier;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -45,8 +44,11 @@ import javax.xml.validation.Validator;
 import org.xml.sax.SAXException;
 
 import br.ccsl.cogroo.tools.checker.rules.exception.RulesException;
+import br.ccsl.cogroo.tools.checker.rules.model.ObjectFactory;
 import br.ccsl.cogroo.tools.checker.rules.model.Rule;
 import br.ccsl.cogroo.tools.checker.rules.model.Rules;
+
+import com.google.common.io.Closeables;
 
 /**
  * Class that provides access to the rules read from a xml file.
@@ -62,7 +64,7 @@ public class RulesXmlAccess implements RulesAccess {
   /**
    * Instantiates the singleton and recovers all rules from the xml file.
    */
-  private RulesXmlAccess(String xmlFile, String schemaFile) {
+  private RulesXmlAccess(URL xmlFile, URL schemaFile) {
     this.xmlFile = xmlFile;
     this.schemaName = schemaFile;
     this.loadSchema();
@@ -70,29 +72,35 @@ public class RulesXmlAccess implements RulesAccess {
   
   public static synchronized RulesAccess getInstance() {
     if(instance == null) {
-      String xml = RulesXmlAccess.class.getClassLoader().getResource("rules/rules.xml").getFile();
-      String xsd = RulesXmlAccess.class.getClassLoader().getResource("rules/schema/rules.xsd").getFile();
+      URL xml = RulesXmlAccess.class.getClassLoader().getResource("rules/rules.xml");
+      URL xsd = RulesXmlAccess.class.getClassLoader().getResource("rules/schema/rules.xsd");
       instance = new RulesXmlAccess(xml, xsd);
     }
     return instance;
   }
 
-  private String schemaName;
+  private URL schemaName;
 
   private Schema schema;
 
-  private String xmlFile;
+  private URL xmlFile;
 
   private void loadSchema() {
     if (this.schema == null) {
-      StreamSource ss = new StreamSource(this.schemaName);
-      SchemaFactory sf = SchemaFactory
-          .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+      InputStream in = null;
       try {
+        in = this.schemaName.openStream();
+        StreamSource ss = new StreamSource(in);
+        SchemaFactory sf = SchemaFactory
+            .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         this.schema = sf.newSchema(ss);
       } catch (SAXException saxe) {
         this.schema = null;
-        throw new RulesException("Could not read file " + this.schemaName);
+        throw new RulesException("Could not read file " + this.schemaName, saxe);
+      } catch (IOException e) {
+        throw new RulesException("Could not open schema " + this.schemaName, e);
+      } finally {
+        Closeables.closeQuietly(in);
       }
     }
   }
@@ -102,12 +110,16 @@ public class RulesXmlAccess implements RulesAccess {
    */
   public void validate() {
     Validator validator = this.schema.newValidator();
+    InputStream in = null;
     try {
-      validator.validate(new StreamSource(this.xmlFile));
+      in = this.xmlFile.openStream();
+      validator.validate(new StreamSource(in));
     } catch (SAXException e) {
-      throw new RulesException("Rules file does not conform to the schema");
+      throw new RulesException("Rules file does not conform to the schema", e);
     } catch (IOException e) {
-      throw new RulesException("Could not read file " + this.xmlFile);
+      throw new RulesException("Could not read file " + this.xmlFile, e);
+    } finally {
+      Closeables.closeQuietly(in);
     }
   }
 
@@ -133,22 +145,26 @@ public class RulesXmlAccess implements RulesAccess {
   }
 
   public Rules getRules() {
-
-    File file = new File(this.xmlFile);
+    Rules rules = null;
+    InputStream in = null;
     try {
-      InputStream in;
-      in = new FileInputStream(file);
-      return unmarshal(in);
+      in = xmlFile.openStream();
+      rules = unmarshal(in);
     } catch (JAXBException e) {
       throw new RulesException("Invalid rules file: " + this.xmlFile, e);
     } catch (FileNotFoundException e) {
       throw new RulesException("Could not find rules file: " + this.xmlFile, e);
+    } catch (IOException e) {
+      throw new RulesException("Could not open  file: " + this.xmlFile, e);
+    } finally {
+      Closeables.closeQuietly(in);
     }
+    return rules;
   }
 
   private Rules unmarshal(InputStream inputStream) throws JAXBException {
     String packageName = Rules.class.getPackage().getName();
-    JAXBContext jc = JAXBContext.newInstance(packageName);
+    JAXBContext jc = JAXBContext.newInstance(packageName, ObjectFactory.class.getClassLoader());
     Unmarshaller u = jc.createUnmarshaller();
     loadSchema();
     u.setSchema(this.schema);

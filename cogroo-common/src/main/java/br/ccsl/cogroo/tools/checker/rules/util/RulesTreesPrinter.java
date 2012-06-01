@@ -27,13 +27,20 @@
 
 package br.ccsl.cogroo.tools.checker.rules.util;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
 import br.ccsl.cogroo.tools.checker.rules.applier.AcceptState;
+import br.ccsl.cogroo.tools.checker.rules.applier.RulesProvider;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesTrees;
+import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesAccess;
+import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesBuilder;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesFromScratchAccess;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesSerializedAccess;
+import br.ccsl.cogroo.tools.checker.rules.applier.RulesXmlAccess;
 import br.ccsl.cogroo.tools.checker.rules.applier.State;
 
 /**
@@ -49,17 +56,22 @@ public class RulesTreesPrinter {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		// TODO: restore
-//	    RulesContainerHelper rc = new RulesContainerHelper();
-//		OutputStreamWriter serialOut = StreamFactory.createOutputStreamWriter("data/treesSerial.txt", "ISO-8859-1");
-//		OutputStreamWriter xmlOut = StreamFactory.createOutputStreamWriter("data/treesXml.txt", "ISO-8859-1");
+
+	  RulesProvider xmlProvider = new RulesProvider(RulesXmlAccess.getInstance(),
+	        false);
+	  RulesTreesBuilder rtb = new RulesTreesBuilder(xmlProvider);
+	  RulesTreesAccess rta = new RulesTreesFromScratchAccess(rtb);
+	  
+	  //		OutputStreamWriter serialOut = StreamFactory.createOutputStreamWriter("target/treesSerial.txt", "ISO-8859-1");
+	    
+	    OutputStreamWriter xmlOut = new OutputStreamWriter(new FileOutputStream("target/treesXml.txt"),"UTF-8");
 //		RulesTrees serialTrees = rc.getContainerForSerializedAccess().getComponent(RulesTreesSerializedAccess.class).getTrees();
-//		RulesTrees xmlTrees = rc.getContainerForXMLAccess().getComponent(RulesTreesFromScratchAccess.class).getTrees();
-//		
+		RulesTrees xmlTrees = rta.getTrees();
+		
 //		printRulesTrees(serialTrees, serialOut);
-//		printRulesTrees(xmlTrees, xmlOut);
+		printRulesTrees(xmlTrees, xmlOut);
 //		serialOut.close();
-//		xmlOut.close();
+		xmlOut.close();
 	}
 	
 	private static void printRulesTrees(RulesTrees rulesTrees, OutputStreamWriter out) throws Exception {
