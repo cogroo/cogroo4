@@ -110,8 +110,15 @@ public class DefaultFeaturizerContextGenerator implements
     createSuffixFeats(i, toks, tags, preds, features);
     tokenClassFeatureGenerator.createFeatures(features, toks, i, preds);
     createNumberFeats(i, toks, features);
-    if (lex.contains("_")) {
-      createGroupSuffixex(lex, features);
+    
+    if(lex.length() >= 3) {
+      if (lex.contains("_")) {
+        createGroupSuffixex("us_", lex, features);
+      }
+      if (lex.contains("-")) {
+        createGroupSuffixex("hf_", lex, features);
+      }
+      
     }
     
     for (String f : features) {
@@ -120,17 +127,17 @@ public class DefaultFeaturizerContextGenerator implements
     
   }
 
-  private static final Pattern UNDERLINE_PATTERN = Pattern.compile("_");
+  private static final Pattern UNDERLINE_PATTERN = Pattern.compile("[_-]");
 
-  private void createGroupSuffixex(String lex, List<String> e) {
+  private void createGroupSuffixex(String pre, String lex, List<String> e) {
     String[] parts = UNDERLINE_PATTERN.split(lex);
 
     if (parts.length < 2) // this is handled already
       return;
 
     for (int i = 0; i < parts.length; i++) {
-      e.add("up_" + i + "=" + parts[i]);
-      String prefix = "prsf_" + i + "=";
+      e.add(pre + "up_" + i + "=" + parts[i]);
+      String prefix = pre + "prsf_" + i + "=";
       String[] suffixes = getSuffixes(parts[i]);
       for (String suf : suffixes) {
         e.add(prefix + suf);
