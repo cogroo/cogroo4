@@ -18,6 +18,7 @@
 package br.ccsl.cogroo.formats.ad;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.nio.charset.Charset;
 
 import opennlp.tools.chunker.ChunkSample;
@@ -28,6 +29,7 @@ import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
 import opennlp.tools.formats.LanguageSampleStreamFactory;
 import opennlp.tools.util.ObjectStream;
+import opennlp.tools.util.PlainTextByLineStream;
 
 /**
  * A Factory to create a Arvores Deitadas ChunkStream from the command line
@@ -98,12 +100,14 @@ public class ADChunkBasedHeadFinderSampleStreamFactory extends
 
     language = params.getLang();
 
-    Charset encoding = params.getEncoding();
+    FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
+    
+    ObjectStream<String> lineStream = new PlainTextByLineStream(sampleDataIn.getChannel(),
+        params.getEncoding());
 
     ADChunkBasedHeadFinderSampleStream sampleStream = new ADChunkBasedHeadFinderSampleStream(
-        CmdLineUtil.openInFile(params.getData()), encoding.name(),
-        params.getUseCGTags(), params.getExpandME());
-
+        lineStream, params.getUseCGTags(), params.getExpandME());
+        
     if (params.getStart() != null && params.getStart() > -1) {
       sampleStream.setStart(params.getStart());
     }

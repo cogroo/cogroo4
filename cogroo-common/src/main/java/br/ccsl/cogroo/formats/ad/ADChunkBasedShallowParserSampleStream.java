@@ -31,7 +31,6 @@ import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.formats.ad.ADChunkSampleStream;
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
-import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
@@ -82,6 +81,27 @@ public class ADChunkBasedShallowParserSampleStream implements
       "ADVO", "SC", "OC", "P", "MV", "PMV", "AUX", "PAUX", "NPHR" };
 
   private boolean isIncludePOSTags;
+  
+  public ADChunkBasedShallowParserSampleStream(ObjectStream<String> lineStream, String commaSeparatedFunctTags,
+      boolean isIncludePOSTags, boolean useCGTag, boolean expandME) {
+    this.useCGTags = useCGTag;
+    this.expandME = expandME;
+      this.adSentenceStream = new ADSentenceStream(lineStream);
+      this.isIncludePOSTags = isIncludePOSTags;
+
+      if (commaSeparatedFunctTags == null
+          || commaSeparatedFunctTags.trim().isEmpty()) {
+        Set<String> functTagsSet = new HashSet<String>();
+        functTagsSet.addAll(Arrays.asList(defaultFunctTags));
+        functTagSet = Collections.unmodifiableSet(functTagsSet);
+      } else {
+        String[] tags = commaSeparatedFunctTags.split(",");
+        Set<String> functTagsSet = new HashSet<String>();
+        functTagsSet.addAll(Arrays.asList(tags));
+        functTagSet = Collections.unmodifiableSet(functTagsSet);
+      }
+  }
+  
 
   /**
    * Creates a new {@link NameSample} stream from a {@link InputStream}
