@@ -107,18 +107,23 @@ public class DefaultFeaturizerContextGenerator implements
     String lex = toks[i];
     List<String> features = new ArrayList<String>();
     
-    createSuffixFeats(i, toks, tags, preds, features);
     tokenClassFeatureGenerator.createFeatures(features, toks, i, preds);
     createNumberFeats(i, toks, features);
     
+    boolean suffixesCollected = false;
     if(lex.length() >= 3) {
       if (lex.contains("_")) {
         createGroupSuffixex("us_", lex, features);
+        suffixesCollected = true;
       }
       if (lex.contains("-")) {
         createGroupSuffixex("hf_", lex, features);
+        suffixesCollected = true;
       }
-      
+    }
+    
+    if(!suffixesCollected) {
+      createSuffixFeats(i, toks, tags, preds, features);
     }
     
     for (String f : features) {
