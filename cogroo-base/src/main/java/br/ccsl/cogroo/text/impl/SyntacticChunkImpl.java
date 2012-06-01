@@ -26,7 +26,7 @@ public class SyntacticChunkImpl implements SyntacticChunk {
     List<Token> tokens = theSentence.getTokens();
     StringBuilder sentence = new StringBuilder();
 
-    sentence.append("SyntacticChunk: ").append(span.getType()).append(" [ ");
+    sentence.append("SyntacticChunk: ").append(tag).append(" [ ");
 
     for (int i = span.getStart(); i < span.getEnd(); i++) {
       sentence.append(tokens.get(i).getLexeme()).append(" ");

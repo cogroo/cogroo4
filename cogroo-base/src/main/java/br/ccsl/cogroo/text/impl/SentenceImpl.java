@@ -3,12 +3,13 @@ package br.ccsl.cogroo.text.impl;
 import java.util.List;
 
 import opennlp.tools.util.Span;
-
 import br.ccsl.cogroo.text.Chunk;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.SyntacticChunk;
 import br.ccsl.cogroo.text.Token;
+import br.ccsl.cogroo.text.tree.Node;
+import br.ccsl.cogroo.text.tree.TreeUtil;
 
 import com.google.common.base.Objects;
 
@@ -77,6 +78,10 @@ public class SentenceImpl implements Sentence {
 
   public void setSyntacticChunks(List<SyntacticChunk> syntacticChunks) {
     this.syntacticChunks = syntacticChunks;
+  }
+  
+  public Node asTree() {
+    return TreeUtil.createTree(this);
   }
   
   @Override

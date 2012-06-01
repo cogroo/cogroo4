@@ -2,6 +2,8 @@ package br.ccsl.cogroo.text;
 
 import java.util.List;
 
+import br.ccsl.cogroo.text.tree.Node;
+
 public interface Sentence {
 
   /**
@@ -26,5 +28,6 @@ public interface Sentence {
   public List<SyntacticChunk> getSyntacticChunks();
 
   public void setSyntacticChunks(List<SyntacticChunk> syntacticChunks);
-
+  
+  public Node asTree ();
 }

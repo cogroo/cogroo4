@@ -25,6 +25,7 @@
 #v/CAT=v,T=inf,TR=_//  Na realidade TR=??
 #vt/CAT=v,T=inf,TR=t//
 #vi/CAT=v,T=inf,TR=i//
+#vl/CAT=v,T=inf,TR=l//
 #vn/CAT=v,T=inf,TR=_//
 #o/CAT=nord,G=m,N=s//
 #ca/CAT=card,N=p//
@@ -14220,7 +14221,7 @@ estardalhaço/#nm//
 estardalhar/#vi/XYL/
 estarola/#nn//
 estarrecer/#vn/XYPL/
-estar/#vi,I=3/Lv/
+estar/#vl,I=3/Lv/
 estatal/#an/pm/
 estateladamente/#av//
 estatelar/#vt/XYPL/

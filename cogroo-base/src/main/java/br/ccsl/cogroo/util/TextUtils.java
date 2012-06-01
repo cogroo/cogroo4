@@ -134,6 +134,8 @@ public class TextUtils {
           }
         }
         
+        output.append(sentence.asTree());
+        
         output.append("\n");
       }
     }
