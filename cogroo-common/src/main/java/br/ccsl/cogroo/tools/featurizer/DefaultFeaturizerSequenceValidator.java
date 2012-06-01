@@ -104,6 +104,8 @@ public class DefaultFeaturizerSequenceValidator implements
         tagsArr = expandedSearch(word, "n-adj", false);
       } else if(postag.equals("adj")) {
         tagsArr = expandedSearch(word, "n-adj", false);
+      } else if(word.length() > 1 && word.charAt(0) == '-') {
+        tagsArr = expandedSearch(word.substring(1), postag, false);
       }
     }
     return tagsArr;
