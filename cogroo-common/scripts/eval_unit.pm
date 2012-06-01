@@ -316,9 +316,9 @@ sub exec() {
 		  . ENCODING
 		  . " -data $data $extraOption";
 		$trCommand .=
-		    createCommand('cogroo', " POSTaggerTrainer.adex -factory br.ccsl.cogroo.tools.postag.PortugueseFactory -model $model $base -expandME true", $extraProperties);
+		    createCommand('cogroo', " POSTaggerTrainer.adex -model $model $base -expandME true", $extraProperties);
 		$cvCommand .=
-		    createCommand('cogroo', " POSTaggerCrossValidator.adex -factory br.ccsl.cogroo.tools.postag.PortugueseFactory $base -expandME true", $extraProperties);
+		    createCommand('cogroo', " POSTaggerCrossValidator.adex $base -expandME true", $extraProperties);
 	}
 	
 	if ( $opt{t} eq 'feat' ) {
@@ -329,6 +329,16 @@ sub exec() {
 		    createCommand('cogroo', " FeaturizerTrainerME.ad -model $model $base", $extraProperties);
 		$cvCommand .=
 		    createCommand('cogroo', " FeaturizerCrossValidator.ad $base", $extraProperties);
+	}
+	
+	if ( $opt{t} eq 'chunker' ) {
+		my $base = "$basicCommand "
+		  . ENCODING
+		  . " -data $data $extraOption";
+		$trCommand .=
+		    createCommand('cogroo', " ChunkerTrainerME.ad -model $model $base", $extraProperties);
+		$cvCommand .=
+		    createCommand('cogroo', " ChunkerCrossValidator.ad $base", $extraProperties);
 	}
 	
 	my %resCV = executeCV($cvCommand);
