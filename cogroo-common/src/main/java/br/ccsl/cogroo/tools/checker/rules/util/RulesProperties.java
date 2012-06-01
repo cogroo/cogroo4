@@ -83,6 +83,10 @@ public class RulesProperties {
     }
   }
 
+  public static final boolean APPLY_PHRASE_LOCAL = getBoolean("apply.phrase.local");
+
+  public static final boolean APPLY_SUBJECT_VERB = getBoolean("apply.subject.verb");
+
 	public static final String PACKAGE = getString("package");
 	
 	private static String SCHEMA = getString("schema");

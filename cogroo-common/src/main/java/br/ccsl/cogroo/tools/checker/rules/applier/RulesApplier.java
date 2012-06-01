@@ -49,13 +49,14 @@ import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.entities.impl.TokenCogroo;
 import br.ccsl.cogroo.tools.checker.Checker;
 import br.ccsl.cogroo.tools.checker.RuleDefinitionI;
-import br.ccsl.cogroo.tools.checker.rules.util.RuleUtils;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import br.ccsl.cogroo.tools.checker.rules.model.Element;
 import br.ccsl.cogroo.tools.checker.rules.model.Mask;
 import br.ccsl.cogroo.tools.checker.rules.model.PatternElement;
 import br.ccsl.cogroo.tools.checker.rules.model.Rule;
 import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.util.RuleUtils;
+import br.ccsl.cogroo.tools.checker.rules.util.RulesProperties;
 
 /**
  * Applies error rules to a {@link Sentence} object.
@@ -129,27 +130,32 @@ public final class RulesApplier implements Checker {
 		// remove aux tokens
 		sentence.setTokens(sentence.getTokens().subList(1, sentence.getTokens().size() - 1));
 		
-		// Seeks for errors inside a chunk (phrase local).
-		rulesTree = this.rulesTreesProvider.getTrees().getPhraseLocal();
-		// For each chunk in the sentence.
-		List<Chunk> chunks = sentence.getChunks();
-		for (int i = 0; i < chunks.size(); i++) {
-			for (int j = 0; j < chunks.get(i).getTokens().size(); j++) {
-				// For each token, gets back to the initial state (hence 0).
-				List<State> nextStates = rulesTree.getRoot().getNextStates();
-				// j is the index of the token that began the rule applying process.
-				mistakes = this.getMistakes(mistakes, nextStates, chunks.get(i), j, j, sentence);
-			}
+		if(RulesProperties.APPLY_PHRASE_LOCAL) {
+    		// Seeks for errors inside a chunk (phrase local).
+    		rulesTree = this.rulesTreesProvider.getTrees().getPhraseLocal();
+    		// For each chunk in the sentence.
+    		List<Chunk> chunks = sentence.getChunks();
+    		for (int i = 0; i < chunks.size(); i++) {
+    			for (int j = 0; j < chunks.get(i).getTokens().size(); j++) {
+    				// For each token, gets back to the initial state (hence 0).
+    				List<State> nextStates = rulesTree.getRoot().getNextStates();
+    				// j is the index of the token that began the rule applying process.
+    				mistakes = this.getMistakes(mistakes, nextStates, chunks.get(i), j, j, sentence);
+    			}
+    		}
 		}
 		
-		// Seeks for errors between a subject and a main verb.
-		rulesTree = this.rulesTreesProvider.getTrees().getSubjectVerb();
-		// For each chunk in the sentence.
-		List<SyntacticChunk> syntacticChunks = sentence.getSyntacticChunks();
-		for (int i = 0; i < syntacticChunks.size(); i++) {
-			List<State> nextStates = rulesTree.getRoot().getNextStates();
-			mistakes = this.getMistakes(mistakes, nextStates, syntacticChunks, i, i, sentence);
+		if(RulesProperties.APPLY_SUBJECT_VERB) {
+    		// Seeks for errors between a subject and a main verb.
+    		rulesTree = this.rulesTreesProvider.getTrees().getSubjectVerb();
+    		// For each chunk in the sentence.
+    		List<SyntacticChunk> syntacticChunks = sentence.getSyntacticChunks();
+    		for (int i = 0; i < syntacticChunks.size(); i++) {
+    			List<State> nextStates = rulesTree.getRoot().getNextStates();
+    			mistakes = this.getMistakes(mistakes, nextStates, syntacticChunks, i, i, sentence);
+    		}
 		}
+		
 		if(LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Rules applied in " + (System.nanoTime() - start) / 1000 + "us");
 		}
