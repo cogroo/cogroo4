@@ -19,7 +19,6 @@ public class TreeUtil {
     TreeElement[] originalElements = elements.toArray(new TreeElement[elements
         .size()]);
 
-    List<Token> tokens = sent.getTokens();
     List<Chunk> chunks = sent.getChunks();
     List<SyntacticChunk> syntChunks = sent.getSyntacticChunks();
 
@@ -31,13 +30,11 @@ public class TreeUtil {
       node.setLevel(2);
 
       for (int j = chunks.get(i).getStart(); j < chunks.get(i).getEnd(); j++) {
-        // System.out.println("coloquei" + elements.get(j));
         node.addElement(elements.get(j));
         elements.get(j).setParent(node);
       }
 
       for (int j = chunks.get(i).getEnd() - 1; j >= chunks.get(i).getStart(); j--) {
-        // System.out.println("Vou remover " + elements.get(j));
         elements.remove(j);
       }
 
@@ -50,36 +47,39 @@ public class TreeUtil {
       node.setSyntacticTag(syntChunks.get(i).getTag());
       node.setMorphologicalTag(null);
       node.setLevel(1);
-      
-      List<TreeElement> toRemove = new ArrayList<TreeElement>();
-      
-      for (int j = syntChunks.get(i).getEnd()-1; j >= syntChunks.get(i).getStart(); j--) {
-        if (originalElements[j].getParent() == null) {
-          node.addElement(originalElements[j]);
-          toRemove.add(originalElements[j]);
-        } else {
 
-          if (node.getElements().length == 0
-              || node.getElements()[node.getElements().length - 1] != originalElements[j]
-                  .getParent()) {
-            node.addElement(originalElements[j].getParent());
+      List<TreeElement> toRemove = new ArrayList<TreeElement>();
+      List<TreeElement> sons = new ArrayList<TreeElement>();
+
+      for (int j = syntChunks.get(i).getEnd() - 1; j >= syntChunks.get(i)
+          .getStart(); j--) {
+
+        if (originalElements[j].getParent() == null) {
+          sons.add(0, originalElements[j]);
+          toRemove.add(originalElements[j]);
+          originalElements[j].setParent(node);
+        } else {
+          if (sons.size() == 0
+              || sons.get(0) != originalElements[j].getParent()) {
+            sons.add(0, originalElements[j].getParent());
             toRemove.add(originalElements[j].getParent());
           }
         }
       }
       
-      int index = elements.indexOf(toRemove.get(toRemove.size()-1));
+      for (TreeElement son : sons)
+        node.addElement(son);
       
-      for (TreeElement element : toRemove) {
-        
+      int index = elements.indexOf(toRemove.get(toRemove.size() - 1));
+
+      for (TreeElement element : toRemove)
         elements.remove(element);
-        
-      }
+
       elements.add(index, node);
-      
+
       node.setParent(root);
     }
-    
+
     for (TreeElement element : elements) {
       root.addElement(element);
     }
