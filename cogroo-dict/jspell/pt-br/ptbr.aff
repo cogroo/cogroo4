@@ -333,8 +333,8 @@ P A T I A	>	-IA,AS		; "CAT=adj,G=_,N=p"	# telepatas
 
 C U L T U R A   >       -URA,OR         ; "CAT=a_nc,G=m,N=s"     # escultor      
 C U L T U R A   >       -URA,ORA        ; "CAT=a_nc,G=f,N=s"     # escultora  
-C U L T U R A   >       -URA,ORES       ; "CAT=a_nc,G=m,N=s"     # escultores
-C U L T U R A   >       -URA,ORAS       ; "CAT=a_nc,G=f,N=s"     # escultoras 
+C U L T U R A   >       -URA,ORES       ; "CAT=a_nc,G=m,N=p"     # escultores
+C U L T U R A   >       -URA,ORAS       ; "CAT=a_nc,G=f,N=p"     # escultoras 
 
 C R A C I A     >       -CIA,TA         ; "CAT=a_nc,G=_,N=s"     # democrata
 C R A C I A     >       -CIA,TAS        ; "CAT=a_nc,G=_,N=p"     # democratas
@@ -407,10 +407,10 @@ flag *N:         ; "CAT=V"      #issimo
 [IA]R     >   -R,DÍSSIMA  ; "CAT=adj;GR=sup,G=f,N=s" # admirar => admiradíssima
 [IA]R     >   -R,DÍSSIMAS ; "CAT=adj;GR=sup,G=f,N=p" # admirar => admiradíssimas
 [IA]R     >   -R,DÍSSIMOS ; "CAT=adj;GR=sup,G=m,N=p" # admirar => admiradíssimos
-E R       > -ER,IDÍSSIMO  ; "CAT=adj;GR=sup,G=m,N=s" # encarecer => encarecidíddimo
-E R       > -ER,IDÍSSIMA  ; "CAT=adj;GR=sup,G=f,N=s" # encarecer => encarecidíddima
-E R       > -ER,IDÍSSIMAS ; "CAT=adj;GR=sup,G=f,N=p" # encarecer => encarecidíddimas
-E R       > -ER,IDÍSSIMOS ; "CAT=adj;GR=sup,G=m,N=p" # encarecer => encarecidíddimos
+E R       > -ER,IDÍSSIMO  ; "CAT=adj;GR=sup,G=m,N=s" # encarecer => encarecidíssimo
+E R       > -ER,IDÍSSIMA  ; "CAT=adj;GR=sup,G=f,N=s" # encarecer => encarecidíssima
+E R       > -ER,IDÍSSIMAS ; "CAT=adj;GR=sup,G=f,N=p" # encarecer => encarecidíssimas
+E R       > -ER,IDÍSSIMOS ; "CAT=adj;GR=sup,G=m,N=p" # encarecer => encarecidíssimos
 
 
 # inho a partir de verbos

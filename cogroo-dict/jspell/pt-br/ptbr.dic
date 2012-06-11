@@ -237,7 +237,7 @@ acabar/#vt/XYPLMD/
 acabrunhado/#a/mpf/
 acácia/#nf/p/
 academia/#nf/pt/
-académico/#a/pfH/
+acadêmico/#a/pfH/
 academismo/#nm/p/
 acádico/#a//
 açafrão/#nm/p/
@@ -461,8 +461,8 @@ acrobático/#a/fpH/
 acrobatismo/#nm/p/
 acromático/#a/fp/
 acromatizar/#vt/XYPL/
-acrónico/#a//
-acrónimo/#nm/p/
+acrônico/#a//
+acrônimo/#nm/p/
 acrópole/#nf/p/
 ata/PREAO90=acta,#nf/p/
 actínia/#nf/p/
@@ -617,7 +617,7 @@ adolescente/#hn/Epm/
 adolescer/#vi/XYL/
 adonde/#avl//
 adonisar/#vt/XYPL/
-adónis/#nm//
+adônis/#nm//
 adoção/PREAO90=adopção,#nf/p/
 adotante/PREAO90=adoptante,#hn/p/
 adotar/PREAO90=adoptar,#vt/XYPLRn/
@@ -975,7 +975,9 @@ aguarelista/#nn//
 aguarrás/#nf//
 aguar/#vt,I=3/YPLM/
 águas-furtadas/$água-furtada$#nfp//
+águas-vivas/$água-viva$#nfp//
 água-tinta/#nf//
+água-viva/#nf//
 aguçadeira/#nf/p/
 aguçador/#nm/p/
 aguçadura/#nf//
@@ -1130,7 +1132,7 @@ alcoolismo/#nm/p/
 alcoolizar/#vt/XYPLc/
 álcool/#nm//
 alcoolometria/#nf/p/
-alcoolómetro/#nm//
+alcoolômetro/#nm//
 alcorânico/#a//
 alcova/#nf/p/
 alcoviteiro/#hm/fpG/
@@ -1513,7 +1515,7 @@ amável/#hn/pms/
 amazelar/#vt/XYL/
 amazona/#nf/p/
 amazonense/#hn/p/
-amazónico/#a/fp/
+amazônico/PREAO90=amazónico,#a/fp/
 âmbar/#nm//
 ambas/CAT=pind,G=f,N=p//
 ambição/#nf/p/
@@ -1755,13 +1757,13 @@ anaplasia/#nf//
 anaplastia/#nf//
 anaplástico/#a//
 anarmónico/#a/fp/
-anarquia/#nf/prti/
+anarquia/#nf/pti/
 anarquizar/#vt/XYPLc/
 anástrofe/#nf//
 anatar/#vn/XYPL/
 anátema/#nm/p/
 anatomia/#nf/pt/
-anatómico/#a/fp/
+anatômico/#a/fp/
 anatomizar/#vt/XYPLc/
 anavalhar/#vt/XYPL/
 anca/#nf/p/
@@ -1825,12 +1827,12 @@ anel/#nm/p/
 anemia/#nf/p/
 anemiante/#an/p/
 anemiar/#vt/XYPLn/
-anémico/#a/fp/
+anêmico/#a/fp/
 anemizante/#an/p/
 anemizar/#vt/XYPLn/
 anemómetro/#nm/p/
-anémona-do-mar/#nf//
-anémona/#nf//
+anêmona-do-mar/#nf//
+anêmona/#nf//
 anencefalia/#nf//
 anencefálico/#a/pf/
 anencéfalo/#a/p/
@@ -2052,7 +2054,7 @@ antevidência/#nf/p/
 antevidente/#hn//
 antiabolicionismo/#nm/p/
 antiabortivo/#a//
-antiacadémico/#a//
+antiacadêmico/#a//
 antiaéreo/#a/fp/
 antialcalino/#a//
 antialcoólico/#a//
@@ -2127,15 +2129,14 @@ anti-hemorrágico/#a//
 anti-hemorroidal/#an//
 anti-hepático/#a/fp/
 anti-hipnótico/#a//
-anti-infecioso/PREAO90=anti-infeccioso,#a//
-anti-inflamatório/#nm/p/
+anti-infeccioso/#a//
 antijurídico/#a//
 antiletárgico/#a//
 antiliberal/#an//
 antilogaritmo/#nm//
 antilogismo/#nm/p/
 antílope/#nm/p/
-antimaçónico/#a/fp/
+antimaçônico/PREAO90=antimaçónico,#a/fp/
 antimagnético/#a//
 antimatéria/#nf//
 antimelancólico/#a/fp/
@@ -2160,7 +2161,7 @@ antinomismo/#nm/p/
 antinupcial/#an//
 antipapado/#nm//
 antipapa/#nm/tip/
-antiparalelas/#nf,N=p//
+antiparalelas/#nfp//
 antiparalelismo/#nm/p/
 antiparasita/#an//
 antiparlamentarismo/#nm/p/
@@ -2190,6 +2191,7 @@ antirrealismo/PREAO90=anti-realismo,#nm//
 antirrugas/PREAO90=anti-rugas,#an//
 antissético/PREAO90=anti-séptico,#hm/fp/
 antisséptico/PREAO90=anti-séptico,#hm/fp/
+antitanque/#an,N=_//
 antiteatro/#nm//
 antiteísmo/#nm/pq/
 antitérmico/#a/pf/
@@ -3769,7 +3771,7 @@ automático/#a/fpH/
 automatismo/#nm/p/
 automatização/#nf//
 automatizar/#vt/XYPLc/
-autómato/#nm/p/
+autômato/PREAO90=autómato,#nm/p/
 automobilismo/#nm/p/
 automobilista/#nn/p/
 automobilístico/#a/fp/
@@ -3780,10 +3782,10 @@ automotor/#hm/f/
 automóvel/#nm/p/
 autónimo/#a//
 auto/#nm/pti/
-autonomamente/$autónomo$#a$#avm//
+autonomamente/$autônomo$#a$#avm//
 autonomia/#nf/ptir/
 autonomizar/#vt/XYPLnc/
-autónomo/#a/fp/
+autônomo/PREAO90=autônomo,#a/fp/
 autopiano/#nm//
 autoplastia/#nf//
 autópsia/#nf/p/
@@ -5288,7 +5290,7 @@ bosta/#nf//
 bostar/#vn/XYPL/
 bosteira/#nf//
 bosteiro/#nm/f/
-bota-fora/#nm//
+bota-fora/CAT=nc,G=m,N=_//
 bota/#nf/p/
 botânica/#nf//
 botânico/#a/fp/
@@ -9324,7 +9326,7 @@ convés/#nm//
 convexão/#nf//
 convexidade/#nf/p/
 convexo/#a/fpd/
-convexo-côncavo/#a//
+convexo-côncavo/#a/p/
 convicção/#nf/p/
 convicto/#a/fpm/
 convidado/#hn//
@@ -9532,7 +9534,7 @@ corpúsculo/#nm/p/
 corpus/#nmp//
 correção/PREAO90=correcção,#nf/p/
 correcional/PREAO90=correccional,#an/m/
-corre-corre/#nm//
+corre-corre/#nm/p/
 corretivo/PREAO90=correctivo,#hm/fp/
 correto/PREAO90=correcto,#a/pfmIs/
 corretor/PREAO90=corrector,#hm/fp/
@@ -9599,13 +9601,13 @@ cortadela/#nf/p/
 cortador/#hm//
 cortadura/#nf//
 corta-fogo/#nm/p/
-corta-mar/#nm//
-corta-mato/#nm//
+corta-mar/#nm/p/
+corta-mato/#nm/p/
 corta/#nf//
 cortante/#an/p/
-corta-papel/#nm//
+corta-papel/#nm/p/
 cortar/#vn/XYPLMDn/
-corta-vento/#nm//
+corta-vento/#nm/p/
 cortejador/#hm//
 cortejar/#vt/XYPLD/
 cortejo/#nm/fp/
@@ -9677,7 +9679,7 @@ costada/#nf//
 costado/#hm/f/
 costal/#an//
 costa/#nf/p/
-costa-riquenho/#hn//
+costa-riquenho/#hn/p/
 costear/#vn/ZYPLM/
 costeiro/#a/fp/
 costela/#nf/p/
@@ -10112,6 +10114,7 @@ curtidura/#nf//
 curtir/#vt/XYPLMD/
 curto/#a/pfmsh/
 curto-circuito/#nm//
+curtos-circuitos/$curto-circuito$#nm$N=p//
 curto-prazo/#nm//
 curtume/#nm/p/
 curva/#nf//
@@ -17196,7 +17199,7 @@ guapo/#a/p/
 guarani/#nm//
 guarani/#nn//
 guarda-chuva/#nm/p/
-guarda-costas/#nm//
+guarda-costas/#n,G=m,N=_//
 guardadeira/#nf//
 guardador/#nm//
 guarda-fatos/#nm//
@@ -17207,7 +17210,7 @@ guarda-joias/PREAO90=guarda-jóias,#nm//
 guarda-lama/#nm/p/
 guarda-livros/#nm//
 guarda-loiça/#nm//
-guarda-louça/#nm//
+guarda-louça/#nm/p/
 guarda-marinha/#nm//
 guardanapo/#nm/p/
 guarda/#nf/p/
@@ -17215,12 +17218,11 @@ guarda-noturno/PREAO90=guarda-nocturno,#nm//
 guarda-redes/#nm//
 guarda-republicano/#nm//
 guarda-rios/#nm//
-guarda-roupa/#nm//
-guarda-roupa/#nn//
+guarda-roupa/#nm/p/
 guardar/#vt/XYPLD/
 guarda-sol/#nm/p/
-guarda-vento/#nm//
-guarda-vestidos/#nm//
+guarda-vento/#nm/p/
+guarda-vestidos/#nm,G=m,N=_//
 guardear/#vt/ZYPLM/
 guardense/#hn/p/
 guardião/#nm/bp/
@@ -17590,7 +17592,7 @@ hispânico/#a/fp/
 hispanismo/#nm/p/
 hispanista/#nn/p/
 hispanizar/#vt/XYPL/
-hispano-americano/#a//
+hispano-americano/#a/p/
 histerese/#nm//
 histeria/#nf/p/
 histericismo/#nm/p/
@@ -17781,7 +17783,7 @@ iate/#nm/p/
 ibérico/#hm/fp/
 ibério/#hm/fp/
 iberizar/#vt/XYPLc/
-ibero-americano/#a//
+ibero-americano/#a/p/
 ibero/#a/tipf/
 ícaro/#nm//
 içar/#vt/XYPLM/
@@ -18756,7 +18758,7 @@ indocilidade/#nf/p/
 indocilizar/#vt/XYPL/
 indocumentado/#a//
 indo-europeia/#a/p/
-indo-europeu/#a//
+indo-europeu/#a/p/
 indolência/#nf/p/
 índole/#nf/p/
 indolente/#an/m/
@@ -18951,7 +18953,7 @@ inflamador/#hm//
 inflamante/#an/p/
 inflamar/#vt/XYPLcDnv/
 inflamativo/#a//
-inflamatório/#a/fp/
+inflamatório/#a/fpAu/
 infletir/PREAO90=inflectir,#vt,I=3/YPL/
 inflexão/#nf/p/
 inflexibilidade/#nf/p/
@@ -28590,6 +28592,7 @@ reclinar/#vt/XYPLc/
 reclinatório/#nm//
 reclusão/#nf/p/
 recluso/#a/fpx/
+reco-reco/#nm/p/
 recobrar/#vt/XYPLv/
 recognição/#nf//
 recognitivo/#a//
@@ -31625,7 +31628,6 @@ subgrupo/#nm/p/
 subida/#nf//
 subidouro/#nm//
 subinflamação/#nf//
-subinflamatório/#a//
 subinspetor/PREAO90=subinspector,#nm//
 subintendência/#nf/p/
 subintendente/#nn//
@@ -32189,7 +32191,7 @@ tangueiro/#a//
 tanguista/#nn//
 tânjara/#nf//
 tanoeiro/#nm/p/
-tanque/#nm/pA/
+tanque/#nm/p/		retirou-se o prefixo anti-, pois essa palavra possui dois gêneros e números
 tanso/#hm/p/
 tântalo/#nm//
 tantíssimo/#a//
@@ -34690,9 +34692,9 @@ volúvel/#an/pd/
 volver/#vn/XYL/
 vomitar/#vt/XYPLD/
 vomitivo/#hm//
-vómito/#nm/p/
+vômito/#nm/p/
 vontade/#nf/p/
-voo/#nm/pR/
+voo/PREAO90=vôo,#nm/pR/
 voragem/#nf//
 voraz/#an/dp/
 vórtice/#nm//
@@ -34804,7 +34806,7 @@ zeloso/#a/fpm/
 zelote/#a/p/
 zé-ninguém/#nm//
 zenital/#an/p/
-zénite/#nm//
+zênite/PREAO90=zénite,#nm//
 zê/#nm/p/
 zepelim/#nm//
 zé-pereira/#nm//
@@ -34836,6 +34838,7 @@ zonzo/#a/p/
 zoolatria/#nf/p/
 zoologia/#nf/qtrp/
 zoológico/#a/fp/
+zoológico/#nm/p/
 zoo/$zoológico$#nm//
 zorro/#hm/fp/
 zuarte/#nm//
