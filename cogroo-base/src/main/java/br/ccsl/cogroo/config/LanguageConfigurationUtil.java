@@ -84,7 +84,8 @@ public class LanguageConfigurationUtil {
   private static LanguageConfiguration unmarshal(InputStream inputStream)
       throws JAXBException {
     String packageName = LanguageConfiguration.class.getPackage().getName();
-    JAXBContext jc = JAXBContext.newInstance(packageName);
+    ClassLoader cl = ObjectFactory.class.getClassLoader();
+    JAXBContext jc = JAXBContext.newInstance(packageName, cl);
     Unmarshaller u = jc.createUnmarshaller();
     return (LanguageConfiguration) u.unmarshal(inputStream);
   }
