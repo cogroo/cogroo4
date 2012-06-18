@@ -91,7 +91,7 @@ public class Merger {
     } else
     // now we try we check if the "tag" can be generalized in terms of gender
     // and number
-    if (allTags != null && allTags.length > 1
+    if (allTags != null && allTags.length >= 1
         && (tag.getGenderE() != null || tag.getNumberE() != null)) {
       TagMask noGender = toTagMask(tag);
       noGender.setGender(null);
