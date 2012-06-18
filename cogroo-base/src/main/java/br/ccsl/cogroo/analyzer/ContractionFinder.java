@@ -4,6 +4,9 @@ import java.util.List;
 
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.util.Span;
+
+import org.apache.log4j.Logger;
+
 import br.ccsl.cogroo.ContractionUtility;
 import br.ccsl.cogroo.config.Analyzers;
 import br.ccsl.cogroo.text.Document;
@@ -20,6 +23,8 @@ import br.ccsl.cogroo.util.TextUtils;
 public class ContractionFinder implements AnalyzerI {
 
   private NameFinderME contractionFinder;
+  
+  protected static final Logger LOGGER = Logger.getLogger(ContractionFinder.class);
 
   public ContractionFinder(NameFinderME contractionFinder) {
     this.contractionFinder = contractionFinder;
@@ -42,20 +47,23 @@ public class ContractionFinder implements AnalyzerI {
         String[] contractions = ContractionUtility.expand(lexeme);
 
         Token original = newTokens.remove(start);
-
-        for (int j = contractions.length - 1; j >= 0; j--) {
-          Token token = new TokenImpl(original.getStart(), original.getEnd(), contractions[j]);
-          newTokens.add(start, token);
-
-          String caze = null;
-          if (j == 0)
-            caze = "B";
-          else if (j == contractions.length - 1)
-            caze = "E";
-          else
-            caze = "I";
-
-          token.addContext(Analyzers.CONTRACTION_FINDER, caze);
+        if(contractions != null) {
+          for (int j = contractions.length - 1; j >= 0; j--) {
+            Token token = new TokenImpl(original.getStart(), original.getEnd(), contractions[j]);
+            newTokens.add(start, token);
+  
+            String caze = null;
+            if (j == 0)
+              caze = "B";
+            else if (j == contractions.length - 1)
+              caze = "E";
+            else
+              caze = "I";
+  
+            token.addContext(Analyzers.CONTRACTION_FINDER, caze);
+          }
+        } else {
+          LOGGER.debug("Missing contraction: " + lexeme);
         }
       }
       sentence.setTokens(newTokens);
