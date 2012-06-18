@@ -1,5 +1,6 @@
 package br.ccsl.cogroo.text.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import opennlp.tools.util.Span;
@@ -50,5 +51,10 @@ public class SyntacticChunkImpl implements SyntacticChunk {
 
   public int getEnd() {
     return span.getEnd();
+  }
+  
+  public List<Token> getTokens() {
+    return Collections.unmodifiableList(theSentence.getTokens().subList(
+        getStart(), getEnd()));
   }
 }

@@ -1,5 +1,6 @@
 package br.ccsl.cogroo.text.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import opennlp.tools.util.Span;
@@ -28,7 +29,7 @@ public class ChunkImpl implements Chunk {
     List<Token> tokens = theSentence.getTokens();
     StringBuilder sentence = new StringBuilder();
 
-    sentence.append("Chunk: ").append(span.getType()).append(" [ ");
+    sentence.append("Chunk: ").append(tag).append(" [ ");
 
     for (int i = span.getStart(); i < span.getEnd(); i++) {
       if (i == index)
@@ -62,6 +63,11 @@ public class ChunkImpl implements Chunk {
 
   public void setTag(String tag) {
     this.tag = tag;
+  }
+
+  public List<Token> getTokens() {
+    return Collections.unmodifiableList(theSentence.getTokens().subList(
+        getStart(), getEnd()));
   }
 
 }
