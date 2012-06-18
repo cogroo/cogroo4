@@ -253,7 +253,6 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
     /* weird things */
     ArrayList<Enum<?>> hifen = new ArrayList<Enum<?>>();
     hifen.add(Class.PUNCTUATION_MARK);
-    stringMElements.put(".", Collections.unmodifiableList(hifen));
     hifen.add(Punctuation.REL);
     stringMElements.put("$--", Collections.unmodifiableList(hifen));
 
@@ -333,6 +332,15 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
       } else {
         if (tag.length() == 1 || "--".equals(tag) || "...".equals(tag)) {
           m.setClazz(Class.PUNCTUATION_MARK);
+          if(",".equals(tag)) {
+            m.setPunctuation(Punctuation.NSEP);
+          } else if(".".equals(tag) || "!".equals(tag) || "?".equals(tag)) {
+            m.setPunctuation(Punctuation.ABS);
+          } else if("(".equals(tag) || ")".equals(tag)) {
+            m.setPunctuation(Punctuation.BIN);
+          } else {
+            m.setPunctuation(Punctuation.REL);
+          }
         } else if ("n:".equals(tag)) {
           m.setClazz(Class.NOUN);
         } else if ("intj".equals(tag)) {
