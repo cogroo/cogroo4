@@ -1,8 +1,8 @@
 package cogroo.uima.eval;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import net.sf.antcontrib.property.PathToFileSet;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.AnalysisComponent;
@@ -23,12 +21,12 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import com.google.common.base.Objects;
-
 import cogroo.uima.GoldenGrammarError;
 import cogroo.uima.GoldenSentence;
 import cogroo.uima.GrammarError;
 import cogroo.uima.eval.HtmlWriter.Detail;
+
+import com.google.common.base.Objects;
 
 public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
 
@@ -56,6 +54,9 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
         .getConfigParameterValue(PARAM_CORPUSNAME)).trim();
     String textReportPath = ((String) aContext
         .getConfigParameterValue(PARAM_TEXTREPORTPATH)).trim();
+    
+    new File(htmlReportPath).mkdirs();
+    new File(htmlReportPath).mkdirs();
 
     String pathToReportFMeasure = textReportPath + "/" + corpusName
         + "-FMeasure.txt";
