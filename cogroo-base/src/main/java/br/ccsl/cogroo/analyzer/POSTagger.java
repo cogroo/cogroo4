@@ -40,6 +40,8 @@ public class POSTagger implements AnalyzerI {
       }
       
       EntityUtils.groupTokens(sentence.getText(), tokens, createSpanList(toTokensArray(tokens), toTagsArray(tokens)));
+      
+      mergeHyphenedWords(sentence);
     }
   }
   
@@ -94,5 +96,89 @@ public class POSTagger implements AnalyzerI {
     }
 
     return phrases;
+  }
+  
+  private void mergeHyphenedWords(Sentence sentence) {
+    List<Token> tokens = sentence.getTokens();
+    // look for "-", check if it makes contact with the other hyphens
+    boolean restart = true;
+    int start = 1;
+    while (restart) {
+      restart = false;
+      for (int i = start; i < tokens.size() - 1 && !restart; i++) {
+        if ("-".equals(tokens.get(i).getLexeme())) {
+          if (!hasCharacterBetween(tokens.get(i - 1), tokens.get(i))
+              && !hasCharacterBetween(tokens.get(i), tokens.get(i + 1))) {
+            Token a = tokens.get(i - 1);
+            Token b = tokens.get(i + 1);
+            if (b.getPOSTag().startsWith("pron-")) {
+              // remove the "-"
+              b.setBoundaries(b.getStart() - 1, b.getEnd());
+              b.setLexeme("-" + b.getLexeme());
+              tokens.remove(i);
+              restart = true;
+              start = i + 1;
+            } else {
+              // merge the terms
+              String res = merge(a.getPOSTag(), b.getPOSTag());
+              if(res != null) {
+                String lexeme = a.getLexeme() + "-" + b.getLexeme();
+                b.setLexeme(lexeme);
+                b.setPOSTag(res);
+                b.setBoundaries(a.getStart(), b.getEnd());
+                tokens.remove(i);
+                tokens.remove(i - 1);
+                start = i;
+                restart = true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  private String merge(String a, String b) {
+    // http://www.soportugues.com.br/secoes/morf/morf28.php
+    
+    if (isNoun(a) || isNoun(b)) {
+      return "n";
+    } else if (isNoun(a) && isAdjective(b)) {
+      return "n";
+    } else if (isVerb(a) && isNoun(b)) {
+      return "n";
+    } else if (isAdjective(a) && isAdjective(b)) {
+      return "n";
+    } else if ("prep".equals(b) || "art".equals(b)) {
+      return a;
+    } else if (isVerb(a) && "adv".equals(b)) {
+      return "n";
+    } else if (isNoun(b)) {
+      return "n";
+    } else if(a.equals(b)){
+      return a;
+    }
+    return null;
+  }
+
+  private boolean isVerb(String a) {
+    return a.startsWith("v-");
+  }
+
+  private boolean isNoun(String b) {
+    return "n".equals(b) || "n-adj".equals(b);
+  }
+
+  private boolean isAdjective(String b) {
+    return "adj".equals(b) || "n-adj".equals(b);
+  }
+
+  private boolean hasCharacterBetween(Token a, Token b) {
+    int aEnd = a.getEnd();
+    int bStart = b.getStart();
+    if (aEnd == bStart) {
+      return false;
+    }
+    return true;
   }
 }
