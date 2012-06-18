@@ -67,8 +67,7 @@ public class ProcessReport {
           .append("\n");
       for (Token token : sentence.getTokens()) {
         // print the text
-        sb.append(text.substring(token.getSpan().getStart(), token.getSpan()
-            .getEnd()));
+        sb.append(token.getLexeme());
         // print the lemma
         sb.append(" [" + token.getPrimitive() + " ");
         // print the morphological tag, we use a tag interpreter here

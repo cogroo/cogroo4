@@ -161,7 +161,7 @@ public class PostPOSTagger implements ProcessingEngine {
             || Number.PLURAL.equals(b.getNumberE())) {
           ret.setNumber(Number.PLURAL);
         }
-      } else if (aClass.equals(Class.VERB) || aClass.equals(Class.PREPOSITION)) {
+      } else if (aClass.equals(Class.VERB) || bClass.equals(Class.PREPOSITION)) {
         ret = b.clone();
         ret.setGender(Gender.MALE);
       } else if (aClass.equals(Class.NOUN)) {

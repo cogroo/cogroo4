@@ -8,9 +8,9 @@
         </collectionIterator>
     </collectionReader>
     <casProcessors casPoolSize="3" processingUnitThreadCount="1">
-        <casProcessor deployment="integrated" name="BaselineCogrooAE_pear.xml">
+        <casProcessor deployment="integrated" name="NewTagsetBaselineCogrooAE_pear.xml">
             <descriptor>
-                <import location="../../../_REPO/BaselineCogrooAE/BaselineCogrooAE_pear.xml"/>
+                <import location="../../../_REPO/NewTagsetBaselineCogrooAE/NewTagsetBaselineCogrooAE_pear.xml"/>
 <!--                 <import location="../../../_REPO/Cogroo3AE/Cogroo3AE_pear.xml"/> -->
             </descriptor>
             <deploymentParameters/>

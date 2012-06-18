@@ -292,7 +292,7 @@ public class MultiCogroo implements CogrooI {
         // input = "Os olhos das meninas são bonitos nas estrelas.";
         // input = "Os inimigos que eram fácil derrotar estão próximo.";
         // input = "A construção do trecho inicial da Linha 5-Lilás.";
-        input = "Ao erguer-se para estender a mão, o jovem realçou seu porte magestoso.";
+        input = "Enviei os documentos à Vossa Excelência. Enviei os documentos à Vossa Santidade.";
         // 114: Jamais ocorreu-nos tal idéia.
         // 115: Júlio namorou com Marina durante três anos.
         //
