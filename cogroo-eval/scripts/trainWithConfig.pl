@@ -73,6 +73,7 @@ sub parseConfig {
 		# 'v' => $tokens[4],
 		'c' => $tokens[5],
 	);
+	
 	if($tokens[3] ne 'NONE') {
 		$o{'o'} = uc($tokens[3]); 		
 	}

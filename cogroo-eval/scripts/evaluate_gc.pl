@@ -11,7 +11,7 @@ use Test::Deep qw(cmp_deeply);
 use Data::Dumper;
 use File::Temp qw/ tempfile tempdir /;
 use Cwd;
-use File::Path qw(make_path);
+use File::Path qw(make_path rmtree);
 use Storable qw(freeze thaw);
 use File::Copy::Recursive qw(dircopy);
 my $common = "$Bin/../../cogroo-common/scripts"; 
@@ -20,6 +20,7 @@ use lib "$Bin/../../cogroo-common/scripts";
 require eval_unit;
  
 require cpe;
+require cpeNewTagset;
 
 my %extraOpt;
 
@@ -93,8 +94,12 @@ sub createBaseline {
 	close LIST;
 }
 
+my %baselineVars;
+
 sub evaluate {
 	my $conf = shift;
+	my $useNew = shift;
+	
 	my %opt = parseConfig($conf);
 	# faltam: c, p, f 
 	$opt{'p'} = 8;
@@ -107,8 +112,8 @@ sub evaluate {
 	$ENV{'MODEL_ROOT'} = $tempDir;
 	$ENV{'UIMA_DATAPATH'} = $tempDir;
 	$ENV{'REPO_ROOT'} = tempdir;
-	$ENV{'UIMA_JVM_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'UIMA_JVM_OPTS'};
-	$ENV{'MAVEN_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'MAVEN_OPTS'};
+	$ENV{'UIMA_JVM_OPTS'} = "-Duima.datapath=$tempDir -Xms512m -Xmx1024m -XX:PermSize=256m " . $ENV{'UIMA_JVM_OPTS'};
+	$ENV{'MAVEN_OPTS'} = "-Duima.datapath=$tempDir -Xms256m -Xmx1024m -XX:PermSize=256m " . $ENV{'MAVEN_OPTS'};
 	
 	my $dir = getcwd;
 	chdir('../../cogroo-common');
@@ -122,8 +127,21 @@ sub evaluate {
 		print "Copied $num_of_files_and_dirs models to $tempDir \n";		
 	}
 	
-	cpe::installRequiredPears();
-	my %r = cpe::evaluateUsingModel('eval', processName($conf));
+	my %r;
+	if($useNew) {
+		# copy models to resources
+		rmtree("../NewTagsetBaselineCogrooAE/target/models");
+		my $num_of_files_and_dirs = dircopy($tempDir,"../NewTagsetBaselineCogrooAE/target/models");
+		print "Copied $num_of_files_and_dirs models to models \n";
+		
+		cpeNewTagset::install("../NewTagsetBaselineCogrooAE/pom.xml");
+		%r = cpeNewTagset::evaluateUsingModel('eval', processName($conf), \%baselineVars);
+	} else {
+		
+		cpe::installRequiredPears();
+		%r = cpe::evaluateUsingModel('eval', processName($conf));		
+	}
+
 	
 	return %r;
 }
@@ -136,6 +154,13 @@ sub evaluateBaseline {
 	$ENV{'REPO_ROOT'} = tempdir;
 	$ENV{'UIMA_JVM_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'UIMA_JVM_OPTS'};
 	$ENV{'MAVEN_OPTS'} = "-Duima.datapath=$tempDir " . $ENV{'MAVEN_OPTS'};
+	
+		# this is executed first, so we can keep the vars
+	
+	$baselineVars{'MODEL_ROOT'} = $ENV{'MODEL_ROOT'};
+	$baselineVars{'UIMA_HOME'} = $ENV{'UIMA_HOME'};
+	$baselineVars{'CORPUS_ROOT'} = $ENV{'CORPUS_ROOT'};
+	$baselineVars{'REPO_ROOT'} = $ENV{'REPO_ROOT'}; 
 	
 	# copy baseline models to $tempdir
 	if(defined $baselineModels) {
@@ -171,7 +196,7 @@ sub loadOrderFromFile {
 
 sub evaluateListFromFile {
 	my $file = shift;
-	
+	my $useNew = shift;
 	open (CONF, $file)  or die("Could not open list file. $!");
 	
 	my %results;
@@ -181,7 +206,7 @@ sub evaluateListFromFile {
     	my @confs = split(/\n/,$line);
     	foreach my $c (@confs) {
     	    print "will evaluate $c \n";
-			my %newResult = evaluate($c);
+			my %newResult = evaluate($c, $useNew);
 			%results = (%results, %newResult);	
     	}
 	}
@@ -713,13 +738,21 @@ print "order: \n" . Dumper(\%order);
 my $reportsPath = 'eval';
 my %eval;
 
-if(1) {
+if(0) {
 	# use this to evaluate baseline x new modules
 	if(@ARGV > 1 && $ARGV[1] ne '') {
 		createBaseline($ARGV[1]);
 	}
 	my %baselineEval = evaluateBaseline('baseline');
-	my %fromfileEval = evaluateListFromFile($ARGV[0]);
+	my %fromfileEval = evaluateListFromFile($ARGV[0], 0);
+	%eval = (%baselineEval, %fromfileEval);
+} elsif(1) {
+	# use this to evaluate baseline x new modules with new tagset
+	if(@ARGV > 1 && $ARGV[1] ne '') {
+		createBaseline($ARGV[1]);
+	}
+	my %baselineEval = evaluateBaseline('baseline');
+	my %fromfileEval = evaluateListFromFile($ARGV[0], 1);
 	%eval = (%baselineEval, %fromfileEval);
 } else {
 	# use this to evaluate cogroo3 x new baseline (code changes)

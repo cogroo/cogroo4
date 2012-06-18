@@ -4,7 +4,7 @@
 # to execute grammar checking evaluation. Also has methods to execute the evaluation
 # Everything is cleared before each test to make sure we are using the right models and code
 
-package cpe;
+package cpeNewTagset;
 
 use FindBin qw($Bin);
 use Data::Dumper;
@@ -152,12 +152,44 @@ sub executeCPE {
 	
 }
 
+sub generateCogrooReportNew {
+	
+	my $data = shift;
+	my $report = shift;	
+	my $path = "../NewTagsetBaselineCogrooAE/target/cogroo";
+	configureMultiProperties(1);
+		
+	my $desc = "$path $data $report";
+		
+	printToLog("Will process report using MultiCogroo (new tagset) \n");
+	
+	my $command = 'mvn -f ../NewTagsetBaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
+
+	my @res = `$command 2>&1`;
+
+	my $err = 0;
+	foreach my $line (@res) {
+		if($line =~ m/An exception occured while executing/) {
+			$err = 1;
+		}
+	}
+	
+	if($err) {
+		my $log = "=== Failed to execute command ===\n\n";
+		$log .= join "\t", @res;
+		printToLog($log . "\n\n");
+		
+		die "Failed to execute command";
+	}
+	
+}
+
 sub generateCogrooReport {
 	
 	my $data = shift;
 	my $report = shift;	
 	my $path = "../BaselineCogrooAE/target/cogroo";
-	configureMultiProperties(1);
+	configureMultiPropertiesBaseline(1);
 		
 	my $desc = "$path $data $report";
 		
@@ -220,9 +252,9 @@ sub evaluate {
 		# change to 0 to evaluate cogroo3, to 1 to evaluate new
 		if(1) {
 			# execute new cogroo to get the reports...
-			generateCogrooReport("$reportPath/probi/diff.txt", "$reportPath/probi/diff-new.txt");
-			generateCogrooReport("$reportPath/metro/diff.txt", "$reportPath/metro/diff-new.txt");
-			generateCogrooReport("$reportPath/bosque/diff.txt", "$reportPath/bosque/diff-new.txt");
+			generateCogrooReportNew("$reportPath/probi/diff.txt", "$reportPath/probi/diff-new.txt");
+			generateCogrooReportNew("$reportPath/metro/diff.txt", "$reportPath/metro/diff-new.txt");
+			generateCogrooReportNew("$reportPath/bosque/diff.txt", "$reportPath/bosque/diff-new.txt");
 			
 			# restore baseline and execute
 			$ENV{'MODEL_ROOT'} = $baselineVars{'MODEL_ROOT'};
@@ -250,7 +282,7 @@ sub evaluate {
 	return \%res;
 }
 
-sub configureMultiProperties {
+sub configureMultiPropertiesBaseline {
 	
 	my $useModels = shift;
 	
@@ -303,6 +335,63 @@ sub configureMultiProperties {
 	# 		$replace{'pos'} = 'true';
 	# 	}		
 	#}
+	
+ 	filterFile($filterFile, $target, \%replace);
+}
+
+sub configureMultiProperties {
+	
+	my $useModels = shift;
+	
+	# we check the avalilable models and configure multi.properties to use it
+	my $filterFile = '../NewTagsetBaselineCogrooAE/src/main/resources/models.xml.filter';
+	my $target = '../NewTagsetBaselineCogrooAE/src/main/resources/models.xml';
+	my $root = '../NewTagsetBaselineCogrooAE/target/models';
+	my $modelRoot = $ENV{'MODEL_ROOT'};
+	my %replace = (
+		'sent' => '',
+		'tok' => '',
+		'prop' => '',
+		'con' => '',
+		'pos' => '',
+		'chunker' => '',
+		'sp' => '',
+	);
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-sent.model") {
+			print "found sentence detector model\n";
+	 		$replace{'sent'} = '<analyzer>sentenceDetector</analyzer>';
+	 	}		
+	}
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-tok.model") {
+			print "found tokenizer model\n";
+	 		$replace{'tok'} = '<analyzer>tokenizer</analyzer>';
+	 	}		
+	}
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-prop.model") {
+			print "found proper name finder model\n";
+	 		$replace{'prop'} = '<analyzer>nameFinder</analyzer>';
+	 	}		
+	}
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-con.model") {
+			print "found contraction finder model\n";
+	 		$replace{'con'} = '<analyzer>contractionFinder</analyzer>';
+	 	}		
+	}
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-pos.model" && -e "$modelRoot/pt-feat.model") {
+			print "found POS Tagger (class) and Featurizer models\n";
+	 		$replace{'pos'} = '<analyzer>posTagger</analyzer><analyzer>featurizer</analyzer><analyzer>lemmatizer</analyzer>';
+	 	}		
+	}
 	
  	filterFile($filterFile, $target, \%replace);
 }
@@ -369,9 +458,9 @@ sub evaluateCogroo3 {
 #	my $evalPath = shift;
 #	my %res;
 #	configureMultiProperties(0);
-#	install("../BaselineCogrooAE/pom.xml");
-#	installPearByPath("../BaselineCogrooAE/target/BaselineCogrooAE.pear");
-#	$res{'baseline'} = evaluate("BaselineCogrooAE", "$evalPath/baseline");
+#	install("../NewTagsetBaselineCogrooAE/pom.xml");
+#	installPearByPath("../NewTagsetBaselineCogrooAE/target/NewTagsetBaselineCogrooAE.pear");
+#	$res{'baseline'} = evaluate("NewTagsetBaselineCogrooAE", "$evalPath/baseline");
 #	printToLog Dumper( \%res );
 #	return %res;
 #}
@@ -380,11 +469,13 @@ sub evaluateUsingModel {
 	my $evalPath = shift;
 	my $name = shift;
 
+	%baselineVars =  %{$_[0]};
+
 	my %res;
 	configureMultiProperties(1);
-	install("../BaselineCogrooAE/pom.xml");
-	installPearByPath("../BaselineCogrooAE/target/BaselineCogrooAE.pear");
-	$res{$name} = evaluate("BaselineCogrooAE", "$evalPath/$name");
+	install("../NewTagsetBaselineCogrooAE/pom.xml");
+	installPearByPath("../NewTagsetBaselineCogrooAE/target/NewTagsetBaselineCogrooAE.pear");
+	$res{$name} = evaluate("NewTagsetBaselineCogrooAE", "$evalPath/$name");
 	printToLog Dumper( \%res );
 	return %res;
 }
@@ -398,35 +489,11 @@ sub printVars {
 	print "REPO_ROOT: " . $ENV{'REPO_ROOT'} . "\n"; 
 }
 
-sub installRequiredPears {
-	my $modelRoot = $ENV{'MODEL_ROOT'};
-	if (-e "$modelRoot/pt-sent.model") {
-	 	installPearByName('SentenceDetector');
-	}	
-	if (-e "$modelRoot/pt-tok.model") {
-	 	installPearByName('Tokenizer');
-	}		
-	if (-e "$modelRoot/pt-prop.model") {
-	 	installPearByName('MultiWordExp');
-	}			
-	if (-e "$modelRoot/pt-con.model") {
-	 	installPearByName('Contraction');
-	}			
-	#if (-e "$modelRoot/pt-pos.model" && -e "$modelRoot/pt-feat.model") {
-	# 	installPearByName('Featurizer');
-	# 	installPearByName('PosTagger');
-	#}			
-	#if (-e "$modelRoot/pt-feat.model") {
-	# 	installPearByName('Featurizer');
-	#}
-}
-
 sub init() {
 	checkVars();
 	install("../../cogroo-common/pom.xml");
 	install("../../cogroo-base/pom.xml");
 	install("../../../cogroo3/pom.xml");
-	install("../pom.xml");
 	install("../UIMAAutomation/pom-evaluators.xml");
 	installPearByPath("../Cogroo3AE/target/Cogroo3AE.pear");
 }
