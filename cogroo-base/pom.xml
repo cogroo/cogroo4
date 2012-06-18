@@ -100,7 +100,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<schemaDirectory>src/main/schema</schemaDirectory>
+					<schemaDirectory>src/main/resources/br/ccsl/cogroo/config</schemaDirectory>
 					<extension>true</extension>
 					<generatePackage>br.ccsl.cogroo.config</generatePackage>
 				</configuration>
