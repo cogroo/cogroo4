@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cogroo.uima</groupId>
-	<artifactId>NewTagsetNewTagsetBaselineCogrooAE</artifactId>
+	<artifactId>NewTagsetBaselineCogrooAE</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<parent>
@@ -13,9 +13,9 @@
 	</parent>
 	
 	<properties>
-		<uima.componentID>NewTagsetNewTagsetBaselineCogrooAE</uima.componentID>
+		<uima.componentID>NewTagsetBaselineCogrooAE</uima.componentID>
 		<uima.datapath>$main_root</uima.datapath>
-		<uima.mainComponent>desc/NewTagsetNewTagsetBaselineCogrooAE.xml</uima.mainComponent>
+		<uima.mainComponent>desc/NewTagsetBaselineCogrooAE.xml</uima.mainComponent>
 	</properties>
 	<repositories>
 
@@ -45,12 +45,21 @@
 
 	</repositories>
 
+	<dependencyManagement>
+		<dependencies>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.uima</groupId>
@@ -70,11 +79,6 @@
 			<version>2.3.1</version>
 			<type>jar</type>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.usp.pcs.lta.cogroo</groupId>
-			<artifactId>CoGrOOBase</artifactId>
-			<version>3.2.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>cogroo.uima</groupId>
@@ -108,9 +112,29 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>br.ccsl.cogroo</groupId>
+			<artifactId>cogroo-base</artifactId>
+			<version>4.0.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.xml.bind</groupId>
+					<artifactId>jaxb-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>target/models</directory>
+				<targetPath>eval_models</targetPath>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -130,32 +154,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>br.usp.pcs.lta.cogroo</groupId>
-									<artifactId>CoGrOOBase</artifactId>
-									<version>3.2.1-SNAPSHOT</version>
-									<classifier>bin</classifier>
-									<type>zip</type>
-									<outputDirectory>target/cogroo</outputDirectory>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 			<!-- pear -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -169,23 +167,6 @@
 							<tasks>
 								<delete dir="${basedir}/resources" includeemptydirs="true" />
 								<delete dir="${basedir}/lib" includeemptydirs="true" />
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>create-data</id>
-						<phase>process-test-resources</phase>
-						<configuration>
-							<tasks>
-								<copy todir="${basedir}/resources/data">
-									<fileset dir="target/cogroo/data" />
-								</copy>
-								<copy todir="${basedir}/resources/rules">
-									<fileset dir="target/cogroo/rules" />
-								</copy>
 							</tasks>
 						</configuration>
 						<goals>

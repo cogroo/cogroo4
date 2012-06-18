@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<languageConfiguration xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="languageConfiguration.xsd">
+	<locale>pt_BR</locale>
+	<model type="sentenceDetector">/eval_models/pt-sent.model</model>
+	<model type="tokenizer">/eval_models/pt-tok.model</model>
+	<model type="nameFinder">/eval_models/pt-prop.model</model>
+	<model type="contractionFinder">/eval_models/pt-con.model</model>
+	<model type="posTagger">/eval_models/pt-pos.model</model>
+	<model type="featurizer">/eval_models/pt-feat.model</model>
+
+	<pipe>
+		${sent}
+		${tok}
+		${prop}
+		${con}
+		${pos}
+		${chunker}
+		${sp}
+	</pipe>
+</languageConfiguration>

@@ -5,32 +5,49 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import br.usp.pcs.lta.cogroo.configuration.LegacyRuntimeConfiguration;
-import br.usp.pcs.lta.cogroo.entity.Sentence;
-import br.usp.pcs.lta.cogroo.entity.Token;
-import br.usp.pcs.lta.cogroo.entity.impl.runtime.MorphologicalTag;
-import br.usp.pcs.lta.cogroo.entity.tree.Leaf;
-import br.usp.pcs.lta.cogroo.entity.tree.Node;
-import br.usp.pcs.lta.cogroo.entity.tree.TreeElement;
-import br.usp.pcs.lta.cogroo.grammarchecker.CheckerResult;
-import br.usp.pcs.lta.cogroo.grammarchecker.CogrooI;
-import br.usp.pcs.lta.cogroo.tag.LegacyTagInterpreter;
-import br.usp.pcs.lta.cogroo.tag.TagInterpreterI;
+import br.ccsl.cogroo.analyzer.ComponentFactory;
+import br.ccsl.cogroo.analyzer.Pipe;
+import br.ccsl.cogroo.checker.CheckDocument;
+import br.ccsl.cogroo.checker.GrammarCheckerAnalyzer;
+import br.ccsl.cogroo.entities.Sentence;
+import br.ccsl.cogroo.entities.Token;
+import br.ccsl.cogroo.entities.impl.MorphologicalTag;
+import br.ccsl.cogroo.entities.tree.Leaf;
+import br.ccsl.cogroo.entities.tree.Node;
+import br.ccsl.cogroo.entities.tree.TreeElement;
+import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
+import br.ccsl.cogroo.interpreters.TagInterpreterI;
+
+import com.google.common.io.Closeables;
 
 public class ProcessReport {
 
-  CogrooI cogroo;
+  Pipe pipe;
   private String report;
   private String output;
+  GrammarCheckerAnalyzer cogroo;
 
-  public ProcessReport(String resources, String report, String output) {
+  public ProcessReport(String resources, String report, String output)
+      throws IllegalArgumentException, IOException {
     // UIMA will load modules using envvar!
 
     // the rest we load normally
-    this.cogroo = new MultiCogroo(new LegacyRuntimeConfiguration(resources));
+    
+    InputStream in = ComponentFactory.class.getResourceAsStream("/models_pt_BR.xml");
+    ComponentFactory factory = ComponentFactory.create(in);
+    
+      cogroo = new GrammarCheckerAnalyzer();
+    
+    pipe = (Pipe) factory.createPipe();
+    pipe.add(cogroo);
+    
+    Closeables.closeQuietly(in);
+    
+    
     this.report = report;
     this.output = output;
   }
@@ -56,19 +73,18 @@ public class ProcessReport {
   }
 
   private String process(String text) {
-    CheckerResult results = cogroo.analyseAndCheckText(text);
-    StringBuilder sb = new StringBuilder();
+    CheckDocument doc = new CheckDocument();
+    doc.setText(text);
     
-    if(results == null) {
-      return "Processing failed: " + text;
-    }
-    for (Sentence sentence : results.sentences) {
+    pipe.analyze(doc);
+    
+    StringBuilder sb = new StringBuilder();
+    for (Sentence sentence : doc.getSentencesLegacy()) {
       sb.append("Flat structure for: ").append(sentence.getSentence())
           .append("\n");
       for (Token token : sentence.getTokens()) {
         // print the text
-        sb.append(text.substring(token.getSpan().getStart(), token.getSpan()
-            .getEnd()));
+        sb.append(token.getLexeme());
         // print the lemma
         sb.append(" [" + token.getPrimitive() + " ");
         // print the morphological tag, we use a tag interpreter here
@@ -141,7 +157,7 @@ public class ProcessReport {
   // tag interpreter is responsible for serializing and reading tags.
   // .. the LegacyTagInterpreter follow a variant of GC tagset:
   // .. http://beta.visl.sdu.dk/visl/pt/info/portsymbol.html
-  private static final TagInterpreterI tagInterpreter = new LegacyTagInterpreter();
+  private static final TagInterpreterI tagInterpreter = new FlorestaTagInterpreter();
 
   private static String mtagToStr(MorphologicalTag tag) {
     return tagInterpreter.serialize(tag);

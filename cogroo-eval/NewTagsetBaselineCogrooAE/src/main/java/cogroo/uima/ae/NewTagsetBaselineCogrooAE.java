@@ -1,5 +1,7 @@
 package cogroo.uima.ae;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.apache.uima.UimaContext;
@@ -13,14 +15,16 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Level;
 import org.apache.uima.util.Logger;
 
-import br.usp.pcs.lta.cogroo.configuration.LegacyRuntimeConfiguration;
-import br.usp.pcs.lta.cogroo.configuration.RuntimeConfigurationI;
-import br.usp.pcs.lta.cogroo.entity.Mistake;
-import br.usp.pcs.lta.cogroo.grammarchecker.CogrooI;
-import br.usp.pcs.lta.cogroo.tools.checker.Checker;
-import cogroo.MultiCogroo;
+import br.ccsl.cogroo.analyzer.AnalyzerI;
+import br.ccsl.cogroo.analyzer.ComponentFactory;
+import br.ccsl.cogroo.analyzer.Pipe;
+import br.ccsl.cogroo.checker.CheckDocument;
+import br.ccsl.cogroo.checker.GrammarCheckerAnalyzer;
+import br.ccsl.cogroo.entities.Mistake;
 import cogroo.uima.GoldenSentence;
 import cogroo.uima.GrammarError;
+
+import com.google.common.io.Closeables;
 
 public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
 
@@ -38,7 +42,7 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
 
   private Boolean mIsBySentences;
 
-  private CogrooI mCogroo;
+  private AnalyzerI mCogroo;
 
   private Logger mLogger;
 
@@ -47,13 +51,25 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
    */
   public void initialize(UimaContext aContext)
       throws ResourceInitializationException {
-
-    String pathToResources = aContext.getDataPath()
-        + "/"
-        + ((String) aContext.getConfigParameterValue(PARAM_RESOURCESPATH))
-            .trim();
-
-    System.out.println("Path to resources: " + pathToResources);
+    
+    InputStream in = ComponentFactory.class.getResourceAsStream("/models.xml");
+    
+    ComponentFactory factory = ComponentFactory.create(in);
+    
+    mCogroo = factory.createPipe();
+    
+    GrammarCheckerAnalyzer checker;
+    try {
+      checker = new GrammarCheckerAnalyzer();
+    } catch (IllegalArgumentException e) {
+      throw new ResourceInitializationException(e);
+    } catch (IOException e) {
+      throw new ResourceInitializationException(e);
+    }
+    
+    ((Pipe) mCogroo).add(checker);
+    
+    Closeables.closeQuietly(in);
 
     String[] rulesToIgnore = (String[]) aContext
         .getConfigParameterValue(PARAM_RULESTOIGNORE);
@@ -64,22 +80,16 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
       mIsBySentences = Boolean.FALSE;
     }
 
-    RuntimeConfigurationI config = new LegacyRuntimeConfiguration(
-        pathToResources);
-
     String[] ignoreRules = new String[rulesToIgnore.length];
     for (int i = 0; i < rulesToIgnore.length; i++) {
       ignoreRules[i] = rulesToIgnore[i].trim();
     }
 
-    // instantiate the grammar checker passing the configuration
-    mCogroo = new MultiCogroo(config);
-
     if (ignoreRules.length > 0) {
-      Checker ap = config.getChecker();
-      for (String rule : ignoreRules) {
-        ap.ignore(rule);
-      }
+//      Checker ap = config.getChecker();
+//      for (String rule : ignoreRules) {
+//        ap.ignore(rule);
+//      }
     }
     mLogger = aContext.getLogger();
   }
@@ -94,12 +104,11 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
       int start = s.getBegin();
       String text = s.getCoveredText();
       try {
-        // mLogger.log(Level.SEVERE, "Will check: " + text);
-        // if(text.contains("Duvidavam de que precisasses de apoio.")) {
-        // System.out.println();
-        // }
-        // System.out.println(text);
-        List<Mistake> mistakes = mCogroo.checkText(text);
+
+        CheckDocument doc = new CheckDocument();
+        doc.setText(text);
+        mCogroo.analyze(doc);
+        List<Mistake> mistakes = doc.getMistakes();
         for (Mistake mistake : mistakes) {
           GrammarError ge = new GrammarError(jcas);
           ge.setBegin(start + mistake.getStart());
@@ -114,7 +123,8 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
         }
       } catch (Throwable e) {
         System.out.println("Failed: " + text);
-        mLogger.log(Level.SEVERE, "Failed: " + text);
+        e.printStackTrace();
+        mLogger.log(Level.SEVERE, "Failed: " + text,e);
       }
 
     }
