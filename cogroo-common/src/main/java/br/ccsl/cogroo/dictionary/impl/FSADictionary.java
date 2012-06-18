@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -53,7 +52,7 @@ public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<
             }
           });
 
-  public FSADictionary(DictionaryLookup dictLookup) {
+  private FSADictionary(DictionaryLookup dictLookup) {
     this.dictLookup = dictLookup;
   }
 
@@ -219,7 +218,7 @@ public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<
       IOException {
 
     long start = System.nanoTime();
-    FSADictionary td = (FSADictionary) create("fsa_dictionaries/pos/pt_br_jspell.dict");
+    FSADictionary td = (FSADictionary) create("fsa_dictionaries/pos/pt_br_jspell_corpus.dict");
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
     Scanner kb = new Scanner(System.in);
@@ -227,9 +226,12 @@ public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<
     String input = kb.nextLine();
     while (!input.equals("q")) {
       if (input.equals("0")) {
-        input = "\"";
+        input = "árvores";
       }
-      System.out.println(Arrays.toString(td.getLemmas("fomos", "v-fin")));
+      List<PairWordPOSTag> pair = td.getTagsAndLemms(input);
+      for (PairWordPOSTag pairWordPOSTag : pair) {
+        System.out.println(pairWordPOSTag.getPosTag() + " : " + pairWordPOSTag.getWord());
+      }
       System.out.print("Enter a query: ");
       input = kb.nextLine();
     }

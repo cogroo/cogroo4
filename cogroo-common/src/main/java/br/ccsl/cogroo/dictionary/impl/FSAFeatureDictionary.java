@@ -49,7 +49,7 @@ public class FSAFeatureDictionary implements FeatureDictionaryI, Iterable<WordTa
         List<String> tags = new ArrayList<String>(data.size());
         for (int i = 0; i < data.size(); i++) {
           String completeTag = data.get(i).getTag().toString();
-          if (completeTag.startsWith(prefix)) {
+          if (completeTag.startsWith(prefix) || key.getPostag() == null) {
             tags.add(completeTag.substring(completeTag.indexOf("#") + 1));
           }
         }
@@ -59,6 +59,7 @@ public class FSAFeatureDictionary implements FeatureDictionaryI, Iterable<WordTa
     return null;
   }
 
+  // add all features if pos == null
   public String[] getFeatures(String word, String pos) {
     try {
       return cache.get(new WordTag(word, pos)).orNull();
@@ -153,5 +154,20 @@ public class FSAFeatureDictionary implements FeatureDictionaryI, Iterable<WordTa
 
   public Iterator<WordTag> iterator() {
     return new IteratorWrapper(this.dictLookup.iterator());
+  }
+
+  
+  public static FeatureDictionaryI createFromResources(String path)
+      throws IllegalArgumentException, IOException {
+    
+    InputStream dic = FSAFeatureDictionary.class.getResourceAsStream(path);
+    InputStream info = FSAFeatureDictionary.class.getResourceAsStream(Dictionary.getExpectedFeaturesName(path));
+    
+    FeatureDictionaryI fsa = create(dic, info);
+    
+    dic.close();
+    info.close();
+    
+    return fsa;
   }
 }

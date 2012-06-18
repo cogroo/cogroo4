@@ -26,7 +26,7 @@ public class FSASynthDictionary {
     synchronized (dictLookup) {
       List<WordData> data = dictLookup.lookup(lemma);
       for (WordData wordData : data) {
-        result.add(new PairWordPOSTag(wordData.getWord().toString(), wordData
+        result.add(new PairWordPOSTag(wordData.getStem().toString(), wordData
             .getTag().toString()));
       }
     }
@@ -63,9 +63,12 @@ public class FSASynthDictionary {
   }
   
   public static void main(String[] args) throws IllegalArgumentException, IOException {
-    FSASynthDictionary td = (FSASynthDictionary) create("fsa_dictionaries/featurizer/pt_br_feats.dict");
     
-    List<PairWordPOSTag> x = td.synthesize("casa");
+    //String dic = "fsa_dictionaries/featurizer/pt_br_feats_synth.dict";
+    String dic = "fsa_dictionaries/pos/pt_br_jspell_synth.dict";
+    FSASynthDictionary td = (FSASynthDictionary) create(dic);
+    
+    List<PairWordPOSTag> x = td.synthesize("árvore");
     
     System.out.println(Arrays.toString(x.toArray()));
   }
