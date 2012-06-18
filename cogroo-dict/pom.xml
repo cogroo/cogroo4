@@ -116,6 +116,8 @@
 								<argument>true</argument>
 								<argument>-corpus</argument>
 								<argument>${env.CORPUS_ROOT}/Bosque/Bosque_CF_8.0.ad.txt</argument>
+								<argument>-encoding</argument>
+								<argument>UTF-8</argument>
 							</arguments>
 						</configuration>
 					</execution>
