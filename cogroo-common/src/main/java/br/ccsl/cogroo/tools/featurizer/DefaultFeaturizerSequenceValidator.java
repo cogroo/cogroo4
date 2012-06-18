@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import opennlp.tools.util.SequenceValidator;
 import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
@@ -136,18 +137,85 @@ public class DefaultFeaturizerSequenceValidator implements
     if(tags.contains(outcome)) {
       return true;
     }
-    Set<String> tagParts = new HashSet<String>();
-    for (String tag : tags) {
-      tagParts.addAll(Arrays.asList(tag.split("[_=/]")));
+    
+    for (String t : tags) {
+      if(matches(outcome, t))
+        return true;
     }
-    for (String part : outcome.split("[_=/]")) {
-      if (!tagParts.contains(part)) {
-//        System.err.println("  -- missing: " + part);
-        return false;
-      }
-    }
-
-    return true;
+    return false;
   }
 
+  public static boolean matches(String outcome, String tag) {
+    if("-".equals(tag) || "-".equals(outcome)) {
+      return false;
+    }
+    
+    Set<String> outcomeParts = new HashSet<String>(Arrays.asList(outcome
+        .split("[=-]")));
+    Set<String> tagParts = new HashSet<String>(Arrays.asList(tag.split("[=-]")));
+
+    if(outcomeParts.size() != tagParts.size()) {
+      return false;
+    }
+    
+    List<String> remove = new ArrayList<String>();
+    for (String t : tagParts) {
+      if (outcomeParts.contains(t)) {
+        remove.add(t);
+      }
+    }
+    
+    tagParts.removeAll(remove);
+    if(tagParts.size() == 0) {
+      return true;
+    }
+    
+    if(!tag.contains("/")) {
+      return false;
+    }
+    
+    outcomeParts.removeAll(remove);
+    
+    // lets split the outcome, we don't need to consume all of this tags.
+    Set<String> outcomeParts2 = new HashSet<String>();
+    for (String o : outcomeParts) {
+      outcomeParts2.addAll(Arrays.asList(o.split("/")));
+    }
+    remove.clear();
+    // the tagPars we use as it is... we iterate and eliminate the parts that match with outcomeParts2 
+    for (String t : tagParts) {
+      for (String o : outcomeParts2) {
+        if(t.contains(o) && !Character.isDigit(o.charAt(0))) {
+          remove.add(t);remove.add(o);
+          break;
+        }
+      }
+    }
+    
+    tagParts.removeAll(remove);
+    outcomeParts2.removeAll(remove);
+    if(tagParts.size() == 0 && outcomeParts2.size() == 0) {
+      return true;
+    }
+    
+    if(tagParts.size() == 1 && outcomeParts2.size() >= 1) {
+      for (String op : outcomeParts2) {
+        String t = new ArrayList<String>(tagParts).get(0);
+        if(Character.isDigit(op.charAt(0)) && Character.isDigit(t.charAt(0))) {
+          boolean ok = true;
+          for (int i = 0; i < op.length(); i++) {
+            if(!t.contains(Character.toString(op.charAt(i)))) {
+              ok = false;
+              break;
+            }
+          }
+          if(ok)
+            return true;
+        }
+      }
+    }
+    
+
+    return false;
+  }
 }

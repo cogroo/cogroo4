@@ -115,8 +115,7 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
         Set<String> poisoned = new HashSet<String>();
 
         for (WordTag wt : (Iterable<WordTag>) posDict) {
-          Collections.addAll(dictTags,
-              posDict.getFeatures(wt.getWord(), wt.getPostag()));
+          dictTags.add(wt.getPostag());
         }
 
         Set<String> modelTags = new HashSet<String>();
