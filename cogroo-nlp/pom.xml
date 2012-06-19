@@ -11,9 +11,9 @@
 		<relativePath>../cogroo</relativePath>
 	</parent>
 
-	<artifactId>cogroo-common</artifactId>
+	<artifactId>cogroo-nlp</artifactId>
 	<packaging>jar</packaging>
-	<name>Cogroo-common</name>
+	<name>cogroo-nlp</name>
 
 	<dependencies>
 		<dependency>
@@ -152,4 +152,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	<description>Contains OpenNLP customizations, such as factories and new tools, also adds suport to FSA Dictionaries from Morfologik.</description>
 </project>
