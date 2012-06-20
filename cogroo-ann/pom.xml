@@ -11,9 +11,9 @@
 		<relativePath>../cogroo</relativePath>
 	</parent>
 
-	<artifactId>cogroo-base</artifactId>
+	<artifactId>cogroo-ann</artifactId>
 	<packaging>jar</packaging>
-	<name>Cogroo Base</name>
+	<name>Cogroo Annotators</name>
 
 	<dependencies>
 		<dependency>
@@ -125,4 +125,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	<description>An API with pipes and annotators for NLP</description>
 </project>
