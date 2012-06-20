@@ -19,7 +19,7 @@
  * This code derived from Apache OpenNLP. Please keep the header.
  */
 
-package br.ccsl.cogroo.cmdline;
+package br.ccsl.cogroo.gc.cmdline;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -34,46 +34,17 @@ import opennlp.tools.cmdline.CmdLineTool;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
 import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.cmdline.TypedCmdLineTool;
-import opennlp.tools.cmdline.chunker.ChunkerCrossValidatorTool;
-import opennlp.tools.cmdline.chunker.ChunkerTrainerTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderCrossValidatorTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderEvaluatorTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderTrainerTool;
-import opennlp.tools.cmdline.postag.POSTaggerCrossValidatorTool;
-import opennlp.tools.cmdline.postag.POSTaggerTrainerTool;
 import opennlp.tools.util.Version;
-import br.ccsl.cogroo.cmdline.dictionary.AbbreviationDictionaryBuilderTool;
 import br.ccsl.cogroo.cmdline.dictionary.POSDictionaryBuilderTool;
 import br.ccsl.cogroo.cmdline.dictionary.TabSeparatedPOSDictionaryBuilderTool;
-import br.ccsl.cogroo.cmdline.featurizer.FeaturizerConverterTool;
-import br.ccsl.cogroo.cmdline.featurizer.FeaturizerCrossValidatorTool;
-import br.ccsl.cogroo.cmdline.featurizer.FeaturizerEvaluatorTool;
-import br.ccsl.cogroo.cmdline.featurizer.FeaturizerMETool;
-import br.ccsl.cogroo.cmdline.featurizer.FeaturizerTrainerTool;
-import br.ccsl.cogroo.formats.FeatureSampleStreamFactory;
-import br.ccsl.cogroo.formats.ad.ADChunkBasedHeadFinderSampleStreamFactory;
-import br.ccsl.cogroo.formats.ad.ADChunkBasedShallowParserSampleStreamFactory;
-import br.ccsl.cogroo.formats.ad.ADContractionNameSampleStreamFactory;
-import br.ccsl.cogroo.formats.ad.ADExPOSSampleStreamFactory;
-import br.ccsl.cogroo.formats.ad.ADExpNameSampleStreamFactory;
-import br.ccsl.cogroo.formats.ad.ADFeatureSampleStreamFactory;
 
 public final class CLI {
 
-  public static final String CMD = "cogroo-nlp";
+  public static final String CMD = "cogroo-gc";
 
   private static Map<String, AbstractCmdLineTool> toolLookupMap;
 
   static {
-    // Register other types
-    FeatureSampleStreamFactory.registerFactory();
-    ADFeatureSampleStreamFactory.registerFactory();
-    ADContractionNameSampleStreamFactory.registerFactory();
-    ADExpNameSampleStreamFactory.registerFactory();
-    ADExPOSSampleStreamFactory.registerFactory();
-    ADChunkBasedHeadFinderSampleStreamFactory.registerFactory();
-    ADChunkBasedShallowParserSampleStreamFactory.registerFactory();
     
     toolLookupMap = new LinkedHashMap<String, AbstractCmdLineTool>();
 
@@ -83,28 +54,6 @@ public final class CLI {
     tools.add(new POSDictionaryBuilderTool());
     tools.add(new TabSeparatedPOSDictionaryBuilderTool());
 
-    // Featurizer
-    tools.add(new FeaturizerMETool());
-    tools.add(new FeaturizerTrainerTool());
-    tools.add(new FeaturizerEvaluatorTool());
-    tools.add(new FeaturizerCrossValidatorTool());
-    tools.add(new FeaturizerConverterTool());
-
-    // Contraction
-    tools.add(new AbbreviationDictionaryBuilderTool());
-    tools.add(new TokenNameFinderTool());
-    tools.add(new TokenNameFinderTrainerTool());
-    tools.add(new TokenNameFinderEvaluatorTool());
-    tools.add(new TokenNameFinderCrossValidatorTool());
-
-    // tagger
-    tools.add(new POSTaggerTrainerTool());
-    tools.add(new POSTaggerCrossValidatorTool());
-
-    // Chunker
-    tools.add(new ChunkerTrainerTool());
-    tools.add(new ChunkerCrossValidatorTool());
-    
     for (AbstractCmdLineTool tool : tools) {
       toolLookupMap.put(tool.getName(), tool);
     }

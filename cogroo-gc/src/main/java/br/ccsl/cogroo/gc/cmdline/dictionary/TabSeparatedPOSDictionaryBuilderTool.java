@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package br.ccsl.cogroo.cmdline.dictionary;
+package br.ccsl.cogroo.gc.cmdline.dictionary;
 
 import java.io.BufferedReader;
 import java.io.File;
