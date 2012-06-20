@@ -23,9 +23,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import opennlp.tools.util.SequenceValidator;
 import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
+import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
 
 public class DefaultFeaturizerSequenceValidator implements
     SequenceValidator<WordTag> {
@@ -128,6 +130,8 @@ public class DefaultFeaturizerSequenceValidator implements
     }
     return Collections.unmodifiableList(filtered);
   }
+
+  FlorestaTagInterpreter ti = new FlorestaTagInterpreter();
 
   private boolean matches(String outcome, List<String> tags) {
     if(tags.contains(outcome)) {
