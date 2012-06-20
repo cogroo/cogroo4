@@ -41,6 +41,14 @@
 		<system>redmine</system>
 		<url>http://ccsl.ime.usp.br/redmine/projects/cogroo</url>
 	</issueManagement>
+	
+		
+	<modules>
+		<module>../cogroo-nlp</module>
+		<module>../cogroo-ann</module>
+		<module>../cogroo-gc</module>
+		<module>../lang</module>
+	</modules>
 
 	
 	<distributionManagement>
@@ -258,11 +266,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	
-	<modules>
-<!-- 		<module>../cogroo-dict</module> -->
-		<module>../cogroo-common</module>
-		<module>../cogroo-base</module>
-	</modules>
 
 </project>
