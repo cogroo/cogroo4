@@ -19,7 +19,7 @@
  * Derived from Apache OpenNLP. Please keep the header. 
  */
 
-package br.ccsl.cogroo.cmdline.dictionary;
+package br.ccsl.cogroo.gc.cmdline.dictionary;
 
 import java.io.File;
 
