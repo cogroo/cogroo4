@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.ccsl.cogroo.dictionary.impl.FSADictionary;
 import br.ccsl.cogroo.dictionary.impl.FSASynthDictionary;
+import br.ccsl.cogroo.util.PairWordPOSTag;
 
 public class FSALexicalDictionary implements LexicalDictionary {
   

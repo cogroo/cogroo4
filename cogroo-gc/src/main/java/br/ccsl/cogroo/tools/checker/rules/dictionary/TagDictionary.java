@@ -38,6 +38,7 @@ import org.apache.log4j.Logger;
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.interpreters.TagInterpreterI;
 import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.util.PairWordPOSTag;
 
 /**
  * Provides access to the FSA tag dictionary

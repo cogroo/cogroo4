@@ -2,6 +2,8 @@ package br.ccsl.cogroo.tools.checker.rules.dictionary;
 
 import java.util.List;
 
+import br.ccsl.cogroo.util.PairWordPOSTag;
+
 
 public interface LexicalDictionary {
 	

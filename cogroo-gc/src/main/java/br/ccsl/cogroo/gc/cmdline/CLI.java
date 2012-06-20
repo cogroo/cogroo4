@@ -28,6 +28,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import br.ccsl.cogroo.gc.cmdline.dictionary.POSDictionaryBuilderTool;
+import br.ccsl.cogroo.gc.cmdline.dictionary.TabSeparatedPOSDictionaryBuilderTool;
+
 import opennlp.tools.cmdline.AbstractCmdLineTool;
 import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CmdLineTool;
@@ -35,8 +38,6 @@ import opennlp.tools.cmdline.StreamFactoryRegistry;
 import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.cmdline.TypedCmdLineTool;
 import opennlp.tools.util.Version;
-import br.ccsl.cogroo.cmdline.dictionary.POSDictionaryBuilderTool;
-import br.ccsl.cogroo.cmdline.dictionary.TabSeparatedPOSDictionaryBuilderTool;
 
 public final class CLI {
 
