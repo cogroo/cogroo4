@@ -35,11 +35,6 @@
 			<artifactId>log4j</artifactId>
 			<version>[1.2,2)</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.2.5</version>
-		</dependency>
 
 
 		<dependency>
@@ -69,15 +64,6 @@
 	</dependencies>
 
 	<build>
-	<resources>
-		<resource>
-			<targetPath>fsa_dictionaries</targetPath>
-			<directory>fsa_dictionaries</directory>
-		</resource>
-		<resource>
-			<directory>src/main/resources</directory>
-		</resource>
-	</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -108,44 +94,6 @@
 						<id>create-javadoc-jar</id>
 						<configuration>
 							<excludePackageNames>br.ccsl.cmdline</excludePackageNames>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<!-- http://java.net/projects/maven-jaxb2-plugin -->
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>rules</id>
-						<inherited>false</inherited>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<schemaDirectory>src/main/resources/rules/schema</schemaDirectory>
-					<extension>true</extension>
-					<generatePackage>br.ccsl.cogroo.tools.checker.rules.model</generatePackage>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>generated-sources/xjc</source>
-							</sources>
 						</configuration>
 					</execution>
 				</executions>
