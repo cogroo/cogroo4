@@ -18,12 +18,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.ccsl.cogroo</groupId>
-			<artifactId>cogroo-ann</artifactId>
+			<artifactId>cogroo-ann-pt_br</artifactId>
 			<version>4.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>br.ccsl.cogroo</groupId>
-			<artifactId>cogroo-pt_br</artifactId>
+			<artifactId>cogroo-gc</artifactId>
 			<version>4.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

@@ -43,6 +43,7 @@
 	</issueManagement>
 
 	<modules>
+		<module>cogroo-gc-pt_br</module>
 		<module>cogroo-ann-pt_br</module>
 		<module>cogroo-pt_br</module>
 	</modules>
