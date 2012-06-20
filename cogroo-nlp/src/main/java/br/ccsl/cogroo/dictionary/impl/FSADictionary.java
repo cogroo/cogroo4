@@ -20,7 +20,7 @@ import opennlp.tools.postag.TagDictionary;
 import org.apache.log4j.Logger;
 
 import br.ccsl.cogroo.dictionary.LemmaDictionaryI;
-import br.ccsl.cogroo.tools.checker.rules.dictionary.PairWordPOSTag;
+import br.ccsl.cogroo.util.PairWordPOSTag;
 
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;

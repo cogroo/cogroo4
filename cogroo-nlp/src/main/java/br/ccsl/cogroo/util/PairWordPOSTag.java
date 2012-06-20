@@ -1,4 +1,4 @@
-package br.ccsl.cogroo.tools.checker.rules.dictionary;
+package br.ccsl.cogroo.util;
 
 import com.google.common.base.Objects;
 

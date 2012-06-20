@@ -11,7 +11,7 @@ import java.util.List;
 import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
-import br.ccsl.cogroo.tools.checker.rules.dictionary.PairWordPOSTag;
+import br.ccsl.cogroo.util.PairWordPOSTag;
 
 public class FSASynthDictionary {
 

@@ -12,7 +12,7 @@ import opennlp.tools.postag.DefaultPOSContextGenerator;
 import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 import br.ccsl.cogroo.dictionary.impl.FSADictionary;
 import br.ccsl.cogroo.dictionary.impl.FSAFeatureDictionary;
-import br.ccsl.cogroo.tools.checker.rules.dictionary.PairWordPOSTag;
+import br.ccsl.cogroo.util.PairWordPOSTag;
 
 public class PortuguesePOSContextGenerator extends DefaultPOSContextGenerator {
 
