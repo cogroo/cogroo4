@@ -487,4 +487,10 @@ public class MorphologicalTag extends Tag implements Cloneable {
     } 
     return false;
   }
+
+  public boolean isEmpty() {
+    return clazz == null && gender == null && number == null && caze == null
+        && person == null && tense == null && mood == null
+        && punctuation == null;
+  }
 }

@@ -264,12 +264,16 @@ public class TabSeparatedPOSDictionaryBuilderTool extends
 
             MorphologicalTag featsMT = completeTag.clone();
             featsMT.setClazz(null);
-            String featsString = tagd.serialize(featsMT);
-
+            
+            String featsString = null;
+            
+            if(!featsMT.isEmpty()) {
+            	featsString = tagd.serialize(featsMT);
+            }
+            
             if (featsString == null || featsString.length() == 0) {
               featsString = "-";
             }
-
             
             if(classString.startsWith("v-") && word.contains("-")) {
               // don't add

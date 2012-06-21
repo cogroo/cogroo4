@@ -321,7 +321,7 @@ public class JspellTagInterpreter implements TagInterpreterI {
         m.setCase(null);
         m.setGender(null);
         m.setMood(null);
-//        m.setNumber(null); // bastantes, quantos
+        m.setNumber(null); // bastantes, quantos
         m.setPerson(null);
         m.setPunctuation(null);
         m.setTense(null);

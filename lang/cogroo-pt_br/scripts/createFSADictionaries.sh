@@ -1,8 +1,8 @@
 
 # vars
-BASE_PARAM="-inputFile /Users/wcolen/Documents/jspell-git/master/out/cogroo/tagdict.txt -corpus /Users/wcolen/Documents/wrks/corpus/Bosque/Bosque_CF_8.0.ad.txt -encoding "UTF-8" -allowInvalidFeats false"
+BASE_PARAM="-inputFile ../../../jspell.br/out/cogroo/tagdict.txt -corpus /Users/wcolen/Documents/wrks/corpus/Bosque/Bosque_CF_8.0.ad.txt -encoding "UTF-8" -allowInvalidFeats false"
 
-TS="sh scripts/cogroo TabSeparatedPOSDictionaryBuilder"
+TS="sh ../../cogroo-gc/scripts/cogroo TabSeparatedPOSDictionaryBuilder"
 SYNTH="awk -f scripts/synthesis.awk"
 
 mkdir target/tmp
