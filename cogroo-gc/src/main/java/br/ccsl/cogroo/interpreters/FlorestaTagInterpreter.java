@@ -82,6 +82,8 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
     senumElements.put(SyntacticFunction.NONE, "-");
     senumElements.put(SyntacticFunction.SUBJECT, "SUBJ");
     senumElements.put(SyntacticFunction.VERB, "VERB");
+    senumElements.put(SyntacticFunction.INDIRECT_OBJECT, "PIV");
+    senumElements.put(SyntacticFunction.DIRECT_OBJECT, "ACC");
 
     ENUM_STAG_PARTS = Collections.unmodifiableMap(senumElements);
     Set<SyntacticFunction> k1 = ENUM_STAG_PARTS.keySet();

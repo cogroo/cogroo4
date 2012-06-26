@@ -23,6 +23,8 @@ import br.ccsl.cogroo.text.Token;
 import br.ccsl.cogroo.tools.checker.Checker;
 import br.ccsl.cogroo.tools.checker.CheckerComposite;
 import br.ccsl.cogroo.tools.checker.Merger;
+import br.ccsl.cogroo.tools.checker.checkers.PunctuationChecker;
+import br.ccsl.cogroo.tools.checker.checkers.WordCombinationChecker;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesApplier;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesProvider;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesAccess;
@@ -53,8 +55,13 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     RulesTreesAccess rta = new RulesTreesFromScratchAccess(rtb);
     RulesTreesProvider rtp = new RulesTreesProvider(rta, false);
     Checker rulesApplier = new RulesApplier(rtp, td);
-
-    checker = new CheckerComposite(Collections.singletonList(rulesApplier));
+    
+    List<Checker> checkers = new ArrayList<Checker>();
+    checkers.add(new WordCombinationChecker());
+    checkers.add(rulesApplier);
+    checkers.add(new PunctuationChecker());
+    
+    checker = new CheckerComposite(checkers);
 
   }
 
