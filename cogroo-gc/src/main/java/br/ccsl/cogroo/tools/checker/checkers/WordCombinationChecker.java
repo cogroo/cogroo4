@@ -28,33 +28,34 @@ public class WordCombinationChecker extends AbstractChecker {
     List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
     List<Token> tokens = null;
     Verbs verbs = new Verbs();
+    VerbPlusPreps verb = null;
 
-    for (SyntacticChunk syntacticChunk : syntChunks) {
-      SyntacticTag tag = syntacticChunk.getSyntacticTag();
+    for (int i = 0; i < syntChunks.size(); i++) {
+      SyntacticTag tag = syntChunks.get(i).getSyntacticTag();
 
-      if (tag.getSyntacticFunction() == SyntacticFunction.VERB) {
-        tokens = syntacticChunk.getTokens();
-
+      switch (tag.getSyntacticFunction()) {
+      
+      case VERB:
+        tokens = syntChunks.get(i).getTokens();
         for (Token token : tokens) {
           System.out.println(token.getLexeme());
           String lemma = token.getPrimitive();
-
-          VerbPlusPreps verb = verbs.getVerb(lemma);
-          
-          
-          
-          if (verb != null) {
-            List<Prep> preps = verb.getPreps();
-            
-            for (Prep prep : preps) {
-              
-            }
-          }
-
+          verb = verbs.getVerb(lemma);
         }
+        break;
 
+      case DIRECT_OBJECT:
+        tokens = syntChunks.get(i).getTokens();
+        for (Token token : tokens) {
+          String primitive = token.getPrimitive();
+          List<String> list = verb.getPreps().get(i).getObjects();
+          for (String string : list) {
+            if (string.equals(primitive))
+              ;
+          }
+        }
+        break;
       }
-
     }
 
     return word;
@@ -69,11 +70,11 @@ public class WordCombinationChecker extends AbstractChecker {
 
   public List<Mistake> check(Sentence sentence) {
     String text = sentence.getSentence();
-//    List<Mistake> mistakes = new LinkedList<Mistake>();
-//    int offset = sentence.getSpan().getStart();
+    // List<Mistake> mistakes = new LinkedList<Mistake>();
+    // int offset = sentence.getSpan().getStart();
 
     String verb = findVerb(sentence);
-    
+
     return Collections.emptyList();
   }
 

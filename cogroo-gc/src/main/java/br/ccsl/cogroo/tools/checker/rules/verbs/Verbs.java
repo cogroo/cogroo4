@@ -1,7 +1,6 @@
 package br.ccsl.cogroo.tools.checker.rules.verbs;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,9 +45,10 @@ public class Verbs {
 
           } else if (PREP_LINE.matcher(line).matches()) {
             Prep prep = new Prep();
-            String[] words = line.split(":\\s?", 2);
+            String[] words = line.split(":\\s?", 3);
             prep.setPreposition(words[0].substring(1));
             prep.setMeaning(words[1]);
+            prep.setObjects(words[2]);
             vp.addPreps(prep);
           }
         }
