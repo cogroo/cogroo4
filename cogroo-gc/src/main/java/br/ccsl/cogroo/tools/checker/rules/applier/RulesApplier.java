@@ -47,7 +47,7 @@ import br.ccsl.cogroo.entities.TokenGroup;
 import br.ccsl.cogroo.entities.impl.MistakeImpl;
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.entities.impl.TokenCogroo;
-import br.ccsl.cogroo.tools.checker.Checker;
+import br.ccsl.cogroo.tools.checker.TypedChecker;
 import br.ccsl.cogroo.tools.checker.RuleDefinitionI;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import br.ccsl.cogroo.tools.checker.rules.model.Element;
@@ -65,7 +65,7 @@ import br.ccsl.cogroo.tools.checker.rules.util.RulesProperties;
  * @author Fábio Wang Gusukuma (phrase local and subject-verb appliers)
  * @author William Colen
  */
-public final class RulesApplier implements Checker {
+public final class RulesApplier implements TypedChecker {
 	
 	public RulesApplier(RulesTreesProvider rulesTreesProvider, CogrooTagDictionary dictionary) {
 		this.rulesTreesProvider = rulesTreesProvider;

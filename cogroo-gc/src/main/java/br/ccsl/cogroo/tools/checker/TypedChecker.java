@@ -31,13 +31,13 @@ import java.util.Collection;
 import java.util.List;
 
 import br.ccsl.cogroo.entities.Mistake;
-import br.ccsl.cogroo.text.Sentence;
+import br.ccsl.cogroo.entities.Sentence;
 
 /**
  * Interface to implement checkers. Checkers should be added to
  * CheckerComposite.
  */
-public interface Checker {
+public interface TypedChecker {
 
   /**
    * Each checker should have IDs with a fixed prefix so CheckerComposite can

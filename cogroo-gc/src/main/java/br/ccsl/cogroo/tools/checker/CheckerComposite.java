@@ -41,24 +41,24 @@ import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.Sentence;
 import br.ccsl.cogroo.tools.checker.rules.util.MistakeComparator;
 
-public class CheckerComposite implements Checker {
+public class CheckerComposite implements TypedChecker {
 
   private final static String ID_PREFIX = "";
-  private SortedSet<Checker> mChildCheckers;
+  private SortedSet<TypedChecker> mChildCheckers;
   private boolean mAllowOverlaps;
   protected static final Logger LOGGER = Logger
       .getLogger(CheckerComposite.class);
 
   private static final MistakeComparator MISTAKE_COMPARATOR = new MistakeComparator();
 
-  public CheckerComposite(List<Checker> aChildCheckers) {
+  public CheckerComposite(List<TypedChecker> aChildCheckers) {
     this(aChildCheckers, false);
   }
 
-  public CheckerComposite(List<Checker> aChildCheckers, boolean aAllowOverlaps) {
-    SortedSet<Checker> children = new TreeSet<Checker>(
-        new Comparator<Checker>() {
-          public int compare(Checker o1, Checker o2) {
+  public CheckerComposite(List<TypedChecker> aChildCheckers, boolean aAllowOverlaps) {
+    SortedSet<TypedChecker> children = new TreeSet<TypedChecker>(
+        new Comparator<TypedChecker>() {
+          public int compare(TypedChecker o1, TypedChecker o2) {
             if (o1.equals(o2))
               return 0;
 
@@ -82,7 +82,7 @@ public class CheckerComposite implements Checker {
 
     boolean[] occupied = new boolean[sentence.getSentence().length()];
 
-    for (Checker child : mChildCheckers) {
+    for (TypedChecker child : mChildCheckers) {
       List<Mistake> mistakesFromChild = child.check(sentence);
       mistakes.addAll(addFilteredMistakes(mistakesFromChild, occupied,
           sentence.getOffset()));
@@ -118,7 +118,7 @@ public class CheckerComposite implements Checker {
   }
 
   public void ignore(String id) {
-    for (Checker checker : mChildCheckers) {
+    for (TypedChecker checker : mChildCheckers) {
       if (id.startsWith(checker.getIdPrefix())) {
         checker.ignore(id);
         break;
@@ -127,7 +127,7 @@ public class CheckerComposite implements Checker {
   }
 
   public void resetIgnored() {
-    for (Checker checker : mChildCheckers) {
+    for (TypedChecker checker : mChildCheckers) {
       checker.resetIgnored();
     }
   }
@@ -138,7 +138,7 @@ public class CheckerComposite implements Checker {
 
   public List<RuleDefinitionI> getRulesDefinition() {
     List<RuleDefinitionI> definitions = new LinkedList<RuleDefinitionI>();
-    for (Checker d : mChildCheckers) {
+    for (TypedChecker d : mChildCheckers) {
       definitions.addAll(d.getRulesDefinition());
     }
     return definitions;

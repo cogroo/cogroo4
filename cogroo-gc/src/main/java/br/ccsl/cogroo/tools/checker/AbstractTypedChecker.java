@@ -41,10 +41,10 @@ import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.impl.MistakeImpl;
 import br.ccsl.cogroo.tools.checker.rules.model.Example;
 
-public abstract class AbstractChecker implements Checker {
+public abstract class AbstractTypedChecker implements TypedChecker {
 
   protected static final Logger LOGGER = Logger
-      .getLogger(AbstractChecker.class);
+      .getLogger(AbstractTypedChecker.class);
 
   private Set<String> ignored = Collections
       .synchronizedSet(new HashSet<String>());
@@ -79,7 +79,7 @@ public abstract class AbstractChecker implements Checker {
     ignored.clear();
   }
 
-  public AbstractChecker add(RuleDefinitionI ruleDefinition) {
+  public AbstractTypedChecker add(RuleDefinitionI ruleDefinition) {
     this.definitions.put(ruleDefinition.getId(), ruleDefinition);
     return this;
   }
