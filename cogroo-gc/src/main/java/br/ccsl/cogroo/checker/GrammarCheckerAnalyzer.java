@@ -13,6 +13,8 @@ import br.ccsl.cogroo.analyzer.AnalyzerI;
 import br.ccsl.cogroo.entities.Chunk;
 import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.SyntacticChunk;
+import br.ccsl.cogroo.entities.impl.ChunkCogroo;
+import br.ccsl.cogroo.entities.impl.ChunkTag;
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.entities.impl.TokenCogroo;
 import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
@@ -20,7 +22,7 @@ import br.ccsl.cogroo.interpreters.TagInterpreterI;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
-import br.ccsl.cogroo.tools.checker.Checker;
+import br.ccsl.cogroo.tools.checker.TypedChecker;
 import br.ccsl.cogroo.tools.checker.CheckerComposite;
 import br.ccsl.cogroo.tools.checker.Merger;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesApplier;
@@ -33,6 +35,8 @@ import br.ccsl.cogroo.tools.checker.rules.applier.RulesXmlAccess;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.FSALexicalDictionary;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.TagDictionary;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
+import br.ccsl.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
 
 public class GrammarCheckerAnalyzer implements AnalyzerI {
 
@@ -43,6 +47,8 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
 
   private TagDictionary td;
 
+  private ChunkerConverter chunkerConverter;
+
   public GrammarCheckerAnalyzer() throws IllegalArgumentException, IOException {
     RulesProvider xmlProvider = new RulesProvider(RulesXmlAccess.getInstance(),
         false);
@@ -52,9 +58,11 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     RulesTreesBuilder rtb = new RulesTreesBuilder(xmlProvider);
     RulesTreesAccess rta = new RulesTreesFromScratchAccess(rtb);
     RulesTreesProvider rtp = new RulesTreesProvider(rta, false);
-    Checker rulesApplier = new RulesApplier(rtp, td);
+    TypedChecker rulesApplier = new RulesApplier(rtp, td);
 
     checker = new CheckerComposite(Collections.singletonList(rulesApplier));
+    
+    chunkerConverter = new ChunkerConverter(ti);
 
   }
 
@@ -84,8 +92,8 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
 
     List<br.ccsl.cogroo.entities.Token> typedTokenList = new ArrayList<br.ccsl.cogroo.entities.Token>();
     for (Token token : sentence.getTokens()) {
-      br.ccsl.cogroo.entities.Token typedToken = new TokenCogroo(
-          new Span(token.getStart(), token.getEnd()));
+      br.ccsl.cogroo.entities.Token typedToken = new TokenCogroo(new Span(
+          token.getStart(), token.getEnd()));
 
       typedToken.setLexeme(token.getLexeme());
       typedToken.setMorphologicalTag(createMorphologicalTag(token));
@@ -94,13 +102,33 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
       typedTokenList.add(typedToken);
     }
 
-    typedSentence.setChunks(Collections.<Chunk> emptyList());
+    // typedSentence.setChunks(Collections.<Chunk> emptyList());
+
     typedSentence.setSyntacticChunks(Collections.<SyntacticChunk> emptyList());
 
     typedSentence.setTokens(Collections.unmodifiableList(typedTokenList));
+    
+    chunkerConverter.convertChunks(sentence, typedSentence);
 
     if (LOGGER.isDebugEnabled()) {
-      LOGGER.debug("Typede sentence: " + typedSentence);
+      LOGGER.debug("Typed sentence: ");
+      if (LOGGER.isDebugEnabled()) {
+        StringBuilder trace = new StringBuilder();
+        trace.append("Show tree [" + typedSentence.getSentence()
+                + "]: \n");
+        List<br.ccsl.cogroo.entities.Token> tokens = typedSentence.getTokens();
+        for (int i = 0; i < tokens.size(); i++) {
+            trace.append("\t["
+                    + tokens.get(i).getSyntacticTag() + "]["
+                    + tokens.get(i).getChunkTag() + "] (ck: "
+                    + tokens.get(i).getChunk().getMorphologicalTag() + ") "
+                    + tokens.get(i) + " --> {"
+                    + tokens.get(i).getPrimitive() + "}_"
+                    + tokens.get(i).getMorphologicalTag()
+                    + "\n");
+        }
+        LOGGER.debug(trace.toString());
+    }
     }
 
     return typedSentence;
@@ -135,6 +163,88 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
       tok.setPrimitive(tok.getLexeme());
     } else {
       tok.setPrimitive(primitives[0]);
+    }
+  }
+
+  private static class ChunkerConverter {
+    private final TagMask CHUNK_OTHER;
+    private final TagMask CHUNK_BOUNDARY_NOUN_PHRASE;
+    private final TagMask CHUNK_BOUNDARY_NOUN_PHRASE_MAIN;
+    private final TagMask CHUNK_INTERMEDIARY_NOUN_PHRASE_MAIN;
+    private final TagMask CHUNK_BOUNDARY_VERB_PHRASE_MAIN;
+    private final TagMask CHUNK_INTERMEDIARY_VERB_PHRASE;
+    private final TagInterpreterI corpusTagInterpreter;
+
+    public ChunkerConverter(TagInterpreterI corpusTagInterpreter) {
+      this.corpusTagInterpreter = corpusTagInterpreter;
+
+      CHUNK_OTHER = new TagMask();
+      CHUNK_OTHER.setChunkFunction(ChunkFunction.OTHER);
+
+      CHUNK_BOUNDARY_NOUN_PHRASE = new TagMask();
+      CHUNK_BOUNDARY_NOUN_PHRASE
+          .setChunkFunction(ChunkFunction.BOUNDARY_NOUN_PHRASE);
+
+      CHUNK_BOUNDARY_NOUN_PHRASE_MAIN = new TagMask();
+      CHUNK_BOUNDARY_NOUN_PHRASE_MAIN
+          .setChunkFunction(ChunkFunction.BOUNDARY_NOUN_PHRASE_MAIN);
+
+      CHUNK_INTERMEDIARY_NOUN_PHRASE_MAIN = new TagMask();
+      CHUNK_INTERMEDIARY_NOUN_PHRASE_MAIN
+          .setChunkFunction(ChunkFunction.INTERMEDIARY_NOUN_PHRASE);
+
+      CHUNK_BOUNDARY_VERB_PHRASE_MAIN = new TagMask();
+      CHUNK_BOUNDARY_VERB_PHRASE_MAIN
+          .setChunkFunction(ChunkFunction.BOUNDARY_VERB_PHRASE_MAIN);
+
+      CHUNK_INTERMEDIARY_VERB_PHRASE = new TagMask();
+      CHUNK_INTERMEDIARY_VERB_PHRASE
+          .setChunkFunction(ChunkFunction.INTERMEDIARY_VERB_PHRASE);
+    }
+
+    public void convertChunks(Sentence sentence, br.ccsl.cogroo.entities.Sentence typedSentence) {
+      
+      for (int i = 0; i < sentence.getTokens().size(); i++) {
+        Token textToken = sentence.getTokens().get(i);
+        br.ccsl.cogroo.entities.Token typedToken = typedSentence.getTokens().get(i);
+        
+        ChunkTag tag = corpusTagInterpreter.parseChunkTag(textToken.getChunkTag());
+        
+        typedToken.setChunkTag(tag);
+      }
+      
+      List<Chunk> chunks = new ArrayList<Chunk>(sentence.getChunks().size());
+      for (br.ccsl.cogroo.text.Chunk textChunk : sentence.getChunks()) {
+        int head = 0;
+        if(textChunk.getHeadIndex() != -1) {
+          head = textChunk.getHeadIndex();
+        }
+        MorphologicalTag tag = typedSentence.getTokens().get(head).getMorphologicalTag().clone();
+
+        List<br.ccsl.cogroo.entities.Token> tokens = new ArrayList<br.ccsl.cogroo.entities.Token>();
+        for (int i = textChunk.getStart(); i < textChunk.getEnd(); i++) {
+          tokens.add(typedSentence.getTokens().get(i));
+        }
+        
+        Chunk typedChunk = new ChunkCogroo(tokens, textChunk.getStart());
+        
+        for (br.ccsl.cogroo.entities.Token token : tokens) {
+          token.setChunk(typedChunk);
+        }
+        
+        typedChunk.setMorphologicalTag(tag);
+        chunks.add(typedChunk);
+      }
+      
+      for (br.ccsl.cogroo.entities.Token token : typedSentence.getTokens()) {
+        if(token.getChunk() == null) {
+          Chunk c = new ChunkCogroo(Collections.singletonList(token), 0);
+          c.setMorphologicalTag(token.getMorphologicalTag().clone());
+          token.setChunk(c);
+        }
+      }
+      
+      typedSentence.setChunks(chunks);
     }
   }
 }

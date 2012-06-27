@@ -40,7 +40,7 @@ public class GrammarChecker {
 
     while (!input.equals("q")) {
       if (input.equals("0")) {
-        input = "Enviei os documentos à Vossa Excelência. Enviei os documentos à Vossa Santidade.";
+        input = "O casaco feios ficou pronto. Os casacos bonito ficaram prontos.";
       }
 
       CheckDocument document = new CheckDocument();
