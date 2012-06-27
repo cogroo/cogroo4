@@ -7,17 +7,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.ccsl.cogroo.entities.Mistake;
-import br.ccsl.cogroo.text.Sentence;
+import br.ccsl.cogroo.entities.Sentence;
 
-public class CheckerComposite extends GenericCheckerComposite<Sentence> implements Checker {
+public class TypedCheckerComposite extends GenericCheckerComposite<Sentence> implements TypedChecker {
 
-  public CheckerComposite(List<Checker> aChildCheckers,
+  public TypedCheckerComposite(List<TypedChecker> aChildCheckers,
       boolean aAllowOverlaps) {
     super(convert(aChildCheckers), aAllowOverlaps);
   }
 
   private static List<GenericChecker<Sentence>> convert(
-      List<Checker> aChildCheckers) {
+      List<TypedChecker> aChildCheckers) {
     List<GenericChecker<Sentence>> converted = new ArrayList<GenericChecker<Sentence>>(aChildCheckers.size());
     for (GenericChecker<Sentence> a : aChildCheckers) {
       converted.add(a);
@@ -28,12 +28,12 @@ public class CheckerComposite extends GenericCheckerComposite<Sentence> implemen
   public List<Mistake> check(Sentence sentence) {
     List<Mistake> mistakes = new LinkedList<Mistake>();
 
-    boolean[] occupied = new boolean[sentence.getText().length()];
+    boolean[] occupied = new boolean[sentence.getSentence().length()];
 
     for (GenericChecker<Sentence> child : mChildCheckers) {
       List<Mistake> mistakesFromChild = child.check(sentence);
       mistakes.addAll(addFilteredMistakes(mistakesFromChild, occupied,
-          sentence.getStart()));
+          sentence.getOffset()));
     }
 
     Collections.sort(mistakes, MISTAKE_COMPARATOR);

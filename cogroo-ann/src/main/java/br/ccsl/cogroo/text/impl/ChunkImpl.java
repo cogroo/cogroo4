@@ -44,6 +44,10 @@ public class ChunkImpl implements Chunk {
   public void setHeadIndex(int index) {
     this.index = index;
   }
+  
+  public int getHeadIndex() {
+    return this.index;
+  }
 
   public int getStart() {
     return span.getStart();

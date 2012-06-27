@@ -70,6 +70,8 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
       stringCElements.put(ENUM_CTAG_PARTS.get(tagE),
           Collections.unmodifiableList(values));
     }
+    
+    stringCElements.put("B-VP", Collections.singletonList(ChunkFunction.BOUNDARY_VERB_PHRASE_MAIN));
 
     CTAG_PARTS_ENUM = Collections.unmodifiableMap(stringCElements);
 

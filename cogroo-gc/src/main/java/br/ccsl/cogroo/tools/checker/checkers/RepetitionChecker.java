@@ -34,7 +34,7 @@ import java.util.List;
 import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.Sentence;
 import br.ccsl.cogroo.entities.Token;
-import br.ccsl.cogroo.tools.checker.AbstractChecker;
+import br.ccsl.cogroo.tools.checker.AbstractTypedChecker;
 import br.ccsl.cogroo.tools.checker.JavaRuleDefinition;
 import br.ccsl.cogroo.tools.checker.RuleDefinitionI;
 import br.ccsl.cogroo.tools.checker.rules.model.Example;
@@ -51,7 +51,7 @@ import br.ccsl.cogroo.tools.checker.rules.model.TagMask.Class;
  * </p>
  * 
  */
-public class RepetitionChecker extends AbstractChecker {
+public class RepetitionChecker extends AbstractTypedChecker {
 
 	public RepetitionChecker() {
 		List<Example> examples = new ArrayList<Example>();

@@ -35,12 +35,12 @@ import java.util.regex.Pattern;
 import br.ccsl.cogroo.dictionary.AbbreviationDictionaryI;
 import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.Sentence;
-import br.ccsl.cogroo.tools.checker.AbstractChecker;
+import br.ccsl.cogroo.tools.checker.AbstractTypedChecker;
 import br.ccsl.cogroo.tools.checker.JavaRuleDefinition;
 import br.ccsl.cogroo.tools.checker.RuleDefinitionI;
 import br.ccsl.cogroo.tools.checker.rules.model.Example;
 
-public class SpaceChecker extends AbstractChecker {
+public class SpaceChecker extends AbstractTypedChecker {
 
 	private static final String ID_PREFIX = "space:";
 

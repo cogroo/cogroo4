@@ -18,4 +18,6 @@ public interface Chunk {
   public void setBoundaries(int start, int end);
   
   public void setHeadIndex(int index);
+  
+  public int getHeadIndex();
 }
