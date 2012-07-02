@@ -7,7 +7,7 @@
     <node oor:name="Jobs">
         <node oor:name="mytools.JobExample" oor:op="replace">
             <prop oor:name="Service">
-                <value>br.usp.ime.ccsl.cogroo.oooext.Job</value>
+                <value>br.ccsl.cogroo.addon.Job</value>
             </prop>
             <prop oor:name="Context" oor:type="xs:string">
                 <value>com.sun.star.text.TextDocument</value>

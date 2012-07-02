@@ -27,7 +27,7 @@ public class GrammarChecker {
       return;
     }
 
-    ComponentFactory factory = ComponentFactory.create(new Locale(args[0]));
+    ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
 
     Pipe pipe = (Pipe) factory.createPipe();
     pipe.add(new GrammarCheckerAnalyzer());

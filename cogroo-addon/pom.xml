@@ -117,14 +117,14 @@
                     </excludes>
                     <archive>
                         <manifestEntries>
-                            <RegistrationClassName>br.usp.ime.ccsl.cogroo.oooext.CentralRegistrationClass</RegistrationClassName>
+                            <RegistrationClassName>br.ccsl.cogroo.addon.CentralRegistrationClass</RegistrationClassName>
                             <UNO-Type-Path></UNO-Type-Path>
                         </manifestEntries>
                         <manifestSections>
                         <manifestSection>
                           <name>br/usp/ime/ccsl/cogroo/oooext/CentralRegistrationClass.class</name>
                           <manifestEntries>
-                            <RegistrationClasses>br.usp.ime.ccsl.cogroo.oooext.Main</RegistrationClasses>
+                            <RegistrationClasses>br.ccsl.cogroo.addon.Main</RegistrationClasses>
                           </manifestEntries>
                         </manifestSection>
                       </manifestSections>

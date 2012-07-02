@@ -78,8 +78,8 @@
 
     -->
 
-    <target name="download-resources">
-        <!-- Download CogrooBase and unpack it inside dist folder -->
+    <!--<target name="download-resources">
+         Download CogrooBase and unpack it inside dist folder 
         <artifact:dependencies filesetId="dependency.fileset"
             sourcesFilesetId="sources.dependency.fileset"
             javadocFilesetId="javadoc.dependency.fileset"
@@ -101,9 +101,9 @@
                 classname="org.apache.maven.artifact.ant.VersionMapper"
                 from="${dependency.versions}" to="flatten" />
         </copy>
-    </target>
+    </target>-->
 
-    <target name="-post-uno-package">
+    <!--<target name="-post-uno-package">
         <deltree dir="tmp/base/CoGrOOBase-bin.zip/registry" />
 
         <unzip src="tmp/base/CoGrOOBase-bin.zip"
@@ -117,7 +117,7 @@
             <fileset dir="tmp/base/CoGrOOBase-bin" casesensitive="yes"/>
         </zip>
 
-    </target>
+    </target>-->
 
     <target name="-post-clean">
 
@@ -139,9 +139,9 @@
 
 
             <dependency
-                groupId="br.usp.pcs.lta.cogroo"
-                artifactId="CoGrOOBase"
-                version="3.2.1-SNAPSHOT"/>
+                groupId="br.ccsl.cogroo"
+                artifactId="cogroo-gc-pt_br"
+                version="4.0.0-SNAPSHOT"/>
 
             <dependency
                 groupId="commons-codec"

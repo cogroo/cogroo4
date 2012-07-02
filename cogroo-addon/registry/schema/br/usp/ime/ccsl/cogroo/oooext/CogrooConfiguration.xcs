@@ -2,7 +2,7 @@
  <oor:component-schema
      xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     oor:name="CogrooConfiguration" oor:package="br.usp.ime.ccsl.cogroo.oooext">
+     oor:name="CogrooConfiguration" oor:package="br.ccsl.cogroo.addon">
      <info>
          <author></author>
          <desc>Configurations for Cogroo extension</desc>
@@ -25,7 +25,7 @@
                  <value>WARNING</value>
              </prop>
              <prop oor:name="LOG_FILE_PATTERN" oor:type="xs:string">
-                 <value>%t/br.usp.ime.ccsl.cogroo.oooext.%u/logs/trace_%g.log</value>
+                 <value>%t/br.ccsl.cogroo.addon.%u/logs/trace_%g.log</value>
              </prop>
              <prop oor:name="COMMUNITY_USERNAME" oor:type="xs:string">
                  <value></value>

@@ -8,7 +8,7 @@
     <node oor:name="ServiceManager">
         <node oor:name="GrammarCheckers">
             <!-- (TODO: 1) Change to your package.Main class name -->
-            <node oor:name="br.usp.ime.ccsl.cogroo.oooext.Main" oor:op="fuse">
+            <node oor:name="br.ccsl.cogroo.addon.Main" oor:op="fuse">
                 <prop oor:name="Locales" oor:type="oor:string-list">
                     <!-- (2) Add locale for each supported language -->
                     <value>pt-BR</value>
@@ -18,14 +18,14 @@
     </node>
     <node oor:name="Images">
         <node oor:name="ServiceNameEntries">
-            <node oor:name="br.usp.ime.ccsl.cogroo.oooext.Main" oor:op="fuse">
+            <node oor:name="br.ccsl.cogroo.addon.Main" oor:op="fuse">
                 <prop oor:name="VendorImagesNode" oor:type="xs:string">
-                    <value>br.usp.ime.ccsl.cogroo.oooext.Main.Images</value>
+                    <value>br.ccsl.cogroo.addon.Main.Images</value>
                 </prop>
             </node>
         </node>
         <node oor:name="VendorImages">
-            <node oor:name="br.usp.ime.ccsl.cogroo.oooext.Main.Images" oor:op="fuse">
+            <node oor:name="br.ccsl.cogroo.addon.Main.Images" oor:op="fuse">
                 <prop oor:name="SpellAndGrammarDialogImage" oor:type="xs:string">
                     <value>%origin%/../../../../../../../../images/cogrooVendor.png</value>
                 </prop>
