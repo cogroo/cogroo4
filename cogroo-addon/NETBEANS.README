@@ -1,0 +1,4 @@
+This project where created using OOo API Plugin for NetBeans.
+
+To populate the libraries folder, execute "ant download-libs" in the root
+folder.

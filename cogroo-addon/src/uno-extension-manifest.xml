@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest:manifest xmlns:manifest="http://openoffice.org/2001/manifest">
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.uno-component;type=Java"
+                       manifest:full-path="CoGrOO-AddOn.jar"/>
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
+                       manifest:full-path="registry/data/br/usp/ime/ccsl/cogroo/oooext/ProtocolHandler.xcu"/>
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
+                       manifest:full-path="registry/data/br/usp/ime/ccsl/cogroo/oooext/Addons.xcu"/>
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
+                       manifest:full-path="registry/data/br/usp/ime/ccsl/cogroo/oooext/AddonConfiguration.xcu"/>
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
+                       manifest:full-path="registry/data/br/usp/ime/ccsl/cogroo/oooext/Linguistic.xcu"/>
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
+                       manifest:full-path="registry/data/br/usp/ime/ccsl/cogroo/oooext/jobs.xcu"/>
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-schema"
+                       manifest:full-path="registry/schema/br/usp/ime/ccsl/cogroo/oooext/AddonConfiguration.xcs"/>
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-schema"
+                       manifest:full-path="registry/schema/br/usp/ime/ccsl/cogroo/oooext/CogrooConfiguration.xcs"/>
+</manifest:manifest>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+
+<oor:component-schema
+        oor:name="CoGrOOImportFilter"
+        oor:package="br.usp.ime.ccsl.cogroo.oooext"
+        xmlns:oor="http://openoffice.org/2001/registry"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <component>
+      <group oor:name="Templates"> 
+          <prop oor:name="store.local" oor:type="xs:string"/>
+          <prop oor:name="cogroo.ooointegration.addon.home" oor:type="xs:string"/>
+      </group>
+    </component>
+</oor:component-schema>

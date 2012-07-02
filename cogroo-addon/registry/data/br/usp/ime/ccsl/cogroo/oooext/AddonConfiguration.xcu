@@ -1,0 +1,17 @@
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" 
+					xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+					oor:name="CoGrOOImportFilter" 
+					oor:package="br.usp.ime.ccsl.cogroo.oooext"> 
+    <node oor:name="Templates">
+      	 <prop oor:name="store.local" oor:type="xs:string">
+            <value>%origin%/templates</value>            
+        </prop>
+         <prop oor:name="cogroo.ooointegration.addon.home" oor:type="xs:string">
+            <value>%origin%</value>            
+        </prop>
+        <prop oor:name="template.default" oor:type="xs:string">
+            <value>template1</value>            
+        </prop>
+   
+   </node>
+</oor:component-data> 

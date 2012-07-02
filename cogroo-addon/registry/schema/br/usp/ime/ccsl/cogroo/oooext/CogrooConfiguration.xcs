@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <oor:component-schema
+     xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     oor:name="CogrooConfiguration" oor:package="br.usp.ime.ccsl.cogroo.oooext">
+     <info>
+         <author></author>
+         <desc>Configurations for Cogroo extension</desc>
+     </info>
+     <component>
+         <group oor:name="Options">
+             <info>
+                 <desc>The data properties for the demo option page.</desc>
+             </info>
+             <prop oor:name="ICON_ABOUT" oor:type="xs:string">
+                 <value>/images/CoGrOOAbout.png</value>
+             </prop>
+             <prop oor:name="COMUNIDADE_LOGO" oor:type="xs:string">
+                 <value>/images/comunidade_banner_175.png</value>
+             </prop>
+             <prop oor:name="LICENSE_ABOUT" oor:type="xs:string">
+                 <value>/description/licenseAbout.txt</value>
+             </prop>
+             <prop oor:name="LOG_LEVEL" oor:type="xs:string">
+                 <value>WARNING</value>
+             </prop>
+             <prop oor:name="LOG_FILE_PATTERN" oor:type="xs:string">
+                 <value>%t/br.usp.ime.ccsl.cogroo.oooext.%u/logs/trace_%g.log</value>
+             </prop>
+             <prop oor:name="COMMUNITY_USERNAME" oor:type="xs:string">
+                 <value></value>
+             </prop>
+             <prop oor:name="COMMUNITY_USERTOKEN" oor:type="xs:string">
+                 <value></value>
+             </prop>
+             <prop oor:name="COMMUNITY_ROOT" oor:type="xs:string">
+                 <value>http://ccsl.ime.usp.br/cogroo/comunidade</value>
+             </prop>
+         </group>
+     </component>
+ </oor:component-schema>
