@@ -50,6 +50,27 @@
 					<generatePackage>br.ccsl.cogroo.tools.checker.rules.model</generatePackage>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<!-- http://java.net/projects/maven-jaxb2-plugin -->
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>error_report</id>
+						<inherited>false</inherited>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaDirectory>src/main/resources/error_report/</schemaDirectory>
+					<extension>true</extension>
+					<generatePackage>br.ccsl.cogroo.tools.errorreport.model</generatePackage>
+				</configuration>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>

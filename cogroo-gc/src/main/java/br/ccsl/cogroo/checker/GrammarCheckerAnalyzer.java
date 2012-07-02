@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 import opennlp.tools.util.Span;
 
@@ -52,14 +53,13 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
 
   private TagDictionary td;
 
-
   public GrammarCheckerAnalyzer() throws IllegalArgumentException, IOException {
     // all checkers will be added to this:
     List<Checker> checkerList = new ArrayList<Checker>();
-    
+
     // create typed checkers
     List<TypedChecker> typedCheckers = new ArrayList<TypedChecker>();
-    
+
     // Create XML rules applier
     RulesProvider xmlProvider = new RulesProvider(RulesXmlAccess.getInstance(),
         false);
@@ -68,21 +68,22 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     RulesTreesBuilder rtb = new RulesTreesBuilder(xmlProvider);
     RulesTreesAccess rta = new RulesTreesFromScratchAccess(rtb);
     RulesTreesProvider rtp = new RulesTreesProvider(rta, false);
-    
+
     typedCheckers.add(new RulesApplier(rtp, td));
-    
+
     // create other typed checkers
     // typedCheckers.add(new SpaceChecker(dic));
     typedCheckers.add(new PunctuationChecker());
-    
+
     // create the typed composite and adapter
-    TypedCheckerAdapter adaptedComposite = new TypedCheckerAdapter(new TypedCheckerComposite(typedCheckers, false), td);
-    
+    TypedCheckerAdapter adaptedComposite = new TypedCheckerAdapter(
+        new TypedCheckerComposite(typedCheckers, false), td);
+
     // finally:
     checkerList.add(adaptedComposite);
-    
+
     // now we can create other checkers...
-    
+
     this.checkers = new CheckerComposite(checkerList, false);
   }
 
@@ -102,5 +103,13 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     }
   }
 
+  public void ignoreRule(String ruleIdentifier) {
+    this.checkers.ignore(ruleIdentifier);
+  }
 
+  
+  public void resetIgnoredRules(){
+    this.checkers.resetIgnored();
+  }
+  
 }
