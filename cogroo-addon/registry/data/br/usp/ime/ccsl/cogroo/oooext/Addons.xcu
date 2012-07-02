@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="Addons" oor:package="org.openoffice.Office">
+	<node oor:name="AddonUI">
+		<node oor:name="OfficeMenuBarMerging">
+			<node oor:name="br.ccsl.cogroo.addon" oor:op="replace">
+				<node oor:name="S1" oor:op="replace">
+					<prop oor:name="MergePoint">
+						<value>.uno:HelpMenu\.uno:About</value>
+					</prop>
+					<prop oor:name="MergeCommand">
+						<value>AddBefore</value>
+					</prop>
+					<prop oor:name="MergeFallback">
+						<value>AddPath</value>
+					</prop>
+					<node oor:name="MenuItems">
+						<node oor:name="M0" oor:op="replace">
+							<prop oor:name="Title">
+								<value xml:lang="en">CoGrOO Grammar Checker</value>
+								<value xml:lang="pt-BR">Corretor Gramatical CoGrOO</value>
+							</prop>
+							<node oor:name="Submenu">
+								<node oor:name="M0" oor:op="replace">
+									<prop oor:name="URL" oor:type="xs:string">
+										<value>service:br.ccsl.cogroo.addon.Main?about</value>
+									</prop>
+									<prop oor:name="Title" oor:type="xs:string">
+										<value xml:lang="en">About...</value>
+										<value xml:lang="pt-BR">Sobre...</value>
+									</prop>
+									<prop oor:name="Target" oor:type="xs:string">
+										<value>_self</value>
+									</prop>
+									<prop oor:name="Context" oor:type="xs:string">
+										<value>com.sun.star.text.TextDocument</value>
+									</prop>
+								</node>
+							</node>
+						</node>
+					</node>
+				</node>
+				<node oor:name="S2" oor:op="replace">
+					<prop oor:name="MergePoint">
+						<value>.uno:ToolsMenu\.uno:WordCountDialog</value>
+					</prop>
+					<prop oor:name="MergeCommand">
+						<value>AddBefore</value>
+					</prop>
+					<prop oor:name="MergeFallback">
+						<value>AddPath</value>
+					</prop>
+                                        <prop oor:name="Context" oor:type="xs:string">
+                                            <value>com.sun.star.text.TextDocument</value>
+                                        </prop>
+					<node oor:name="MenuItems">
+						<node oor:name="M1" oor:op="replace">
+							<prop oor:name="Title">
+								<value xml:lang="en">CoGrOO Grammar Checker</value>
+								<value xml:lang="pt-BR">Corretor Gramatical CoGrOO</value>
+							</prop>
+							<node oor:name="Submenu">
+								<node oor:name="M3" oor:op="replace">
+									<prop oor:name="URL" oor:type="xs:string">
+										<value>.uno:RecheckDocument</value>
+									</prop>
+									<prop oor:name="Title" oor:type="xs:string">
+										<value xml:lang="en">Recheck Document</value>
+										<value xml:lang="pt-BR">Reiniciar verificação</value>
+									</prop>
+									<prop oor:name="Target" oor:type="xs:string">
+										<value>_self</value>
+									</prop>
+									<prop oor:name="Context" oor:type="xs:string">
+										<value>com.sun.star.text.TextDocument</value>
+									</prop>
+								</node>
+								<node oor:name="M4" oor:op="replace">
+									<prop oor:name="URL" oor:type="xs:string">
+										<value>br.ccsl.cogroo.addon:ReportError</value>
+
+									</prop>
+									<prop oor:name="Title" oor:type="xs:string">
+										<value xml:lang="en">Report error...</value>
+										<value xml:lang="pt-BR">Reportar erro...</value>
+									</prop>
+									<prop oor:name="Target" oor:type="xs:string">
+										<value>_self</value>
+									</prop>
+									<prop oor:name="Context" oor:type="xs:string">
+										<value>com.sun.star.text.TextDocument</value>
+									</prop>
+								</node>
+								<node oor:name="M5" oor:op="replace">
+									<prop oor:name="URL" oor:type="xs:string">
+										<value>service:br.ccsl.cogroo.addon.Main?about</value>
+									</prop>
+									<prop oor:name="Title" oor:type="xs:string">
+										<value xml:lang="en">About...</value>
+										<value xml:lang="pt-BR">Sobre...</value>
+									</prop>
+									<prop oor:name="Target" oor:type="xs:string">
+										<value>_self</value>
+									</prop>
+									<prop oor:name="Context" oor:type="xs:string">
+										<value>com.sun.star.text.TextDocument</value>
+									</prop>
+								</node>
+							</node>
+						</node>
+					</node>
+
+				</node>
+			</node>
+
+		</node>
+	</node>
+</oor:component-data>

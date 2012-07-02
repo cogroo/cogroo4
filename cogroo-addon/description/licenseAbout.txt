@@ -1,0 +1,12 @@
+Copyright (C) 2012 CoGrOO Team (cogroo AT gmail DOT com)
+
+CoGrOO (cogroo AT gmail DOT com)
+CCSL - Centro de Competência em Software Livre (FLOSS Competence Center)
+IME/USP (Instituto de Matemática e Estatística da Universidade de São Paulo),
+Rua do Matão, 1010
+CEP 05508-090 - São Paulo - SP - BRAZIL
+http://cogroo.sourceforge.net/
+
+CoGrOO is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+CoGrOO is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU Lesser General Public License along with CoGrOO. If not, see <http://www.gnu.org/licenses/>.
