@@ -28,127 +28,147 @@ package br.usp.ime.ccsl.cogroo.oooext;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.ccsl.cogroo.analyzer.AnalyzerI;
+import br.ccsl.cogroo.analyzer.ComponentFactory;
+import br.ccsl.cogroo.analyzer.Pipe;
+import br.ccsl.cogroo.checker.CheckDocument;
+import br.ccsl.cogroo.checker.GrammarCheckerAnalyzer;
+import br.ccsl.cogroo.entities.Mistake;
+import br.ccsl.cogroo.text.Document;
+import br.ccsl.cogroo.text.impl.DocumentImpl;
+import br.ccsl.cogroo.tools.checker.rules.model.Rule;
 import br.usp.ime.ccsl.cogroo.oooext.addon.conf.AddOnConfiguration;
-import br.usp.pcs.lta.cogroo.configuration.LegacyRuntimeConfiguration;
-import br.usp.pcs.lta.cogroo.configuration.RuntimeConfigurationI;
-import br.usp.pcs.lta.cogroo.entity.Mistake;
-import br.usp.pcs.lta.cogroo.grammarchecker.Cogroo;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.applier.RulesProvider;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.model.Rule;
-import br.usp.pcs.lta.cogroo.tools.checker.rules.util.RulesContainerHelper;
 
 import com.sun.star.uno.XComponentContext;
 
 public class CogrooSingleton {
 
-    private static Cogroo COGROO;
-    private static CogrooSingleton instance = null;
+  private static Pipe COGROO;
+  private static GrammarCheckerAnalyzer gca;
+  private static CogrooSingleton instance = null;
 
-    // Logger
-    protected static Logger LOGGER = LoggerImpl.getLogger(CogrooSingleton.class.getCanonicalName());
-    private RuntimeConfigurationI cogrooConfig;
-    private XComponentContext context;
+  // Logger
+  protected static Logger LOGGER = LoggerImpl.getLogger(CogrooSingleton.class
+      .getCanonicalName());
+  private XComponentContext context;
 
-    private CogrooSingleton() {
-        // prevents instantiation
+  private CogrooSingleton() {
+    // prevents instantiation
+  }
+
+  public static synchronized CogrooSingleton getInstance(
+      XComponentContext context) {
+
+    if (instance == null) {
+      instance = new CogrooSingleton();
+      instance.init(context);
     }
+    return instance;
+  }
 
-    public static synchronized CogrooSingleton getInstance(XComponentContext context) {
+  private String root = null;
+  private final Object flag = new Object();
 
-        if (instance == null) {
-            instance = new CogrooSingleton();
-            instance.init(context);
-        }
-        return instance;
-    }
-
-    private String root = null;
-    private final Object flag = new Object();
-
-    private String getRoot() {
-        if(root == null) {
-            synchronized(flag) {
-                File f;
-                AddOnConfiguration config = new AddOnConfiguration(context);
-                try {
-                    f = config.getDataFolder();
-                    root = f.getCanonicalPath();
-                } catch (Exception e) {
-                    LOGGER.log(Level.SEVERE, "Failed getting execution path.", e);
-                }
-            }
-        }
-        return root;
-    }
-
-    private void init(XComponentContext context) {
-        this.context = context;
-        String home = getRoot();
-        
-
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.fine("Will start CoGrOO using home path: " + home);
-        }
-
+  private String getRoot() {
+    if (root == null) {
+      synchronized (flag) {
+        File f;
+        AddOnConfiguration config = new AddOnConfiguration(context);
         try {
-            //RulesProperties.setRootFolder(instance.getRoot());
-            cogrooConfig = new LegacyRuntimeConfiguration(home);
-            COGROO = new Cogroo(cogrooConfig);
-        } catch (Throwable e) {
-            LOGGER.log(Level.SEVERE, "Error in CoGrOO initialization.", e);
-        }
-
-    }
-
-    public synchronized int checkSentence(final String paraText, List<Mistake> outMistakes) {
-       int end = -1;
-        try {
-           end = COGROO.checkFirstSentence(paraText, outMistakes);
+          f = config.getDataFolder();
+          root = f.getCanonicalPath();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Internal error.", e);
+          LOGGER.log(Level.SEVERE, "Failed getting execution path.", e);
         }
-        return end;
+      }
+    }
+    return root;
+  }
+
+  private void init(XComponentContext context) {
+    this.context = context;
+    String home = getRoot();
+
+    if (LOGGER.isLoggable(Level.FINE)) {
+      LOGGER.fine("Will start CoGrOO using home path: " + home);
     }
 
-    public synchronized void ignoreRule(final String ruleidentifier) {
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.fine("Will add rule to ignored list: " + ruleidentifier);
-        }
-        cogrooConfig.getChecker().ignore(ruleidentifier);
+    try {
+      // RulesProperties.setRootFolder(instance.getRoot());
+      ComponentFactory factory = ComponentFactory
+          .create(new Locale("pt", "BR"));
+      COGROO = (Pipe) factory.createPipe();
+      
+      gca = new GrammarCheckerAnalyzer();
+      
+      COGROO.add(gca);
+
+    } catch (Throwable e) {
+      LOGGER.log(Level.SEVERE, "Error in CoGrOO initialization.", e);
     }
 
-    public synchronized void resetIgnoredRules() {
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.fine("Will reset ignored rule list.");
-        }
-        cogrooConfig.getChecker().resetIgnored();
+  }
+
+  public synchronized int checkSentence(final String paraText,
+      List<Mistake> outMistakes) {
+    int end = -1;
+    try {
+      CheckDocument document = new CheckDocument();
+      document.setText(paraText);
+
+      COGROO.analyze(document);
+      if (document.getSentences() != null && document.getSentences().size() > 0) {
+        end = document.getSentences().get(0).getEnd();
+        outMistakes.addAll(document.getMistakes());
+      }
+    } catch (Exception e) {
+      LOGGER.log(Level.SEVERE, "Internal error.", e);
     }
+    return end;
+  }
 
-    private List<Rule> rules = null;
-
-    public String[] getCategories(){
-        String[] ret = null;
-        try {
-            if(rules == null) {
-                synchronized(flag) {
-
-                    rules = new RulesContainerHelper(getRoot()).getContainerForXMLAccess().getComponent(RulesProvider.class).getRules().getRule();
-                }
-            }
-            SortedSet cat = new TreeSet<String>();
-            for (Rule r : rules) {
-                cat.add(r.getGroup());
-            }
-            ret = (String[])cat.toArray(new String[cat.size()]);
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Internal error.", e);
-        }
-        
-        return ret;
+  public synchronized void ignoreRule(final String ruleidentifier) {
+    if (LOGGER.isLoggable(Level.FINE)) {
+      LOGGER.fine("Will add rule to ignored list: " + ruleidentifier);
     }
+    gca.ignoreRule(ruleidentifier);
+  }
+
+  public synchronized void resetIgnoredRules() {
+    if (LOGGER.isLoggable(Level.FINE)) {
+      LOGGER.fine("Will reset ignored rule list.");
+    }
+    gca.resetIgnoredRules();
+  }
+
+  private List<Rule> rules = null;
+
+  public String[] getCategories() {
+    String[] ret = null;
+//    try {
+//      if (rules == null) {
+//        synchronized (flag) {
+//
+//          rules = new RulesContainerHelper(getRoot())
+//              .getContainerForXMLAccess().getComponent(RulesProvider.class)
+//              .getRules().getRule();
+//        }
+//      }
+//      SortedSet cat = new TreeSet<String>();
+//      for (Rule r : rules) {
+//        cat.add(r.getGroup());
+//      }
+//      ret = (String[]) cat.toArray(new String[cat.size()]);
+//    } catch (Exception e) {
+//      LOGGER.log(Level.SEVERE, "Internal error.", e);
+//    }
+//
+    return ret;
+  }
 }

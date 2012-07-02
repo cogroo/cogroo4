@@ -1,12 +1,12 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <groupId>br.usp.pcs.lta.cogroo</groupId>
-        <artifactId>CoGrOO</artifactId>
-        <version>3.2.1-SNAPSHOT</version>
+        <groupId>br.ccsl.cogroo</groupId>
+        <artifactId>cogroo</artifactId>
+        <version>4.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>CoGrOO-AddOn</artifactId>
+    <artifactId>cogroo-addon</artifactId>
     <name>Grammar Checker OOo Addon</name>
     <packaging>jar</packaging>
     <description/>
@@ -74,22 +74,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>br.usp.pcs.lta.cogroo</groupId>
-            <artifactId>CoGrOOBase</artifactId>
-            <version>3.2.1-SNAPSHOT</version>
-            <classifier>bin</classifier>
-            <type>zip</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>br.usp.pcs.lta.cogroo</groupId>
-            <artifactId>CoGrOOBase</artifactId>
-            <version>3.2.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.4</version>
+        </dependency>
+        <dependency>
+        	<groupId>br.ccsl.cogroo</groupId>
+        	<artifactId>cogroo-gc-pt_br</artifactId>
+        	<version>4.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>

@@ -1,29 +1,28 @@
 package br.usp.ime.ccsl.cogroo.oooext;
 
-import br.usp.ime.ccsl.cogroo.oooext.addon.contextmenu.ContextMenuInterceptor;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ccsl.cogroo.entities.Mistake;
+import br.usp.ime.ccsl.cogroo.oooext.addon.contextmenu.ContextMenuInterceptor;
 import br.usp.ime.ccsl.cogroo.oooext.dialogs.about.AboutThread;
 import br.usp.ime.ccsl.cogroo.oooext.dialogs.reporterror.ErrorReportDialogThread;
 import br.usp.ime.ccsl.cogroo.oooext.util.SelectedTextExtractor;
-import br.usp.pcs.lta.cogroo.entity.Mistake;
 
-import com.sun.star.beans.PropertyValue;
-import com.sun.star.lang.Locale;
-import com.sun.star.linguistic2.ProofreadingResult;
-import com.sun.star.linguistic2.SingleProofreadingError;
-import com.sun.star.linguistic2.XLinguServiceEventListener;
-import com.sun.star.text.TextMarkupType;
-
-import com.sun.star.lib.uno.helper.Factory;
 import com.sun.star.beans.NamedValue;
+import com.sun.star.beans.PropertyValue;
 import com.sun.star.frame.XController;
 import com.sun.star.frame.XModel;
 import com.sun.star.lang.IllegalArgumentException;
+import com.sun.star.lang.Locale;
 import com.sun.star.lang.XSingleComponentFactory;
+import com.sun.star.lib.uno.helper.Factory;
 import com.sun.star.lib.uno.helper.WeakBase;
+import com.sun.star.linguistic2.ProofreadingResult;
+import com.sun.star.linguistic2.SingleProofreadingError;
+import com.sun.star.linguistic2.XLinguServiceEventListener;
 import com.sun.star.registry.XRegistryKey;
+import com.sun.star.text.TextMarkupType;
 import com.sun.star.text.XTextDocument;
 import com.sun.star.ui.XContextMenuInterception;
 import com.sun.star.ui.XContextMenuInterceptor;

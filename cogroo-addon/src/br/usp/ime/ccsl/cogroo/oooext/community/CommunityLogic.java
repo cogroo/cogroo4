@@ -5,21 +5,6 @@
 
 package br.usp.ime.ccsl.cogroo.oooext.community;
 
-import br.usp.ime.ccsl.cogroo.oooext.CogrooException;
-import br.usp.ime.ccsl.cogroo.oooext.CogrooExceptionMessages;
-import br.usp.ime.ccsl.cogroo.oooext.CogrooSingleton;
-import br.usp.ime.ccsl.cogroo.oooext.LoggerImpl;
-import br.usp.ime.ccsl.cogroo.oooext.Resources;
-import br.usp.ime.ccsl.cogroo.oooext.i18n.I18nLabelsLoader;
-import br.usp.ime.ccsl.cogroo.oooext.util.RestUtil;
-import br.usp.ime.ccsl.cogroo.oooext.util.SecurityUtil;
-import br.usp.pcs.lta.cogroo.entity.Mistake;
-import br.usp.pcs.lta.cogroo.errorreport.ErrorReportAccess;
-import br.usp.pcs.lta.cogroo.errorreport.model.BadIntervention;
-import br.usp.pcs.lta.cogroo.errorreport.model.BadIntervention.BadInterventionClassification;
-import br.usp.pcs.lta.cogroo.errorreport.model.ErrorReport;
-import com.sun.star.beans.XPropertySet;
-import com.sun.star.uno.XComponentContext;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.util.ArrayList;
@@ -31,7 +16,24 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import opennlp.tools.util.Span;
+import br.ccsl.cogroo.entities.Mistake;
+import br.ccsl.cogroo.errorreport.ErrorReportAccess;
+import br.ccsl.cogroo.tools.errorreport.model.BadIntervention;
+import br.ccsl.cogroo.tools.errorreport.model.BadIntervention.BadInterventionClassification;
+import br.ccsl.cogroo.tools.errorreport.model.ErrorReport;
+import br.usp.ime.ccsl.cogroo.oooext.CogrooException;
+import br.usp.ime.ccsl.cogroo.oooext.CogrooExceptionMessages;
+import br.usp.ime.ccsl.cogroo.oooext.CogrooSingleton;
+import br.usp.ime.ccsl.cogroo.oooext.LoggerImpl;
+import br.usp.ime.ccsl.cogroo.oooext.Resources;
+import br.usp.ime.ccsl.cogroo.oooext.i18n.I18nLabelsLoader;
+import br.usp.ime.ccsl.cogroo.oooext.util.RestUtil;
+import br.usp.ime.ccsl.cogroo.oooext.util.SecurityUtil;
+
+import com.sun.star.beans.XPropertySet;
+import com.sun.star.uno.XComponentContext;
 
 /**
  *
@@ -423,7 +425,7 @@ public class CommunityLogic {
                 bi.setClassification(classification);
                 bi.setComment(this.commentsForBadIntervention[i]);
                 bi.setRule(new Integer(mistakes.get(i).getRuleIdentifier()));
-                br.usp.pcs.lta.cogroo.errorreport.model.Span span = new br.usp.pcs.lta.cogroo.errorreport.model.Span();
+                br.ccsl.cogroo.tools.errorreport.model.Span span = new br.ccsl.cogroo.tools.errorreport.model.Span();
                 span.setStart(mistakes.get(i).getStart());
                 span.setEnd(mistakes.get(i).getEnd());
                 bi.setSpan(span);
@@ -432,12 +434,12 @@ public class CommunityLogic {
         }
         Omission[] os = getOmissions();
         for(int i = 0; i < os.length; i++) {
-            br.usp.pcs.lta.cogroo.errorreport.model.Omission o = new br.usp.pcs.lta.cogroo.errorreport.model.Omission();
+            br.ccsl.cogroo.tools.errorreport.model.Omission o = new br.ccsl.cogroo.tools.errorreport.model.Omission();
             o.setCategory(os[i].getCategory());
             o.setComment(os[i].getComment());
             o.setCustomCategory(os[i].getCustomCategory());
             o.setReplaceBy(os[i].getReplaceBy());
-            br.usp.pcs.lta.cogroo.errorreport.model.Span span = new br.usp.pcs.lta.cogroo.errorreport.model.Span();
+            br.ccsl.cogroo.tools.errorreport.model.Span span = new br.ccsl.cogroo.tools.errorreport.model.Span();
                 span.setStart(os[i].getStart());
                 span.setEnd(os[i].getEnd());
             o.setSpan(span);
