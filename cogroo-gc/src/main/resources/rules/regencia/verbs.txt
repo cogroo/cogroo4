@@ -1,0 +1,15 @@
+#aspirar
+-: inspirar, tragar, sorver
+a: almejar, desejar
+
+#assistir
+-: socorrer, auxiliar, ajudar: paciente, acidentado, enfermo, doente
+a: ver, presenciar: show, espetáculo, filme
+em: residir, morar:
+
+#obedecer
+a:
+
+#visar
+-: dar visto, mirar
+a: almejar, pretender

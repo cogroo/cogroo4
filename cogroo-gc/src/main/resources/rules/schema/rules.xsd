@@ -185,6 +185,8 @@
 					<xs:restriction base="xs:string">
 						<xs:enumeration value="subject"/>
 						<xs:enumeration value="verb"/>
+						<xs:enumeration value="indirect object"/>
+						<xs:enumeration value="direct object"/>
 						<xs:enumeration value="none"/>
 					</xs:restriction>
 				</xs:simpleType>
