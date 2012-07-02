@@ -42,33 +42,27 @@
 						<goals>
 							<goal>generate</goal>
 						</goals>
+						<configuration>
+        					<generateDirectory>target/generated-sources/xjc1</generateDirectory>
+							<schemaDirectory>src/main/resources/rules/schema</schemaDirectory>
+							<extension>true</extension>
+							<generatePackage>br.ccsl.cogroo.tools.checker.rules.model</generatePackage>
+						</configuration>
 					</execution>
-				</executions>
-				<configuration>
-					<schemaDirectory>src/main/resources/rules/schema</schemaDirectory>
-					<extension>true</extension>
-					<generatePackage>br.ccsl.cogroo.tools.checker.rules.model</generatePackage>
-				</configuration>
-			</plugin>
-			
-			<plugin>
-				<!-- http://java.net/projects/maven-jaxb2-plugin -->
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<executions>
 					<execution>
 						<id>error_report</id>
 						<inherited>false</inherited>
 						<goals>
 							<goal>generate</goal>
 						</goals>
+						<configuration>
+							<generateDirectory>target/generated-sources/xjc2</generateDirectory>
+							<schemaDirectory>src/main/resources/error_report/</schemaDirectory>
+							<extension>true</extension>
+							<generatePackage>br.ccsl.cogroo.tools.errorreport.model</generatePackage>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<schemaDirectory>src/main/resources/error_report/</schemaDirectory>
-					<extension>true</extension>
-					<generatePackage>br.ccsl.cogroo.tools.errorreport.model</generatePackage>
-				</configuration>
 			</plugin>
 			
 			<plugin>
@@ -84,6 +78,8 @@
 						<configuration>
 							<sources>
 								<source>generated-sources/xjc</source>
+								<source>generated-sources/xjc1</source>
+								<source>generated-sources/xjc2</source>
 							</sources>
 						</configuration>
 					</execution>
