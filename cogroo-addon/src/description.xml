@@ -8,7 +8,7 @@
         <name lang="en">CoGrOO pt-BR Grammar Checker </name>
     </display-name>
     <!-- (3) The plug-in version -->
-    <version value="${pom.version}"/>
+    <version value="${OXT_VERSION}"/>
     <!-- (4) Path to your release notes -->
     <release-notes>
         <src lang="en" xlink:href="release-notes.txt"/>

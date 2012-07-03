@@ -86,6 +86,9 @@
     </dependencies>
     <build>
         <sourceDirectory>src</sourceDirectory>
+	    <filters>
+	      <filter>target/oxt_version.property</filter>
+	    </filters>
         <resources>
             <resource>
                 <filtering>true</filtering>
@@ -103,7 +106,37 @@
                     <source>1.5</source>
                     <target>1.5</target>
                 </configuration>
-            </plugin>
+		    </plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<configuration>
+							<target>
+								<tstamp>
+    								<format property="TSTAMP" pattern="yyyyMMddHHmmss" locale="GMT"/>
+  								</tstamp>
+								<echo message="TSTAMP: ${TSTAMP} Version: ${pom.version}"/>
+								<echo message="${pom.version}" file="target/version.property" />
+								    <loadfile property="OXT_VERSION" srcFile="target/version.property">
+								        <filterchain>
+								            <tokenfilter>
+								                <replaceregex pattern="-SNAPSHOT" replace=".${TSTAMP}" flags="g"/>
+								            </tokenfilter>
+								        </filterchain>
+								    </loadfile>
+					            <echo message="OXT_VERSION = ${OXT_VERSION}" file="target/oxt_version.property"/>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -135,31 +168,6 @@
                         </manifest>
                     </archive>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>br.usp.pcs.lta.cogroo</groupId>
-                                    <artifactId>CoGrOOBase</artifactId>
-                                    <version>3.2.1-SNAPSHOT</version>
-                                    <classifier>bin</classifier>
-                                    <type>zip</type>
-                                    <outputDirectory>target/cogroo</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
