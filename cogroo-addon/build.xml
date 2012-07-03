@@ -126,7 +126,7 @@
     </target>
 
     <target name="download-libs">
-
+        <mkdir dir="lib"/>
         <delete includeemptydirs="true">
             <fileset dir="lib" includes="**/*.jar" defaultexcludes="false"/>
         </delete>
