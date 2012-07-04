@@ -155,7 +155,7 @@
                         </manifestEntries>
                         <manifestSections>
                         <manifestSection>
-                          <name>br/usp/ime/ccsl/cogroo/oooext/CentralRegistrationClass.class</name>
+                          <name>br/ccsl/cogroo/addon/CentralRegistrationClass.class</name>
                           <manifestEntries>
                             <RegistrationClasses>br.ccsl.cogroo.addon.Main</RegistrationClasses>
                           </manifestEntries>
