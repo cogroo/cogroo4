@@ -71,11 +71,18 @@ public class TreeUtil {
         node.addElement(son);
       
       int index = elements.indexOf(toRemove.get(toRemove.size() - 1));
+      while(index == -1 && toRemove.size() > 1) {
+        toRemove.remove(toRemove.size() - 1);
+        index = elements.indexOf(toRemove.get(toRemove.size() - 1));
+      }
 
       for (TreeElement element : toRemove)
         elements.remove(element);
 
-      elements.add(index, node);
+      if(index >= 0)
+        elements.add(index, node);
+      //else
+      //  elements.add(0, node);
 
       node.setParent(root);
     }
@@ -95,6 +102,8 @@ public class TreeUtil {
     for (Token token : tokens) {
       Leaf leaf = new Leaf(token.getLexeme(), token.getLemmas());
       leaf.setLevel(3);
+      leaf.setMorphologicalTag(token.getPOSTag());
+      leaf.setFeatureTag(token.getFeatures());
       leafs.add(leaf);
     }
 

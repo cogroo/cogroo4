@@ -13,11 +13,11 @@ public class Node extends TreeElement implements Serializable {
   public void addElement(TreeElement element) {
     elems.add(element);
   }
-  
+
   public TreeElement[] getElements() {
     return elems.toArray(new TreeElement[elems.size()]);
   }
-  
+
   public List<TreeElement> getElems() {
     return elems;
   }
@@ -42,14 +42,26 @@ public class Node extends TreeElement implements Serializable {
 
   @Override
   public String toSyntaxTree() {
-
     return "[" + getSyntacticTag() + " " + toSyntaxTree(getElements()) + "]";
+  }
+
+  @Override
+  public String toTreebank() {
+    return "(" + getSyntacticTag() + " " + toTreebank(getElements()) + ")";
   }
 
   private String toSyntaxTree(TreeElement[] elements) {
     StringBuilder sb = new StringBuilder();
     for (TreeElement treeElement : elements) {
       sb.append(treeElement.toSyntaxTree() + " ");
+    }
+    return sb.toString();
+  }
+
+  private String toTreebank(TreeElement[] elements) {
+    StringBuilder sb = new StringBuilder();
+    for (TreeElement treeElement : elements) {
+      sb.append(treeElement.toTreebank() + " ");
     }
     return sb.toString();
   }
