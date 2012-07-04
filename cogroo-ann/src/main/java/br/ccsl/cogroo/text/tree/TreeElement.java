@@ -3,6 +3,7 @@ package br.ccsl.cogroo.text.tree;
 public abstract class TreeElement {
   private String syntacticTag;
   private String morphologicalTag;
+  private String featureTag;
   private int level;
   private TreeElement parent;
 
@@ -31,6 +32,8 @@ public abstract class TreeElement {
   }
 
   public abstract String toSyntaxTree();
+  
+  public abstract String toTreebank();
 
   public TreeElement getParent() {
     return parent;
@@ -38,5 +41,13 @@ public abstract class TreeElement {
 
   public void setParent(TreeElement parent) {
     this.parent = parent;
+  }
+
+  public String getFeatureTag() {
+    return featureTag;
+  }
+
+  public void setFeatureTag(String featureTag) {
+    this.featureTag = featureTag;
   }
 }

@@ -95,6 +95,8 @@ public class TreeUtil {
     for (Token token : tokens) {
       Leaf leaf = new Leaf(token.getLexeme(), token.getLemmas());
       leaf.setLevel(3);
+      leaf.setMorphologicalTag(token.getPOSTag());
+      leaf.setFeatureTag(token.getFeatures());
       leafs.add(leaf);
     }
 
