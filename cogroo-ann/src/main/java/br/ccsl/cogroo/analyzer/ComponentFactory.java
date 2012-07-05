@@ -281,7 +281,7 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
 
-  private AnalyzerI createChunker() {
+  public AnalyzerI createChunker() {
     long start = System.nanoTime();
     AnalyzerI analyzer = null;
     ChunkerME chunker = null;
@@ -311,7 +311,7 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
   
-  private AnalyzerI createHeadFinder() {
+  public AnalyzerI createHeadFinder() {
     long start = System.nanoTime();
     AnalyzerI analyzer = null;
     ChunkerME headFinder = null;
@@ -341,7 +341,7 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
   
-  private AnalyzerI createShallowParser() {
+  public AnalyzerI createShallowParser() {
     long start = System.nanoTime();
     AnalyzerI analyzer = null;
     ChunkerME shallowParser = null;
