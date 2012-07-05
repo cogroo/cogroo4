@@ -7,7 +7,7 @@
 
 	<parent>
 		<artifactId>cogroo-eval</artifactId>
-		<groupId>br.ccsl.cogroo</groupId>
+		<groupId>org.cogroo</groupId>
 		<relativePath>..</relativePath>
 		<version>4.0.0-SNAPSHOT</version>
 	</parent>
@@ -113,7 +113,7 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>br.ccsl.cogroo</groupId>
+			<groupId>org.cogroo</groupId>
 			<artifactId>cogroo-base</artifactId>
 			<version>4.0.0-SNAPSHOT</version>
 			<exclusions>
