@@ -21,11 +21,6 @@
 
 package br.ccsl.cogroo.addon.addon.conf;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import br.ccsl.cogroo.addon.LoggerImpl;
-
 import com.sun.star.beans.XHierarchicalPropertySet;
 import com.sun.star.beans.XPropertySet;
 import com.sun.star.container.XNameAccess;

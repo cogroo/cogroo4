@@ -21,14 +21,10 @@
 package br.ccsl.cogroo.addon.addon.conf;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.logging.Level;
 
-import br.ccsl.cogroo.addon.Resources;
-
-import com.sun.star.lang.IllegalArgumentException;
 import com.sun.star.uno.AnyConverter;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.uno.XComponentContext;

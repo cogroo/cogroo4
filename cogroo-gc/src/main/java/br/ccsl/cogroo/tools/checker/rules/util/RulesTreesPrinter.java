@@ -27,9 +27,7 @@
 
 package br.ccsl.cogroo.tools.checker.rules.util;
 
-import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
@@ -39,7 +37,6 @@ import br.ccsl.cogroo.tools.checker.rules.applier.RulesTrees;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesAccess;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesBuilder;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesFromScratchAccess;
-import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesSerializedAccess;
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesXmlAccess;
 import br.ccsl.cogroo.tools.checker.rules.applier.State;
 

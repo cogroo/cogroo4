@@ -1,225 +1,324 @@
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <groupId>br.ccsl.cogroo</groupId>
-        <artifactId>cogroo</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>cogroo-addon</artifactId>
-    <name>Grammar Checker OOo Addon</name>
-    <packaging>jar</packaging>
-    <description/>
-    <inceptionYear>2009</inceptionYear>
-    <url>http://cogroo.sourceforge.net</url>
-    <developers>
-        <developer>
-            <id>colen</id>
-            <name>William Colen</name>
-            <email>colen@users.sourceforge.net</email>
-            <roles>
-                <role>analyst</role>
-                <role>architect</role>
-                <role>developer</role>
-            </roles>
-        </developer>
-    </developers>
-    <prerequisites>
-        <maven>2.0.5</maven>
-    </prerequisites>
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public License, Version 3</name>
-            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <pluginRepositories>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+	<parent>
+		<groupId>br.ccsl.cogroo</groupId>
+		<artifactId>cogroo</artifactId>
+		<version>4.0.0-SNAPSHOT</version>
+		<relativePath>../cogroo</relativePath>
+	</parent>
+
+
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>cogroo-addon</artifactId>
+	<name>Grammar Checker OOo Addon</name>
+	<packaging>jar</packaging>
+	<description />
+	<inceptionYear>2009</inceptionYear>
+	<url>http://cogroo.sourceforge.net</url>
+	<developers>
+		<developer>
+			<id>colen</id>
+			<name>William Colen</name>
+			<email>colen@users.sourceforge.net</email>
+			<roles>
+				<role>analyst</role>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+	<prerequisites>
+		<maven>2.0.5</maven>
+	</prerequisites>
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<pluginRepositories>
 		<!-- License Plug-in repo -->
-        <pluginRepository>
-            <id>mc-release</id>
-            <name>Local Maven repository of releases</name>
-            <url>http://mc-repo.googlecode.com/svn/maven2/releases </url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
-    <dependencies>
-        <dependency>
-            <groupId>org.openoffice</groupId>
-            <artifactId>juh</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.openoffice</groupId>
-            <artifactId>jurt</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.openoffice</groupId>
-            <artifactId>ridl</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.openoffice</groupId>
-            <artifactId>unoil</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.4</version>
-        </dependency>
-        <dependency>
-        	<groupId>br.ccsl.cogroo</groupId>
-        	<artifactId>cogroo-gc-pt_br</artifactId>
-        	<version>4.0.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
-    <build>
-        <sourceDirectory>src</sourceDirectory>
-	    <filters>
-	      <filter>target/oxt_version.property</filter>
-	    </filters>
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>src</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-		    </plugin>
+		<pluginRepository>
+			<id>mc-release</id>
+			<name>Local Maven repository of releases</name>
+			<url>http://mc-repo.googlecode.com/svn/maven2/releases </url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+	<dependencies>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>juh</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>jurt</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>ridl</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>unoil</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>br.ccsl.cogroo</groupId>
+			<artifactId>cogroo-gc-pt_br</artifactId>
+			<version>4.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<sourceDirectory>src</sourceDirectory>
+		<filters>
+			<filter>target/oxt_version.property</filter>
+		</filters>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src</directory>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.7</version>
 				<executions>
 					<execution>
+						<id>time stamp</id>
 						<phase>generate-sources</phase>
 						<configuration>
 							<target>
 								<tstamp>
-    								<format property="TSTAMP" pattern="yyyyMMddHHmmss" locale="GMT"/>
-  								</tstamp>
-								<echo message="TSTAMP: ${TSTAMP} Version: ${pom.version}"/>
+									<format property="TSTAMP" pattern="yyyyMMddHHmmss"
+										locale="GMT" />
+								</tstamp>
+								<echo message="TSTAMP: ${TSTAMP} Version: ${pom.version}" />
 								<echo message="${pom.version}" file="target/version.property" />
-								    <loadfile property="OXT_VERSION" srcFile="target/version.property">
-								        <filterchain>
-								            <tokenfilter>
-								                <replaceregex pattern="-SNAPSHOT" replace=".${TSTAMP}" flags="g"/>
-								            </tokenfilter>
-								        </filterchain>
-								    </loadfile>
-					            <echo message="OXT_VERSION = ${OXT_VERSION}" file="target/oxt_version.property"/>
+								<loadfile property="OXT_VERSION" srcFile="target/version.property">
+									<filterchain>
+										<tokenfilter>
+											<replaceregex pattern="-SNAPSHOT" replace=".${TSTAMP}"
+												flags="g" />
+										</tokenfilter>
+									</filterchain>
+								</loadfile>
+								<echo message="OXT_VERSION = ${OXT_VERSION}" file="target/oxt_version.property" />
 							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
 						</goals>
 					</execution>
+
+					<execution>
+						<id>rename file</id>
+						<phase>verify</phase>
+						<configuration>
+							<target>
+								<echo
+									message="Change name: ${project.artifactId}-${project.version}-bin.oxt.zip to ${project.artifactId}-${project.version}.oxt" />
+								<copy
+									file="target/${project.artifactId}-${project.version}-bin.oxt.zip"
+									tofile="target/${project.artifactId}-${project.version}.oxt" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
 				</executions>
 			</plugin>
-		            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*.xcs</exclude>
-                        <exclude>**/*.xcu</exclude>
-                        <exclude>**/*.xml</exclude>
-                        <include>**/LICENSE*</include>
-                        <include>**/license*</include>
-                    </excludes>
-                    <archive>
-                        <manifestEntries>
-                            <RegistrationClassName>br.ccsl.cogroo.addon.CentralRegistrationClass</RegistrationClassName>
-                            <UNO-Type-Path></UNO-Type-Path>
-                        </manifestEntries>
-                        <manifestSections>
-                        <manifestSection>
-                          <name>br/ccsl/cogroo/addon/CentralRegistrationClass.class</name>
-                          <manifestEntries>
-                            <RegistrationClasses>br.ccsl.cogroo.addon.Main</RegistrationClasses>
-                          </manifestEntries>
-                        </manifestSection>
-                      </manifestSections>
 
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>${basedir}/mvn/addonAssembly.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <id>oxt</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-			<!-- <plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<inherited>true</inherited>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-					<descriptorRefs>
-						<descriptorRef>src</descriptorRef>
-					</descriptorRefs>
+					<finalName>${project.artifactId}-${project.version}</finalName>
+					<excludes>
+						<exclude>**/*.xcs</exclude>
+						<exclude>**/*.xcu</exclude>
+						<exclude>**/*.xml</exclude>
+						<include>**/LICENSE*</include>
+						<include>**/license*</include>
+					</excludes>
+					<archive>
+						<manifestEntries>
+							<RegistrationClassName>br.ccsl.cogroo.addon.CentralRegistrationClass</RegistrationClassName>
+							<UNO-Type-Path></UNO-Type-Path>
+						</manifestEntries>
+						<manifestSections>
+							<manifestSection>
+								<name>br/ccsl/cogroo/addon/CentralRegistrationClass.class</name>
+								<manifestEntries>
+									<RegistrationClasses>br.ccsl.cogroo.addon.Main</RegistrationClasses>
+								</manifestEntries>
+							</manifestSection>
+						</manifestSections>
+
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+					</archive>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<finalName>${project.artifactId}-${project.version}</finalName>
+					<descriptors>
+						<descriptor>${basedir}/mvn/addonAssembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<inherited>false</inherited>
 				<executions>
 					<execution>
-						<id>src</id>
-						<phase>verify</phase>
+						<id>oxt</id>
+						<phase>package</phase>
 						<goals>
-							<goal>attached</goal>
+							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin> -->
-        </plugins>
-    </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
+			</plugin>
+
+			<!-- <plugin> -->
+			<!-- <artifactId>maven-assembly-plugin</artifactId> -->
+			<!-- <inherited>true</inherited> -->
+			<!-- <configuration> -->
+			<!-- <descriptorRefs> -->
+			<!-- <descriptorRef>src</descriptorRef> -->
+			<!-- </descriptorRefs> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>src</id> -->
+			<!-- <phase>verify</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>attached</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+
+
+
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>downloads-maven-plugin</artifactId>
+				<version>0.6</version>
+				<configuration>
+					<repositoryName>cogroo4</repositoryName>
+					<repositoryOwner>cogroo</repositoryOwner>
+					<description>${project.version} release of ${project.name}</description>
+					<override>true</override>
+					<includes>
+						<include>**/*.oxt</include>
+						<include>**/update-site/*.xml</include>
+					</includes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/update-site</outputDirectory>
+							<resources>
+								<resource>
+									<directory>update-site</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${basedir}/target/update-site/update-site-snapshot.xml</file>
+									<type>xml</type>
+									<classifier>update-site</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>

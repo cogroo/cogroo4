@@ -32,7 +32,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import br.ccsl.cogroo.tools.checker.rules.applier.RulesTreesBuilder;
-import br.ccsl.cogroo.tools.checker.rules.applier.RulesXmlAccess;
 
 /**
  * This class holds common properties to the rules applier classes.

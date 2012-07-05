@@ -29,20 +29,15 @@ package br.ccsl.cogroo.addon;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.ccsl.cogroo.addon.addon.conf.AddOnConfiguration;
-import br.ccsl.cogroo.analyzer.AnalyzerI;
 import br.ccsl.cogroo.analyzer.ComponentFactory;
 import br.ccsl.cogroo.analyzer.Pipe;
 import br.ccsl.cogroo.checker.CheckDocument;
 import br.ccsl.cogroo.checker.GrammarCheckerAnalyzer;
 import br.ccsl.cogroo.entities.Mistake;
-import br.ccsl.cogroo.text.Document;
-import br.ccsl.cogroo.text.impl.DocumentImpl;
 import br.ccsl.cogroo.tools.checker.rules.model.Rule;
 
 import com.sun.star.uno.XComponentContext;

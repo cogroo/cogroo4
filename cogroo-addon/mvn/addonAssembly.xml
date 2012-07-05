@@ -1,95 +1,80 @@
-<!--
-
-    Copyright (C) 2008 CoGrOO Team (cogroo AT gmail DOT com)
-    
-    CoGrOO Team (cogroo AT gmail DOT com)
-    LTA, PCS (Computer and Digital Systems Engineering Department),
-    Escola Politécnica da Universidade de São Paulo
-    Av. Prof. Luciano Gualberto, trav. 3, n. 380
-    CEP 05508-900 - São Paulo - SP - BRAZIL
-    
-    http://cogroo.sourceforge.net/
-    
-    This file is part of CoGrOO.
-    
-    CoGrOO is free software; you can redistribute it and/or modify it 
-    under the terms of the GNU Lesser General Public as published by 
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    
-    CoGrOO is distributed in the hope that it will be useful, but 
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-    
-    You should have received a copy of the GNU Lesser General Public
-    License along with CoGrOO. If not, see <http://www.gnu.org/licenses/>.
-
--->
+<!-- Copyright (C) 2008 CoGrOO Team (cogroo AT gmail DOT com) CoGrOO Team 
+	(cogroo AT gmail DOT com) LTA, PCS (Computer and Digital Systems Engineering 
+	Department), Escola Politécnica da Universidade de São Paulo Av. Prof. Luciano 
+	Gualberto, trav. 3, n. 380 CEP 05508-900 - São Paulo - SP - BRAZIL http://cogroo.sourceforge.net/ 
+	This file is part of CoGrOO. CoGrOO is free software; you can redistribute 
+	it and/or modify it under the terms of the GNU Lesser General Public as published 
+	by the Free Software Foundation, either version 3 of the License, or (at 
+	your option) any later version. CoGrOO is distributed in the hope that it 
+	will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+	of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+	Public License for more details. You should have received a copy of the GNU 
+	Lesser General Public License along with CoGrOO. If not, see <http://www.gnu.org/licenses/>. -->
 
 <assembly>
-    <id>bin.oxt</id>
-    <formats>
-        <format>zip</format>
-        <format>dir</format>
-    </formats>
-    <includeBaseDirectory>false</includeBaseDirectory>
-    <fileSets>
-        <fileSet>
-            <directory>target/cogroo</directory>
-            <outputDirectory>registry/data/br/usp/ime/ccsl/cogroo/oooext</outputDirectory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <filtered>false</filtered>
+	<id>bin.oxt</id>
+	<formats>
+		<format>zip</format>
+		<format>dir</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>target/cogroo</directory>
+			<outputDirectory>registry/data/br/usp/ime/ccsl/cogroo/oooext
+			</outputDirectory>
+			<useDefaultExcludes>true</useDefaultExcludes>
+			<filtered>false</filtered>
 
-            <includes>
-                <include>data/**</include>
-                <include>rules/**</include>
-                <include>schema/**</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>src</directory>
-            <outputDirectory></outputDirectory>
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <filtered>true</filtered>
-            <includes>
-                <include>*.properties</include>
-                <include>description.xml</include>
-                <include>LICENSE*</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>images</directory>
-            <outputDirectory>images</outputDirectory>
-        </fileSet>
-        <fileSet>
-            <directory>description</directory>
-            <outputDirectory>description</outputDirectory>
-        </fileSet>
-        <fileSet>
-            <directory>registry</directory>
-            <outputDirectory>registry</outputDirectory>
-        </fileSet>
-    </fileSets>
-    <files>
-        <file>
-            <source>src/uno-extension-manifest.xml</source>
-            <outputDirectory>META-INF</outputDirectory>
-            <destName>manifest.xml</destName>
-        </file>
-        <file>
-            <source>target/${pom.artifactId}-${pom.version}.jar</source>
-            <outputDirectory></outputDirectory>
-            <destName>${pom.artifactId}.jar</destName>
-        </file>
-    </files>
-    <dependencySets>
-        <dependencySet>
-            <outputDirectory>lib</outputDirectory>
-            <scope>runtime</scope>
-            <useProjectAttachments>false</useProjectAttachments>
-            <useProjectArtifact>false</useProjectArtifact>
-            <useTransitiveDependencies>true</useTransitiveDependencies>
-        </dependencySet>
-    </dependencySets>
+			<includes>
+				<include>data/**</include>
+				<include>rules/**</include>
+				<include>schema/**</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>src</directory>
+			<outputDirectory></outputDirectory>
+			<useDefaultExcludes>true</useDefaultExcludes>
+			<filtered>true</filtered>
+			<includes>
+				<include>*.properties</include>
+				<include>description.xml</include>
+				<include>LICENSE*</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>images</directory>
+			<outputDirectory>images</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>description</directory>
+			<outputDirectory>description</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>registry</directory>
+			<outputDirectory>registry</outputDirectory>
+		</fileSet>
+	</fileSets>
+	<files>
+		<file>
+			<source>src/uno-extension-manifest.xml</source>
+			<outputDirectory>META-INF</outputDirectory>
+			<destName>manifest.xml</destName>
+		</file>
+		<file>
+			<source>target/${pom.artifactId}-${pom.version}.jar</source>
+			<outputDirectory></outputDirectory>
+			<destName>${pom.artifactId}.jar</destName>
+		</file>
+	</files>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+			<scope>runtime</scope>
+			<useProjectAttachments>false</useProjectAttachments>
+			<useProjectArtifact>false</useProjectArtifact>
+			<useTransitiveDependencies>true</useTransitiveDependencies>
+		</dependencySet>
+	</dependencySets>
 </assembly>

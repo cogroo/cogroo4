@@ -35,8 +35,6 @@ import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
 import br.ccsl.cogroo.tools.featurizer.FeatureSample;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerCrossValidator;
 import br.ccsl.cogroo.tools.featurizer.FeaturizerEvaluationMonitor;
-import br.ccsl.cogroo.tools.featurizer.FeaturizerFactory;
-import br.ccsl.cogroo.tools.featurizer.FeaturizerModel;
 
 public final class FeaturizerCrossValidatorTool extends
     AbstractCrossValidatorTool<FeatureSample, CVToolParams> {
