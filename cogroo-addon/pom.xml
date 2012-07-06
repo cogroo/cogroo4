@@ -10,8 +10,6 @@
 		<relativePath>../cogroo</relativePath>
 	</parent>
 
-
-
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>cogroo-addon</artifactId>
 	<name>Grammar Checker OOo Addon</name>
@@ -86,9 +84,9 @@
 			<version>1.4</version>
 		</dependency>
 		<dependency>
-			<groupId>org.cogroo</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>cogroo-gc-pt_br</artifactId>
-			<version>4.0.0-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
