@@ -46,7 +46,7 @@
 	<modules>
 		<module>cogroo-gc</module>
 		<module>cogroo-ann</module>
-		<module>resources</module>
+		<module>cogroo-res</module>
 	</modules>
 
 	<description>Projects with language specific stuff</description>
