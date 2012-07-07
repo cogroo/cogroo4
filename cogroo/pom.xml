@@ -20,7 +20,7 @@
 	<version>4.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Cogroo Reactor</name>
+	<name>Cogroo Parent</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,6 +43,7 @@
 		<module>../cogroo-gc</module>
 		<module>../lang</module>
 		<module>../cogroo-addon</module>
+<!-- 		<module>../cogroo-eval</module> -->
 	</modules>
 
 	<scm>
@@ -268,4 +269,10 @@
 		</pluginManagement>
 	</build>
 
+	<organization>
+		<name>CoGrOO</name>
+		<url>http://cogroo.org</url>
+	</organization>
+	<inceptionYear>2012</inceptionYear>
+	<url>http://cogroo.org</url>
 </project>
