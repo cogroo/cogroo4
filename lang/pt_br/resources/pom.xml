@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>cogroo</artifactId>
-		<groupId>org.cogroo</groupId>
-		<version>4.0.0-SNAPSHOT</version>
-		<relativePath>../../cogroo</relativePath>
+  		<groupId>org.cogroo.lang.pt_br</groupId>
+  		<artifactId>cogroo-pt_br</artifactId>
+  		<version>4.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 
-	<artifactId>cogroo-pt_br</artifactId>
+	<artifactId>cogroo-res</artifactId>
 	<packaging>jar</packaging>
 	<name>cogroo-pt_br</name>
 	<description>pt_br models and dictionaries.</description>
@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>org.cogroo</groupId>
 			<artifactId>cogroo-nlp</artifactId>
-			<version>4.0.0-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 

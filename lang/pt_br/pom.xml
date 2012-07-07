@@ -22,19 +22,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<parent>
-		<artifactId>cogroo</artifactId>
-		<groupId>org.cogroo</groupId>
-		<version>4.0.0-SNAPSHOT</version>
-		<relativePath>../cogroo</relativePath>
+  		<groupId>org.cogroo.lang</groupId>
+  		<artifactId>cogroo-lang</artifactId>
+  		<version>4.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.cogroo.lang</groupId>
-	<artifactId>cogroo-lang</artifactId>
+	<groupId>org.cogroo.lang.pt_br</groupId>
+	<artifactId>cogroo-pt_br</artifactId>
 	<packaging>pom</packaging>
 
-	<name>Cogroo Lang Aggregator</name>
+	<name>Cogroo pt-BR Aggregator</name>
 
 	<prerequisites>
 		<maven>3.0</maven>
@@ -44,7 +44,9 @@
 	</issueManagement>
 
 	<modules>
-		<module>pt_br</module>
+		<module>cogroo-gc</module>
+		<module>cogroo-ann</module>
+		<module>resources</module>
 	</modules>
 
 	<description>Projects with language specific stuff</description>

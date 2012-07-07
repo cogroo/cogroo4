@@ -5,15 +5,15 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>cogroo</artifactId>
-		<groupId>org.cogroo</groupId>
-		<version>4.0.0-SNAPSHOT</version>
-		<relativePath>../../cogroo</relativePath>
+  		<groupId>org.cogroo.lang.pt_br</groupId>
+  		<artifactId>cogroo-pt_br</artifactId>
+  		<version>4.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 
-	<artifactId>cogroo-gc-pt_br</artifactId>
+	<artifactId>cogroo-gc</artifactId>
 	<packaging>jar</packaging>
-	<name>cogroo-gc-pt_br</name>
+	<name>cogroo-gc: pt_br</name>
 
 	<dependencies>
 		<dependency>
