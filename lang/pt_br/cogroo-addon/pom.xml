@@ -4,18 +4,18 @@
 
 
 	<parent>
-		<groupId>org.cogroo</groupId>
-		<artifactId>cogroo</artifactId>
-		<version>4.0.0-SNAPSHOT</version>
-		<relativePath>../cogroo</relativePath>
+  		<groupId>org.cogroo.lang.pt_br</groupId>
+  		<artifactId>cogroo-pt_br</artifactId>
+  		<version>4.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>cogroo-addon</artifactId>
-	<name>Grammar Checker OOo Addon</name>
+	<name>Grammar Checker Libre|OpenOffice pt-BR Addon</name>
 	<packaging>jar</packaging>
 	<description />
-	<inceptionYear>2009</inceptionYear>
+	<inceptionYear>2012</inceptionYear>
 	<url>http://cogroo.sourceforge.net</url>
 	<developers>
 		<developer>
@@ -85,7 +85,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>cogroo-gc-pt_br</artifactId>
+			<artifactId>cogroo-gc</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

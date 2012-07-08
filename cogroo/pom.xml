@@ -42,7 +42,6 @@
 		<module>../cogroo-ann</module>
 		<module>../cogroo-gc</module>
 		<module>../lang</module>
-		<module>../cogroo-addon</module>
 <!-- 		<module>../cogroo-eval</module> -->
 	</modules>
 

@@ -17,14 +17,14 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.cogroo</groupId>
-			<artifactId>cogroo-ann-pt_br</artifactId>
-			<version>4.0.0-SNAPSHOT</version>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cogroo-ann</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.cogroo</groupId>
 			<artifactId>cogroo-gc</artifactId>
-			<version>4.0.0-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
