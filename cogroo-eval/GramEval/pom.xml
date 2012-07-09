@@ -1,13 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cogroo.uima</groupId>
+
 	<artifactId>GramEval</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 
 	<parent>
-		<artifactId>cogroo-eval</artifactId>
-		<groupId>org.cogroo</groupId>
+		<artifactId>parent</artifactId>
+		<groupId>org.cogroo.eval</groupId>
 		<relativePath>..</relativePath>
 		<version>4.0.0-SNAPSHOT</version>
 	</parent>
@@ -17,9 +16,37 @@
 		<uima.datapath>$main_root</uima.datapath>
 		<uima.mainComponent>desc/GrammarCheckerEvaluator.xml</uima.mainComponent>
 	</properties>
+	
+		<repositories>
+
+		<repository>
+			<id>ApacheIncubatorRepository</id>
+			<url>
+				http://people.apache.org/repo/m2-incubating-repository/
+			</url>
+		</repository>
+
+		<repository>
+			<id>Cogroo Release</id>
+			<url>
+		http://ccsl.ime.usp.br/cogroo/maven/release/
+		</url>
+		</repository>
+
+		<repository>
+			<id>Cogroo Snapshot</id>
+			<url>
+		http://ccsl.ime.usp.br/cogroo/maven/snapshot/
+		</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+	</repositories>
 
 	<dependencies>
- 		<dependency>
+		<dependency>
 			<artifactId>opennlp-tools</artifactId>
 			<version>1.5.3-SNAPSHOT</version>
 			<groupId>org.apache.opennlp</groupId>
@@ -41,9 +68,9 @@
 			<type>jar</type>
 		</dependency>
 		<dependency>
-			<groupId>cogroo.uima</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>TypeSystem</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -52,7 +79,7 @@
 			<artifactId>stringtemplate</artifactId>
 			<version>4.0.2</version>
 		</dependency>
-				<!-- pear -->
+		<!-- pear -->
 		<dependency>
 			<groupId>ant-contrib</groupId>
 			<artifactId>ant-contrib</artifactId>
@@ -64,10 +91,10 @@
 			<version>1.0-alpha-2</version>
 		</dependency>
 		<dependency>
-    		<groupId>com.google.guava</groupId>
-    		<artifactId>guava</artifactId>
-    		<version>11.0.2</version>
-</dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>11.0.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -140,10 +167,9 @@
 						<phase>process-test-resources</phase>
 						<configuration>
 							<tasks>
-								<!-- <copy todir="${basedir}/resources" flatten="true">
-									<fileset dir="${basedir}/res" />
-									<fileset dir="${project.build.directory}/others/resources" />
-								</copy> -->
+								<!-- <copy todir="${basedir}/resources" flatten="true"> <fileset 
+									dir="${basedir}/res" /> <fileset dir="${project.build.directory}/others/resources" 
+									/> </copy> -->
 							</tasks>
 						</configuration>
 						<goals>
@@ -252,7 +278,7 @@
 						<configuration>
 							<classpath>
 								${pear.classpath}
-								</classpath>
+							</classpath>
 							<mainComponentDesc>
 								<!-- PEAR file main component descriptor -->
 								${uima.mainComponent}

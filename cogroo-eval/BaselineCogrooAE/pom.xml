@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cogroo.uima</groupId>
+
 	<artifactId>BaselineCogrooAE</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 
 	<parent>
-		<artifactId>cogroo-eval</artifactId>
-		<groupId>org.cogroo</groupId>
+		<artifactId>parent</artifactId>
+		<groupId>org.cogroo.eval</groupId>
 		<relativePath>..</relativePath>
 		<version>4.0.0-SNAPSHOT</version>
 	</parent>
@@ -26,22 +26,22 @@
 			</url>
 		</repository>
 
-		<!-- <repository> -->
-		<!-- <id>Cogroo Release</id> -->
-		<!-- <url> -->
-		<!-- http://ccsl.ime.usp.br/cogroo/maven/release/ -->
-		<!-- </url> -->
-		<!-- </repository> -->
+	<repository>
+		<id>Cogroo Release</id>
+		<url>
+		http://ccsl.ime.usp.br/cogroo/maven/release/
+		</url>
+	</repository>
 
-		<!-- <repository> -->
-		<!-- <id>Cogroo Snapshot</id> -->
-		<!-- <url> -->
-		<!-- http://ccsl.ime.usp.br/cogroo/maven/snapshot/ -->
-		<!-- </url> -->
-		<!-- <snapshots> -->
-		<!-- <enabled>true</enabled> -->
-		<!-- </snapshots> -->
-		<!-- </repository> -->
+	<repository>
+		<id>Cogroo Snapshot</id>
+		<url>
+		http://ccsl.ime.usp.br/cogroo/maven/snapshot/
+		</url>
+		<snapshots>
+			<enabled>true</enabled>
+		</snapshots>
+	</repository>
 
 	</repositories>
 
@@ -77,9 +77,9 @@
 			<version>3.2.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>cogroo.uima</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>TypeSystem</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

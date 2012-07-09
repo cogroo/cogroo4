@@ -108,7 +108,7 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
     /* Class */
     menumElements.put(Class.NOUN, "n");
     menumElements.put(Class.PROPER_NOUN, "prop");
-//    menumElements.put(Class.SPECIFIER, "pron-indp");// ?
+    menumElements.put(Class.SPECIFIER, "pron-indp");// ?
     menumElements.put(Class.DETERMINER, "art");// collision
     // menumElements.put(Class.ARTICLE, "art");//collision
     // menumElements.put(Class.DETERMINER_PRONOUN, "pron-det");//collision
