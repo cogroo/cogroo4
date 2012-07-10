@@ -107,7 +107,7 @@
         <deltree dir="tmp/base/CoGrOOBase-bin.zip/registry" />
 
         <unzip src="tmp/base/CoGrOOBase-bin.zip"
-            dest="tmp/base/CoGrOOBase-bin/registry/data/br/usp/ime/ccsl/cogroo/oooext/">
+            dest="tmp/base/CoGrOOBase-bin/registry/data/org/cogroo/oooext/">
             <patternset>
                 <exclude name="**/*.jar"/>
             </patternset>

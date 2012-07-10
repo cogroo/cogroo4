@@ -183,7 +183,7 @@
 						</manifestEntries>
 						<manifestSections>
 							<manifestSection>
-								<name>br/ccsl/cogroo/addon/CentralRegistrationClass.class</name>
+								<name>org/cogroo/addon/CentralRegistrationClass.class</name>
 								<manifestEntries>
 									<RegistrationClasses>org.cogroo.addon.Main</RegistrationClasses>
 								</manifestEntries>

@@ -21,7 +21,7 @@
 	<fileSets>
 		<fileSet>
 			<directory>target/cogroo</directory>
-			<outputDirectory>registry/data/br/usp/ime/ccsl/cogroo/oooext
+			<outputDirectory>registry/data/org/cogroo/oooext
 			</outputDirectory>
 			<useDefaultExcludes>true</useDefaultExcludes>
 			<filtered>false</filtered>
