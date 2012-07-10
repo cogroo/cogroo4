@@ -3,7 +3,8 @@ package br.ccsl.cogroo.util;
 import java.util.Arrays;
 import java.util.List;
 
-import br.ccsl.cogroo.config.Analyzers;
+import org.cogroo.config.Analyzers;
+
 import br.ccsl.cogroo.text.Chunk;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;

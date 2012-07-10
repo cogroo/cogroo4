@@ -4,7 +4,9 @@ import java.util.List;
 
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.util.Span;
-import br.ccsl.cogroo.config.Analyzers;
+
+import org.cogroo.config.Analyzers;
+
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;

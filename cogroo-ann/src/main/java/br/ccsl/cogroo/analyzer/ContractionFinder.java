@@ -7,8 +7,8 @@ import opennlp.tools.util.Span;
 
 import org.apache.log4j.Logger;
 import org.cogroo.ContractionUtility;
+import org.cogroo.config.Analyzers;
 
-import br.ccsl.cogroo.config.Analyzers;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;

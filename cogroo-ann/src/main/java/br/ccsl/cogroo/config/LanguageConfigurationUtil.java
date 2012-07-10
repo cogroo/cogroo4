@@ -9,9 +9,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import com.google.common.io.Closeables;
+import org.cogroo.config.LanguageConfiguration;
+import org.cogroo.config.ObjectFactory;
 
 import br.ccsl.cogroo.analyzer.InitializationException;
+
+import com.google.common.io.Closeables;
 
 /**
  * The <code>LanguageConfigurationUtil</code> class is responsible for

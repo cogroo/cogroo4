@@ -1,6 +1,6 @@
 package br.ccsl.cogroo.text;
 
-import br.ccsl.cogroo.config.Analyzers;
+import org.cogroo.config.Analyzers;
 
 /**
  * The <code>Token</code> interface is responsible for obtaining each component

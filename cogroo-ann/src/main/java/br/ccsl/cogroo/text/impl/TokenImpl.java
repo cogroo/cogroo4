@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.ccsl.cogroo.config.Analyzers;
+import opennlp.tools.util.Span;
+
+import org.cogroo.config.Analyzers;
+
 import br.ccsl.cogroo.text.Token;
 
 import com.google.common.base.Objects;
-
-import opennlp.tools.util.Span;
 
 /**
  * The <code>TokenImpl</code> class represents a token, which is a word, its
