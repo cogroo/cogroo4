@@ -11,7 +11,7 @@
 		<relativePath>..</relativePath>
 	</parent>
 
-	<artifactId>cogroo-ann</artifactId>
+	<artifactId>cogroo-ann-pt_br</artifactId>
 	<packaging>jar</packaging>
 	<name>cogroo-ann-pt_br</name>
 	<description>Pipe configuration for pt-br</description>
@@ -24,7 +24,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>cogroo-res</artifactId>
+			<artifactId>cogroo-res-pt_br</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

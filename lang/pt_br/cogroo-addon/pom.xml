@@ -11,7 +11,7 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>cogroo-addon</artifactId>
+	<artifactId>cogroo-addon-pt_br</artifactId>
 	<name>Grammar Checker Libre|OpenOffice pt-BR Addon</name>
 	<packaging>jar</packaging>
 	<description />
@@ -85,7 +85,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>cogroo-gc</artifactId>
+			<artifactId>cogroo-gc-pt_br</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

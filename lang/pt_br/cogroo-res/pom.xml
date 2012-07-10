@@ -11,7 +11,7 @@
 		<relativePath>..</relativePath>
 	</parent>
 
-	<artifactId>cogroo-res</artifactId>
+	<artifactId>cogroo-res-pt_br</artifactId>
 	<packaging>jar</packaging>
 	<name>cogroo-pt_br</name>
 	<description>pt_br models and dictionaries.</description>
