@@ -35,6 +35,9 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.cogroo.formats.ad.ADFeaturizerSampleStream;
+import org.cogroo.tools.featurizer.FeatureSample;
+
 import opennlp.tools.cmdline.AbstractBasicCmdLineTool;
 import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
 import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
@@ -43,11 +46,9 @@ import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.postag.Triple;
 import opennlp.tools.util.featuregen.StringPattern;
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
-import br.ccsl.cogroo.formats.ad.ADFeaturizerSampleStream;
 import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
 import br.ccsl.cogroo.interpreters.JspellTagInterpreter;
 import br.ccsl.cogroo.interpreters.TagInterpreterI;
-import br.ccsl.cogroo.tools.featurizer.FeatureSample;
 
 public class TabSeparatedPOSDictionaryBuilderTool extends
     AbstractBasicCmdLineTool {

@@ -26,7 +26,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import br.ccsl.cogroo.tools.featurizer.WordTag;
+import org.cogroo.tools.featurizer.WordTag;
+
 
 import opennlp.tools.dictionary.serializer.Attributes;
 import opennlp.tools.dictionary.serializer.DictionarySerializer;

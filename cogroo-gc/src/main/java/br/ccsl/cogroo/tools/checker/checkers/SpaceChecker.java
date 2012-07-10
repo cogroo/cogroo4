@@ -32,7 +32,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.ccsl.cogroo.dictionary.AbbreviationDictionaryI;
+import org.cogroo.dictionary.AbbreviationDictionaryI;
+
 import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.Sentence;
 import br.ccsl.cogroo.tools.checker.AbstractTypedChecker;

@@ -43,7 +43,7 @@ public class SentenceImpl implements Sentence {
   }
 
   /* (non-Javadoc)
-   * @see br.ccsl.cogroo.text.Sentence#getText()
+   * @see org.cogroo.text.Sentence#getText()
    */
   public String getText() {
     return span.getCoveredText(theDocument.getText()).toString();
@@ -51,14 +51,14 @@ public class SentenceImpl implements Sentence {
 
 
   /* (non-Javadoc)
-   * @see br.ccsl.cogroo.text.Sentence#getTokens()
+   * @see org.cogroo.text.Sentence#getTokens()
    */
   public List<Token> getTokens() {
     return tokens;
   }
 
   /* (non-Javadoc)
-   * @see br.ccsl.cogroo.text.Sentence#setTokens(java.util.List)
+   * @see org.cogroo.text.Sentence#setTokens(java.util.List)
    */
   public void setTokens(List<Token> tokens) {
     this.tokens = tokens;

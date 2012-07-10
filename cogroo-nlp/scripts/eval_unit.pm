@@ -206,7 +206,7 @@ sub createCommand {
 	if($cliTool eq "opennlp") {
 		$command .= 'opennlp.tools.cmdline.CLI';
 	}  else {
-		$command .= 'br.ccsl.cogroo.cmdline.CLI';
+		$command .= 'org.cogroo.cmdline.CLI';
 	}
 	
 	$command .= '" "-Dexec.args=' . $execArgs . '"';

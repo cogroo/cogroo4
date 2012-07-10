@@ -46,7 +46,7 @@
         					<generateDirectory>target/generated-sources/xjc1</generateDirectory>
 							<schemaDirectory>src/main/resources/rules/schema</schemaDirectory>
 							<extension>true</extension>
-							<generatePackage>br.ccsl.cogroo.tools.checker.rules.model</generatePackage>
+							<generatePackage>org.cogroo.tools.checker.rules.model</generatePackage>
 						</configuration>
 					</execution>
 					<execution>
@@ -59,7 +59,7 @@
 							<generateDirectory>target/generated-sources/xjc2</generateDirectory>
 							<schemaDirectory>src/main/resources/error_report/</schemaDirectory>
 							<extension>true</extension>
-							<generatePackage>br.ccsl.cogroo.tools.errorreport.model</generatePackage>
+							<generatePackage>org.cogroo.tools.errorreport.model</generatePackage>
 						</configuration>
 					</execution>
 				</executions>

@@ -99,7 +99,7 @@
 				<configuration>
 					<schemaDirectory>src/main/resources/br/ccsl/cogroo/config</schemaDirectory>
 					<extension>true</extension>
-					<generatePackage>br.ccsl.cogroo.config</generatePackage>
+					<generatePackage>org.cogroo.config</generatePackage>
 				</configuration>
 			</plugin>
 			<plugin>

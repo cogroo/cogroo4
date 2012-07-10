@@ -44,7 +44,7 @@ public class RulesProperties {
 	/**
 	 * This resource bundle holds various properties used by the rules applier.
 	 */
-	//public static final ResourceBundle RESOURCES = ResourceBundle.getBundle("br.ccsl.cogroo.tools.checker.rules.rules");
+	//public static final ResourceBundle RESOURCES = ResourceBundle.getBundle("org.cogroo.tools.checker.rules.rules");
 
 	public static String rootFolder = System.getProperty("user.dir") + "/";
 	
@@ -69,7 +69,7 @@ public class RulesProperties {
 	 */
 	public static final int SUBJECT_VERB_TREE = 2;
 	
-	//private static final ResourceBundle PROPERTIES = ResourceBundle.getBundle("br.ccsl.cogroo.tools.checker.rules.rules");
+	//private static final ResourceBundle PROPERTIES = ResourceBundle.getBundle("org.cogroo.tools.checker.rules.rules");
 	private static final Properties PROPERTIES = new Properties();
 	
   static {

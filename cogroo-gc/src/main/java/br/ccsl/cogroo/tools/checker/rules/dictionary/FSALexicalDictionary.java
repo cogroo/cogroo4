@@ -5,9 +5,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import br.ccsl.cogroo.dictionary.impl.FSADictionary;
-import br.ccsl.cogroo.dictionary.impl.FSASynthDictionary;
-import br.ccsl.cogroo.util.PairWordPOSTag;
+import org.cogroo.dictionary.impl.FSADictionary;
+import org.cogroo.dictionary.impl.FSASynthDictionary;
+import org.cogroo.util.PairWordPOSTag;
+
 
 public class FSALexicalDictionary implements LexicalDictionary {
   

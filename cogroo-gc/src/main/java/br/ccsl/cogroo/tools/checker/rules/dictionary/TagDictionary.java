@@ -34,11 +34,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.cogroo.util.PairWordPOSTag;
 
 import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.interpreters.TagInterpreterI;
 import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
-import br.ccsl.cogroo.util.PairWordPOSTag;
 
 /**
  * Provides access to the FSA tag dictionary

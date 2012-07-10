@@ -51,7 +51,7 @@ public class TokenImpl implements Token {
   /*
    * (non-Javadoc)
    * 
-   * @see br.ccsl.cogroo.TokenI#getLemma()
+   * @see org.cogroo.TokenI#getLemma()
    */
   public String[] getLemmas() {
     return lemmas;
@@ -64,7 +64,7 @@ public class TokenImpl implements Token {
   /*
    * (non-Javadoc)
    * 
-   * @see br.ccsl.cogroo.TokenI#getLexeme()
+   * @see org.cogroo.TokenI#getLexeme()
    */
   public String getLexeme() {
     return lexeme;

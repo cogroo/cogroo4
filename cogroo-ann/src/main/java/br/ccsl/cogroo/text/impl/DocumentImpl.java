@@ -23,28 +23,28 @@ public class DocumentImpl implements Document {
   }
   
   /* (non-Javadoc)
-   * @see br.ccsl.cogroo.text.Document#getText()
+   * @see org.cogroo.text.Document#getText()
    */
   public String getText() {
     return text;
   }
 
   /* (non-Javadoc)
-   * @see br.ccsl.cogroo.text.Document#setText(java.lang.String)
+   * @see org.cogroo.text.Document#setText(java.lang.String)
    */
   public void setText(String text) {
     this.text = text;
   }
 
   /* (non-Javadoc)
-   * @see br.ccsl.cogroo.text.Document#getSentences()
+   * @see org.cogroo.text.Document#getSentences()
    */
   public List<Sentence> getSentences() {
     return sentences;
   }
 
   /* (non-Javadoc)
-   * @see br.ccsl.cogroo.text.Document#setSentences(java.util.List)
+   * @see org.cogroo.text.Document#setSentences(java.util.List)
    */
   public void setSentences(List<Sentence> sentences) {
     this.sentences = sentences;

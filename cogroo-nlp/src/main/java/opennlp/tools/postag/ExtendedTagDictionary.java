@@ -17,7 +17,7 @@
 
 package opennlp.tools.postag;
 
-import br.ccsl.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionaryI;
 
 public interface ExtendedTagDictionary extends TagDictionary, FeatureDictionaryI {
 

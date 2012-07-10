@@ -2,7 +2,8 @@ package br.ccsl.cogroo.analyzer;
 
 import java.util.List;
 
-import br.ccsl.cogroo.dictionary.LemmaDictionaryI;
+import org.cogroo.dictionary.LemmaDictionaryI;
+
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;

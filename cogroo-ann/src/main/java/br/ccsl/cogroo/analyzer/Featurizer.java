@@ -2,10 +2,11 @@ package br.ccsl.cogroo.analyzer;
 
 import java.util.List;
 
+import org.cogroo.tools.featurizer.FeaturizerME;
+
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.text.Token;
-import br.ccsl.cogroo.tools.featurizer.FeaturizerME;
 import br.ccsl.cogroo.util.TextUtils;
 
 public class Featurizer implements AnalyzerI {

@@ -6,8 +6,8 @@ import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.util.Span;
 
 import org.apache.log4j.Logger;
+import org.cogroo.ContractionUtility;
 
-import br.ccsl.cogroo.ContractionUtility;
 import br.ccsl.cogroo.config.Analyzers;
 import br.ccsl.cogroo.text.Document;
 import br.ccsl.cogroo.text.Sentence;

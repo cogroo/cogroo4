@@ -28,15 +28,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cogroo.formats.ad.ADFeaturizerSampleStream;
+import org.cogroo.tools.featurizer.FeatureSample;
+
 import opennlp.tools.cmdline.AbstractBasicCmdLineTool;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.postag.ExtendedPOSDictionary;
 import opennlp.tools.postag.MyPOSDictionary;
-import br.ccsl.cogroo.formats.ad.ADFeaturizerSampleStream;
 import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
 import br.ccsl.cogroo.interpreters.JspellTagInterpreter;
-import br.ccsl.cogroo.tools.featurizer.FeatureSample;
 
 public class POSDictionaryBuilderTool extends AbstractBasicCmdLineTool {
 

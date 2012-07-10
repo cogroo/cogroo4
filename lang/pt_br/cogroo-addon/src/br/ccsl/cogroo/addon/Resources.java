@@ -38,7 +38,7 @@ public class Resources {
 
 
                 Object[] args = new Object[1];
-                args[0] = new PropertyValue("nodepath", 0, "/br.ccsl.cogroo.addon.CogrooConfiguration/Options",
+                args[0] = new PropertyValue("nodepath", 0, "/org.cogroo.addon.CogrooConfiguration/Options",
                         PropertyState.DIRECT_VALUE);
 
                 m_xDemoOptions = (XPropertySet) UnoRuntime.queryInterface(XPropertySet.class,

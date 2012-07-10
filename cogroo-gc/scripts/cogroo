@@ -22,4 +22,4 @@ export MAVEN_OPTS="-Xms512m -Xmx2048m -XX:PermSize=256m"
 DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 POM=${DIR}/../pom.xml
 
-mvn -e -o -q -f ${POM} exec:java "-Dexec.mainClass=br.ccsl.cogroo.gc.cmdline.CLI" "-Dexec.args=$*"
+mvn -e -o -q -f ${POM} exec:java "-Dexec.mainClass=org.cogroo.gc.cmdline.CLI" "-Dexec.args=$*"

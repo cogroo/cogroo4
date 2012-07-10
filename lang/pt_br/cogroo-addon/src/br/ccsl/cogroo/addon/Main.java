@@ -51,9 +51,9 @@ public final class Main extends WeakBase
 
     private static final String[] m_serviceNames = {
         "com.sun.star.linguistic2.Proofreader",
-	"br.ccsl.cogroo.addon.Main",
+	"org.cogroo.addon.Main",
         "com.sun.star.frame.ProtocolHandler",
-        "br.ccsl.cogroo.addon.Job"};
+        "org.cogroo.addon.Job"};
 
     /* related to XLinguServiceEventBroadcaster */
 	private List<XLinguServiceEventListener> xEventListeners = new ArrayList<XLinguServiceEventListener>();
@@ -256,7 +256,7 @@ public final class Main extends WeakBase
      public void dispatch( com.sun.star.util.URL aURL,
                            com.sun.star.beans.PropertyValue[] aArguments )
     {
-         if ( aURL.Protocol.compareTo("br.ccsl.cogroo.addon:") == 0 )
+         if ( aURL.Protocol.compareTo("org.cogroo.addon:") == 0 )
         {
             if ( aURL.Path.compareTo("ReportError") == 0 )
             {
@@ -288,7 +288,7 @@ public final class Main extends WeakBase
                                                        String sTargetFrameName,
                                                        int iSearchFlags )
     {
-        if ( aURL.Protocol.compareTo("br.ccsl.cogroo.addon:") == 0 )
+        if ( aURL.Protocol.compareTo("org.cogroo.addon:") == 0 )
         {
             if ( aURL.Path.compareTo("ReportError") == 0 )
                 return this;

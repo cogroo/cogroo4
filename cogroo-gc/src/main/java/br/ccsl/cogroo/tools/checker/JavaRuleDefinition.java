@@ -108,7 +108,7 @@ public class JavaRuleDefinition implements RuleDefinitionI {
   /**
    * Will always return RuleType.JAVA
    * 
-   * @see br.ccsl.cogroo.tools.checker.RuleDefinitionI#getRuleType()
+   * @see org.cogroo.tools.checker.RuleDefinitionI#getRuleType()
    */
   public RuleType getRuleType() {
     return RuleType.JAVA;
@@ -117,7 +117,7 @@ public class JavaRuleDefinition implements RuleDefinitionI {
   /**
    * Will allways return false
    * 
-   * @see br.ccsl.cogroo.tools.checker.RuleDefinitionI#isXMLBased()
+   * @see org.cogroo.tools.checker.RuleDefinitionI#isXMLBased()
    */
   public boolean isXMLBased() {
     return false;

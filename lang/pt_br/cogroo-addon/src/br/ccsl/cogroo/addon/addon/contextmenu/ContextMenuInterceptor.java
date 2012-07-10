@@ -44,7 +44,7 @@ public class ContextMenuInterceptor implements XContextMenuInterceptor {
 
                 // intialize root menu entry
                 xRootMenuEntry.setPropertyValue("Text", new String(I18nLabelsLoader.ADDON_REPORT_ERROR_CONTEXTMENU_GC));
-                xRootMenuEntry.setPropertyValue("CommandURL", "br.ccsl.cogroo.addon:ReportError");
+                xRootMenuEntry.setPropertyValue("CommandURL", "org.cogroo.addon:ReportError");
 
                 // intialize help/content menu entry
                 // entry "Content"

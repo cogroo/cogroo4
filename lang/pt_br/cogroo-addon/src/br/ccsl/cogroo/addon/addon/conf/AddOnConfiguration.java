@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 
 public class AddOnConfiguration extends DefaultConfiguration {
 
-    public static final String CONFIGURATION_ROOT_NODE = "/br.ccsl.cogroo.addon.CoGrOOImportFilter/Templates";
+    public static final String CONFIGURATION_ROOT_NODE = "/org.cogroo.addon.CoGrOOImportFilter/Templates";
     public static final String CONFIGURATION_NODE_TEMPLATE_REPOSITORIES = "TemplateRepositories";
     public static final String CONFIGURATION_PROPERTY_STORE_LOCAL = "store.local";
     public static final String CONFIGURATION_PROPERTY_ADDON_HOME = "cogroo.ooointegration.addon.home";

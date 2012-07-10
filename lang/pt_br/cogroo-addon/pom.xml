@@ -178,14 +178,14 @@
 					</excludes>
 					<archive>
 						<manifestEntries>
-							<RegistrationClassName>br.ccsl.cogroo.addon.CentralRegistrationClass</RegistrationClassName>
+							<RegistrationClassName>org.cogroo.addon.CentralRegistrationClass</RegistrationClassName>
 							<UNO-Type-Path></UNO-Type-Path>
 						</manifestEntries>
 						<manifestSections>
 							<manifestSection>
 								<name>br/ccsl/cogroo/addon/CentralRegistrationClass.class</name>
 								<manifestEntries>
-									<RegistrationClasses>br.ccsl.cogroo.addon.Main</RegistrationClasses>
+									<RegistrationClasses>org.cogroo.addon.Main</RegistrationClasses>
 								</manifestEntries>
 							</manifestSection>
 						</manifestSections>
