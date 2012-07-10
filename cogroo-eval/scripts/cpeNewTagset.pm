@@ -487,13 +487,13 @@ sub printVars {
 	print "UIMA_HOME: " . $ENV{'UIMA_HOME'} . "\n";
 	print "CORPUS_ROOT: " . $ENV{'CORPUS_ROOT'} . "\n";
 	print "REPO_ROOT: " . $ENV{'REPO_ROOT'} . "\n"; 
+	print "COGROO_3: " . $ENV{'COGROO_3'} . "\n";
 }
 
 sub init() {
 	checkVars();
-	install("../../cogroo-common/pom.xml");
-	install("../../cogroo-base/pom.xml");
-	install("../../../cogroo3/pom.xml");
+	install("../../cogroo/pom.xml");
+	install($ENV{'COGROO_3'} ."/pom.xml");
 	install("../UIMAAutomation/pom-evaluators.xml");
 	installPearByPath("../Cogroo3AE/target/Cogroo3AE.pear");
 }

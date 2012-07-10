@@ -1,0 +1,6 @@
+sent-vcf-perceptron-sd_factory,sd_abb-gp-0
+tok-vcf-perceptron-SD_ABB,TOK_ALPHAOPT-gp-0
+prop-cf-perceptron-NONE-gp-0
+con-vcf-perceptron-CON_DIC-gp-8
+pos-cf-maxent-POS_AC,POS_FSAEX,POS_FSAFACT-gp-4
+feat-cf-perceptron-FEAT_FSAFACT,FEAT_FSAEX-gp-0

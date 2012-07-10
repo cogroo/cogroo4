@@ -5,6 +5,7 @@ package eval_unit;
 use Time::HiRes;
 use Data::Dumper;
 use strict 'vars';
+use Cwd;
 use File::Temp qw/ tempfile tempdir /;
 
 use constant CORPUS_ROOT => $ENV{'CORPUS_ROOT'};
@@ -178,6 +179,7 @@ sub executeTr {
 	my $command = shift;
 	my $out     = "# results for $command\n";
 	printToLog "Will execute command: $command\n";
+	printToLog "At: " . cwd() . "\n";
 
 	my $start_time = [ Time::HiRes::gettimeofday() ];
 	my @res        = `$command 2>&1`;

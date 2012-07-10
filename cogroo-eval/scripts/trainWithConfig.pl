@@ -14,9 +14,9 @@ use Cwd;
 use File::Path qw(make_path);
 use Storable qw(freeze thaw);
 use File::Copy::Recursive qw(dircopy);
-my $common = "$Bin/../../cogroo-common/scripts"; 
+my $common = "$Bin/../../cogroo-nlp/scripts"; 
 
-use lib "$Bin/../../cogroo-common/scripts";
+use lib "$Bin/../../cogroo-nlp/scripts";
 require eval_unit;
  
 require cpe;
@@ -27,7 +27,7 @@ sub init() {
 	
 	checkVars();
 
-	open CONFIG, "../../cogroo-common/scripts/options.properties" or die $!;
+	open CONFIG, "../../cogroo-nlp/scripts/options.properties" or die $!;
 
 	while (<CONFIG>) {
 		chomp;       # no newline
@@ -40,6 +40,12 @@ sub init() {
 	}
 
 	close CONFIG;
+	
+	cpe::install("../../cogroo/pom.xml");
+	#install($ENV{'COGROO_3'} ."/pom.xml");
+	#install("../pom.xml");
+	#install("../UIMAAutomation/pom-evaluators.xml");
+	#installPearByPath("../Cogroo3AE/target/Cogroo3AE.pear");
 }
 
 sub checkVars {
@@ -94,7 +100,7 @@ sub train {
 	# create a temp folder and set the envvar REPO there.
 	
 	my $dir = getcwd;
-	chdir('../../cogroo-common');
+	chdir('../../lang/pt_br/cogroo-res');
 	# this will build the model
 	eval_unit::exec(\%opt, \%extraOpt);
 	chdir($dir);
@@ -165,16 +171,37 @@ sub generateHumanNames {
 	return @names;
 }
 
+sub trainListFromFile {
+	my $file = shift;
+	my $useNew = shift;
+	open (CONF, $file)  or die("Could not open list file. $!");
+	
+	my %results;
+
+	while (my $line = <CONF>) {
+    	$line =~ s/^\s+|\s+$//g;
+    	my @confs = split(/\n/,$line);
+    	foreach my $c (@confs) {
+    	    print "will train $c \n";
+			train($c);
+    	}
+	}
+	
+	close CONF;
+}
 
 
-if(@ARGV != 1) {
-	die "pass in an configuration argument\n";
+
+if(@ARGV != 2) {
+	die "pass in a configuration file and 1 to create and install the UIMA pears. \n";
 }
 print "Will train with argument " . $ARGV[0] . "\n";
 
 init();
 
-train($ARGV[0]);
+trainListFromFile($ARGV[0]);
 
-print "will also install pears...\n";
-cpe::installRequiredPears();
+if($ARGV[1]) {
+	print "will also install pears...\n";
+	cpe::installRequiredPears();
+}

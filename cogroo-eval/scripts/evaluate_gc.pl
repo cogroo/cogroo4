@@ -14,9 +14,9 @@ use Cwd;
 use File::Path qw(make_path rmtree);
 use Storable qw(freeze thaw);
 use File::Copy::Recursive qw(dircopy);
-my $common = "$Bin/../../cogroo-common/scripts"; 
+my $common = "$Bin/../../cogroo-nlp/scripts"; 
 
-use lib "$Bin/../../cogroo-common/scripts";
+use lib "$Bin/../../cogroo-nlp/scripts";
 require eval_unit;
  
 require cpe;
@@ -26,7 +26,7 @@ my %extraOpt;
 
 sub init() {
 
-	open CONFIG, "../../cogroo-common/scripts/options.properties" or die $!;
+	open CONFIG, "../../cogroo-nlp/scripts/options.properties" or die $!;
 
 	while (<CONFIG>) {
 		chomp;       # no newline
@@ -74,7 +74,7 @@ sub createBaseline {
 	$ENV{'MODEL_ROOT'} = $baselineModels;
 	
 	my $dir = getcwd;
-	chdir('../../cogroo-common');
+	chdir('../../cogroo-nlp');
 
 	while (my $conf = <LIST>) {
     	$conf =~ s/^\s+|\s+$//g;
@@ -116,7 +116,7 @@ sub evaluate {
 	$ENV{'MAVEN_OPTS'} = "-Duima.datapath=$tempDir -Xms256m -Xmx1024m -XX:PermSize=256m " . $ENV{'MAVEN_OPTS'};
 	
 	my $dir = getcwd;
-	chdir('../../cogroo-common');
+	chdir('../../cogroo-nlp');
 	# this will build the model
 	eval_unit::exec(\%opt, \%extraOpt);
 	chdir($dir);
