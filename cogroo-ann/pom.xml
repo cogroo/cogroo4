@@ -97,7 +97,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<schemaDirectory>src/main/resources/br/ccsl/cogroo/config</schemaDirectory>
+					<schemaDirectory>src/main/resources/org/cogroo/config</schemaDirectory>
 					<extension>true</extension>
 					<generatePackage>org.cogroo.config</generatePackage>
 				</configuration>

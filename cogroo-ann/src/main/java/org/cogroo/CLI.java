@@ -1,25 +1,26 @@
-package br.ccsl.cogroo.checker;
+package org.cogroo;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.Scanner;
 
+import org.cogroo.analyzer.AnalyzerI;
 import org.cogroo.analyzer.ComponentFactory;
-import org.cogroo.analyzer.Pipe;
+import org.cogroo.text.Document;
+import org.cogroo.text.impl.DocumentImpl;
+import org.cogroo.util.TextUtils;
 
 
 /**
  * 
  */
-public class GrammarChecker {
+public class CLI {
   /**
    * @param args
    *          the language to be used, "pt_BR" by default
-   * @throws IOException
-   * @throws IllegalArgumentException
+   * @throws FileNotFoundException
    */
-  public static void main(String[] args) throws IllegalArgumentException,
-      IOException {
+  public static void main(String[] args) throws FileNotFoundException {
 
     long start = System.nanoTime();
 
@@ -30,8 +31,7 @@ public class GrammarChecker {
 
     ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
 
-    Pipe pipe = (Pipe) factory.createPipe();
-    pipe.add(new GrammarCheckerAnalyzer());
+    AnalyzerI pipe = factory.createPipe();
 
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
@@ -41,15 +41,15 @@ public class GrammarChecker {
 
     while (!input.equals("q")) {
       if (input.equals("0")) {
-        input = "O casaco feios ficou pronto. Os casacos bonito ficaram prontos.";
+        input = "Fomos levados à crer que os menino são burro de doer. As menina chegaram.";
       }
 
-      CheckDocument document = new CheckDocument();
+      Document document = new DocumentImpl();
       document.setText(input);
       pipe.analyze(document);
       
-      System.out.println(document);
-
+      System.out.println(TextUtils.nicePrint(document));
+      
       System.out.print("Enter the sentence: ");
       input = kb.nextLine();
     }

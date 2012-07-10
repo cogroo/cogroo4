@@ -8,6 +8,8 @@ import java.util.List;
 import opennlp.tools.util.Span;
 
 import org.apache.log4j.Logger;
+import org.cogroo.text.Sentence;
+import org.cogroo.text.Token;
 
 import br.ccsl.cogroo.entities.Chunk;
 import br.ccsl.cogroo.entities.Mistake;
@@ -18,8 +20,6 @@ import br.ccsl.cogroo.entities.impl.MorphologicalTag;
 import br.ccsl.cogroo.entities.impl.TokenCogroo;
 import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
 import br.ccsl.cogroo.interpreters.TagInterpreterI;
-import br.ccsl.cogroo.text.Sentence;
-import br.ccsl.cogroo.text.Token;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import br.ccsl.cogroo.tools.checker.rules.dictionary.TagDictionary;
 import br.ccsl.cogroo.tools.checker.rules.model.TagMask;
@@ -194,7 +194,7 @@ public class TypedCheckerAdapter implements Checker {
       }
       
       List<Chunk> chunks = new ArrayList<Chunk>(sentence.getChunks().size());
-      for (br.ccsl.cogroo.text.Chunk textChunk : sentence.getChunks()) {
+      for (org.cogroo.text.Chunk textChunk : sentence.getChunks()) {
         int head = 0;
         if(textChunk.getHeadIndex() != -1) {
           head = textChunk.getHeadIndex();

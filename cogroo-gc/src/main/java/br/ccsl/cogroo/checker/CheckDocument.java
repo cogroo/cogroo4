@@ -2,10 +2,11 @@ package br.ccsl.cogroo.checker;
 
 import java.util.List;
 
+import org.cogroo.text.impl.DocumentImpl;
+import org.cogroo.util.TextUtils;
+
 import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.entities.Sentence;
-import br.ccsl.cogroo.text.impl.DocumentImpl;
-import br.ccsl.cogroo.util.TextUtils;
 
 public class CheckDocument extends DocumentImpl {
   

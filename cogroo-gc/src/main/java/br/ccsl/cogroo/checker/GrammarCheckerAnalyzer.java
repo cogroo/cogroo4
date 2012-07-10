@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.cogroo.analyzer.AnalyzerI;
+import org.cogroo.text.Document;
+import org.cogroo.text.Sentence;
 
-import br.ccsl.cogroo.analyzer.AnalyzerI;
 import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
-import br.ccsl.cogroo.text.Document;
-import br.ccsl.cogroo.text.Sentence;
 import br.ccsl.cogroo.tools.checker.Checker;
 import br.ccsl.cogroo.tools.checker.CheckerComposite;
 import br.ccsl.cogroo.tools.checker.TypedChecker;

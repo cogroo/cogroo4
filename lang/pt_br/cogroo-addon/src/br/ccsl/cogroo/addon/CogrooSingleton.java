@@ -32,9 +32,10 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.cogroo.analyzer.ComponentFactory;
+import org.cogroo.analyzer.Pipe;
+
 import br.ccsl.cogroo.addon.addon.conf.AddOnConfiguration;
-import br.ccsl.cogroo.analyzer.ComponentFactory;
-import br.ccsl.cogroo.analyzer.Pipe;
 import br.ccsl.cogroo.checker.CheckDocument;
 import br.ccsl.cogroo.checker.GrammarCheckerAnalyzer;
 import br.ccsl.cogroo.entities.Mistake;

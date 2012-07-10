@@ -2,10 +2,11 @@ package br.ccsl.cogroo.tools.checker.checkers;
 
 import java.util.List;
 
+import org.cogroo.text.Sentence;
+import org.cogroo.text.SyntacticChunk;
+import org.cogroo.text.Token;
+
 import br.ccsl.cogroo.entities.Mistake;
-import br.ccsl.cogroo.text.Sentence;
-import br.ccsl.cogroo.text.SyntacticChunk;
-import br.ccsl.cogroo.text.Token;
 import br.ccsl.cogroo.tools.checker.AbstractTypedChecker;
 import br.ccsl.cogroo.tools.checker.rules.verbs.Prep;
 import br.ccsl.cogroo.tools.checker.rules.verbs.VerbPlusPreps;

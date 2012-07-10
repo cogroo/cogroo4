@@ -6,8 +6,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.cogroo.text.Sentence;
+
 import br.ccsl.cogroo.entities.Mistake;
-import br.ccsl.cogroo.text.Sentence;
 
 public class CheckerComposite extends GenericCheckerComposite<Sentence> implements Checker {
 
