@@ -17,10 +17,10 @@
 
 -->
 <description xmlns="http://openoffice.org/extensions/update/2006" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<identifier value="br.usp.pcs.lta.cogroo.ooointegration.oxt" />
+	<identifier value="org.cogroo.addon-pt_br.oxt" />
 	<version value="${OXT_VERSION}" />
 	<update-download>
-		<src xlink:href="http://github.com/downloads/cogroo/cogroo4/cogroo-addon-${pom.version}.oxt" />
+		<src xlink:href="http://github.com/downloads/cogroo/cogroo4/cogroo-addon-pt_br-${project.version}.oxt" />
 	</update-download>
 	<publisher>
 		<name xlink:href="http://cogroo.org" lang="pt">CoGrOO</name>

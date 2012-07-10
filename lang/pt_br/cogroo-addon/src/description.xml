@@ -20,10 +20,10 @@
 	xmlns:d="http://openoffice.org/extensions/description/2006"
 	xmlns:xlink="http://www.w3.org/1999/xlink">
 	<!-- (1) Set your identifier -->
-	<identifier value="br.usp.pcs.lta.cogroo.ooointegration.oxt" />
+	<identifier value="org.cogroo.addon-pt_br.oxt" />
 	<display-name>
 		<!-- (2) Set your display name (for each locale) -->
-		<name lang="pt-BR">CoGrOO Corretor Gramatical</name>
+		<name lang="pt-BR">CoGrOO Corretor Gramatical pt-BR</name>
 		<name lang="en">CoGrOO pt-BR Grammar Checker </name>
 	</display-name>
 	<!-- (3) The plug-in version -->
