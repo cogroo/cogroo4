@@ -38,11 +38,11 @@
 
 
 	<modules>
-		<module>../cogroo-nlp</module>
-		<module>../cogroo-ann</module>
-		<module>../cogroo-gc</module>
-		<module>../lang</module>
-<!-- 		<module>../cogroo-eval</module> -->
+<!-- 		<module>../cogroo-nlp</module> -->
+<!-- 		<module>../cogroo-ann</module> -->
+<!-- 		<module>../cogroo-gc</module> -->
+<!-- 		<module>../lang</module> -->
+		<module>../cogroo-eval</module>
 	</modules>
 
 	<scm>
@@ -112,8 +112,15 @@
 	                    <exclude>**/description/licenseAbout.txt</exclude>
 	                    <exclude>**/nbproject/**</exclude>
 	                    <exclude>**/.gitignore</exclude>
+	                    <exclude>**/*.model</exclude>
+	                    <exclude>**/*.dict</exclude>
 	                    <exclude>**/*.README</exclude>
+	                    <exclude>**/*.md</exclude>
+	                    <exclude>**/apache.txt</exclude>
 	                </excludes>
+	                <validHeaders>
+	                	<validHeader>src/etc/license/apache.txt</validHeader>
+	                </validHeaders>
                 <mapping>
                     <xcu>XML_STYLE</xcu>
                     <xcs>XML_STYLE</xcs>
