@@ -3,11 +3,12 @@ package br.ccsl.cogroo.addon;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cogroo.entities.Mistake;
+
 import br.ccsl.cogroo.addon.addon.contextmenu.ContextMenuInterceptor;
 import br.ccsl.cogroo.addon.dialogs.about.AboutThread;
 import br.ccsl.cogroo.addon.dialogs.reporterror.ErrorReportDialogThread;
 import br.ccsl.cogroo.addon.util.SelectedTextExtractor;
-import br.ccsl.cogroo.entities.Mistake;
 
 import com.sun.star.beans.NamedValue;
 import com.sun.star.beans.PropertyValue;

@@ -34,11 +34,11 @@ import java.util.logging.Logger;
 
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.analyzer.Pipe;
+import org.cogroo.checker.CheckDocument;
+import org.cogroo.checker.GrammarCheckerAnalyzer;
+import org.cogroo.entities.Mistake;
 
 import br.ccsl.cogroo.addon.addon.conf.AddOnConfiguration;
-import br.ccsl.cogroo.checker.CheckDocument;
-import br.ccsl.cogroo.checker.GrammarCheckerAnalyzer;
-import br.ccsl.cogroo.entities.Mistake;
 import br.ccsl.cogroo.tools.checker.rules.model.Rule;
 
 import com.sun.star.uno.XComponentContext;

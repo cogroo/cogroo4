@@ -17,6 +17,9 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.cogroo.entities.Mistake;
+import org.cogroo.errorreport.ErrorReportAccess;
+
 import opennlp.tools.util.Span;
 import br.ccsl.cogroo.addon.CogrooException;
 import br.ccsl.cogroo.addon.CogrooExceptionMessages;
@@ -26,8 +29,6 @@ import br.ccsl.cogroo.addon.Resources;
 import br.ccsl.cogroo.addon.i18n.I18nLabelsLoader;
 import br.ccsl.cogroo.addon.util.RestUtil;
 import br.ccsl.cogroo.addon.util.SecurityUtil;
-import br.ccsl.cogroo.entities.Mistake;
-import br.ccsl.cogroo.errorreport.ErrorReportAccess;
 import br.ccsl.cogroo.tools.errorreport.model.BadIntervention;
 import br.ccsl.cogroo.tools.errorreport.model.BadIntervention.BadInterventionClassification;
 import br.ccsl.cogroo.tools.errorreport.model.ErrorReport;

@@ -9,8 +9,9 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
-import br.ccsl.cogroo.entities.impl.MorphologicalTag;
-import br.ccsl.cogroo.interpreters.TagInterpreterI;
+import org.cogroo.entities.impl.MorphologicalTag;
+import org.cogroo.interpreters.TagInterpreterI;
+
 
 public class MyPOSDictionary extends POSDictionary {
 
