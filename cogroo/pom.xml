@@ -13,6 +13,7 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.cogroo</groupId>
@@ -21,6 +22,7 @@
 	<packaging>pom</packaging>
 
 	<name>Cogroo Parent</name>
+	<description>CoGrOO Aggregator</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,11 +33,25 @@
 		<maven>3.0</maven>
 	</prerequisites>
 
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
 	<issueManagement>
 		<system>redmine</system>
 		<url>http://ccsl.ime.usp.br/redmine/projects/cogroo</url>
 	</issueManagement>
 
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<modules>
 		<module>../cogroo-nlp</module>
@@ -51,22 +67,6 @@
 		<developerConnection>scm:git:git://github.com/cogroo/cogroo4.git</developerConnection>
 	</scm>
 
-	<distributionManagement>
-		<downloadUrl>http://ccsl.ime.usp.br/cogroo/maven</downloadUrl>
-		<repository>
-			<id>ccsl</id>
-			<uniqueVersion>false</uniqueVersion>
-			<url>scp://cogroo@ccsl.ime.usp.br/var/www/cogroo/maven/release</url>
-			<layout>default</layout>
-		</repository>
-		<snapshotRepository>
-			<id>ccsl</id>
-			<uniqueVersion>false</uniqueVersion>
-			<url>scp://cogroo@ccsl.ime.usp.br/var/www/cogroo/maven/snapshot</url>
-			<layout>default</layout>
-		</snapshotRepository>
-	</distributionManagement>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -77,20 +77,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<repositories>
-		<repository>
-			<id>snapshots.apache.org</id>
-			<name>Apache Snapshot Repository</name>
-			<url>http://repository.apache.org/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 	<build>
 		<extensions>
@@ -312,4 +298,56 @@
 	</organization>
 	<inceptionYear>2012</inceptionYear>
 	<url>http://cogroo.org</url>
+	
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+		    <activation>
+		      <property>
+		        <name>performRelease</name>
+		        <value>true</value>
+		      </property>
+		    </activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.1</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>allow-repositories-if-not-release</id>
+		    <activation>
+		      <property>
+		        <name>performRelease</name>
+		        <value>false</value>
+		      </property>
+		    </activation>
+				<repositories>
+					<repository>
+						<id>snapshots.apache.org</id>
+						<name>Apache Snapshot Repository</name>
+						<url>http://repository.apache.org/snapshots</url>
+						<releases>
+							<enabled>false</enabled>
+						</releases>
+						<snapshots>
+							<enabled>true</enabled>
+						</snapshots>
+					</repository>
+				</repositories>
+		</profile>
+	</profiles>
 </project>
