@@ -1,36 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-
-    Copyright (C) 2012 cogroo <cogroo@cogroo.org>
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-            http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
--->
 <manifest:manifest xmlns:manifest="http://openoffice.org/2001/manifest">
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.uno-component;type=Java"
-                       manifest:full-path="cogroo-addon.jar"/>
-  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-schema"
-                       manifest:full-path="registry/schema/org/cogroo/oooext/CogrooConfiguration.xcs"/>
+                       manifest:full-path="cogroo-addon-pt_br.jar"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-schema"
                        manifest:full-path="registry/schema/org/cogroo/oooext/AddonConfiguration.xcs"/>
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-schema"
+                       manifest:full-path="registry/schema/org/cogroo/oooext/CogrooConfiguration.xcs"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
                        manifest:full-path="registry/data/org/cogroo/oooext/Linguistic.xcu"/>
-  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
-                       manifest:full-path="registry/data/org/cogroo/oooext/ProtocolHandler.xcu"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
                        manifest:full-path="registry/data/org/cogroo/oooext/Addons.xcu"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
                        manifest:full-path="registry/data/org/cogroo/oooext/AddonConfiguration.xcu"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
                        manifest:full-path="registry/data/org/cogroo/oooext/jobs.xcu"/>
+  <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
+                       manifest:full-path="registry/data/org/cogroo/oooext/ProtocolHandler.xcu"/>
 </manifest:manifest>

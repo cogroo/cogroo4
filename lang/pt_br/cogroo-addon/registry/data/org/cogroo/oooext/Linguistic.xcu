@@ -44,10 +44,10 @@
         <node oor:name="VendorImages">
             <node oor:name="org.cogroo.addon.Main.Images" oor:op="fuse">
                 <prop oor:name="SpellAndGrammarDialogImage" oor:type="xs:string">
-                    <value>%origin%/../../../../../../../../images/cogrooVendor.png</value>
+                    <value>%origin%/../../../../../images/cogrooVendor.png</value>
                 </prop>
                 <prop oor:name="SpellAndGrammarDialogImage_HC" oor:type="xs:string">
-                    <value>%origin%/../../../../../../../../images/cogrooVendor.png</value>
+                    <value>%origin%/../../../../../images/cogrooVendor.png</value>
                 </prop>
             </node>
         </node>

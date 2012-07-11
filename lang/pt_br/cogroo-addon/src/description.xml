@@ -16,43 +16,45 @@
     limitations under the License.
 
 -->
-<description xmlns="http://openoffice.org/extensions/description/2006"
-	xmlns:d="http://openoffice.org/extensions/description/2006"
-	xmlns:xlink="http://www.w3.org/1999/xlink">
-	<!-- (1) Set your identifier -->
-	<identifier value="org.cogroo.addon-pt_br.oxt" />
-	<display-name>
-		<!-- (2) Set your display name (for each locale) -->
-		<name lang="pt-BR">CoGrOO Corretor Gramatical pt-BR</name>
-		<name lang="en">CoGrOO pt-BR Grammar Checker </name>
-	</display-name>
-	<!-- (3) The plug-in version -->
-	<version value="${OXT_VERSION}" />
-	<!-- (4) Path to your release notes -->
-	<release-notes>
-		<src lang="en" xlink:href="release-notes.txt" />
-		<src lang="pt-BR" xlink:href="release-notes.txt" />
-	</release-notes>
-	<!-- (5) Your plug-in display icon -->
-	<icon>
-		<default xlink:href="images/CoGrOO-icone.png" />
-	</icon>
-	<!-- (6) Dependencies -->
-	<dependencies>
-		<OpenOffice.org-minimal-version d:name="OpenOffice.org 3.0.1"
-			value="3.0.1" />
-	</dependencies>
-	<publisher>
-		<name lang="pt-BR" xlink:href="http://ccsl.ime.usp.br/cogroo/comunidade">CoGrOO</name>
-		<name lang="en" xlink:href="http://ccsl.ime.usp.br/cogroo/comunidade">CoGrOO</name>
-	</publisher>
-	<update-information>
-		<src
-			xlink:href="http://github.com/downloads/cogroo/cogroo4/update-site-snapshot.xml" />
-	</update-information>
-	<extension-description>
-		<src lang="pt-BR" xlink:href="description/description_pt_BR.txt" />
-		<src lang="en" xlink:href="description/description_en.txt" />
-	</extension-description>
+<description xmlns="http://openoffice.org/extensions/description/2006" xmlns:d="http://openoffice.org/extensions/description/2006" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- (1) Set your identifier -->
+    <identifier value="org.cogroo.addon-pt_br.oxt"/>
+    <display-name>
+        <!-- (2) Set your display name (for each locale) -->
+        <name lang="pt-BR">CoGrOO Corretor Gramatical pt-BR</name>
+        <name lang="en">CoGrOO pt-BR Grammar Checker </name>
+    </display-name>
+    <!-- (3) The plug-in version -->
+    <version value="${OXT_VERSION}"/>
+    <!-- (4) Path to your release notes -->
+    <release-notes>
+        <src lang="en" xlink:href="release-notes.txt"/>
+        <src lang="pt-BR" xlink:href="release-notes.txt"/>
+    </release-notes>
+    <!-- (5) Your plug-in display icon -->
+    <icon>
+        <default xlink:href="images/CoGrOO-icone.png"/>
+    </icon>
+    <!-- (6) Dependencies -->
+    <dependencies>
+        <OpenOffice.org-minimal-version d:name="OpenOffice.org 3.0.1" value="3.0.1"/>
+    </dependencies>
+    <publisher>
+        <name lang="pt-BR" xlink:href="http://cogroo.org">CoGrOO</name>
+        <name lang="en" xlink:href="http://cogroo.org">CoGrOO</name>
+    </publisher>
+    <update-information>
+        <src xlink:href="http://github.com/downloads/cogroo/cogroo4/update-site-snapshot.xml"/>
+    </update-information>
+    <extension-description>
+        <src lang="pt-BR" xlink:href="description/description_pt_BR.txt"/>
+        <src lang="en" xlink:href="description/description_en.txt"/>
+    </extension-description>
+    <registration>
+        <simple-license accept-by="admin" default-license-id="pt-BR">
+            <license-text lang="pt-BR" license-id="pt-BR" xlink:href="licenses/LICENSE"/>
+            <license-text lang="en" xlink:href="LICENSE"/>
+        </simple-license>
+    </registration>
 </description>
-<!--Created with OpenOffice.org API plug-in for NetBeans Version 2.0.4 -->
+<!--Created with OpenOffice.org API plug-in for NetBeans Version 2.0.6-->

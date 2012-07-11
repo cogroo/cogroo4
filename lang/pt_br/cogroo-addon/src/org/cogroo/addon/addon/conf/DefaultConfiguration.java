@@ -13,26 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * NOTICE:
- * Some peaces of the code came from other projects I studied. 
- * I have to thanks the developers of:
- * 	CoGrOO
- * 		Site: cogroo.sourceforge.net 
- * 		License: LGPL
- * 		Used as a sample of Grammar Checker Addon.
- * 	LinguageTool 
- * 		Site: www.languagetool.org
- * 		License: LGPL
- * 		Used as a sample of Grammar Checker Addon that
- * 		implements the XGrammarChecker interface.
- *  	dxf2calc 
- *  		Site: www.abj.dk/dxf2calc
- * 		License: SODA-WARE
- *  		Was used as more sofisticated sample of OOo Addon, specially 
- *  		as a sample of how to find the Addon folder during runtime and
- *  		how do a nice About dialog box. 
- */
 
 package org.cogroo.addon.addon.conf;
 

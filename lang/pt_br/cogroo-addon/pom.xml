@@ -9,7 +9,7 @@
   		<version>4.0.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
-
+	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>cogroo-addon-pt_br</artifactId>
 	<name>Grammar Checker Libre|OpenOffice pt-BR Addon</name>
@@ -32,27 +32,6 @@
 	<prerequisites>
 		<maven>2.0.5</maven>
 	</prerequisites>
-	<licenses>
-		<license>
-			<name>GNU Lesser General Public License, Version 3</name>
-			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	<pluginRepositories>
-		<!-- License Plug-in repo -->
-		<pluginRepository>
-			<id>mc-release</id>
-			<name>Local Maven repository of releases</name>
-			<url>http://mc-repo.googlecode.com/svn/maven2/releases </url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.openoffice</groupId>

@@ -152,11 +152,12 @@
         <artifact:dependencies filesetId="dependency.fileset"
             sourcesFilesetId="sources.dependency.fileset"
             javadocFilesetId="javadoc.dependency.fileset"
-            versionsId="dependency.versions">
+            versionsId="dependency.versions"
+            settingsFile="mvn_settings.xml">
 
 
             <dependency
-                groupId="org.cogroo"
+                groupId="org.cogroo.lang.pt_br"
                 artifactId="cogroo-gc-pt_br"
                 version="4.0.0-SNAPSHOT"/>
 

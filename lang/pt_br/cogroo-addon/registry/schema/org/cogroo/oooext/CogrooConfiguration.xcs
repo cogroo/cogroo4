@@ -51,7 +51,7 @@
                  <value></value>
              </prop>
              <prop oor:name="COMMUNITY_ROOT" oor:type="xs:string">
-                 <value>http://ccsl.ime.usp.br/cogroo/comunidade</value>
+                 <value>http://comunidade.cogroo.org</value>
              </prop>
          </group>
      </component>

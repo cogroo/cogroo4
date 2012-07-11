@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.java.j2seproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>CoGrOO-AddOn</name>
+            <name>cogroo-addon-pt_br</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <explicit-platform explicit-source-supported="true"/>
             <source-roots>
