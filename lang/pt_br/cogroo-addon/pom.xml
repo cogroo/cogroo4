@@ -14,24 +14,10 @@
 	<artifactId>cogroo-addon-pt_br</artifactId>
 	<name>Grammar Checker Libre|OpenOffice pt-BR Addon</name>
 	<packaging>jar</packaging>
-	<description />
-	<inceptionYear>2012</inceptionYear>
-	<url>http://cogroo.sourceforge.net</url>
-	<developers>
-		<developer>
-			<id>colen</id>
-			<name>William Colen</name>
-			<email>colen@users.sourceforge.net</email>
-			<roles>
-				<role>analyst</role>
-				<role>architect</role>
-				<role>developer</role>
-			</roles>
-		</developer>
-	</developers>
-	<prerequisites>
-		<maven>2.0.5</maven>
-	</prerequisites>
+	
+	<description>CoGrOO pt-BR OXT</description>
+	
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.openoffice</groupId>
