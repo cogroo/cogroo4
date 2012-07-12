@@ -18,4 +18,8 @@
 #   under the License.
 
 export MAVEN_OPTS="-Xms512m -Xmx2048m -XX:PermSize=256m"
-mvn -e -o -q exec:java "-Dexec.mainClass=org.cogroo.cmdline.CLI" "-Dexec.args=$*"
+
+# we dont have converters here :(
+# will execute -gc
+
+mvn -f ../cogroo-gc/pom.xml -e -o -q exec:java "-Dexec.mainClass=org.cogroo.gc.cmdline.CLI" "-Dexec.args=$*"

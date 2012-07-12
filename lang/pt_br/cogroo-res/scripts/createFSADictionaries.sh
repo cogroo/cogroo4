@@ -16,9 +16,9 @@
 
 
 # vars
-BASE_PARAM="-inputFile ../../../jspell.br/out/cogroo/tagdict.txt -corpus /Users/wcolen/Documents/wrks/corpus/Bosque/Bosque_CF_8.0.ad.txt -encoding "UTF-8" -allowInvalidFeats false"
+BASE_PARAM="-inputFile ../../../../jspell.br/out/cogroo/tagdict.txt -corpus ${CORPUS_ROOT}/Bosque/Bosque_CF_8.0.ad.txt -encoding "UTF-8" -allowInvalidFeats false"
 
-TS="sh ../../cogroo-gc/scripts/cogroo TabSeparatedPOSDictionaryBuilder"
+TS="sh scripts/cogroo TabSeparatedPOSDictionaryBuilder"
 SYNTH="awk -f scripts/synthesis.awk"
 
 mkdir target/tmp
@@ -76,10 +76,11 @@ mvn -e -o -q exec:java "-Dexec.mainClass=morfologik.tools.Launcher" "-Dexec.args
 OUT=target/tmp/trans
 FINAL=fsa_dictionaries/pos/pt_br_trans
 
-mvn -e -o -q exec:java "-Dexec.mainClass=morfologik.tools.Launcher" "-Dexec.args=tab2morph -inf -i /Users/wcolen/Documents/jspell-git/master/out/cogroo/trans.txt -o ${OUT}-enc.txt"
+mvn -e -o -q exec:java "-Dexec.mainClass=morfologik.tools.Launcher" "-Dexec.args=tab2morph -inf -i ../../../../jspell.br/out/cogroo/trans.txt -o ${OUT}-enc.txt"
 mvn -e -o -q exec:java "-Dexec.mainClass=morfologik.tools.Launcher" "-Dexec.args=fsa_build -f CFSA2 -i ${OUT}-enc.txt -o ${FINAL}.dict"
 
 ## XML
 
-XML=/Users/wcolen/Documents/wrks/cogroo4/cogroo4/cogroo-dict/res/tagdict.xml/Users/wcolen/Documents/wrks/cogroo4/cogroo4/cogroo-dict/res/tagdict.xml
-sh scripts/cogroo POSDictionaryBuilder -isIncludeFeatures false -includeFromCorpus false -outputFile ${"XML} $BASE_PARAM
+XML=../../../cogroo-dict/res/tagdict.xml
+mkdir ../../../cogroo-dict/res 
+sh scripts/cogroo POSDictionaryBuilder -outputFile ${XML} $BASE_PARAM
