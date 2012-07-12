@@ -71,9 +71,14 @@ public class MyPOSDictionary extends POSDictionary {
             classMT.setClazz(completeTag.getClazzE());
             String classString = tagd.serialize(classMT);
 
+            
             MorphologicalTag featsMT = completeTag.clone();
             featsMT.setClazz(null);
-            String featsString = tagd.serialize(featsMT);
+            
+            String featsString = null;
+            if(!featsMT.isEmpty()) {
+              featsString = tagd.serialize(featsMT);
+            }
 
             if (featsString == null || featsString.length() == 0) {
               featsString = "-";
