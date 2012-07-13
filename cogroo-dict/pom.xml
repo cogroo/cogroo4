@@ -89,7 +89,7 @@
 							<goal>java</goal>
 						</goals>
 						<configuration>
-							<mainClass>br.ccsl.cogroo.cmdline.CLI</mainClass>
+							<mainClass>org.cogroo.cmdline.CLI</mainClass>
 							<arguments>
 								<argument>AbbreviationDictionaryBuilder</argument>
 								<argument>-outputFile</argument>
@@ -97,29 +97,29 @@
 							</arguments>
 						</configuration>
 					</execution>
-					<execution>
-						<id>pos</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>java</goal>
-						</goals>
-						<configuration>
-							<mainClass>br.ccsl.cogroo.cmdline.CLI</mainClass>
-							<arguments>
-								<argument>POSDictionaryBuilder</argument>
-								<argument>-inputFile</argument>
-								<argument>${project.build.directory}/tagdict.txt</argument>
-								<argument>-outputFile</argument>
-								<argument>${project.build.directory}/tagdict.xml</argument>
-								<argument>-allowInvalidFeats</argument>
-								<argument>true</argument>
-								<argument>-corpus</argument>
-								<argument>${env.CORPUS_ROOT}/Bosque/Bosque_CF_8.0.ad.txt</argument>
-								<argument>-encoding</argument>
-								<argument>UTF-8</argument>
-							</arguments>
-						</configuration>
-					</execution>
+<!-- 					<execution> -->
+<!-- 						<id>pos</id> -->
+<!-- 						<phase>compile</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>java</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 							<mainClass>br.ccsl.cogroo.cmdline.CLI</mainClass> -->
+<!-- 							<arguments> -->
+<!-- 								<argument>POSDictionaryBuilder</argument> -->
+<!-- 								<argument>-inputFile</argument> -->
+<!-- 								<argument>${project.build.directory}/tagdict.txt</argument> -->
+<!-- 								<argument>-outputFile</argument> -->
+<!-- 								<argument>${project.build.directory}/tagdict.xml</argument> -->
+<!-- 								<argument>-allowInvalidFeats</argument> -->
+<!-- 								<argument>true</argument> -->
+<!-- 								<argument>-corpus</argument> -->
+<!-- 								<argument>${env.CORPUS_ROOT}/Bosque/Bosque_CF_8.0.ad.txt</argument> -->
+<!-- 								<argument>-encoding</argument> -->
+<!-- 								<argument>UTF-8</argument> -->
+<!-- 							</arguments> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
 				</executions>
 			</plugin>
 		</plugins>
