@@ -22,13 +22,8 @@ import java.util.regex.Pattern;
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.tokenize.TokenContextGenerator;
 import opennlp.tools.tokenize.TokenizerFactory;
-import opennlp.tools.util.model.ArtifactProvider;
 
 public class PortugueseTokenizerFactory extends TokenizerFactory {
-
-  public PortugueseTokenizerFactory(ArtifactProvider artifactProvider) {
-    super(artifactProvider);
-  }
 
   public PortugueseTokenizerFactory(String languageCode,
       Dictionary abbreviationDictionary, boolean useAlphaNumericOptimization,

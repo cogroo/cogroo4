@@ -21,17 +21,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.cogroo.dictionary.impl.FSADictionary;
-import org.cogroo.util.serializers.ByteArraySerializer;
-
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.postag.POSContextGenerator;
 import opennlp.tools.postag.POSTaggerFactory;
 import opennlp.tools.postag.TagDictionary;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.SequenceValidator;
-import opennlp.tools.util.model.ArtifactProvider;
 import opennlp.tools.util.model.ArtifactSerializer;
+
+import org.cogroo.dictionary.impl.FSADictionary;
+import org.cogroo.util.serializers.ByteArraySerializer;
 
 public class FSAPortugueseFactory extends POSTaggerFactory {
 
@@ -45,10 +44,18 @@ public class FSAPortugueseFactory extends POSTaggerFactory {
   
   private byte[] dictInfo;
   private byte[] dictData;
+  
+  public FSAPortugueseFactory() {
+  }
 
   public FSAPortugueseFactory(Dictionary ngramDictionary,
       TagDictionary posDictionary) {
     super(ngramDictionary, null);
+  }
+  
+  @Override
+  protected void init(Dictionary ngramDictionary, TagDictionary posDictionary) {
+    super.init(ngramDictionary, posDictionary);
     this.dict = posDictionary;
     
     // get the dictionary path
@@ -67,10 +74,6 @@ public class FSAPortugueseFactory extends POSTaggerFactory {
     } catch (IOException e) {
       throw new IllegalArgumentException("Could not open the FSA dictionary or the .info file", e);
     }
-  }
-
-  public FSAPortugueseFactory(ArtifactProvider artifactProvider) {
-    super(artifactProvider);
   }
 
   @Override

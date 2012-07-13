@@ -18,17 +18,16 @@ package org.cogroo.tools.postag;
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.postag.POSContextGenerator;
 import opennlp.tools.postag.TagDictionary;
-import opennlp.tools.util.model.ArtifactProvider;
 
 public class PortugueseExFactory extends PortugueseFactory {
 
+  public PortugueseExFactory() {
+    super();
+  }
+  
   public PortugueseExFactory(Dictionary ngramDictionary,
       TagDictionary posDictionary) {
     super(ngramDictionary, posDictionary);
-  }
-
-  public PortugueseExFactory(ArtifactProvider artifactProvider) {
-    super(artifactProvider);
   }
 
   @Override

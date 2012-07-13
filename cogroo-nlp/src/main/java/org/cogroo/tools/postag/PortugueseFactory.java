@@ -27,7 +27,6 @@ import opennlp.tools.postag.POSTaggerFactory;
 import opennlp.tools.postag.TagDictionary;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.SequenceValidator;
-import opennlp.tools.util.model.ArtifactProvider;
 import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.UncloseableInputStream;
 
@@ -35,13 +34,13 @@ public class PortugueseFactory extends POSTaggerFactory {
 
   private static final String EXTENDED_POSDICT = "EXTENDED_POSDICT";
 
+  public PortugueseFactory() {
+    super();
+  }
+  
   public PortugueseFactory(Dictionary ngramDictionary,
       TagDictionary posDictionary) {
     super(ngramDictionary, posDictionary);
-  }
-
-  public PortugueseFactory(ArtifactProvider artifactProvider) {
-    super(artifactProvider);
   }
 
   @Override

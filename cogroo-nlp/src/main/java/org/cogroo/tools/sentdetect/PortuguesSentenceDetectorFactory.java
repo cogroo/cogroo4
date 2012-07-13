@@ -27,9 +27,10 @@ import opennlp.tools.util.model.ArtifactProvider;
 public class PortuguesSentenceDetectorFactory extends SentenceDetectorFactory {
 
   private char[] eos;
-
-  public PortuguesSentenceDetectorFactory(ArtifactProvider artifactProvider) {
-    super(artifactProvider);
+  
+  @Override
+  public void init(ArtifactProvider artifactProvider) {
+    super.init(artifactProvider);
     this.eos = super.getEOSCharacters();
   }
 

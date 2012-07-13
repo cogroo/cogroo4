@@ -20,21 +20,20 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Constructor;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
-
 import opennlp.model.AbstractModel;
 import opennlp.tools.util.BaseToolFactory;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.SequenceValidator;
-import opennlp.tools.util.model.ArtifactProvider;
+import opennlp.tools.util.ext.ExtensionLoader;
 import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.UncloseableInputStream;
+
+import org.cogroo.dictionary.FeatureDictionaryI;
 
 public abstract class FeaturizerFactory extends BaseToolFactory {
 
@@ -52,26 +51,15 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
   }
 
   /**
-   * Creates a {@link FeaturizerFactory} with an
-   * {@link ArtifactProvider} that will be used to retrieve artifacts. This
-   * constructor will try to get the ngram and tags dictionaries from the
-   * artifact provider.
-   * <p>
-   * Sub-classes should implement a constructor with this signatures and call
-   * this constructor.
-   * <p>
-   * This will be used to load the factory from a serialized POSModel.
-   */
-  public FeaturizerFactory(ArtifactProvider artifactProvider) {
-    super(artifactProvider);
-  }
-
-  /**
    * Creates a {@link FeaturizerFactory}. Use this constructor to
    * programmatically create a factory.
    * 
    */
   public FeaturizerFactory(FeatureDictionaryI featureDictionary) {
+    this.init(featureDictionary);
+  }
+  
+  protected void init(FeatureDictionaryI featureDictionary) {
     this.featureDictionary = featureDictionary;
   }
 
@@ -180,26 +168,9 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
       // will create the default factory
       return new DefaultFeaturizerFactory(posDictionary);
     }
-    FeaturizerFactory theFactory = null;
-    Class<? extends BaseToolFactory> factoryClass = loadSubclass(subclassName);
-    if (factoryClass != null) {
-      try {
-        Constructor<?> constructor = null;
-        constructor = factoryClass.getConstructor(FeatureDictionaryI.class);
-        theFactory = (FeaturizerFactory) constructor.newInstance(posDictionary);
-      } catch (NoSuchMethodException e) {
-        String msg = "Could not instantiate the " + subclassName
-            + ". The mandatory constructor (FeatureDictionaryI) is missing.";
-        System.err.println(msg);
-        throw new IllegalArgumentException(msg);
-      } catch (Exception e) {
-        String msg = "Could not instantiate the " + subclassName
-            + ". The constructor (FeatureDictionaryI) throw an exception.";
-        System.err.println(msg);
-        e.printStackTrace();
-        throw new InvalidFormatException(msg);
-      }
-    }
+    FeaturizerFactory theFactory = ExtensionLoader.instantiateExtension(FeaturizerFactory.class, subclassName);
+    theFactory.init(theFactory.featureDictionary);
+    
     return theFactory;
   }
 }

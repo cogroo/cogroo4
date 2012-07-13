@@ -45,21 +45,7 @@ public class FSAFeaturizerFactory extends FeaturizerFactory {
    */
   public FSAFeaturizerFactory() {
   }
-
-  /**
-   * Creates a {@link FSAFeaturizerFactory} with an {@link ArtifactProvider} that
-   * will be used to retrieve artifacts. This constructor will try to get the
-   * ngram and tags dictionaries from the artifact provider.
-   * <p>
-   * Sub-classes should implement a constructor with this signatures and call
-   * this constructor.
-   * <p>
-   * This will be used to load the factory from a serialized POSModel.
-   */
-  public FSAFeaturizerFactory(ArtifactProvider artifactProvider) {
-    super(artifactProvider);
-  }
-
+  
   /**
    * Creates a {@link FSAFeaturizerFactory}. Use this constructor to
    * programmatically create a factory.

@@ -20,14 +20,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
-
 import opennlp.tools.postag.ExtendedPOSDictionary;
 import opennlp.tools.postag.POSDictionary;
 import opennlp.tools.util.InvalidFormatException;
-import opennlp.tools.util.model.ArtifactProvider;
 import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.UncloseableInputStream;
+
+import org.cogroo.dictionary.FeatureDictionaryI;
 
 public class DefaultFeaturizerFactory extends FeaturizerFactory {
 
@@ -38,20 +37,6 @@ public class DefaultFeaturizerFactory extends FeaturizerFactory {
    * implementation of the resources.
    */
   public DefaultFeaturizerFactory() {
-  }
-
-  /**
-   * Creates a {@link DefaultFeaturizerFactory} with an {@link ArtifactProvider} that
-   * will be used to retrieve artifacts. This constructor will try to get the
-   * ngram and tags dictionaries from the artifact provider.
-   * <p>
-   * Sub-classes should implement a constructor with this signatures and call
-   * this constructor.
-   * <p>
-   * This will be used to load the factory from a serialized POSModel.
-   */
-  public DefaultFeaturizerFactory(ArtifactProvider artifactProvider) {
-    super(artifactProvider);
   }
 
   /**
