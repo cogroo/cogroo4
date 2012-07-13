@@ -331,8 +331,7 @@
 			<id>allow-repositories-if-not-release</id>
 		    <activation>
 		      <property>
-		        <name>performRelease</name>
-		        <value>false</value>
+		        <name>!performRelease</name>
 		      </property>
 		    </activation>
 				<repositories>

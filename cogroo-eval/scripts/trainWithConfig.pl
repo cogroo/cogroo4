@@ -30,9 +30,9 @@ use Cwd;
 use File::Path qw(make_path);
 use Storable qw(freeze thaw);
 use File::Copy::Recursive qw(dircopy);
-my $common = "$Bin/../../cogroo-nlp/scripts"; 
+my $common = "$Bin/../../lang/pt_br/cogroo-res/scripts"; 
 
-use lib "$Bin/../../cogroo-nlp/scripts";
+use lib "$Bin/../../lang/pt_br/cogroo-res/scripts";
 require eval_unit;
  
 require cpe;
@@ -43,7 +43,7 @@ sub init() {
 	
 	checkVars();
 
-	open CONFIG, "../../cogroo-nlp/scripts/options.properties" or die $!;
+	open CONFIG, "../../lang/pt_br/cogroo-res/scripts/options.properties" or die $!;
 
 	while (<CONFIG>) {
 		chomp;       # no newline

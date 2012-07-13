@@ -289,13 +289,13 @@ sub exec() {
 	if ( $opt{t} eq 'tok' ) {
 		$trCommand .=
 		    createCommand('opennlp', "TokenizerTrainer.ad "
-		  . "-detokenizer ../../opennlp/opennlp-tools/lang/pt/tokenizer/pt-detokenizer.xml "
+		  . "-detokenizer /Users/wcolen/Documents/wrks/cogroo4/opennlp/opennlp-tools/lang/pt/tokenizer/pt-detokenizer.xml "
 		  . "$basicCommand "
 		  . ENCODING
 		  . " -data $data -model $model ", $extraProperties);
 		$cvCommand .=
 		    createCommand('opennlp', "TokenizerCrossValidator.ad "
-		  . "-detokenizer ../../opennlp/opennlp-tools/lang/pt/tokenizer/pt-detokenizer.xml "
+		  . "-detokenizer /Users/wcolen/Documents/wrks/cogroo4/opennlp/opennlp-tools/lang/pt/tokenizer/pt-detokenizer.xml "
 		  . "$basicCommand "
 		  . ENCODING 
 		  . " -data $data ", $extraProperties);
