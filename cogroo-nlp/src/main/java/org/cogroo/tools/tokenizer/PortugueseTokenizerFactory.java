@@ -25,6 +25,9 @@ import opennlp.tools.tokenize.TokenizerFactory;
 
 public class PortugueseTokenizerFactory extends TokenizerFactory {
 
+  public PortugueseTokenizerFactory() {
+  }
+  
   public PortugueseTokenizerFactory(String languageCode,
       Dictionary abbreviationDictionary, boolean useAlphaNumericOptimization,
       Pattern alphaNumericPattern) {
