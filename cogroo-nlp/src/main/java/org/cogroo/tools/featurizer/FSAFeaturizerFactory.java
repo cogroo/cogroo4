@@ -53,6 +53,11 @@ public class FSAFeaturizerFactory extends FeaturizerFactory {
    */
   public FSAFeaturizerFactory(FeatureDictionaryI featureDictionary) {
     super((FeatureDictionaryI) null);
+  }
+  
+  @Override
+  protected void init(FeatureDictionaryI featureDictionary) {
+    super.init(featureDictionary);
 
     // get the dictionary path
     String path = System.getProperty("fsa.dict");

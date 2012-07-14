@@ -23,7 +23,6 @@ import java.util.Map;
 
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.postag.POSContextGenerator;
-import opennlp.tools.postag.POSTaggerFactory;
 import opennlp.tools.postag.TagDictionary;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.SequenceValidator;
@@ -32,7 +31,7 @@ import opennlp.tools.util.model.ArtifactSerializer;
 import org.cogroo.dictionary.impl.FSADictionary;
 import org.cogroo.util.serializers.ByteArraySerializer;
 
-public class FSAPortugueseFactory extends POSTaggerFactory {
+public class FSAPortugueseFactory extends PortugueseExFactory {
 
   private static final String FSA_POSDICT_SUF = "fsa_data";
   private static final String FSA_DICT_INFO_SUF = "fsa_info";
@@ -55,7 +54,7 @@ public class FSAPortugueseFactory extends POSTaggerFactory {
   
   @Override
   protected void init(Dictionary ngramDictionary, TagDictionary posDictionary) {
-    super.init(ngramDictionary, posDictionary);
+    super.init(ngramDictionary, null);
     this.dict = posDictionary;
     
     // get the dictionary path
@@ -74,21 +73,6 @@ public class FSAPortugueseFactory extends POSTaggerFactory {
     } catch (IOException e) {
       throw new IllegalArgumentException("Could not open the FSA dictionary or the .info file", e);
     }
-  }
-
-  @Override
-  public SequenceValidator<String> getSequenceValidator() {
-    return new PortuguesePOSSequenceValidator(getTagDictionary());
-  }
-
-  @Override
-  public POSContextGenerator getPOSContextGenerator(int cacheSize) {
-    return new PortuguesePOSContextGenerator(cacheSize, getDictionary());
-  }
-  
-  @Override
-  public POSContextGenerator getPOSContextGenerator() {
-    return new PortuguesePOSContextGenerator(getDictionary());
   }
 
   @Override
