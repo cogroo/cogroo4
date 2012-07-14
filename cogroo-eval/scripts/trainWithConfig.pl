@@ -38,6 +38,8 @@ require cpe;
 
 my %extraOpt;
 
+my $evaluate = 0;
+
 sub init() {
 	
 	checkVars();
@@ -56,7 +58,7 @@ sub init() {
 
 	close CONFIG;
 	
-	cpe::install("../../cogroo/pom.xml");
+	#cpe::install("../../cogroo/pom.xml");
 }
 
 sub checkVars {
@@ -107,15 +109,19 @@ sub train {
 	# faltam: c, p, f 
 	$opt{'p'} = 8;
 	$opt{'f'} = 1;
+	if($evaluate) {
+		$opt{'e'} = 1;
+	}
+	
 	
 	# create a temp folder and set the envvar REPO there.
 	
 	my $dir = getcwd;
 	chdir('../../lang/pt_br/cogroo-res');
 	# this will build the model
-	eval_unit::exec(\%opt, \%extraOpt);
+	my %result = eval_unit::exec(\%opt, \%extraOpt);
 	chdir($dir);
-	
+	return %result; 
 }
 
 sub processName {
@@ -184,7 +190,11 @@ sub generateHumanNames {
 
 sub trainListFromFile {
 	my $file = shift;
-	my $useNew = shift;
+	my $log = shift;
+
+	my $output = '';
+	
+	
 	open (CONF, $file)  or die("Could not open list file. $!");
 	
 	my %results;
@@ -193,24 +203,44 @@ sub trainListFromFile {
     	$line =~ s/^\s+|\s+$//g;
     	my @confs = split(/\n/,$line);
     	foreach my $c (@confs) {
+    	    $output .= "### $c \n";
     	    print "will train $c \n";
-			train($c);
+			my %res = train($c);
+			my @keys = keys %res;
+			
+			foreach my $k (@keys) {
+				if( $k ne '' ) {
+					$output .= " * $k: " . $res{$k} . "  \n";
+				}
+			}
+			$output .= "\n";
     	}
 	}
 	
+	if($log ne '') {
+		open (LOG, ">" . $log);
+		print LOG $output;
+		close LOG;
+	}
 	close CONF;
 }
 
 
 
-if(@ARGV != 2) {
-	die "pass in a configuration file and 1 to create and install the UIMA pears. \n";
+if(@ARGV < 1) {
+	die "pass in a configuration file and 1 to create and install the UIMA pears, and a report file. \n";
 }
 print "Will train with argument " . $ARGV[0] . "\n";
 
 init();
 
-trainListFromFile($ARGV[0]);
+
+if(@ARGV == 3) {
+	$report = $ARGV[2];
+	$evaluate = 1;
+}
+
+trainListFromFile($ARGV[0], $report);
 
 if($ARGV[1]) {
 	print "will also install pears...\n";
