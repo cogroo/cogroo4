@@ -23,7 +23,6 @@
 # usage: perl evaluate_gc.pl sent-vcf
 
 use FindBin qw($Bin);
-use Test::Deep qw(cmp_deeply);
 use Data::Dumper;
 use File::Temp qw/ tempfile tempdir /;
 use Cwd;
