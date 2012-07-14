@@ -58,10 +58,6 @@ sub init() {
 	close CONFIG;
 	
 	cpe::install("../../cogroo/pom.xml");
-	#install($ENV{'COGROO_3'} ."/pom.xml");
-	#install("../pom.xml");
-	#install("../UIMAAutomation/pom-evaluators.xml");
-	#installPearByPath("../Cogroo3AE/target/Cogroo3AE.pear");
 }
 
 sub checkVars {

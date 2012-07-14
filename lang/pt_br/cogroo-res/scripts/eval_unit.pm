@@ -263,6 +263,9 @@ sub exec() {
 		my @tokens = split( /,/, $opt{o} );
 		foreach my $token (@tokens) {
 			my $val = $extraOpt{$token};
+			if($val eq '') {
+				die "Could not load extraOpt: $token\n";
+			}
 			if($val =~ m/-D/) {
 				$extraProperties .= $val . ' ';
 			} else {
@@ -271,7 +274,9 @@ sub exec() {
 		}
 	}
 	
-	my $basicCommand = " -params $paramsFileName -lang pt -encoding ";
+	printToLog "Extra options: $extraOption \n\n";
+	
+	my $basicCommand = " -params $paramsFileName -lang pt $extraOption -encoding ";
 	my $trCommand = '';
 	my $cvCommand = '';
 	
@@ -332,7 +337,7 @@ sub exec() {
 	if ( $opt{t} eq 'pos' ) {
 		my $base = "$basicCommand "
 		  . ENCODING
-		  . " -data $data $extraOption";
+		  . " -data $data ";
 		$trCommand .=
 		    createCommand('cogroo', " POSTaggerTrainer.adex -model $model $base -expandME true", $extraProperties);
 		$cvCommand .=
@@ -342,7 +347,7 @@ sub exec() {
 	if ( $opt{t} eq 'feat' ) {
 		my $base = "$basicCommand "
 		  . ENCODING
-		  . " -data $data $extraOption";
+		  . " -data $data ";
 		$trCommand .=
 		    createCommand('cogroo', " FeaturizerTrainerME.ad -model $model $base", $extraProperties);
 		$cvCommand .=
@@ -352,7 +357,7 @@ sub exec() {
 	if ( $opt{t} eq 'chunker' ) {
 		my $base = "$basicCommand "
 		  . ENCODING
-		  . " -data $data $extraOption";
+		  . " -data $data ";
 		$trCommand .=
 		    createCommand('cogroo', " ChunkerTrainerME.ad -model $model $base", $extraProperties);
 		$cvCommand .=
