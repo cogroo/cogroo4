@@ -36,7 +36,6 @@ import org.apache.log4j.Logger;
 import org.cogroo.dictionary.LemmaDictionaryI;
 import org.cogroo.util.PairWordPOSTag;
 
-
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -75,11 +74,15 @@ public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<
     synchronized (dictLookup) {
       List<WordData> data = dictLookup.lookup(word);
       if (data.size() > 0) {
-        String[] tags = new String[data.size()];
-        for (int i = 0; i < tags.length; i++) {
-          tags[i] = data.get(i).getTag().toString();
+        List<String> tags = new ArrayList<String>(data.size());
+        for (int i = 0; i < data.size(); i++) {
+          if(isValid(data.get(i))) {
+            tags.add(data.get(i).getTag().toString());
+          }
         }
-        return tags;
+        if(tags.size() > 0)
+          return tags.toArray(new String[tags.size()]);
+        return null;
       }
     }
     return null;
@@ -93,13 +96,24 @@ public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<
         list = new ArrayList<PairWordPOSTag>(data.size());
         for (int i = 0; i < data.size(); i++) {
           WordData wd = data.get(i);
-          list.add(new PairWordPOSTag(wd.getStem().toString(), wd.getTag()
-              .toString()));
+          if(isValid(wd)) {
+            list.add(new PairWordPOSTag(wd.getStem().toString(), wd.getTag()
+                .toString()));
+          }
         }
         return Collections.unmodifiableList(list);
       }
     }
     return Collections.emptyList();
+  }
+
+  private boolean isValid(WordData wd) {
+    if(wd.getStem() == null) {
+      LOGGER.error("Got invalid entry from FSA dictionary: " + wd);
+      return false;
+    }
+    
+    return true;
   }
 
   public String[] getTags(String word) {
@@ -233,7 +247,7 @@ public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<
       IOException {
 
     long start = System.nanoTime();
-    FSADictionary td = (FSADictionary) create("fsa_dictionaries/pos/pt_br_jspell_corpus.dict");
+    FSADictionary td = (FSADictionary) create("../lang/pt_br/cogroo-res/fsa_dictionaries/pos/pt_br_jspell_corpus.dict");
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
     Scanner kb = new Scanner(System.in);
