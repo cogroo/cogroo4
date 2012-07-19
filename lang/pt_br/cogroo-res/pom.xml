@@ -35,6 +35,10 @@
 				<directory>models</directory>
 			</resource>
 			<resource>
+				<targetPath>dictionaries</targetPath>
+				<directory>dictionaries</directory>
+			</resource>
+			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
 		</resources>

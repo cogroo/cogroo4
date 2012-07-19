@@ -84,3 +84,10 @@ mvn -e -o -q exec:java "-Dexec.mainClass=morfologik.tools.Launcher" "-Dexec.args
 XML=../../../cogroo-dict/res/tagdict.xml
 mkdir ../../../cogroo-dict/res 
 sh scripts/cogroo POSDictionaryBuilder -outputFile ${XML} $BASE_PARAM
+
+## Abbreviation dictionary
+ABB_TXT=../../../cogroo-dict/abbr/pt-br/abbr.txt
+ABB_XML=dictionaries/pt_br/abbr.xml
+mkdir dictionaries
+mkdir dictionaries/pt_br
+sh scripts/opennlp DictionaryBuilder -inputFile ${ABB_TXT} -outputFile ${ABB_XML} -encoding UTF-8 

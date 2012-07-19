@@ -20,13 +20,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.cogroo.dictionary.AbbreviationDictionaryI;
+import opennlp.tools.dictionary.Dictionary;
+import opennlp.tools.util.StringList;
+
 import org.cogroo.entities.Mistake;
 import org.cogroo.entities.Sentence;
 import org.cogroo.tools.checker.AbstractTypedChecker;
 import org.cogroo.tools.checker.JavaRuleDefinition;
 import org.cogroo.tools.checker.RuleDefinitionI;
-
 import org.cogroo.tools.checker.rules.model.Example;
 
 public class SpaceChecker extends AbstractTypedChecker {
@@ -78,9 +79,9 @@ public class SpaceChecker extends AbstractTypedChecker {
 	// Ele, J.B.C. morreu em 154 a.C.!
 	private static final Pattern URL = Pattern.compile("(^(http|www)[\\S]+)");
 
-	private AbbreviationDictionaryI dic;
+	private Dictionary dic;
 
-	public SpaceChecker(AbbreviationDictionaryI dic) {
+	public SpaceChecker(Dictionary dic) {
 		this.dic = dic;
 		add(
 				createRuleDefinition(
@@ -317,7 +318,7 @@ public class SpaceChecker extends AbstractTypedChecker {
 		if (end == true) {
 			if (INITIALS.matcher(word).find())
 				return true;
-			else if (this.dic.contains(word))
+			else if (this.dic.contains(new StringList(word)))
 				return true;
 		}
 
