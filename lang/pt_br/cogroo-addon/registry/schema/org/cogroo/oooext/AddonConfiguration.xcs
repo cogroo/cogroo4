@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
 
     Copyright (C) 2012 cogroo <cogroo@cogroo.org>
@@ -15,8 +16,6 @@
     limitations under the License.
 
 -->
-<?xml version='1.0' encoding='UTF-8'?> 
-
 <oor:component-schema
         oor:name="CoGrOOImportFilter"
         oor:package="org.cogroo.addon"
