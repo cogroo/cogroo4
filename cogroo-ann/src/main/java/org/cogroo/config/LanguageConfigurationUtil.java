@@ -48,10 +48,10 @@ public class LanguageConfigurationUtil {
    */
   public static LanguageConfiguration get(Locale locale) {
 
-    File file = new File(generateName(locale));
+    String file = generateName(locale);
 
     InputStream in = LanguageConfigurationUtil.class.getClassLoader()
-        .getResourceAsStream(generateName(locale));
+        .getResourceAsStream(file);
 
     if (in != null) {
       LanguageConfiguration lc = get(in);
