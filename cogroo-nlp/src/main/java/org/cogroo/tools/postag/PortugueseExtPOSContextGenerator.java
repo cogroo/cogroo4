@@ -103,22 +103,31 @@ public class PortugueseExtPOSContextGenerator extends
     if ("que".equals(sequence[index].toLowerCase())) {
       if (index < sequence.length - 1) { // at least one before and one after
         boolean nextIsVerb = false;
-        if (isCanBeAVerb(sequence[index + 1])) {
-          modContext.add("spec_que=nv");
-          nextIsVerb = true;
-        }
+        boolean prevIsVerb = false;
+        boolean prevprevIsVerb = false;
+        
+        nextIsVerb = isCanBeAVerb(sequence[index + 1]);
         if (index > 0) {
           modContext.add("spec_que_prev=" + priorDecisions[index - 1]);
-          if (nextIsVerb) {
-            modContext.add("spec_que_prev_nv=" + priorDecisions[index - 1]);
+          prevIsVerb = isCanBeAVerb(sequence[index - 1]);
+          if (index > 1) {
+            modContext.add("spec_que_pprev=" + priorDecisions[index - 2]);
+            prevprevIsVerb = isCanBeAVerb(sequence[index - 2]);
           }
         }
-        if (index > 1) {
-          modContext.add("spec_que_pprev=" + priorDecisions[index - 2] + "|"
-              + priorDecisions[index - 1]);
-          if (nextIsVerb)
-            modContext.add("spec_que_pprev_nv=" + priorDecisions[index - 2]
-                + "|" + priorDecisions[index - 1]);
+        
+        if (nextIsVerb) {
+          modContext.add("spec_que=nv");
+        }
+        
+        if(prevIsVerb) {
+          modContext.add("spec_que=pv");
+          modContext.add("spec_que_pv=" + priorDecisions[index - 1]);
+        }
+        
+        if(prevprevIsVerb) {
+          modContext.add("spec_que=ppv");
+          modContext.add("spec_que_ppv=" + priorDecisions[index - 2]);
         }
       }
     }
