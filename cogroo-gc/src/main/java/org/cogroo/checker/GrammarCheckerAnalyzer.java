@@ -29,6 +29,7 @@ import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.tools.checker.Checker;
 import org.cogroo.tools.checker.CheckerComposite;
+import org.cogroo.tools.checker.GenericChecker;
 import org.cogroo.tools.checker.TypedChecker;
 import org.cogroo.tools.checker.TypedCheckerAdapter;
 import org.cogroo.tools.checker.TypedCheckerComposite;
@@ -111,6 +112,8 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     
     // finally:
     checkerList.add(adaptedComposite);
+    checkerList.add(new WordCombinationChecker());
+    
 
     // now we can create other checkers...
 

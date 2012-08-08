@@ -15,8 +15,9 @@
  */
 package org.cogroo.tools.checker;
 
-import org.cogroo.entities.Sentence;
+import org.cogroo.text.Sentence;
 
-public abstract class AbstractChecker extends AbstractGenericChecker<Sentence> implements TypedChecker {
+
+public abstract class AbstractChecker extends AbstractGenericChecker<Sentence> implements Checker {
 
 }
