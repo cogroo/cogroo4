@@ -98,7 +98,7 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
 
     senumElements.put(SyntacticFunction.NONE, "-");
     senumElements.put(SyntacticFunction.SUBJECT, "SUBJ");
-    senumElements.put(SyntacticFunction.VERB, "VERB");
+    senumElements.put(SyntacticFunction.VERB, "P");
     senumElements.put(SyntacticFunction.INDIRECT_OBJECT, "PIV");
     senumElements.put(SyntacticFunction.DIRECT_OBJECT, "ACC");
 
