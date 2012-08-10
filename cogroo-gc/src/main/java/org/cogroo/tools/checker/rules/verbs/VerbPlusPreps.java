@@ -20,24 +20,44 @@ import java.util.List;
 
 public class VerbPlusPreps {
 
-  private String verb;
+	private String verb;
 
-  private List<Prep> preps = new ArrayList<Prep>();
+	private List<Prep> preps = new ArrayList<Prep>();
 
-  public String getVerb() {
-    return verb;
-  }
+	public String getVerb() {
+		return verb;
+	}
 
-  public void setVerb(String verb) {
-    this.verb = verb;
-  }
+	public void setVerb(String verb) {
+		this.verb = verb;
+	}
 
-  public List<Prep> getPreps() {
-    return preps;
-  }
+	public List<Prep> getPreps() {
+		return preps;
+	}
 
-  public void addPreps(Prep prep) {
-    preps.add(prep);
-  }
+	public void addPreps(Prep prep) {
+		preps.add(prep);
+	}
+
+//	Looks for a noun that matches the current verb and returns the preposition that should be linking them
+	public Prep findWord(String word) {
+
+		VerbPlusPreps vpp = this;
+		List<Prep> preps = vpp.getPreps();
+
+		for (Prep prep : preps) {
+
+			if (prep.getObjects() != null) {
+				List<String> objects = prep.getObjects();
+				for (String string : objects) {
+					if (string.equals(word)) {
+						return prep;
+					}
+				}
+			}
+		}
+		return null;
+	}
 
 }
