@@ -21,8 +21,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
+
+import org.cogroo.analyzer.InitializationException;
 
 /**
  * The <code>Verbs</code> class reads a verb's list as input and turns it into a
@@ -31,91 +36,75 @@ import java.util.regex.Pattern;
  */
 public class Verbs {
 
-	/**
-	 * Structure that stores from an input list verbs, its acceptable
-	 * prepositions and in which case to use them
-	 */
-	private List<VerbPlusPreps> verbsList;
+  /**
+   * Structure that stores from an input list verbs, its acceptable prepositions
+   * and in which case to use them
+   */
+  private final Map<String, VerbPlusPreps> verbsMap;
 
-	private static final Pattern PREP_LINE = Pattern.compile("^\\w+:.*");
+  private static final Pattern PREP_LINE = Pattern.compile("^\\w+:.*");
 
-	public Verbs() {
-		parseConfiguration();
-	}
+  public Verbs() {
+    verbsMap = Collections.unmodifiableMap(parseConfiguration());
+  }
 
-	public void parseConfiguration() {
-		InputStream input = Verbs.class.getClassLoader().getResourceAsStream(
-				"rules/regencia/verbs.txt");
+  public Map<String, VerbPlusPreps> parseConfiguration() {
+    InputStream input = Verbs.class.getClassLoader().getResourceAsStream(
+        "rules/regencia/verbs.txt");
 
-		verbsList = new ArrayList<VerbPlusPreps>();
-		VerbPlusPreps vp = new VerbPlusPreps();
+    Map<String, VerbPlusPreps> map = new HashMap<String, VerbPlusPreps>();
 
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					input, "UTF-8"));
+    try {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(input,
+          "UTF-8"));
 
-			while (reader.ready()) {
-				String line = reader.readLine();
+      List<Prep> preps = null;
+      String verb = null;
 
-				if (line.length() > 0) {
+      while (reader.ready()) {
+        String line = reader.readLine();
 
-					if (line.charAt(0) == '#') {
-						vp = new VerbPlusPreps();
-						vp.setVerb(line.substring(1));
-						verbsList.add(vp);
+        if (line.length() > 0) {
 
-					} else if (PREP_LINE.matcher(line).matches()) {
-						Prep prep = new Prep();
-						String[] words = line.split(":\\s?", 3);
-						if (words != null) {
-							prep.setPreposition(words[0]);
-							if (words.length > 1) {
-								prep.setMeaning(words[1]);
-								if (words.length > 2)
-									prep.setObjects(words[2]);
-							}
-						}
-						vp.addPreps(prep);
-					}
-				}
-			}
+          if (line.charAt(0) == '#') {
 
-		} catch (UnsupportedEncodingException e) {
-			// Shouldn't happen because every system contains the utf-8 encode.
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+            if (preps != null) {
+              map.put(verb, new VerbPlusPreps(preps));
+              verb = null;
+              preps = null;
+            }
 
-	/**
-	 * Makes a binary search in the {@link #verbsList}'s structure
-	 * 
-	 * @param verb
-	 *            the word to be searched in the list
-	 * @return the structure which contains the parameter, if the verb isn't in
-	 *         the list returns null
-	 */
-	public VerbPlusPreps getVerb(String verb) {
+            preps = new ArrayList<Prep>();
+            verb = line.substring(1).trim();
 
-		int low = 0;
-		int high = verbsList.size() - 1;
-		int mid;
+          } else if (PREP_LINE.matcher(line).matches()) {
+            Prep prep = new Prep();
+            String[] words = line.split(":\\s?", 3);
+            if (words != null) {
+              prep.setPreposition(words[0]);
+              if (words.length > 1) {
+                prep.setMeaning(words[1]);
+                if (words.length > 2)
+                  prep.setObjects(words[2]);
+              }
+            }
+            preps.add(prep);
+          }
+        }
+      }
+      return map;
 
-		while (low <= high) {
-			mid = (low + high) / 2;
+    } catch (UnsupportedEncodingException e) {
+      // Shouldn't happen because every system contains the utf-8 encode.
+      throw new InitializationException(
+          "Enconding problem while reading the verbs.txt file", e);
+    } catch (IOException e) {
+      throw new InitializationException("Could not read the verbs.txt file", e);
+    }
+  }
 
-			if (verbsList.get(mid).getVerb().compareTo(verb) < 0)
-				low = mid + 1;
-			else if (verbsList.get(mid).getVerb().compareTo(verb) > 0)
-				high = mid - 1;
-			else
-				return verbsList.get(mid);
-		}
-
-		return null;
-
-	}
+  public VerbPlusPreps getVerb(String verb) {
+    return this.verbsMap.get(verb);
+  }
 
 }

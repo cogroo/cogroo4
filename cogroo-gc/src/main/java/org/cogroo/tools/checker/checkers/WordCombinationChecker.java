@@ -35,6 +35,8 @@ public class WordCombinationChecker extends AbstractChecker {
 
   private static final String ID_PREFIX = "word combination:";
 
+  private final Verbs verbs;
+
   public WordCombinationChecker() {
     List<Example> examples = new ArrayList<Example>();
     examples
@@ -43,6 +45,8 @@ public class WordCombinationChecker extends AbstractChecker {
     RuleDefinitionI wordCombination = new JavaRuleDefinition(ID, CATEGORY,
         GROUP, DESCRIPTION, MESSAGE, SHORT, examples);
     add(wordCombination);
+
+    verbs = new Verbs();
   }
 
   static final String ID = ID_PREFIX + "WORD_COMB_TOKEN";
@@ -64,52 +68,54 @@ public class WordCombinationChecker extends AbstractChecker {
     List<Mistake> mistakes = new LinkedList<Mistake>();
     int offset = sentence.getStart();
 
-    Verbs verbs = new Verbs();
     Token verb = findVerb(sentence);
     List<String> nouns = findNoun(sentence);
 
-    VerbPlusPreps vpp = verbs.getVerb(verb.getLemmas()[0]);
-    // Only gives the first lemma. %TODO improve this case.
+    if (verb != null) {
+      VerbPlusPreps vpp = verbs.getVerb(verb.getLemmas()[0]);
+      // Only gives the first lemma. %TODO improve this case.
 
-    Token sentPrep = findPrep(sentence);
+      Token sentPrep = findPrep(sentence);
 
-    for (String noun : nouns) {
-      if (vpp != null) {
+      for (String noun : nouns) {
+        if (vpp != null) {
 
-        /** the correct preposition to be used in the sentence. */
-        Prep prep = vpp.findWord(noun);
+          /** the correct preposition to be used in the sentence. */
+          Prep prep = vpp.findWord(noun);
 
-        // if prep is null, then no object to the main verb was found
-        if (prep != null) {
+          // if prep is null, then no object to the main verb was found
+          if (prep != null) {
 
-          if (sentPrep == null) {
-            // The original sentence has no preposition in its objects, when it
-            // should have.
-            if (!prep.getPreposition().equals("_")) {
+            if (sentPrep == null) {
+              // The original sentence has no preposition in its objects, when
+              // it
+              // should have.
+              if (!prep.getPreposition().equals("_")) {
 
-              int start = verb.getStart() + offset;
-              int end = verb.getEnd() + offset;
+                int start = verb.getStart() + offset;
+                int end = verb.getEnd() + offset;
 
-              mistakes.add(createMistake(ID, createSuggestion(verb, prep),
-                  start, end, sentence.getText()));
+                mistakes.add(createMistake(ID, createSuggestion(verb, prep),
+                    start, end, sentence.getText()));
+              }
             }
-          }
 
-          else {
-            // The original sentence has a preposition already, but it is wrong.
-            if (!sentPrep.getLexeme().equals(prep.getPreposition())) {
+            else {
+              // The original sentence has a preposition already, but it is
+              // wrong.
+              if (!sentPrep.getLexeme().equals(prep.getPreposition())) {
 
-              int start = sentPrep.getStart() + offset;
-              int end = sentPrep.getEnd() + offset;
+                int start = sentPrep.getStart() + offset;
+                int end = sentPrep.getEnd() + offset;
 
-              mistakes.add(createMistake(ID, createSuggestion(verb, prep),
-                  start, end, sentence.getText()));
+                mistakes.add(createMistake(ID, createSuggestion(verb, prep),
+                    start, end, sentence.getText()));
+              }
             }
           }
         }
       }
     }
-
     return mistakes;
   }
 
@@ -185,7 +191,8 @@ public class WordCombinationChecker extends AbstractChecker {
     for (int i = 0; i < syntChunks.size(); i++) {
       String tag = syntChunks.get(i).getTag();
 
-      if (tag.equals("P"))
+      if (tag.equals("P") || tag.equals("MV") || tag.equals("PMV")
+          || tag.equals("AUX") || tag.equals("PAUX"))
         return syntChunks.get(i).getTokens().get(0);
     }
 

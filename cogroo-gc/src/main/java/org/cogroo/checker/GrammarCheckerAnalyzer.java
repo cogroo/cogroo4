@@ -111,7 +111,7 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     
     // finally:
     checkerList.add(adaptedComposite);
-//    checkerList.add(new WordCombinationChecker());
+    checkerList.add(new WordCombinationChecker());
     
 
     // now we can create other checkers...

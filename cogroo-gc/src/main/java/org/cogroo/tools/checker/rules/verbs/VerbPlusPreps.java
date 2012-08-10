@@ -15,49 +15,31 @@
  */
 package org.cogroo.tools.checker.rules.verbs;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VerbPlusPreps {
 
-	private String verb;
-
-	private List<Prep> preps = new ArrayList<Prep>();
-
-	public String getVerb() {
-		return verb;
-	}
-
-	public void setVerb(String verb) {
-		this.verb = verb;
-	}
-
-	public List<Prep> getPreps() {
-		return preps;
-	}
-
-	public void addPreps(Prep prep) {
-		preps.add(prep);
-	}
+	private final Map<String, Prep> prepsMap;
+  
+	public VerbPlusPreps(List<Prep> preps) {
+	  Map<String, Prep> map = new HashMap<String, Prep>();
+	  
+	  for (Prep prep : preps) {
+	    for (String word : prep.getObjects()) {
+	      map.put(word, prep);
+	    }
+	  }
+	  
+	  prepsMap = Collections.unmodifiableMap(map);
+	    
+  }
 
 //	Looks for a noun that matches the current verb and returns the preposition that should be linking them
 	public Prep findWord(String word) {
-
-		VerbPlusPreps vpp = this;
-		List<Prep> preps = vpp.getPreps();
-
-		for (Prep prep : preps) {
-
-			if (prep.getObjects() != null) {
-				List<String> objects = prep.getObjects();
-				for (String string : objects) {
-					if (string.equals(word)) {
-						return prep;
-					}
-				}
-			}
-		}
-		return null;
+		return prepsMap.get(word);
 	}
 
 }
