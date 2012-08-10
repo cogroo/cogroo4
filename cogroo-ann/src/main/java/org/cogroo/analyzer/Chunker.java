@@ -49,8 +49,11 @@ public class Chunker implements AnalyzerI {
       
       String[] tokensString = TextUtils.tokensToString(tokens);
       List<Chunk> chunks = new ArrayList<Chunk>();
-      String[] chunkTags = chunker.chunk(tokensString, tags);
-    
+      String[] chunkTags;
+      
+      synchronized (chunker) {
+        chunkTags = chunker.chunk(tokensString, tags);
+      }
       
       for (int i = 0; i < chunkTags.length; i++) {
         tokens.get(i).setChunkTag(chunkTags[i]);

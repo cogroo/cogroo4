@@ -42,8 +42,11 @@ public class Featurizer implements AnalyzerI {
       for (int i = 0; i < tokens.size(); i++)
         tags[i] = tokens.get(i).getPOSTag();
 
-      String[] features = featurizer.featurize(
-          TextUtils.tokensToString(tokens), tags);
+      String[] features;
+
+      synchronized (this.featurizer) {
+        features = featurizer.featurize(TextUtils.tokensToString(tokens), tags);
+      }
 
       for (int i = 0; i < features.length; i++)
         tokens.get(i).setFeatures(features[i]);

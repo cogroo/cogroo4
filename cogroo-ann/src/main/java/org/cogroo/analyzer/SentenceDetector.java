@@ -46,7 +46,10 @@ public class SentenceDetector implements AnalyzerI {
     if (document.getText() == null)
       throw new IllegalArgumentException("Document text is null.");
 
-    Span[] spans = sentenceDetector.sentPosDetect(document.getText());
+    Span[] spans;
+    synchronized (sentenceDetector) {
+      spans = sentenceDetector.sentPosDetect(document.getText());
+    }
 
     List<Sentence> sentences = new ArrayList<Sentence>(spans.length);
 
