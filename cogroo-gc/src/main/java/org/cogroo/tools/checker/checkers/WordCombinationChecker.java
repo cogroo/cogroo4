@@ -33,163 +33,170 @@ import org.cogroo.tools.checker.rules.verbs.Verbs;
 
 public class WordCombinationChecker extends AbstractChecker {
 
-	private static final String ID_PREFIX = "word combination:";
+  private static final String ID_PREFIX = "word combination:";
 
-	public WordCombinationChecker() {
-		List<Example> examples = new ArrayList<Example>();
-		examples.add(createExample("Ele assiste o filme.",
-				"Ele assiste ao filme."));
+  public WordCombinationChecker() {
+    List<Example> examples = new ArrayList<Example>();
+    examples
+        .add(createExample("Ele assiste o filme.", "Ele assiste ao filme."));
 
-		RuleDefinitionI wordCombination = new JavaRuleDefinition(ID, CATEGORY,
-				GROUP, DESCRIPTION, MESSAGE, SHORT, examples);
-		add(wordCombination);
-	}
+    RuleDefinitionI wordCombination = new JavaRuleDefinition(ID, CATEGORY,
+        GROUP, DESCRIPTION, MESSAGE, SHORT, examples);
+    add(wordCombination);
+  }
 
-	static final String ID = ID_PREFIX + "WORD_COMB_TOKEN";
-	static final String CATEGORY = "Regência verbal";
-	static final String GROUP = "Erros sintáticos";
-	static final String DESCRIPTION = "Procura por verbos e analisa sua regência.";
-	static final String MESSAGE = "Verifique a regência verbal.";
-	static final String SHORT = "Regência verbal.";
+  static final String ID = ID_PREFIX + "WORD_COMB_TOKEN";
+  static final String CATEGORY = "Regência verbal";
+  static final String GROUP = "Erros sintáticos";
+  static final String DESCRIPTION = "Procura por verbos e analisa sua regência.";
+  static final String MESSAGE = "Verifique a regência verbal.";
+  static final String SHORT = "Regência verbal.";
 
-	public String getIdPrefix() {
-		return ID_PREFIX;
-	}
+  public String getIdPrefix() {
+    return ID_PREFIX;
+  }
 
-	public int getPriority() {
-		return 211;
-	}
+  public int getPriority() {
+    return 211;
+  }
 
-	public List<Mistake> check(Sentence sentence) {
-		List<Mistake> mistakes = new LinkedList<Mistake>();
-		int offset = sentence.getStart();
+  public List<Mistake> check(Sentence sentence) {
+    List<Mistake> mistakes = new LinkedList<Mistake>();
+    int offset = sentence.getStart();
 
-		Verbs verbs = new Verbs();
-		Token verb = findVerb(sentence);
-		List<String> nouns = findNoun(sentence);
+    Verbs verbs = new Verbs();
+    Token verb = findVerb(sentence);
+    List<String> nouns = findNoun(sentence);
 
-		VerbPlusPreps vpp = verbs.getVerb(verb.getLemmas()[0]); // only gives
-																// the first
-																// lemma %TODO
-																// improve this
-																// case.
+    VerbPlusPreps vpp = verbs.getVerb(verb.getLemmas()[0]);
+    // Only gives the first lemma. %TODO improve this case.
 
-		Token sentPrep = findPrep(sentence);
+    Token sentPrep = findPrep(sentence);
 
-		for (String noun : nouns) {
-			if (vpp != null) {
-				Prep prep = vpp.findWord(noun);
+    for (String noun : nouns) {
+      if (vpp != null) {
 
-				// prep == the preposition that is correct and should be in the
-				// sentence
-				// if prep is null, then no indirect object to be linked with
-				// the
-				// main verb was found
-				if (prep != null) {
+        /** the correct preposition to be used in the sentence. */
+        Prep prep = vpp.findWord(noun);
 
-					if (sentPrep == null) {
+        // if prep is null, then no object to the main verb was found
+        if (prep != null) {
 
-						if (!prep.getPreposition().equals("_")) {
+          if (sentPrep == null) {
+            // The original sentence has no preposition in its objects, when it
+            // should have.
+            if (!prep.getPreposition().equals("_")) {
 
-							System.out
-									.println("Não tem prep na frase original e deveria ter a prep: "
-											+ prep.getPreposition());
+              int start = verb.getStart() + offset;
+              int end = verb.getEnd() + offset;
 
-							int start = verb.getStart() + offset;
-							int end = verb.getEnd() + offset;
+              mistakes.add(createMistake(ID, createSuggestion(verb, prep),
+                  start, end, sentence.getText()));
+            }
+          }
 
-							mistakes.add(createMistake(ID,
-									createSuggestion(verb, prep), start, end,
-									sentence.getText()));
-						}
-					}
+          else {
+            // The original sentence has a preposition already, but it is wrong.
+            if (!sentPrep.getLexeme().equals(prep.getPreposition())) {
 
-					else {
-						if (!sentPrep.getLexeme().equals(prep.getPreposition())) {
+              int start = sentPrep.getStart() + offset;
+              int end = sentPrep.getEnd() + offset;
 
-							System.out
-									.println("A frase original já tem uma prep, mas deveria ter essa outra: "
-											+ prep.getPreposition());
+              mistakes.add(createMistake(ID, createSuggestion(verb, prep),
+                  start, end, sentence.getText()));
+            }
+          }
+        }
+      }
+    }
 
-							int start = sentPrep.getStart() + offset;
-							int end = sentPrep.getEnd() + offset;
+    return mistakes;
+  }
 
-							mistakes.add(createMistake(ID,
-									createSuggestion(verb, prep), start, end,
-									sentence.getText()));
-						}
-					}
-				}
-			}
-		}
+  /**
+   * Looks for a noun in the sentence's objects.
+   * 
+   * @param sentence
+   *          entered by the user
+   * @return a <tt>List></tt> of every noun found in the sentence's objects
+   */
+  private List<String> findNoun(Sentence sentence) {
+    List<String> nouns = new ArrayList<String>();
 
-		return mistakes;
-	}
+    List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
 
-	private List<String> findNoun(Sentence sentence) {
-		List<String> nouns = new ArrayList<String>();
+    for (int i = 0; i < syntChunks.size(); i++) {
+      String tag = syntChunks.get(i).getTag();
 
-		List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
+      if (tag.equals("PIV") || tag.equals("ACC")) {
 
-		for (int i = 0; i < syntChunks.size(); i++) {
-			String tag = syntChunks.get(i).getTag();
+        for (Token token : syntChunks.get(i).getTokens()) {
+          if (token.getPOSTag().equals("n")) {
+            if (token.getLemmas() == null)
+              nouns.add(token.getLemmas()[0]);
+            else
+              nouns.add(token.getLexeme());
+          }
+        }
+      }
+    }
 
-			if (tag.equals("PIV") || tag.equals("ACC")) {
+    return nouns;
+  }
 
-				for (Token token : syntChunks.get(i).getTokens()) {
-					if (token.getPOSTag().equals("n")) {
-						if (token.getLemmas() == null)
-							nouns.add(token.getLemmas()[0]);
-						else
-							nouns.add(token.getLexeme());
-					}
-				}
-			}
-		}
+  /**
+   * Looks in the sentence's objects for a preposition
+   * 
+   * @param sentence
+   *          the original sentence typed by the user
+   * @return the <tt>Token</tt> that contains the searched preposition, if it
+   *         exists; otherwise returns <tt>null</tt>
+   */
+  public Token findPrep(Sentence sentence) {
+    List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
 
-		return nouns;
-	}
+    for (int i = 0; i < syntChunks.size(); i++) {
+      String tag = syntChunks.get(i).getTag();
 
-	public Token findPrep(Sentence sentence) {
-		List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
+      if (tag.equals("PIV") || tag.equals("ACC")) {
 
-		for (int i = 0; i < syntChunks.size(); i++) {
-			String tag = syntChunks.get(i).getTag();
+        for (Token token : syntChunks.get(i).getTokens()) {
+          if (token.getPOSTag().equals("prp")) {
+            return token;
+          }
+        }
+      }
+    }
+    return null;
+  }
 
-			if (tag.equals("PIV") || tag.equals("ACC")) {
+  /**
+   * Looks in a sentence for a verb.
+   * 
+   * @param sentence
+   *          entered by the user
+   * @return the <tt>Token</tt> which contains the searched verb, in case none
+   *         was found returns <tt>null</tt>
+   */
+  // %TODO Improve the case above.
+  public Token findVerb(Sentence sentence) {
+    List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
 
-				for (Token token : syntChunks.get(i).getTokens()) {
-					if (token.getPOSTag().equals("prp")) {
-						return token;
-					}
-				}
-			}
-		}
-		return null;
-	}
+    for (int i = 0; i < syntChunks.size(); i++) {
+      String tag = syntChunks.get(i).getTag();
 
-	// Returns the token which contains a verb.
-	// In case there are two verbs in the sentence it will only return the first
-	// one
-	// %TODO Improve the case above.
-	public Token findVerb(Sentence sentence) {
-		List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
+      if (tag.equals("P"))
+        return syntChunks.get(i).getTokens().get(0);
+    }
 
-		for (int i = 0; i < syntChunks.size(); i++) {
-			String tag = syntChunks.get(i).getTag();
+    return null;
+  }
 
-			if (tag.equals("P"))
-				return syntChunks.get(i).getTokens().get(0);
-		}
+  private String[] createSuggestion(Token token, Prep prep) {
 
-		return null;
-	}
+    String[] array = { token.getLexeme() + " " + prep.getPreposition() };
 
-	private String[] createSuggestion(Token token, Prep prep) {
-
-		String[] array = { token.getLexeme() + " " + prep.getPreposition() };
-
-		return array;
-	}
+    return array;
+  }
 
 }
