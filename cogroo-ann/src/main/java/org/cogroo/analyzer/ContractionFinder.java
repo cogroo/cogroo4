@@ -49,14 +49,18 @@ public class ContractionFinder implements AnalyzerI {
     List<Sentence> sentences = document.getSentences();
 
     for (Sentence sentence : sentences) {
-      Span[] contractionsSpan = contractionFinder.find(TextUtils
-          .tokensToString(sentence.getTokens()));
+      Span[] contractionsSpan;
+      
+      synchronized (this.contractionFinder) {
+        contractionsSpan = contractionFinder.find(TextUtils
+            .tokensToString(sentence.getTokens()));
+      }
+      
       List<Token> newTokens = sentence.getTokens();
 
       for (int i = contractionsSpan.length - 1; i >= 0; i--) {
 
-        int start = contractionsSpan[i].getStart(), end = contractionsSpan[i]
-            .getEnd();
+        int start = contractionsSpan[i].getStart();
 
         String lexeme = sentence.getTokens().get(start).getLexeme();
         String[] contractions = ContractionUtility.expand(lexeme);

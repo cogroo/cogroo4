@@ -86,22 +86,34 @@
 						<id>time stamp</id>
 						<phase>generate-sources</phase>
 						<configuration>
+							<exportAntProperties>true</exportAntProperties>
 							<target>
-								<tstamp>
-									<format property="TSTAMP" pattern="yyyyMMddHHmmss"
-										locale="GMT" />
-								</tstamp>
-								<echo message="TSTAMP: ${TSTAMP} Version: ${pom.version}" />
-								<echo message="${pom.version}" file="target/version.property" />
-								<loadfile property="OXT_VERSION" srcFile="target/version.property">
-									<filterchain>
-										<tokenfilter>
-											<replaceregex pattern="-SNAPSHOT" replace=".${TSTAMP}"
-												flags="g" />
-										</tokenfilter>
-									</filterchain>
-								</loadfile>
-								<echo message="OXT_VERSION = ${OXT_VERSION}" file="target/oxt_version.property" />
+								<echo message="************** Will check for OXT_VERSION: ${OXT_VERSION} **************" />
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties"
+									classpathref="maven.plugin.classpath" />
+								<if>
+									<isset property="OXT_VERSION" />
+									<then>
+										<echo message="************** Using previously set OXT_VERSION: ${OXT_VERSION} **************" />
+									</then>
+									<else>
+										<tstamp>
+											<format property="TSTAMP" pattern="yyyyMMddHHmmss"
+												locale="GMT" />
+										</tstamp>
+										<echo message="********** TSTAMP: ${TSTAMP} Version: ${project.version} **********" />
+										<echo message="${project.version}" file="target/version.property" />
+										<loadfile property="OXT_VERSION" srcFile="target/version.property">
+											<filterchain>
+												<tokenfilter>
+													<replaceregex pattern="-SNAPSHOT" replace=".${TSTAMP}"
+														flags="g" />
+												</tokenfilter>
+											</filterchain>
+										</loadfile>
+										<echo message="OXT_VERSION = ${OXT_VERSION}" file="target/oxt_version.property" />
+									</else>
+								</if>
 							</target>
 						</configuration>
 						<goals>
@@ -127,8 +139,28 @@
 					</execution>
 
 				</executions>
+				<dependencies>
+			
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+					    <groupId>org.apache.ant</groupId>
+					    <artifactId>ant-nodeps</artifactId>
+					    <version>1.8.1</version>
+					</dependency>
+	
+				</dependencies>
 			</plugin>
-
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -214,8 +246,8 @@
 					<description>${project.version} release of ${project.name}</description>
 					<override>true</override>
 					<includes>
-						<include>**/*.oxt</include>
-						<include>**/update-site/*.xml</include>
+						<include>*.oxt</include>
+						<include>update-site/*.xml</include>
 					</includes>
 				</configuration>
 			</plugin>

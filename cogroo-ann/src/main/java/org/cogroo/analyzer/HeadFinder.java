@@ -37,7 +37,6 @@ public class HeadFinder implements AnalyzerI {
     List<Sentence> sentences = document.getSentences();
     
     for (Sentence sentence : sentences) {
-      String[] heads = new String[sentence.getTokens().size()];
       List<Token> tokens = sentence.getTokens();
       List<Chunk> chunks = sentence.getChunks();
 
@@ -47,7 +46,10 @@ public class HeadFinder implements AnalyzerI {
         tags[i] = tokens.get(i).getPOSTag() + "|" + tokens.get(i).getChunkTag();
       
       String[] tokensString = TextUtils.tokensToString(tokens);
-      heads = headFinder.chunk(tokensString, tags);
+      String[] heads;
+      synchronized (this.headFinder) {
+        heads = headFinder.chunk(tokensString, tags);
+      }
       
       for (Chunk chunk : chunks)
         for (int i = chunk.getStart(); i < chunk.getEnd(); i++)

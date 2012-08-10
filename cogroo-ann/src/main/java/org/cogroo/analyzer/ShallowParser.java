@@ -40,7 +40,7 @@ public class ShallowParser implements AnalyzerI {
     List<Sentence> sentences = document.getSentences();
 
     for (Sentence sentence : sentences) {
-      Span[] parsers = null;
+      
       List<Token> tokens = sentence.getTokens();
       List<SyntacticChunk> syntChunks = new ArrayList<SyntacticChunk>();
 
@@ -50,7 +50,10 @@ public class ShallowParser implements AnalyzerI {
         tags[i] = tokens.get(i).getPOSTag() + "|" + tokens.get(i).getChunkTag();
 
       String[] tokensString = TextUtils.tokensToString(tokens);
-      parsers = shallowParser.chunkAsSpans(tokensString, tags);
+      Span[] parsers = null;
+      synchronized (this.shallowParser) {
+        parsers = shallowParser.chunkAsSpans(tokensString, tags);
+      }
 
       for (Span span : parsers) {
         SyntacticChunk st = new SyntacticChunkImpl(span.getType(),

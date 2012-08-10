@@ -47,10 +47,14 @@ public class POSTagger implements AnalyzerI {
 
     for (Sentence sentence : sentences) {
       List<Token> tokens = sentence.getTokens();
-      String[] tags = tagger.tag(
-          TextUtils.tokensToString(sentence.getTokens()), TextUtils
-              .additionalContext(tokens, Arrays.asList(
-                  Analyzers.CONTRACTION_FINDER, Analyzers.NAME_FINDER)));
+      String[] tags;
+      
+      synchronized (this.tagger) {
+        tags = tagger.tag(
+            TextUtils.tokensToString(sentence.getTokens()), TextUtils
+                .additionalContext(tokens, Arrays.asList(
+                    Analyzers.CONTRACTION_FINDER, Analyzers.NAME_FINDER)));
+      }
 
       for (int i = 0; i < tags.length; i++) {
         tokens.get(i).setPOSTag(tags[i]);

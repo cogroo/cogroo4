@@ -44,7 +44,11 @@ public class Tokenizer implements AnalyzerI {
 
     for (Sentence sentence : sentences) {
       String sentenceString = sentence.getText();
-      Span tokensSpan[] = tokenizer.tokenizePos(sentenceString);
+      Span[] tokensSpan;
+
+      synchronized (this.tokenizer) {
+        tokensSpan = tokenizer.tokenizePos(sentenceString);
+      }
 
       List<Token> tokens = new ArrayList<Token>(tokensSpan.length);
 

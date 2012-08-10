@@ -23,10 +23,14 @@ import org.cogroo.text.Document;
 
 
 /**
- * The <code>Pipe</code> class contains a sequence of analyzers.    
+ * The <code>Pipe</code> class contains a sequence of analyzers.
  * <p>
- * It follows the composite pattern to manage the analyzers. Uses the method {@link #add(AnalyzerI)} to add analyzers into the pipe.  
- *
+ * It follows the composite pattern to manage the analyzers. Uses the method
+ * {@link #add(AnalyzerI)} to add analyzers into the pipe.
+ * </p>
+ * The {@link #analyze(Document)} method is thread-safe, if all analyzers in it
+ * are also thread-safe, which is the case of the default analyzers.
+ * 
  */
 public class Pipe implements AnalyzerI {
 
@@ -47,7 +51,7 @@ public class Pipe implements AnalyzerI {
   public void analyze(Document document) {
 
     for (AnalyzerI analyzer : mChildAnalyzers) {
-      analyzer.analyze(document);
+        analyzer.analyze(document);
     }
 
   }

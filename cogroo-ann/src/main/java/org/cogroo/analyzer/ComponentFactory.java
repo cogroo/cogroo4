@@ -18,8 +18,15 @@ package org.cogroo.analyzer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
@@ -40,7 +47,6 @@ import org.cogroo.config.Model;
 import org.cogroo.dictionary.impl.FSADictionary;
 import org.cogroo.tools.featurizer.FeaturizerME;
 import org.cogroo.tools.featurizer.FeaturizerModel;
-
 
 import com.google.common.io.Closeables;
 
@@ -93,8 +99,7 @@ public class ComponentFactory implements ComponentFactoryI {
     long start = System.nanoTime();
     SentenceDetectorME sentenceDetector = null;
     InputStream modelIn = null;
-    AnalyzerI analyzer = null;
-
+    AnalyzerI analyzer = null; 
     if (modelPathMap.containsKey(Analyzers.SENTENCE_DETECTOR)) {
       try {
         modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
@@ -390,42 +395,125 @@ public class ComponentFactory implements ComponentFactoryI {
     long start = System.nanoTime();
     Pipe pipe = new Pipe();
 
+    
+    // to accelerate the startup we do it in two steps. First we start initialization with
+    // FutureTasks, and finally we wait for the results..
+    
+    FutureTask<AnalyzerI> future;
+    List<FutureTask<AnalyzerI>> initializers = new LinkedList<FutureTask<AnalyzerI>>();
+    ExecutorService executor = Executors.newCachedThreadPool();
+    
+    LOGGER.info("Loading pipe assynchronously...");
+    
     for (Analyzers analyzer : lc.getPipe().getAnalyzer()) {
       switch (analyzer) {
       case SENTENCE_DETECTOR:
-        pipe.add(this.createSentenceDetector());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createSentenceDetector();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       case TOKENIZER:
-        pipe.add(this.createTokenizer());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createTokenizer();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       case NAME_FINDER:
-        pipe.add(this.createNameFinder());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createNameFinder();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       case CONTRACTION_FINDER:
-        pipe.add(this.createContractionFinder());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createContractionFinder();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       case POS_TAGGER:
-        pipe.add(this.createPOSTagger());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createPOSTagger();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       case FEATURIZER:
-        pipe.add(this.createFeaturizer());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createFeaturizer();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       case LEMMATIZER:
-        pipe.add(this.createLemmatizer());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createLemmatizer();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       case CHUNKER:
-        pipe.add(this.createChunker());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createChunker();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       case HEAD_FINDER:
-        pipe.add(this.createHeadFinder());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createHeadFinder();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       case SHALLOW_PARSER:
-        pipe.add(this.createShallowParser());
+        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
+          public AnalyzerI call() {
+            return createShallowParser();
+          }
+        });
+        executor.execute(future);
+        initializers.add(future);
         break;
       default:
         throw new InitializationException("Unknown analyzer: " + analyzer);
       }
     }
+    
+    // now we get it...
+    
+    for (FutureTask<AnalyzerI> futureTask : initializers) {
+      try {
+        pipe.add(futureTask.get());
+      } catch (InterruptedException e) {
+        throw new InitializationException("Failed to load pipe.", e);
+      } catch (ExecutionException e) {
+        throw new InitializationException("Failed to load pipe.", e);
+      }
+    }
+    
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("Initialized Pipe and its components in "
           + ((System.nanoTime() - start) / 1000000) + "ms]");

@@ -18,11 +18,10 @@ package org.cogroo.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import opennlp.tools.util.Span;
+
 import org.cogroo.text.Token;
 import org.cogroo.text.impl.TokenImpl;
-
-
-import opennlp.tools.util.Span;
 
 public class EntityUtils {
 

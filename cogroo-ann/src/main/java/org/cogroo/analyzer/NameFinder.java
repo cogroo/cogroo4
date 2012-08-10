@@ -45,12 +45,19 @@ public class NameFinder implements AnalyzerI {
     List<Sentence> sentences = document.getSentences();
 
     for (Sentence sentence : sentences) {
-      Span[] namesSpan = nameFinder.find(TextUtils.tokensToString(sentence
-          .getTokens()));
+      Span[] namesSpan;
+      synchronized (this.nameFinder) {
+        namesSpan = nameFinder.find(TextUtils.tokensToString(sentence
+            .getTokens()));
+      }
+      
       List<Token> newTokens = sentence.getTokens();
 
       for (int i = namesSpan.length - 1; i >= 0; i--) {
         int start = namesSpan[i].getStart(), end = namesSpan[i].getEnd();
+
+        int chStart = newTokens.get(start).getStart();
+        int chEnd = newTokens.get(end - 1).getEnd();
 
         String name = newTokens.get(end - 1).getLexeme();
         newTokens.remove(end - 1);
@@ -60,7 +67,7 @@ public class NameFinder implements AnalyzerI {
           name = temp + "_" + name;
           newTokens.remove(j);
         }
-        Token token = new TokenImpl(start, end, name);
+        Token token = new TokenImpl(chStart, chEnd, name);
         newTokens.add(start, token);
         
         token.addContext(Analyzers.NAME_FINDER, "P");
