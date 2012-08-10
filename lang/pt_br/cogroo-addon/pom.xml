@@ -246,8 +246,8 @@
 					<description>${project.version} release of ${project.name}</description>
 					<override>true</override>
 					<includes>
-						<include>**/*.oxt</include>
-						<include>**/update-site/*.xml</include>
+						<include>*.oxt</include>
+						<include>update-site/*.xml</include>
 					</includes>
 				</configuration>
 			</plugin>
