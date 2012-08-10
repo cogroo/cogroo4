@@ -415,7 +415,7 @@ public final class RulesApplier implements TypedChecker {
 					match = match & !(chunk.getMorphologicalTag().matchExact(mask.getTagMask(), false) && chunk.getSyntacticTag().match(mask.getTagMask()));
 				} else if (mask.getTagReference() != null) {
 					TagMask t = RuleUtils.createTagMaskFromReference(mask.getTagReference(), sentence, baseTokenIndex);
-					match = match & !(chunk.getMorphologicalTag().match(t,false) && chunk.getSyntacticTag().match(t));
+					match = match & !(chunk.getMorphologicalTag().match(t,false) && (t.getSyntacticFunction() == null || chunk.getSyntacticTag().match(t)));
 				}
 			}
 		}

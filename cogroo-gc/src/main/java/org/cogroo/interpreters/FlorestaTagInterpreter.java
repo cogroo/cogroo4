@@ -115,6 +115,13 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
           Collections.unmodifiableList(values));
     }
 
+    ArrayList<SyntacticFunction> _OtherVerbs = new ArrayList<SyntacticFunction>();
+    _OtherVerbs.add(SyntacticFunction.VERB);
+    stringSElements.put("AUX", Collections.unmodifiableList(_OtherVerbs));
+    stringSElements.put("PAUX", Collections.unmodifiableList(_OtherVerbs));
+    stringSElements.put("MV", Collections.unmodifiableList(_OtherVerbs));
+    stringSElements.put("PMV", Collections.unmodifiableList(_OtherVerbs));
+    
     STAG_PARTS_ENUM = Collections.unmodifiableMap(stringSElements);
 
     /* ********************************
