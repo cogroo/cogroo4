@@ -8835,4 +8835,74 @@
 			<Date>2008-10-25T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
+
+
+	
+	<Rule id="125" active="true">
+		<Method>subject-verb</Method>
+		<Type>Concordância do sujeito com o verbo do predicado</Type>
+		<Group>núcleo do sujeito + verbo</Group>
+		<Message>O sujeito concorda em número (singular ou plural) com o predicado.</Message>
+		<ShortMessage>O sujeito concorda em número com o predicado.</ShortMessage>
+		<Pattern>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<TagMask>
+							<SyntacticFunction>subject</SyntacticFunction>
+						</TagMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Composition>
+				<And>
+					<PatternElement>
+						<Element>
+							<Mask>
+								<TagMask>
+									<SyntacticFunction>verb</SyntacticFunction>
+								</TagMask>
+							</Mask>
+						</Element>
+					</PatternElement>
+					<PatternElement>
+						<Element>
+							<Negated>true</Negated>
+							<Mask>
+								<TagReference index="0">
+									<Property>Number</Property>
+								</TagReference>
+							</Mask>
+						</Element>
+					</PatternElement>
+				</And>
+				</Composition>
+			</PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>1</Lower>
+			<Upper>0</Upper>
+		</Boundaries>
+		<Suggestion>
+			<!-- <SuggestionAsString>2=&gt;2_M_P_</SuggestionAsString> -->
+			<Replace index="1">
+				<Reference index="0">
+					<Property>Number</Property>
+				</Reference>
+			</Replace>
+		</Suggestion>
+		<!-- M_P - M_S -->
+		<Example>
+			<Incorrect>Nós vai para lá.</Incorrect>
+			<Correct>Nós vamos para lá.</Correct>
+		</Example>
+		<ModificationHistory>
+			<Author>Arthur</Author>
+			<Date>2012-08-08T12:00:00.000-03:00</Date>
+		</ModificationHistory>
+		
+	</Rule>
+	
+
 </Rules>

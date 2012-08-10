@@ -46,6 +46,7 @@ import org.cogroo.tools.checker.rules.applier.RulesXmlAccess;
 import org.cogroo.tools.checker.rules.dictionary.FSALexicalDictionary;
 import org.cogroo.tools.checker.rules.dictionary.TagDictionary;
 
+
 public class GrammarCheckerAnalyzer implements AnalyzerI {
 
   private CheckerComposite checkers;
@@ -63,57 +64,55 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
    * be deprecated in the future. They are:
    * </p>
    * <ul>
-   * <li>{@link RulesApplier} (rules from XML file)</li>
-   * <li>{@link PunctuationChecker}</li>
-   * <li>{@link RepetitionChecker}</li>
-   * <li>{@link SpaceChecker}</li>
-   * <li>{@link WordCombinationChecker} (beta)</li>
+   *    <li>{@link RulesApplier} (rules from XML file)</li>
+   *    <li>{@link PunctuationChecker}</li>
+   *    <li>{@link RepetitionChecker}</li>
+   *    <li>{@link SpaceChecker}</li>
+   *    <li>{@link WordCombinationChecker} (beta)</li>
    * </ul>
    * 
-   * Also we should have checker that deals with basic Document structure, but
-   * today we don't have any yet.
-   * 
+   * Also we should have checker that deals with basic Document structure, but today we don't have any yet.
+   *  
    * @throws IllegalArgumentException
    * @throws IOException
    */
   public GrammarCheckerAnalyzer() throws IllegalArgumentException, IOException {
-
+    
     // initialize resources...
-    // today we load the tag dictionary this way, but in the future it
-    // should be
+    // today we load the tag dictionary this way, but in the future it should be
     // shared the rules and the models.
     td = new TagDictionary(new FSALexicalDictionary(), false,
         new FlorestaTagInterpreter());
-
-    // *************************************************************************
+    
+    //*************************************************************************
     // Create typed checkers
-    // *************************************************************************
+    //*************************************************************************
     List<TypedChecker> typedCheckersList = new ArrayList<TypedChecker>();
-
+    
     // add the rules applier, from XSD
     typedCheckersList.add(createRulesApplierChecker());
 
     // create other typed checkers
-
-    // how to get the abbreviation dictionary?
+    
+    // how to get the abbreviation dictionary? 
     typedCheckersList.add(new SpaceChecker(loadAbbDict()));
-
+    
     typedCheckersList.add(new PunctuationChecker());
     typedCheckersList.add(new RepetitionChecker());
 
     // create the typed composite and adapter
-    // we need to pass in the tag dictionary because of the adapter, that
-    // needs
+    // we need to pass in the tag dictionary because of the adapter, that needs
     // to manipulate the tags
     TypedCheckerAdapter adaptedComposite = new TypedCheckerAdapter(
         new TypedCheckerComposite(typedCheckersList, false), td);
 
     // all checkers will be added to this:
     List<Checker> checkerList = new ArrayList<Checker>();
-
+    
     // finally:
     checkerList.add(adaptedComposite);
     checkerList.add(new WordCombinationChecker());
+    
 
     // now we can create other checkers...
 
@@ -121,8 +120,7 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   }
 
   private Dictionary loadAbbDict() throws InvalidFormatException, IOException {
-    Dictionary abbDict = new Dictionary(this.getClass().getResourceAsStream(
-        "/dictionaries/pt_br/abbr.xml"));
+    Dictionary abbDict = new Dictionary(this.getClass().getResourceAsStream("/dictionaries/pt_br/abbr.xml"));
     return abbDict;
   }
 
@@ -157,8 +155,9 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     this.checkers.ignore(ruleIdentifier);
   }
 
-  public void resetIgnoredRules() {
+  
+  public void resetIgnoredRules(){
     this.checkers.resetIgnored();
   }
-
+  
 }
