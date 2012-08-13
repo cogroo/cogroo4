@@ -503,7 +503,6 @@ public class ComponentFactory implements ComponentFactoryI {
     }
     
     // now we get it...
-    
     for (FutureTask<AnalyzerI> futureTask : initializers) {
       try {
         pipe.add(futureTask.get());
@@ -513,6 +512,8 @@ public class ComponentFactory implements ComponentFactoryI {
         throw new InitializationException("Failed to load pipe.", e);
       }
     }
+    
+    executor.shutdown();
     
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("Initialized Pipe and its components in "
