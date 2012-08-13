@@ -37,8 +37,6 @@ import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
 import org.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import org.cogroo.tools.checker.rules.dictionary.TagDictionary;
-import org.cogroo.tools.checker.rules.model.TagMask;
-import org.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 
 public class TypedCheckerAdapter implements Checker {
@@ -210,6 +208,19 @@ public class TypedCheckerAdapter implements Checker {
       for (int i = lastToken; i < typedTokens.size(); i++) {
         typedSyntacticChunks.add(createNoneSyntacticChunk(typedTokens.get(i)));
       }
+      
+      if(LOGGER.isDebugEnabled()) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Typed syntatic chunks:\n");
+        for (SyntacticChunk chunk : typedSyntacticChunks) {
+          sb.append("  ");
+          for (org.cogroo.entities.Token token : chunk.getTokens()) {
+            sb.append(token.getLexeme()).append(" ");
+          }
+          sb.append("\n  MT: ").append(chunk.getMorphologicalTag()).append("\n");
+        }
+        LOGGER.debug(sb.toString());
+      }
 
       typedSentence.setSyntacticChunks(Collections
           .unmodifiableList(typedSyntacticChunks));
@@ -229,63 +240,42 @@ public class TypedCheckerAdapter implements Checker {
   }
 
   private static class ChunkerConverter {
-    private final TagMask CHUNK_OTHER;
-    private final TagMask CHUNK_BOUNDARY_NOUN_PHRASE;
-    private final TagMask CHUNK_BOUNDARY_NOUN_PHRASE_MAIN;
-    private final TagMask CHUNK_INTERMEDIARY_NOUN_PHRASE_MAIN;
-    private final TagMask CHUNK_BOUNDARY_VERB_PHRASE_MAIN;
-    private final TagMask CHUNK_INTERMEDIARY_VERB_PHRASE;
+    
     private final TagInterpreterI corpusTagInterpreter;
-
+    
     public ChunkerConverter(TagInterpreterI corpusTagInterpreter) {
       this.corpusTagInterpreter = corpusTagInterpreter;
-
-      CHUNK_OTHER = new TagMask();
-      CHUNK_OTHER.setChunkFunction(ChunkFunction.OTHER);
-
-      CHUNK_BOUNDARY_NOUN_PHRASE = new TagMask();
-      CHUNK_BOUNDARY_NOUN_PHRASE
-          .setChunkFunction(ChunkFunction.BOUNDARY_NOUN_PHRASE);
-
-      CHUNK_BOUNDARY_NOUN_PHRASE_MAIN = new TagMask();
-      CHUNK_BOUNDARY_NOUN_PHRASE_MAIN
-          .setChunkFunction(ChunkFunction.BOUNDARY_NOUN_PHRASE_MAIN);
-
-      CHUNK_INTERMEDIARY_NOUN_PHRASE_MAIN = new TagMask();
-      CHUNK_INTERMEDIARY_NOUN_PHRASE_MAIN
-          .setChunkFunction(ChunkFunction.INTERMEDIARY_NOUN_PHRASE);
-
-      CHUNK_BOUNDARY_VERB_PHRASE_MAIN = new TagMask();
-      CHUNK_BOUNDARY_VERB_PHRASE_MAIN
-          .setChunkFunction(ChunkFunction.BOUNDARY_VERB_PHRASE_MAIN);
-
-      CHUNK_INTERMEDIARY_VERB_PHRASE = new TagMask();
-      CHUNK_INTERMEDIARY_VERB_PHRASE
-          .setChunkFunction(ChunkFunction.INTERMEDIARY_VERB_PHRASE);
     }
 
     public void convertChunks(Sentence sentence, org.cogroo.entities.Sentence typedSentence) {
       
+      List<org.cogroo.entities.Token> typedTokens = typedSentence.getTokens();
+      
       for (int i = 0; i < sentence.getTokens().size(); i++) {
         Token textToken = sentence.getTokens().get(i);
-        org.cogroo.entities.Token typedToken = typedSentence.getTokens().get(i);
-        
+        org.cogroo.entities.Token typedToken = typedTokens.get(i);
         ChunkTag tag = corpusTagInterpreter.parseChunkTag(textToken.getChunkTag());
-        
         typedToken.setChunkTag(tag);
       }
       
       List<Chunk> chunks = new ArrayList<Chunk>(sentence.getChunks().size());
+      int head = 0;
       for (org.cogroo.text.Chunk textChunk : sentence.getChunks()) {
-        int head = 0;
         if(textChunk.getHeadIndex() != -1) {
           head = textChunk.getHeadIndex();
         }
-        MorphologicalTag tag = typedSentence.getTokens().get(head).getMorphologicalTag().clone();
+        
+        // try changing the chunkTag
+        ChunkTag ctag = corpusTagInterpreter.parseChunkTag(sentence.getTokens().get(head).getChunkTag() + "*");
+        if(ctag != null) {
+          typedTokens.get(head).setChunkTag(ctag);
+        }
+        
+        MorphologicalTag tag = typedTokens.get(head).getMorphologicalTag().clone();
 
         List<org.cogroo.entities.Token> tokens = new ArrayList<org.cogroo.entities.Token>();
         for (int i = textChunk.getStart(); i < textChunk.getEnd(); i++) {
-          tokens.add(typedSentence.getTokens().get(i));
+          tokens.add(typedTokens.get(i));
         }
         
         Chunk typedChunk = new ChunkCogroo(tokens, textChunk.getStart());
@@ -298,12 +288,25 @@ public class TypedCheckerAdapter implements Checker {
         chunks.add(typedChunk);
       }
       
-      for (org.cogroo.entities.Token token : typedSentence.getTokens()) {
+      for (org.cogroo.entities.Token token : typedTokens) {
         if(token.getChunk() == null) {
           Chunk c = new ChunkCogroo(Collections.singletonList(token), 0);
           c.setMorphologicalTag(token.getMorphologicalTag().clone());
           token.setChunk(c);
         }
+      }
+      
+      if(LOGGER.isDebugEnabled()) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Typed chunks:\n");
+        for (Chunk chunk : chunks) {
+          sb.append("  ");
+          for (org.cogroo.entities.Token t : chunk.getTokens()) {
+            sb.append(t.getLexeme()).append(" ");
+          }
+          sb.append("\n  -- MT: " + chunk.getMorphologicalTag() + "\n");
+        }
+        LOGGER.debug(sb.toString());
       }
       
       typedSentence.setChunks(chunks);

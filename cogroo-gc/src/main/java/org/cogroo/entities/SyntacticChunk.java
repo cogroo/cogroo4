@@ -40,13 +40,11 @@ public class SyntacticChunk implements Serializable {
 
   protected SyntacticTag syntacticTag;
 
-  private final SyntacticTag SUBJ;
-  private final SyntacticTag MV;
-  private final SyntacticTag NONE;
-
-  public SyntacticChunk(List<Chunk> childChunks) {
-    this.chunks = childChunks;
-
+  private static final SyntacticTag SUBJ;
+  private static final SyntacticTag MV;
+  private static final SyntacticTag NONE;
+  
+  static {
     SUBJ = new SyntacticTag();
     SUBJ.setSyntacticFunction(SyntacticFunction.SUBJECT);
 
@@ -55,6 +53,10 @@ public class SyntacticChunk implements Serializable {
 
     NONE = new SyntacticTag();
     NONE.setSyntacticFunction(SyntacticFunction.NONE);
+  }
+
+  public SyntacticChunk(List<Chunk> childChunks) {
+    this.chunks = childChunks;
   }
 
   public String toPlainText() {
@@ -125,7 +127,7 @@ public class SyntacticChunk implements Serializable {
         }
         tag = tag.clone();
         if (hasFemale && hasMale) {
-          tag.setGender(Gender.NEUTRAL);
+          tag.setGender(Gender.MALE);
         } else if (hasFemale) {
           tag.setGender(Gender.FEMALE);
         } else if (hasMale) {
@@ -133,7 +135,9 @@ public class SyntacticChunk implements Serializable {
         }
 
         if (hasSingular && hasPlural) {
-          tag.setNumber(Number.NEUTRAL);
+          tag.setNumber(Number.PLURAL);
+        } else if (getChildChunks().size() > 1) {
+          tag.setNumber(Number.PLURAL);
         } else if (hasSingular) {
           tag.setNumber(Number.SINGULAR);
         } else if (hasPlural) {
@@ -174,7 +178,7 @@ public class SyntacticChunk implements Serializable {
   public String toString() {
 
     return Objects.toStringHelper(this).add("cks", chunks)
-        .add("mtag", this.getMorphologicalTag())
+        //.add("mtag", this.getMorphologicalTag())
         .add("syntacticTag", syntacticTag).toString();
   }
 
