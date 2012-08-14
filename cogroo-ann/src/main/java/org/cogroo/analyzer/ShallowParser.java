@@ -25,6 +25,7 @@ import org.cogroo.text.Token;
 import org.cogroo.text.impl.SyntacticChunkImpl;
 import org.cogroo.util.TextUtils;
 
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.util.Span;
 
@@ -50,12 +51,19 @@ public class ShallowParser implements AnalyzerI {
         tags[i] = tokens.get(i).getPOSTag() + "|" + tokens.get(i).getChunkTag();
 
       String[] tokensString = TextUtils.tokensToString(tokens);
-      Span[] parsers = null;
+      
+      String[] spTags = null;
       synchronized (this.shallowParser) {
-        parsers = shallowParser.chunkAsSpans(tokensString, tags);
+        spTags = shallowParser.chunk(tokensString, tags);
       }
 
-      for (Span span : parsers) {
+      for (int i = 0; i < spTags.length; i++) {
+        tokens.get(i).setSyntacticTag(spTags[i]);
+      }
+      
+      Span[] spSpans = ChunkSample.phrasesAsSpanList(tokensString, tags, spTags);
+      
+      for (Span span : spSpans) {
         SyntacticChunk st = new SyntacticChunkImpl(span.getType(),
             span.getStart(), span.getEnd(), sentence);
         syntChunks.add(st);
