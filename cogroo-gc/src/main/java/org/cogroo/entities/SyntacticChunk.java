@@ -88,65 +88,54 @@ public class SyntacticChunk implements Serializable {
           }
         }
       } else if (syntacticTag.match(SUBJ)) {
-        boolean hasMale = false;
-        boolean hasFemale = false;
-        boolean hasSingular = false;
-        boolean hasPlural = false;
-        for (Chunk subjChunk : getChildChunks()) {
-          if (tag == null && subjChunk.getMainToken() != null) {
-            tag = subjChunk.getMainToken().getMorphologicalTag();
-          }
-
-          if (subjChunk.getMainToken() != null) {
-            MorphologicalTag mt = subjChunk.getMainToken()
-                .getMorphologicalTag();
-            if ((!hasFemale || !hasMale) && mt.getGenderE() != null
-                && mt.getGenderE().equals(Gender.NEUTRAL)) {
-              hasFemale = true;
-              hasMale = true;
-            } else if (!hasFemale && mt.getGenderE() != null
-                && mt.getGenderE().equals(Gender.FEMALE)) {
-              hasFemale = true;
-            } else if (!hasMale && mt.getGenderE() != null
-                && mt.getGenderE().equals(Gender.MALE)) {
-              hasMale = true;
-            }
-
-            if ((!hasSingular || !hasPlural) && mt.getNumberE() != null
-                && mt.getNumberE().equals(Number.NEUTRAL)) {
-              hasSingular = true;
-              hasPlural = true;
-            } else if (!hasSingular && mt.getNumberE() != null
-                && mt.getNumberE().equals(Number.SINGULAR)) {
-              hasSingular = true;
-            } else if (!hasPlural && mt.getNumberE() != null
-                && mt.getNumberE().equals(Number.PLURAL)) {
-              hasPlural = true;
-            }
-          }
+        
+        Gender gender = null;
+        Number number = null;
+        
+        List<Chunk> childChunks = getChildChunks();
+        
+        MorphologicalTag mtag = childChunks.get(0).getMorphologicalTag().clone();
+        gender = mtag.getGenderE();
+        number = mtag.getNumberE();
+        
+        for (int i = 1; i < childChunks.size(); i++) {
+          number = Number.PLURAL;
+          Gender otherGender = childChunks.get(i).getMorphologicalTag().getGenderE();
+          gender = getStronger(gender, otherGender);
         }
-        tag = tag.clone();
-        if (hasFemale && hasMale) {
-          tag.setGender(Gender.MALE);
-        } else if (hasFemale) {
-          tag.setGender(Gender.FEMALE);
-        } else if (hasMale) {
-          tag.setGender(Gender.MALE);
-        }
-
-        if (hasSingular && hasPlural) {
-          tag.setNumber(Number.PLURAL);
-        } else if (getChildChunks().size() > 1) {
-          tag.setNumber(Number.PLURAL);
-        } else if (hasSingular) {
-          tag.setNumber(Number.SINGULAR);
-        } else if (hasPlural) {
-          tag.setNumber(Number.PLURAL);
-        }
+        
+        mtag.setGender(gender);
+        mtag.setNumber(number);
+        
+        tag = mtag;
       }
-
     }
+        
     return tag;
+  }
+
+  private Number getStronger(Number a, Number b) {
+    if(Number.PLURAL.equals(a) || Number.PLURAL.equals(b)) return Number.PLURAL;
+    
+    if(Number.NEUTRAL.equals(a)) return b;
+    if(Number.NEUTRAL.equals(b)) return a;
+    
+    if(a == null) return b;
+    if(b == null) return a;
+    
+    return a;
+  }
+
+  private Gender getStronger(Gender a, Gender b) {
+    if(Gender.MALE.equals(a) || Gender.MALE.equals(b)) return Gender.MALE;
+    
+    if(Gender.NEUTRAL.equals(a)) return b;
+    if(Gender.NEUTRAL.equals(b)) return a;
+    
+    if(a == null) return b;
+    if(b == null) return a;
+        
+    return a;
   }
 
   public SyntacticTag getSyntacticTag() {
