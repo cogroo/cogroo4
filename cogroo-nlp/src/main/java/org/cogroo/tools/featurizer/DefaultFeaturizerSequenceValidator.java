@@ -40,7 +40,7 @@ public class DefaultFeaturizerSequenceValidator implements
 
   public boolean validSequence(int i, WordTag[] sequence, String[] s,
       String outcome) {
-
+    
     String word = sequence[i].getWord();
     String postag = sequence[i].getPostag();
 
@@ -53,6 +53,7 @@ public class DefaultFeaturizerSequenceValidator implements
 //      return false; // MWE should have at least two tokens
 //    }
     
+
     if (tagDict == null) {
       return true;
     }
@@ -68,13 +69,31 @@ public class DefaultFeaturizerSequenceValidator implements
       tags = filterPoisoned(tagsArr);
     }
     
+    boolean match = true;
     if (tags != null) {
       // System.err.println("-- eval: " + word + " (" + postag + ") "+ tags +
       // " outcome: " + outcome);
-      return matches(outcome, tags);
+      match = matches(outcome, tags);
+      
+      // validate subjuntive verb:
+      if(match && hasNoSubjOpt(tags) && postag.equals("v-fin") && outcome.endsWith("=SUBJ")) {
+        // we need to find a "que"
+        boolean found = false;
+        for (int j = i - 1; j >= 0; j--) {
+          String lexeme = sequence[j].getWord().toLowerCase();
+          if (lexeme.equals("que")) {
+            found = true;
+            break;
+          }
+        }
+        if(!found) {
+          return false;
+        }
+      }
+      
     }
-
-    return true;
+    
+    return match;
   }
 
   // private boolean isCont(WordTag[] sequence, int i) {
@@ -85,6 +104,17 @@ public class DefaultFeaturizerSequenceValidator implements
   // }
   // return false;
   // }
+
+  private boolean hasNoSubjOpt(List<String> tags) {
+    if(tags.size() > 1) {
+      for (String tag : tags) {
+        if(!tag.endsWith("=SUBJ")) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
   private String[] expandedSearch(String word, String postag, boolean recurse) {
     String[] tagsArr = tagDict.getFeatures(word, postag);
