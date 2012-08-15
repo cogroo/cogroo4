@@ -1218,8 +1218,8 @@
 			</Replace>
 		</Suggestion>
 		<Example>
-			<Incorrect>As faces rosada da criança.</Incorrect>
-			<Correct>As faces rosadas da criança.</Correct>
+			<Incorrect>A face rosadas da criança.</Incorrect>
+			<Correct>A face rosada da criança.</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>sueli</Author>
@@ -1281,8 +1281,8 @@
 			</Replace>
 		</Suggestion>
 		<Example>
-			<Incorrect>Os belos carro ficaram prontos.</Incorrect>
-			<Correct>Os belos carros ficaram prontos.</Correct>
+			<Incorrect>O belo carros ficou pronto.</Incorrect>
+			<Correct>O belo carro ficou pronto.</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>sueli</Author>
@@ -1795,7 +1795,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>infinitive verb</Class>
+							<Class>finitive verb</Class>
 							<Number>plural</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1857,7 +1857,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>infinitive verb</Class>
+							<Class>finitive verb</Class>
 							<Number>plural</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1919,7 +1919,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>infinitive verb</Class>
+							<Class>finitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -1981,7 +1981,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>infinitive verb</Class>
+							<Class>finitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -2022,7 +2022,7 @@
 			<Replace index="0">
 				<TagReference index="0">
 					<TagMask>
-						<Class>infinitive verb</Class>
+						<Class>finitive verb</Class>
 						<Number>plural</Number>
 						<Person>third</Person>
 						<Tense>present</Tense>
@@ -2054,7 +2054,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>infinitive verb</Class>
+							<Class>finitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -2095,7 +2095,7 @@
 			<Replace index="0">
 				<TagReference index="0">
 					<TagMask>
-						<Class>infinitive verb</Class>
+						<Class>finitive verb</Class>
 						<Number>plural</Number>
 						<Person>third</Person>
 						<Tense>present</Tense>
@@ -2127,7 +2127,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>infinitive verb</Class>
+							<Class>finitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -2168,7 +2168,7 @@
 			<Replace index="0">
 				<TagReference index="0">
 					<TagMask>
-						<Class>infinitive verb</Class>
+						<Class>finitive verb</Class>
 						<Number>plural</Number>
 						<Person>third</Person>
 						<Tense>present</Tense>
@@ -2200,7 +2200,7 @@
 				<Element>
 					<Mask>
 						<TagMask>
-							<Class>infinitive verb</Class>
+							<Class>finitive verb</Class>
 							<Number>singular</Number>
 							<Person>third</Person>
 						</TagMask>
@@ -7441,14 +7441,7 @@
 			<PatternElement>
 				<Element>
 					<Mask>
-						<LexemeMask>em</LexemeMask>
-					</Mask>
-				</Element>
-			</PatternElement>
-			<PatternElement>
-				<Element>
-					<Mask>
-						<LexemeMask>os</LexemeMask>
+						<LexemeMask>nos</LexemeMask>
 					</Mask>
 				</Element>
 			</PatternElement>
@@ -7472,14 +7465,8 @@
 			<Upper>0</Upper>
 		</Boundaries>
 		<Suggestion>
-			<SuggestionAsString>0,1=&gt;"nos"|3=&gt;"a"</SuggestionAsString>
-			<Replace index="0">
-				<Lexeme/>
-			</Replace>
-			<Replace index="1">
-				<Lexeme>nos</Lexeme>
-			</Replace>
-			<Replace index="3">
+			<!-- <SuggestionAsString>0,1=&gt;"nos"|3=&gt;"a"</SuggestionAsString> -->
+			<Replace index="2">
 				<Lexeme>a</Lexeme>
 			</Replace>
 		</Suggestion>
@@ -8544,7 +8531,7 @@
 			<Upper>0</Upper>
 		</Boundaries>
 		<Example>
-			<Incorrect>Nós vamos poder estar agendando a visita para amanhã.</Incorrect>
+			<Incorrect>Nós poderemos estar agendando a visita para amanhã.</Incorrect>
 			<Correct>Nós poderemos agendar a visita para amanhã.</Correct>
 		</Example>
 		<ModificationHistory>
@@ -8836,7 +8823,7 @@
 		</ModificationHistory>
 	</Rule>
 
-	<Rule id="125" active="true">
+	<Rule id="125" active="false">
 		<Method>subject-verb</Method>
 		<Type>Concordância do sujeito com o verbo do predicado</Type>
 		<Group>núcleo do sujeito + verbo</Group>
@@ -8902,5 +8889,71 @@
 		
 	</Rule>
 	
+	
+	<Rule id="126" active="true">
+		<Method>general</Method>
+		<Type>Crase</Type>
+		<Group>à + pronomes de tratamento</Group>
+		<Message>Pronomes de tratamento não admitem artigo, portanto não haverá crase antes deles. A única exceção é o pronome "senhora", que admite artigo e, se houver também preposição, haverá crase.</Message>
+		<ShortMessage>Pronomes de tratamento não admitem artigo, logo não há crase aqui.</ShortMessage>
+		<Pattern>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>Vossa_Senhoria</LexemeMask>
+					</Mask>
+					<Mask>
+						<LexemeMask>Vossa_Majestade</LexemeMask>
+					</Mask>
+					<Mask>
+						<LexemeMask>Vossa_Eminência</LexemeMask>
+					</Mask>
+					<Mask>
+						<LexemeMask>Vossa_Excelência</LexemeMask>
+					</Mask>
+					<Mask>
+						<LexemeMask>Vossa_Reverendíssima</LexemeMask>
+					</Mask>
+					<Mask>
+						<LexemeMask>Vossa_Santidade</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>0</Lower>
+			<Upper>-1</Upper>
+		</Boundaries>
+		<Suggestion>
+			<Replace index="0">
+				<Lexeme/>
+			</Replace>
+			<Replace index="1">
+				<Lexeme>a</Lexeme>
+			</Replace>
+		</Suggestion>
+		<Example>
+			<Incorrect>Enviei os documentos à Vossa Excelência.</Incorrect>
+			<Correct>Enviei os documentos a Vossa Excelência.</Correct>
+		</Example>
+		<ModificationHistory>
+			<Author>sueli</Author>
+			<Date>2005-09-21T12:00:00.000-03:00</Date>
+		</ModificationHistory>
+	</Rule>
 
 </Rules>
