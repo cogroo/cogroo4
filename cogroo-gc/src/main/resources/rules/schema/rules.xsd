@@ -65,6 +65,7 @@
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:unsignedInt" use="required"/>
 		<xs:attribute name="active" type="xs:boolean" use="required"/>
+		<xs:attribute name="priority" type="xs:unsignedInt" use="optional"/>
 	</xs:complexType>
 	<xs:complexType name="Pattern">
 		<xs:annotation>
