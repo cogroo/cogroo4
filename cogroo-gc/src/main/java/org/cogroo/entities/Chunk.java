@@ -98,7 +98,8 @@ public abstract class Chunk implements Serializable, TokenGroup {
   @Override
   public String toString() {
 
-    return Objects.toStringHelper(this).add("tokens", tokens)
+    return Objects.toStringHelper(this).add("text", toPlainText())
+        .add("tokens", tokens)
         .add("morphologicalTag", morphologicalTag)
         .add("morphologicalTag", morphologicalTag).add("tokens", tokens)
         .toString();
