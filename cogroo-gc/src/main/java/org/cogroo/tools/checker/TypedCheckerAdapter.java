@@ -259,10 +259,12 @@ public class TypedCheckerAdapter implements Checker {
       }
       
       List<Chunk> chunks = new ArrayList<Chunk>(sentence.getChunks().size());
-      int head = 0;
+      int head;
       for (org.cogroo.text.Chunk textChunk : sentence.getChunks()) {
         if(textChunk.getHeadIndex() != -1) {
           head = textChunk.getHeadIndex();
+        } else {
+          head = textChunk.getStart();
         }
         
         // try changing the chunkTag

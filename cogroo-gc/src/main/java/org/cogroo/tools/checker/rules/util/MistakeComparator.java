@@ -17,23 +17,40 @@ package org.cogroo.tools.checker.rules.util;
 
 import java.util.Comparator;
 
-import org.cogroo.entities.Mistake;
+import opennlp.tools.util.Span;
 
+import org.cogroo.entities.Mistake;
 
 /**
  * Utility class to compare {@link Mistake} objects
- * 
- * @author Marcelo Suzumura
  */
 public class MistakeComparator implements Comparator<Mistake> {
 
-	public int compare(Mistake m1, Mistake m2) {
-		if (m1.getStart() < m2.getStart()) {
-			return -1;
-		} else if (m1.getStart() > m2.getStart()) {
-			return 1;
-		}
-		return 0;
-	}
+  public int compare(Mistake m1, Mistake m2) {
+
+    // First we check if they overlap. If they don't we simply use the start position
+    Span a = new Span(m1.getStart(), m1.getEnd());
+    Span b = new Span(m2.getStart(), m2.getEnd());
+    if(!a.intersects(b)) {
+      return a.compareTo(b);
+    }
+    
+    // they intersect, so we should sort using the priority. The higher the
+    // number, the higher th priority
+    if(m1.getRulePriority() > m2.getRulePriority()) {
+      return -1;
+    } else if(m1.getRulePriority() < m2.getRulePriority()) {
+      return 1;
+    } else {
+      // equal priority! so we try to use the rule id
+      if(m2.getRuleIdentifier().startsWith("xml:")) {
+        Integer id1 = new Integer(m1.getRuleIdentifier().substring(4));
+        Integer id2 = new Integer(m2.getRuleIdentifier().substring(4));
+        
+        return id1.compareTo(id2);
+      }
+      return m1.getRuleIdentifier().compareTo(m2.getRuleIdentifier());
+    }
+  }
 
 }

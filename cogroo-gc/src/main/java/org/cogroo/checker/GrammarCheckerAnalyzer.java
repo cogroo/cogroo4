@@ -17,6 +17,7 @@ package org.cogroo.checker;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import opennlp.tools.dictionary.Dictionary;
@@ -45,6 +46,7 @@ import org.cogroo.tools.checker.rules.applier.RulesTreesProvider;
 import org.cogroo.tools.checker.rules.applier.RulesXmlAccess;
 import org.cogroo.tools.checker.rules.dictionary.FSALexicalDictionary;
 import org.cogroo.tools.checker.rules.dictionary.TagDictionary;
+import org.cogroo.tools.checker.rules.util.MistakeComparator;
 
 
 public class GrammarCheckerAnalyzer implements AnalyzerI {
@@ -52,6 +54,10 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   private CheckerComposite checkers;
 
   private TagDictionary td;
+
+  private boolean allowOverlap;
+  
+  private static final MistakeComparator MISTAKE_COMPARATOR = new MistakeComparator();
 
   /**
    * Creates an analyzer that will call the available checker. Today it is hard
@@ -77,6 +83,10 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
    * @throws IOException
    */
   public GrammarCheckerAnalyzer() throws IllegalArgumentException, IOException {
+    this(false, null);
+  }
+  
+  public GrammarCheckerAnalyzer(boolean allowOverlap, long[] activeXmlRules) throws IllegalArgumentException, IOException {
     
     // initialize resources...
     // today we load the tag dictionary this way, but in the future it should be
@@ -90,7 +100,7 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     List<TypedChecker> typedCheckersList = new ArrayList<TypedChecker>();
     
     // add the rules applier, from XSD
-    typedCheckersList.add(createRulesApplierChecker());
+    typedCheckersList.add(createRulesApplierChecker(activeXmlRules));
 
     // create other typed checkers
     
@@ -117,6 +127,9 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     // now we can create other checkers...
 
     this.checkers = new CheckerComposite(checkerList, false);
+   
+    
+    this.allowOverlap = allowOverlap;
   }
 
   private Dictionary loadAbbDict() throws InvalidFormatException, IOException {
@@ -124,11 +137,11 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     return abbDict;
   }
 
-  private TypedChecker createRulesApplierChecker() {
+  private TypedChecker createRulesApplierChecker(long[] activeRules) {
     // Create XML rules applier
     RulesProvider xmlProvider = new RulesProvider(RulesXmlAccess.getInstance(),
         false);
-    RulesTreesBuilder rtb = new RulesTreesBuilder(xmlProvider);
+    RulesTreesBuilder rtb = new RulesTreesBuilder(xmlProvider, activeRules);
     RulesTreesAccess rta = new RulesTreesFromScratchAccess(rtb);
     RulesTreesProvider rtp = new RulesTreesProvider(rta, false);
 
@@ -139,16 +152,42 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     if (document instanceof CheckDocument) {
       List<Mistake> mistakes = new ArrayList<Mistake>();
       List<Sentence> sentences = document.getSentences();
-      List<org.cogroo.entities.Sentence> legacySentences = new ArrayList<org.cogroo.entities.Sentence>();
       for (Sentence sentence : sentences) {
         mistakes.addAll(this.checkers.check(sentence));
       }
+      
+      Collections.sort(mistakes, MISTAKE_COMPARATOR);
+      
+      if(this.allowOverlap == false)
+        mistakes = filterOverlap(document, mistakes);
+      
       ((CheckDocument) document).setMistakes(mistakes);
-      ((CheckDocument) document).setSentencesLegacy(legacySentences);
     } else {
       throw new IllegalArgumentException("An instance of "
           + CheckDocument.class + " was expected.");
     }
+  }
+
+  private List<Mistake> filterOverlap(Document doc, List<Mistake> mistakes) {
+    boolean[] occupied = new boolean[doc.getText().length()]; 
+    
+    List<Mistake> mistakesNoOverlap = new ArrayList<Mistake>();
+    boolean overlap = false;
+    for (Mistake mistake : mistakes) {
+      overlap = false;
+      for (int i = mistake.getStart(); i < mistake.getEnd(); i++) {
+        if (occupied[i]) {
+          overlap = true;
+        }
+      }
+      if (!overlap) {
+        for (int i = mistake.getStart(); i < mistake.getEnd(); i++) {
+          occupied[i] = true;
+        }
+        mistakesNoOverlap.add(mistake);
+      }
+    }
+    return mistakesNoOverlap;
   }
 
   public void ignoreRule(String ruleIdentifier) {

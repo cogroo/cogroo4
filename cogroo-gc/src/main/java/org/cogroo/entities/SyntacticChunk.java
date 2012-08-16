@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.entities.impl.SyntacticTag;
-
+import org.cogroo.tools.checker.rules.model.TagMask.Class;
 import org.cogroo.tools.checker.rules.model.TagMask.Gender;
 import org.cogroo.tools.checker.rules.model.TagMask.Number;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
@@ -99,8 +99,12 @@ public class SyntacticChunk implements Serializable {
         number = mtag.getNumberE();
         
         for (int i = 1; i < childChunks.size(); i++) {
+          Chunk cc = childChunks.get(i);
+          if(cc.getMorphologicalTag().getClazzE().equals(Class.PREPOSITION)) {
+            break;
+          }
           number = Number.PLURAL;
-          Gender otherGender = childChunks.get(i).getMorphologicalTag().getGenderE();
+          Gender otherGender = cc.getMorphologicalTag().getGenderE();
           gender = getStronger(gender, otherGender);
         }
         

@@ -200,7 +200,7 @@ public final class RulesApplier implements TypedChecker {
 					  System.out.println(rule.getId() + " -> " + sentence.getSentence());
 					}
 					
-					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
+					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), getPriority(rule), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
 					mistakes.add(mistake);
 				} else if (currentTokenIndex + 1 < tokenGroup.getTokens().size()) {
 					// Keep looking: recurse.
@@ -211,7 +211,13 @@ public final class RulesApplier implements TypedChecker {
 		return mistakes;
 	}
 	
-	/**
+	private int getPriority(Rule rule) {
+	  if(rule.getPriority() != null) 
+	    return rule.getPriority().intValue();
+    return (int)(getPriority() - rule.getId());
+  }
+
+  /**
 	 * A recursive method that iterates the sentence given a base chunk. Used to match subject-verb rules.
 	 * 
 	 * @param mistakes
@@ -247,7 +253,7 @@ public final class RulesApplier implements TypedChecker {
 					int upperCountedByChars = chunkUpper.getTokens().get(chunkUpper.getTokens().size() - 1).getSpan().getEnd();
 					// Suggestions.
 					String[] suggestions = SuggestionBuilder.getSuggestions(sentence, true, baseChunkIndex, lower, upper, rule.getSuggestion(), dictionary);
-					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
+					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), getPriority(rule), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
 					mistakes.add(mistake);
 				} else if (currentChunkIndex + 1 < syntacticChunks.size()) {
 					// Keep looking: recurse.
