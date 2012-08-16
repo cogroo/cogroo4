@@ -52,16 +52,12 @@ public class MistakeImpl implements Mistake, Serializable {
 
   private int end;
 
-  @Deprecated
-  public MistakeImpl(int id, String message, String shortMessage,
-      String[] suggestions, int start, int end, List<Example> examples) {
-    this(Integer.toString(id), message, shortMessage, suggestions, start, end,
-        examples, null);
-  }
+  private int rulePriority;
 
-  public MistakeImpl(String id, String message, String shortMessage,
+  public MistakeImpl(String id, int priority, String message, String shortMessage,
       String[] suggestions, int start, int end, List<Example> examples,
       String text) {
+    this.rulePriority = priority;
     this.identifier = id;
 
     if (shortMessage == null || shortMessage.length() == 0) {
@@ -93,21 +89,6 @@ public class MistakeImpl implements Mistake, Serializable {
     }
 
     this.setContextFromText(text);
-  }
-
-  @Deprecated
-  public int getId() {
-
-    int index = this.identifier.lastIndexOf(":");
-
-    int id = 0;
-
-    if (index > 0) {
-      String idFromString = this.identifier.substring(index + 1);
-      id = Integer.parseInt(idFromString);
-    }
-
-    return id;
   }
 
   public String getLongMessage() {
@@ -182,6 +163,11 @@ public class MistakeImpl implements Mistake, Serializable {
     if (text != null) {
       this.context = text;
     }
+  }
+
+  @Override
+  public int getRulePriority() {
+    return this.rulePriority;
   }
 
 }
