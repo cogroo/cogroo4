@@ -376,15 +376,10 @@ public class CogrooHtml {
 
     private void checkSuggestion(Rule rule, List<List<Mistake>> mistakesList, List<Sentence> sentences)
     {
-        long id = rule.getId();
-        if(id == 84)
-            System.out.println();
         for (int i = 0; i < sentences.size(); i++) {
             Sentence s = sentences.get(i);
             List<Mistake> ml = mistakesList.get(i);
             for (Mistake mistake : ml) {
-                if(id != ((MistakeImpl)mistake).getId())
-                    System.out.println("Something wrong!!");
                 String[] suggestions = mistake.getSuggestions();
                 // at least one suggestion should fit
                 boolean suggestionIsOk = false;
