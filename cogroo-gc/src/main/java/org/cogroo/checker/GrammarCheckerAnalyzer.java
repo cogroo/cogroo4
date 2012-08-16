@@ -139,12 +139,10 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     if (document instanceof CheckDocument) {
       List<Mistake> mistakes = new ArrayList<Mistake>();
       List<Sentence> sentences = document.getSentences();
-      List<org.cogroo.entities.Sentence> legacySentences = new ArrayList<org.cogroo.entities.Sentence>();
       for (Sentence sentence : sentences) {
         mistakes.addAll(this.checkers.check(sentence));
       }
       ((CheckDocument) document).setMistakes(mistakes);
-      ((CheckDocument) document).setSentencesLegacy(legacySentences);
     } else {
       throw new IllegalArgumentException("An instance of "
           + CheckDocument.class + " was expected.");
