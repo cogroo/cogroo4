@@ -20,47 +20,33 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import br.ccsl.cogroo.analyzer.ComponentFactory;
-import br.ccsl.cogroo.analyzer.Pipe;
-import br.ccsl.cogroo.checker.CheckDocument;
-import br.ccsl.cogroo.checker.GrammarCheckerAnalyzer;
-import br.ccsl.cogroo.entities.Sentence;
-import br.ccsl.cogroo.entities.Token;
-import br.ccsl.cogroo.entities.impl.MorphologicalTag;
-import br.ccsl.cogroo.entities.tree.Leaf;
-import br.ccsl.cogroo.entities.tree.Node;
-import br.ccsl.cogroo.entities.tree.TreeElement;
-import br.ccsl.cogroo.interpreters.FlorestaTagInterpreter;
-import br.ccsl.cogroo.interpreters.TagInterpreterI;
+import org.apache.uima.resource.ResourceInitializationException;
+import org.cogroo.analyzer.Pipe;
+import org.cogroo.checker.CheckDocument;
+import org.cogroo.entities.Sentence;
+import org.cogroo.entities.Token;
+import org.cogroo.entities.impl.MorphologicalTag;
+import org.cogroo.entities.tree.Leaf;
+import org.cogroo.entities.tree.Node;
+import org.cogroo.entities.tree.TreeElement;
+import org.cogroo.interpreters.FlorestaTagInterpreter;
+import org.cogroo.interpreters.TagInterpreterI;
 
-import com.google.common.io.Closeables;
+import cogroo.uima.ae.NewTagsetBaselineCogrooAE;
 
 public class ProcessReport {
 
   Pipe pipe;
   private String report;
   private String output;
-  GrammarCheckerAnalyzer cogroo;
 
   public ProcessReport(String resources, String report, String output)
-      throws IllegalArgumentException, IOException {
-    // UIMA will load modules using envvar!
-
-    // the rest we load normally
+      throws IllegalArgumentException, IOException, ResourceInitializationException {
     
-    InputStream in = ComponentFactory.class.getResourceAsStream("/models_pt_BR.xml");
-    ComponentFactory factory = ComponentFactory.create(in);
-    
-      cogroo = new GrammarCheckerAnalyzer();
-    
-    pipe = (Pipe) factory.createPipe();
-    pipe.add(cogroo);
-    
-    Closeables.closeQuietly(in);
+    pipe = (Pipe) NewTagsetBaselineCogrooAE.createCogroo();
     
     
     this.report = report;
@@ -181,8 +167,10 @@ public class ProcessReport {
   /**
    * @param args
    * @throws IOException
+   * @throws IllegalArgumentException 
+   * @throws ResourceInitializationException 
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, ResourceInitializationException, IllegalArgumentException {
     System.out.println("Executing MultiCogroo ProcessReport...");
     System.out.println("  path: " + args[0]);
     System.out.println("    in: " + args[1]);

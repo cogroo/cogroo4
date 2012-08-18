@@ -16,3 +16,13 @@ export REPO_ROOT=~/Documents/wrks/_REPO
 export COGROO_3=~/Documents/wrks/cogroo4-old_svn/cogroo3
 
 
+HOW TO
+======
+
+Evaluate a grammar checker configuration
+----------------------------------------
+
+To evaluate the grammar checker changing some configuration do:
+
+perl evaluate_gc.pl 
+

@@ -36,9 +36,8 @@ import org.apache.uima.resource.ResourceAccessException;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Level;
 import org.apache.uima.util.Logger;
-
-import br.ccsl.cogroo.tools.featurizer.FeaturizerME;
-import br.ccsl.cogroo.tools.featurizer.FeaturizerModel;
+import org.cogroo.tools.featurizer.FeaturizerME;
+import org.cogroo.tools.featurizer.FeaturizerModel;
 
 public final class Featurizer extends CasAnnotator_ImplBase {
   
