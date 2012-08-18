@@ -18,6 +18,7 @@ package org.cogroo.checker;
 import java.util.List;
 
 import org.cogroo.entities.Mistake;
+import org.cogroo.entities.Sentence;
 import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.util.TextUtils;
 
@@ -29,6 +30,7 @@ public class CheckDocument extends DocumentImpl {
   }
 
   private List<Mistake> mistakes;
+  private List<Sentence> legacySentences;
 
   public List<Mistake> getMistakes() {
     return mistakes;
@@ -49,6 +51,15 @@ public class CheckDocument extends DocumentImpl {
     }
     
     return sb.toString();
+  }
+
+  public List<Sentence> getSentencesLegacy() {
+    return legacySentences;
+  }
+
+  public void setSentencesLegacy(
+      List<org.cogroo.entities.Sentence> typedSentences) {
+    this.legacySentences = typedSentences;
   }
 
 }

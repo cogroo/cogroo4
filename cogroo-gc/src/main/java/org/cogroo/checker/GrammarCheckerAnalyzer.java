@@ -23,6 +23,7 @@ import java.util.List;
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.util.InvalidFormatException;
 
+import org.apache.log4j.Logger;
 import org.cogroo.analyzer.AnalyzerI;
 import org.cogroo.entities.Mistake;
 import org.cogroo.interpreters.FlorestaTagInterpreter;
@@ -30,8 +31,8 @@ import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.tools.checker.Checker;
 import org.cogroo.tools.checker.CheckerComposite;
+import org.cogroo.tools.checker.SentenceAdapter;
 import org.cogroo.tools.checker.TypedChecker;
-import org.cogroo.tools.checker.TypedCheckerAdapter;
 import org.cogroo.tools.checker.TypedCheckerComposite;
 import org.cogroo.tools.checker.checkers.PunctuationChecker;
 import org.cogroo.tools.checker.checkers.RepetitionChecker;
@@ -50,12 +51,18 @@ import org.cogroo.tools.checker.rules.util.MistakeComparator;
 
 
 public class GrammarCheckerAnalyzer implements AnalyzerI {
+  
+  private static final Logger LOGGER = Logger.getLogger(GrammarCheckerAnalyzer.class);
 
   private CheckerComposite checkers;
 
   private TagDictionary td;
 
   private boolean allowOverlap;
+
+  private SentenceAdapter sentenceAdapter;
+
+  private TypedCheckerComposite typedCheckers;
   
   private static final MistakeComparator MISTAKE_COMPARATOR = new MistakeComparator();
 
@@ -94,6 +101,9 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     td = new TagDictionary(new FSALexicalDictionary(), false,
         new FlorestaTagInterpreter());
     
+    
+    sentenceAdapter = new SentenceAdapter(td);
+    
     //*************************************************************************
     // Create typed checkers
     //*************************************************************************
@@ -105,26 +115,17 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     // create other typed checkers
     
     // how to get the abbreviation dictionary? 
-    typedCheckersList.add(new SpaceChecker(loadAbbDict()));
+//    typedCheckersList.add(new SpaceChecker(loadAbbDict()));
     
-    typedCheckersList.add(new PunctuationChecker());
-    typedCheckersList.add(new RepetitionChecker());
+//    typedCheckersList.add(new PunctuationChecker());
+//    typedCheckersList.add(new RepetitionChecker());
+    
+    typedCheckers = new TypedCheckerComposite(typedCheckersList, false);
 
-    // create the typed composite and adapter
-    // we need to pass in the tag dictionary because of the adapter, that needs
-    // to manipulate the tags
-    TypedCheckerAdapter adaptedComposite = new TypedCheckerAdapter(
-        new TypedCheckerComposite(typedCheckersList, false), td);
-
-    // all checkers will be added to this:
+    // all non typed checkers will be added to this:
     List<Checker> checkerList = new ArrayList<Checker>();
+//    checkerList.add(new WordCombinationChecker());
     
-    // finally:
-    checkerList.add(adaptedComposite);
-    checkerList.add(new WordCombinationChecker());
-    
-
-    // now we can create other checkers...
 
     this.checkers = new CheckerComposite(checkerList, false);
    
@@ -152,10 +153,16 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     if (document instanceof CheckDocument) {
       List<Mistake> mistakes = new ArrayList<Mistake>();
       List<Sentence> sentences = document.getSentences();
+      List<org.cogroo.entities.Sentence> typedSentences = new ArrayList<org.cogroo.entities.Sentence>(sentences.size());
       for (Sentence sentence : sentences) {
         mistakes.addAll(this.checkers.check(sentence));
+        
+        org.cogroo.entities.Sentence typedSentence = this.sentenceAdapter.asTypedSentence(sentence);
+        typedSentences.add(typedSentence);
+        
+        mistakes.addAll(this.typedCheckers.check(typedSentence));
       }
-      
+      ((CheckDocument) document).setSentencesLegacy(typedSentences);
       Collections.sort(mistakes, MISTAKE_COMPARATOR);
       
       if(this.allowOverlap == false)
