@@ -16,6 +16,7 @@
 package org.cogroo.entities;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import org.cogroo.entities.impl.ChunkTag;
 import org.cogroo.entities.impl.MorphologicalTag;
@@ -45,7 +46,7 @@ public abstract class Token implements Serializable {
    * A lexeme from which derives the lexeme of this token. Example: lexeme =
    * meninas, primitive = menino
    */
-  protected String primitive;
+  protected String[] primitive;
 
   /**
    * States the morphological function of this token.
@@ -113,11 +114,11 @@ public abstract class Token implements Serializable {
 
   public abstract void setLexeme(String lexeme);
 
-  public String getPrimitive() {
+  public String[] getPrimitive() {
     return this.primitive;
   }
 
-  public void setPrimitive(String primitive) {
+  public void setPrimitive(String[] primitive) {
     this.primitive = primitive;
   }
 
@@ -167,7 +168,7 @@ public abstract class Token implements Serializable {
   @Override
   public String toString() {
 
-    return Objects.toStringHelper(this).add("lxm", lexeme).add("pr", primitive)
+    return Objects.toStringHelper(this).add("lxm", lexeme).add("pr", Arrays.toString(primitive))
         .add("mp", morphologicalTag).add("ch", chunkTag)
         // .add("lexemeType", lexemeType)
         // .add("span", span)
@@ -182,8 +183,8 @@ public abstract class Token implements Serializable {
           && Objects.equal(this.primitive, that.primitive)
           && Objects.equal(this.morphologicalTag, that.morphologicalTag)
           && Objects.equal(this.chunkTag, that.chunkTag)
-          && Objects.equal(this.syntacticChunk, that.syntacticChunk)
-          && Objects.equal(this.chunk, that.chunk)
+//          && Objects.equal(this.syntacticChunk, that.syntacticChunk)
+//          && Objects.equal(this.chunk, that.chunk)
           && Objects.equal(this.lexemeType, that.lexemeType)
           && Objects.equal(this.span, that.span);
     }

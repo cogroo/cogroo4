@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 
 import org.apache.uima.resource.ResourceInitializationException;
 import org.cogroo.analyzer.Pipe;
@@ -87,7 +88,7 @@ public class ProcessReport {
         // print the text
         sb.append(token.getLexeme());
         // print the lemma
-        sb.append(" [" + token.getPrimitive() + " ");
+        sb.append(" [" + Arrays.toString(token.getPrimitive()) + " ");
         // print the morphological tag, we use a tag interpreter here
         
         if(token.getMorphologicalTag() == null) {

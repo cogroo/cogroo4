@@ -125,9 +125,10 @@ public class SentenceAdapter {
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug("Missing lemma for: " + tok);
       }
-      tok.setPrimitive(tok.getLexeme());
+      String[] primitive = {tok.getLexeme()};
+      tok.setPrimitive(primitive);
     } else {
-      tok.setPrimitive(primitives[0]);
+      tok.setPrimitive(primitives);
     }
   }
   
