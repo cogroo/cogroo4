@@ -43,7 +43,7 @@ public class PortuguesePOSSequenceValidator implements
     String word = inputSequence[i];
 
     // validate B- and I-
-    if (!validOutcome(outcome, outcomesSequence)) {
+    if (!validOutcome(word, outcome, outcomesSequence)) {
       return false;
     }
 
@@ -56,6 +56,9 @@ public class PortuguesePOSSequenceValidator implements
       return true;
     } else {
       if ((outcome.startsWith("B-") || outcome.startsWith("I-")) && inputSequence.length > 1 ) {
+        if(i < inputSequence.length - 1 && outcome.startsWith("B-") && isPunctuation(inputSequence[i+1])) {
+          return false;
+        }
         return true;
       }
 
@@ -105,15 +108,15 @@ public class PortuguesePOSSequenceValidator implements
     // System.out.println("... fim ...");
   }
 
-  static boolean validOutcome(String outcome, String[] sequence) {
+  static boolean validOutcome(String word, String outcome, String[] sequence) {
     String prevOutcome = null;
     if (sequence.length > 0) {
       prevOutcome = sequence[sequence.length - 1];
     }
-    return validOutcome(outcome, prevOutcome);
+    return validOutcome(word, outcome, prevOutcome);
   }
 
-  static boolean validOutcome(String outcome, String prevOutcome) {
+  static boolean validOutcome(String word, String outcome, String prevOutcome) {
 
     boolean prevIsBoundary = false, prevIsIntermediate = false, isBoundary = false, isIntermediate = false;
 
@@ -131,7 +134,12 @@ public class PortuguesePOSSequenceValidator implements
     if ((prevIsBoundary || prevIsIntermediate) && isIntermediate) {
       isSameEntity = prevOutcome.substring(2).equals(outcome.substring(2));
     }
-
+    
+    // no B- or I- for punctuation
+    if((isBoundary || isIntermediate) && isPunctuation(word)) {
+      return false;
+    }
+    
     if (isIntermediate) {
       if (prevOutcome == null) {
         return (false);
@@ -151,6 +159,10 @@ public class PortuguesePOSSequenceValidator implements
     }
 
     return true;
+  }
+
+  private static boolean isPunctuation(String word) {
+    return word.matches("[\\.,;:()?-]");
   }
 
   private boolean contains(List<String> tagList, String outcome) {
