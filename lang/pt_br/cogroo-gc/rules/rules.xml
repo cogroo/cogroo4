@@ -5762,11 +5762,25 @@
 		<ShortMessage>"Ir" constrói-se com prep. "a". Há crase com compl. feminino.</ShortMessage>
 		<Pattern>
 			<PatternElement>
-				<Element>
-					<Mask>
-						<PrimitiveMask>ir</PrimitiveMask>
-					</Mask>
-				</Element>
+				<Composition>
+					<And>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<PrimitiveMask>ir</PrimitiveMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<PatternElement>
+							<Element>
+								<Negated>true</Negated>
+								<Mask>
+									<PrimitiveMask>ser</PrimitiveMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+					</And>
+				</Composition>
 			</PatternElement>
 			<PatternElement>
 				<Element>
