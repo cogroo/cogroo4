@@ -173,7 +173,7 @@ public class DefaultFeaturizerContextGenerator implements
         }
       } catch (ParseException e1) {
         // nothing to do...
-        System.err.println("failed to parse num: " + num);
+//        System.err.println("failed to parse num: " + num);
         e.add("notNum");
       }
     }

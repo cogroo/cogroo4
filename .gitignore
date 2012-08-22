@@ -6,3 +6,4 @@ target
 .DS_Store
 genGraphics
 lang/pt_br/cogroo-gc/reports/rules_status.html
+**/scripts/eval*

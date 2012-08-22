@@ -113,7 +113,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.cogroo.lang.pt_br</groupId>
-			<artifactId>cogroo-gc</artifactId>
+			<artifactId>cogroo-gc-pt_br</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>

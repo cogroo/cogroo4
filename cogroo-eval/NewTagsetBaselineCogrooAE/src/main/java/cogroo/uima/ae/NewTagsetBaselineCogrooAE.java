@@ -29,13 +29,13 @@ import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Level;
 import org.apache.uima.util.Logger;
+import org.cogroo.analyzer.AnalyzerI;
+import org.cogroo.analyzer.ComponentFactory;
+import org.cogroo.analyzer.Pipe;
+import org.cogroo.checker.CheckDocument;
+import org.cogroo.checker.GrammarCheckerAnalyzer;
+import org.cogroo.entities.Mistake;
 
-import br.ccsl.cogroo.analyzer.AnalyzerI;
-import br.ccsl.cogroo.analyzer.ComponentFactory;
-import br.ccsl.cogroo.analyzer.Pipe;
-import br.ccsl.cogroo.checker.CheckDocument;
-import br.ccsl.cogroo.checker.GrammarCheckerAnalyzer;
-import br.ccsl.cogroo.entities.Mistake;
 import cogroo.uima.GoldenSentence;
 import cogroo.uima.GrammarError;
 
@@ -67,25 +67,8 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
   public void initialize(UimaContext aContext)
       throws ResourceInitializationException {
     
-    InputStream in = ComponentFactory.class.getResourceAsStream("/models.xml");
+    mCogroo = createCogroo();
     
-    ComponentFactory factory = ComponentFactory.create(in);
-    
-    mCogroo = factory.createPipe();
-    
-    GrammarCheckerAnalyzer checker;
-    try {
-      checker = new GrammarCheckerAnalyzer();
-    } catch (IllegalArgumentException e) {
-      throw new ResourceInitializationException(e);
-    } catch (IOException e) {
-      throw new ResourceInitializationException(e);
-    }
-    
-    ((Pipe) mCogroo).add(checker);
-    
-    Closeables.closeQuietly(in);
-
     String[] rulesToIgnore = (String[]) aContext
         .getConfigParameterValue(PARAM_RULESTOIGNORE);
 
@@ -107,6 +90,29 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
 //      }
     }
     mLogger = aContext.getLogger();
+  }
+
+  public static AnalyzerI createCogroo() throws ResourceInitializationException {
+    InputStream in = ComponentFactory.class.getResourceAsStream("/models.xml");
+    
+    ComponentFactory factory = ComponentFactory.create(in);
+    
+    Pipe cogroo = (Pipe) factory.createPipe();
+    
+    GrammarCheckerAnalyzer checker;
+    try {
+      checker = new GrammarCheckerAnalyzer();
+    } catch (IllegalArgumentException e) {
+      throw new ResourceInitializationException(e);
+    } catch (IOException e) {
+      throw new ResourceInitializationException(e);
+    }
+    
+    cogroo.add(checker);
+    
+    Closeables.closeQuietly(in);
+
+    return cogroo;
   }
 
   @Override

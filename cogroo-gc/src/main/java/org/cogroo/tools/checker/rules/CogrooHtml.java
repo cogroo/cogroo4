@@ -290,8 +290,8 @@ public class CogrooHtml {
         List<List<String>> analysis = new ArrayList<List<String>>(5);
         for (int i = 0; i < sentence.getTokens().size(); i++) {
             List<String> row = new ArrayList<String>();
-            row.add(sentence.getTokens().get(i).getSyntacticTag().toString());
-            row.add(sentence.getTokens().get(i).getChunkTag().toString());
+            row.add(sentence.getTokens().get(i).getSyntacticTag());
+            row.add(sentence.getTokens().get(i).getChunkTag());
             row.add(sentence.getTokens().get(i).getLexeme());
             row.add(Arrays.toString(sentence.getTokens().get(i).getLemmas()));
             row.add(sentence.getTokens().get(i).getPOSTag() + "=" + sentence.getTokens().get(i).getFeatures());
