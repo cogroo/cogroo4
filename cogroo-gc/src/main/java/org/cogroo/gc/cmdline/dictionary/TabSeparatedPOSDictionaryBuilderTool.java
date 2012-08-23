@@ -192,6 +192,10 @@ public class TabSeparatedPOSDictionaryBuilderTool extends
     if(StringPattern.recognize(tok).containsDigit())
       return false; //no numbers...
     
+    // no B- I-
+    if(clazz.startsWith("B-") || clazz.startsWith("I-")) {
+      return false;
+    }
     
     if (knownTriples != null && knownTriples.size() > 0) {
       // check if we already have this entry ignoring the lemma...

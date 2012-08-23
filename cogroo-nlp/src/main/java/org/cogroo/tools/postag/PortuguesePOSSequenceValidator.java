@@ -15,7 +15,7 @@
  */
 package org.cogroo.tools.postag;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -42,35 +42,38 @@ public class PortuguesePOSSequenceValidator implements
 
     String word = inputSequence[i];
 
+    // lets start with some punctuation check
+    if(isPunctuation(word)) {
+      // this is only true for BOSQUE! XXX: remember this! 
+      return outcome.equals(word);
+    }
+    if(i < inputSequence.length - 1 && isPunctuation(inputSequence[i+1])) {
+      // we can't start a MWE here :(
+      if(outcome.startsWith("B-")) {
+        return false;
+      }
+    }
+    
     // validate B- and I-
-    if (!validOutcome(word, outcome, outcomesSequence)) {
+    if (!validOutcome(outcome, outcomesSequence)) {
       return false;
     }
-
-    if (outcome.startsWith("I-")) {
-      String prev = outcomesSequence[i - 1].substring(2);
-      return outcome.substring(2).equals(prev);
-    }
-
+    
     if (tagDictionary == null) {
       return true;
     } else {
       if ((outcome.startsWith("B-") || outcome.startsWith("I-")) && inputSequence.length > 1 ) {
-        if(i < inputSequence.length - 1 && outcome.startsWith("B-") && isPunctuation(inputSequence[i+1])) {
-          return false;
-        }
         return true;
       }
-
-      String[] tags = queryDictionary(word, true);
 
       if (word.equals(outcome)) {
         isValid = true;
       }
+      
+      List<String> tagList = filterMWE(queryDictionary(word, true));
 
-      if (tags != null) {
+      if (tagList != null && tagList.size() > 0) {
         tokExists = true;
-        List<String> tagList = Arrays.asList(tags);
         if (contains(tagList, outcome)) {
           isValid = true;
         }
@@ -83,6 +86,16 @@ public class PortuguesePOSSequenceValidator implements
 
       return isValid;
     }
+  }
+
+  private List<String> filterMWE(String[] arr) {
+    if(arr == null) return null;
+    List<String> out = new ArrayList<String>(arr.length);
+    for (String t : arr) {
+      if (!(t.startsWith("B-") || t.startsWith("I-")))
+        out.add(t);
+    }
+    return out;
   }
 
   private String[] queryDictionary(String word, boolean recurse) {
@@ -108,15 +121,15 @@ public class PortuguesePOSSequenceValidator implements
     // System.out.println("... fim ...");
   }
 
-  static boolean validOutcome(String word, String outcome, String[] sequence) {
+  static boolean validOutcome(String outcome, String[] sequence) {
     String prevOutcome = null;
     if (sequence.length > 0) {
       prevOutcome = sequence[sequence.length - 1];
     }
-    return validOutcome(word, outcome, prevOutcome);
+    return validOutcome(outcome, prevOutcome);
   }
 
-  static boolean validOutcome(String word, String outcome, String prevOutcome) {
+  static boolean validOutcome(String outcome, String prevOutcome) {
 
     boolean prevIsBoundary = false, prevIsIntermediate = false, isBoundary = false, isIntermediate = false;
 
@@ -134,12 +147,7 @@ public class PortuguesePOSSequenceValidator implements
     if ((prevIsBoundary || prevIsIntermediate) && isIntermediate) {
       isSameEntity = prevOutcome.substring(2).equals(outcome.substring(2));
     }
-    
-    // no B- or I- for punctuation
-    if((isBoundary || isIntermediate) && isPunctuation(word)) {
-      return false;
-    }
-    
+
     if (isIntermediate) {
       if (prevOutcome == null) {
         return (false);
@@ -160,9 +168,9 @@ public class PortuguesePOSSequenceValidator implements
 
     return true;
   }
-
+  
   private static boolean isPunctuation(String word) {
-    return word.matches("[\\.,;:()?-]");
+    return word.matches("^[\\.,;:()?-]$");
   }
 
   private boolean contains(List<String> tagList, String outcome) {
