@@ -17,6 +17,7 @@ package org.cogroo.analyzer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
@@ -47,7 +48,7 @@ public class Tokenizer implements AnalyzerI {
       Span[] tokensSpan;
 
       synchronized (this.tokenizer) {
-        tokensSpan = tokenizer.tokenizePos(sentenceString);
+        tokensSpan = tokenizer.tokenizePos(preprocess(sentenceString));
       }
 
       List<Token> tokens = new ArrayList<Token>(tokensSpan.length);
@@ -59,5 +60,14 @@ public class Tokenizer implements AnalyzerI {
       }
       sentence.setTokens(tokens);
     }
+  }
+
+  private static final Pattern OPEN_QUOTATION = Pattern.compile("[«“]");
+  private static final Pattern CLOSE_QUOTATION = Pattern.compile("[»”]");
+  
+  private String preprocess(String sentenceString) {
+    sentenceString = OPEN_QUOTATION.matcher(sentenceString).replaceAll("\"");
+    sentenceString = CLOSE_QUOTATION.matcher(sentenceString).replaceAll("\"");
+    return sentenceString;
   }
 }
