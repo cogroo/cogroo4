@@ -16,6 +16,7 @@
 package org.cogroo.tools.checker.rules.applier;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -104,11 +105,12 @@ public class SuggestionBuilder {
 				replacedByEmptyString[replaceIndex] = replacement.equals("") ? true : false;
 			}
 			else { // T1.
-				String primitive;
+				String[] primitive;
 				int replaceIndex = (int) replace.getIndex();
 				if (replace.getLexeme() != null) { // L1, T1.
 					// Gets the primitive from Replace and queries the dictionary for a replacement.
-					primitive = replace.getLexeme();
+				    String[] arr = {replace.getLexeme()};
+					primitive = arr;
 				} else { // L0, T1.
 					// Gets the primitive from the sentence and queries the dictionary for a replacement.
 					//primitive = sentence.getTokens().get((int) replace.getIndex() + lower) .getPrimitive();
@@ -164,8 +166,17 @@ public class SuggestionBuilder {
 					}
 				}
 				
+				List<String> flexList = new ArrayList<String>();
+				if(primitive != null) {
+				  for (String p : primitive) {
+				    String[] farr = dictionary.getInflectedPrimitive(p, cloneTagMask, false);
+				    if(farr != null) {
+				      flexList.addAll(Arrays.asList(farr));
+				    }
+                  }
+				}
 				
-				String[] flexArr = dictionary.getInflectedPrimitive(primitive, cloneTagMask, false); // Can be empty.
+				String[] flexArr = flexList.toArray(new String[flexList.size()]); // Can be empty.
 				String flex = getBestFlexedWord(flexArr, sentence.getTokens().get(replaceIndex + lower), cloneTagMask);
 				
 				

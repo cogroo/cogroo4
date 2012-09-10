@@ -16,7 +16,6 @@
 package org.cogroo.tools.checker;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +23,6 @@ import opennlp.tools.util.Span;
 
 import org.apache.log4j.Logger;
 import org.cogroo.entities.Chunk;
-import org.cogroo.entities.Mistake;
 import org.cogroo.entities.SyntacticChunk;
 import org.cogroo.entities.impl.ChunkCogroo;
 import org.cogroo.entities.impl.ChunkTag;
@@ -39,48 +37,21 @@ import org.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import org.cogroo.tools.checker.rules.dictionary.TagDictionary;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 
-public class TypedCheckerAdapter implements Checker {
+public class SentenceAdapter {
   
-  private TypedChecker inner;
   private TagDictionary td;
   private TagInterpreterI ti = new FlorestaTagInterpreter();
-  private static final Logger LOGGER = Logger.getLogger(TypedCheckerAdapter.class);
+  private static final Logger LOGGER = Logger.getLogger(SentenceAdapter.class);
   private ChunkerConverter chunkerConverter;
   private SyntacticChunkConverter syntacticChunkerConverter;
   
-  public TypedCheckerAdapter(TypedChecker inner, TagDictionary td) {
-    this.inner = inner;
+  public SentenceAdapter(TagDictionary td) {
     this.td = td;
     this.chunkerConverter = new ChunkerConverter(ti);
     this.syntacticChunkerConverter = new SyntacticChunkConverter(ti);
   }
 
-  public String getIdPrefix() {
-    return inner.getIdPrefix();
-  }
-
-  public List<Mistake> check(Sentence sentence) {
-    org.cogroo.entities.Sentence typed = asTypedSentence(sentence);
-    return inner.check(typed);
-  }
-
-  public void ignore(String id) {
-    inner.ignore(id);
-  }
-
-  public void resetIgnored() {
-    inner.resetIgnored();
-  }
-
-  public int getPriority() {
-    return inner.getPriority();
-  }
-
-  public Collection<RuleDefinitionI> getRulesDefinition() {
-    return inner.getRulesDefinition();
-  }
-  
-  private org.cogroo.entities.Sentence asTypedSentence(Sentence sentence) {
+  public org.cogroo.entities.Sentence asTypedSentence(Sentence sentence) {
     org.cogroo.entities.Sentence typedSentence = new org.cogroo.entities.Sentence();
     typedSentence.setSentence(sentence.getText());
     typedSentence.setOffset(sentence.getStart());
@@ -154,9 +125,10 @@ public class TypedCheckerAdapter implements Checker {
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug("Missing lemma for: " + tok);
       }
-      tok.setPrimitive(tok.getLexeme());
+      String[] primitive = {tok.getLexeme()};
+      tok.setPrimitive(primitive);
     } else {
-      tok.setPrimitive(primitives[0]);
+      tok.setPrimitive(primitives);
     }
   }
   
@@ -170,6 +142,11 @@ public class TypedCheckerAdapter implements Checker {
 
     public void convertChunks(Sentence sentence,
         org.cogroo.entities.Sentence typedSentence) {
+      
+      if(sentence.getSyntacticChunks() == null) {
+        createFakeChunks(typedSentence);
+        return;
+      }
 
       int lastToken = 0;
       List<SyntacticChunk> typedSyntacticChunks = new ArrayList<SyntacticChunk>();
@@ -227,6 +204,17 @@ public class TypedCheckerAdapter implements Checker {
 
     }
 
+    private void createFakeChunks(org.cogroo.entities.Sentence typedSentence) {
+      List<SyntacticChunk> sc = new ArrayList<SyntacticChunk>();
+      for (org.cogroo.entities.Token token : typedSentence.getTokens()) {
+        SyntacticChunk chunk = new SyntacticChunk(Collections.singletonList(token.getChunk()));
+        chunk.setSyntacticTag(corpusTagInterpreter.parseSyntacticTag("O"));
+        token.setSyntacticChunk(chunk);
+        sc.add(chunk);
+      }
+      typedSentence.setSyntacticChunks(sc);
+    }
+
     private SyntacticChunk createNoneSyntacticChunk(
         org.cogroo.entities.Token token) {
       SyntacticChunk noneTypedSyntacticChunk = new SyntacticChunk(
@@ -249,6 +237,11 @@ public class TypedCheckerAdapter implements Checker {
 
     public void convertChunks(Sentence sentence, org.cogroo.entities.Sentence typedSentence) {
       
+      if(sentence.getChunks() == null) {
+        createFakeChunks(typedSentence);
+        return;
+      }
+      
       List<org.cogroo.entities.Token> typedTokens = typedSentence.getTokens();
       
       for (int i = 0; i < sentence.getTokens().size(); i++) {
@@ -259,10 +252,12 @@ public class TypedCheckerAdapter implements Checker {
       }
       
       List<Chunk> chunks = new ArrayList<Chunk>(sentence.getChunks().size());
-      int head = 0;
+      int head;
       for (org.cogroo.text.Chunk textChunk : sentence.getChunks()) {
         if(textChunk.getHeadIndex() != -1) {
           head = textChunk.getHeadIndex();
+        } else {
+          head = textChunk.getStart();
         }
         
         // try changing the chunkTag
@@ -311,6 +306,20 @@ public class TypedCheckerAdapter implements Checker {
       
       typedSentence.setChunks(chunks);
     }
+
+    private void createFakeChunks(org.cogroo.entities.Sentence typedSentence) {
+      int index = 0;
+      List<Chunk> cl = new ArrayList<Chunk>();
+      for (org.cogroo.entities.Token token : typedSentence.getTokens()) {
+        token.setChunkTag(corpusTagInterpreter.parseChunkTag("O"));
+        ChunkCogroo chunk = new ChunkCogroo(Collections.singletonList(token), index++);
+        chunk.setMorphologicalTag(token.getMorphologicalTag().clone());
+        token.setChunk(chunk);
+        cl.add(chunk);
+      }
+      typedSentence.setChunks(cl);
+    }
+    
   }
 
 }

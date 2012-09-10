@@ -15,7 +15,7 @@
  */
 package opennlp.uima.featurizer;
 
-import br.ccsl.cogroo.tools.featurizer.FeaturizerModel;
+import org.cogroo.tools.featurizer.FeaturizerModel;
 
 public interface FeaturizerModelResource {
   FeaturizerModel getModel();

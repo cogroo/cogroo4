@@ -66,17 +66,13 @@ public class EntityUtils {
       if (span.length() > 0) {
         int s = toks.get(span.getStart()).getStart();
         int e = toks.get(span.getEnd() - 1).getEnd();
-        StringBuilder lexeme = new StringBuilder();
-        for (int j = span.getStart(); j < span.getEnd() - 1; j++) {
-          lexeme.append(toks.get(j).getLexeme()).append("_");
-        }
-        lexeme.append(toks.get(span.getEnd() - 1).getLexeme());
+        String lexeme = text.substring(s, e).replace(" ", "_");
 
         List<Token> removeToks = new ArrayList<Token>();
         for (int j = span.getEnd() - 1; j >= span.getStart(); j--) {
           removeToks.add(toks.remove(j));
         }
-        Token t = new TokenImpl(s, e, lexeme.toString());
+        Token t = new TokenImpl(s, e, lexeme);
         t.setPOSTag(span.getType());
 
         // if(additionalContext != null) {

@@ -59,12 +59,10 @@ public class NameFinder implements AnalyzerI {
         int chStart = newTokens.get(start).getStart();
         int chEnd = newTokens.get(end - 1).getEnd();
 
-        String name = newTokens.get(end - 1).getLexeme();
+        String name = sentence.getText().substring(chStart, chEnd).replace(" ", "_");
         newTokens.remove(end - 1);
 
         for (int j = end - 2; j >= start; j--) {
-          String temp = newTokens.get(j).getLexeme();
-          name = temp + "_" + name;
           newTokens.remove(j);
         }
         Token token = new TokenImpl(chStart, chEnd, name);

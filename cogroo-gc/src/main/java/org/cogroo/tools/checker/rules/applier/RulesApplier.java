@@ -200,7 +200,7 @@ public final class RulesApplier implements TypedChecker {
 					  System.out.println(rule.getId() + " -> " + sentence.getSentence());
 					}
 					
-					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
+					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), getPriority(rule), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
 					mistakes.add(mistake);
 				} else if (currentTokenIndex + 1 < tokenGroup.getTokens().size()) {
 					// Keep looking: recurse.
@@ -211,7 +211,13 @@ public final class RulesApplier implements TypedChecker {
 		return mistakes;
 	}
 	
-	/**
+	private int getPriority(Rule rule) {
+	  if(rule.getPriority() != null) 
+	    return rule.getPriority().intValue();
+    return (int)(getPriority() - rule.getId());
+  }
+
+  /**
 	 * A recursive method that iterates the sentence given a base chunk. Used to match subject-verb rules.
 	 * 
 	 * @param mistakes
@@ -247,7 +253,7 @@ public final class RulesApplier implements TypedChecker {
 					int upperCountedByChars = chunkUpper.getTokens().get(chunkUpper.getTokens().size() - 1).getSpan().getEnd();
 					// Suggestions.
 					String[] suggestions = SuggestionBuilder.getSuggestions(sentence, true, baseChunkIndex, lower, upper, rule.getSuggestion(), dictionary);
-					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
+					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), getPriority(rule), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
 					mistakes.add(mistake);
 				} else if (currentChunkIndex + 1 < syntacticChunks.size()) {
 					// Keep looking: recurse.
@@ -348,7 +354,7 @@ public final class RulesApplier implements TypedChecker {
 				// If not negated, match starts as false and just one match is needed to make it true.
 				if (mask.getLexemeMask() != null && mask.getLexemeMask().equalsIgnoreCase(token.getLexeme())) {
 					match = true;
-				} else if (mask.getPrimitiveMask() != null && mask.getPrimitiveMask().equalsIgnoreCase(token.getPrimitive())) {
+				} else if (mask.getPrimitiveMask() != null && matchLemma(token, mask.getPrimitiveMask())) {
 					match = true;
 				} else if (mask.getTagMask() != null && token.getMorphologicalTag() != null) {
 					match = match | token.getMorphologicalTag().matchExact(mask.getTagMask(), false);
@@ -361,7 +367,9 @@ public final class RulesApplier implements TypedChecker {
 				// If negated, match starts as true and just one match is needed to make it false.
 				if (mask.getLexemeMask() != null && mask.getLexemeMask().equalsIgnoreCase(token.getLexeme())) {
 					match = false;
-				} else if (mask.getTagMask() != null && token!=null && token.getMorphologicalTag() != null) {
+				} else if (mask.getPrimitiveMask() != null && matchLemma(token, mask.getPrimitiveMask())) {
+                  match = false;
+                } else if (mask.getTagMask() != null && token!=null && token.getMorphologicalTag() != null) {
 					match = match & !token.getMorphologicalTag().matchExact(mask.getTagMask(),false);
 				} else if (mask.getTagReference() != null && token!=null && token.getMorphologicalTag() != null) {
 					match = match & !token.getMorphologicalTag().match(RuleUtils.createTagMaskFromReference(mask.getTagReference(), sentence, baseTokenIndex), false);
@@ -373,7 +381,7 @@ public final class RulesApplier implements TypedChecker {
 		return match;
 	}
 	
-	/**
+  /**
 	 * Determines if a chunk is matched by a rule element.
 	 * 
 	 * @param chunk the chunk to be matched by the element
@@ -401,7 +409,7 @@ public final class RulesApplier implements TypedChecker {
 					match = true;
 				} else if (mask.getTagMask() != null && chunk.getMorphologicalTag() != null) {
 					match = match | (chunk.getMorphologicalTag().matchExact(mask.getTagMask(), false) && chunk.getSyntacticTag().match(mask.getTagMask()));
-				} else if (mask.getPrimitiveMask() != null /*&& chunk.getTokens().size() > 0*/ && mask.getPrimitiveMask().equalsIgnoreCase(chunk.getChildChunks().get(0).getMainToken().getPrimitive())) {
+				} else if (mask.getPrimitiveMask() != null /*&& chunk.getTokens().size() > 0*/ && matchLemma(chunk.getChildChunks().get(0).getMainToken(), mask.getPrimitiveMask())) {
 					match = true;
 				} else if (mask.getTagReference() != null && chunk.getMorphologicalTag() != null) {
 					TagMask t = RuleUtils.createTagMaskFromReference(mask.getTagReference(), sentence, baseTokenIndex);
@@ -509,4 +517,18 @@ public final class RulesApplier implements TypedChecker {
 		definitions = Collections.unmodifiableCollection(d);
 		return definitions;
 	}
+	
+  private boolean matchLemma(Token token, String primitiveMask) {
+    boolean match = false;
+    String[] lemmas = token.getPrimitive();
+    if(lemmas != null) {
+      for (String lemma : lemmas) {
+        if(lemma.equalsIgnoreCase(primitiveMask)) {
+          match = true;
+          break;
+        }
+      }
+    }
+    return match;
+  }
 }

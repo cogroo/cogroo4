@@ -15,7 +15,6 @@
  */
 package org.cogroo.tools.checker;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -24,8 +23,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
-import org.cogroo.entities.Mistake;
-import org.cogroo.tools.checker.rules.util.MistakeComparator;
 
 
 public abstract class GenericCheckerComposite<T> implements GenericChecker<T> {
@@ -35,8 +32,6 @@ public abstract class GenericCheckerComposite<T> implements GenericChecker<T> {
   private boolean mAllowOverlaps;
   protected static final Logger LOGGER = Logger
       .getLogger(GenericCheckerComposite.class);
-
-  protected static final MistakeComparator MISTAKE_COMPARATOR = new MistakeComparator();
 
   public GenericCheckerComposite(List<GenericChecker<T>> aChildCheckers) {
     this(aChildCheckers, false);
@@ -62,30 +57,6 @@ public abstract class GenericCheckerComposite<T> implements GenericChecker<T> {
 
   public String getIdPrefix() {
     return ID_PREFIX;
-  }
-
-  protected List<Mistake> addFilteredMistakes(List<Mistake> mistakes,
-      boolean[] occupied, final int offset) {
-    if (mAllowOverlaps) {
-      return mistakes;
-    }
-    List<Mistake> mistakesNoOverlap = new ArrayList<Mistake>();
-    boolean overlap = false;
-    for (Mistake mistake : mistakes) {
-      overlap = false;
-      for (int i = mistake.getStart(); i < mistake.getEnd(); i++) {
-        if (occupied[i - offset]) {
-          overlap = true;
-        }
-      }
-      if (!overlap) {
-        for (int i = mistake.getStart(); i < mistake.getEnd(); i++) {
-          occupied[i - offset] = true;
-        }
-        mistakesNoOverlap.add(mistake);
-      }
-    }
-    return mistakesNoOverlap;
   }
 
   public void ignore(String id) {

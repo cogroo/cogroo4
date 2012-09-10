@@ -36,6 +36,9 @@ public interface Mistake {
   public int getStart();
 
   public int getEnd();
+  
+  // the rule priority is used to sort the rules
+  public int getRulePriority();
 
   public String getFullMessage();
 

@@ -30,9 +30,8 @@ public class CheckDocument extends DocumentImpl {
   }
 
   private List<Mistake> mistakes;
+  private List<Sentence> legacySentences;
 
-  private List<Sentence> sentencesLegacy;
-  
   public List<Mistake> getMistakes() {
     return mistakes;
   }
@@ -55,11 +54,12 @@ public class CheckDocument extends DocumentImpl {
   }
 
   public List<Sentence> getSentencesLegacy() {
-    return sentencesLegacy;
+    return legacySentences;
   }
 
-  public void setSentencesLegacy(List<Sentence> sentencesLegacy) {
-    this.sentencesLegacy = sentencesLegacy;
+  public void setSentencesLegacy(
+      List<org.cogroo.entities.Sentence> typedSentences) {
+    this.legacySentences = typedSentences;
   }
 
 }

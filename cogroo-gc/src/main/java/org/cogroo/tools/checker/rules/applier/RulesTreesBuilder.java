@@ -16,6 +16,7 @@
 package org.cogroo.tools.checker.rules.applier;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -43,10 +44,17 @@ public class RulesTreesBuilder {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(RulesTreesBuilder.class);
 
+  private volatile long[] activeRules;
+
 	public RulesTreesBuilder(RulesProvider rulesProvider) {
-		this.rulesProvider = rulesProvider;
-		this.trees = this.buildTrees();
+	  this(rulesProvider, null);
 	}
+	
+  public RulesTreesBuilder(RulesProvider rulesProvider, long[] activeRules) {
+    this.rulesProvider = rulesProvider;
+    this.activeRules = activeRules;
+    this.trees = this.buildTrees();
+  }
 
 	private final RulesProvider rulesProvider;
 
@@ -91,7 +99,7 @@ public class RulesTreesBuilder {
 		
 		// For each active rule.
 		for (Rule rule : this.rulesProvider.getRules().getRule()) {
-			if (rule.isActive()) {
+			if (isActive(rule)) {
 				// For each element.
 				int i = 0;
 				// See to which tree the rules refers to.
@@ -134,7 +142,15 @@ public class RulesTreesBuilder {
 		return this.buildRulesTrees(rawRulesTrees);
 	}
 	
-	private RulesTrees buildRulesTrees(List<List<State>> rawRulesTrees) {
+  private boolean isActive(Rule rule) {
+    if(this.activeRules == null) {
+      return rule.isActive();
+    }
+    boolean isActive = Arrays.binarySearch(this.activeRules, rule.getId()) >= 0; 
+    return isActive;
+  }
+
+  private RulesTrees buildRulesTrees(List<List<State>> rawRulesTrees) {
 		List<RulesTree> rulesList = new ArrayList<RulesTree>();
 		for (int i = 0; i < rawRulesTrees.size(); i++) {
 			rulesList.add(new RulesTree(rawRulesTrees.get(i)));

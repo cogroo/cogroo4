@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import opennlp.uima.util.AbstractModelResource;
-import br.ccsl.cogroo.tools.featurizer.FeaturizerModel;
+
+import org.cogroo.tools.featurizer.FeaturizerModel;
 
 public class FeaturizerModelResourceImpl extends AbstractModelResource<FeaturizerModel>
     implements FeaturizerModelResource {

@@ -18,7 +18,7 @@ package org.cogroo.entities.tree;
 public class Leaf extends TreeElement {
 
   private String word;
-  private String lemma;
+  private String[] lemma;
 
   public void setLexeme(String lexeme) {
     this.word = lexeme;
@@ -43,11 +43,11 @@ public class Leaf extends TreeElement {
     return sb.toString();
   }
 
-  public void setLemma(String lemma) {
+  public void setLemma(String[] lemma) {
     this.lemma = lemma;
   }
 
-  public String getLemma() {
+  public String[] getLemma() {
     return lemma;
   }
 

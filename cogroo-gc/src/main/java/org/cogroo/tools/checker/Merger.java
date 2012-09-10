@@ -64,11 +64,6 @@ public class Merger {
   public static void generalizePOSTags(MorphologicalTag tag,
       MorphologicalTag[] allTags) {
 
-    // this is generally true, we set gender neutral to avoid false positives.
-    if (tag.getClazzE().equals(Class.NUMERAL)) {
-      tag.setGender(Gender.NEUTRAL);
-    }
-
     if (allTags == null || allTags.length == 0) {
       // lets try to generalize gender and number....
       if (tag.getGenderE() != null) {

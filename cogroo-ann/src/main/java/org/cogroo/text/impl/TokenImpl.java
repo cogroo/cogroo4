@@ -50,6 +50,8 @@ public class TokenImpl implements Token {
   
   private String chunkTag;
   
+  private String syntacticTag;
+  
   private Map<Analyzers, String> additionalContext = new HashMap<Analyzers, String>();
   
   public TokenImpl(int start, int end, String lexeme) {
@@ -112,6 +114,14 @@ public class TokenImpl implements Token {
   
   public void setChunkTag(String chunkTag) {
     this.chunkTag = chunkTag;
+  }
+  
+  public void setSyntacticTag(String tag) {
+    this.syntacticTag = tag;
+  }
+  
+  public String getSyntacticTag() {
+    return this.syntacticTag;
   }
   
   public void addContext (Analyzers analyzer, String value) {

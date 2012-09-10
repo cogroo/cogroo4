@@ -36,6 +36,8 @@ public interface Token {
   public String getFeatures();
   
   public String getChunkTag();
+  
+  public String getSyntacticTag();
 
   public void setFeatures(String features);
 
@@ -48,6 +50,8 @@ public interface Token {
   public void setBoundaries(int start, int end);
   
   public void setChunkTag(String string);
+  
+  public void setSyntacticTag(String string);
 
   public void addContext(Analyzers contractionFinder, String value);
 

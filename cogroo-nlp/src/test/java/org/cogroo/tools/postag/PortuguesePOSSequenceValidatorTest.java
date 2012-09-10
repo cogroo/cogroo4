@@ -42,7 +42,7 @@ public class PortuguesePOSSequenceValidatorTest {
     assertFalse(PortuguesePOSSequenceValidator.validOutcome("I-b", "I-a"));
     
     assertFalse(PortuguesePOSSequenceValidator.validOutcome("I-b", "a"));
-  
+    
   }
 
 }
