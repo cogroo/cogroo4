@@ -53,7 +53,7 @@ public class WordCombinationChecker extends AbstractChecker {
   static final String CATEGORY = "Regência verbal";
   static final String GROUP = "Erros sintáticos";
   static final String DESCRIPTION = "Procura por verbos e analisa sua regência.";
-  static final String MESSAGE = "Verifique a regência verbal.";
+  static final String MESSAGE = "Problema com a regência verbal";
   static final String SHORT = "Regência verbal.";
 
   public String getIdPrefix() {
@@ -87,16 +87,16 @@ public class WordCombinationChecker extends AbstractChecker {
           if (prep != null) {
 
             if (sentPrep == null) {
-              // The original sentence has no preposition in its objects, when
-              // it
-              // should have.
+              // The original sentence has no preposition in its objects, though
+              // it should have.
               if (!prep.getPreposition().equals("_")) {
 
                 int start = verb.getStart() + offset;
                 int end = verb.getEnd() + offset;
 
-                mistakes.add(createMistake(ID, createSuggestion(verb, prep),
-                    start, end, sentence.getText()));
+                mistakes.add(createMistake(ID,
+                    createSuggestion(verb, sentPrep, prep), start, end,
+                    sentence.getText()));
               }
             }
 
@@ -108,8 +108,9 @@ public class WordCombinationChecker extends AbstractChecker {
                 int start = sentPrep.getStart() + offset;
                 int end = sentPrep.getEnd() + offset;
 
-                mistakes.add(createMistake(ID, createSuggestion(verb, prep),
-                    start, end, sentence.getText()));
+                mistakes.add(createMistake(ID,
+                    createSuggestion(verb, sentPrep, prep), start, end,
+                    sentence.getText()));
               }
             }
           }
@@ -199,9 +200,21 @@ public class WordCombinationChecker extends AbstractChecker {
     return null;
   }
 
-  private String[] createSuggestion(Token token, Prep prep) {
+  private String[] createSuggestion(Token token, Token sentPrep, Prep prep) {
+    String[] array = null;
 
-    String[] array = { token.getLexeme() + " " + prep.getPreposition() };
+    if (prep.getPreposition().equals("_")) {
+      array = new String[] { token.getLexeme() + " " };
+      // MESSAGE = new String ("O verbo (" + token.getLexeme()
+      // + ") com o sentido de (" + prep.getMeaning()
+      // + ") não leva preposição.");
+    } else {
+      array = new String[] { token.getLexeme() + " " + prep.getPreposition() };
+      // MESSAGE = new String ("O verbo " + token.getLexeme()
+      // + " com o sentido de (" + prep.getMeaning()
+      // + ") pede a preposição: " + prep.getPreposition());
+     
+    }
 
     return array;
   }
