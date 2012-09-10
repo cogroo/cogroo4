@@ -69,7 +69,7 @@ public class WordCombinationChecker extends AbstractChecker {
     int offset = sentence.getStart();
 
     Token verb = findVerb(sentence);
-    List<String> nouns = findNoun(sentence);
+    List<String> nouns = findNouns(sentence);
 
     if (verb != null) {
       VerbPlusPreps vpp = verbs.getVerb(verb.getLemmas()[0]);
@@ -127,7 +127,7 @@ public class WordCombinationChecker extends AbstractChecker {
    *          entered by the user
    * @return a <tt>List></tt> of every noun found in the sentence's objects
    */
-  private List<String> findNoun(Sentence sentence) {
+  private List<String> findNouns(Sentence sentence) {
     List<String> nouns = new ArrayList<String>();
 
     List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
@@ -139,10 +139,15 @@ public class WordCombinationChecker extends AbstractChecker {
 
         for (Token token : syntChunks.get(i).getTokens()) {
           if (token.getPOSTag().equals("n")) {
-            if (token.getLemmas() == null)
+            if (token.getLemmas() != null)
               nouns.add(token.getLemmas()[0]);
             else
               nouns.add(token.getLexeme());
+          }
+          else { // Adiciona um nome próprio
+             if (token.getPOSTag().equals("prop")) {
+               nouns.add("NP");
+             }
           }
         }
       }

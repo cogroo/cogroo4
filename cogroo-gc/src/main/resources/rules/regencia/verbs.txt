@@ -7,6 +7,9 @@ _: socorrer, auxiliar, ajudar: paciente, acidentado, enfermo, doente
 a: ver, presenciar: show, espetáculo, filme
 em: residir, morar:
 
+#namorar
+_: : NP
+
 #obedecer
 a: seguir os comandos de alguém: mãe, pai
 
