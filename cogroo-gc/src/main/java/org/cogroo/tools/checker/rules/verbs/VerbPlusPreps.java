@@ -22,24 +22,30 @@ import java.util.Map;
 
 public class VerbPlusPreps {
 
-	private final Map<String, Prep> prepsMap;
-  
-	public VerbPlusPreps(List<Prep> preps) {
-	  Map<String, Prep> map = new HashMap<String, Prep>();
-	  
-	  for (Prep prep : preps) {
-	    for (String word : prep.getObjects()) {
-	      map.put(word, prep);
-	    }
-	  }
-	  
-	  prepsMap = Collections.unmodifiableMap(map);
-	    
+  private final Map<String, Prep> prepsMap;
+
+  public VerbPlusPreps(List<Prep> preps) {
+    Map<String, Prep> map = new HashMap<String, Prep>();
+
+    for (Prep prep : preps) {
+      for (String word : prep.getObjects()) {
+        map.put(word, prep);
+      }
+    }
+
+    prepsMap = Collections.unmodifiableMap(map);
+
   }
 
-//	Looks for a noun that matches the current verb and returns the preposition that should be linking them
-	public Prep findWord(String word) {
-		return prepsMap.get(word);
-	}
+  // Looks for a noun that matches the current verb and returns the preposition
+  // that should be linking them, otherwise returns null
+  public Prep findWord(String word) {
+    
+    if (prepsMap.containsKey("*")) {
+      word = "*";
+    }
+    
+    return prepsMap.get(word);
+  }
 
 }

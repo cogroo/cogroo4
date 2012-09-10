@@ -135,7 +135,7 @@ public class WordCombinationChecker extends AbstractChecker {
     for (int i = 0; i < syntChunks.size(); i++) {
       String tag = syntChunks.get(i).getTag();
 
-      if (tag.equals("PIV") || tag.equals("ACC")) {
+      if (tag.equals("PIV") || tag.equals("ACC") || tag.equals("SC")) {
 
         for (Token token : syntChunks.get(i).getTokens()) {
           if (token.getPOSTag().equals("n")) {
@@ -143,11 +143,27 @@ public class WordCombinationChecker extends AbstractChecker {
               nouns.add(token.getLemmas()[0]);
             else
               nouns.add(token.getLexeme());
+          } else { // Adiciona um nome próprio
+            if (token.getPOSTag().equals("prop")) {
+              nouns.add("NP");
+            }
           }
-          else { // Adiciona um nome próprio
-             if (token.getPOSTag().equals("prop")) {
-               nouns.add("NP");
-             }
+        }
+      }
+    }
+
+    int[] spans = spans(sentence);
+    for (int i = 0; i < spans.length; i++) {
+      if (spans[i] != 1) {
+        Token token = sentence.getTokens().get(i);
+        if (token.getPOSTag().equals("n")) {
+          if (token.getLemmas() != null)
+            nouns.add(token.getLemmas()[0]);
+          else
+            nouns.add(token.getLexeme());
+        } else { // Adiciona um nome próprio
+          if (token.getPOSTag().equals("prop")) {
+            nouns.add("NP");
           }
         }
       }
@@ -170,8 +186,10 @@ public class WordCombinationChecker extends AbstractChecker {
     for (int i = 0; i < syntChunks.size(); i++) {
       String tag = syntChunks.get(i).getTag();
 
-      if (tag.equals("PIV") || tag.equals("ACC")) {
-
+      if (tag.equals("PIV") || tag.equals("ACC") || tag.equals("SC")
+          || tag.equals("P")) {
+        // %TODO Improve the accuracy from the SC and P syntactic chunks, in
+        // order to remove them from this condition
         for (Token token : syntChunks.get(i).getTokens()) {
           if (token.getPOSTag().equals("prp")) {
             return token;
@@ -179,7 +197,31 @@ public class WordCombinationChecker extends AbstractChecker {
         }
       }
     }
+
+    // In case the preposition ins't located in an object
+    int[] spans = spans(sentence);
+    for (int i = 0; i < spans.length; i++) {
+      if (spans[i] != 1) {
+        Token token = sentence.getTokens().get(i);
+        if (token.getPOSTag().equals("prp")) {
+          return token;
+        }
+      }
+    }
+
     return null;
+  }
+
+  private int[] spans(Sentence sentence) {
+    int[] spans = new int[sentence.getTokens().size()];
+
+    for (SyntacticChunk sc : sentence.getSyntacticChunks()) {
+      for (int i = sc.getStart(); i < sc.getEnd(); i++) {
+        spans[i] = 1;
+      }
+    }
+
+    return spans;
   }
 
   /**
@@ -190,7 +232,6 @@ public class WordCombinationChecker extends AbstractChecker {
    * @return the <tt>Token</tt> which contains the searched verb, in case none
    *         was found returns <tt>null</tt>
    */
-  // %TODO Improve the case above.
   public Token findVerb(Sentence sentence) {
     List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
 
@@ -218,7 +259,7 @@ public class WordCombinationChecker extends AbstractChecker {
       // MESSAGE = new String ("O verbo " + token.getLexeme()
       // + " com o sentido de (" + prep.getMeaning()
       // + ") pede a preposição: " + prep.getPreposition());
-     
+
     }
 
     return array;

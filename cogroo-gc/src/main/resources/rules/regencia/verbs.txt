@@ -8,10 +8,10 @@ a: ver, presenciar: show, espetáculo, filme
 em: residir, morar:
 
 #namorar
-_: : NP
+_: : *
 
 #obedecer
-a: seguir os comandos de alguém: mãe, pai
+a: seguir os comandos de alguém: mãe, pai, NP
 
 #visar
 _: dar visto, mirar: cheque, documento
