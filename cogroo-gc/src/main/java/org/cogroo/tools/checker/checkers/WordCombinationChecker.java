@@ -71,7 +71,7 @@ public class WordCombinationChecker extends AbstractChecker {
     Token verb = findVerb(sentence);
     List<String> nouns = findNouns(sentence);
 
-    if (verb != null) {
+    if (verb != null && verb.getLemmas().length > 0) {
       VerbPlusPreps vpp = verbs.getVerb(verb.getLemmas()[0]);
       // Only gives the first lemma. %TODO improve this case.
 
@@ -112,8 +112,8 @@ public class WordCombinationChecker extends AbstractChecker {
                     createSuggestion(verb, sentPrep, prep), start, end,
                     sentence.getText()));
               }
+              }
             }
-          }
         }
       }
     }
@@ -139,10 +139,12 @@ public class WordCombinationChecker extends AbstractChecker {
 
         for (Token token : syntChunks.get(i).getTokens()) {
           if (token.getPOSTag().equals("n")) {
-            if (token.getLemmas() != null)
+            if (token.getLemmas() != null && token.getLemmas().length > 0)
+            {
               nouns.add(token.getLemmas()[0]);
-            else
+            } else {
               nouns.add(token.getLexeme());
+            }
           } else { // Adiciona um nome próprio
             if (token.getPOSTag().equals("prop")) {
               nouns.add("NP");
@@ -157,7 +159,7 @@ public class WordCombinationChecker extends AbstractChecker {
       if (spans[i] != 1) {
         Token token = sentence.getTokens().get(i);
         if (token.getPOSTag().equals("n")) {
-          if (token.getLemmas() != null)
+          if (token.getLemmas() != null && token.getLemmas().length > 0)
             nouns.add(token.getLemmas()[0]);
           else
             nouns.add(token.getLexeme());
