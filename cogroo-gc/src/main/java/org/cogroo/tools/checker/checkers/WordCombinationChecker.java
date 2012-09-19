@@ -50,8 +50,8 @@ public class WordCombinationChecker extends AbstractChecker {
   }
 
   static final String ID = ID_PREFIX + "WORD_COMB_TOKEN";
-  static final String CATEGORY = "Regência verbal";
-  static final String GROUP = "Erros sintáticos";
+  static final String CATEGORY = "Erros sintáticos";
+  static final String GROUP = "Regência verbal";
   static final String DESCRIPTION = "Procura por verbos e analisa sua regência.";
   static final String MESSAGE = "Problema com a regência verbal";
   static final String SHORT = "Regência verbal.";
@@ -98,9 +98,7 @@ public class WordCombinationChecker extends AbstractChecker {
                     createSuggestion(verb, sentPrep, prep), start, end,
                     sentence.getText()));
               }
-            }
-
-            else {
+            } else {
               // The original sentence has a preposition already, but it is
               // wrong.
               if (!sentPrep.getLexeme().equals(prep.getPreposition())) {
@@ -112,8 +110,8 @@ public class WordCombinationChecker extends AbstractChecker {
                     createSuggestion(verb, sentPrep, prep), start, end,
                     sentence.getText()));
               }
-              }
             }
+          }
         }
       }
     }
@@ -139,8 +137,7 @@ public class WordCombinationChecker extends AbstractChecker {
 
         for (Token token : syntChunks.get(i).getTokens()) {
           if (token.getPOSTag().equals("n")) {
-            if (token.getLemmas() != null && token.getLemmas().length > 0)
-            {
+            if (token.getLemmas() != null && token.getLemmas().length > 0) {
               nouns.add(token.getLemmas()[0]);
             } else {
               nouns.add(token.getLexeme());

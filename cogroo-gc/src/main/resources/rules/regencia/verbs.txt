@@ -11,7 +11,7 @@ em: residir, morar:
 _: : *
 
 #obedecer
-a: seguir os comandos de alguém: mãe, pai, NP
+a: seguir os comandos de alguém: *
 
 #visar
 _: dar visto, mirar: cheque, documento

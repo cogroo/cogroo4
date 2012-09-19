@@ -38,8 +38,8 @@ public class SpaceChecker extends AbstractTypedChecker {
 
 	private static final String[] SUGGESTION_NO_SPACE = { "" };
 
-	private static final String CATEGORY = "Uso do espaço";
-	private static final String GROUP = "Erros mecânicos";
+	private static final String CATEGORY = "Erros mecânicos";
+	private static final String GROUP = "Uso do espaço";
 
 	// abc abc
 	static final String EXTRA_BETWEEN_WORDS_ID = ID_PREFIX
