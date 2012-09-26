@@ -107,5 +107,5 @@
 
 		</plugins>
 	</build>
-	<description>Contains OpenNLP customizations, such as factories and new tools, also adds suport to FSA Dictionaries from Morfologik.</description>
+	<description>Contains OpenNLP customizations, such as factories and new tools, also adds support to FSA Dictionaries from Morfologik.</description>
 </project>
