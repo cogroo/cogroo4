@@ -21,7 +21,6 @@ import java.util.List;
 import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.entities.impl.SyntacticTag;
 
-
 import com.google.common.base.Objects;
 
 /**
@@ -93,6 +92,14 @@ public abstract class Chunk implements Serializable, TokenGroup {
           && Objects.equal(this.morphologicalTag, that.morphologicalTag);
     }
     return false;
+  }
+  
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.tokens, this.firstToken, this.morphologicalTag);
   }
 
   @Override
