@@ -963,22 +963,35 @@
 					<Mask>
 						<TagMask>
 							<Class>noun</Class>
-							<Gender>male</Gender>
-							<Number>plural</Number>
 						</TagMask>
 					</Mask>
 				</Element>
 			</PatternElement>
+			
 			<PatternElement>
-				<Element>
-					<Mask>
-						<TagMask>
-							<Class>adjective</Class>
-							<Gender>male</Gender>
-							<Number>singular</Number>
-						</TagMask>
-					</Mask>
-				</Element>
+				<Composition>
+				<And>
+					<PatternElement>
+						<Element>
+							<Mask>
+								<TagMask>
+									<Class>adjective</Class>
+								</TagMask>
+							</Mask>
+						</Element>
+					</PatternElement>
+					<PatternElement>
+						<Element>
+							<Negated>true</Negated>
+							<Mask>
+								<TagReference index="0">
+									<Property>Number</Property>
+								</TagReference>
+							</Mask>
+						</Element>
+					</PatternElement>
+				</And>
+				</Composition>
 			</PatternElement>
 			<PatternElement>
 				<Element>
@@ -998,34 +1011,42 @@
 		</Boundaries>
 		<Suggestion>
 			<Replace index="0">
-				<TagReference index="0">
-					<TagMask>
-						<Gender>male</Gender>
-						<Number>singular</Number>
-					</TagMask>
-				</TagReference>
+				<Reference index="1">
+					<Property>Number</Property>
+					<Property>Gender</Property>
+				</Reference>
 			</Replace>
 		</Suggestion>
 		<Suggestion>
 			<Replace index="1">
-				<TagReference index="1">
-					<TagMask>
-						<Gender>male</Gender>
-						<Number>plural</Number>
-					</TagMask>
-				</TagReference>
+				<Reference index="0">
+					<Property>Number</Property>
+					<Property>Gender</Property>
+				</Reference>
 			</Replace>
 		</Suggestion>
 		<Example>
 			<Incorrect>Os casacos bonito ficaram prontos.</Incorrect>
 			<Correct>Os casacos bonitos ficaram prontos.</Correct>
 		</Example>
+		<Example>
+			<Incorrect>O casaco feios ficou pronto.</Incorrect>
+			<Correct>O casaco feio ficou pronto.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>As faces rosada das crianças.</Incorrect>
+			<Correct>As faces rosadas das crianças.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>A face rosadas da criança.</Incorrect>
+			<Correct>A face rosada da criança.</Correct>
+		</Example>
 		<ModificationHistory>
 			<Author>sueli</Author>
 			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
-	<Rule id="18" active="true">
+	<Rule id="18" active="false">
 		<Method>phrase-local</Method>
 		<Type>Concordância adjetivo-substantivo</Type>
 		<Group>substantivo + adjetivo</Group>
@@ -1088,7 +1109,7 @@
 			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
-	<Rule id="19" active="true">
+	<Rule id="19" active="false">
 		<Method>general</Method>
 		<Type>Concordância adjetivo-substantivo</Type>
 		<Group>substantivo + adjetivo</Group>
@@ -1163,7 +1184,7 @@
 			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
-	<Rule id="20" active="true">
+	<Rule id="20" active="false">
 		<Method>phrase-local</Method>
 		<Type>Concordância adjetivo-substantivo</Type>
 		<Group>substantivo + adjetivo</Group>
@@ -1238,22 +1259,35 @@
 					<Mask>
 						<TagMask>
 							<Class>adjective</Class>
-							<Gender>male</Gender>
-							<Number>singular</Number>
 						</TagMask>
 					</Mask>
 				</Element>
 			</PatternElement>
+			
 			<PatternElement>
-				<Element>
-					<Mask>
-						<TagMask>
-							<Class>noun</Class>
-							<Gender>male</Gender>
-							<Number>plural</Number>
-						</TagMask>
-					</Mask>
-				</Element>
+				<Composition>
+				<And>
+					<PatternElement>
+						<Element>
+							<Mask>
+								<TagMask>
+									<Class>noun</Class>
+								</TagMask>
+							</Mask>
+						</Element>
+					</PatternElement>
+					<PatternElement>
+						<Element>
+							<Negated>true</Negated>
+							<Mask>
+								<TagReference index="0">
+									<Property>Number</Property>
+								</TagReference>
+							</Mask>
+						</Element>
+					</PatternElement>
+				</And>
+				</Composition>
 			</PatternElement>
 		</Pattern>
 		<Boundaries>
@@ -1262,34 +1296,42 @@
 		</Boundaries>
 		<Suggestion>
 			<Replace index="0">
-				<TagReference index="0">
-					<TagMask>
-						<Gender>male</Gender>
-						<Number>plural</Number>
-					</TagMask>
-				</TagReference>
+				<Reference index="1">
+					<Property>Number</Property>
+					<Property>Gender</Property>
+				</Reference>
 			</Replace>
 		</Suggestion>
 		<Suggestion>
 			<Replace index="1">
-				<TagReference index="1">
-					<TagMask>
-						<Gender>male</Gender>
-						<Number>singular</Number>
-					</TagMask>
-				</TagReference>
+				<Reference index="0">
+					<Property>Number</Property>
+					<Property>Gender</Property>
+				</Reference>
 			</Replace>
 		</Suggestion>
 		<Example>
 			<Incorrect>O belo carros ficou pronto.</Incorrect>
 			<Correct>O belo carro ficou pronto.</Correct>
 		</Example>
+		<Example>
+			<Incorrect>Os belos carro ficaram prontos.</Incorrect>
+			<Correct>Os belos carros ficaram prontos.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>As bonitas face das crianças.</Incorrect>
+			<Correct>As bonitas faces das crianças.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>As bonita faces das crianças.</Incorrect>
+			<Correct>As bonitas faces das crianças.</Correct>
+		</Example>
 		<ModificationHistory>
 			<Author>sueli</Author>
 			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
-	<Rule id="22" active="true">
+	<Rule id="22" active="false">
 		<Method>phrase-local</Method>
 		<Type>Concordância adjetivo-substantivo</Type>
 		<Group>adjetivo + substantivo</Group>
@@ -1352,7 +1394,7 @@
 			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
-	<Rule id="23" active="true">
+	<Rule id="23" active="false">
 		<Method>phrase-local</Method>
 		<Type>Concordância adjetivo-substantivo</Type>
 		<Group>adjetivo + substantivo</Group>
@@ -1415,7 +1457,7 @@
 			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
-	<Rule id="24" active="true">
+	<Rule id="24" active="false">
 		<Method>phrase-local</Method>
 		<Type>Concordância adjetivo-substantivo</Type>
 		<Group>adjetivo + substantivo</Group>
@@ -2300,7 +2342,7 @@
 			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
-	<Rule id="39" active="true">
+	<Rule id="39" active="true" priority="1200"> <!-- High priority to execute before rule 17 -->
 		<Method>general</Method>
 		<Type>Uso de meio</Type>
 		<Group>meio no sentido de "um pouco"</Group>
@@ -6525,8 +6567,8 @@
 			</Replace>
 		</Suggestion>
 		<Example>
-			<Incorrect>Ela, com certeza, mentiu; quanto à ele, parece que foi sincero.</Incorrect>
-			<Correct>Ela, com certeza, mentiu; quanto a ele, parece que foi sincero.</Correct>
+			<Incorrect>Ela, com certeza, mentiu, quanto à ele, parece que foi sincero.</Incorrect>
+			<Correct>Ela, com certeza, mentiu, quanto a ele, parece que foi sincero.</Correct>
 		</Example>
 		<Example>
 			<Incorrect>Na hora do aperto, sempre recorrem à mim.</Incorrect>
