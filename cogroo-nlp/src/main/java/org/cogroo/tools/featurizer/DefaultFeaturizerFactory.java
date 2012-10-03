@@ -44,8 +44,8 @@ public class DefaultFeaturizerFactory extends FeaturizerFactory {
    * programmatically create a factory.
    * 
    */
-  public DefaultFeaturizerFactory(FeatureDictionaryI featureDictionary) {
-    super(featureDictionary);
+  public DefaultFeaturizerFactory(FeatureDictionaryI featureDictionary, String cgFlags) {
+    super(featureDictionary, cgFlags);
   }
 
   @Override
@@ -74,10 +74,6 @@ public class DefaultFeaturizerFactory extends FeaturizerFactory {
     if (artifactProvider != null)
       return artifactProvider.getArtifact(FEATURE_DICTIONARY_ENTRY_NAME);
     return null;
-  }
-
-  public FeaturizerContextGenerator getFeaturizerContextGenerator() {
-    return new DefaultFeaturizerContextGenerator();
   }
 
   @SuppressWarnings("unchecked")

@@ -41,6 +41,25 @@ public class DefaultFeaturizerContextGenerator implements
   
   // TODO: this is language dependent!
   private NumberFormat nf = NumberFormat.getInstance(new Locale("pt"));
+  
+  
+  private boolean isWiderContext;
+  private boolean isSuffixFeats;
+  private boolean isHiphenedFeats;
+  private boolean isNumberFeats;
+  private boolean isClassFeatures;
+  
+  /**
+   * Default is shnc
+   * @param flags
+   */
+  public DefaultFeaturizerContextGenerator(String flags) {
+    this.isWiderContext = flags.contains("w");
+    this.isSuffixFeats = flags.contains("s");
+    this.isHiphenedFeats = flags.contains("h");
+    this.isNumberFeats = flags.contains("n");
+    this.isClassFeatures = flags.contains("c");
+  }
 
   protected static String[] getPrefixes(String lex) {
     String[] prefs = new String[PREFIX_LENGTH];
@@ -85,7 +104,10 @@ public class DefaultFeaturizerContextGenerator implements
 
     List<String> e = new ArrayList<String>();
 
-    createWindowFeats(i, toks, tags, preds, e);
+    if(isWiderContext)
+      createWindowFeats(i, toks, tags, preds, e);
+    else
+      create3WindowFeats(i, toks, tags, preds, e);
     
     if(i > 0)
       wrappWindowFeatures("prev_", i-1, toks, tags, preds, e);
@@ -105,22 +127,28 @@ public class DefaultFeaturizerContextGenerator implements
     String lex = toks[i];
     List<String> features = new ArrayList<String>();
     
-    tokenClassFeatureGenerator.createFeatures(features, toks, i, preds);
-    createNumberFeats(i, toks, features);
+    if(isClassFeatures)
+      tokenClassFeatureGenerator.createFeatures(features, toks, i, preds);
+    
+    if(isNumberFeats)
+      createNumberFeats(i, toks, features);
     
     boolean suffixesCollected = false;
-    if(lex.length() >= 3) {
-      if (lex.contains("_")) {
-        createGroupSuffixex("us_", lex, features);
-        suffixesCollected = true;
-      }
-      if (lex.contains("-")) {
-        createGroupSuffixex("hf_", lex, features);
-        suffixesCollected = true;
+    
+    if(isHiphenedFeats) {
+      if(lex.length() >= 3) {
+        if (lex.contains("_")) {
+          createGroupSuffixex("us_", lex, features);
+          suffixesCollected = true;
+        }
+        if (lex.contains("-")) {
+          createGroupSuffixex("hf_", lex, features);
+          suffixesCollected = true;
+        }
       }
     }
     
-    if(!suffixesCollected) {
+    if(!suffixesCollected && isSuffixFeats) {
       createSuffixFeats(i, toks, tags, preds, features);
     }
     
@@ -200,6 +228,7 @@ public class DefaultFeaturizerContextGenerator implements
 
   }
 
+  // 0.9674293472168595
   private void createWindowFeats(int i, String[] toks, String[] tags,
       String[] preds, List<String> feats) {
 
@@ -284,5 +313,79 @@ public class DefaultFeaturizerContextGenerator implements
 
     feats.addAll(Arrays.asList(features));
   }
+
+  //0.9670307770871996
+  private void create3WindowFeats(int i, String[] toks, String[] tags,
+      String[] preds, List<String> feats) {
+
+    // Words in a 5-word window
+    String w_1, w0, w1;
+
+    // Tags in a 5-word window
+    String t_1, t0, t1;
+
+    // Previous predictions
+    String p_2, p_1;
+
+    w0 = w1 = null;
+    t_1 = t0 = t1 = null;
+    p_1 = p_2 = null;
+
+    if (i < 2) {
+      p_2 = "p_2=bos";
+    } else {
+      p_2 = "p_2" + preds[i - 2];
+    }
+
+    if (i < 1) {
+      w_1 = "w_1=bos";
+      t_1 = "t_1=bos";
+      p_1 = "p_1=bos";
+    } else {
+      w_1 = "w_1=" + toks[i - 1];
+      t_1 = "t_1=" + tags[i - 1];
+      p_1 = "p_1=" + preds[i - 1];
+    }
+
+    w0 = "w0=" + toks[i];
+    t0 = "t0=" + tags[i];
+
+    if (i + 1 >= toks.length) {
+      w1 = "w1=eos";
+      t1 = "t1=eos";
+    } else {
+      w1 = "w1=" + toks[i + 1];
+      t1 = "t1=" + tags[i + 1];
+    }
+
+    String[] features = new String[] {
+        // add word features
+        w_1, w0, w1,
+        w_1 + w0,
+        w0 + w1,
+
+        // add tag features
+        t_1, t0, t1, 
+        t_1 + t0,
+        t0 + t1,
+        t_1 + t0 + t1,
+
+        // add pred tags
+        p_2,
+        p_1,
+        p_2 + p_1,
+
+        // add pred and tag
+        p_1 + t_1, p_1 + t0, p_1 + t1,
+        p_1 + t_1 + t0, p_1 + t0 + t1,
+        p_1 + t_1 + t0 + t1,
+
+        // add pred and word
+        p_1 + w_1, p_1 + w0, p_1 + w1, p_1 + w_1 + w0,
+        p_1 + w0 + w1 };
+
+    feats.addAll(Arrays.asList(features));
+  }
+
 
 }

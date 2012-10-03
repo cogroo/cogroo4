@@ -18,13 +18,12 @@ package org.cogroo.tools.featurizer;
 import java.io.IOException;
 import java.util.Map;
 
+import opennlp.tools.util.model.ArtifactSerializer;
+
 import org.cogroo.dictionary.FeatureDictionaryI;
 import org.cogroo.dictionary.impl.FSADictionary;
 import org.cogroo.dictionary.impl.FSAFeatureDictionary;
 import org.cogroo.util.serializers.ByteArraySerializer;
-
-import opennlp.tools.util.model.ArtifactProvider;
-import opennlp.tools.util.model.ArtifactSerializer;
 
 public class FSAFeaturizerFactory extends FeaturizerFactory {
 
@@ -51,13 +50,13 @@ public class FSAFeaturizerFactory extends FeaturizerFactory {
    * programmatically create a factory.
    * 
    */
-  public FSAFeaturizerFactory(FeatureDictionaryI featureDictionary) {
-    super((FeatureDictionaryI) null);
+  public FSAFeaturizerFactory(FeatureDictionaryI featureDictionary, String cgFlags) {
+    super((FeatureDictionaryI) null, cgFlags);
   }
   
   @Override
-  protected void init(FeatureDictionaryI featureDictionary) {
-    super.init(featureDictionary);
+  protected void init(FeatureDictionaryI featureDictionary, String cgFlags) {
+    super.init(featureDictionary, cgFlags);
 
     // get the dictionary path
     String path = System.getProperty("fsa.dict");
