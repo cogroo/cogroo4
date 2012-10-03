@@ -31,6 +31,7 @@ import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.tools.checker.Checker;
 import org.cogroo.tools.checker.CheckerComposite;
+import org.cogroo.tools.checker.RuleDefinitionI;
 import org.cogroo.tools.checker.SentenceAdapter;
 import org.cogroo.tools.checker.TypedChecker;
 import org.cogroo.tools.checker.TypedCheckerComposite;
@@ -115,10 +116,9 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     // create other typed checkers
     
     // how to get the abbreviation dictionary? 
-//    typedCheckersList.add(new SpaceChecker(loadAbbDict()));
-    
-//    typedCheckersList.add(new PunctuationChecker());
-//    typedCheckersList.add(new RepetitionChecker());
+    //typedCheckersList.add(new SpaceChecker(loadAbbDict()));
+    //typedCheckersList.add(new PunctuationChecker());
+    //typedCheckersList.add(new RepetitionChecker());
     
     typedCheckers = new TypedCheckerComposite(typedCheckersList, false);
 
@@ -131,6 +131,17 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
    
     
     this.allowOverlap = allowOverlap;
+    
+    if(LOGGER.isDebugEnabled()) {
+      LOGGER.debug("Created following rules:");
+      int count = 0;
+      for (RuleDefinitionI def : this.typedCheckers.getRulesDefinition()) {
+        LOGGER.debug(count++ + ": " + def.getId());
+      }
+      for (RuleDefinitionI def : this.checkers.getRulesDefinition()) {
+        LOGGER.debug(count++ + ": " + def.getId());
+      }
+    }
   }
 
   private Dictionary loadAbbDict() throws InvalidFormatException, IOException {

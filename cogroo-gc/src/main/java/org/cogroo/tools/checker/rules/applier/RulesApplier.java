@@ -175,8 +175,14 @@ public final class RulesApplier implements TypedChecker {
 	 *         invocation, if any
 	 */
 	private List<Mistake> getMistakes(List<Mistake> mistakes, List<State> currentStates, TokenGroup tokenGroup, int baseTokenIndex, int currentTokenIndex, Sentence sentence) {
+	  
+        int offset = 0;
+        if (tokenGroup instanceof Chunk) {
+          offset = ((Chunk) tokenGroup).getFirstToken();
+        }
+	    
 		for (State state : currentStates) {
-			boolean tokenAndElementMatched = this.match(tokenGroup.getTokens().get(currentTokenIndex), state.getElement(), baseTokenIndex, sentence);
+			boolean tokenAndElementMatched = this.match(tokenGroup.getTokens().get(currentTokenIndex), state.getElement(), baseTokenIndex + offset, sentence);
 			if (tokenAndElementMatched) {
 				if (state instanceof AcceptState) {
 					// Got a mistake!
@@ -184,11 +190,8 @@ public final class RulesApplier implements TypedChecker {
 					// The mistake is located between the tokens indicated by lower and upper.
 					int lower = baseTokenIndex + rule.getBoundaries().getLower();
 					int upper = currentTokenIndex + rule.getBoundaries().getUpper();
-					if (tokenGroup instanceof Chunk) {
-						// Adds an offset to the boundaries of the mistake.
-						lower += ((Chunk) tokenGroup).getFirstToken();
-						upper += ((Chunk) tokenGroup).getFirstToken();
-					}
+					lower += offset;
+					upper += offset;
 					// Pointing the mistake location using the chars in the sentence.
 					int lowerCountedByChars = sentence.getTokens().get(lower).getSpan().getStart();
 					int upperCountedByChars = sentence.getTokens().get(upper).getSpan().getEnd();
