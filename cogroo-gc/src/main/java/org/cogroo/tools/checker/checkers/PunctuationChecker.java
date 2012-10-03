@@ -34,8 +34,8 @@ public class PunctuationChecker extends AbstractTypedChecker {
 
 	private static final String[] SUGGESTION_NO_PUNCTUATION = { "" };
 
-	private static final String CATEGORY = "Uso do espaço";
-	private static final String GROUP = "Erros mecânicos";
+	private static final String CATEGORY = "Erros mecânicos";
+	private static final String GROUP = "Pontuação";
 
 	// !.?abc
 	static final String BEFORE_SENTENCES_ID = ID_PREFIX + "BEFORE_SENTENCES";

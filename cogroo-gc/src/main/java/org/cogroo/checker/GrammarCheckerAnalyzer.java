@@ -124,8 +124,8 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
 
     // all non typed checkers will be added to this:
     List<Checker> checkerList = new ArrayList<Checker>();
-//    checkerList.add(new WordCombinationChecker());
     
+    checkerList.add(new WordCombinationChecker());
 
     this.checkers = new CheckerComposite(checkerList, false);
    

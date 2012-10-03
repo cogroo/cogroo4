@@ -50,10 +50,10 @@ public class WordCombinationChecker extends AbstractChecker {
   }
 
   static final String ID = ID_PREFIX + "WORD_COMB_TOKEN";
-  static final String CATEGORY = "Regência verbal";
-  static final String GROUP = "Erros sintáticos";
+  static final String CATEGORY = "Erros sintáticos";
+  static final String GROUP = "Regência verbal";
   static final String DESCRIPTION = "Procura por verbos e analisa sua regência.";
-  static final String MESSAGE = "Verifique a regência verbal.";
+  static final String MESSAGE = "Problema com a regência verbal";
   static final String SHORT = "Regência verbal.";
 
   public String getIdPrefix() {
@@ -69,9 +69,9 @@ public class WordCombinationChecker extends AbstractChecker {
     int offset = sentence.getStart();
 
     Token verb = findVerb(sentence);
-    List<String> nouns = findNoun(sentence);
+    List<String> nouns = findNouns(sentence);
 
-    if (verb != null) {
+    if (verb != null && verb.getLemmas().length > 0) {
       VerbPlusPreps vpp = verbs.getVerb(verb.getLemmas()[0]);
       // Only gives the first lemma. %TODO improve this case.
 
@@ -87,20 +87,18 @@ public class WordCombinationChecker extends AbstractChecker {
           if (prep != null) {
 
             if (sentPrep == null) {
-              // The original sentence has no preposition in its objects, when
-              // it
-              // should have.
+              // The original sentence has no preposition in its objects, though
+              // it should have.
               if (!prep.getPreposition().equals("_")) {
 
                 int start = verb.getStart() + offset;
                 int end = verb.getEnd() + offset;
 
-                mistakes.add(createMistake(ID, createSuggestion(verb, prep),
-                    start, end, sentence.getText()));
+                mistakes.add(createMistake(ID,
+                    createSuggestion(verb, sentPrep, prep), start, end,
+                    sentence.getText()));
               }
-            }
-
-            else {
+            } else {
               // The original sentence has a preposition already, but it is
               // wrong.
               if (!sentPrep.getLexeme().equals(prep.getPreposition())) {
@@ -108,8 +106,9 @@ public class WordCombinationChecker extends AbstractChecker {
                 int start = sentPrep.getStart() + offset;
                 int end = sentPrep.getEnd() + offset;
 
-                mistakes.add(createMistake(ID, createSuggestion(verb, prep),
-                    start, end, sentence.getText()));
+                mistakes.add(createMistake(ID,
+                    createSuggestion(verb, sentPrep, prep), start, end,
+                    sentence.getText()));
               }
             }
           }
@@ -126,7 +125,7 @@ public class WordCombinationChecker extends AbstractChecker {
    *          entered by the user
    * @return a <tt>List></tt> of every noun found in the sentence's objects
    */
-  private List<String> findNoun(Sentence sentence) {
+  private List<String> findNouns(Sentence sentence) {
     List<String> nouns = new ArrayList<String>();
 
     List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
@@ -134,14 +133,36 @@ public class WordCombinationChecker extends AbstractChecker {
     for (int i = 0; i < syntChunks.size(); i++) {
       String tag = syntChunks.get(i).getTag();
 
-      if (tag.equals("PIV") || tag.equals("ACC")) {
+      if (tag.equals("PIV") || tag.equals("ACC") || tag.equals("SC")) {
 
         for (Token token : syntChunks.get(i).getTokens()) {
           if (token.getPOSTag().equals("n")) {
-            if (token.getLemmas() == null)
+            if (token.getLemmas() != null && token.getLemmas().length > 0) {
               nouns.add(token.getLemmas()[0]);
-            else
+            } else {
               nouns.add(token.getLexeme());
+            }
+          } else { // Adiciona um nome próprio
+            if (token.getPOSTag().equals("prop")) {
+              nouns.add("NP");
+            }
+          }
+        }
+      }
+    }
+
+    int[] spans = spans(sentence);
+    for (int i = 0; i < spans.length; i++) {
+      if (spans[i] != 1) {
+        Token token = sentence.getTokens().get(i);
+        if (token.getPOSTag().equals("n")) {
+          if (token.getLemmas() != null && token.getLemmas().length > 0)
+            nouns.add(token.getLemmas()[0]);
+          else
+            nouns.add(token.getLexeme());
+        } else { // Adiciona um nome próprio
+          if (token.getPOSTag().equals("prop")) {
+            nouns.add("NP");
           }
         }
       }
@@ -164,8 +185,10 @@ public class WordCombinationChecker extends AbstractChecker {
     for (int i = 0; i < syntChunks.size(); i++) {
       String tag = syntChunks.get(i).getTag();
 
-      if (tag.equals("PIV") || tag.equals("ACC")) {
-
+      if (tag.equals("PIV") || tag.equals("ACC") || tag.equals("SC")
+          || tag.equals("P")) {
+        // %TODO Improve the accuracy from the SC and P syntactic chunks, in
+        // order to remove them from this condition
         for (Token token : syntChunks.get(i).getTokens()) {
           if (token.getPOSTag().equals("prp")) {
             return token;
@@ -173,7 +196,31 @@ public class WordCombinationChecker extends AbstractChecker {
         }
       }
     }
+
+    // In case the preposition ins't located in an object
+    int[] spans = spans(sentence);
+    for (int i = 0; i < spans.length; i++) {
+      if (spans[i] != 1) {
+        Token token = sentence.getTokens().get(i);
+        if (token.getPOSTag().equals("prp")) {
+          return token;
+        }
+      }
+    }
+
     return null;
+  }
+
+  private int[] spans(Sentence sentence) {
+    int[] spans = new int[sentence.getTokens().size()];
+
+    for (SyntacticChunk sc : sentence.getSyntacticChunks()) {
+      for (int i = sc.getStart(); i < sc.getEnd(); i++) {
+        spans[i] = 1;
+      }
+    }
+
+    return spans;
   }
 
   /**
@@ -184,7 +231,6 @@ public class WordCombinationChecker extends AbstractChecker {
    * @return the <tt>Token</tt> which contains the searched verb, in case none
    *         was found returns <tt>null</tt>
    */
-  // %TODO Improve the case above.
   public Token findVerb(Sentence sentence) {
     List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
 
@@ -199,9 +245,21 @@ public class WordCombinationChecker extends AbstractChecker {
     return null;
   }
 
-  private String[] createSuggestion(Token token, Prep prep) {
+  private String[] createSuggestion(Token token, Token sentPrep, Prep prep) {
+    String[] array = null;
 
-    String[] array = { token.getLexeme() + " " + prep.getPreposition() };
+    if (prep.getPreposition().equals("_")) {
+      array = new String[] { token.getLexeme() + " " };
+      // MESSAGE = new String ("O verbo (" + token.getLexeme()
+      // + ") com o sentido de (" + prep.getMeaning()
+      // + ") não leva preposição.");
+    } else {
+      array = new String[] { token.getLexeme() + " " + prep.getPreposition() };
+      // MESSAGE = new String ("O verbo " + token.getLexeme()
+      // + " com o sentido de (" + prep.getMeaning()
+      // + ") pede a preposição: " + prep.getPreposition());
+
+    }
 
     return array;
   }

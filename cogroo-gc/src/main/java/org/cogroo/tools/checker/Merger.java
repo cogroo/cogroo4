@@ -18,7 +18,6 @@ package org.cogroo.tools.checker;
 import org.cogroo.entities.impl.MorphologicalTag;
 
 import org.cogroo.tools.checker.rules.model.TagMask;
-import org.cogroo.tools.checker.rules.model.TagMask.Class;
 import org.cogroo.tools.checker.rules.model.TagMask.Gender;
 import org.cogroo.tools.checker.rules.model.TagMask.Number;
 

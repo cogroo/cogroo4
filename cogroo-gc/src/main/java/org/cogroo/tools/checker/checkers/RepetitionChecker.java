@@ -55,8 +55,8 @@ public class RepetitionChecker extends AbstractTypedChecker {
 	private static final String ID_PREFIX = "repetition:";
 
 	static final String ID = ID_PREFIX + "DUPLICATED_TOKEN";
-	static final String CATEGORY = "Repetição de símbolos";
-	static final String GROUP = "Erros mecânicos";
+	static final String CATEGORY = "Erros mecânicos";
+	static final String GROUP = "Repetição de palavras";
 	static final String DESCRIPTION = "Procura por palavras consecutivas repetidas.";
 	static final String MESSAGE = "Verifique a repetição de palavras.";
 	static final String SHORT = "Repetição de palavras.";
