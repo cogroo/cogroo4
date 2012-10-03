@@ -66,29 +66,18 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
    */
   public void initialize(UimaContext aContext)
       throws ResourceInitializationException {
+
+    String[] rulesToIgnore = (String[]) aContext
+        .getConfigParameterValue(PARAM_RULESTOIGNORE);
     
     mCogroo = createCogroo();
     
-    String[] rulesToIgnore = (String[]) aContext
-        .getConfigParameterValue(PARAM_RULESTOIGNORE);
-
     mIsBySentences = (Boolean) aContext
         .getConfigParameterValue(PARAM_BYSENTENCES);
     if (null == mIsBySentences) { // could be null if not set, it is optional
       mIsBySentences = Boolean.FALSE;
     }
 
-    String[] ignoreRules = new String[rulesToIgnore.length];
-    for (int i = 0; i < rulesToIgnore.length; i++) {
-      ignoreRules[i] = rulesToIgnore[i].trim();
-    }
-
-    if (ignoreRules.length > 0) {
-//      Checker ap = config.getChecker();
-//      for (String rule : ignoreRules) {
-//        ap.ignore(rule);
-//      }
-    }
     mLogger = aContext.getLogger();
   }
 
@@ -102,6 +91,14 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
     GrammarCheckerAnalyzer checker;
     try {
       checker = new GrammarCheckerAnalyzer();
+      checker.resetIgnoredRules();
+      
+      String[] ignore = { "xml:117", "xml:118", "xml:124", "xml:103",
+          "xml:104", "xml:105" };
+      
+      for (String string : ignore) {
+        checker.ignoreRule(string);
+      }
     } catch (IllegalArgumentException e) {
       throw new ResourceInitializationException(e);
     } catch (IOException e) {

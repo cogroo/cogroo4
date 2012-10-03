@@ -1,1 +1,10 @@
-pos-cf-maxent-POS_AC,POS_FSAEX,POS_FSAFACT-gp-4
+pos-cf-perceptron-POS_DIC,POS_DICCUT1,POS_EXFACT,POS_AC-gp-0
+pos-cf-maxent-POS_DIC,POS_DICCUT1,POS_EXFACT,POS_AC-gp-2
+pos-cf-maxent-POS_DIC,POS_DICCUT1,POS_FACT,POS_AC-gp-4
+pos-cf-perceptron-POS_DIC,POS_DICCUT1,POS_FACT,POS_AC-gp-0
+pos-cf-maxent-POS_DIC,POS_DICCUT1,POS_FACT-gp-4
+pos-cf-perceptron-POS_DIC,POS_DICCUT1,POS_FACT-gp-0
+pos-cf-maxent-POS_DICCUT1,POS_FACT-gp-4
+pos-cf-perceptron-POS_DICCUT1,POS_FACT-gp-0
+pos-cf-maxent-POS_FACT-gp-2
+pos-cf-perceptron-POS_FACT-gp-0
