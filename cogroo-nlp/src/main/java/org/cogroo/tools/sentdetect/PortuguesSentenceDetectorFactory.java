@@ -22,43 +22,16 @@ import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.sentdetect.SDContextGenerator;
 import opennlp.tools.sentdetect.SentenceDetectorFactory;
 import opennlp.tools.sentdetect.lang.Factory;
-import opennlp.tools.util.model.ArtifactProvider;
 
 public class PortuguesSentenceDetectorFactory extends SentenceDetectorFactory {
-
-  private char[] eos;
-
-  @Override
-  public void init(ArtifactProvider artifactProvider) {
-    super.init(artifactProvider);
-    this.eos = super.getEOSCharacters();
-  }
-
-  @Override
-  protected void init(String languageCode, boolean useTokenEnd,
-      Dictionary abbreviationDictionary, char[] eosCharacters) {
-    super
-        .init(languageCode, useTokenEnd, abbreviationDictionary, eosCharacters);
-
-    if (eosCharacters != null) {
-      this.eos = eosCharacters;
-    } else {
-      this.eos = Factory.ptEosCharacters;
-    }
-  }
 
   public PortuguesSentenceDetectorFactory(String languageCode,
       boolean useTokenEnd, Dictionary abbreviationDictionary,
       char[] eosCharacters) {
-    super(languageCode, useTokenEnd, abbreviationDictionary, eosCharacters);
+    init(languageCode, useTokenEnd, abbreviationDictionary, eosCharacters);
   }
 
   public PortuguesSentenceDetectorFactory() {
-  }
-
-  @Override
-  public char[] getEOSCharacters() {
-    return eos;
   }
 
   @Override
