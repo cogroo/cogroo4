@@ -47,6 +47,24 @@ my %data;
 my %table;
 my @exp;
 
+
+# load the config, just to check..
+my %extraOpt;
+
+	open CONFIG, "options.properties" or die $!;
+
+	while (<CONFIG>) {
+		chomp;       # no newline
+		s/#.*//;     # no comments
+		s/^\s+//;    # no leading white
+		s/\s+$//;    # no trailing white
+		next unless length;    # anything left?
+		my ( $var, $value ) = split( /\s*=\s*/, $_, 2 );
+		$extraOpt{$var} = $value;
+	}
+
+	close CONFIG;
+
 foreach my $line (<IN>) {
 	if( $line =~ m/===\s+(.*?)\s+===/) {
 		putData(\%data, $experiment) if (useData($experiment));
@@ -482,9 +500,50 @@ sub toConfiguration {
 	my $cut = shift;
 	my @parts = split('\.',$exp);
 	
+	for(my $i = 3; $i < @parts; $i++) {
+		$parts[$i] = toExtraOpt($parts[0], $parts[$i]);
+		if(!(exists $extraOpt{$parts[$i]})) {
+			die "missing configuration! $parts[$i] \n";
+		}
+	}
+	
+	@parts = removeOverlap(\@parts);
+	
 	my $opt = join(',', @parts[3..(@parts-1)]);
-	$opt =~ s/ABB/SD_ABB/;
-	$opt =~ s/ALPHAOPT/TOK_ALPHAOPT/;
 	
 	return lc($parts[0]) . '-' . lc($parts[1]) . '-' . lc($parts[2]) . "-$opt-gp-$cut";
+}
+
+sub toExtraOpt {
+	my $tool = shift;
+	my $opt = shift;
+	
+	if($opt eq "ABB") {
+		$opt = "SD_ABB";
+	} elsif($opt eq "ALPHAOPT") {
+		$opt = "TOK_ALPHAOPT";
+	} elsif($opt eq "CCP") {
+		$opt = "POS_EXFACT";
+	} elsif($opt eq "MDICT") {
+		$opt = "POS_DICCUT1";
+	} else {
+		if($tool eq "pos") {
+			$opt = "POS_" . $opt;
+		}
+	}
+	return $opt;
+	
+}
+
+sub removeOverlap {
+	my @parts = @{$_[0]};
+	my @opts = splice (@parts, 3, @parts-3);
+	my %params = map { $_ => 1 } @opts;
+	if(exists($params{"POS_FACT"}) && exists($params{"POS_EXFACT"})) { 
+		delete($params{"POS_FACT"});
+	}
+	
+	@opts = keys %params;
+	@parts = (@parts, @opts);
+	return @parts;
 }

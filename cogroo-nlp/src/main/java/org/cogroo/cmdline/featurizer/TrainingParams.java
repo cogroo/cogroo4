@@ -35,4 +35,8 @@ interface TrainingParams extends BasicTrainingParams {
   @ParameterDescription(valueName = "factoryName", description = "A sub-class of POSTaggerFactory where to get implementation and resources.")
   @OptionalParameter
   String getFactory();
+  
+  @ParameterDescription(valueName = "cgFlags", description = "The Context Generator flags.")
+  @OptionalParameter
+  String getCGFlags();
 }

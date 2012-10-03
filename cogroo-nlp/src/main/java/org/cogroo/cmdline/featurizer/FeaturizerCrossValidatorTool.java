@@ -78,7 +78,7 @@ public final class FeaturizerCrossValidatorTool extends
       String factoryName = params.getFactory();
 
       validator = new FeaturizerCrossValidator(factory.getLang(), mlParams,
-          tagdict, factoryName,
+          tagdict, params.getCGFlags(), factoryName,
           listeners.toArray(new FeaturizerEvaluationMonitor[listeners.size()]));
 
       validator.evaluate(sampleStream, params.getFolds());

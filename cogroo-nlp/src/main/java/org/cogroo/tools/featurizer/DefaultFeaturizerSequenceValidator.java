@@ -62,6 +62,11 @@ public class DefaultFeaturizerSequenceValidator implements
 //      postag = postag.substring(2);
 //    }
 
+    if(postag == null) {
+      System.err.println("NULL: " + Arrays.toString(sequence));
+      System.err.println("NULL: " + Arrays.toString(s));
+    }
+    
     String[] tagsArr = expandedSearch(word, postag, true);
     
     List<String> tags = null;

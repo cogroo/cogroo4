@@ -209,6 +209,10 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
       postag = ADFeaturizerSampleStream.convertFuncTag(leaf.getFunctionalTag());
     }
 
+    if(postag == null) {
+      return;
+    }
+    
     if (expandME && lexeme.contains("_") && !"prop".equals(postag)) {
       StringTokenizer tokenizer = new StringTokenizer(lexeme, "_");
 

@@ -59,7 +59,7 @@
     		<xs:element name="Comment" type="xs:string" maxOccurs="1"
     			minOccurs="0">
     		</xs:element>
-    		<xs:element name="Rule" type="xs:int" maxOccurs="1"
+    		<xs:element name="Rule" type="xs:string" maxOccurs="1"
     			minOccurs="1">
     		</xs:element>
     		<xs:element name="Span" type="Span" maxOccurs="1" minOccurs="1"></xs:element>

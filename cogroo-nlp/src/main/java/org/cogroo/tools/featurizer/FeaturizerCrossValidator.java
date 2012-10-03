@@ -35,11 +35,13 @@ public class FeaturizerCrossValidator {
   private FeatureDictionaryI posDict;
   private String factoryClassName;
   private FeaturizerFactory factory;
+  private String cgFlags;
 
   public FeaturizerCrossValidator(String languageCode,
-      TrainingParameters params, FeatureDictionaryI dict,
+      TrainingParameters params, FeatureDictionaryI dict, String cgFlags,
       String factoryClass, FeaturizerEvaluationMonitor... listeners) {
 
+    this.cgFlags = cgFlags;
     this.languageCode = languageCode;
     this.params = params;
     this.listeners = listeners;
@@ -68,7 +70,7 @@ public class FeaturizerCrossValidator {
           .next();
       
       if (this.factory == null) {
-        this.factory = FeaturizerFactory.create(this.factoryClassName, posDict);
+        this.factory = FeaturizerFactory.create(this.factoryClassName, posDict, cgFlags);
       }
 
       FeaturizerModel model = FeaturizerME.train(languageCode,

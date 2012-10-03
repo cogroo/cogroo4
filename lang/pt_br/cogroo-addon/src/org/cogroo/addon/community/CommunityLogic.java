@@ -440,7 +440,7 @@ public class CommunityLogic {
                 BadIntervention bi = new BadIntervention();
                 bi.setClassification(classification);
                 bi.setComment(this.commentsForBadIntervention[i]);
-                bi.setRule(new Integer(mistakes.get(i).getRuleIdentifier()));
+                bi.setRule(mistakes.get(i).getRuleIdentifier());
                 org.cogroo.tools.errorreport.model.Span span = new org.cogroo.tools.errorreport.model.Span();
                 span.setStart(mistakes.get(i).getStart());
                 span.setEnd(mistakes.get(i).getEnd());

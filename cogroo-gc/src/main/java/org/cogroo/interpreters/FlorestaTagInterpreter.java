@@ -329,9 +329,13 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
         return ((MorphologicalTag) cache.get(tagString)).clone();
       }
     }
+    
+    if(tagString.endsWith("#-")) {
+      tagString = tagString.substring(0, tagString.length() - 2);
+    }
 
     MorphologicalTag m = new MorphologicalTag();
-
+    
     String[] tags = tagString.split("[#=]");
     for (String tag : tags) {
       if (MTAG_PARTS_ENUM.containsKey(tag)) {

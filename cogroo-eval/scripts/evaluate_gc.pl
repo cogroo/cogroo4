@@ -496,6 +496,8 @@ sub processName {
 	$name =~ s/GP //g;
 	$name =~ s/SENT //g;
 	$name =~ s/TOK //g;
+	$name =~ s/POS //g;
+	$name =~ s/FEAT //g;
 	$name =~ s/^\s+|\s+$//g;
 	return $name;
 }

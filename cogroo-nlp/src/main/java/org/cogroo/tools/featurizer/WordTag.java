@@ -66,4 +66,9 @@ public class WordTag {
   public int hashCode() {
     return Objects.hashCode(word, postag);
   }
+  
+  @Override
+  public String toString() {
+    return getWord() + "_" + getPostag();
+  }
 }

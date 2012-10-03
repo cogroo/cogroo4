@@ -39,10 +39,11 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
 
 //  private static final String POISONED_TAGS_ENTRY_NAME = "poisonedtags.serialized_set";
   
+  private static final String CG_FLAGS_PROPERTY = "cgFlags";
   protected FeatureDictionaryI featureDictionary;
-
   private Set<String> poisonedDictionaryTags = null;
-
+  private String cgFlags;
+  
   /**
    * Creates a {@link FeaturizerFactory} that provides the default
    * implementation of the resources.
@@ -55,12 +56,13 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
    * programmatically create a factory.
    * 
    */
-  public FeaturizerFactory(FeatureDictionaryI featureDictionary) {
-    this.init(featureDictionary);
+  public FeaturizerFactory(FeatureDictionaryI featureDictionary, String cgFlags) {
+    this.init(featureDictionary, cgFlags);
   }
   
-  protected void init(FeatureDictionaryI featureDictionary) {
+  protected void init(FeatureDictionaryI featureDictionary, String cgFlags) {
     this.featureDictionary = featureDictionary;
+    this.cgFlags = cgFlags;
   }
 
   @Override
@@ -71,6 +73,17 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
     SetSerializer.register(serializers);
     return serializers;
   }
+  
+  @Override
+  public Map<String, String> createManifestEntries() {
+    Map<String, String> manifestEntries = super.createManifestEntries();
+
+    // EOS characters are optional
+    if (getCGFlags() != null)
+      manifestEntries.put(CG_FLAGS_PROPERTY, getCGFlags());
+
+    return manifestEntries;
+  }
 
   @Override
   public Map<String, Object> createArtifactMap() {
@@ -80,6 +93,21 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
 //    artifactMap.put(POISONED_TAGS_ENTRY_NAME, new HashSet<String>());
 
     return artifactMap;
+  }
+  
+  public String getCGFlags() {
+    if (this.cgFlags == null) {
+      if (artifactProvider != null) {
+        String prop = this.artifactProvider
+            .getManifestProperty(CG_FLAGS_PROPERTY);
+        if (prop != null) {
+          this.cgFlags = prop;
+        }
+      } else {
+        this.cgFlags = "shnc";
+      }
+    }
+    return this.cgFlags;
   }
 
   public FeatureDictionaryI getFeatureDictionary() {
@@ -98,7 +126,7 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
   }
 
   public FeaturizerContextGenerator getFeaturizerContextGenerator() {
-    return new DefaultFeaturizerContextGenerator();
+    return new DefaultFeaturizerContextGenerator(getCGFlags());
   }
 
   public SequenceValidator<WordTag> getSequenceValidator() {
@@ -163,13 +191,13 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
   }
   
   public static FeaturizerFactory create(String subclassName,
-      FeatureDictionaryI posDictionary) throws InvalidFormatException {
+      FeatureDictionaryI posDictionary, String cgFlags) throws InvalidFormatException {
     if (subclassName == null) {
       // will create the default factory
-      return new DefaultFeaturizerFactory(posDictionary);
+      return new DefaultFeaturizerFactory(posDictionary, cgFlags);
     }
     FeaturizerFactory theFactory = ExtensionLoader.instantiateExtension(FeaturizerFactory.class, subclassName);
-    theFactory.init(theFactory.featureDictionary);
+    theFactory.init(posDictionary, cgFlags);
     
     return theFactory;
   }

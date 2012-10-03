@@ -74,7 +74,8 @@ public class FeaturizerTrainerTool extends
       
       FeaturizerFactory  featurizerFactory = null;
       try {
-        featurizerFactory = FeaturizerFactory.create(params.getFactory(), tagdict);
+        featurizerFactory = FeaturizerFactory.create(params.getFactory(),
+            tagdict, params.getCGFlags());
       } catch (InvalidFormatException e) {
         throw new TerminateToolException(-1, e.getMessage());
       }
