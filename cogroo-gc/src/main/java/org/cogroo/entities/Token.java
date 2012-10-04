@@ -18,13 +18,13 @@ package org.cogroo.entities;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import opennlp.tools.util.Span;
+
 import org.cogroo.entities.impl.ChunkTag;
 import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.entities.impl.SyntacticTag;
 
 import com.google.common.base.Objects;
-
-import opennlp.tools.util.Span;
 
 /**
  * A token is the smallest annotated unit of the text. Examples: "home" "," "."
@@ -189,6 +189,16 @@ public abstract class Token implements Serializable {
           && Objects.equal(this.span, that.span);
     }
     return false;
+  }
+  
+  /*
+   * (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.lexeme, this.primitive, this.morphologicalTag, 
+                                this.chunkTag, this.lexemeType, this.span);
   }
 
   public void setSyntacticChunk(SyntacticChunk syntacticChunk) {

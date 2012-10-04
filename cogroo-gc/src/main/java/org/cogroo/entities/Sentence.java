@@ -18,9 +18,9 @@ package org.cogroo.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import org.cogroo.entities.tree.Node;
-
 import opennlp.tools.util.Span;
+
+import org.cogroo.entities.tree.Node;
 
 import com.google.common.base.Objects;
 
@@ -194,5 +194,13 @@ public class Sentence implements Serializable, TokenGroup {
           && Objects.equal(this.offset, that.offset);
     }
     return false;
+  }
+  
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.sentence, this.tokens, this.chunks, this.root, this.offset);
   }
 }
