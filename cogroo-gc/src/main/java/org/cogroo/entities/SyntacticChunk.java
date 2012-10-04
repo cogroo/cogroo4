@@ -162,6 +162,14 @@ public class SyntacticChunk implements Serializable {
     }
     return false;
   }
+  
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.getChildChunks(), this.syntacticTag);
+  }
 
   public List<Chunk> getChildChunks() {
     return this.chunks;

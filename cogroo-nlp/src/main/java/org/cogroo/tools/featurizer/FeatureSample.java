@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.common.base.Objects;
+
 /**
  * Class for holding features for a single unit of text.
  */
@@ -130,6 +132,14 @@ public class FeatureSample {
     } else {
       return false;
     }
+  }
+  
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getSentence(), getTags(), getLemmas(), getFeatures());
   }
 
 }
