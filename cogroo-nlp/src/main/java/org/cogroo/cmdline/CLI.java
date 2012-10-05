@@ -26,6 +26,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import opennlp.tools.cmdline.AbstractCmdLineTool;
+import opennlp.tools.cmdline.BasicCmdLineTool;
+import opennlp.tools.cmdline.CmdLineTool;
+import opennlp.tools.cmdline.StreamFactoryRegistry;
+import opennlp.tools.cmdline.TerminateToolException;
+import opennlp.tools.cmdline.TypedCmdLineTool;
+import opennlp.tools.cmdline.namefind.TokenNameFinderCrossValidatorTool;
+import opennlp.tools.cmdline.namefind.TokenNameFinderEvaluatorTool;
+import opennlp.tools.cmdline.namefind.TokenNameFinderTool;
+import opennlp.tools.cmdline.namefind.TokenNameFinderTrainerTool;
+import opennlp.tools.cmdline.postag.POSTaggerCrossValidatorTool;
+import opennlp.tools.cmdline.postag.POSTaggerTrainerTool;
+import opennlp.tools.util.Version;
+
+import org.cogroo.cmdline.chunker2.Chunker2CrossValidatorTool;
+import org.cogroo.cmdline.chunker2.Chunker2EvaluatorTool;
+import org.cogroo.cmdline.chunker2.Chunker2Tool;
+import org.cogroo.cmdline.chunker2.Chunker2TrainerTool;
 import org.cogroo.cmdline.dictionary.AbbreviationDictionaryBuilderTool;
 import org.cogroo.cmdline.featurizer.FeaturizerConverterTool;
 import org.cogroo.cmdline.featurizer.FeaturizerCrossValidatorTool;
@@ -35,26 +53,11 @@ import org.cogroo.cmdline.featurizer.FeaturizerTrainerTool;
 import org.cogroo.formats.FeatureSampleStreamFactory;
 import org.cogroo.formats.ad.ADChunkBasedHeadFinderSampleStreamFactory;
 import org.cogroo.formats.ad.ADChunkBasedShallowParserSampleStreamFactory;
+import org.cogroo.formats.ad.ADChunkSampleStreamFactory;
 import org.cogroo.formats.ad.ADContractionNameSampleStreamFactory;
 import org.cogroo.formats.ad.ADExPOSSampleStreamFactory;
 import org.cogroo.formats.ad.ADExpNameSampleStreamFactory;
 import org.cogroo.formats.ad.ADFeatureSampleStreamFactory;
-
-import opennlp.tools.cmdline.AbstractCmdLineTool;
-import opennlp.tools.cmdline.BasicCmdLineTool;
-import opennlp.tools.cmdline.CmdLineTool;
-import opennlp.tools.cmdline.StreamFactoryRegistry;
-import opennlp.tools.cmdline.TerminateToolException;
-import opennlp.tools.cmdline.TypedCmdLineTool;
-import opennlp.tools.cmdline.chunker.ChunkerCrossValidatorTool;
-import opennlp.tools.cmdline.chunker.ChunkerTrainerTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderCrossValidatorTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderEvaluatorTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderTrainerTool;
-import opennlp.tools.cmdline.postag.POSTaggerCrossValidatorTool;
-import opennlp.tools.cmdline.postag.POSTaggerTrainerTool;
-import opennlp.tools.util.Version;
 
 public final class CLI {
 
@@ -72,6 +75,8 @@ public final class CLI {
     ADChunkBasedHeadFinderSampleStreamFactory.registerFactory();
     ADChunkBasedShallowParserSampleStreamFactory.registerFactory();
     
+    ADChunkSampleStreamFactory.registerFactory();
+    
     toolLookupMap = new LinkedHashMap<String, AbstractCmdLineTool>();
 
     List<AbstractCmdLineTool> tools = new LinkedList<AbstractCmdLineTool>();
@@ -83,6 +88,13 @@ public final class CLI {
     tools.add(new FeaturizerEvaluatorTool());
     tools.add(new FeaturizerCrossValidatorTool());
     tools.add(new FeaturizerConverterTool());
+    
+    // Chunker2
+    tools.add(new Chunker2Tool());
+    tools.add(new Chunker2TrainerTool());
+    tools.add(new Chunker2EvaluatorTool());
+    tools.add(new Chunker2CrossValidatorTool());
+//    tools.add(new Chunker2ConverterTool());
 
     // Contraction
     tools.add(new AbbreviationDictionaryBuilderTool());
@@ -96,8 +108,8 @@ public final class CLI {
     tools.add(new POSTaggerCrossValidatorTool());
 
     // Chunker
-    tools.add(new ChunkerTrainerTool());
-    tools.add(new ChunkerCrossValidatorTool());
+//    tools.add(new Chunker2TrainerTool());
+//    tools.add(new Chunker2CrossValidatorTool());
     
     for (AbstractCmdLineTool tool : tools) {
       toolLookupMap.put(tool.getName(), tool);
