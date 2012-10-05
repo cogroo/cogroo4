@@ -1,1 +1,10 @@
-feat-cf-perceptron-FEAT_FSAFACT,FEAT_FSAEX-gp-0
+feat-cf-perceptron-FEAT_FLAGSWHNCS-gp-0
+feat-cf-perceptron-FEAT_FLAGSHNCS-gp-0
+feat-cf-perceptron-FEAT_FLAGSCS-gp-0
+feat-cf-perceptron-FEAT_FLAGSWHNCS,FEAT_DIC,FEAT_FSAFACTORY-gp-0
+feat-cf-perceptron-FEAT_FLAGSS-gp-0
+feat-cf-perceptron-FEAT_FLAGSNCS-gp-0
+feat-cf-perceptron-FEAT_DIC,FEAT_FSAFACTORY,FEAT_FLAGSHNCS-gp-0
+feat-cf-perceptron-FEAT_DIC,FEAT_FLAGSCS,FEAT_FSAFACTORY-gp-0
+feat-cf-perceptron-FEAT_DIC,FEAT_FLAGSS,FEAT_FSAFACTORY-gp-0
+feat-cf-perceptron-FEAT_DIC,FEAT_FSAFACTORY,FEAT_FLAGSNCS-gp-0
