@@ -529,6 +529,8 @@ sub toExtraOpt {
 	} else {
 		if($tool eq "pos") {
 			$opt = "POS_" . $opt;
+		} elsif($tool eq "feat") {
+			$opt = "FEAT_" . $opt;
 		}
 	}
 	return $opt;
