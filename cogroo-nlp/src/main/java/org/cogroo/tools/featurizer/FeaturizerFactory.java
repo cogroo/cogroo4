@@ -103,8 +103,10 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
         if (prop != null) {
           this.cgFlags = prop;
         }
-      } else {
-        this.cgFlags = "shnc";
+      }
+      
+      if (this.cgFlags == null) {
+        this.cgFlags = "wshnc";
       }
     }
     return this.cgFlags;
