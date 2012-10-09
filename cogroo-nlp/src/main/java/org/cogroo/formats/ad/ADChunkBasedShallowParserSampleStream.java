@@ -17,7 +17,6 @@ package org.cogroo.formats.ad;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,16 +24,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.cogroo.tools.featurizer.WordTag;
+import org.cogroo.tools.shallowparser.ShallowParserSequenceValidator;
+
 import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.formats.ad.ADChunkSampleStream;
-import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
-import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
-import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.ObjectStream;
-import opennlp.tools.util.PlainTextByLineStream;
 
 /**
  * Parser for Floresta Sita(c)tica Arvores Deitadas corpus, output to for the
@@ -59,33 +57,24 @@ import opennlp.tools.util.PlainTextByLineStream;
  * <p>
  * <b>Note:</b> Do not use this class, internal use only!
  */
-public class ADChunkBasedShallowParserSampleStream implements
-    ObjectStream<ChunkSample> {
-
-  private final ObjectStream<ADSentenceStream.Sentence> adSentenceStream;
-
-  private int start = -1;
-  private int end = -1;
-
-  private int index = 0;
-
-  private boolean useCGTags;
-
-  private boolean expandME;
+public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
 
   private final Set<String> functTagSet;
 
   private String[] defaultFunctTags = { "SUBJ", "ACC", "DAT", "PIV", "ADVS",
-      "ADVO", "SC", "OC", "P", "MV", "PMV", "AUX", "PAUX", "NPHR" };
+      "ADVO", "SC", "OC", "P", "AUX", "NPHR", "SA", "ADVL",
+      // "MV","PMV", "PAUX", 
+      };
 
-  private boolean isIncludePOSTags;
+  private boolean readChunk;
+
+  private ShallowParserSequenceValidator sv = new ShallowParserSequenceValidator();
   
   public ADChunkBasedShallowParserSampleStream(ObjectStream<String> lineStream, String commaSeparatedFunctTags,
       boolean isIncludePOSTags, boolean useCGTag, boolean expandME) {
-    this.useCGTags = useCGTag;
-    this.expandME = expandME;
-      this.adSentenceStream = new ADSentenceStream(lineStream);
-      this.isIncludePOSTags = isIncludePOSTags;
+    
+    super(lineStream);
+    
 
       if (commaSeparatedFunctTags == null
           || commaSeparatedFunctTags.trim().isEmpty()) {
@@ -112,12 +101,8 @@ public class ADChunkBasedShallowParserSampleStream implements
   public ADChunkBasedShallowParserSampleStream(InputStream in,
       String charsetName, String commaSeparatedFunctTags,
       boolean isIncludePOSTags, boolean useCGTag, boolean expandME) {
-    this.useCGTags = useCGTag;
-    this.expandME = expandME;
-    try {
-      this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(
-          in, charsetName));
-      this.isIncludePOSTags = isIncludePOSTags;
+    
+    super(in, charsetName);
 
       if (commaSeparatedFunctTags == null
           || commaSeparatedFunctTags.trim().isEmpty()) {
@@ -130,208 +115,83 @@ public class ADChunkBasedShallowParserSampleStream implements
         functTagsSet.addAll(Arrays.asList(tags));
         functTagSet = Collections.unmodifiableSet(functTagsSet);
       }
-    } catch (UnsupportedEncodingException e) {
-      // UTF-8 is available on all JVMs, will never happen
-      throw new IllegalStateException(e);
-    }
   }
 
   public ChunkSample read() throws IOException {
-
+    
+    
     Sentence paragraph;
     while ((paragraph = this.adSentenceStream.read()) != null) {
 
-      if (end > -1 && index >= end) {
-        // leave
-        return null;
-      }
-
-      if (start > -1 && index < start) {
-        index++;
-        // skip this one
-      } else {
+        this.readChunk = true;
         Node root = paragraph.getRoot();
         List<String> sentence = new ArrayList<String>();
         List<String> tags = new ArrayList<String>();
+        List<String> chunks = new ArrayList<String>();
+
+        processRoot(root, sentence, tags, chunks);
+        
+        this.readChunk = false;
+        
+        sentence.clear();
+        tags.clear();
         List<String> target = new ArrayList<String>();
-
         processRoot(root, sentence, tags, target);
-
-        if (sentence.size() > 0) {
-          index++;
-          return new ChunkSample(sentence, tags, target);
+        
+        for (int i = 0; i < tags.size(); i++) {
+          tags.set(i, tags.get(i) + "|" + chunks.get(i));
         }
+        
+        if (sentence.size() > 0) {
+          ChunkSample cs = new ChunkSample(sentence, tags, target);
+//          System.out.println(cs);
+          for (int i = 0; i < sentence.size(); i++) {
+            String[] outcomes;
+            if(i > 0) {
+              outcomes = target.subList(0, i).toArray(new String[i]);
+            } else {
+              outcomes = new String[0];
+            }
+            if(!sv.validSequence(i, WordTag.create(cs), outcomes, target.get(i))) {
+              System.out.println("failed, invalid outcome: " + target.get(i));
+            }
+          }
+          
+          
+//          System.out.println(cs);
+          return cs;
+        }
+        
 
       }
 
-    }
     return null;
   }
 
-  private void processRoot(Node root, List<String> sentence, List<String> tags,
-      List<String> target) {
-    if (root != null) {
-      TreeElement[] elements = root.getElements();
-      for (int i = 0; i < elements.length; i++) {
-        if (elements[i].isLeaf()) {
-          processLeaf((Leaf) elements[i], false, "O", false, "O", sentence,
-              tags, target);
-        } else {
-          // allways pass isInt false when it is a new node
-          processNode((Node) elements[i], sentence, tags, target, "O", false,
-              null);
-        }
+
+  @Override
+  protected String getChunkTag(String tag) {
+    if(this.readChunk)
+      return super.getChunkTag(tag);
+    else {
+      String funcTag = tag.substring(0, tag.lastIndexOf(":"));
+
+      if (!functTagSet.contains(funcTag)) {
+        funcTag = "O";
       }
+      return funcTag;
     }
   }
-
-  private void processNode(Node node, List<String> sentence, List<String> tags,
-      List<String> target, String functTagParent, boolean isIntermediateFunct,
-      String inheritedTag) {
-
-    String phraseTag = getChunkTag(node.getSyntacticTag());
-    String funcTag = getFunctionTag(node.getSyntacticTag());
-
-    boolean inherited = false;
-    if (phraseTag.equals("O") && inheritedTag != null) {
-      phraseTag = inheritedTag;
-      inherited = true;
-    }
-
-    if (funcTag.equals("O") && functTagParent != null) {
-      // keep parent funct tag
-      funcTag = functTagParent;
-    }
-
-    if (!funcTag.equals(functTagParent)) {
-      // it is a new tag... reset isInt
-      isIntermediateFunct = false;
-    }
-
-    TreeElement[] elements = node.getElements();
-    for (int i = 0; i < elements.length; i++) {
-
-      if (elements[i].isLeaf()) {
-
-        boolean isIntermediatePhrase = false;
-        if (i > 0 && elements[i - 1].isLeaf() && phraseTag != null
-            && !phraseTag.equals("O")) {
-          isIntermediatePhrase = true;
-        }
-        if (inherited && target.size() > 0
-            && target.get(target.size() - 1).endsWith(phraseTag)) {
-          isIntermediatePhrase = true;
-        }
-
-        processLeaf((Leaf) elements[i], isIntermediatePhrase, phraseTag,
-            isIntermediateFunct, funcTag, sentence, tags, target);
-      } else {
-        processNode((Node) elements[i], sentence, tags, target, funcTag,
-            isIntermediateFunct, phraseTag);
-      }
-      if (!funcTag.equals("O")) {
-        isIntermediateFunct = true;
-      }
-    }
+  
+  protected String getPhraseTagFromPosTag(String functionalTag) {
+    return OTHER;
   }
 
-  private void processLeaf(Leaf leaf, boolean isIntermediatePhrase,
-      String phraseTag, boolean isIntermediateFunct, String functTag,
-      List<String> sentence, List<String> tags, List<String> target) {
-
-    if (leaf.getFunctionalTag() != null && phraseTag.equals("O")) {
-      if (leaf.getFunctionalTag().equals("v-fin")) {
-        phraseTag = "VP";
-      } else if (leaf.getFunctionalTag().equals("n")) {
-        phraseTag = "NP";
-      }
-    }
-
-    phraseTag = ADChunkSampleStream.convertPhraseTag(phraseTag);
-
-    if (leaf.getSyntacticTag() != null && functTag.equals("O")
-        && functTagSet.contains(leaf.getSyntacticTag())) {
-      functTag = leaf.getSyntacticTag();
-    }
-
-    if (!phraseTag.equals("O")) {
-      if (isIntermediatePhrase) {
-        phraseTag = "I-" + phraseTag;
-      } else {
-        phraseTag = "B-" + phraseTag;
-      }
-    }
-
-    if (!functTag.equals("O")) {
-      if (isIntermediateFunct) {
-        functTag = "I-" + functTag;
-      } else {
-        functTag = "B-" + functTag;
-      }
-    }
-
-    sentence.add(leaf.getLexeme());
-
-    // if ("H".equals(leaf.getSyntacticTag())) {
-    // phraseTag = "*" + phraseTag;
-    // }
-
-    if (leaf.getSyntacticTag() == null) {
-      tags.add(getTag(leaf.getLexeme(), phraseTag));
-    } else {
-      tags.add(getTag(ADChunkSampleStream.convertFuncTag(
-          leaf.getFunctionalTag(), this.useCGTags), phraseTag));
-    }
-
-    target.add(functTag);
+  @Override
+  protected boolean isIncludePunctuations() {
+    if(this.readChunk)
+      return super.isIncludePunctuations();
+    return true;
   }
-
-  private String getTag(String functTag, String phraseTag) {
-    if (isIncludePOSTags) {
-      return functTag + "|" + phraseTag;
-    }
-    return phraseTag;
-  }
-
-  private String getFunctionTag(String tag) {
-
-    String funcTag = tag.substring(0, tag.lastIndexOf(":"));
-
-    if (!functTagSet.contains(funcTag)) {
-      funcTag = "O";
-    }
-    return funcTag;
-  }
-
-  private String getChunkTag(String tag) {
-
-    String phraseTag = tag.substring(tag.lastIndexOf(":") + 1);
-
-    // maybe we should use only np, vp and pp, but will keep ap and advp.
-    if (phraseTag.equals("np") || phraseTag.equals("vp")
-        || phraseTag.equals("pp") || phraseTag.equals("ap")
-        || phraseTag.equals("advp")) {
-      phraseTag = phraseTag.toUpperCase();
-    } else {
-      phraseTag = "O";
-    }
-    return phraseTag;
-  }
-
-  public void setStart(int aStart) {
-    this.start = aStart;
-  }
-
-  public void setEnd(int aEnd) {
-    this.end = aEnd;
-  }
-
-  public void reset() throws IOException, UnsupportedOperationException {
-    adSentenceStream.reset();
-  }
-
-  public void close() throws IOException {
-    adSentenceStream.close();
-  }
-
+  
 }
