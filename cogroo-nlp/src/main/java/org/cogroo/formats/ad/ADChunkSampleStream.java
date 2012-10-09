@@ -23,8 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cogroo.tools.chunker2.ChunkSample;
-
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;

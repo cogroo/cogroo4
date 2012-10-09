@@ -21,9 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.cogroo.tools.chunker2.ChunkSample;
-import org.cogroo.tools.chunker2.ChunkerME;
-import org.cogroo.tools.chunker2.ChunkerModel;
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.AbstractBasicCmdLineTool;
 import opennlp.tools.cmdline.CLI;
 import opennlp.tools.cmdline.CmdLineUtil;
@@ -32,6 +30,9 @@ import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
+
+import org.cogroo.tools.chunker2.ChunkerME;
+import org.cogroo.tools.chunker2.ChunkerModel;
 
 public class Chunker2Tool extends AbstractBasicCmdLineTool {
 

@@ -17,10 +17,11 @@
 
 package org.cogroo.cmdline.chunker2;
 
-import org.cogroo.tools.chunker2.ChunkSample;
-import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.DetailedFMeasureListener;
 import opennlp.tools.util.Span;
+
+import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
 
 public class ChunkerDetailedFMeasureListener extends
     DetailedFMeasureListener<ChunkSample> implements ChunkerEvaluationMonitor{

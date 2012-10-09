@@ -15,6 +15,7 @@
  */
 package org.cogroo.tools.chunker2;
 
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.util.eval.Evaluator;
 import opennlp.tools.util.eval.FMeasure;
 

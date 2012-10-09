@@ -20,16 +20,17 @@ package org.cogroo.cmdline.chunker2;
 import java.io.File;
 import java.io.IOException;
 
-import org.cogroo.tools.chunker2.ChunkSample;
-import org.cogroo.tools.chunker2.ChunkerFactory;
-import org.cogroo.tools.chunker2.ChunkerME;
-import org.cogroo.tools.chunker2.ChunkerModel;
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.AbstractTrainerTool;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.TerminateToolException;
-import org.cogroo.cmdline.chunker2.Chunker2TrainerTool.TrainerToolParams;
 import opennlp.tools.cmdline.params.TrainingToolParams;
 import opennlp.tools.util.model.ModelUtil;
+
+import org.cogroo.cmdline.chunker2.Chunker2TrainerTool.TrainerToolParams;
+import org.cogroo.tools.chunker2.ChunkerFactory;
+import org.cogroo.tools.chunker2.ChunkerME;
+import org.cogroo.tools.chunker2.ChunkerModel;
 
 public class Chunker2TrainerTool
     extends AbstractTrainerTool<ChunkSample, TrainerToolParams> {

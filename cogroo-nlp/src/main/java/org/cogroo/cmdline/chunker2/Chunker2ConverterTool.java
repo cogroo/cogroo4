@@ -17,7 +17,7 @@
 
 package org.cogroo.cmdline.chunker2;
 
-import org.cogroo.tools.chunker2.ChunkSample;
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.AbstractConverterTool;
 
 /**

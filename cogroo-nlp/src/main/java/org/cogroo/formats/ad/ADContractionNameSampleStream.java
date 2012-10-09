@@ -24,9 +24,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.cogroo.ContractionUtility;
-
-
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
@@ -37,6 +34,8 @@ import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
+
+import org.cogroo.ContractionUtility;
 
 /**
  * Parser for Floresta Sita(c)tica Arvores Deitadas corpus, output to for the

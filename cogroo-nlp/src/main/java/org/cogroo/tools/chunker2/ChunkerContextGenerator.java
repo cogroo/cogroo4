@@ -15,9 +15,9 @@
  */
 package org.cogroo.tools.chunker2;
 
-import org.cogroo.tools.featurizer.WordTag;
-
 import opennlp.tools.util.BeamSearchContextGenerator;
+
+import org.cogroo.tools.featurizer.WordTag;
 
 /**
  * Interface for the context generator used in syntactic chunking.

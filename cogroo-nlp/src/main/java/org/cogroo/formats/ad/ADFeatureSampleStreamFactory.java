@@ -19,8 +19,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
 
-import org.cogroo.tools.featurizer.FeatureSample;
-
 import opennlp.tools.cmdline.ArgumentParser;
 import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
 import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
@@ -29,6 +27,8 @@ import opennlp.tools.cmdline.StreamFactoryRegistry;
 import opennlp.tools.formats.LanguageSampleStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
+
+import org.cogroo.tools.featurizer.FeatureSample;
 
 /**
  * A Factory to create a Arvores Deitadas FeatureSampe from the command line

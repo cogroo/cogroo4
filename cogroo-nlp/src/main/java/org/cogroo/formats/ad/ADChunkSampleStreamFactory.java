@@ -21,8 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
 
-import org.cogroo.tools.chunker2.ChunkSample;
-
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.ArgumentParser;
 import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
 import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;

@@ -19,10 +19,11 @@ package org.cogroo.cmdline.chunker2;
 
 import java.io.OutputStream;
 
-import org.cogroo.tools.chunker2.ChunkSample;
-import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.EvaluationErrorPrinter;
 import opennlp.tools.util.eval.EvaluationMonitor;
+
+import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
 
 /**
  * A default implementation of {@link EvaluationMonitor} that prints

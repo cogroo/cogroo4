@@ -20,8 +20,9 @@ package org.cogroo.cmdline.chunker2;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.cogroo.tools.chunker2.ChunkerModel;
 import opennlp.tools.cmdline.ModelLoader;
+
+import org.cogroo.tools.chunker2.ChunkerModel;
 
 /**
  * Loads a Chunker Model for the command line tools.

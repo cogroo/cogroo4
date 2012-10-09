@@ -21,19 +21,20 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.cogroo.tools.chunker2.ChunkSample;
-import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
-import org.cogroo.tools.chunker2.ChunkerEvaluator;
-import org.cogroo.tools.chunker2.ChunkerME;
-import org.cogroo.tools.chunker2.ChunkerModel;
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.AbstractEvaluatorTool;
 import opennlp.tools.cmdline.PerformanceMonitor;
 import opennlp.tools.cmdline.TerminateToolException;
-import org.cogroo.cmdline.chunker2.Chunker2EvaluatorTool.EvalToolParams;
 import opennlp.tools.cmdline.params.DetailedFMeasureEvaluatorParams;
 import opennlp.tools.cmdline.params.EvaluatorParams;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.eval.EvaluationMonitor;
+
+import org.cogroo.cmdline.chunker2.Chunker2EvaluatorTool.EvalToolParams;
+import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
+import org.cogroo.tools.chunker2.ChunkerEvaluator;
+import org.cogroo.tools.chunker2.ChunkerME;
+import org.cogroo.tools.chunker2.ChunkerModel;
 
 public final class Chunker2EvaluatorTool
     extends AbstractEvaluatorTool<ChunkSample, EvalToolParams> {

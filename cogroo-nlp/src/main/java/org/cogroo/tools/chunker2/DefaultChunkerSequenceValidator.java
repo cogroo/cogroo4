@@ -15,9 +15,9 @@
  */
 package org.cogroo.tools.chunker2;
 
-import org.cogroo.tools.featurizer.WordTag;
-
 import opennlp.tools.util.SequenceValidator;
+
+import org.cogroo.tools.featurizer.WordTag;
 
 public class DefaultChunkerSequenceValidator implements SequenceValidator<WordTag>{
 

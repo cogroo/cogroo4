@@ -20,17 +20,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cogroo.tools.featurizer.WordTag;
-
 import opennlp.model.AbstractModel;
 import opennlp.model.EventStream;
 import opennlp.model.MaxentModel;
 import opennlp.model.TrainUtil;
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.BeamSearch;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.Sequence;
 import opennlp.tools.util.TrainingParameters;
+
+import org.cogroo.tools.featurizer.WordTag;
 
 /**
  * The class represents a maximum-entropy-based chunker. Such a chunker can be
