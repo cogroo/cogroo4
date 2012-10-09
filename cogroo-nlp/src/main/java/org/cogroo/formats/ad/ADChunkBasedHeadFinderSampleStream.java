@@ -55,226 +55,33 @@ import opennlp.tools.util.PlainTextByLineStream;
  * <p>
  * <b>Note:</b> Do not use this class, internal use only!
  */
-public class ADChunkBasedHeadFinderSampleStream implements
-    ObjectStream<ChunkSample> {
+public class ADChunkBasedHeadFinderSampleStream extends ADChunkSampleStream {
 
-  private final ObjectStream<ADSentenceStream.Sentence> adSentenceStream;
-
-  private int start = -1;
-  private int end = -1;
-
-  private int index = 0;
-
-  private boolean useCGTags;
-
-  private boolean expandME;
-
-  /**
-   * Creates a new {@link NameSample} stream from a line stream, i.e.
-   * {@link ObjectStream}< {@link String}>, that could be a
-   * {@link PlainTextByLineStream} object.
-   * 
-   * @param lineStream
-   *          a stream of lines as {@link String}
-   */
-  public ADChunkBasedHeadFinderSampleStream(ObjectStream<String> lineStream,
-      boolean useCGTag, boolean expandME) {
-    this.useCGTags = useCGTag;
-    this.expandME = expandME;
-    this.adSentenceStream = new ADSentenceStream(lineStream);
+  public ADChunkBasedHeadFinderSampleStream(InputStream in, String charsetName) {
+    super(in, charsetName);
   }
 
-  /**
-   * Creates a new {@link NameSample} stream from a {@link InputStream}
-   * 
-   * @param in
-   *          the Corpus {@link InputStream}
-   * @param charsetName
-   *          the charset of the Arvores Deitadas Corpus
-   */
-  public ADChunkBasedHeadFinderSampleStream(InputStream in, String charsetName,
-      boolean useCGTag, boolean expandME) {
-    this.useCGTags = useCGTag;
-    this.expandME = expandME;
-    try {
-      this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(
-          in, charsetName));
-    } catch (UnsupportedEncodingException e) {
-      // UTF-8 is available on all JVMs, will never happen
-      throw new IllegalStateException(e);
-    }
+  public ADChunkBasedHeadFinderSampleStream(ObjectStream<String> lineStream) {
+    super(lineStream);
   }
-
-  public ChunkSample read() throws IOException {
-
-    Sentence paragraph;
-    while ((paragraph = this.adSentenceStream.read()) != null) {
-
-      if (end > -1 && index >= end) {
-        // leave
-        return null;
-      }
-
-      if (start > -1 && index < start) {
-        index++;
-        // skip this one
-      } else {
-        Node root = paragraph.getRoot();
-        List<String> sentence = new ArrayList<String>();
-        List<String> tags = new ArrayList<String>();
-        List<String> target = new ArrayList<String>();
-
-        processRoot(root, sentence, tags, target);
-
-        if (sentence.size() > 0) {
-          index++;
-          return new ChunkSample(sentence, tags, target);
-        }
-
-      }
-
-    }
-    return null;
-  }
-
-  private void processRoot(Node root, List<String> sentence, List<String> tags,
-      List<String> target) {
-    if (root != null) {
-      TreeElement[] elements = root.getElements();
-      for (int i = 0; i < elements.length; i++) {
-        if (elements[i].isLeaf()) {
-          processLeaf((Leaf) elements[i], false, "O", sentence, tags, target,
-              false);
-        } else {
-          processNode((Node) elements[i], sentence, tags, target, null);
-        }
-      }
-    }
-  }
-
-  // private void processNode(Node node, List<String> sentence, List<String>
-  // tags,
-  // List<String> target) {
-  // String phraseTag = getChunkTag(node.getSyntacticTag());
-  //
-  // TreeElement[] elements = node.getElements();
-  // for (int i = 0; i < elements.length; i++) {
-  // if (elements[i].isLeaf()) {
-  // boolean isIntermediate = false;
-  // if ( i > 0 && elements[i - 1].isLeaf() && phraseTag != null &&
-  // !phraseTag.equals("O")) {
-  // isIntermediate = true;
-  // }
-  // processLeaf((Leaf) elements[i], isIntermediate, phraseTag, sentence,
-  // tags, target);
-  // } else {
-  // processNode((Node) elements[i], sentence, tags, target);
-  // }
-  // }
-  // }
-
-  private void processNode(Node node, List<String> sentence, List<String> tags,
-      List<String> target, String inheritedTag) {
-    String phraseTag = getChunkTag(node.getSyntacticTag());
-
-    boolean inherited = false;
-    if (phraseTag.equals("O") && inheritedTag != null) {
-      phraseTag = inheritedTag;
-      inherited = true;
-    }
-
-    TreeElement[] elements = node.getElements();
-    for (int i = 0; i < elements.length; i++) {
-      if (elements[i].isLeaf()) {
-        boolean isIntermediate = false;
-        if (i > 0 && elements[i - 1].isLeaf() && phraseTag != null
-            && !phraseTag.equals("O")) {
-          isIntermediate = true;
-        }
-        if (inherited && target.size() > 0
-            && target.get(target.size() - 1).endsWith(phraseTag)) {
-          isIntermediate = true;
-        }
-        processLeaf((Leaf) elements[i], isIntermediate, phraseTag, sentence,
-            tags, target, inherited);
-      } else {
-        processNode((Node) elements[i], sentence, tags, target, phraseTag);
-      }
-    }
-  }
-
-  private void processLeaf(Leaf leaf, boolean isIntermediate, String phraseTag,
-      List<String> sentence, List<String> tags, List<String> target,
-      boolean isInherited) {
-    String phrase;
-    String pos;
-
-    if (leaf.getFunctionalTag() != null && phraseTag.equals("O")) {
-      if (leaf.getFunctionalTag().equals("v-fin")) {
-        phraseTag = "VP";
-      } else if (leaf.getFunctionalTag().equals("n")) {
-        phraseTag = "NP";
-      }
-    }
-
-    phraseTag = ADChunkSampleStream.convertPhraseTag(phraseTag);
-
-    if (!phraseTag.equals("O")) {
-      if (isIntermediate) {
-        phrase = "I-" + phraseTag;
-      } else {
-        phrase = "B-" + phraseTag;
-      }
+  
+  protected void processLeaf(Leaf leaf, boolean isIntermediate, String phraseTag,
+      List<String> sentence, List<String> tags, List<String> target) {
+    super.processLeaf(leaf, isIntermediate, phraseTag, sentence, tags, target);
+    
+    int i = target.size() - 1;
+    // change the tags
+    tags.set(i, tags.get(i) + "|" + target.get(i));
+    
+    if (/*!isInherited &&*/ ("H".equals(leaf.getSyntacticTag()) || "MV".equals(leaf.getSyntacticTag())) 
+        && !OTHER.equals(phraseTag)) {
+      target.set(i, "B-H");
     } else {
-      phrase = phraseTag;
+      target.set(i, OTHER);
     }
-
-    sentence.add(leaf.getLexeme());
-    if (leaf.getSyntacticTag() == null) {
-      pos = leaf.getLexeme();
-    } else {
-      pos = ADChunkSampleStream.convertFuncTag(leaf.getFunctionalTag(),
-          this.useCGTags);
-    }
-    tags.add(pos + "|" + phrase);
-    if (!isInherited && "H".equals(leaf.getSyntacticTag())
-        && !"O".equals(phraseTag)) {
-      target.add("B-H");
-    } else {
-      target.add("O");
-    }
-
   }
-
-  private String getChunkTag(String tag) {
-
-    String phraseTag = tag.substring(tag.lastIndexOf(":") + 1);
-
-    // maybe we should use only np, vp and pp, but will keep ap and advp.
-    if (phraseTag.equals("np") || phraseTag.equals("vp")
-        || phraseTag.equals("pp") || phraseTag.equals("ap")
-        || phraseTag.equals("advp")) {
-      phraseTag = phraseTag.toUpperCase();
-    } else {
-      phraseTag = "O";
-    }
-    return phraseTag;
+  
+  protected boolean isIntermediate(List<String> tags, List<String> target, String phraseTag) {
+    return tags.size() > 0 && tags.get(tags.size() - 1).endsWith("-" + phraseTag);
   }
-
-  public void setStart(int aStart) {
-    this.start = aStart;
-  }
-
-  public void setEnd(int aEnd) {
-    this.end = aEnd;
-  }
-
-  public void reset() throws IOException, UnsupportedOperationException {
-    adSentenceStream.reset();
-  }
-
-  public void close() throws IOException {
-    adSentenceStream.close();
-  }
-
 }

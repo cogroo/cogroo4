@@ -17,10 +17,11 @@ package org.cogroo.tools.chunker2;
 
 import java.io.IOException;
 
-import org.cogroo.tools.featurizer.WordTag;
-
 import opennlp.model.Event;
+import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.util.ObjectStream;
+
+import org.cogroo.tools.featurizer.WordTag;
 
 /**
  * Class for creating an event stream out of data files for training a chunker.
@@ -76,7 +77,7 @@ public class ChunkerEventStream extends opennlp.model.AbstractEventStream {
 
     if (sample != null) {
       events = new Event[sample.getSentence().length];
-      WordTag[] seqArray = sample.getWordTag();
+      WordTag[] seqArray = WordTag.create(sample);
       String[] predsArray = sample.getPreds();
       for (int ei = 0, el = events.length; ei < el; ei++) {
         events[ei] = new Event(predsArray[ei], cg.getContext(ei, seqArray, predsArray));

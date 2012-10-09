@@ -104,7 +104,7 @@ public class ADChunkBasedHeadFinderSampleStreamFactory extends
         params.getEncoding());
 
     ADChunkBasedHeadFinderSampleStream sampleStream = new ADChunkBasedHeadFinderSampleStream(
-        lineStream, params.getUseCGTags(), params.getExpandME());
+        lineStream);
         
     if (params.getStart() != null && params.getStart() > -1) {
       sampleStream.setStart(params.getStart());
