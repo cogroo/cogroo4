@@ -1,3 +1,7 @@
+sp-cf-perceptron-NONE-gp-0
+hf-cf-perceptron-NONE-gp-0
+chunker-cf-perceptron-NONE-gp-0
+feat-cf-perceptron-FEAT_FLAGSWHNCS,FEAT_DIC,FEAT_FSAFACTORY-gp-0
 sent-vcf-perceptron-sd_factory,sd_abb-gp-0
 tok-vcf-perceptron-SD_ABB,TOK_ALPHAOPT-gp-0
 prop-cf-perceptron-NONE-gp-0

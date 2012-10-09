@@ -24,15 +24,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.cogroo.tools.featurizer.WordTag;
-import org.cogroo.tools.shallowparser.ShallowParserSequenceValidator;
-
 import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.formats.ad.ADChunkSampleStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.ObjectStream;
+
+import org.cogroo.tools.featurizer.WordTag;
+import org.cogroo.tools.shallowparser.ShallowParserSequenceValidator;
 
 /**
  * Parser for Floresta Sita(c)tica Arvores Deitadas corpus, output to for the

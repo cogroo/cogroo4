@@ -2,7 +2,6 @@ package org.cogroo.tools.shallowparser;
 
 import org.cogroo.tools.chunker2.DefaultChunkerSequenceValidator;
 import org.cogroo.tools.featurizer.WordTag;
-import org.junit.internal.matchers.IsCollectionContaining;
 
 public class ShallowParserSequenceValidator extends DefaultChunkerSequenceValidator {
   
