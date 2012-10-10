@@ -27,6 +27,7 @@ import java.util.Set;
 import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.formats.ad.ADChunkSampleStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
+import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.ObjectStream;
@@ -62,8 +63,8 @@ public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
   private final Set<String> functTagSet;
 
   private String[] defaultFunctTags = { "SUBJ", "ACC", "DAT", "PIV", "ADVS",
-      "ADVO", "SC", "OC", "P", "AUX", "NPHR", "SA", "ADVL",
-      // "MV","PMV", "PAUX", 
+      "ADVO", "SC", "OC", "P",  "NPHR", "SA", "ADVL",
+      // "MV","PMV", "PAUX", "AUX",
       };
 
   private boolean readChunk;
@@ -167,13 +168,25 @@ public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
 
     return null;
   }
+  
+  protected String getChunkTag(Leaf leaf) {
+    if(this.readChunk)
+      return super.getChunkTag(leaf);
+    
+    String tag = leaf.getSyntacticTag(); 
+    if(functTagSet.contains(tag)) {
+      return tag;
+    }
+    return null;
+  }
 
 
   @Override
-  protected String getChunkTag(String tag) {
+  protected String getChunkTag(Node node) {
     if(this.readChunk)
-      return super.getChunkTag(tag);
+      return super.getChunkTag(node);
     else {
+      String tag = node.getSyntacticTag();
       String funcTag = tag.substring(0, tag.lastIndexOf(":"));
 
       if (!functTagSet.contains(funcTag)) {

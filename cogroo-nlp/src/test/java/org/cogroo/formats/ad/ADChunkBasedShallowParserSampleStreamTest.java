@@ -41,15 +41,15 @@ public class ADChunkBasedShallowParserSampleStreamTest {
   public void testChunks() throws IOException {
 
     assertEquals("Inicia", samples.get(0).getSentence()[0]);
-    assertEquals("B-VP", samples.get(0).getTags()[0]);
+    assertEquals("v-fin|B-VP", samples.get(0).getTags()[0]);
     assertEquals("B-P", samples.get(0).getPreds()[0]);
 
     assertEquals("em", samples.get(0).getSentence()[1]);
-    assertEquals("O", samples.get(0).getTags()[1]);
+    assertEquals("prp|B-PP", samples.get(0).getTags()[1]);
     assertEquals("O", samples.get(0).getPreds()[1]);
 
     // assertEquals("galpão", samples.get(3).getSentence()[2]);
-    assertEquals("B-NP", samples.get(3).getTags()[2]);
+    assertEquals("n|B-NP", samples.get(3).getTags()[2]);
     assertEquals("B-SUBJ", samples.get(3).getPreds()[2]);
 
   }
@@ -65,7 +65,7 @@ public class ADChunkBasedShallowParserSampleStreamTest {
     ChunkSample sample = stream.read();
 
     while (sample != null) {
-      System.out.println(sample);
+//      System.out.println(sample);
       samples.add(sample);
       sample = stream.read();
     }
