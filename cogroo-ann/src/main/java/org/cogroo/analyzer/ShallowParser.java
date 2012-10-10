@@ -23,10 +23,10 @@ import org.cogroo.text.Sentence;
 import org.cogroo.text.SyntacticChunk;
 import org.cogroo.text.Token;
 import org.cogroo.text.impl.SyntacticChunkImpl;
+import org.cogroo.tools.chunker2.ChunkerME;
 import org.cogroo.util.TextUtils;
 
 import opennlp.tools.chunker.ChunkSample;
-import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.util.Span;
 
 

@@ -21,10 +21,8 @@ import org.cogroo.text.Chunk;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
+import org.cogroo.tools.chunker2.ChunkerME;
 import org.cogroo.util.TextUtils;
-
-import opennlp.tools.chunker.ChunkerME;
-
 
 public class HeadFinder implements AnalyzerI {
   private ChunkerME headFinder;

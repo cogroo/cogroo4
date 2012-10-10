@@ -28,8 +28,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
-import opennlp.tools.chunker.ChunkerME;
-import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.postag.POSModel;
@@ -45,6 +43,8 @@ import org.cogroo.config.LanguageConfiguration;
 import org.cogroo.config.LanguageConfigurationUtil;
 import org.cogroo.config.Model;
 import org.cogroo.dictionary.impl.FSADictionary;
+import org.cogroo.tools.chunker2.ChunkerME;
+import org.cogroo.tools.chunker2.ChunkerModel;
 import org.cogroo.tools.featurizer.FeaturizerME;
 import org.cogroo.tools.featurizer.FeaturizerModel;
 
@@ -304,15 +304,15 @@ public class ComponentFactory implements ComponentFactoryI {
   public AnalyzerI createChunker() {
     long start = System.nanoTime();
     AnalyzerI analyzer = null;
-    ChunkerME chunker = null;
+    opennlp.tools.chunker.ChunkerME chunker = null;
     InputStream modelIn = null;
 
     if (modelPathMap.containsKey(Analyzers.CHUNKER)) {
       try {
         modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
             .get(Analyzers.CHUNKER));
-        ChunkerModel model = new ChunkerModel(modelIn);
-        chunker = new ChunkerME(model);
+        opennlp.tools.chunker.ChunkerModel model = new opennlp.tools.chunker.ChunkerModel(modelIn);
+        chunker = new opennlp.tools.chunker.ChunkerME(model);
       } catch (IOException e) {
         LOGGER.fatal("Couldn't load Chunker model!", e);
       } finally {
