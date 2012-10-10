@@ -17,5 +17,5 @@
 #   specific language governing permissions and limitations
 #   under the License.
 
-export MAVEN_OPTS="-Xms512m -Xmx2048m -XX:PermSize=256m"
+export MAVEN_OPTS="-Xms512m -Xmx1100m -XX:PermSize=256m"
 mvn -e -o -q exec:java "-Dexec.mainClass=opennlp.tools.cmdline.CLI" "-Dexec.args=$*"
