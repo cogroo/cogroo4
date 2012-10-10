@@ -104,7 +104,11 @@ public class CogrooHtml {
     
     private Map<Long, String> rulesInfo = new HashMap<Long, String>();
 
+    private String path;
+
     public CogrooHtml() throws Exception {
+      File f = new File("reports/rules_status.html");
+      path = f.getAbsolutePath();
       out = Files.newWriter(new File("reports/rules_status.html"), Charset.forName("UTF-8"));
       
       GrammarCheckerAnalyzer gca = new GrammarCheckerAnalyzer();
@@ -181,6 +185,8 @@ public class CogrooHtml {
         this.printHtmlFooter();
         
         this.out.close();
+        
+        System.out.println("Finished. Report file: " + path);
     }
     
     private void prepareRuleInfo(Rule rule) {
