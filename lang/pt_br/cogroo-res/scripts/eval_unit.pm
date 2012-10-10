@@ -98,7 +98,7 @@ Cutoff=$cutoff";
 	print $pfh $params;
 }
 
-my %simpleF = ( sent => 1, tok => 1, con => 1, prop => 1 );
+my %simpleF = ( sent => 1, tok => 1, con => 1, prop => 1, chunker => 1, hf =>, sp => 1 );
 my %simpleA = ( pos => 1, feat => 1 );
 
 sub filter {
@@ -359,9 +359,29 @@ sub exec() {
 		  . ENCODING
 		  . " -data $data ";
 		$trCommand .=
-		    createCommand('cogroo', " ChunkerTrainerME.ad -model $model $base", $extraProperties);
+		    createCommand('opennlp', " ChunkerTrainerME.ad -model $model $base", $extraProperties);
 		$cvCommand .=
-		    createCommand('cogroo', " ChunkerCrossValidator.ad $base", $extraProperties);
+		    createCommand('opennlp', " ChunkerCrossValidator.ad $base", $extraProperties);
+	}
+	
+	if ( $opt{t} eq 'hf' ) {
+		my $base = "$basicCommand "
+		  . ENCODING
+		  . " -data $data ";
+		$trCommand .=
+		    createCommand('cogroo', " Chunker2Trainer.adheadfinder -factory org.cogroo.tools.headfinder.HeadFinderFactory -model $model $base", $extraProperties);
+		$cvCommand .=
+		    createCommand('cogroo', " Chunker2CrossValidator.adheadfinder -factory org.cogroo.tools.headfinder.HeadFinderFactory $base", $extraProperties);
+	}
+	
+	if ( $opt{t} eq 'sp' ) {
+		my $base = "$basicCommand "
+		  . ENCODING
+		  . " -data $data ";
+		$trCommand .=
+		    createCommand('cogroo', " Chunker2Trainer.adshallowparser -factory org.cogroo.tools.shallowparser.ShallowParserFactory -model $model $base", $extraProperties);
+		$cvCommand .=
+		    createCommand('cogroo', " Chunker2CrossValidator.adshallowparser -factory org.cogroo.tools.shallowparser.ShallowParserFactory $base", $extraProperties);
 	}
 	
 	my %resCV = executeCV($cvCommand);
