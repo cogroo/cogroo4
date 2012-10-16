@@ -343,6 +343,23 @@ public class RuleUtils {
 			return new TagMask();
 		}
 	}
+	
+	   public static TagMask createTagMaskFromReferenceSyntatic(Reference ref,
+           Sentence sent, int refPos) {
+       
+       int pos = refPos + (int)ref.getIndex();
+       if(pos >= 0 && pos < sent.getSyntacticChunks().size())
+       {
+           MorphologicalTag mTag = sent.getSyntacticChunks().get(pos).getMorphologicalTag();
+//           ChunkTag cTag = sent.getSyntacticChunks().get(pos).getChunkTag();
+           SyntacticTag sTag = sent.getSyntacticChunks().get(pos).getSyntacticTag();
+           return createTagMaskFromReference(ref, mTag, null, sTag);
+       }
+       else
+       {
+           return new TagMask();
+       }
+   }
 
 //	public static void main(String[] args) {
 //		// Rule rule = RulesService.getInstance().getRule(69, true);

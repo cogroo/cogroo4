@@ -415,7 +415,7 @@ public final class RulesApplier implements TypedChecker {
 				} else if (mask.getPrimitiveMask() != null /*&& chunk.getTokens().size() > 0*/ && matchLemma(chunk.getChildChunks().get(0).getMainToken(), mask.getPrimitiveMask())) {
 					match = true;
 				} else if (mask.getTagReference() != null && chunk.getMorphologicalTag() != null) {
-					TagMask t = RuleUtils.createTagMaskFromReference(mask.getTagReference(), sentence, baseTokenIndex);
+					TagMask t = RuleUtils.createTagMaskFromReferenceSyntatic(mask.getTagReference(), sentence, baseTokenIndex);
 					match = match | (chunk.getMorphologicalTag().match(t, false) && chunk.getSyntacticTag().match(t));
 				}
 			} else { // The token must NOT match the mask.
@@ -425,7 +425,7 @@ public final class RulesApplier implements TypedChecker {
 				} else if (mask.getTagMask() != null) {
 					match = match & !(chunk.getMorphologicalTag().matchExact(mask.getTagMask(), false) && chunk.getSyntacticTag().match(mask.getTagMask()));
 				} else if (mask.getTagReference() != null) {
-					TagMask t = RuleUtils.createTagMaskFromReference(mask.getTagReference(), sentence, baseTokenIndex);
+					TagMask t = RuleUtils.createTagMaskFromReferenceSyntatic(mask.getTagReference(), sentence, baseTokenIndex);
 					match = match & !(chunk.getMorphologicalTag().match(t,false) && (t.getSyntacticFunction() == null || chunk.getSyntacticTag().match(t)));
 				}
 			}
