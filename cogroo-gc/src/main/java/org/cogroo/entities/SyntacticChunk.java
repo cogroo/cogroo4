@@ -177,10 +177,12 @@ public class SyntacticChunk implements Serializable {
 
   @Override
   public String toString() {
+    
+    
 
-    return Objects.toStringHelper(this).add("cks", chunks)
-        //.add("mtag", this.getMorphologicalTag())
-        .add("syntacticTag", syntacticTag).toString();
+    return Objects.toStringHelper(this).add("tag", syntacticTag)
+        .add("mtag", this.getMorphologicalTag())
+        .add("toks", toPlainText()).toString();
   }
 
   public int getFirstToken() {

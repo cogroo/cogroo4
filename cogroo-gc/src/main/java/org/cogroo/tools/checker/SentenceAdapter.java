@@ -92,6 +92,17 @@ public class SentenceAdapter {
                     + tokens.get(i).getMorphologicalTag()
                     + "\n");
         }
+        
+        trace.append("Syntactic Elements:\n");
+        for (SyntacticChunk schunks : typedSentence.getSyntacticChunks()) {
+          trace.append("\t").append(schunks).append("\n");
+        }
+        
+        trace.append("Chunks:\n");
+        for (Chunk schunks : typedSentence.getChunks()) {
+          trace.append("\t").append(schunks).append("\n");
+        }
+        
         LOGGER.debug(trace.toString());
     }
     }
