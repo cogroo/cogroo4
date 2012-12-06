@@ -287,7 +287,8 @@ public class MorphologicalTag extends Tag implements Cloneable {
                                                     * &&
                                                     * !Gender.NEUTRAL.equals(this
                                                     * .getGenderE())
-                                                    */)
+                                                    */
+          )
         return false;
     }
 

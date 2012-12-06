@@ -18,16 +18,16 @@ package org.cogroo.analyzer;
 import java.util.ArrayList;
 import java.util.List;
 
+import opennlp.tools.chunker.ChunkSample;
+import opennlp.tools.util.Span;
+
 import org.cogroo.text.Chunk;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
 import org.cogroo.text.impl.ChunkImpl;
+import org.cogroo.tools.chunker2.ChunkerME;
 import org.cogroo.util.TextUtils;
-
-import opennlp.tools.chunker.ChunkSample;
-import opennlp.tools.chunker.ChunkerME;
-import opennlp.tools.util.Span;
 
 public class Chunker implements AnalyzerI {
   private ChunkerME chunker;

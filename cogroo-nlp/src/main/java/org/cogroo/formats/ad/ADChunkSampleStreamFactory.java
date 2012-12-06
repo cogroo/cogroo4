@@ -81,7 +81,7 @@ public class ADChunkSampleStreamFactory extends LanguageSampleStreamFactory<Chun
     ObjectStream<String> lineStream = new PlainTextByLineStream(sampleDataIn.getChannel(),
         params.getEncoding());
 
-    ADChunkSampleStream sampleStream = new ADChunkSampleStream(lineStream);
+    ADChunk2SampleStream sampleStream = new ADChunk2SampleStream(lineStream);
 
     if(params.getStart() != null && params.getStart() > -1) {
       sampleStream.setStart(params.getStart());

@@ -46,6 +46,8 @@ public class GrammarChecker {
     ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
 
     Pipe pipe = (Pipe) factory.createPipe();
+    //long[] rules = {127};
+//    pipe.add(new GrammarCheckerAnalyzer(true, rules));
     pipe.add(new GrammarCheckerAnalyzer());
 
     System.out.println("Loading time ["

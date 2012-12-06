@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Set;
 
 import opennlp.tools.dictionary.Dictionary;
+import opennlp.tools.util.featuregen.DictionaryFeatureGenerator;
+import opennlp.tools.util.featuregen.WindowFeatureGenerator;
 
 import org.cogroo.dictionary.FeatureDictionaryI;
 import org.cogroo.dictionary.impl.FSADictionary;
@@ -33,6 +35,7 @@ public class PortugueseExtPOSContextGenerator extends
 
   private FSADictionary trans;
   private FeatureDictionaryI feat;
+  private WindowFeatureGenerator dfg;
 
   public PortugueseExtPOSContextGenerator(Dictionary dict) {
     this(0, dict);
@@ -47,6 +50,12 @@ public class PortugueseExtPOSContextGenerator extends
           .createFromResources("/fsa_dictionaries/pos/pt_br_trans.dict");
       this.feat = FSAFeatureDictionary
           .createFromResources("/fsa_dictionaries/featurizer/pt_br_feats.dict");
+      
+      dfg = new WindowFeatureGenerator(new DictionaryFeatureGenerator("loc_prep=",
+          new Dictionary(getClass().getResourceAsStream(
+              "/dictionaries/pt_br/locucoes_prepositivas.xml"))), 2, 2);
+          
+      
     } catch (IllegalArgumentException e) {
       e.printStackTrace();
     } catch (IOException e) {
@@ -61,6 +70,10 @@ public class PortugueseExtPOSContextGenerator extends
       List<String> modContext) {
     super.getContext(index, sequence, priorDecisions, additionalContext,
         modContext);
+    
+    // locucoes
+//    this.dfg.createFeatures(modContext, sequence, index, null);
+//    this.dfg.clearAdaptiveData();
 
     // Check transitivity
     if (index > 0)

@@ -71,6 +71,8 @@ public class RulesProperties {
     }
   }
 
+  public static final boolean APPLY_LOCAL = getBoolean("apply.local");
+  
   public static final boolean APPLY_PHRASE_LOCAL = getBoolean("apply.phrase.local");
 
   public static final boolean APPLY_SUBJECT_VERB = getBoolean("apply.subject.verb");

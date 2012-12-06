@@ -952,7 +952,7 @@
 		</ModificationHistory>
 	</Rule>
 	<Rule id="17" active="true">
-		<Method>general</Method>
+		<Method>phrase-local</Method>
 		<Type>Concordância adjetivo-substantivo</Type>
 		<Group>substantivo + adjetivo</Group>
 		<Message>O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.</Message>
@@ -993,21 +993,10 @@
 				</And>
 				</Composition>
 			</PatternElement>
-			<PatternElement>
-				<Element>
-					<Negated>true</Negated>
-					<Mask>
-						<LexemeMask>e</LexemeMask>
-					</Mask>
-					<Mask>
-						<LexemeMask>ou</LexemeMask>
-					</Mask>
-				</Element>
-			</PatternElement>
 		</Pattern>
 		<Boundaries>
 			<Lower>0</Lower>
-			<Upper>-1</Upper>
+			<Upper>0</Upper>
 		</Boundaries>
 		<Suggestion>
 			<Replace index="0">
@@ -7551,9 +7540,9 @@
 					<Mask>
 						<LexemeMask>o</LexemeMask>
 					</Mask>
-					<Mask>
+					<!-- <Mask>
 						<LexemeMask>a</LexemeMask>
-					</Mask>
+					</Mask> -->
 					<Mask>
 						<LexemeMask>um</LexemeMask>
 					</Mask>
@@ -7629,9 +7618,9 @@
 		<Pattern>
 			<PatternElement>
 				<Element>
-					<Mask>
+					<!-- <Mask>
 						<LexemeMask>a</LexemeMask>
-					</Mask>
+					</Mask> -->
 					<Mask>
 						<LexemeMask>as</LexemeMask>
 					</Mask>
@@ -8276,6 +8265,14 @@
 								</Mask>
 							</Element>
 						</PatternElement>
+						<!-- <PatternElement>
+							<Element>
+								<Negated>true</Negated>
+								<Mask>
+									<LexemeMask>a</LexemeMask>
+								</Mask>
+							</Element>
+						</PatternElement> -->
 						<PatternElement>
 							<Element>
 								<Negated>true</Negated>
@@ -8453,23 +8450,81 @@
 				</Element>
 			</PatternElement>
 			<PatternElement>
-				<Element>
-					<Mask>
-						<TagMask>
-							<SyntacticFunction>verb</SyntacticFunction>
-							<Number>singular</Number>
-						</TagMask>
-					</Mask>
-				</Element>
+				<Composition>
+					<And>
+						<PatternElement>
+							<Element>
+								<Negated>true</Negated>
+								<Mask>
+									<PrimitiveMask>haver</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>ser</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>estar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>parecer</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>continuar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>ficar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>permanecer</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>tornar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>andar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>virar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>achar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>encontrar</PrimitiveMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<SyntacticFunction>verb</SyntacticFunction>
+										<Number>singular</Number>
+										<Person>third</Person>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+					</And>
+				</Composition>
 			</PatternElement>
+<!-- 			<PatternElement> -->
+<!-- 				<Element> -->
+<!-- 					<Negated>true</Negated> -->
+<!-- 					<Mask> -->
+<!-- 						<TagMask> -->
+<!-- 							<SyntacticFunction>subject predicative</SyntacticFunction> -->
+<!-- 						</TagMask> -->
+<!-- 					</Mask> -->
+<!-- 				</Element> -->
+<!-- 			</PatternElement> -->
 		</Pattern>
 		<Boundaries>
 			<Lower>0</Lower>
 			<Upper>0</Upper>
 		</Boundaries>
 		<Example>
-			<Incorrect>Eles foi comprar banana.</Incorrect>
-			<Correct>Eles foram comprar banana.</Correct>
+			<Incorrect>Eles vai comprar banana.</Incorrect>
+			<Correct>Eles vão comprar banana.</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>anon</Author>
@@ -8494,14 +8549,59 @@
 				</Element>
 			</PatternElement>
 			<PatternElement>
-				<Element>
-					<Mask>
-						<TagMask>
-							<SyntacticFunction>verb</SyntacticFunction>
-							<Number>plural</Number>
-						</TagMask>
-					</Mask>
-				</Element>
+				<Composition>
+					<And>
+						<PatternElement>
+							<Element>
+								<Negated>true</Negated>
+								<Mask>
+									<PrimitiveMask>ser</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>estar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>parecer</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>continuar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>ficar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>permanecer</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>tornar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>andar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>virar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>achar</PrimitiveMask>
+								</Mask>
+								<Mask>
+									<PrimitiveMask>encontrar</PrimitiveMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<SyntacticFunction>verb</SyntacticFunction>
+										<Number>plural</Number>
+										<Person>third</Person>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+					</And>
+				</Composition>
 			</PatternElement>
 		</Pattern>
 		<Boundaries>
@@ -8509,8 +8609,8 @@
 			<Upper>0</Upper>
 		</Boundaries>
 		<Example>
-			<Incorrect>Ele foram comprar banana.</Incorrect>
-			<Correct>Ele foi comprar banana.</Correct>
+			<Incorrect>Ele vão comprar banana.</Incorrect>
+			<Correct>Ele vai comprar banana.</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>anon</Author>
@@ -8730,18 +8830,64 @@
 		<ShortMessage>O adjetivo na função de predicativo concorda com o sujeito.</ShortMessage>
 		<Pattern>
 			<PatternElement>
-				<Element>
-					<Mask>
-						<TagMask>
-							<SyntacticFunction>subject</SyntacticFunction>
-						</TagMask>
-					</Mask>
-				</Element>
+				<Composition>
+					<And>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<SyntacticFunction>subject</SyntacticFunction>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<!-- <PatternElement>
+							<Element>
+								<Negated>true</Negated>
+								<Mask>
+									<TagMask>
+										<Number>neutral</Number>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement> -->
+					</And>
+				</Composition>
 			</PatternElement>
 			<PatternElement>
 				<Element>
 					<Mask>
 						<PrimitiveMask>ser</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>estar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>parecer</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>continuar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>ficar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>permanecer</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>tornar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>andar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>virar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>achar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>encontrar</PrimitiveMask>
 					</Mask>
 				</Element>
 			</PatternElement>
@@ -8749,41 +8895,41 @@
 				<Composition>
 					<And>
 						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<SyntacticFunction>subject predicative</SyntacticFunction>
+										<Class>adjective</Class>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<PatternElement>
 							<Composition>
 								<Or>
 									<PatternElement>
 										<Element>
+											<Negated>true</Negated>
 											<Mask>
-												<TagMask>
-													<SyntacticFunction>none</SyntacticFunction>
-													<Class>adjective</Class>
-												</TagMask>
+												<TagReference index="0">
+													<Property>Gender</Property>
+													<Property>Number</Property>
+												</TagReference>
 											</Mask>
 										</Element>
 									</PatternElement>
 									<PatternElement>
 										<Element>
+											<Negated>true</Negated>
 											<Mask>
-												<TagMask>
-													<SyntacticFunction>none</SyntacticFunction>
-													<Class>noun</Class>
-												</TagMask>
+												<TagReference index="1">
+													<Property>Number</Property>
+												</TagReference>
 											</Mask>
 										</Element>
 									</PatternElement>
 								</Or>
 							</Composition>
-						</PatternElement>
-						<PatternElement>
-							<Element>
-								<Negated>true</Negated>
-								<Mask>
-									<TagReference index="0">
-										<Property>Gender</Property>
-										<Property>Number</Property>
-									</TagReference>
-								</Mask>
-							</Element>
 						</PatternElement>
 					</And>
 				</Composition>
@@ -8863,7 +9009,6 @@
 			<Date>2008-10-25T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
-
 	<Rule id="125" active="false">
 		<Method>subject-verb</Method>
 		<Type>Concordância do sujeito com o verbo do predicado</Type>
@@ -8996,5 +9141,149 @@
 			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
-
+	
+	<Rule id="127" active="true">
+		<Method>subject-verb</Method>
+		<Type>Concordância do sujeito com o predicativo</Type>
+		<Group>pronome + verbo de ligação + predicativo</Group>
+		<Message>O predicativo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o sujeito.</Message>
+		<ShortMessage>O adjetivo na função de predicativo concorda com o sujeito.</ShortMessage>
+		<Pattern>
+			<PatternElement>
+				<Composition>
+					<And>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<SyntacticFunction>subject</SyntacticFunction>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<!-- <PatternElement>
+							<Element>
+								<Negated>true</Negated>
+								<Mask>
+									<TagMask>
+										<Number>neutral</Number>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement> -->
+					</And>
+				</Composition>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<PrimitiveMask>ser</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>estar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>parecer</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>continuar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>ficar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>permanecer</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>tornar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>andar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>virar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>achar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>encontrar</PrimitiveMask>
+					</Mask>
+				</Element>
+				
+				<!-- ser, estar, parecer, continuar, ficar, permanecer, tornar, andar, virar, achar, encontrar -->
+			</PatternElement>
+			<PatternElement>
+				<Composition>
+					<And>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<SyntacticFunction>subject predicative</SyntacticFunction>
+										<Class>noun</Class>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagReference index="0">
+										<Property>Number</Property>
+									</TagReference>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<PatternElement>
+							<Element>
+								<Negated>true</Negated>
+								<Mask>
+									<TagReference index="1">
+										<Property>Number</Property>
+									</TagReference>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<!-- <PatternElement>
+							<Element>
+								<Negated>true</Negated>
+								<Mask>
+									<TagMask>
+										<Number>neutral</Number>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement> -->
+					</And>
+				</Composition>
+			</PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>0</Lower>
+			<Upper>0</Upper>
+		</Boundaries>
+<!-- 		<Suggestion> -->
+			<!-- <SuggestionAsString>2=&gt;2_M_P_</SuggestionAsString> -->
+			<!-- <Replace index="0">
+				<Reference index="0">
+					<Property>Gender</Property>
+					<Property>Number</Property>
+				</Reference>
+			</Replace>-->
+<!-- 		</Suggestion> -->
+		<Example>
+			<Incorrect>Sangue e vida é os preços.</Incorrect>
+			<Correct>Sangue e vida é o preço.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>Sangue são o preço.</Incorrect>
+			<Correct>Sangue e vida são o preço.</Correct>
+		</Example>	
+		<ModificationHistory>
+			<Author>Colen</Author>
+			<Date>2008-10-25T12:00:00.000-03:00</Date>
+		</ModificationHistory>
+	</Rule>
+	
 </Rules>

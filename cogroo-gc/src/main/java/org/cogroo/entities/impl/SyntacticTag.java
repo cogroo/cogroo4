@@ -53,6 +53,9 @@ public class SyntacticTag extends Tag {
                                                                       * ("SUBJ")
                                                                       */) {
         return true;
+      } else if (sf.equals(SyntacticFunction.SUBJECT_PREDICATIVE)
+          && this.syntacticFunction.equals(SyntacticFunction.SUBJECT_PREDICATIVE)) {
+        return true;
       } else if (sf.equals(SyntacticFunction.VERB)
           && this.syntacticFunction.equals(SyntacticFunction.VERB)/*
                                                                    * this.tag.equals

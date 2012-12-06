@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.google.common.base.Strings;
+
 import opennlp.tools.postag.TagDictionary;
 import opennlp.tools.util.SequenceValidator;
 
@@ -41,6 +43,13 @@ public class PortuguesePOSSequenceValidator implements
     boolean tokExists = false;
 
     String word = inputSequence[i];
+    
+    if(i > 0 && "nm".equals(outcome) && "a".equalsIgnoreCase(inputSequence[i-1]) && "artf".equals(outcomesSequence[i-1])) {
+      return false;
+    }
+    
+    
+    outcome = GenderUtil.removeGender(outcome);
 
     // lets start with some punctuation check
     if(isPunctuation(word)) {
@@ -108,7 +117,7 @@ public class PortuguesePOSSequenceValidator implements
         tags = queryDictionary(word.substring(1), false);
       }
     }
-    return tags;
+    return GenderUtil.removeGender(tags);
   }
 
   @Override

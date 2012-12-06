@@ -18,10 +18,16 @@ package org.cogroo.entities.tree;
 public class Leaf extends TreeElement {
 
   private String word;
+  private String features;
   private String[] lemma;
+  private boolean isChunkHead;
 
   public void setLexeme(String lexeme) {
     this.word = lexeme;
+  }
+  
+  public void setIsChunkHead(boolean value) {
+    this.isChunkHead = value;
   }
 
   public String getLexeme() {
@@ -36,11 +42,17 @@ public class Leaf extends TreeElement {
       sb.append("=");
     }
     if (this.getSyntacticTag() != null) {
-      sb.append(this.getSyntacticTag() + "(" + this.getMorphologicalTag()
+      sb.append(this.getSyntacticTag() + "(" + isChunkHeadStr() + this.getMorphologicalTag() + ":" + this.getFeatures()
           + ") ");
     }
     sb.append(this.word + "\n");
     return sb.toString();
+  }
+
+  private String isChunkHeadStr() {
+    if(isChunkHead)
+      return "*";
+    return "";
   }
 
   public void setLemma(String[] lemma) {
@@ -54,10 +66,14 @@ public class Leaf extends TreeElement {
   @Override
   public String toSyntaxTree() {
 
-    return "[" + getMorphologicalTag() + " " + word + "]"; // word + "{" +
-                                                           // getMorphologicalTag()
-                                                           // + " '" +
-                                                           // getLemma() + "'" +
-                                                           // "}";
+    return "[" + this.isChunkHeadStr() + this.getMorphologicalTag() + " " + word + "]";
+  }
+
+  public String getFeatures() {
+    return features;
+  }
+
+  public void setFeatures(String features) {
+    this.features = features;
   }
 }

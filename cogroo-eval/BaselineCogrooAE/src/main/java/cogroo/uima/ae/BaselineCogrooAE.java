@@ -89,13 +89,16 @@ public class BaselineCogrooAE extends JCasAnnotator_ImplBase {
 
     // instantiate the grammar checker passing the configuration
     mCogroo = new MultiCogroo(config);
-
-    if (ignoreRules.length > 0) {
-      Checker ap = config.getChecker();
-      for (String rule : ignoreRules) {
-        ap.ignore(rule);
-      }
-    }
+    
+//    String[] ignore = { "xml:17", "xml:21", "xml:117", "xml:118", "xml:124", "xml:103",
+//        "xml:104", "xml:105" };
+//
+//    if (ignore.length > 0) {
+//      Checker ap = config.getChecker();
+//      for (String rule : ignore) {
+//        ap.ignore(rule);
+//      }
+//    }
     mLogger = aContext.getLogger();
   }
 

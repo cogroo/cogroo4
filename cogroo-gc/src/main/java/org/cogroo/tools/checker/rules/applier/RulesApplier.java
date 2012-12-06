@@ -103,16 +103,20 @@ public final class RulesApplier implements TypedChecker {
 		
 		// mistakes will hold mistakes found in the sentence.
 		List<Mistake> mistakes = new ArrayList<Mistake>();
-		// rules will hold the tree being used to seek for mistakes.
-		RulesTree rulesTree;
-		// Seeks for errors that can occur anywhere in the sentence (general).
-		rulesTree = this.rulesTreesProvider.getTrees().getGeneral();
-		// For each token in the sentence.
-		for (int i = 0; i < sentence.getTokens().size(); i++) {
-			// For each token, gets back to the initial state (hence 0).
-			List<State> nextStates = rulesTree.getRoot().getNextStates();
-			// i is the index of the token that began the rule applying process.
-			mistakes = this.getMistakes(mistakes, nextStates, sentence, i, i, sentence);
+
+        // rules will hold the tree being used to seek for mistakes.
+        RulesTree rulesTree;
+        
+		if(RulesProperties.APPLY_LOCAL) {
+    		// Seeks for errors that can occur anywhere in the sentence (general).
+    		rulesTree = this.rulesTreesProvider.getTrees().getGeneral();
+    		// For each token in the sentence.
+    		for (int i = 0; i < sentence.getTokens().size(); i++) {
+    			// For each token, gets back to the initial state (hence 0).
+    			List<State> nextStates = rulesTree.getRoot().getNextStates();
+    			// i is the index of the token that began the rule applying process.
+    			mistakes = this.getMistakes(mistakes, nextStates, sentence, i, i, sentence);
+    		}
 		}
 		
 		// remove aux tokens
@@ -300,6 +304,7 @@ public final class RulesApplier implements TypedChecker {
 	}
 	
 	private boolean match(SyntacticChunk chunk, PatternElement patternElement, int baseTokenIndex, Sentence sentence) {
+	    //System.out.println(RuleUtils.getPatternElementAsString(patternElement));
 		if(patternElement.getElement() != null)
 			return match(chunk, patternElement.getElement(), baseTokenIndex, sentence);
 
@@ -416,15 +421,17 @@ public final class RulesApplier implements TypedChecker {
 					match = true;
 				} else if (mask.getTagReference() != null && chunk.getMorphologicalTag() != null) {
 					TagMask t = RuleUtils.createTagMaskFromReferenceSyntatic(mask.getTagReference(), sentence, baseTokenIndex);
-					match = match | (chunk.getMorphologicalTag().match(t, false) && chunk.getSyntacticTag().match(t));
+					match = match | (chunk.getMorphologicalTag().match(t, false) && (t.getSyntacticFunction() == null || chunk.getSyntacticTag().match(t)));
 				}
 			} else { // The token must NOT match the mask.
 				// If negated, match starts as true and just one match is needed to make it false.
 				if ( mask.getLexemeMask() != null && mask.getLexemeMask().equalsIgnoreCase(chunk.toString())) {
 					match = false;
 				} else if (mask.getTagMask() != null) {
-					match = match & !(chunk.getMorphologicalTag().matchExact(mask.getTagMask(), false) && chunk.getSyntacticTag().match(mask.getTagMask()));
-				} else if (mask.getTagReference() != null) {
+					match = match & !(chunk.getMorphologicalTag().matchExact(mask.getTagMask(), false) && (mask.getTagMask().getSyntacticFunction() == null || chunk.getSyntacticTag().match(mask.getTagMask())));
+				} else if (mask.getPrimitiveMask() != null /*&& chunk.getTokens().size() > 0*/ && matchLemma(chunk.getChildChunks().get(0).getMainToken(), mask.getPrimitiveMask())) {
+                    match = false;
+              }  else if (mask.getTagReference() != null) {
 					TagMask t = RuleUtils.createTagMaskFromReferenceSyntatic(mask.getTagReference(), sentence, baseTokenIndex);
 					match = match & !(chunk.getMorphologicalTag().match(t,false) && (t.getSyntacticFunction() == null || chunk.getSyntacticTag().match(t)));
 				}

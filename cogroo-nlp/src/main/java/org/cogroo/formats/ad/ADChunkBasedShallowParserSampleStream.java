@@ -20,20 +20,28 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import opennlp.tools.chunker.ChunkSample;
-import opennlp.tools.formats.ad.ADChunkSampleStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
+import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.ObjectStream;
+import opennlp.tools.util.Span;
 
 import org.cogroo.tools.featurizer.WordTag;
 import org.cogroo.tools.shallowparser.ShallowParserSequenceValidator;
+
+import com.google.common.base.Strings;
 
 /**
  * Parser for Floresta Sita(c)tica Arvores Deitadas corpus, output to for the
@@ -58,18 +66,22 @@ import org.cogroo.tools.shallowparser.ShallowParserSequenceValidator;
  * <p>
  * <b>Note:</b> Do not use this class, internal use only!
  */
-public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
+public class ADChunkBasedShallowParserSampleStream extends ADChunk2SampleStream {
 
   private final Set<String> functTagSet;
 
   private String[] defaultFunctTags = { "SUBJ", "ACC", "DAT", "PIV", "ADVS",
-      "ADVO", "SC", "OC", "P",  "NPHR", "SA", "ADVL",
+      "ADVO", "SC", "OC", "P",  "NPHR", "SA", "ADVL", "APP",
       // "MV","PMV", "PAUX", "AUX",
       };
 
   private boolean readChunk;
 
   private ShallowParserSequenceValidator sv = new ShallowParserSequenceValidator();
+
+  private ArrayList<String> chunks;
+
+  private SubjectTypes subjectTypes = new SubjectTypes();
   
   public ADChunkBasedShallowParserSampleStream(ObjectStream<String> lineStream, String commaSeparatedFunctTags,
       boolean isIncludePOSTags, boolean useCGTag, boolean expandME) {
@@ -104,7 +116,7 @@ public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
       boolean isIncludePOSTags, boolean useCGTag, boolean expandME) {
     
     super(in, charsetName);
-
+    
       if (commaSeparatedFunctTags == null
           || commaSeparatedFunctTags.trim().isEmpty()) {
         Set<String> functTagsSet = new HashSet<String>();
@@ -128,7 +140,7 @@ public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
         Node root = paragraph.getRoot();
         List<String> sentence = new ArrayList<String>();
         List<String> tags = new ArrayList<String>();
-        List<String> chunks = new ArrayList<String>();
+        chunks = new ArrayList<String>();
 
         processRoot(root, sentence, tags, chunks);
         
@@ -154,18 +166,21 @@ public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
               outcomes = new String[0];
             }
             if(!sv.validSequence(i, WordTag.create(cs), outcomes, target.get(i))) {
+              //sv.validSequence(i, WordTag.create(cs), outcomes, target.get(i));
               System.out.println("failed, invalid outcome: " + target.get(i));
             }
           }
           
           
 //          System.out.println(cs);
+//          this.subjectTypes.add(cs);
           return cs;
         }
         
 
       }
 
+//    this.subjectTypes.print();
     return null;
   }
   
@@ -182,9 +197,9 @@ public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
 
 
   @Override
-  protected String getChunkTag(Node node) {
+  protected String getChunkTag(Node node, String parent, int index) {
     if(this.readChunk)
-      return super.getChunkTag(node);
+      return super.getChunkTag(node, parent, index);
     else {
       String tag = node.getSyntacticTag();
       String funcTag = tag.substring(0, tag.lastIndexOf(":"));
@@ -192,10 +207,47 @@ public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
       if (!functTagSet.contains(funcTag)) {
         funcTag = "O";
       }
-      return funcTag;
+      
+      if(funcTag.equals(parent))
+        return "O";
+      
+      if(funcTag.equals("O")) 
+        return funcTag;
+      
+      // check for nested...
+      // we can check the index, and the size of this node (number of leafs)
+      int leafs = countLeafs(node);
+      // check if we have a complete chunk group inside
+      String s = chunks.get(index);
+      boolean valid = s.equals("O") || s.startsWith("B-");
+      
+      if(valid) {
+        if(chunks.size() == index + leafs) {
+          // last chunk...
+          return funcTag;
+        }
+        String end1 = chunks.get(index + leafs);
+        valid = end1.equals("O") || end1.startsWith("B-");
+      }
+      if(valid) 
+        return funcTag;
+      return "O";
     }
   }
   
+  private int countLeafs(Node node) {
+    int counter = 0;
+    for (TreeElement element : node.getElements()) {
+      if(element.isLeaf()) {
+        counter++;
+      } else {
+        counter += countLeafs((Node)element);
+      }
+    }
+    return counter;
+  }
+
+
   protected String getPhraseTagFromPosTag(String functionalTag) {
     return OTHER;
   }
@@ -205,6 +257,65 @@ public class ADChunkBasedShallowParserSampleStream extends ADChunkSampleStream {
     if(this.readChunk)
       return super.isIncludePunctuations();
     return true;
+  }
+  
+  static class SubjectTypes {
+    private Map<String, AtomicInteger> subjects = new HashMap<String, AtomicInteger>();
+    private Map<String, String> examples = new HashMap<String, String>();
+    
+    public void add(ChunkSample sample) {
+      for (Span subj : sample.getPhrasesAsSpanList()) {
+        if(subj.getType().equals("SUBJ")) {
+          String[] chunks = extractChunk(Arrays.copyOfRange(sample.getTags(), subj.getStart(), subj.getEnd()));
+          Span[] c = ChunkSample.phrasesAsSpanList(chunks, chunks, chunks);
+          StringBuilder sb = new StringBuilder();
+          for (Span span : c) {
+            sb.append(span.getType()).append(" ");
+          }
+          
+          String value = sb.toString().trim();
+          
+          if(!subjects.containsKey(value)) {
+            subjects.put(value, new AtomicInteger(1));
+            examples.put(value, Arrays.toString(Arrays.copyOfRange(sample.getSentence(), subj.getStart(), subj.getEnd())));
+          } else {
+            subjects.get(value).incrementAndGet();
+          }
+        }
+      }
+    }
+    
+    public void print() {
+      Set<String> chunks = new TreeSet<String>(new Comparator<String>() {
+
+        @Override
+        public int compare(String arg0, String arg1) {
+          if(arg0.equals(arg1)) return 0;
+          return subjects.get(arg0).intValue() - subjects.get(arg1).intValue();
+        }
+        
+      });
+      
+      chunks.addAll(subjects.keySet());
+      
+      for (String string : chunks) {
+        System.out.println(string + " -> " + subjects.get(string) + "->" + examples.get(string));
+      }
+      
+    }
+
+    private String[] extractChunk(String[] postags) {
+      String[] out = new String[postags.length];
+      for (int i = 0; i < postags.length; i++) {
+        out[i] = extractChunk(postags[i]);
+      }
+      return out;
+    }
+    
+    private String extractChunk(String postag) {
+      int i = postag.indexOf('|');
+      return postag.substring(i + 1);
+    }
   }
   
 }

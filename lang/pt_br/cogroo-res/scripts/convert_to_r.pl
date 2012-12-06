@@ -502,7 +502,7 @@ sub toConfiguration {
 	
 	for(my $i = 3; $i < @parts; $i++) {
 		$parts[$i] = toExtraOpt($parts[0], $parts[$i]);
-		if(!(exists $extraOpt{$parts[$i]})) {
+		if(!(exists $extraOpt{$parts[$i]} || $parts[$i] eq 'NONE')) {
 			die "missing configuration! $parts[$i] \n";
 		}
 	}

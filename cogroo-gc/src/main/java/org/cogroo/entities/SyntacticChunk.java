@@ -18,6 +18,7 @@ package org.cogroo.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.cogroo.entities.impl.MorphologicalTag;
@@ -28,6 +29,7 @@ import org.cogroo.tools.checker.rules.model.TagMask.Number;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 
 /**
  * Initially a subject or verb group of Chunks
@@ -43,6 +45,7 @@ public class SyntacticChunk implements Serializable {
   private static final SyntacticTag SUBJ;
   private static final SyntacticTag MV;
   private static final SyntacticTag NONE;
+  private static final SyntacticTag SUBJECT_PREDICATIVE;
   
   static {
     SUBJ = new SyntacticTag();
@@ -53,6 +56,9 @@ public class SyntacticChunk implements Serializable {
 
     NONE = new SyntacticTag();
     NONE.setSyntacticFunction(SyntacticFunction.NONE);
+
+    SUBJECT_PREDICATIVE = new SyntacticTag();
+    SUBJECT_PREDICATIVE.setSyntacticFunction(SyntacticFunction.SUBJECT_PREDICATIVE);
   }
 
   public SyntacticChunk(List<Chunk> childChunks) {
@@ -72,10 +78,235 @@ public class SyntacticChunk implements Serializable {
 
   private MorphologicalTag tag = null;
 
+  public MorphologicalTag getMorphologicalTag() {
+    if(tag == null) {
+        // here we try to guess a mtag for the syntactic chunk.
+        if(syntacticTag.match(NONE)) {
+            tag = getChildChunks().get(0).getMainToken().morphologicalTag;
+        } else if(syntacticTag.match(MV)) {
+            for (Chunk verbChunk : getChildChunks()) {
+                if(verbChunk.getMainToken() != null) {
+                    tag = verbChunk.getMainToken().getMorphologicalTag();
+                    break;
+                }
+            }
+        } else if(syntacticTag.match(SUBJ) || syntacticTag.match(SUBJECT_PREDICATIVE)) {
+            boolean hasMale = false;
+            boolean hasFemale = false;
+            boolean hasSingular = false;
+            boolean hasPlural = false;
+            
+            Gender lastGender = null;
+            
+            boolean multipleNP = false;
+            
+            // for now we can not handle complex cases... so lets handle simple ones at least
+            boolean canHandle = false;
+            List<Chunk> childChunks = filterPP(getChildChunks());
+            
+            if(childChunks != null && 
+                !containsLemma(childChunks, "cujo", "que", "como") && 
+                !containsClass(childChunks, Class.NUMERAL) &&
+                !endsWithPunct(childChunks)) {
+              
+              // 1) we can handle trivial cases, with one NP (but there are exceptions that cause false positives!!)
+              if(childChunks.size() == 1 && "NP".equals(childChunks.get(0).getType())) {
+                canHandle = true;
+              }
+              
+              // 2) we can handle (NP, NP)* "e" NP (a menina e a bola)
+              else if(childChunks.size() > 1) {
+                boolean gotE = false;
+                // now we check 
+                for (int i = 0; i < childChunks.size(); i = i+2) {
+                  if(i == childChunks.size() - 1 && checkType(childChunks.get(i), "NP")) {
+                    if(gotE) {
+                      canHandle = true;
+                      multipleNP = true;
+                    }
+                  } else if(checkType(childChunks.get(i), "NP") && checkType(childChunks.get(i+1), null) 
+                      && checkLexeme(childChunks.get(i+1), ",", "e")) {
+                    if(checkLexeme(childChunks.get(i+1), "e")) {
+                      gotE = true;
+                    }
+                    // keep going... until last one that should be a NP
+                  } else {
+                    break;
+                  }
+                  
+                }
+              }
+              
+            }
+            
+            if(canHandle) {
+              for (Chunk subjChunk : childChunks) {
+              if(tag == null && subjChunk.getMainToken() != null) {
+                  tag = subjChunk.getMainToken().getMorphologicalTag();
+              }
+              
+              if(subjChunk.getMainToken() != null) {
+                  MorphologicalTag mt = subjChunk.getMainToken().getMorphologicalTag();
+                  if((!hasFemale || !hasMale) && mt.getGenderE() != null && mt.getGenderE().equals(Gender.NEUTRAL)) {
+                      hasFemale = true; hasMale = true;
+                      lastGender = Gender.NEUTRAL;
+                  } else if(!hasFemale && mt.getGenderE() != null && mt.getGenderE().equals(Gender.FEMALE)) {
+                      hasFemale = true;
+                      lastGender = Gender.FEMALE;
+                  } else if(!hasMale && mt.getGenderE() != null && mt.getGenderE().equals(Gender.MALE)) {
+                      hasMale = true;
+                      lastGender = Gender.MALE;
+                  }
+  
+                  if((!hasSingular || !hasPlural) && mt.getNumberE() != null && mt.getNumberE().equals(Number.NEUTRAL)) {
+                      hasSingular = true; hasPlural = true;
+                  } else if(!hasSingular && mt.getNumberE() != null && mt.getNumberE().equals(Number.SINGULAR)) {
+                      hasSingular = true;
+                  } else if(!hasPlural && mt.getNumberE() != null && mt.getNumberE().equals(Number.PLURAL)) {
+                      hasPlural = true;
+                  }
+              }
+          }
+              
+            } else {
+              tag = createNeutralNoun();
+            }
+              
+
+            tag = tag.clone();
+            if(hasFemale && hasMale) {
+                if(Objects.equal(lastGender, Gender.MALE)) {
+                  tag.setGender(Gender.MALE);
+                } else {
+                  tag.setGender(Gender.NEUTRAL); // could be male, but sometimes one can opt to agree with latter only
+                }
+            } else if(hasFemale) {
+                tag.setGender(Gender.FEMALE);
+            } else if(hasMale) {
+                tag.setGender(Gender.MALE);
+            }
+            
+            if(syntacticTag.match(SUBJ) && multipleNP) {
+              tag.setNumber(Number.PLURAL);
+            } else if(syntacticTag.match(SUBJECT_PREDICATIVE) && childChunks.size() > 1) {
+              tag.setNumber(Number.NEUTRAL);
+            } else {
+              if(hasSingular && hasPlural) {
+                tag.setNumber(Number.NEUTRAL);
+              } else if(hasSingular) {
+                  tag.setNumber(Number.SINGULAR);
+              } else if(hasPlural) {
+                  tag.setNumber(Number.PLURAL);
+              }              
+            }
+
+        } else {
+          if(getChildChunks().size() == 1) {
+            tag = getChildChunks().get(0).getMainToken().getMorphologicalTag();
+          } else {
+            tag = createNeutralNoun();
+          }
+        }
+    }
+    
+    if(tag.getNumberE() == null) tag.setNumber(Number.NEUTRAL);
+    if(tag.getGenderE() == null) tag.setGender(Gender.NEUTRAL);
+    return tag;
+}
+  
+  private boolean endsWithPunct(List<Chunk> childChunks) {
+    if(childChunks.size() > 0) {
+      Chunk lastChunk = childChunks.get(childChunks.size() - 1);
+      List<Token> tokens = lastChunk.getTokens();
+      if(tokens.size() > 0) {
+        return Class.PUNCTUATION_MARK.equals(tokens.get(tokens.size() - 1).getMorphologicalTag().getClazzE());
+      }
+    }
+    return false;
+  }
+
+  private List<Chunk> filterPP(List<Chunk> childChunks) {
+    List<Chunk> out = new ArrayList<Chunk>();
+    // if we find a PP, we skip it and the following NP
+    // it it fails, we simply skip the chunks...
+    if(childChunks.size() == 1) return childChunks;
+    
+    for (int i = 0; i < childChunks.size(); i++) {
+      Chunk c = childChunks.get(i);
+      
+      if(i < childChunks.size() - 1 && Objects.equal(c.getType(), "PP") && Objects.equal(childChunks.get(i+1).getType(), "NP")) {
+        i++;
+      } else {
+        out.add(c);
+      }
+      
+    }
+    return out;
+  }
+
+  private boolean containsClass(List<Chunk> childChunks, Class... classes) {
+    boolean match = false;
+    for (Chunk chunk : childChunks) {
+      for (Token t : chunk.getTokens()) {
+        for (Class c : classes) {
+          if (t.getMorphologicalTag() != null
+              && c.equals(t.getMorphologicalTag().getClazzE())) {
+            match = true;
+            break;
+          }
+        }
+      }
+    }
+    return match;
+  }
+
+  private boolean containsLemma(List<Chunk> childChunks, String ... arr) {
+    boolean match = false;
+    for (Chunk chunk : childChunks) {
+      for (Token t : chunk.getTokens()) {
+        for (String lexeme : arr) {
+          for (String p : t.getPrimitive()) {
+            if(lexeme.equalsIgnoreCase(p)) {
+              match = true;
+              break;
+            } 
+          }
+            
+        }
+      }
+    }
+    return match;
+  }
+
+  private MorphologicalTag createNeutralNoun() {
+    MorphologicalTag t = new MorphologicalTag();
+    t.setClazz(Class.NOUN);
+    t.setGender(Gender.NEUTRAL);
+    t.setNumber(Number.NEUTRAL);
+    return t;
+  }
+
+  private boolean checkLexeme(Chunk chunk, String ... arr) {
+    boolean match = false;
+    if(chunk.getTokens().size() == 1) {
+      for (String lexeme : arr) {
+        if(Objects.equal(chunk.getTokens().get(0).getLexeme(), lexeme)) {
+          match = true;
+          break;
+        }
+      }
+    }
+    return match;
+  }
+
+  private boolean checkType(Chunk chunk, String string) {
+    return Objects.equal(chunk.getType(), string);
+  }
+
   /**
    * @return the morphologicalTag
    */
-  public MorphologicalTag getMorphologicalTag() {
+  public MorphologicalTag getMorphologicalTag2xx() {
     if (tag == null) {
       // here we try to guess a mtag for the syntactic chunk.
       if (syntacticTag.match(NONE)) {
@@ -92,7 +323,7 @@ public class SyntacticChunk implements Serializable {
         Gender gender = null;
         Number number = null;
         
-        List<Chunk> childChunks = getChildChunks();
+        List<Chunk> childChunks = filterNP(getChildChunks());
         
         MorphologicalTag mtag = childChunks.get(0).getMorphologicalTag().clone();
         gender = mtag.getGenderE();
@@ -116,6 +347,23 @@ public class SyntacticChunk implements Serializable {
     }
         
     return tag;
+  }
+
+  private List<Chunk> filterNP(List<Chunk> childChunks) {
+    List<Chunk> filtered = new ArrayList<Chunk>();
+    for (Chunk c : childChunks) {
+      if(c.getMorphologicalTag().getClazzE().equals(Class.PREPOSITION)) {
+        break;
+      }
+      if(Objects.equal(c.getType(), "NP")) {
+        filtered.add(c);
+      }
+    }
+    if(filtered.size() > 0) {
+      return filtered;
+    }
+    
+    return childChunks;
   }
 
   private Number getStronger(Number a, Number b) {

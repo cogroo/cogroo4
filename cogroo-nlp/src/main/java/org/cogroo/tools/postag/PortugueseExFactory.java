@@ -15,9 +15,12 @@
  */
 package org.cogroo.tools.postag;
 
+import opennlp.model.AbstractModel;
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.postag.POSContextGenerator;
+import opennlp.tools.postag.POSDictionary;
 import opennlp.tools.postag.TagDictionary;
+import opennlp.tools.util.InvalidFormatException;
 
 public class PortugueseExFactory extends PortugueseFactory {
 
@@ -38,6 +41,11 @@ public class PortugueseExFactory extends PortugueseFactory {
   @Override
   public POSContextGenerator getPOSContextGenerator() {
     return new PortugueseExtPOSContextGenerator(getDictionary());
+  }
+  
+  @Override
+  protected void validatePOSDictionary(POSDictionary posDict,
+      AbstractModel posModel) throws InvalidFormatException {
   }
   
 }

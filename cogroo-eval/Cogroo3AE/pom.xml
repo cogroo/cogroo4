@@ -144,7 +144,7 @@
 								<artifactItem>
 									<groupId>br.usp.pcs.lta.cogroo</groupId>
 									<artifactId>CoGrOOBase</artifactId>
-									<version>3.2.1-SNAPSHOT</version>
+									<version>3.1.2</version>
 									<classifier>bin</classifier>
 									<type>zip</type>
 									<outputDirectory>target/cogroo</outputDirectory>

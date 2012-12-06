@@ -155,8 +155,9 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
       if (isIncludeFeatures && leaf.getMorphologicalTag() != null) {
         tag += " " + leaf.getMorphologicalTag();
       }
+      
       tag = tag.replaceAll("\\s+", "=");
-
+      
       if (tag == null)
         tag = lexeme;
 
@@ -249,14 +250,34 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
           con.add(contraction);
         }
       } else {
+        tag = addGender(tag, leaf.getMorphologicalTag());
+        
         sentence.add(lexeme);
         tags.add(tag);
         prop.add(null);
         con.add(contraction);
       }
     }
-
   }
+  
+  private static final Pattern GENDER_M = Pattern.compile(".*\\bM\\b.*"); 
+  private static final Pattern GENDER_F = Pattern.compile(".*\\bF\\b.*"); 
+  private static final Pattern GENDER_N = Pattern.compile(".*\\bM/F\\b.*"); 
+
+  private String addGender(String tag, String morphologicalTag) {
+    if(("n".equals(tag) || "art".equals(tag)) && morphologicalTag != null) {
+      if(GENDER_N.matcher(morphologicalTag).matches()) {
+        //tag = tag + "n";
+      } else if(GENDER_M.matcher(morphologicalTag).matches()) {
+        tag = tag + "m";
+      } else if(GENDER_F.matcher(morphologicalTag).matches()) {
+        tag = tag + "f";
+      } 
+      
+    }
+    return tag;
+  }
+
 
   public void reset() throws IOException, UnsupportedOperationException {
     adSentenceStream.reset();

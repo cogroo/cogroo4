@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
+import opennlp.model.AbstractModel;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.postag.POSModel;
@@ -304,15 +305,15 @@ public class ComponentFactory implements ComponentFactoryI {
   public AnalyzerI createChunker() {
     long start = System.nanoTime();
     AnalyzerI analyzer = null;
-    opennlp.tools.chunker.ChunkerME chunker = null;
+    ChunkerME chunker = null;
     InputStream modelIn = null;
 
     if (modelPathMap.containsKey(Analyzers.CHUNKER)) {
       try {
         modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
             .get(Analyzers.CHUNKER));
-        opennlp.tools.chunker.ChunkerModel model = new opennlp.tools.chunker.ChunkerModel(modelIn);
-        chunker = new opennlp.tools.chunker.ChunkerME(model);
+        ChunkerModel model = new ChunkerModel(modelIn);
+        chunker = new ChunkerME(model);
       } catch (IOException e) {
         LOGGER.fatal("Couldn't load Chunker model!", e);
       } finally {
@@ -372,7 +373,8 @@ public class ComponentFactory implements ComponentFactoryI {
         modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
             .get(Analyzers.SHALLOW_PARSER));
         ChunkerModel model = new ChunkerModel(modelIn);
-        shallowParser = new ChunkerME(model);
+        logOutcomes(model.getChunkerModel());
+        shallowParser = new ChunkerME(model, 20);
       } catch (IOException e) {
         LOGGER.fatal("Couldn't load ShallowParser model!", e);
       } finally {
@@ -389,6 +391,14 @@ public class ComponentFactory implements ComponentFactoryI {
           + ((System.nanoTime() - start) / 1000000) + "ms]");
     }
     return analyzer;
+  }
+
+  private void logOutcomes(AbstractModel chunkerModel) {
+    StringBuilder sb = new StringBuilder("Outcomes: ");
+    for (int i = 0; i < chunkerModel.getNumOutcomes(); i++) {
+      sb.append(chunkerModel.getOutcome(i)).append(" ");
+    }
+    LOGGER.info(sb.toString());
   }
 
   public AnalyzerI createPipe() {

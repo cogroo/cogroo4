@@ -43,7 +43,7 @@ public class ProcessReport {
 
   public ProcessReport(String resources, String report, String output) {
     // UIMA will load modules using envvar!
-
+    System.out.println("Using uima modules from: " + System.getenv("UIMA_DATAPATH"));
     // the rest we load normally
     this.cogroo = new MultiCogroo(new LegacyRuntimeConfiguration(resources));
     this.report = report;

@@ -98,8 +98,8 @@ Cutoff=$cutoff";
 	print $pfh $params;
 }
 
-my %simpleF = ( sent => 1, tok => 1, con => 1, prop => 1, chunker => 1, hf =>, sp => 1 );
-my %simpleA = ( pos => 1, feat => 1 );
+my %simpleF = ( 'sent' => 1, 'tok' => 1, 'con' => 1, 'prop' => 1, 'chunk' => 1, 'hf' => 1, 'sp' => 1 );
+my %simpleA = ( 'pos' => 1, 'feat' => 1 );
 
 sub filter {
 	my %out;
@@ -215,7 +215,7 @@ sub createCommand {
 	my $execArgs = shift;
 	my $properties = shift;
 
-	$ENV{'MAVEN_OPTS'} = "-Xms512m -Xmx1800m -XX:PermSize=256m";
+	$ENV{'MAVEN_OPTS'} = "-Xms512m -Xmx1100m -XX:PermSize=256m";
 	
 	my $command = 'mvn -e -o -q exec:java "-Dexec.mainClass=';
 	
@@ -354,14 +354,14 @@ sub exec() {
 		    createCommand('cogroo', " FeaturizerCrossValidator.ad $base", $extraProperties);
 	}
 	
-	if ( $opt{t} eq 'chunker' ) {
+	if ( $opt{t} eq 'chunk' ) {
 		my $base = "$basicCommand "
 		  . ENCODING
 		  . " -data $data ";
 		$trCommand .=
-		    createCommand('opennlp', " ChunkerTrainerME.ad -model $model $base", $extraProperties);
+		    createCommand('cogroo', " Chunker2Trainer.ad2 -model $model $base", $extraProperties);
 		$cvCommand .=
-		    createCommand('opennlp', " ChunkerCrossValidator.ad $base", $extraProperties);
+		    createCommand('cogroo', " Chunker2CrossValidator.ad2 $base", $extraProperties);
 	}
 	
 	if ( $opt{t} eq 'hf' ) {

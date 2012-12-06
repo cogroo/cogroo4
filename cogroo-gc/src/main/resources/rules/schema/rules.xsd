@@ -176,6 +176,9 @@
 						<xs:enumeration value="verb"/>
 						<xs:enumeration value="indirect object"/>
 						<xs:enumeration value="direct object"/>
+						<xs:enumeration value="subject predicative"/>
+						<xs:enumeration value="subject predicative"/>
+						<xs:enumeration value="identifying apposition"/>
 						<xs:enumeration value="none"/>
 					</xs:restriction>
 				</xs:simpleType>

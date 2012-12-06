@@ -21,6 +21,7 @@ import java.util.List;
 import opennlp.tools.util.Span;
 
 import org.cogroo.entities.tree.Node;
+import org.cogroo.entities.tree.TextModel;
 
 import com.google.common.base.Objects;
 
@@ -161,7 +162,8 @@ public class Sentence implements Serializable, TokenGroup {
     }
     synchronized (this) {
       if (this.root == null) {
-        this.root = new Node();//OldStyleModel.createTree(this);
+        TextModel model = new TextModel(this);
+        this.root = model.getRoot();
       }
       return root;
     }

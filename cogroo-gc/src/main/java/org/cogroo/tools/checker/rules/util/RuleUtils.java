@@ -344,7 +344,7 @@ public class RuleUtils {
 		}
 	}
 	
-	   public static TagMask createTagMaskFromReferenceSyntatic(Reference ref,
+	public static TagMask createTagMaskFromReferenceSyntatic(Reference ref,
            Sentence sent, int refPos) {
        
        int pos = refPos + (int)ref.getIndex();

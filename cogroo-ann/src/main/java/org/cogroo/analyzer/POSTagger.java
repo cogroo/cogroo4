@@ -26,6 +26,7 @@ import org.cogroo.config.Analyzers;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
+import org.cogroo.tools.postag.GenderUtil;
 import org.cogroo.util.EntityUtils;
 import org.cogroo.util.TextUtils;
 
@@ -55,7 +56,9 @@ public class POSTagger implements AnalyzerI {
                 .additionalContext(tokens, Arrays.asList(
                     Analyzers.CONTRACTION_FINDER, Analyzers.NAME_FINDER)));
       }
-
+      
+      tags = GenderUtil.removeGender(tags);
+      
       for (int i = 0; i < tags.length; i++) {
         tokens.get(i).setPOSTag(tags[i]);
       }

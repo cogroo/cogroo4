@@ -9,6 +9,9 @@
 	<model type="contractionFinder">/eval_models/pt-con.model</model>
 	<model type="posTagger">/eval_models/pt-pos.model</model>
 	<model type="featurizer">/eval_models/pt-feat.model</model>
+	<model type="chunker">/eval_models/pt-chunk.model</model>
+	<model type="headFinder">/eval_models/pt-hf.model</model>
+	<model type="shallowParser">/eval_models/pt-sp.model</model>
 
 	<pipe>
 		${sent}

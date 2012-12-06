@@ -151,14 +151,17 @@ public class Categories {
     elems.put("xml:114", "con");
     elems.put("xml:115", "con");
     // elems.put("xml:116", null);
-    elems.put("xml:117", "cov");
-    elems.put("xml:118", "cov");
+    elems.put("xml:117", "cov|ver");
+    elems.put("xml:118", "cov|ver");
     elems.put("xml:119", "cov");
     elems.put("xml:120", "cov");
     elems.put("xml:121", "ger");
     elems.put("xml:122", "sem");
     elems.put("xml:123", "sem");
-    elems.put("xml:124", "con");
+    elems.put("xml:124", "con|cov");
+    elems.put("xml:125", "ver");
+    elems.put("xml:126", "cra");
+    elems.put("xml:127", "con|cov");
 
     elems.put("space:EXTRA_BETWEEN_WORDS", "esp");
     elems.put("space:EXTRA_BEFORE_RIGHT_PUNCT", "esp");

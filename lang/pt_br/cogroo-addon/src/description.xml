@@ -52,8 +52,8 @@
     </extension-description>
     <registration>
         <simple-license accept-by="admin" default-license-id="pt-BR">
-            <license-text lang="pt-BR" license-id="pt-BR" xlink:href="licenses/LICENSE"/>
-            <license-text lang="en" xlink:href="licenses/LICENSE"/>
+            <license-text lang="pt-BR" license-id="pt-BR" xlink:href="LICENSE"/>
+            <license-text lang="en" xlink:href="LICENSE"/>
         </simple-license>
     </registration>
 </description>

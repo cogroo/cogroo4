@@ -765,11 +765,16 @@ if(0) {
 	my %fromfileEval = evaluateListFromFile($ARGV[0], 0);
 	%eval = (%baselineEval, %fromfileEval);
 } elsif(1) {
+	my %baselineEval;
 	# use this to evaluate baseline x new modules with new tagset
 	if(@ARGV > 1 && $ARGV[1] ne '') {
 		createBaseline($ARGV[1]);
 	}
-	my %baselineEval = evaluateBaseline('baseline');
+	if(0) {
+		%baselineEval = evaluateBaseline('baseline');
+	} else {
+		%baselineEval = cpe::evaluateCogroo3($reportsPath, 'baseline');
+	}
 	my %fromfileEval = evaluateListFromFile($ARGV[0], 1);
 	%eval = (%baselineEval, %fromfileEval);
 } else {

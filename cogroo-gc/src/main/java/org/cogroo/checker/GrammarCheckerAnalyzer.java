@@ -48,6 +48,7 @@ import org.cogroo.tools.checker.rules.applier.RulesTreesProvider;
 import org.cogroo.tools.checker.rules.applier.RulesXmlAccess;
 import org.cogroo.tools.checker.rules.dictionary.FSALexicalDictionary;
 import org.cogroo.tools.checker.rules.dictionary.TagDictionary;
+import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.util.MistakeComparator;
 
 
@@ -116,16 +117,16 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     // create other typed checkers
     
     // how to get the abbreviation dictionary? 
-    //typedCheckersList.add(new SpaceChecker(loadAbbDict()));
-    //typedCheckersList.add(new PunctuationChecker());
-    //typedCheckersList.add(new RepetitionChecker());
+    typedCheckersList.add(new SpaceChecker(loadAbbDict()));
+    typedCheckersList.add(new PunctuationChecker());
+    typedCheckersList.add(new RepetitionChecker());
     
     typedCheckers = new TypedCheckerComposite(typedCheckersList, false);
 
     // all non typed checkers will be added to this:
     List<Checker> checkerList = new ArrayList<Checker>();
     
-    checkerList.add(new WordCombinationChecker());
+    // checkerList.add(new WordCombinationChecker());
 
     this.checkers = new CheckerComposite(checkerList, false);
    
@@ -215,6 +216,23 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   
   public void resetIgnoredRules(){
     this.checkers.resetIgnored();
+  }
+  
+  public static void main(String[] args) throws IllegalArgumentException, IOException {
+    System.out.println("Working examples...");
+    
+    GrammarCheckerAnalyzer gca = new GrammarCheckerAnalyzer();
+    
+    printExamples(gca.typedCheckers.getRulesDefinition());
+    printExamples(gca.checkers.getRulesDefinition());
+  }
+
+  private static void printExamples(List<RuleDefinitionI> rulesDefinition) {
+    for (RuleDefinitionI def : rulesDefinition) {
+      for (Example ex : def.getExamples()) {
+        System.out.println(ex.getIncorrect());
+      }
+    }
   }
   
 }

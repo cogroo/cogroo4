@@ -1,0 +1,7 @@
+hf-cf-maxent-NONE-gp-8
+feat-cf-perceptron-FEAT_FLAGSWHNCS,FEAT_DIC,FEAT_FSAFACTORY-gp-0
+sent-vcf-perceptron-sd_factory,sd_abb-gp-0
+tok-vcf-perceptron-SD_ABB,TOK_ALPHAOPT-gp-0
+prop-cf-perceptron-NONE-gp-0
+con-vcf-perceptron-CON_DIC-gp-8
+pos-cf-perceptron-POS_DIC,POS_DICCUT1,POS_EXFACT,POS_AC-gp-0

@@ -62,12 +62,16 @@ public final class Chunker2CrossValidatorTool
 
     List<EvaluationMonitor<ChunkSample>> listeners = new LinkedList<EvaluationMonitor<ChunkSample>>();
     ChunkerDetailedFMeasureListener detailedFMeasureListener = null;
+    ChunkerDetailedFMeasureSizeListener detailedFMeasureForSizeListener = null;
     if (params.getMisclassified()) {
       listeners.add(new ChunkEvaluationErrorListener());
     }
     if (params.getDetailedF()) {
       detailedFMeasureListener = new ChunkerDetailedFMeasureListener();
       listeners.add(detailedFMeasureListener);
+
+      detailedFMeasureForSizeListener = new ChunkerDetailedFMeasureSizeListener();
+      listeners.add(detailedFMeasureForSizeListener);
     }
 
     ChunkerCrossValidator validator;
@@ -98,6 +102,8 @@ public final class Chunker2CrossValidatorTool
       System.out.println(result.toString());
     } else {
       System.out.println(detailedFMeasureListener.toString());
+      System.out.println();
+      System.out.println(detailedFMeasureForSizeListener.toString());
     }
   }
 }

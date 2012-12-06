@@ -15,19 +15,21 @@
  */
 package org.cogroo.entities.tree;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.cogroo.entities.impl.SyntacticTag;
-
 import opennlp.tools.util.Span;
+
+import org.cogroo.entities.SyntacticChunk;
+import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.tools.checker.rules.model.TagMask;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 
 public class TextModel {
 
   private final TagMask VERB;
+  private final TagMask NONE;
   private final TagMask SUBJ;
+  
   private Node root;
   // private final Text text;
 
@@ -41,8 +43,10 @@ public class TextModel {
     this.VERB.setSyntacticFunction(SyntacticFunction.VERB);
     this.SUBJ = new TagMask();
     this.SUBJ.setSyntacticFunction(SyntacticFunction.SUBJECT);
+    this.NONE = new TagMask();
+    this.NONE.setSyntacticFunction(SyntacticFunction.NONE);
 
-    root = toNode(sentence);
+    root = toRoot(sentence);
 
   }
 
@@ -58,87 +62,74 @@ public class TextModel {
     return null;
   }
 
-  private Sentence toNode(org.cogroo.entities.Sentence sentence) {
+  private Sentence toRoot(org.cogroo.entities.Sentence sentence) {
     Sentence sent = new Sentence();
     sent.setLevel(0);
     // Span span = getSpan(sentence.getTokens());
 
-    List<org.cogroo.entities.Chunk> chunks = sentence.getChunks();
-    for (org.cogroo.entities.Chunk chunk : chunks) {
-      // check if has syntactic function
-      if (chunk.getSyntacticTag().match(this.SUBJ)) {
-        sent.addElement(toNode(chunk, chunk.getSyntacticTag(), sent));
-      } else if (chunk.getSyntacticTag().match(this.VERB)) {
-        sent.addElement(toNode(chunk, chunk.getSyntacticTag(), sent));
-      } else if (chunk.getTokens().size() > 1) {
-        sent.addElement(toNode(chunk, sent));
-      } else {
-        for (Token c : toNode(chunk.getTokens(), sent)) {
-          sent.addElement(c);
-        }
-      }
+    List<SyntacticChunk> chunks = sentence.getSyntacticChunks();
+    for (SyntacticChunk syntacticChunk : chunks) {
+        addChild(syntacticChunk, sent);
     }
-
     return sent;
   }
 
-  private Chunk toNode(org.cogroo.entities.Chunk chunk, SyntacticTag synt,
-      Node parent) {
-    Chunk c = new Chunk();
-    c.setLevel(parent.getLevel() + 1);
-    // Span span = getSpan(chunk.getTokens());
-    c.setSyntacticTag(chunk.getSyntacticTag().toVerboseString());
-    // c.details.add(SYNTACTIC_FUNCTION +
-    // chunk.getSyntacticTag().toVerboseString());
-    // c.details.add(SPAN + span);
-
-    // c.children = new ArrayList<Node>();
-    if (chunk.getTokens().size() > 1) {
-      c.addElement(toNode(chunk, c));
-    } else {
-      for (Token t : toNode(chunk.getTokens(), c)) {
-        c.addElement(t);
+  private void addChild(SyntacticChunk syntacticChunk, Node parent) {
+    if (syntacticChunk.getSyntacticTag() != null && !syntacticChunk.getSyntacticTag().match(this.NONE)) {
+      Chunk c = new Chunk();
+      c.setLevel(parent.getLevel() + 1);
+      c.setSyntacticTag(syntacticChunk.getSyntacticTag().toVerboseString());
+      
+      for (org.cogroo.entities.Chunk child : syntacticChunk.getChildChunks()) {
+        addChild(child, c);
       }
-
-      // c.children.addAll(toNode(chunk.getTokens(), c));
+      parent.addElement(c);
+    } else {
+      for (org.cogroo.entities.Chunk chunk : syntacticChunk.getChildChunks()) {
+        addChild(chunk, parent);
+      }
     }
-
-    return c;
   }
 
-  private Chunk toNode(org.cogroo.entities.Chunk chunk, Node parent) {
-    Chunk c = new Chunk();
-    c.setLevel(parent.getLevel() + 1);
-    // Span span = getSpan(chunk.getTokens());
-    c.setSyntacticTag(chunk.getMorphologicalTag().getClazzE().toString());
-    // c.details.add(CHUNK_FUNCTION + chunk.getMorphologicalTag().getClazzE());
-    // c.details.add(SPAN + span);
-
-    // c.children = new ArrayList<Node>();
-    for (Token t : toNode(chunk.getTokens(), c)) {
-      c.addElement(t);
+  private void addChild(org.cogroo.entities.Chunk chunk, Node parent) {
+    if(chunk.getType() == null) {
+      addChild(chunk.getTokens(), parent);
+    } else {
+      Chunk c = new Chunk();
+      c.setLevel(parent.getLevel() + 1);
+      c.setSyntacticTag(chunk.getType());
+      
+      addChild(chunk.getTokens(), c);
+  
+      parent.addElement(c);
     }
-    // c.children.addAll(toNode(chunk.getTokens(), c));
-    // c.parent = parent;
-
-    return c;
   }
 
-  private List<Token> toNode(List<org.cogroo.entities.Token> tokenList,
+  private void addChild(List<org.cogroo.entities.Token> tokenList,
       Node parent) {
-
-    List<Token> t = new ArrayList<Token>();
-    for (org.cogroo.entities.Token token : tokenList) {
-      t.add(toNode(token, parent));
+    for (int i = 0; i < tokenList.size(); i++) {
+      addChild(tokenList.get(i), parent, isHead(i, tokenList.get(i)));
     }
-    return t;
   }
 
-  private Token toNode(org.cogroo.entities.Token token, Node parent) {
+  private boolean isHead(int i, org.cogroo.entities.Token token) {
+    int relativeIndex = i; //- token.getChunk().getFirstToken();
+    if(relativeIndex == token.getChunk().getRelativeHeadIndex())
+      return true;
+    return false;
+  }
+
+  private void addChild(org.cogroo.entities.Token token, Node parent, boolean isHead) {
     Token t = new Token();
-    t.setLevel(3);
-    t.setLexeme(token.toString());
-    t.setMorphologicalTag(token.getMorphologicalTag().toVerboseString());
+    t.setLevel(parent.getLevel() + 1);
+    t.setLexeme(token.getLexeme());
+    t.setIsChunkHead(isHead);
+    t.setMorphologicalTag(token.getMorphologicalTag().getClazzE().name());
+    
+    MorphologicalTag mt = token.getMorphologicalTag().clone();
+    mt.setClazz(null);
+    
+    t.setFeatures(mt.toString());
     t.setLemma(token.getPrimitive());
     // Span span = token.getSpan();
     // t.details.add(MORPH_FUNCTION +
@@ -146,7 +137,7 @@ public class TextModel {
     // t.details.add(SPAN + span);
     // t.parent = parent;
 
-    return t;
+    parent.addElement(t);
   }
 
   // public class Node
@@ -208,7 +199,10 @@ public class TextModel {
   }
 
   public class Sentence extends Node {
-
+    @Override
+    public String getSyntacticTag() {
+      return "S";
+    }
   }
 
   public class Chunk extends Node {

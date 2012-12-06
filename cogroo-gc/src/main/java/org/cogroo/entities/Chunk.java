@@ -39,6 +39,8 @@ public abstract class Chunk implements Serializable, TokenGroup {
   protected int firstToken;
 
   protected MorphologicalTag morphologicalTag;
+  
+  private String type;
 
   /**
    * Gets the representation of the sentence as a plain text.
@@ -111,14 +113,32 @@ public abstract class Chunk implements Serializable, TokenGroup {
         .add("tag", getTokens().get(0).getChunkTag())
         .toString();
   }
-
-  public Token getMainToken() {
-    for (Token t : this.getTokens()) {
-      if (t.getChunkTag().toString().contains("MAIN")) {
-        return t;
+  
+  private int headIndex = -1;
+  
+  public int getRelativeHeadIndex() {
+    if(headIndex == -1) {
+      headIndex = 0;
+      for(int i = 0; i < tokens.size(); i++) {
+        if(tokens.get(i).getChunkTag().toString().contains("MAIN")) {
+          headIndex = i;
+          break;
+        }
       }
     }
-    return this.getTokens().get(0);
+    return headIndex;
+  }
+
+  public Token getMainToken() {
+    return this.getTokens().get(getRelativeHeadIndex());
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 
 }

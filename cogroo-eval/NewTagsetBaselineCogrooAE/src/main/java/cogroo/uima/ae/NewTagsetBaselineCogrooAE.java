@@ -93,12 +93,12 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
       checker = new GrammarCheckerAnalyzer();
       checker.resetIgnoredRules();
       
-      String[] ignore = { "xml:117", "xml:118", "xml:124", "xml:103",
-          "xml:104", "xml:105" };
-      
-      for (String string : ignore) {
-        checker.ignoreRule(string);
-      }
+//      String[] ignore = { "xml:17", "xml:21", "xml:117", "xml:118", "xml:124", "xml:103",
+//          "xml:104", "xml:105" };
+//      
+//      for (String string : ignore) {
+//        checker.ignoreRule(string);
+//      }
     } catch (IllegalArgumentException e) {
       throw new ResourceInitializationException(e);
     } catch (IOException e) {

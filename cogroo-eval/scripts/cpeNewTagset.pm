@@ -52,7 +52,7 @@ sub install {
 	my $pom = shift;
 	printToLog("Will install pom: $pom\n");
 
-	my $command = "mvn -e -nsu -q -f $pom install -DskipTests";
+	my $command = "mvn -o -e -nsu -q -f $pom install -DskipTests";
 
 	my @res = `$command 2>&1`;
 
@@ -76,7 +76,7 @@ sub installPearByPath {
 	my $pear = shift;
 	printToLog("Will install pear: $pear\n");
 	
-	my $command = 'mvn -f ../UIMAAutomation/pom.xml -e -q clean install exec:java -DskipTests "-Dexec.mainClass=uima.Installer" "-Dexec.args=' . $pear . ' ' . $ENV{'REPO_ROOT'} . '" -DUIMA_DATAPATH';
+	my $command = 'mvn -o -f ../UIMAAutomation/pom.xml -e -q clean install exec:java -DskipTests "-Dexec.mainClass=uima.Installer" "-Dexec.args=' . $pear . ' ' . $ENV{'REPO_ROOT'} . '" -DUIMA_DATAPATH';
 
 	printToLog("command: $command\n");
 	
@@ -147,7 +147,7 @@ sub executeCPE {
 	
 	my $desc = "../GramEval/desc/$name.svnignore.xml";
 	
-	my $command = 'mvn -f ../GramEval/pom.xml -e -q exec:java -DskipTests -DsystemProperties="file.encoding=UTF-8" "-Dexec.mainClass=cogroo.uima.SimpleRunCPE" "-Dexec.args=' . $desc . '"';
+	my $command = 'mvn -o -f ../GramEval/pom.xml -e -q exec:java -DskipTests -DsystemProperties="file.encoding=UTF-8" "-Dexec.mainClass=cogroo.uima.SimpleRunCPE" "-Dexec.args=' . $desc . '"';
 
 	my @res = `$command 2>&1`;
 
@@ -179,7 +179,7 @@ sub generateCogrooReportNew {
 		
 	printToLog("Will process report using MultiCogroo (new tagset) \n");
 	
-	my $command = 'mvn -f ../NewTagsetBaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
+	my $command = 'mvn -o -f ../NewTagsetBaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
 
 	my @res = `$command 2>&1`;
 
@@ -192,6 +192,7 @@ sub generateCogrooReportNew {
 	
 	if($err) {
 		my $log = "=== Failed to execute command ===\n\n";
+		$log .= "Command: $command\n\n";
 		$log .= join "\t", @res;
 		printToLog($log . "\n\n");
 		
@@ -211,7 +212,7 @@ sub generateCogrooReport {
 		
 	printToLog("Will process report using MultiCogroo \n");
 	
-	my $command = 'mvn -f ../BaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
+	my $command = 'mvn -o -f ../BaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
 
 	my @res = `$command 2>&1`;
 
@@ -224,6 +225,8 @@ sub generateCogrooReport {
 	
 	if($err) {
 		my $log = "=== Failed to execute command ===\n\n";
+		$log .= "Command: $command\n\n";
+
 		$log .= join "\t", @res;
 		printToLog($log . "\n\n");
 		
@@ -406,6 +409,22 @@ sub configureMultiProperties {
 		if (-e "$modelRoot/pt-pos.model" && -e "$modelRoot/pt-feat.model") {
 			print "found POS Tagger (class) and Featurizer models\n";
 	 		$replace{'pos'} = '<analyzer>posTagger</analyzer><analyzer>featurizer</analyzer><analyzer>lemmatizer</analyzer>';
+	 	}		
+	}
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-chunk.model" && -e "$modelRoot/pt-hf.model") {
+			print "found Chunker and Chunker HF models\n";
+	 		$replace{'chunker'} = '<analyzer>chunker</analyzer><analyzer>headFinder</analyzer>';
+	 	}		
+	}
+	
+	
+	
+	if($useModels) {
+		if (-e "$modelRoot/pt-sp.model") {
+			print "found SP models\n";
+	 		$replace{'sp'} = '<analyzer>shallowParser</analyzer>';
 	 	}		
 	}
 	

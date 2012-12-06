@@ -102,6 +102,8 @@ public class SentenceAdapter {
         for (Chunk schunks : typedSentence.getChunks()) {
           trace.append("\t").append(schunks).append("\n");
         }
+
+        trace.append("\n\nAs syntactic tree: " + typedSentence.getSyntaxTree() + "\n");
         
         LOGGER.debug(trace.toString());
     }
@@ -285,7 +287,7 @@ public class SentenceAdapter {
         }
         
         Chunk typedChunk = new ChunkCogroo(tokens, textChunk.getStart());
-        
+        typedChunk.setType(textChunk.getTag());
         for (org.cogroo.entities.Token token : tokens) {
           token.setChunk(typedChunk);
         }
