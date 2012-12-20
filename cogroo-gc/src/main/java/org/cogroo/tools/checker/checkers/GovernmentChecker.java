@@ -136,6 +136,11 @@ public class GovernmentChecker extends AbstractChecker {
       if (tag.equals("PIV") || tag.equals("ACC") || tag.equals("SC")) {
 
         for (Token token : syntChunks.get(i).getTokens()) {
+        	if (token.getChunkTag().equals("NP")) {
+        		
+        	}
+        	
+        	
           if (token.getPOSTag().equals("n") || token.getPOSTag().equals("pron-pers")) {
             if (token.getLemmas() != null && token.getLemmas().length > 0) {
               nouns.add(token.getLemmas()[0]);
