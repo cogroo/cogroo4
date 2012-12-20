@@ -18,6 +18,7 @@ package org.cogroo.addon.dialogs.reporterror;
 
 import com.sun.star.awt.ActionEvent;
 import com.sun.star.awt.ItemEvent;
+import com.sun.star.awt.MessageBoxButtons;
 import com.sun.star.awt.PushButtonType;
 import com.sun.star.awt.TextEvent;
 import com.sun.star.awt.XActionListener;
@@ -45,6 +46,7 @@ import org.cogroo.addon.LoggerImpl;
 import org.cogroo.addon.Resources;
 import org.cogroo.addon.community.CommunityLogic;
 import org.cogroo.addon.community.CommunityLogic.Omission;
+import org.cogroo.addon.dialogs.MessageBox;
 import org.cogroo.addon.i18n.I18nLabelsLoader;
 import org.cogroo.addon.util.RestConnectionException;
 
@@ -1324,6 +1326,7 @@ public class ErrorReportDialog extends WizardDialog {
                     authStatusLabel.setText(I18nLabelsLoader.ADDON_LOGIN_STATUS_COMMUNICATIONERROR);
                 } catch (CogrooException ex) {
                     LOGGER.log(Level.SEVERE, null, ex);
+                    showError(m_xContext, ex);
                     authStatusLabel.setText(I18nLabelsLoader.ADDON_LOGIN_STATUS_INVALIDUSER);
                 }
                 authProgressBar.setPropertyValue("ProgressValue", new Integer(100));
@@ -1335,6 +1338,7 @@ public class ErrorReportDialog extends WizardDialog {
                 LOGGER.log(Level.SEVERE, null, ex);
             }
 	}
+	
     }
 
     private class SendReportThread extends Thread {
@@ -1365,6 +1369,8 @@ public class ErrorReportDialog extends WizardDialog {
                         LOGGER.log(Level.SEVERE, null, ex);
                         authStatusLabel.setText(I18nLabelsLoader.ADDON_THANKS_STATUS_ERROR);
                     } catch (CogrooException ex) {
+                        showError(m_xContext, ex);
+                        gotCommunicationError = true;
                         LOGGER.log(Level.SEVERE, null, ex);
                         authStatusLabel.setText(I18nLabelsLoader.ADDON_THANKS_STATUS_ERROR);
                     }
@@ -1373,7 +1379,25 @@ public class ErrorReportDialog extends WizardDialog {
                 } catch (com.sun.star.uno.Exception ex) {
                     LOGGER.log(Level.SEVERE, null, ex);
                 }
+                 setControlsState();
             }
         }
+    }
+    
+    private static void showError(XComponentContext xContext, CogrooException ex) {
+      
+      MessageBox mb = new MessageBox(xContext);
+      short result = mb.showMessageBox(
+              I18nLabelsLoader.ADDON_REPORT_ERROR,
+              ex.getLocalizedMessage() + "\n Mais em: " + LoggerImpl.getPath(),
+              "warningbox", MessageBoxButtons.BUTTONS_OK);
+      if(result == MessageBoxButtons.BUTTONS_OK){
+          //text = text.substring(0, 255);
+      } else {
+           LOGGER.fine("User canceled");
+          return;
+      }
+      LOGGER.fine("Result: " + result);
+      
     }
 }

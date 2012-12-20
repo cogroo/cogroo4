@@ -67,7 +67,11 @@ public class LoggerImpl {
 		}
 		initialized = true;
 	}
-	
+
+        public static String getPath() {
+            return replacePath(path);
+        }
+
 	public static boolean isInitialized()
 	{
 		return initialized;

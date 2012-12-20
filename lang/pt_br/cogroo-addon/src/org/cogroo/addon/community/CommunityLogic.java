@@ -32,6 +32,8 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import opennlp.tools.util.Span;
+
 import org.cogroo.addon.CogrooException;
 import org.cogroo.addon.CogrooExceptionMessages;
 import org.cogroo.addon.CogrooSingleton;
@@ -42,8 +44,6 @@ import org.cogroo.addon.util.RestUtil;
 import org.cogroo.addon.util.SecurityUtil;
 import org.cogroo.entities.Mistake;
 import org.cogroo.errorreport.ErrorReportAccess;
-
-import opennlp.tools.util.Span;
 import org.cogroo.tools.errorreport.model.BadIntervention;
 import org.cogroo.tools.errorreport.model.BadIntervention.BadInterventionClassification;
 import org.cogroo.tools.errorreport.model.ErrorReport;
@@ -217,7 +217,7 @@ public class CommunityLogic {
             data.clear();
             data.put("username", userName);
             data.put("token", security.encodeURLSafe(security.encrypt(kp.getPrivate(), encryptedBKey, token)));
-            data.put("error", security.encodeURLSafe(createErrorReportXML()));
+            data.put("error", SecurityUtil.encodeURLSafe(createErrorReportXML()));
             authProgressBar.setPropertyValue("ProgressValue", 60);
             respData = rest.post(ROOT, "submitErrorReport", data);
             result = respData.get("result");
@@ -424,7 +424,7 @@ public class CommunityLogic {
 
     }
 
-    public String createErrorReportXML() {
+    public String createErrorReportXML() throws CogrooException {
         ErrorReport errorReport = new ErrorReport();
 
         errorReport.setVersion(I18nLabelsLoader.ADDON_VERSION);
@@ -464,13 +464,12 @@ public class CommunityLogic {
 
                
         try {
-            ErrorReportAccess era = new ErrorReportAccess();
-            return era.serialize(errorReport);
+            return ErrorReportAccess.serialize(errorReport);
         } catch(Exception e) {
             LOG.log(Level.SEVERE, null, e);
+            Object[] args = {e.getLocalizedMessage()};
+            throw new CogrooException("community_communication_serialization", args, e);
         }
-        
-        return null;
     }
 
     public class Omission implements Comparable<Omission>{
