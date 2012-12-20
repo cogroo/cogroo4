@@ -38,7 +38,7 @@ import org.cogroo.tools.checker.TypedCheckerComposite;
 import org.cogroo.tools.checker.checkers.PunctuationChecker;
 import org.cogroo.tools.checker.checkers.RepetitionChecker;
 import org.cogroo.tools.checker.checkers.SpaceChecker;
-import org.cogroo.tools.checker.checkers.WordCombinationChecker;
+import org.cogroo.tools.checker.checkers.GovernmentChecker;
 import org.cogroo.tools.checker.rules.applier.RulesApplier;
 import org.cogroo.tools.checker.rules.applier.RulesProvider;
 import org.cogroo.tools.checker.rules.applier.RulesTreesAccess;
@@ -83,7 +83,7 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
    *    <li>{@link PunctuationChecker}</li>
    *    <li>{@link RepetitionChecker}</li>
    *    <li>{@link SpaceChecker}</li>
-   *    <li>{@link WordCombinationChecker} (beta)</li>
+   *    <li>{@link GovernmentChecker} (beta)</li>
    * </ul>
    * 
    * Also we should have checker that deals with basic Document structure, but today we don't have any yet.
@@ -126,7 +126,7 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     // all non typed checkers will be added to this:
     List<Checker> checkerList = new ArrayList<Checker>();
     
-    // checkerList.add(new WordCombinationChecker());
+    checkerList.add(new GovernmentChecker());
 
     this.checkers = new CheckerComposite(checkerList, false);
    

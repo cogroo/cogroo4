@@ -31,13 +31,13 @@ import org.cogroo.tools.checker.rules.verbs.Prep;
 import org.cogroo.tools.checker.rules.verbs.VerbPlusPreps;
 import org.cogroo.tools.checker.rules.verbs.Verbs;
 
-public class WordCombinationChecker extends AbstractChecker {
+public class GovernmentChecker extends AbstractChecker {
 
   private static final String ID_PREFIX = "word combination:";
 
   private final Verbs verbs;
 
-  public WordCombinationChecker() {
+  public GovernmentChecker() {
     List<Example> examples = new ArrayList<Example>();
     examples
         .add(createExample("Ele assiste o filme.", "Ele assiste ao filme."));
