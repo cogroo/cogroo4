@@ -136,7 +136,7 @@ public class WordCombinationChecker extends AbstractChecker {
       if (tag.equals("PIV") || tag.equals("ACC") || tag.equals("SC")) {
 
         for (Token token : syntChunks.get(i).getTokens()) {
-          if (token.getPOSTag().equals("n")) {
+          if (token.getPOSTag().equals("n") || token.getPOSTag().equals("pron-pers")) {
             if (token.getLemmas() != null && token.getLemmas().length > 0) {
               nouns.add(token.getLemmas()[0]);
             } else {
@@ -155,7 +155,7 @@ public class WordCombinationChecker extends AbstractChecker {
     for (int i = 0; i < spans.length; i++) {
       if (spans[i] != 1) {
         Token token = sentence.getTokens().get(i);
-        if (token.getPOSTag().equals("n")) {
+        if (token.getPOSTag().equals("n") || token.getPOSTag().equals("pron-pers")) {
           if (token.getLemmas() != null && token.getLemmas().length > 0)
             nouns.add(token.getLemmas()[0]);
           else
