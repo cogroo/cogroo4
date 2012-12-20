@@ -26,11 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.cogroo.gc.cmdline.dictionary.POSDictionaryBuilderTool;
-import org.cogroo.gc.cmdline.dictionary.TabSeparatedPOSDictionaryBuilderTool;
-
-
-import opennlp.tools.cmdline.AbstractCmdLineTool;
 import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CmdLineTool;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
@@ -38,23 +33,26 @@ import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.cmdline.TypedCmdLineTool;
 import opennlp.tools.util.Version;
 
+import org.cogroo.gc.cmdline.dictionary.POSDictionaryBuilderTool;
+import org.cogroo.gc.cmdline.dictionary.TabSeparatedPOSDictionaryBuilderTool;
+
 public final class CLI {
 
   public static final String CMD = "cogroo-gc";
 
-  private static Map<String, AbstractCmdLineTool> toolLookupMap;
+  private static Map<String, CmdLineTool> toolLookupMap;
 
   static {
     
-    toolLookupMap = new LinkedHashMap<String, AbstractCmdLineTool>();
+    toolLookupMap = new LinkedHashMap<String, CmdLineTool>();
 
-    List<AbstractCmdLineTool> tools = new LinkedList<AbstractCmdLineTool>();
+    List<CmdLineTool> tools = new LinkedList<CmdLineTool>();
 
     // Dictionary Builder
     tools.add(new POSDictionaryBuilderTool());
     tools.add(new TabSeparatedPOSDictionaryBuilderTool());
 
-    for (AbstractCmdLineTool tool : tools) {
+    for (CmdLineTool tool : tools) {
       toolLookupMap.put(tool.getName(), tool);
     }
 

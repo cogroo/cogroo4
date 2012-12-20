@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import opennlp.tools.cmdline.AbstractCmdLineTool;
 import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CmdLineTool;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
@@ -63,7 +62,7 @@ public final class CLI {
 
   public static final String CMD = "cogroo-nlp";
 
-  private static Map<String, AbstractCmdLineTool> toolLookupMap;
+  private static Map<String, CmdLineTool> toolLookupMap;
 
   static {
     // Register other types
@@ -77,9 +76,9 @@ public final class CLI {
     
     ADChunkSampleStreamFactory.registerFactory();
     
-    toolLookupMap = new LinkedHashMap<String, AbstractCmdLineTool>();
+    toolLookupMap = new LinkedHashMap<String, CmdLineTool>();
 
-    List<AbstractCmdLineTool> tools = new LinkedList<AbstractCmdLineTool>();
+    List<CmdLineTool> tools = new LinkedList<CmdLineTool>();
 
 
     // Featurizer
@@ -111,7 +110,7 @@ public final class CLI {
 //    tools.add(new Chunker2TrainerTool());
 //    tools.add(new Chunker2CrossValidatorTool());
     
-    for (AbstractCmdLineTool tool : tools) {
+    for (CmdLineTool tool : tools) {
       toolLookupMap.put(tool.getName(), tool);
     }
 

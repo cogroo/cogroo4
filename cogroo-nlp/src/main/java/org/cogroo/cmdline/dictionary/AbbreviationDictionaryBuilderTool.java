@@ -21,15 +21,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
 
-import org.cogroo.ContractionUtility;
-
-import opennlp.tools.cmdline.AbstractBasicCmdLineTool;
+import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.util.StringList;
 
-public class AbbreviationDictionaryBuilderTool extends AbstractBasicCmdLineTool {
+import org.cogroo.ContractionUtility;
+
+public class AbbreviationDictionaryBuilderTool extends BasicCmdLineTool {
 
   interface Params extends AbbreviationDictionaryBuilderParams {
   }

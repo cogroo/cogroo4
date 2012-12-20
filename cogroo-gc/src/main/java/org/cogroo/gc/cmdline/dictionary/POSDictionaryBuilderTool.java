@@ -26,18 +26,18 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cogroo.formats.ad.ADFeaturizerSampleStream;
-import org.cogroo.interpreters.FlorestaTagInterpreter;
-import org.cogroo.interpreters.JspellTagInterpreter;
-import org.cogroo.tools.featurizer.FeatureSample;
-
-import opennlp.tools.cmdline.AbstractBasicCmdLineTool;
+import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.postag.ExtendedPOSDictionary;
 import opennlp.tools.postag.MyPOSDictionary;
 
-public class POSDictionaryBuilderTool extends AbstractBasicCmdLineTool {
+import org.cogroo.formats.ad.ADFeaturizerSampleStream;
+import org.cogroo.interpreters.FlorestaTagInterpreter;
+import org.cogroo.interpreters.JspellTagInterpreter;
+import org.cogroo.tools.featurizer.FeatureSample;
+
+public class POSDictionaryBuilderTool extends BasicCmdLineTool {
 
   interface Params extends POSDictionaryBuilderParams {
   }

@@ -33,6 +33,14 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
+import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
+import opennlp.tools.cmdline.BasicCmdLineTool;
+import opennlp.tools.cmdline.CmdLineUtil;
+import opennlp.tools.cmdline.TerminateToolException;
+import opennlp.tools.postag.Triple;
+import opennlp.tools.util.featuregen.StringPattern;
+
 import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.formats.ad.ADFeaturizerSampleStream;
 import org.cogroo.interpreters.FlorestaTagInterpreter;
@@ -40,16 +48,8 @@ import org.cogroo.interpreters.JspellTagInterpreter;
 import org.cogroo.interpreters.TagInterpreterI;
 import org.cogroo.tools.featurizer.FeatureSample;
 
-import opennlp.tools.cmdline.AbstractBasicCmdLineTool;
-import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-import opennlp.tools.cmdline.CmdLineUtil;
-import opennlp.tools.cmdline.TerminateToolException;
-import opennlp.tools.postag.Triple;
-import opennlp.tools.util.featuregen.StringPattern;
-
 public class TabSeparatedPOSDictionaryBuilderTool extends
-    AbstractBasicCmdLineTool {
+BasicCmdLineTool {
 
   interface Params extends POSDictionaryBuilderParams {
 

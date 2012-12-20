@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import opennlp.tools.chunker.ChunkSample;
-import opennlp.tools.cmdline.AbstractBasicCmdLineTool;
+import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CLI;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.PerformanceMonitor;
@@ -34,7 +34,7 @@ import opennlp.tools.util.PlainTextByLineStream;
 import org.cogroo.tools.chunker2.ChunkerME;
 import org.cogroo.tools.chunker2.ChunkerModel;
 
-public class Chunker2Tool extends AbstractBasicCmdLineTool {
+public class Chunker2Tool extends BasicCmdLineTool {
 
   public String getShortDescription() {
     return "learnable chunker";

@@ -19,11 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.cogroo.tools.featurizer.FeatureSample;
-import org.cogroo.tools.featurizer.FeaturizerME;
-import org.cogroo.tools.featurizer.FeaturizerModel;
-
-import opennlp.tools.cmdline.AbstractBasicCmdLineTool;
+import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CLI;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.PerformanceMonitor;
@@ -32,7 +28,11 @@ import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 
-public class FeaturizerMETool extends AbstractBasicCmdLineTool {
+import org.cogroo.tools.featurizer.FeatureSample;
+import org.cogroo.tools.featurizer.FeaturizerME;
+import org.cogroo.tools.featurizer.FeaturizerModel;
+
+public class FeaturizerMETool extends BasicCmdLineTool {
 
   public String getShortDescription() {
     return "learnable Featurizer";
