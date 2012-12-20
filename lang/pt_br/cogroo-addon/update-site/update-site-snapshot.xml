@@ -20,7 +20,7 @@
 	<identifier value="org.cogroo.addon.oxt" />
 	<version value="${OXT_VERSION}" />
 	<update-download>
-		<src xlink:href="http://github.com/downloads/cogroo/cogroo4/${project.artifactId}-${project.version}.oxt" />
+		<src xlink:href="http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/${project.artifactId}-${project.version}.oxt" />
 	</update-download>
 	<publisher>
 		<name xlink:href="http://cogroo.org" lang="pt">CoGrOO</name>

@@ -44,7 +44,7 @@
         <name lang="en" xlink:href="http://cogroo.org">CoGrOO</name>
     </publisher>
     <update-information>
-        <src xlink:href="http://github.com/downloads/cogroo/cogroo4/update-site-snapshot.xml"/>
+        <src xlink:href="http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/update-site-snapshot.xml"/>
     </update-information>
     <extension-description>
         <src lang="pt-BR" xlink:href="description/description_pt_BR.txt"/>
@@ -53,7 +53,6 @@
     <registration>
         <simple-license accept-by="admin" default-license-id="pt-BR">
             <license-text lang="pt-BR" license-id="pt-BR" xlink:href="LICENSE"/>
-            <license-text lang="en" xlink:href="LICENSE"/>
         </simple-license>
     </registration>
 </description>
