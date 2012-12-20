@@ -39,8 +39,6 @@ import org.cogroo.tools.errorreport.model.ErrorReport;
 public class ErrorReportAccess {
 	
 	private static final Logger LOGGER = Logger.getLogger(ErrorReportAccess.class);
-	
-	private static final String PACKAGE = "br.usp.pcs.lta.cogroo.errorreport.model";
 	private static final String ENCODING = "UTF-8";
 	
 
@@ -49,11 +47,7 @@ public class ErrorReportAccess {
 		ErrorReport errorReport = null;
 		try {
 			InputSource inputSource = new InputSource(xml);
-			ClassLoader cl = ErrorReport.class.getClassLoader();
-			if(cl == null) {
-				LOGGER.error("couldn't create class loader.");
-			}
-			JAXBContext context = JAXBContext.newInstance(PACKAGE, cl);
+			JAXBContext context = JAXBContext.newInstance(ErrorReport.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			unmarshaller.setEventHandler(new ValidationEventHandler() {
 				// allow unmarshalling to continue even if there are errors
@@ -77,15 +71,12 @@ public class ErrorReportAccess {
 
 	public static String serialize(ErrorReport newRules) {
 		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("Persisting ErrorReport in an XML...");
+			LOGGER.debug("Persisting ErrorReport in a XML...");
 		String ret = null;
 		try {
 			StringWriter sw = new StringWriter();
-			ClassLoader cl = ErrorReport.class.getClassLoader();
-			if(cl == null) {
-				LOGGER.error("couldn't create class loader.");
-			}
-			JAXBContext context = JAXBContext.newInstance(PACKAGE, cl);
+
+			JAXBContext context = JAXBContext.newInstance(ErrorReport.class);
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaller.setProperty(Marshaller.JAXB_ENCODING, ENCODING);
