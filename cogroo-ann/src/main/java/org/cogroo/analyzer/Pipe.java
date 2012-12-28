@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.cogroo.exceptions.CogrooRuntimeException;
 import org.cogroo.text.Document;
-
 
 /**
  * The <code>Pipe</code> class contains a sequence of analyzers.
@@ -36,13 +36,14 @@ public class Pipe implements AnalyzerI {
 
   protected static final Logger LOGGER = Logger.getLogger(Pipe.class);
   private List<AnalyzerI> mChildAnalyzers = new ArrayList<AnalyzerI>();
-  
+
   /**
    * Adds an analyzer into the pipe.
    * <p>
    * Follows the composite pattern standards.
    * 
-   * @param aAnalyzer is the analyzer to be added in the pipe. 
+   * @param aAnalyzer
+   *          is the analyzer to be added in the pipe.
    */
   public void add(AnalyzerI aAnalyzer) {
     mChildAnalyzers.add(aAnalyzer);
@@ -51,9 +52,15 @@ public class Pipe implements AnalyzerI {
   public void analyze(Document document) {
 
     for (AnalyzerI analyzer : mChildAnalyzers) {
+      try {
         analyzer.analyze(document);
+      } catch (Exception e) {
+        LOGGER.error("An analyzer raised an exeception. Analyzer: "
+            + analyzer.getClass().getCanonicalName() + " Document text: ["
+            + document.getText() + "]", e);
+        throw new CogrooRuntimeException(e);
+      }
     }
 
   }
-
 }
