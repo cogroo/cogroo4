@@ -15,7 +15,10 @@
  */
 package cogroo.uima.readers;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -23,14 +26,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cogroo.uima.readers.entities.Paragraph;
-import cogroo.uima.readers.entities.SentenceEx;
-import cogroo.uima.readers.entities.Text;
-
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
+import cogroo.uima.readers.entities.Paragraph;
+import cogroo.uima.readers.entities.SentenceEx;
+import cogroo.uima.readers.entities.Text;
 
 public class Reader implements ObjectStream<Text> {
 
@@ -117,23 +119,96 @@ public class Reader implements ObjectStream<Text> {
    * @param args
    * @throws IOException
    */
-  public static void main(String[] args) throws IOException {
+  public static void mainBosque(String[] args) throws IOException {
 
     FileInputStream in = new FileInputStream(
-        "/Users/wcolen/Documents/wrks/corpus/Bosque_CF_8.0.ad.txt");
+        "/Users/wcolen/Documents/wrks/corpus/Bosque/Bosque_CF_8.0.ad.txt");
     Reader r = new Reader(in, "ISO-8859-1");
-
+    
+    File out = new File("/Users/wcolen/Documents/wrks/corpus/bosque_texto.txt");
+    BufferedWriter bw = new BufferedWriter(new FileWriter(out));
     Text t = r.read();
     while (t != null) {
-      System.out.println(t.getId());
+//      System.out.println(t.getId());
       for (Paragraph p : t.getParagraphs()) {
-        System.out.println(" > " + p.getId());
+        // System.out.println("[text: " + p.getId() + "]");
         for (SentenceEx s : p.getSentences()) {
-          System.out.println("   > " + s.getSentence().getMetadata());
+          //bw.append("\n\n[" + s.getSentence().getMetadata() + "]\n\n");
+          bw.append(s.getSentence().getText() + " ");
         }
+        
+        bw.append("\n");
       }
+      
+      bw.append("\n\n");
 
       t = r.read();
     }
+    
+    r.close();
+    bw.close();
+  }
+  
+  public static void mainMetro(String[] args) throws IOException {
+
+    FileInputStream in = new FileInputStream(
+        "/Users/wcolen/Documents/wrks/corpus/Metro/Metro.txt");
+    Reader r = new Reader(in, "UTF-8");
+    
+    File out = new File("/Users/wcolen/Documents/wrks/corpus/metro_texto.txt");
+    BufferedWriter bw = new BufferedWriter(new FileWriter(out));
+    Text t = r.read();
+    while (t != null) {
+//      System.out.println(t.getId());
+      for (Paragraph p : t.getParagraphs()) {
+        // System.out.println("[text: " + p.getId() + "]");
+        for (SentenceEx s : p.getSentences()) {
+          //bw.append("\n\n[" + s.getSentence().getMetadata() + "]\n\n");
+          bw.append(s.getSentence().getText() + " ");
+        }
+        
+        bw.append("\n");
+      }
+      
+      bw.append("\n\n");
+
+      t = r.read();
+    }
+    
+    r.close();
+    bw.close();
+  }
+  
+  public static void main(String[] args) throws IOException {
+
+    FileInputStream in = new FileInputStream(
+        "/Users/wcolen/Documents/wrks/corpus/Comunidade/comunidade.txt");
+    Reader r = new Reader(in, "UTF-8");
+    
+    File out = new File("/Users/wcolen/Documents/wrks/corpus/comunidade_texto.txt");
+    BufferedWriter bw = new BufferedWriter(new FileWriter(out));
+    Text t = r.read();
+    while (t != null) {
+//      System.out.println(t.getId());
+      for (Paragraph p : t.getParagraphs()) {
+        // System.out.println("[text: " + p.getId() + "]");
+        for (SentenceEx s : p.getSentences()) {
+          //bw.append("\n\n[" + s.getSentence().getMetadata() + "]\n\n");
+          if(s.getGrammarErrors().size() > 0) {
+            bw.append(s.getSentence().getText() + " ");
+            bw.append("\n");
+          }
+        }
+        
+        
+      }
+      
+      //bw.append("\n\n");
+
+      t = r.read();
+    }
+    
+    r.close();
+    bw.close();
   }
 }
