@@ -143,13 +143,34 @@ sub executeCPE {
 	
 	my $name = shift;
 	
-	printToLog("Will execute CPE: $name \n");
+	printToLog("Will execute CPE: $name ");
 	
 	my $desc = "../GramEval/desc/$name.svnignore.xml";
 	
 	my $command = 'mvn -f ../GramEval/pom.xml -e -q exec:java -DskipTests -DsystemProperties="file.encoding=UTF-8" "-Dexec.mainClass=cogroo.uima.SimpleRunCPE" "-Dexec.args=' . $desc . '"';
 
-	my @res = `$command 2>&1`;
+	my @res; 
+	
+	## set it to die....
+	eval {
+  		local $SIG{ALRM} = sub {die "alarm\n"};
+  		alarm 600;
+  		@res = `$command 2>&1`;
+  		alarm 0;
+	};
+
+	if ($@) {
+  		die unless $@ eq "alarm\n";
+  		print "timed out\n";
+		my $log = "=== Failed to execute command ===\n\n";
+		$log .= join "\t", @res;
+		printToLog($log . "\n\n");
+	}
+	else {
+  		print "didn't time out\n";
+	}
+
+	##
 
 	my $err = 0;
 	foreach my $line (@res) {
@@ -165,6 +186,7 @@ sub executeCPE {
 		
 		die "Failed to execute command";
 	}
+	printToLog(" ...  finished!\n");
 	
 }
 
@@ -224,6 +246,11 @@ sub evaluate {
 	executeCPE("CPE_AD");
 	$res{'bosque'} = readCPEResults("$report/Bosque-FMeasure.txt");
 	
+	$report =  $reportPath . '/comunidade';
+	prepareCPE("Comunidade", $gc, $report, 'Comunidade', 'UTF-8');
+	executeCPE("CPE_AD");
+	$res{'Comunidade'} = readCPEResults("$report/Comunidade-FMeasure.txt");
+	
 	if($reportPath !~ m/baseline/) {
 		print " will include new cogroo output to report ...\n";
 		printVars();
@@ -232,6 +259,7 @@ sub evaluate {
 		$res{'probi-c'} = changes::changes("eval/baseline/probi/PROBI-Details.txt", "$reportPath/probi/PROBI-Details.txt", "$reportPath/probi/diff.txt");
 		$res{'metro-c'} = changes::changes("eval/baseline/metro/Metro-Details.txt", "$reportPath/metro/Metro-Details.txt", "$reportPath/metro/diff.txt");
 		$res{'bosque-c'} = changes::changes("eval/baseline/bosque/Bosque-Details.txt", "$reportPath/bosque/Bosque-Details.txt", "$reportPath/bosque/diff.txt");
+		$res{'comunidade-c'} = changes::changes("eval/baseline/comunidade/Comunidade-Details.txt", "$reportPath/comunidade/Comunidade-Details.txt", "$reportPath/comunidade/diff.txt");
 		
 		# change to 0 to evaluate cogroo3, to 1 to evaluate new
 		if(1) {
@@ -239,6 +267,7 @@ sub evaluate {
 			generateCogrooReport("$reportPath/probi/diff.txt", "$reportPath/probi/diff-new.txt");
 			generateCogrooReport("$reportPath/metro/diff.txt", "$reportPath/metro/diff-new.txt");
 			generateCogrooReport("$reportPath/bosque/diff.txt", "$reportPath/bosque/diff-new.txt");
+			generateCogrooReport("$reportPath/comunidade/diff.txt", "$reportPath/comunidade/diff-new.txt");
 			
 			# restore baseline and execute
 			$ENV{'MODEL_ROOT'} = $baselineVars{'MODEL_ROOT'};
@@ -252,6 +281,7 @@ sub evaluate {
 			generateCogrooReport("$reportPath/probi/diff.txt", "$reportPath/probi/diff-baseline.txt");
 			generateCogrooReport("$reportPath/metro/diff.txt", "$reportPath/metro/diff-baseline.txt");
 			generateCogrooReport("$reportPath/bosque/diff.txt", "$reportPath/bosque/diff-baseline.txt");
+			generateCogrooReport("$reportPath/comunidade/diff.txt", "$reportPath/comunidade/diff-baseline.txt");
 		}
 		
 	} else {
