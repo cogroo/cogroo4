@@ -18,7 +18,11 @@ package org.cogroo.checker;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.util.InvalidFormatException;
@@ -117,9 +121,9 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     // create other typed checkers
     
     // how to get the abbreviation dictionary? 
-    typedCheckersList.add(new SpaceChecker(loadAbbDict()));
-    typedCheckersList.add(new PunctuationChecker());
-    typedCheckersList.add(new RepetitionChecker());
+    //typedCheckersList.add(new SpaceChecker(loadAbbDict()));
+    //typedCheckersList.add(new PunctuationChecker());
+    //typedCheckersList.add(new RepetitionChecker());
     
     typedCheckers = new TypedCheckerComposite(typedCheckersList, false);
 
@@ -219,20 +223,43 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   }
   
   public static void main(String[] args) throws IllegalArgumentException, IOException {
-    System.out.println("Working examples...");
     
     GrammarCheckerAnalyzer gca = new GrammarCheckerAnalyzer();
-    
+//    printCategories(gca.typedCheckers.getRulesDefinition());
     printExamples(gca.typedCheckers.getRulesDefinition());
     printExamples(gca.checkers.getRulesDefinition());
   }
 
   private static void printExamples(List<RuleDefinitionI> rulesDefinition) {
+    
     for (RuleDefinitionI def : rulesDefinition) {
       for (Example ex : def.getExamples()) {
         System.out.println(ex.getIncorrect());
+//        System.out.println(def.getCategory());
       }
     }
   }
+  
+   private static void printCategories(List<RuleDefinitionI> rulesDefinition) {
+     Map<String, Set<String>> categories = new HashMap<String, Set<String>>();
+     
+     for (RuleDefinitionI def : rulesDefinition) {
+       if(!categories.containsKey(def.getCategory().toLowerCase())) {
+         categories.put(def.getCategory().toLowerCase(), new HashSet<String>());
+       }
+       
+       categories.get(def.getCategory().toLowerCase()).add(Categories.getCat(def.getId()));
+     }
+     
+     for (String lc : categories.keySet()) {
+      System.out.print("lc.put(\"" + lc + "\", \"");
+      for (String c : categories.get(lc)) {
+        System.out.print(c + ", ");
+      }
+      System.out.println("\");");
+    }
+     
+     //cat.put("ver", "USO DOS VERBOS");
+  }  
   
 }
