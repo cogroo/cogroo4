@@ -62,7 +62,7 @@ public class Chunker2TrainerTool
     try {
       ChunkerFactory chunkerFactory = ChunkerFactory
           .create(params.getFactory());
-      model = ChunkerME.train(factory.getLang(), sampleStream, mlParams,
+      model = ChunkerME.train(params.getLang(), sampleStream, mlParams,
           chunkerFactory);
     } catch (IOException e) {
       throw new TerminateToolException(-1, "IO error while reading training data or indexing data: " +

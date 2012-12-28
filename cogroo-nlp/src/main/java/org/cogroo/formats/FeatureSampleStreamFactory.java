@@ -17,24 +17,24 @@ package org.cogroo.formats;
 
 import java.io.FileInputStream;
 
-import org.cogroo.tools.featurizer.FeatureSample;
-import org.cogroo.tools.featurizer.FeatureSampleStream;
-
 import opennlp.tools.cmdline.ArgumentParser;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
-import opennlp.tools.cmdline.params.LanguageFormatParams;
-import opennlp.tools.formats.LanguageSampleStreamFactory;
+import opennlp.tools.cmdline.params.BasicFormatParams;
+import opennlp.tools.formats.AbstractSampleStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
+
+import org.cogroo.tools.featurizer.FeatureSample;
+import org.cogroo.tools.featurizer.FeatureSampleStream;
 
 /**
  * Factory producing OpenNLP {@link FeatureSampleStream}s.
  */
 public class FeatureSampleStreamFactory extends
-    LanguageSampleStreamFactory<FeatureSample> {
+    AbstractSampleStreamFactory<FeatureSample> {
 
-  interface Parameters extends LanguageFormatParams {
+  interface Parameters extends BasicFormatParams {
   }
 
   public static void registerFactory() {
@@ -49,8 +49,6 @@ public class FeatureSampleStreamFactory extends
 
   public ObjectStream<FeatureSample> create(String[] args) {
     Parameters params = ArgumentParser.parse(args, Parameters.class);
-
-    language = params.getLang();
 
     CmdLineUtil.checkInputFile("Data", params.getData());
     FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
