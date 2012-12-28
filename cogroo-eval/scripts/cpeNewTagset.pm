@@ -259,6 +259,11 @@ sub evaluate {
 	executeCPE("CPE_AD");
 	$res{'bosque'} = readCPEResults("$report/Bosque-FMeasure.txt");
 	
+	$report =  $reportPath . '/comunidade';
+	prepareCPE("Comunidade", $gc, $report, 'Comunidade', 'UTF-8');
+	executeCPE("CPE_AD");
+	$res{'Comunidade'} = readCPEResults("$report/Comunidade-FMeasure.txt");
+	
 	if($reportPath !~ m/baseline/) {
 		print " will include new cogroo output to report ...\n";
 		printVars();
@@ -267,6 +272,7 @@ sub evaluate {
 		$res{'probi-c'} = changes::changes("eval/baseline/probi/PROBI-Details.txt", "$reportPath/probi/PROBI-Details.txt", "$reportPath/probi/diff.txt");
 		$res{'metro-c'} = changes::changes("eval/baseline/metro/Metro-Details.txt", "$reportPath/metro/Metro-Details.txt", "$reportPath/metro/diff.txt");
 		$res{'bosque-c'} = changes::changes("eval/baseline/bosque/Bosque-Details.txt", "$reportPath/bosque/Bosque-Details.txt", "$reportPath/bosque/diff.txt");
+		$res{'comunidade-c'} = changes::changes("eval/baseline/comunidade/Comunidade-Details.txt", "$reportPath/comunidade/Comunidade-Details.txt", "$reportPath/comunidade/diff.txt");
 		
 		# change to 0 to evaluate cogroo3, to 1 to evaluate new
 		if(1) {
@@ -274,6 +280,7 @@ sub evaluate {
 			generateCogrooReportNew("$reportPath/probi/diff.txt", "$reportPath/probi/diff-new.txt");
 			generateCogrooReportNew("$reportPath/metro/diff.txt", "$reportPath/metro/diff-new.txt");
 			generateCogrooReportNew("$reportPath/bosque/diff.txt", "$reportPath/bosque/diff-new.txt");
+			generateCogrooReportNew("$reportPath/comunidade/diff.txt", "$reportPath/comunidade/diff-new.txt");
 			
 			# restore baseline and execute
 			$ENV{'MODEL_ROOT'} = $baselineVars{'MODEL_ROOT'};
@@ -287,6 +294,7 @@ sub evaluate {
 			generateCogrooReport("$reportPath/probi/diff.txt", "$reportPath/probi/diff-baseline.txt");
 			generateCogrooReport("$reportPath/metro/diff.txt", "$reportPath/metro/diff-baseline.txt");
 			generateCogrooReport("$reportPath/bosque/diff.txt", "$reportPath/bosque/diff-baseline.txt");
+			generateCogrooReport("$reportPath/comunidade/diff.txt", "$reportPath/comunidade/diff-baseline.txt");
 		}
 		
 	} else {
