@@ -29,6 +29,10 @@ public class CheckDocument extends DocumentImpl {
     super();
   }
 
+  public CheckDocument(String text) {
+    super(text);
+  }
+  
   private List<Mistake> mistakes;
   private List<Sentence> legacySentences;
 
