@@ -80,7 +80,7 @@ public class FeaturizerTrainerTool extends
         throw new TerminateToolException(-1, e.getMessage());
       }
 
-      model = FeaturizerME.train(factory.getLang(), sampleStream,
+      model = FeaturizerME.train(params.getLang(), sampleStream,
            mlParams, featurizerFactory);
 
     } catch (IOException e) {

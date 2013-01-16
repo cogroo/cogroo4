@@ -35,7 +35,10 @@ public class DocumentImpl implements Document {
   private List<Sentence> sentences;
 
   public DocumentImpl() {
-    // TODO Auto-generated constructor stub
+  }
+  
+  public DocumentImpl(String text) {
+    setText(text);
   }
   
   /* (non-Javadoc)

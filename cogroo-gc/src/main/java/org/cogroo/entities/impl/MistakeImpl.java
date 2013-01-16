@@ -135,8 +135,10 @@ public class MistakeImpl implements Mistake, Serializable {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("Rule [").append(this.identifier).append("]\n");
-    sb.append("Mistake [").append(this.getStart()).append("..")
+    sb.append("Mistake span [").append(this.getStart()).append("..")
         .append(this.getEnd()).append("]\n");
+    if(this.context != null)
+      sb.append("Mistake text [").append(this.context.substring(getStart(), getEnd())).append("]\n");
     sb.append("Short Message [").append(this.getShortMessage()).append("]\n");
     sb.append("Long Message  [").append(this.getLongMessage()).append("]\n");
     sb.append("Full message [").append(this.getFullMessage()).append("]\n");

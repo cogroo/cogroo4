@@ -104,10 +104,6 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
 
     String docText = aJCas.getDocumentText();
 
-    if (docText.contains("de segunda à sexta-feira")) {
-      System.out.println("aqui");
-    }
-
     AnnotationIndex<Annotation> goldenGrammarErrorIndex = aJCas
         .getAnnotationIndex(GoldenGrammarError.type);
     for (Annotation annotation : goldenGrammarErrorIndex) {
@@ -365,7 +361,7 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
       boolean cont = true;
       for (int j = 0; j < predictedGrammarErrors.size() && cont; j++) {
         Error p = predictedGrammarErrors.get(j);
-        if (t.contains(p)) {
+        if (t.intersects(p)) {
           if (p.getType().contains(t.getType())
               || p.getType().matches("^#\\d+")) {
             targetGrammarErrors.set(i,
