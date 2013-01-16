@@ -26,7 +26,9 @@ use FindBin qw($Bin);
 use Data::Dumper;
 use File::Path qw(make_path);
 use strict 'vars';
+use Switch;
 require changes;
+
 
 sub checkVars {
 	
@@ -169,68 +171,71 @@ sub executeCPE {
 }
 
 sub generateCogrooReportNew {
-	
 	my $data = shift;
-	my $report = shift;	
-	my $path = "../NewTagsetBaselineCogrooAE/target/cogroo";
-	configureMultiProperties(1);
-		
-	my $desc = "$path $data $report";
-		
-	printToLog("Will process report using MultiCogroo (new tagset) \n");
 	
-	my $command = 'mvn -o -f ../NewTagsetBaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
-
-	my @res = `$command 2>&1`;
-
-	my $err = 0;
-	foreach my $line (@res) {
-		if($line =~ m/An exception occured while executing/) {
-			$err = 1;
+	if (-e $data) {
+		my $report = shift;	
+		my $path = "../NewTagsetBaselineCogrooAE/target/cogroo";
+		configureMultiProperties(1);
+			
+		my $desc = "$path $data $report";
+			
+		printToLog("Will process report using MultiCogroo (new tagset) \n");
+		
+		my $command = 'mvn -o -f ../NewTagsetBaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
+	
+		my @res = `$command 2>&1`;
+	
+		my $err = 0;
+		foreach my $line (@res) {
+			if($line =~ m/An exception occured while executing/) {
+				$err = 1;
+			}
 		}
-	}
-	
-	if($err) {
-		my $log = "=== Failed to execute command ===\n\n";
-		$log .= "Command: $command\n\n";
-		$log .= join "\t", @res;
-		printToLog($log . "\n\n");
 		
-		die "Failed to execute command";
+		if($err) {
+			my $log = "=== Failed to execute command ===\n\n";
+			$log .= "Command: $command\n\n";
+			$log .= join "\t", @res;
+			printToLog($log . "\n\n");
+			
+			die "Failed to execute command";
+		}
 	}
 	
 }
 
 sub generateCogrooReport {
-	
 	my $data = shift;
-	my $report = shift;	
-	my $path = "../BaselineCogrooAE/target/cogroo";
-	configureMultiPropertiesBaseline(1);
+	if (-e $data) {
+		my $report = shift;	
+		my $path = "../BaselineCogrooAE/target/cogroo";
+		configureMultiPropertiesBaseline(1);
+			
+		my $desc = "$path $data $report";
+			
+		printToLog("Will process report using MultiCogroo \n");
 		
-	my $desc = "$path $data $report";
-		
-	printToLog("Will process report using MultiCogroo \n");
+		my $command = 'mvn -o -f ../BaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
 	
-	my $command = 'mvn -o -f ../BaselineCogrooAE/pom.xml -e -q install exec:java -DskipTests -Dexec.classpathScope="compile" "-Dexec.mainClass=cogroo.ProcessReport" "-Dexec.args=' . $desc . '"';
-
-	my @res = `$command 2>&1`;
-
-	my $err = 0;
-	foreach my $line (@res) {
-		if($line =~ m/An exception occured while executing/) {
-			$err = 1;
+		my @res = `$command 2>&1`;
+	
+		my $err = 0;
+		foreach my $line (@res) {
+			if($line =~ m/An exception occured while executing/) {
+				$err = 1;
+			}
 		}
-	}
-	
-	if($err) {
-		my $log = "=== Failed to execute command ===\n\n";
-		$log .= "Command: $command\n\n";
-
-		$log .= join "\t", @res;
-		printToLog($log . "\n\n");
 		
-		die "Failed to execute command";
+		if($err) {
+			my $log = "=== Failed to execute command ===\n\n";
+			$log .= "Command: $command\n\n";
+	
+			$log .= join "\t", @res;
+			printToLog($log . "\n\n");
+			
+			die "Failed to execute command";
+		}
 	}
 	
 }
@@ -240,29 +245,64 @@ my %baselineVars;
 sub evaluate {
 	my $gc = shift;
 	my $reportPath = shift;
+	my $corpus = shift;
+	
+	my $testProbi = 0;
+	my $testMetro = 0;
+	my $testBosque = 0;
+	my $testComunidade = 0;
+	
+	if($corpus) {
+		$corpus = lc($corpus);
+		
+		switch ($corpus) {
+			case "probi"	{ $testProbi = 1 }
+			case "metro"	{ $testMetro = 1 }
+			case "bosque"	{ $testBosque = 1 }
+			case "comunidade"	{ $testComunidade = 1 }
+			else { die "corpus invalido !!" }
+		}
+	} else {
+		$testProbi = 1;
+		$testMetro = 1;
+		$testBosque = 1;
+		$testComunidade = 1;
+	}
+	
+	
 	# will prepare CPE files and execute the evaluation
 	
 	my %res;
 
-	my $report =  $reportPath . '/probi';
-	prepareCPE("Probi_From_MDB.txt", $gc, $report, 'PROBI', 'UTF-8');
-	executeCPE("CPE_Probi");
-	$res{'probi'} = readCPEResults("$report/PROBI-FMeasure.txt");
+	my $report;
 	
-	$report =  $reportPath . '/metro';
-	prepareCPE("Metro", $gc, $report, 'Metro', 'UTF-8');
-	executeCPE("CPE_AD");
-	$res{'metro'} = readCPEResults("$report/Metro-FMeasure.txt");
+	if($testProbi) {
+		$report =  $reportPath . '/probi';
+		prepareCPE("Probi_From_MDB.txt", $gc, $report, 'PROBI', 'UTF-8');
+		executeCPE("CPE_Probi");
+		$res{'probi'} = readCPEResults("$report/PROBI-FMeasure.txt");
+	}
 	
-	$report =  $reportPath . '/bosque';
-	prepareCPE("Bosque", $gc, $report, 'Bosque', 'ISO-8859-1');
-	executeCPE("CPE_AD");
-	$res{'bosque'} = readCPEResults("$report/Bosque-FMeasure.txt");
+	if($testMetro) {
+		$report =  $reportPath . '/metro';
+		prepareCPE("Metro", $gc, $report, 'Metro', 'UTF-8');
+		executeCPE("CPE_AD");
+		$res{'metro'} = readCPEResults("$report/Metro-FMeasure.txt");
+	}
 	
-	$report =  $reportPath . '/comunidade';
-	prepareCPE("Comunidade", $gc, $report, 'Comunidade', 'UTF-8');
-	executeCPE("CPE_AD");
-	$res{'Comunidade'} = readCPEResults("$report/Comunidade-FMeasure.txt");
+	if($testBosque) {
+		$report =  $reportPath . '/bosque';
+		prepareCPE("Bosque", $gc, $report, 'Bosque', 'ISO-8859-1');
+		executeCPE("CPE_AD");
+		$res{'bosque'} = readCPEResults("$report/Bosque-FMeasure.txt");
+	}
+	
+	if($testComunidade) {
+		$report =  $reportPath . '/comunidade';
+		prepareCPE("Comunidade", $gc, $report, 'Comunidade', 'UTF-8');
+		executeCPE("CPE_AD");
+		$res{'Comunidade'} = readCPEResults("$report/Comunidade-FMeasure.txt");
+	}
 	
 	if($reportPath !~ m/baseline/) {
 		print " will include new cogroo output to report ...\n";
@@ -511,14 +551,15 @@ sub evaluateCogroo3 {
 sub evaluateUsingModel {
 	my $evalPath = shift;
 	my $name = shift;
-
 	%baselineVars =  %{$_[0]};
+	shift;
+	my $corpus = shift;
 
 	my %res;
 	configureMultiProperties(1);
 	install("../NewTagsetBaselineCogrooAE/pom.xml");
 	installPearByPath("../NewTagsetBaselineCogrooAE/target/NewTagsetBaselineCogrooAE.pear");
-	$res{$name} = evaluate("NewTagsetBaselineCogrooAE", "$evalPath/$name");
+	$res{$name} = evaluate("NewTagsetBaselineCogrooAE", "$evalPath/$name", $corpus);
 	printToLog Dumper( \%res );
 	return %res;
 }
