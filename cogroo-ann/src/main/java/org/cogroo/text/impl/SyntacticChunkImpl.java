@@ -15,9 +15,13 @@
  */
 package org.cogroo.text.impl;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
+import org.cogroo.text.Chunk;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.SyntacticChunk;
 import org.cogroo.text.Token;
@@ -73,4 +77,5 @@ public class SyntacticChunkImpl implements SyntacticChunk {
     return Collections.unmodifiableList(theSentence.getTokens().subList(
         getStart(), getEnd()));
   }
+  
 }

@@ -65,7 +65,11 @@ public class Verbs {
         String line = reader.readLine();
 
         if (line.length() > 0) {
-
+        	
+        	/* This line is a comment */
+        	if (line.charAt(0) == '%')
+        		continue;
+        	
           if (line.charAt(0) == '#') {
 
             if (preps != null) {

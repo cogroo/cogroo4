@@ -27,6 +27,7 @@ import org.cogroo.tools.checker.AbstractChecker;
 import org.cogroo.tools.checker.JavaRuleDefinition;
 import org.cogroo.tools.checker.RuleDefinitionI;
 import org.cogroo.tools.checker.rules.model.Example;
+import org.cogroo.tools.checker.rules.verbs.Noun;
 import org.cogroo.tools.checker.rules.verbs.Prep;
 import org.cogroo.tools.checker.rules.verbs.VerbPlusPreps;
 import org.cogroo.tools.checker.rules.verbs.Verbs;
@@ -69,42 +70,48 @@ public class GovernmentChecker extends AbstractChecker {
     int offset = sentence.getStart();
 
     Token verb = findVerb(sentence);
-    List<String> nouns = findNouns(sentence);
+    List<Noun> nouns = findNouns(sentence);
 
     if (verb != null && verb.getLemmas().length > 0) {
       VerbPlusPreps vpp = verbs.getVerb(verb.getLemmas()[0]);
       // Only gives the first lemma. %TODO improve this case.
 
-      Token sentPrep = findPrep(sentence);
-
-      for (String noun : nouns) {
+//      for (Noun noun : nouns) {
+      if (nouns != null && nouns.size() > 0) {
+        Noun noun = nouns.get(0);
+        
         if (vpp != null) {
 
           /** the correct preposition to be used in the sentence. */
-          Prep prep = vpp.findWord(noun);
+          Prep prep = vpp.findWord(noun.getNoun());
 
           // if prep is null, then no object to the main verb was found
           if (prep != null) {
+            
+            Token sentPrep = findPrep(sentence, noun);
+            
+            if (sentPrep != null) {
+              // The original sentence has a preposition already, but it is
+              // wrong.
+              
+              if (!sentPrep.getLexeme().equals(prep.getPreposition())) {
 
-            if (sentPrep == null) {
-              // The original sentence has no preposition in its objects, though
-              // it should have.
-              if (!prep.getPreposition().equals("_")) {
-
-                int start = verb.getStart() + offset;
-                int end = verb.getEnd() + offset;
+                int start = sentPrep.getStart() + offset;
+                int end = sentPrep.getEnd() + offset;
 
                 mistakes.add(createMistake(ID,
                     createSuggestion(verb, sentPrep, prep), start, end,
                     sentence.getText()));
               }
+              
+              
             } else {
-              // The original sentence has a preposition already, but it is
-              // wrong.
-              if (!sentPrep.getLexeme().equals(prep.getPreposition())) {
+              //The original sentence has no preposition in its objects, though
+              // it should have.
+              if (!prep.getPreposition().equals("_")) {
 
-                int start = sentPrep.getStart() + offset;
-                int end = sentPrep.getEnd() + offset;
+                int start = verb.getStart() + offset;
+                int end = verb.getEnd() + offset;
 
                 mistakes.add(createMistake(ID,
                     createSuggestion(verb, sentPrep, prep), start, end,
@@ -118,15 +125,17 @@ public class GovernmentChecker extends AbstractChecker {
     return mistakes;
   }
 
+  
   /**
    * Looks for a noun in the sentence's objects.
    * 
    * @param sentence
    *          entered by the user
-   * @return a <tt>List></tt> of every noun found in the sentence's objects
+   * @return a <tt>List></tt> of every noun found in the sentence's objects and
+   *         its location in the sentence
    */
-  private List<String> findNouns(Sentence sentence) {
-    List<String> nouns = new ArrayList<String>();
+  public List<Noun> findNouns(Sentence sentence) {
+    List<Noun> nouns = new ArrayList<Noun>();
 
     List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
 
@@ -136,42 +145,41 @@ public class GovernmentChecker extends AbstractChecker {
       if (tag.equals("PIV") || tag.equals("ACC") || tag.equals("SC")) {
 
         for (Token token : syntChunks.get(i).getTokens()) {
-        	if (token.getChunkTag().equals("NP")) {
-        		
-        	}
-        	
-        	
-          if (token.getPOSTag().equals("n") || token.getPOSTag().equals("pron-pers")) {
+
+          if (token.getPOSTag().equals("n")
+              || token.getPOSTag().equals("pron-pers")) {
+
             if (token.getLemmas() != null && token.getLemmas().length > 0) {
-              nouns.add(token.getLemmas()[0]);
+              nouns.add(new Noun(token.getLemmas()[0], token.getStart()));
             } else {
-              nouns.add(token.getLexeme());
+              nouns.add(new Noun(token.getLexeme(), token.getStart()));
             }
           } else { // Adiciona um nome próprio
             if (token.getPOSTag().equals("prop")) {
-              nouns.add("NP");
+              nouns.add(new Noun("NP", token.getStart()));
             }
           }
         }
       }
     }
 
-    int[] spans = spans(sentence);
-    for (int i = 0; i < spans.length; i++) {
-      if (spans[i] != 1) {
-        Token token = sentence.getTokens().get(i);
-        if (token.getPOSTag().equals("n") || token.getPOSTag().equals("pron-pers")) {
-          if (token.getLemmas() != null && token.getLemmas().length > 0)
-            nouns.add(token.getLemmas()[0]);
-          else
-            nouns.add(token.getLexeme());
-        } else { // Adiciona um nome próprio
-          if (token.getPOSTag().equals("prop")) {
-            nouns.add("NP");
-          }
-        }
-      }
-    }
+    // int[] spans = spans(sentence);
+    // for (int i = 0; i < spans.length; i++) {
+    // if (spans[i] != 1) {
+    // Token token = sentence.getTokens().get(i);
+    // if (token.getPOSTag().equals("n") ||
+    // token.getPOSTag().equals("pron-pers")) {
+    // if (token.getLemmas() != null && token.getLemmas().length > 0)
+    // nouns.add(token.getLemmas()[0]);
+    // else
+    // nouns.add(token.getLexeme());
+    // } else { // Adiciona um nome próprio
+    // if (token.getPOSTag().equals("prop")) {
+    // nouns.add("NP");
+    // }
+    // }
+    // }
+    // }
 
     return nouns;
   }
@@ -184,7 +192,7 @@ public class GovernmentChecker extends AbstractChecker {
    * @return the <tt>Token</tt> that contains the searched preposition, if it
    *         exists; otherwise returns <tt>null</tt>
    */
-  public Token findPrep(Sentence sentence) {
+  public Token findPrep(Sentence sentence, Noun noun) {
     List<SyntacticChunk> syntChunks = sentence.getSyntacticChunks();
 
     for (int i = 0; i < syntChunks.size(); i++) {
@@ -196,6 +204,13 @@ public class GovernmentChecker extends AbstractChecker {
         // order to remove them from this condition
         for (Token token : syntChunks.get(i).getTokens()) {
           if (token.getPOSTag().equals("prp")) {
+            
+            // The preposition is after the noun, then it isn't part of the
+            // object, thus shouldn't be corrected
+            if (token.getStart() > noun.getSpan()) {
+              token = null;
+            }
+            
             return token;
           }
         }

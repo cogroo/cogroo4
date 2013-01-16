@@ -60,26 +60,31 @@ public class GovernmentCheckerTest {
 		testWrong("O médico assistiu ao paciente");
 
 		testRight("João simpatizou com aquela garota");
-		// testWrong("João simpatizou naquela garota");
+//		testWrong("João simpatizou naquela garota");
 		// The problem is the wrong object identification
 
-		testRight("Sempre aspirou ao cargo de gerente");
-//		testWrong("Sempre aspirou o cargo de gerente");
+		testRight("Ele sempre aspirou ao cargo de gerente");
+		testWrong("Ele sempre aspirou o cargo de gerente");
 
 		testRight("Ela aspirou todo o pó ontem");
 		testWrong("Ela aspirou a todo o pó ontem");
+		testRight("Ela aspirou todo o pó da sala");
 
 		testRight("Atendeu à solicitação");
 		testRight("Atendeu o telefone");
 
 		testRight("Ele namorou a garota");
 		testWrong("Ele namorou com a garota");
+		testRight("Ele namorava aquela menina com câncer");
+		testRight("Ele namorou a filha do chefe");
+		testRight("Ele namorava com vigor aquela garota");
 		
 		testRight("A criança obedeceu ao pai");
 		testWrong("A criança obedeceu o pai");
 		
-		testRight("Ela usufruía os bens alheios");
-		testWrong("Ela usufruía dos bens alheios");
+		testRight("Ela usufruiu durante anos os bens alheios");
+		testWrong("Ela usufruiu dos bens alheios");
+		testRight("Ela usufruía o salário do marido");
 		
 		testRight("Ele simpatizava com ela");
 		testWrong("Ele simpatizava a ela");
@@ -91,8 +96,7 @@ public class GovernmentCheckerTest {
 //		testRight("O médico assistiu de imediato o doente");
 //		testRight("Ela aspirou todo o pó da sala");
 //		testRight("Ele namorou a filha do chefe");
-//		testRight("Ele namorava aquela menina com câncer");
-//		testRight("Ela usufruía o salário do marido");
+//		
 //		//The following tests are wrong because of the preposition in the
 //		//direct object
 //	}

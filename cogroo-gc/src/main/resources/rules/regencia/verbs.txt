@@ -11,7 +11,7 @@ com: : *
 
 #aspirar
 _: inspirar, tragar, sorver: ar, pó, fumaça, gás, aroma, cheiro, odor
-a: almejar, desejar: cargo, emprego, posição, colocação
+a: almejar, desejar: prêmio, cargo, emprego, posição, colocação
 
 #assistir
 _: socorrer, auxiliar, ajudar: paciente, acidentado, enfermo, doente
@@ -46,21 +46,21 @@ a: seguir os comandos de alguém: *
 _: referência à coisa: *
 a: referência à pessoa: * 
 
-#perdoar
-_: referência à coisa: *
-a: referência à pessoa: *
+%#perdoar
+%_: referência à coisa: *
+%a: referência à pessoa: *
 
-#prevenir
-_: evitar dano: *
-de: avisar com antecedência: *
+%#prevenir
+%_: evitar dano: *
+%de: avisar com antecedência: *
 
-#querer
-_: desejar, pretender: *
-a: ter afeto: *
+%#querer
+%_: desejar, pretender: *
+%a: ter afeto: *
 
-#renunciar
-_: : *
-a: : *
+%#renunciar
+%_: : *
+%a: : *
 
 #revidar
 a: : *

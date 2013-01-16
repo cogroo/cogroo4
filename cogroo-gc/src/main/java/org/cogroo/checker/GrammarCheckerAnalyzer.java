@@ -239,27 +239,5 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
       }
     }
   }
-  
-   private static void printCategories(List<RuleDefinitionI> rulesDefinition) {
-     Map<String, Set<String>> categories = new HashMap<String, Set<String>>();
-     
-     for (RuleDefinitionI def : rulesDefinition) {
-       if(!categories.containsKey(def.getCategory().toLowerCase())) {
-         categories.put(def.getCategory().toLowerCase(), new HashSet<String>());
-       }
-       
-       categories.get(def.getCategory().toLowerCase()).add(Categories.getCat(def.getId()));
-     }
-     
-     for (String lc : categories.keySet()) {
-      System.out.print("lc.put(\"" + lc + "\", \"");
-      for (String c : categories.get(lc)) {
-        System.out.print(c + ", ");
-      }
-      System.out.println("\");");
-    }
-     
-     //cat.put("ver", "USO DOS VERBOS");
-  }  
-  
+   
 }
