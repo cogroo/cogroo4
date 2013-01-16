@@ -178,18 +178,20 @@ sub header {
 sub changes {
 	my $ref = shift;
 	my $pred = shift;
-	my $out = shift;
-	
-	my %baseline = count($ref);
-	my %other = count($pred);
-	my %summary;
-	my $r = compareReport(\%baseline, \%other, \%summary);
-	
-	open REPORT, '>:encoding(UTF-8)', $out or die $!;
-	print REPORT $r;
-	close REPORT;
-	
-	return \%summary;
+	if(-e $ref && -e $pred) {
+		my $out = shift;
+		
+		my %baseline = count($ref);
+		my %other = count($pred);
+		my %summary;
+		my $r = compareReport(\%baseline, \%other, \%summary);
+		
+		open REPORT, '>:encoding(UTF-8)', $out or die $!;
+		print REPORT $r;
+		close REPORT;
+		
+		return \%summary;	
+	}
 }
 
 #my %summary;
