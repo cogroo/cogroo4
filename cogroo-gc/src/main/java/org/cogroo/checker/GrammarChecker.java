@@ -58,7 +58,7 @@ public class GrammarChecker {
 
     while (!input.equals("q")) {
       if (input.equals("0")) {
-        input = "O casaco feios ficou pronto. Os casacos bonito ficaram prontos.";
+        input = "Foi ferido por uma balas perdidas.";
       }
 
       CheckDocument document = new CheckDocument();

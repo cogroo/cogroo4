@@ -44,6 +44,7 @@ import org.cogroo.tools.checker.rules.model.Element;
 import org.cogroo.tools.checker.rules.model.Mask;
 import org.cogroo.tools.checker.rules.model.PatternElement;
 import org.cogroo.tools.checker.rules.model.Rule;
+import org.cogroo.tools.checker.rules.model.Rule.Method;
 import org.cogroo.tools.checker.rules.model.TagMask;
 
 /**
@@ -179,10 +180,12 @@ public final class RulesApplier implements TypedChecker {
 	 *         invocation, if any
 	 */
 	private List<Mistake> getMistakes(List<Mistake> mistakes, List<State> currentStates, TokenGroup tokenGroup, int baseTokenIndex, int currentTokenIndex, Sentence sentence) {
-	  
+	    Method method = Method.GENERAL;
+	    
         int offset = 0;
         if (tokenGroup instanceof Chunk) {
           offset = ((Chunk) tokenGroup).getFirstToken();
+          method = Method.PHRASE_LOCAL;
         }
 	    
 		for (State state : currentStates) {
@@ -202,9 +205,9 @@ public final class RulesApplier implements TypedChecker {
 					// Suggestions.
                     String[] suggestions = new String[0];
 					try {
-					  suggestions = SuggestionBuilder.getSuggestions(sentence, false, baseTokenIndex, lower, upper, rule.getSuggestion(), dictionary);
+					  suggestions = SuggestionBuilder.getSuggestions(sentence, false, baseTokenIndex, lower, upper, rule.getSuggestion(), dictionary, method);
 					} catch(NullPointerException e) {
-					  System.out.println(rule.getId() + " -> " + sentence.getSentence());
+					  LOGGER.error("Failed to apply rule " + rule.getId() + " in: " + sentence.getSentence(), e);
 					}
 					
 					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), getPriority(rule), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
@@ -259,7 +262,7 @@ public final class RulesApplier implements TypedChecker {
 					SyntacticChunk chunkUpper = sentence.getSyntacticChunks().get(currentChunkIndex);
 					int upperCountedByChars = chunkUpper.getTokens().get(chunkUpper.getTokens().size() - 1).getSpan().getEnd();
 					// Suggestions.
-					String[] suggestions = SuggestionBuilder.getSuggestions(sentence, true, baseChunkIndex, lower, upper, rule.getSuggestion(), dictionary);
+					String[] suggestions = SuggestionBuilder.getSuggestions(sentence, true, baseChunkIndex, lower, upper, rule.getSuggestion(), dictionary, Method.SUBJECT_VERB);
 					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), getPriority(rule), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
 					mistakes.add(mistake);
 				} else if (currentChunkIndex + 1 < syntacticChunks.size()) {

@@ -361,6 +361,47 @@ public class RuleUtils {
        }
    }
 
+  public static void completeMissingParts(TagMask tagMask,
+      MorphologicalTag tag) {
+    
+    if(tagMask.getCase() == null) {
+      tagMask.setCase(tag.getCase());
+    }
+    
+    if(tagMask.getClazz() == null) {
+      tagMask.setClazz(tag.getClazzE());
+    }
+    
+    if(tagMask.getGender() == null) {
+      tagMask.setGender(tag.getGenderE());
+    }
+    
+    if(tagMask.getMood() == null) {
+      tagMask.setMood(tag.getMood());
+    }
+    
+    if(tagMask.getNumber() == null) {
+      tagMask.setNumber(tag.getNumberE());
+    }
+    
+    if(tagMask.getPerson() == null) {
+      tagMask.setPerson(tag.getPersonE());
+    }
+    
+    if(tagMask.getPunctuation() == null) {
+      tagMask.setPunctuation(tag.getPunctuation());
+    }
+    
+    if(tagMask.getTense() == null) {
+      tagMask.setTense(tag.getTense());
+    }
+    
+    if(tagMask.getPunctuation() == null) {
+      tagMask.setPunctuation(tag.getPunctuation());
+    }
+    
+  }
+
 //	public static void main(String[] args) {
 //		// Rule rule = RulesService.getInstance().getRule(69, true);
 //		// System.out.println(patternAsString(rule.getPattern()));

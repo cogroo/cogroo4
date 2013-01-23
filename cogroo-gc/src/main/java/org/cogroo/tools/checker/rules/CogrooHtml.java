@@ -325,7 +325,11 @@ public class CogrooHtml {
                     for (Mistake mistake : mistakes) {
                         if (((MistakeImpl) mistake).getRuleIdentifier().equals(appendPrefix(rule.getId()))) {
                             correctMatches++;
-                            this.out.append("   <tr bgcolor='00ff00'>\n");
+                            if(isValidSuggestion(example, mistake)) {
+                              this.out.append("   <tr bgcolor='00ff00'>\n");
+                            } else {
+                              this.out.append("   <tr bgcolor='FF00FF'>\n");
+                            }
                         } else {
                             wrongMatches++;
                             this.out.append("   <tr bgcolor='ff0000'>");
@@ -376,6 +380,33 @@ public class CogrooHtml {
         }
     }
     
+    private boolean isValidSuggestion(Example example, Mistake mistake) {
+      if(mistake.getSuggestions() == null || mistake.getSuggestions().length == 0) 
+        return true;
+      String incorrect = example.getIncorrect();
+      List<String> applied = applySuggestions(incorrect, mistake);
+      boolean isValid = false;
+      for (String fixed : applied) {
+        if(example.getCorrect().contains(fixed)) {
+          isValid = true;
+        }
+      }
+      return isValid;
+    }
+
+
+
+    private List<String> applySuggestions(String incorrect, Mistake mistake) {
+      List<String> resp = new ArrayList<String>();
+      for (String suggestion : mistake.getSuggestions()) {
+        String a = incorrect.substring(0, mistake.getStart()) + suggestion + incorrect.substring(mistake.getEnd());
+        resp.add(a);
+      }
+      return resp;
+    }
+
+
+
     private String appendPrefix(long id) {
         return "xml:" + Long.toString(id);
     }

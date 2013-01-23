@@ -7756,7 +7756,7 @@
 		</Example>
 		<Example>
 			<Incorrect>Os canetas vermelhas estão sem tinta.</Incorrect>
-			<Correct>As canetas vermelhas estão sem tinta</Correct>
+			<Correct>As canetas vermelhas estão sem tinta.</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>lais</Author>
