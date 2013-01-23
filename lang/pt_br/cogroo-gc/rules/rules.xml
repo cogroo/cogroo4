@@ -3068,12 +3068,12 @@
 			</PatternElement>
 		</Pattern>
 		<Boundaries>
-			<Lower>0</Lower>
+			<Lower>1</Lower>
 			<Upper>0</Upper>
 		</Boundaries>
 		<Suggestion>
-			<SuggestionAsString>1=&gt;"há"</SuggestionAsString>
-			<Replace index="1">
+			<SuggestionAsString>0=&gt;"há"</SuggestionAsString>
+			<Replace index="0">
 				<Lexeme>há</Lexeme>
 			</Replace>
 		</Suggestion>
@@ -9378,13 +9378,13 @@
 			</PatternElement>
 		</Pattern>
 		<Boundaries>
-			<Lower>1</Lower>
-			<Upper>-1</Upper>
+			<Lower>0</Lower>
+			<Upper>0</Upper>
 		</Boundaries>
 		<Suggestion>
 			<!-- <SuggestionAsString>2=&gt;2_M_P_</SuggestionAsString> -->
-			<Replace index="0">
-				<Reference index="1">
+			<Replace index="1">
+				<Reference index="2">
 					<Property>Number</Property>
 				</Reference>
 			</Replace>
@@ -9395,16 +9395,16 @@
 			<Correct>Eles são legais.</Correct>
 		</Example>
 		<Example>
-			<Incorrect>Nós é verdes.</Incorrect>
+			<Incorrect>Nós sou verdes.</Incorrect>
 			<Correct>Nós somos verdes.</Correct>
 		</Example>
 		<!-- F_P - F_S -->
 		<Example>
-			<Incorrect>As bonecas é vermelhas.</Incorrect>
+			<Incorrect>As bonecas era vermelhas.</Incorrect>
 			<Correct>As bonecas eram vermelhas.</Correct>
 		</Example>
 		<Example>
-			<Incorrect>Elas é belas.</Incorrect>
+			<Incorrect>Elas era belas.</Incorrect>
 			<Correct>Elas eram belas.</Correct>
 		</Example>
 		<!-- M_S - M_P -->
