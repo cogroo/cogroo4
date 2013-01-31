@@ -15,14 +15,18 @@
  */
 package org.cogroo.tools.checker.checkers;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.cogroo.analyzer.AnalyzerI;
 import org.cogroo.entities.Mistake;
+import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
+import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.tools.checker.AbstractChecker;
 
 public class ParonymChecker extends AbstractChecker {
@@ -38,6 +42,8 @@ public class ParonymChecker extends AbstractChecker {
   static final String SHORT = "Parônimo.";
   
   private Map<String, String> dictionary;
+  
+  private static final Logger LOGGER = Logger.getLogger(ParonymChecker.class);
 
 
   private AnalyzerI analyzer;
@@ -59,14 +65,29 @@ public class ParonymChecker extends AbstractChecker {
 
   public List<Mistake> check(Sentence sentence) {
 
-    Sentence s;
-    
     for(Token t: sentence.getTokens()){
-      if(dictionary.containsKey(t.getLexeme().toLowerCase())){
+      String wanted = t.getLexeme().toLowerCase();
+      if(dictionary.containsKey(wanted)){
+        String sentenceText = sentence.getText();
+        String alternativeText = sentenceText.substring(0, t.getStart()) +
+            dictionary.get(wanted) + sentenceText.substring(t.getEnd());
         
+        if (LOGGER.isDebugEnabled()) {
+          LOGGER.debug("\n****** Sentença alternativa **********:\n" + alternativeText);
+        }
+        
+        Document alternative = new DocumentImpl(alternativeText);
+        this.analyzer.analyze(alternative);
+        
+        if(sentence.getTokensProb() < alternative.getSentences().get(0).getTokensProb()){
+          if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("\n****** Possível correção **********:\n" + sentenceText + " -> " + alternativeText);
+          }
+        }
       }
     }
-    return null;
+    
+    return Collections.emptyList();
   }
 
 }

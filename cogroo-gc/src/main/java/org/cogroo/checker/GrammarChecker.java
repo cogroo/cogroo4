@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import org.cogroo.analyzer.ComponentFactory;
+import org.cogroo.analyzer.Pipe;
 
 
 /**
