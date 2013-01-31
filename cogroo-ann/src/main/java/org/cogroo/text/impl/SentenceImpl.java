@@ -48,6 +48,8 @@ public class SentenceImpl implements Sentence {
   /* a reference to the document that contains this sentence */
   private Document theDocument;
   
+  private double tokensProb;
+  
   public SentenceImpl(int start, int end, Document theDocument) {
     this(start, end, null, theDocument);
   }
@@ -80,22 +82,27 @@ public class SentenceImpl implements Sentence {
     this.tokens = tokens;
   }
   
+  @Override
   public List<Chunk> getChunks() {
     return chunks;
   }
 
+  @Override
   public void setChunks(List<Chunk> chunks) {
     this.chunks = chunks;
   }
   
+  @Override
   public List<SyntacticChunk> getSyntacticChunks() {
     return syntacticChunks;
   }
 
+  @Override
   public void setSyntacticChunks(List<SyntacticChunk> syntacticChunks) {
     this.syntacticChunks = syntacticChunks;
   }
   
+  @Override
   public Node asTree() {
     return TreeUtil.createTree(this);
   }
@@ -122,16 +129,29 @@ public class SentenceImpl implements Sentence {
     return Objects.hashCode(span, tokens);
   }
 
+  @Override
   public int getStart() {
     return span.getStart();
   }
 
+  @Override
   public int getEnd() {
     return span.getEnd();
   }
 
+  @Override
   public void setBoundaries(int start, int end) {
     span = new Span(start, end);
+  }
+  
+  @Override
+  public double getTokensProb() {
+    return tokensProb;
+  }
+
+  @Override
+  public void setTokensProb(double prob) {
+    tokensProb = prob;
   }
 
 }

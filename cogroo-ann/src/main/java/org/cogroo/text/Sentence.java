@@ -34,6 +34,8 @@ public interface Sentence {
   public void setBoundaries(int start, int end);
 
   public List<Token> getTokens();
+  
+  public double getTokensProb();
 
   public void setTokens(List<Token> tokens);
   
@@ -46,4 +48,6 @@ public interface Sentence {
   public void setSyntacticChunks(List<SyntacticChunk> syntacticChunks);
   
   public Node asTree ();
+
+  public void setTokensProb(double prob);
 }

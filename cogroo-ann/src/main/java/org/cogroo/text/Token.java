@@ -32,6 +32,8 @@ public interface Token {
   public String getLexeme();
 
   public String getPOSTag();
+  
+  public double getPOSTagProb();
 
   public String getFeatures();
   
@@ -56,5 +58,7 @@ public interface Token {
   public void addContext(Analyzers contractionFinder, String value);
 
   public Object getAdditionalContext(Analyzers analyzers);
+
+  public void setPOSTagProb(double d);
 
 }
