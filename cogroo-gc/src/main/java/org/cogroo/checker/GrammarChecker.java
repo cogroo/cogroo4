@@ -20,7 +20,6 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import org.cogroo.analyzer.ComponentFactory;
-import org.cogroo.analyzer.Pipe;
 
 
 /**
@@ -45,10 +44,10 @@ public class GrammarChecker {
 
     ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
 
-    Pipe pipe = (Pipe) factory.createPipe();
     //long[] rules = {127};
 //    pipe.add(new GrammarCheckerAnalyzer(true, rules));
-    pipe.add(new GrammarCheckerAnalyzer());
+    
+    GrammarCheckerAnalyzer cogroo = new GrammarCheckerAnalyzer(factory.createPipe());
 
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
@@ -63,7 +62,7 @@ public class GrammarChecker {
 
       CheckDocument document = new CheckDocument();
       document.setText(input);
-      pipe.analyze(document);
+      cogroo.analyze(document);
       
       System.out.println(document);
 
