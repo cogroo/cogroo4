@@ -15,7 +15,7 @@
  */
 package org.cogroo.tools.checker.checkers;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +28,16 @@ import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
 import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.tools.checker.AbstractChecker;
+import org.cogroo.tools.checker.JavaRuleDefinition;
+import org.cogroo.tools.checker.RuleDefinitionI;
+import org.cogroo.tools.checker.rules.model.Example;
 
 public class ParonymChecker extends AbstractChecker {
 
-  private static final String ID_PREFIX = "word combination:";
+  private static final String ID_PREFIX = "probs:";
 
 
-  static final String ID = ID_PREFIX + "WORD_COMB_TOKEN";
+  static final String ID = ID_PREFIX + "paronyms";
   static final String CATEGORY = "Enganos ortográficos";
   static final String GROUP = "Ortografia";
   static final String DESCRIPTION = "Procura por enganos em parônimos.";
@@ -53,6 +56,16 @@ public class ParonymChecker extends AbstractChecker {
     dictionary = new HashMap<String, String>();
     dictionary.put("dúvida", "duvida");
     dictionary.put("duvida", "dúvida");
+    
+    ////
+    List<Example> examples = new ArrayList<Example>();
+    
+    examples.add(createExample("Eu tenho uma duvida.",
+        "Eu tenho uma dúvida."));
+    RuleDefinitionI definition = new JavaRuleDefinition(ID, CATEGORY, GROUP, DESCRIPTION,
+        MESSAGE, SHORT, examples);
+    
+    add(definition);
   }
   
   public String getIdPrefix() {
@@ -65,12 +78,15 @@ public class ParonymChecker extends AbstractChecker {
 
   public List<Mistake> check(Sentence sentence) {
 
+    List<Mistake> mistakes= new ArrayList<Mistake>();
+    
     for(Token t: sentence.getTokens()){
       String wanted = t.getLexeme().toLowerCase();
       if(dictionary.containsKey(wanted)){
+        String candidate = dictionary.get(wanted);
         String sentenceText = sentence.getText();
         String alternativeText = sentenceText.substring(0, t.getStart()) +
-            dictionary.get(wanted) + sentenceText.substring(t.getEnd());
+            candidate + sentenceText.substring(t.getEnd());
         
         if (LOGGER.isDebugEnabled()) {
           LOGGER.debug("\n****** Sentença alternativa **********:\n" + alternativeText);
@@ -83,11 +99,14 @@ public class ParonymChecker extends AbstractChecker {
           if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("\n****** Possível correção **********:\n" + sentenceText + " -> " + alternativeText);
           }
+          String [] suggestions = {candidate};
+          mistakes.add(createMistake(ID, suggestions, t.getStart(), t.getEnd(), sentence.getText()));
+  
         }
       }
     }
     
-    return Collections.emptyList();
+    return mistakes;
   }
 
 }
