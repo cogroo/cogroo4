@@ -59,7 +59,7 @@ public abstract class AbstractGenericChecker<T> implements GenericChecker<T> {
         ruleDefinition.getExamples(), text);
   }
   
-  protected Mistake createMistake2(String ruleID, String[] longMessageArgs,
+  protected Mistake createMistake(String ruleID, String[] longMessageArgs,
       String[] shortMessageArgs, String[] suggestions, int start, int end,
       String text) {
     RuleDefinitionI ruleDefinition = getRuleDefinition(ruleID);
