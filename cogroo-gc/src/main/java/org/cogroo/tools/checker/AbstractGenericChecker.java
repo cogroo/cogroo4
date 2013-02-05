@@ -58,6 +58,18 @@ public abstract class AbstractGenericChecker<T> implements GenericChecker<T> {
         ruleDefinition.getShortMessage(), suggestions, start, end,
         ruleDefinition.getExamples(), text);
   }
+  
+  protected Mistake createMistake2(String ruleID, String[] longMessageArgs,
+      String[] shortMessageArgs, String[] suggestions, int start, int end,
+      String text) {
+    RuleDefinitionI ruleDefinition = getRuleDefinition(ruleID);
+
+    return new MistakeImpl(ruleDefinition.getId(), getPriority(),
+        String.format(ruleDefinition.getMessage(), (Object[]) longMessageArgs),
+        String.format(ruleDefinition.getShortMessage(),
+            (Object[]) shortMessageArgs), suggestions, start, end,
+        ruleDefinition.getExamples(), text);
+  }
 
   public void ignore(String id) {
     ignored.add(id);

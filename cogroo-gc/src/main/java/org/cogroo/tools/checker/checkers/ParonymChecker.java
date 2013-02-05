@@ -16,7 +16,6 @@
 package org.cogroo.tools.checker.checkers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +30,7 @@ import org.cogroo.tools.checker.AbstractChecker;
 import org.cogroo.tools.checker.JavaRuleDefinition;
 import org.cogroo.tools.checker.RuleDefinitionI;
 import org.cogroo.tools.checker.rules.model.Example;
+import org.cogroo.tools.checker.rules.paronym.ParonymList;
 
 public class ParonymChecker extends AbstractChecker {
 
@@ -53,9 +53,6 @@ public class ParonymChecker extends AbstractChecker {
 
   public ParonymChecker(AnalyzerI analyzer) {
     this.analyzer = analyzer;
-    dictionary = new HashMap<String, String>();
-    dictionary.put("dúvida", "duvida");
-    dictionary.put("duvida", "dúvida");
     
     ////
     List<Example> examples = new ArrayList<Example>();
@@ -66,6 +63,8 @@ public class ParonymChecker extends AbstractChecker {
         MESSAGE, SHORT, examples);
     
     add(definition);
+    dictionary = ParonymList.getParonymsMap();
+    
   }
   
   public String getIdPrefix() {
