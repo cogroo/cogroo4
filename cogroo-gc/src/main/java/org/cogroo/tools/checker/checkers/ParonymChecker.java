@@ -34,7 +34,7 @@ import org.cogroo.tools.checker.rules.paronym.ParonymList;
 
 public class ParonymChecker extends AbstractChecker {
 
-  private static final String ID_PREFIX = "probs:";
+private static final String ID_PREFIX = "probs:";
 
 
   static final String ID = ID_PREFIX + "paronyms";
@@ -44,17 +44,16 @@ public class ParonymChecker extends AbstractChecker {
   static final String MESSAGE = "Possível problema com parônimos";
   static final String SHORT = "Parônimo.";
   
-  private Map<String, String> dictionary;
-  
   private static final Logger LOGGER = Logger.getLogger(ParonymChecker.class);
 
-
   private AnalyzerI analyzer;
-
+  
+  private final ParonymList dictionary;
+  private Map<String, String> map;
+  
   public ParonymChecker(AnalyzerI analyzer) {
     this.analyzer = analyzer;
     
-    ////
     List<Example> examples = new ArrayList<Example>();
     
     examples.add(createExample("Eu tenho uma duvida.",
@@ -63,7 +62,9 @@ public class ParonymChecker extends AbstractChecker {
         MESSAGE, SHORT, examples);
     
     add(definition);
-    dictionary = ParonymList.getParonymsMap();
+    
+    dictionary = new ParonymList();
+    map = dictionary.getParonymsMap();
     
   }
   
@@ -81,8 +82,8 @@ public class ParonymChecker extends AbstractChecker {
     
     for(Token t: sentence.getTokens()){
       String wanted = t.getLexeme().toLowerCase();
-      if(dictionary.containsKey(wanted)){
-        String candidate = dictionary.get(wanted);
+      if(map.containsKey(wanted)){
+        String candidate = map.get(wanted);
         String sentenceText = sentence.getText();
         String alternativeText = sentenceText.substring(0, t.getStart()) +
             candidate + sentenceText.substring(t.getEnd());
