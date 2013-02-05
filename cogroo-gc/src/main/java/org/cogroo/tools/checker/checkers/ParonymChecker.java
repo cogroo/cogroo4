@@ -28,6 +28,7 @@ import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
 import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.tools.checker.AbstractChecker;
+import org.cogroo.tools.checker.rules.paronym.ParonymList;
 
 public class ParonymChecker extends AbstractChecker {
 
@@ -50,9 +51,7 @@ public class ParonymChecker extends AbstractChecker {
 
   public ParonymChecker(AnalyzerI analyzer) {
     this.analyzer = analyzer;
-    dictionary = new HashMap<String, String>();
-    dictionary.put("dúvida", "duvida");
-    dictionary.put("duvida", "dúvida");
+    dictionary = ParonymList.getParonymsMap();
   }
   
   public String getIdPrefix() {
