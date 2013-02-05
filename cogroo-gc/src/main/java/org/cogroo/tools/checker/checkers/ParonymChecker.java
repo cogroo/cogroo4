@@ -16,12 +16,14 @@
 package org.cogroo.tools.checker.checkers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import static org.cogroo.tools.checker.rules.util.RuleUtils.translate;
 import org.apache.log4j.Logger;
 import org.cogroo.analyzer.AnalyzerI;
 import org.cogroo.entities.Mistake;
+import org.cogroo.interpreters.FlorestaTagInterpreter;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
@@ -31,6 +33,7 @@ import org.cogroo.tools.checker.JavaRuleDefinition;
 import org.cogroo.tools.checker.RuleDefinitionI;
 import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.paronym.ParonymList;
+import org.cogroo.tools.checker.rules.util.RuleUtils;
 
 public class ParonymChecker extends AbstractChecker {
 
@@ -41,8 +44,8 @@ public class ParonymChecker extends AbstractChecker {
   static final String CATEGORY = "Enganos ortográficos";
   static final String GROUP = "Ortografia";
   static final String DESCRIPTION = "Procura por enganos em parônimos.";
-  static final String MESSAGE = "Possível problema com parônimos";
-  static final String SHORT = "Parônimo.";
+  static final String MESSAGE = "Se a classe de %s for %s, use %s";
+  static final String SHORT = "Possível confusão entre %s e %s";
   
   private Map<String, String> dictionary;
   
@@ -51,8 +54,12 @@ public class ParonymChecker extends AbstractChecker {
 
   private AnalyzerI analyzer;
 
+  private final FlorestaTagInterpreter tagInterpreter;
+
   public ParonymChecker(AnalyzerI analyzer) {
     this.analyzer = analyzer;
+    
+    tagInterpreter = new FlorestaTagInterpreter();
     
     ////
     List<Example> examples = new ArrayList<Example>();
@@ -63,7 +70,10 @@ public class ParonymChecker extends AbstractChecker {
         MESSAGE, SHORT, examples);
     
     add(definition);
-    dictionary = ParonymList.getParonymsMap();
+    dictionary = new HashMap<String, String>();
+    dictionary.put("duvida","dúvida");
+    dictionary.put("dúvida","duvida");
+        //ParonymList.getParonymsMap();
     
   }
   
@@ -79,13 +89,14 @@ public class ParonymChecker extends AbstractChecker {
 
     List<Mistake> mistakes= new ArrayList<Mistake>();
     
-    for(Token t: sentence.getTokens()){
-      String wanted = t.getLexeme().toLowerCase();
+    for(int i = 0; i < sentence.getTokens().size(); i++) {
+      Token originalToken = sentence.getTokens().get(i);
+      String wanted = originalToken.getLexeme().toLowerCase();
       if(dictionary.containsKey(wanted)){
         String candidate = dictionary.get(wanted);
         String sentenceText = sentence.getText();
-        String alternativeText = sentenceText.substring(0, t.getStart()) +
-            candidate + sentenceText.substring(t.getEnd());
+        String alternativeText = sentenceText.substring(0, originalToken.getStart()) +
+            candidate + sentenceText.substring(originalToken.getEnd());
         
         if (LOGGER.isDebugEnabled()) {
           LOGGER.debug("\n****** Sentença alternativa **********:\n" + alternativeText);
@@ -94,13 +105,18 @@ public class ParonymChecker extends AbstractChecker {
         Document alternative = new DocumentImpl(alternativeText);
         this.analyzer.analyze(alternative);
         
-        if(sentence.getTokensProb() < alternative.getSentences().get(0).getTokensProb()){
+        Sentence alternativeSentence = alternative.getSentences().get(0);
+        if(sentence.getTokensProb() < alternativeSentence.getTokensProb()){
           if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("\n****** Possível correção **********:\n" + sentenceText + " -> " + alternativeText);
           }
+          Token alternativeToken = alternativeSentence.getTokens().get(i);
           String [] suggestions = {candidate};
-          mistakes.add(createMistake(ID, suggestions, t.getStart(), t.getEnd(), sentence.getText()));
-  
+          String [] longMsgArgs = {wanted, translate(alternativeToken.getPOSTag()), candidate};
+          String [] shortMsgArgs = {wanted, candidate};
+          mistakes.add(createMistake(ID, longMsgArgs, shortMsgArgs,
+              suggestions, originalToken.getStart(), originalToken.getEnd(), sentence.getText()));
+
         }
       }
     }

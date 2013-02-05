@@ -15,6 +15,7 @@
  */
 package org.cogroo.tools.checker.rules.util;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -400,6 +401,39 @@ public class RuleUtils {
       tagMask.setPunctuation(tag.getPunctuation());
     }
     
+  }
+  
+  private static final Map<String, String> TAGS;
+  
+  static {
+    Map<String, String> tags = new HashMap<String, String>();
+    tags.put("n", "substantivo");
+    tags.put("prop", "substantivo próprio");
+    tags.put("adj", "adjetivo");
+    tags.put("n-adj", "substantivo");
+    tags.put("v-fin", "verbo");
+    tags.put("v-inf", "verbo");
+    tags.put("v-pcp", "verbo");
+    tags.put("v-ger", "verbo");
+    tags.put("art", "artigo");
+    tags.put("pron-det", "pronome");
+    tags.put("pron-pers", "pronome");
+    tags.put("pron-indp", "pronome");
+    tags.put("adv", "advérbio");
+    tags.put("num", "numeral");
+    tags.put("prp", "preposição");
+    tags.put("intj", "interjeição");
+    tags.put("conj-s", "conjunção");
+    tags.put("conj-c", "conjunção");
+    
+    TAGS = Collections.unmodifiableMap(tags);
+  }
+  
+  public static String translate(String ori) {
+    if(TAGS.containsKey(ori)) {
+      return TAGS.get(ori);
+    }
+    return ori;
   }
 
 //	public static void main(String[] args) {
