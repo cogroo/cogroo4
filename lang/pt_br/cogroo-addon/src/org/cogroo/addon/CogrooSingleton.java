@@ -22,20 +22,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.cogroo.addon.addon.conf.AddOnConfiguration;
+import org.cogroo.analyzer.AnalyzerI;
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.analyzer.Pipe;
 import org.cogroo.checker.CheckDocument;
 import org.cogroo.checker.GrammarCheckerAnalyzer;
 import org.cogroo.entities.Mistake;
-
 import org.cogroo.tools.checker.rules.model.Rule;
 
 import com.sun.star.uno.XComponentContext;
 
 public class CogrooSingleton {
 
-  private static Pipe COGROO;
-  private static GrammarCheckerAnalyzer gca;
+  private static GrammarCheckerAnalyzer COGROO;
   private static CogrooSingleton instance = null;
 
   // Logger
@@ -88,12 +87,10 @@ public class CogrooSingleton {
       // RulesProperties.setRootFolder(instance.getRoot());
       ComponentFactory factory = ComponentFactory
           .create(new Locale("pt", "BR"));
-      COGROO = (Pipe) factory.createPipe();
+      AnalyzerI pipe = (Pipe) factory.createPipe();
       
-      gca = new GrammarCheckerAnalyzer();
+      COGROO = new GrammarCheckerAnalyzer(pipe);
       
-      COGROO.add(gca);
-
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, "Error in CoGrOO initialization.", e);
     }
@@ -122,14 +119,14 @@ public class CogrooSingleton {
     if (LOGGER.isLoggable(Level.FINE)) {
       LOGGER.fine("Will add rule to ignored list: " + ruleidentifier);
     }
-    gca.ignoreRule(ruleidentifier);
+    COGROO.ignoreRule(ruleidentifier);
   }
 
   public synchronized void resetIgnoredRules() {
     if (LOGGER.isLoggable(Level.FINE)) {
       LOGGER.fine("Will reset ignored rule list.");
     }
-    gca.resetIgnoredRules();
+    COGROO.resetIgnoredRules();
   }
 
   private List<Rule> rules = null;
