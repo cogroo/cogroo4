@@ -4,14 +4,14 @@ acúmulo,acumulo
 adúltera,adultera
 agência,agencia
 alívio,alivio
-ana,anã
+#ana,anã
 
 #B
 bebê,bebe
 
 #C
 caqui,cáqui
-contém,contêm,contem
+#contém,contêm,contem
 crítico,critico
 
 #D
@@ -46,7 +46,7 @@ líquido,liquido
 #maçã,maça,maca
 mágoa,magoa
 máquina,maquina
-metrô,metro
+#metrô,metro
 
 #N
 náufrago,naufrago
@@ -59,8 +59,8 @@ público,publico
 #R
 réplica,replica
 reverência,reverencia
-roma,romã
-roca,roça
+#roma,romã
+#roca,roça
 
 #T
 terça,terçã
