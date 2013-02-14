@@ -15,14 +15,14 @@ contém,contêm,contem
 crítico,critico
 
 #D
-dê,de
+#dê,de
 diagnóstico,diagnostico
 dívida,divida
 dó,do
 dúvida,duvida
 
 #E
-e,é
+#e,é
 exército,exercito
 
 #F

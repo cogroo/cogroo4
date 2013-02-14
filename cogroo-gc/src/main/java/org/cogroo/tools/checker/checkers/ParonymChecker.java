@@ -15,11 +15,12 @@
  */
 package org.cogroo.tools.checker.checkers;
 
+import static org.cogroo.tools.checker.rules.util.RuleUtils.translate;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import static org.cogroo.tools.checker.rules.util.RuleUtils.translate;
+
 import org.apache.log4j.Logger;
 import org.cogroo.analyzer.AnalyzerI;
 import org.cogroo.entities.Mistake;
@@ -44,8 +45,8 @@ private static final String ID_PREFIX = "probs:";
   static final String CATEGORY = "Enganos ortográficos";
   static final String GROUP = "Ortografia";
   static final String DESCRIPTION = "Procura por enganos em parônimos.";
-  static final String MESSAGE = "Se a classe de %s for %s, use %s";
-  static final String SHORT = "Possível confusão entre %s e %s";
+  static final String MESSAGE = "Se a classe de %s for %s, use %s.";
+  static final String SHORT = "Possível confusão entre %s e %s.";
   
   private static final Logger LOGGER = Logger.getLogger(ParonymChecker.class);
 
@@ -89,9 +90,10 @@ private static final String ID_PREFIX = "probs:";
     
     for(int i = 0; i < sentence.getTokens().size(); i++) {
       Token originalToken = sentence.getTokens().get(i);
-      String wanted = originalToken.getLexeme().toLowerCase();
-      if(map.containsKey(wanted)){
-        String candidate = map.get(wanted);
+      String wanted = originalToken.getLexeme();
+      String wantedLowerCase = wanted.toLowerCase();
+      if(map.containsKey(wantedLowerCase)){
+        String candidate = RuleUtils.useCasedString(wanted, map.get(wantedLowerCase));
         String sentenceText = sentence.getText();
         String alternativeText = sentenceText.substring(0, originalToken.getStart()) +
             candidate + sentenceText.substring(originalToken.getEnd());
