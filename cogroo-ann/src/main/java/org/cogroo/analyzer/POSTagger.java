@@ -22,6 +22,7 @@ import java.util.List;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.util.Span;
 
+import org.apache.log4j.Logger;
 import org.cogroo.config.Analyzers;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
@@ -37,6 +38,7 @@ import org.cogroo.util.TextUtils;
  * 
  */
 public class POSTagger implements AnalyzerI {
+  private static final Logger LOGGER = Logger.getLogger(POSTagger.class);
   private POSTaggerME tagger;
 
   public POSTagger(POSTaggerME tagger) {
@@ -50,17 +52,32 @@ public class POSTagger implements AnalyzerI {
       List<Token> tokens = sentence.getTokens();
       String[] tags;
       
+      double[] probs;
       synchronized (this.tagger) {
         tags = tagger.tag(
             TextUtils.tokensToString(sentence.getTokens()), TextUtils
                 .additionalContext(tokens, Arrays.asList(
                     Analyzers.CONTRACTION_FINDER, Analyzers.NAME_FINDER)));
+        probs = tagger.probs();
+      }
+      
+      double finalProb = 0;
+      for (double prob : probs) {
+        finalProb += Math.log(prob);
+      }
+      
+      sentence.setTokensProb(finalProb);
+      
+      if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("Probabilidades do tagger:\n" + Arrays.toString(probs));
+        LOGGER.debug("Log do produto das probabilidades: " + finalProb);
       }
       
       tags = GenderUtil.removeGender(tags);
       
       for (int i = 0; i < tags.length; i++) {
         tokens.get(i).setPOSTag(tags[i]);
+        tokens.get(i).setPOSTagProb(probs[i]);
       }
       
       EntityUtils.groupTokens(sentence.getText(), tokens, createSpanList(toTokensArray(tokens), toTagsArray(tokens)));

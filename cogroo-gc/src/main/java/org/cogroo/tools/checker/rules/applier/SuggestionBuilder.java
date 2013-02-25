@@ -117,7 +117,7 @@ public class SuggestionBuilder {
 				// Beware of upper case...
 				String replacement = replace.getLexeme();
 				int replaceIndex = (int) replace.getIndex();
-				mistakenTokensAsString[replaceIndex] = SuggestionBuilder.useCasedString(mistakenTokensAsString[(int) replace.getIndex()], replacement);
+				mistakenTokensAsString[replaceIndex] = RuleUtils.useCasedString(mistakenTokensAsString[(int) replace.getIndex()], replacement);
 				replacedByEmptyString[replaceIndex] = replacement.equals("") ? true : false;
 			}
 			else { // T1.
@@ -222,7 +222,7 @@ public class SuggestionBuilder {
 				} else {
 					// This workaround is so lame...
 					flex = SuggestionBuilder.discardBeginningHyphen(flex);
-					flex = SuggestionBuilder.useCasedString(mistakenTokensAsString[(int) replace.getIndex()], flex);
+					flex = RuleUtils.useCasedString(mistakenTokensAsString[(int) replace.getIndex()], flex);
 					
 					if(Method.SUBJECT_VERB == method) {
 					  int i = underlinedSyntacticChunks[(int) (replace.getIndex())].getFirstToken();
@@ -249,7 +249,7 @@ public class SuggestionBuilder {
 			for (ReplaceMapping replaceMapping : suggestion.getReplaceMapping()) {
 				long index = replaceMapping.getIndex();
 				if (replaceMapping.getKey().equals(mistakenTokensAsString[(int) index].toLowerCase())) {
-					mistakenTokensAsString[(int) index] = SuggestionBuilder.useCasedString(mistakenTokensAsString[(int) index], replaceMapping.getValue());
+					mistakenTokensAsString[(int) index] = RuleUtils.useCasedString(mistakenTokensAsString[(int) index], replaceMapping.getValue());
 				}
 			}
 			
@@ -380,41 +380,6 @@ public class SuggestionBuilder {
 			noHyphenString = string.substring(1); // Oh well, just throw away the awful "-". No one will ever notice...
 		}
 		return noHyphenString;
-	}
-	
-	/**
-	 * Checks the case of the first char from <code>replaceable</code> and changes the first char from the
-	 * <code>replacement</code> accordingly.
-	 * 
-	 * @param replaceable
-	 *            the string that will be replaced
-	 * @param replacement
-	 *            the string that will be used to replace the <code>replaceable</code>
-	 * @return the replacement, beginning with upper case if the <code>replaceable</code> begins too or
-	 *         lower case, if not
-	 */
-	private static String useCasedString(String replaceable, String replacement) {
-		String replacementCased = replacement;
-		if (replacement.length() > 1) {
-			// If the first char of the replaceable lexeme is upper case...
-			if (Character.isUpperCase(replaceable.charAt(0))) {
-				// ... so must be its replacement.
-				replacementCased = Character.toUpperCase(replacement.charAt(0)) + replacement.substring(1);
-			} else {
-				// ... the replacement must be lower case.
-				replacementCased = Character.toLowerCase(replacement.charAt(0)) + replacement.substring(1);
-			}
-		} else if (replacement.length() == 1) {
-			// If the first char of the replaceable lexeme is upper case...
-			if (Character.isUpperCase(replaceable.charAt(0))) {
-				// ... so must be its replacement.
-				replacementCased = String.valueOf(Character.toUpperCase(replacement.charAt(0)));
-			} else {
-				// ... the replacement must be lower case.
-				replacementCased = String.valueOf(Character.toLowerCase(replacement.charAt(0)));
-			}
-		}
-		return replacementCased;
 	}
 	
 	private static String getBestFlexedWord(String[] flex, Token original, TagMask tagMask)

@@ -15,6 +15,7 @@
  */
 package org.cogroo.tools.checker.rules.util;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -401,6 +402,74 @@ public class RuleUtils {
     }
     
   }
+  
+  private static final Map<String, String> TAGS;
+  
+  static {
+    Map<String, String> tags = new HashMap<String, String>();
+    tags.put("n", "substantivo");
+    tags.put("prop", "substantivo próprio");
+    tags.put("adj", "adjetivo");
+    tags.put("n-adj", "substantivo");
+    tags.put("v-fin", "verbo");
+    tags.put("v-inf", "verbo");
+    tags.put("v-pcp", "verbo");
+    tags.put("v-ger", "verbo");
+    tags.put("art", "artigo");
+    tags.put("pron-det", "pronome");
+    tags.put("pron-pers", "pronome");
+    tags.put("pron-indp", "pronome");
+    tags.put("adv", "advérbio");
+    tags.put("num", "numeral");
+    tags.put("prp", "preposição");
+    tags.put("intj", "interjeição");
+    tags.put("conj-s", "conjunção");
+    tags.put("conj-c", "conjunção");
+    
+    TAGS = Collections.unmodifiableMap(tags);
+  }
+  
+  public static String translate(String ori) {
+    if(TAGS.containsKey(ori)) {
+      return TAGS.get(ori);
+    }
+    return ori;
+  }
+  
+  /**
+   * Checks the case of the first char from <code>replaceable</code> and changes the first char from the
+   * <code>replacement</code> accordingly.
+   * 
+   * @param replaceable
+   *            the string that will be replaced
+   * @param replacement
+   *            the string that will be used to replace the <code>replaceable</code>
+   * @return the replacement, beginning with upper case if the <code>replaceable</code> begins too or
+   *         lower case, if not
+   */
+  public static String useCasedString(String replaceable, String replacement) {
+      String replacementCased = replacement;
+      if (replacement.length() > 1) {
+          // If the first char of the replaceable lexeme is upper case...
+          if (Character.isUpperCase(replaceable.charAt(0))) {
+              // ... so must be its replacement.
+              replacementCased = Character.toUpperCase(replacement.charAt(0)) + replacement.substring(1);
+          } else {
+              // ... the replacement must be lower case.
+              replacementCased = Character.toLowerCase(replacement.charAt(0)) + replacement.substring(1);
+          }
+      } else if (replacement.length() == 1) {
+          // If the first char of the replaceable lexeme is upper case...
+          if (Character.isUpperCase(replaceable.charAt(0))) {
+              // ... so must be its replacement.
+              replacementCased = String.valueOf(Character.toUpperCase(replacement.charAt(0)));
+          } else {
+              // ... the replacement must be lower case.
+              replacementCased = String.valueOf(Character.toLowerCase(replacement.charAt(0)));
+          }
+      }
+      return replacementCased;
+  }  
 
 //	public static void main(String[] args) {
 //		// Rule rule = RulesService.getInstance().getRule(69, true);
