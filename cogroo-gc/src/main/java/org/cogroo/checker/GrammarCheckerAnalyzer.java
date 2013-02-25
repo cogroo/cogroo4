@@ -15,6 +15,7 @@
  */
 package org.cogroo.checker;
 
+import static org.cogroo.tools.checker.rules.util.RuleUtils.translate;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +34,8 @@ import org.cogroo.entities.Mistake;
 import org.cogroo.interpreters.FlorestaTagInterpreter;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
+import org.cogroo.text.Token;
+import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.tools.checker.Checker;
 import org.cogroo.tools.checker.CheckerComposite;
 import org.cogroo.tools.checker.RuleDefinitionI;
@@ -55,6 +58,7 @@ import org.cogroo.tools.checker.rules.dictionary.FSALexicalDictionary;
 import org.cogroo.tools.checker.rules.dictionary.TagDictionary;
 import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.util.MistakeComparator;
+import org.cogroo.tools.checker.rules.util.RuleUtils;
 
 
 public class GrammarCheckerAnalyzer {
@@ -171,32 +175,29 @@ public class GrammarCheckerAnalyzer {
   }
 
   public void analyze(CheckDocument document) {
-    
+
     pipe.analyze(document);
-    
-    if (document instanceof CheckDocument) {
-      List<Mistake> mistakes = new ArrayList<Mistake>();
-      List<Sentence> sentences = document.getSentences();
-      List<org.cogroo.entities.Sentence> typedSentences = new ArrayList<org.cogroo.entities.Sentence>(sentences.size());
-      for (Sentence sentence : sentences) {
-        mistakes.addAll(this.checkers.check(sentence));
-        
-        org.cogroo.entities.Sentence typedSentence = this.sentenceAdapter.asTypedSentence(sentence);
-        typedSentences.add(typedSentence);
-        
-        mistakes.addAll(this.typedCheckers.check(typedSentence));
-      }
-      ((CheckDocument) document).setSentencesLegacy(typedSentences);
-      Collections.sort(mistakes, MISTAKE_COMPARATOR);
-      
-      if(this.allowOverlap == false)
-        mistakes = filterOverlap(document, mistakes);
-      
-      ((CheckDocument) document).setMistakes(mistakes);
-    } else {
-      throw new IllegalArgumentException("An instance of "
-          + CheckDocument.class + " was expected.");
+
+    List<Mistake> mistakes = new ArrayList<Mistake>();
+    List<Sentence> sentences = document.getSentences();
+    List<org.cogroo.entities.Sentence> typedSentences = new ArrayList<org.cogroo.entities.Sentence>(sentences.size());
+    for (Sentence sentence : sentences) {
+      mistakes.addAll(this.checkers.check(sentence));
+
+      org.cogroo.entities.Sentence typedSentence = this.sentenceAdapter.asTypedSentence(sentence);
+      typedSentences.add(typedSentence);
+
+      mistakes.addAll(this.typedCheckers.check(typedSentence));
     }
+    ((CheckDocument) document).setSentencesLegacy(typedSentences);
+    Collections.sort(mistakes, MISTAKE_COMPARATOR);
+
+    if(this.allowOverlap == false)
+      mistakes = filterOverlap(document, mistakes);
+
+    mistakes = filterWrongSuggestions(document, mistakes);
+
+    ((CheckDocument) document).setMistakes(mistakes);
   }
 
   private List<Mistake> filterOverlap(Document doc, List<Mistake> mistakes) {
@@ -219,6 +220,65 @@ public class GrammarCheckerAnalyzer {
       }
     }
     return mistakesNoOverlap;
+  }
+
+  private List<Mistake> filterWrongSuggestions(Document document, List<Mistake> mistakes)
+  {
+    List<Mistake> revisedMistakes = new ArrayList<Mistake>();
+
+    String documentText = document.getText();
+
+    for (Mistake mistake : mistakes) {
+      String[] suggestions = mistake.getSuggestions();
+      List<Mistake> newMistakes = null;
+      boolean[] revisedSuggestions = new boolean[suggestions.length];
+      int numberOfRightSuggestions = 0;
+      
+      for(int indexOfSuggestions=0; indexOfSuggestions<suggestions.length; indexOfSuggestions++) {
+        newMistakes = new ArrayList<Mistake>();
+        String alternativeText = documentText.substring(0, mistake.getStart()) +
+            suggestions[indexOfSuggestions] + documentText.substring(mistake.getEnd());
+ 
+        Document alternative = new DocumentImpl(alternativeText);
+        pipe.analyze(alternative);
+        Sentence alternativeSentence = (alternative.getSentences()).get(0);
+
+        newMistakes.addAll(this.checkers.check(alternativeSentence));
+        org.cogroo.entities.Sentence alternativeTypedSentence = this.sentenceAdapter.asTypedSentence(alternativeSentence);
+        newMistakes.addAll(this.typedCheckers.check(alternativeTypedSentence));
+
+        if(newMistakes.size() == 0){  //No errors in suggestion
+          revisedSuggestions[indexOfSuggestions] = true;
+          numberOfRightSuggestions++;
+          
+          if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("\n****** Filtering suggestions **********: " + alternativeText + "   (OK!)\n");
+          }        
+        }
+        else{
+          revisedSuggestions[indexOfSuggestions] = false;
+                    
+          if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("\n****** Filtering suggestions **********: " + alternativeText + "   (WRONG!)\n");
+          }
+        }
+      }  
+
+      if(numberOfRightSuggestions != 0) {
+        if(numberOfRightSuggestions != suggestions.length){
+          String[] rightSuggestions = new String[numberOfRightSuggestions];
+          for(int i=0, j=0; i<suggestions.length; i++){
+            if (revisedSuggestions[i] == true){
+              rightSuggestions[j] = suggestions[i];
+              j++;
+            }
+          }
+          mistake.setSuggestions(rightSuggestions);
+        }
+        revisedMistakes.add(mistake);
+      }  
+    }
+    return revisedMistakes;
   }
 
   public void ignoreRule(String ruleIdentifier) {

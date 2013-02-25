@@ -172,4 +172,9 @@ public class MistakeImpl implements Mistake, Serializable {
     return this.rulePriority;
   }
 
+  @Override
+  public void setSuggestions(String[] newSuggestions) {
+    suggestions = newSuggestions;
+  }
+
 }
