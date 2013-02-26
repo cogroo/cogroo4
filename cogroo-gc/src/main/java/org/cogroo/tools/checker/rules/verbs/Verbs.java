@@ -50,7 +50,7 @@ public class Verbs {
 
   public Map<String, VerbPlusPreps> parseConfiguration() {
     InputStream input = Verbs.class.getClassLoader().getResourceAsStream(
-        "rules/regencia/verbs.txt");
+        "rules/government/verbs.txt");
 
     Map<String, VerbPlusPreps> map = new HashMap<String, VerbPlusPreps>();
 

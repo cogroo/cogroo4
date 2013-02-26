@@ -42,4 +42,6 @@ public interface Mistake {
 
   public String getFullMessage();
 
+  public void setSuggestions(String[] newSuggestions);
+
 }

@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.cogroo.analyzer.ComponentFactory;
-import org.cogroo.analyzer.Pipe;
 import org.cogroo.checker.CheckDocument;
 import org.cogroo.checker.GrammarCheckerAnalyzer;
 import org.cogroo.entities.Mistake;
@@ -65,7 +64,7 @@ public class CogrooHtml {
     /**
      * The grammar checker.
      */
-    private Pipe cogroo;
+    private GrammarCheckerAnalyzer cogroo;
     
     /**
      * Examples that were not matched by any rule at all.
@@ -111,10 +110,10 @@ public class CogrooHtml {
       path = f.getAbsolutePath();
       out = Files.newWriter(new File("reports/rules_status.html"), Charset.forName("UTF-8"));
       
-      GrammarCheckerAnalyzer gca = new GrammarCheckerAnalyzer();
       ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
-      cogroo = (Pipe) factory.createPipe();
-      cogroo.add(gca);
+      
+      
+      cogroo = new GrammarCheckerAnalyzer(factory.createPipe());
       
 //      TagDictionary td = new TagDictionary(new FSALexicalDictionary(), false,
 //          new FlorestaTagInterpreter());

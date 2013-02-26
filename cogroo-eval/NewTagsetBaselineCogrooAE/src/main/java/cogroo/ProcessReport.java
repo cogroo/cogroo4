@@ -25,8 +25,8 @@ import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
 import org.apache.uima.resource.ResourceInitializationException;
-import org.cogroo.analyzer.Pipe;
 import org.cogroo.checker.CheckDocument;
+import org.cogroo.checker.GrammarCheckerAnalyzer;
 import org.cogroo.entities.Sentence;
 import org.cogroo.entities.Token;
 import org.cogroo.entities.impl.MorphologicalTag;
@@ -40,14 +40,14 @@ import cogroo.uima.ae.NewTagsetBaselineCogrooAE;
 
 public class ProcessReport {
 
-  Pipe pipe;
+  GrammarCheckerAnalyzer pipe;
   private String report;
   private String output;
 
   public ProcessReport(String resources, String report, String output)
       throws IllegalArgumentException, IOException, ResourceInitializationException {
     
-    pipe = (Pipe) NewTagsetBaselineCogrooAE.createCogroo();
+    pipe = (GrammarCheckerAnalyzer) NewTagsetBaselineCogrooAE.createCogroo();
     
     
     this.report = report;
