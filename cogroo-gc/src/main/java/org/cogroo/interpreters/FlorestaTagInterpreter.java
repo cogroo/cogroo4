@@ -414,7 +414,9 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
       ct.setChunkFunction(en);
     } else {
       ct.setChunkFunction(ChunkFunction.OTHER);
-      LOGGER.error("Invalid ChunkTag: " + tagString);
+      if(LOGGER.isInfoEnabled()) {
+        LOGGER.error("Invalid ChunkTag: " + tagString);
+      }
     }
     return ct;
   }
@@ -428,7 +430,9 @@ public class FlorestaTagInterpreter implements TagInterpreterI {
       st.setSyntacticFunction(en);
     } else {
       st.setSyntacticFunction(SyntacticFunction.NONE);
-      LOGGER.error("Invalid ChunkTag: " + tagString);
+      if(LOGGER.isInfoEnabled()) {
+        LOGGER.info("Invalid ChunkTag: " + tagString);
+      }
     }
     return st;
   }
