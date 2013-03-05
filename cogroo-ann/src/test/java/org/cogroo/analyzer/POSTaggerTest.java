@@ -65,7 +65,10 @@ public class POSTaggerTest {
     String[] tags = { "art", "n", "adj", "v-fin", "prp", "art", "pron-det",
         "n", "punc" };
 
+    double[] probs = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
+
     when(mockedTagger.tag(any(String[].class), any(Object[].class))).thenReturn(tags);
+    when(mockedTagger.probs()).thenReturn(probs);
     tagger.analyze(document);
 
     assertEquals("art", document.getSentences().get(0).getTokens().get(0)
