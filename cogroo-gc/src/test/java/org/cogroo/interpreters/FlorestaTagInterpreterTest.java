@@ -24,13 +24,13 @@ import java.util.Set;
 import org.cogroo.tools.checker.rules.model.TagMask.Class;
 
 import org.cogroo.interpreters.FlorestaTagInterpreter;
-import org.cogroo.interpreters.TagInterpreterI;
+import org.cogroo.interpreters.TagInterpreter;
 import org.junit.Test;
 
 public class FlorestaTagInterpreterTest {
 
   private static Map<String, Class> table = new HashMap<String, Class>();
-  private TagInterpreterI ti = new FlorestaTagInterpreter();
+  private TagInterpreter ti = new FlorestaTagInterpreter();
 
   static {
     table.put("-", Class.PUNCTUATION_MARK);

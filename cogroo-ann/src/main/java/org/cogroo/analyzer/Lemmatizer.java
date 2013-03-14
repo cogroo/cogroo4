@@ -17,16 +17,16 @@ package org.cogroo.analyzer;
 
 import java.util.List;
 
-import org.cogroo.dictionary.LemmaDictionaryI;
+import org.cogroo.dictionary.LemmaDictionary;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
 
 
-public class Lemmatizer implements AnalyzerI {
-  private LemmaDictionaryI dict;
+public class Lemmatizer implements Analyzer {
+  private LemmaDictionary dict;
 
-  public Lemmatizer(LemmaDictionaryI dict) {
+  public Lemmatizer(LemmaDictionary dict) {
     this.dict = dict;
   }
   public void analyze(Document document) {

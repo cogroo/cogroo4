@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.cogroo.entities.impl.MorphologicalTag;
-import org.cogroo.interpreters.TagInterpreterI;
+import org.cogroo.interpreters.TagInterpreter;
 import org.cogroo.util.PairWordPOSTag;
 
 import org.cogroo.tools.checker.rules.model.TagMask;
@@ -42,9 +42,9 @@ public class TagDictionary implements CogrooTagDictionary {
 	
 	LexicalDictionary access;
 	private boolean caseSensitive;
-	private TagInterpreterI dicTI;
+	private TagInterpreter dicTI;
 	
-	public TagDictionary(LexicalDictionary access, boolean caseSensitive, TagInterpreterI tagInterpreter)
+	public TagDictionary(LexicalDictionary access, boolean caseSensitive, TagInterpreter tagInterpreter)
 	{
 		this.dicTI = tagInterpreter;
 		this.caseSensitive = caseSensitive;
@@ -183,7 +183,7 @@ public class TagDictionary implements CogrooTagDictionary {
 		return tag.toArray(new MorphologicalTag[tag.size()]);
 	}
 
-  public TagInterpreterI getTagInterpreter() {
+  public TagInterpreter getTagInterpreter() {
     return dicTI;
   }
 	

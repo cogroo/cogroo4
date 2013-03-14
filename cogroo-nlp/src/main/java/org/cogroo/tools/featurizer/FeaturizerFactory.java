@@ -33,14 +33,14 @@ import opennlp.tools.util.ext.ExtensionLoader;
 import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.UncloseableInputStream;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 
 public abstract class FeaturizerFactory extends BaseToolFactory {
 
 //  private static final String POISONED_TAGS_ENTRY_NAME = "poisonedtags.serialized_set";
   
   private static final String CG_FLAGS_PROPERTY = "cgFlags";
-  protected FeatureDictionaryI featureDictionary;
+  protected FeatureDictionary featureDictionary;
   private Set<String> poisonedDictionaryTags = null;
   private String cgFlags;
   
@@ -56,11 +56,11 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
    * programmatically create a factory.
    * 
    */
-  public FeaturizerFactory(FeatureDictionaryI featureDictionary, String cgFlags) {
+  public FeaturizerFactory(FeatureDictionary featureDictionary, String cgFlags) {
     this.init(featureDictionary, cgFlags);
   }
   
-  protected void init(FeatureDictionaryI featureDictionary, String cgFlags) {
+  protected void init(FeatureDictionary featureDictionary, String cgFlags) {
     this.featureDictionary = featureDictionary;
     this.cgFlags = cgFlags;
   }
@@ -112,13 +112,13 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
     return this.cgFlags;
   }
 
-  public FeatureDictionaryI getFeatureDictionary() {
+  public FeatureDictionary getFeatureDictionary() {
     if (this.featureDictionary == null)
       this.featureDictionary = loadFeatureDictionary();
     return this.featureDictionary;
   }
 
-  protected abstract FeatureDictionaryI loadFeatureDictionary();
+  protected abstract FeatureDictionary loadFeatureDictionary();
 
   public Set<String> getDictionaryPoisonedTags() {
 //    if (this.poisonedDictionaryTags == null && artifactProvider != null)
@@ -140,10 +140,10 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
   // because the poisoned tags are persisted...
   protected void validateFeatureDictionary() {
     
-    FeatureDictionaryI dict = getFeatureDictionary();
+    FeatureDictionary dict = getFeatureDictionary();
     if (dict != null) {
       if (dict instanceof Iterable<?>) {
-        FeatureDictionaryI posDict = (FeatureDictionaryI) dict;
+        FeatureDictionary posDict = (FeatureDictionary) dict;
 
         Set<String> dictTags = new HashSet<String>();
         Set<String> poisoned = new HashSet<String>();
@@ -193,7 +193,7 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
   }
   
   public static FeaturizerFactory create(String subclassName,
-      FeatureDictionaryI posDictionary, String cgFlags) throws InvalidFormatException {
+      FeatureDictionary posDictionary, String cgFlags) throws InvalidFormatException {
     if (subclassName == null) {
       // will create the default factory
       return new DefaultFeaturizerFactory(posDictionary, cgFlags);

@@ -17,7 +17,7 @@ package org.cogroo.tools.checker.rules.applier;
 
 import java.util.List;
 
-import org.cogroo.tools.checker.RuleDefinitionI;
+import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.RuleType;
 import org.cogroo.tools.checker.rules.util.RuleUtils;
 
@@ -26,7 +26,7 @@ import org.cogroo.tools.checker.rules.model.Pattern;
 import org.cogroo.tools.checker.rules.model.Rule;
 import org.cogroo.tools.checker.rules.model.Rule.Method;
 
-public class XMLRuleDefinition implements RuleDefinitionI {
+public class XMLRuleDefinition implements RuleDefinition {
 
 	private final String id;
 	private final String category;

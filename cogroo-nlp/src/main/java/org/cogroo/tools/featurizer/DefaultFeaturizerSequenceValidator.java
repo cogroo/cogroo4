@@ -22,17 +22,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 
 import opennlp.tools.util.SequenceValidator;
 
 public class DefaultFeaturizerSequenceValidator implements
     SequenceValidator<WordTag> {
 
-  private FeatureDictionaryI tagDict = null;
+  private FeatureDictionary tagDict = null;
   private Set<String> poisonedTags;
 
-  public DefaultFeaturizerSequenceValidator(FeatureDictionaryI tagDict,
+  public DefaultFeaturizerSequenceValidator(FeatureDictionary tagDict,
       Set<String> poisonedTags) {
     this.tagDict = tagDict;
     this.poisonedTags = poisonedTags;

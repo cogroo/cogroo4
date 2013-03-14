@@ -24,7 +24,7 @@ import org.cogroo.text.Token;
 import org.cogroo.tools.chunker2.ChunkerME;
 import org.cogroo.util.TextUtils;
 
-public class HeadFinder implements AnalyzerI {
+public class HeadFinder implements Analyzer {
   private ChunkerME headFinder;
 
   public HeadFinder(ChunkerME headFinder) {

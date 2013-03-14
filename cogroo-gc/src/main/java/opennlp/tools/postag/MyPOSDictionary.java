@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import org.cogroo.entities.impl.MorphologicalTag;
-import org.cogroo.interpreters.TagInterpreterI;
+import org.cogroo.interpreters.TagInterpreter;
 
 
 public class MyPOSDictionary extends POSDictionary {
@@ -33,7 +33,7 @@ public class MyPOSDictionary extends POSDictionary {
   private Set<String> knwonTags = new HashSet<String>();
 
   public static ExtendedPOSDictionary parseOneEntryPerLine(Reader in,
-      TagInterpreterI tago, TagInterpreterI tagd, Set<String> knownFeats,
+      TagInterpreter tago, TagInterpreter tagd, Set<String> knownFeats,
       Set<String> knownPostags, boolean allowInvalidFeats) throws IOException {
 
     knownFeats = new TreeSet<String>(knownFeats);

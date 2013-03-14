@@ -3,7 +3,7 @@ package org.cogroo.tools.checker.checkers;
 import java.util.List;
 import java.util.Locale;
 
-import org.cogroo.analyzer.AnalyzerI;
+import org.cogroo.analyzer.Analyzer;
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.entities.Mistake;
 import org.cogroo.text.Document;
@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 public class GovernmentCheckerTest {
 
-	private static AnalyzerI analyzer;
+	private static Analyzer analyzer;
 
 	@BeforeClass
 	public static void init() {

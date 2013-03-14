@@ -71,6 +71,6 @@ public interface GenericChecker<T> {
    * 
    * @return a list of descriptions
    */
-  public Collection<RuleDefinitionI> getRulesDefinition();
+  public Collection<RuleDefinition> getRulesDefinition();
 
 }

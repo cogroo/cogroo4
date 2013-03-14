@@ -26,7 +26,7 @@ import opennlp.tools.util.Span;
 
 import org.cogroo.entities.Mistake;
 import org.cogroo.entities.Sentence;
-import org.cogroo.tools.checker.RuleDefinitionI;
+import org.cogroo.tools.checker.RuleDefinition;
 import org.junit.Test;
 
 public class SpaceCheckerTest {

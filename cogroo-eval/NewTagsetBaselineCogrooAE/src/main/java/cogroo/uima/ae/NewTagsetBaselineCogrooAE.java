@@ -32,7 +32,7 @@ import org.apache.uima.util.Logger;
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.analyzer.Pipe;
 import org.cogroo.checker.CheckDocument;
-import org.cogroo.checker.GrammarCheckerAnalyzer;
+import org.cogroo.checker.GrammarChecker;
 import org.cogroo.entities.Mistake;
 
 import cogroo.uima.GoldenSentence;
@@ -56,7 +56,7 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
 
   private Boolean mIsBySentences;
 
-  private GrammarCheckerAnalyzer mCogroo;
+  private GrammarChecker mCogroo;
 
   private Logger mLogger;
 
@@ -80,15 +80,15 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
     mLogger = aContext.getLogger();
   }
 
-  public static GrammarCheckerAnalyzer createCogroo() throws ResourceInitializationException {
+  public static GrammarChecker createCogroo() throws ResourceInitializationException {
     InputStream in = ComponentFactory.class.getResourceAsStream("/models.xml");
     
     ComponentFactory factory = ComponentFactory.create(in);
     
-    GrammarCheckerAnalyzer cogroo;
+    GrammarChecker cogroo;
     
     try {
-    	cogroo = new GrammarCheckerAnalyzer((Pipe) factory.createPipe());
+    	cogroo = new GrammarChecker((Pipe) factory.createPipe());
     	cogroo.resetIgnoredRules();
       
 //      String[] ignore = { "xml:17", "xml:21", "xml:117", "xml:118", "xml:124", "xml:103",

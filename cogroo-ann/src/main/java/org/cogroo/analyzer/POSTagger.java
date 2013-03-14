@@ -37,7 +37,7 @@ import org.cogroo.util.TextUtils;
  * classifies it grammatically.
  * 
  */
-public class POSTagger implements AnalyzerI {
+public class POSTagger implements Analyzer {
   private static final Logger LOGGER = Logger.getLogger(POSTagger.class);
   private POSTaggerME tagger;
 

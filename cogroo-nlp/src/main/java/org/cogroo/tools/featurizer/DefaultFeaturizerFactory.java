@@ -26,7 +26,7 @@ import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.UncloseableInputStream;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 
 public class DefaultFeaturizerFactory extends FeaturizerFactory {
 
@@ -44,7 +44,7 @@ public class DefaultFeaturizerFactory extends FeaturizerFactory {
    * programmatically create a factory.
    * 
    */
-  public DefaultFeaturizerFactory(FeatureDictionaryI featureDictionary, String cgFlags) {
+  public DefaultFeaturizerFactory(FeatureDictionary featureDictionary, String cgFlags) {
     super(featureDictionary, cgFlags);
   }
 
@@ -70,7 +70,7 @@ public class DefaultFeaturizerFactory extends FeaturizerFactory {
   }
 
   @Override
-  protected FeatureDictionaryI loadFeatureDictionary() {
+  protected FeatureDictionary loadFeatureDictionary() {
     if (artifactProvider != null)
       return artifactProvider.getArtifact(FEATURE_DICTIONARY_ENTRY_NAME);
     return null;
@@ -86,7 +86,7 @@ public class DefaultFeaturizerFactory extends FeaturizerFactory {
         .getArtifact(FEATURE_DICTIONARY_ENTRY_NAME);
 
     if (tagdictEntry != null) {
-      if (!(tagdictEntry instanceof FeatureDictionaryI)) {
+      if (!(tagdictEntry instanceof FeatureDictionary)) {
         throw new InvalidFormatException("Feature dictionary has wrong type!");
       }
     }

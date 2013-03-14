@@ -24,7 +24,7 @@ import org.cogroo.tools.featurizer.FeaturizerME;
 import org.cogroo.util.TextUtils;
 
 
-public class Featurizer implements AnalyzerI {
+public class Featurizer implements Analyzer {
   private FeaturizerME featurizer;
 
   public Featurizer(FeaturizerME featurizer) {

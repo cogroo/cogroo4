@@ -20,7 +20,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.cogroo.cmdline.featurizer.FeaturizerTrainerTool.TrainerToolParams;
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 import org.cogroo.tools.featurizer.FeatureSample;
 import org.cogroo.tools.featurizer.FeaturizerFactory;
 import org.cogroo.tools.featurizer.FeaturizerME;
@@ -66,7 +66,7 @@ public class FeaturizerTrainerTool extends
 
     FeaturizerModel model;
     try {
-      FeatureDictionaryI tagdict = null;
+      FeatureDictionary tagdict = null;
       if (params.getDict() != null) {
         tagdict = ExtendedPOSDictionary.create(new FileInputStream(params
             .getDict()));

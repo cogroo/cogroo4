@@ -25,34 +25,34 @@ package org.cogroo.analyzer;
 public interface ComponentFactoryI {
   
   /**
-   * @return {@link SentenceDetector} if this {@link AnalyzerI} in the corresponding language exists, otherwise <tt>null</tt>.
+   * @return {@link SentenceDetector} if this {@link Analyzer} in the corresponding language exists, otherwise <tt>null</tt>.
    */
-  public AnalyzerI createSentenceDetector();
+  public Analyzer createSentenceDetector();
 
   /**
    * @return {@link Tokenizer} if this Analyzer in the corresponding language exists, otherwise <tt>null</tt>.
    */
-  public AnalyzerI createTokenizer();
+  public Analyzer createTokenizer();
   
   /**
    * @return {@link NameFinder} if this Analyzer in the corresponding language exists, otherwise <tt>null</tt>.
    */
-  public AnalyzerI createNameFinder();
+  public Analyzer createNameFinder();
   
 /**
  * @return {@link ContractionFinder} if this Analyzer in the corresponding language exists, otherwise <tt>null</tt>.
  */
-  public AnalyzerI createContractionFinder();
+  public Analyzer createContractionFinder();
   
   /**
    * @return {@link POSTagger} if this Analyzer in the corresponding language exists, otherwise <tt>null</tt>.
    */
-  public AnalyzerI createPOSTagger();
+  public Analyzer createPOSTagger();
   
-  public AnalyzerI createFeaturizer();
+  public Analyzer createFeaturizer();
   
   /**
    * @return {@link Pipe} according to the corresponding language.
    */
-  public AnalyzerI createPipe();
+  public Analyzer createPipe();
 }

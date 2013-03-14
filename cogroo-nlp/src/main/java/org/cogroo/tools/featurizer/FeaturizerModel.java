@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 
 import opennlp.model.AbstractModel;
 import opennlp.tools.util.BaseToolFactory;
@@ -94,7 +94,7 @@ public class FeaturizerModel extends BaseModel {
    * 
    * @return tag dictionary or null if not used
    */
-  public FeatureDictionaryI getFeatureDictionary() {
+  public FeatureDictionary getFeatureDictionary() {
     if(getFactory() != null)
       return getFactory().getFeatureDictionary();
     return null;

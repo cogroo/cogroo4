@@ -35,7 +35,7 @@ import org.cogroo.util.TextUtils;
  * sentence and then expands them to their primitive form.
  * 
  */
-public class ContractionFinder implements AnalyzerI {
+public class ContractionFinder implements Analyzer {
 
   private NameFinderME contractionFinder;
   

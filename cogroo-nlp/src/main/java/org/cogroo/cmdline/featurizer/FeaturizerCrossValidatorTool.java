@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.cogroo.cmdline.featurizer.FeaturizerCrossValidatorTool.CVToolParams;
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 import org.cogroo.tools.featurizer.FeatureSample;
 import org.cogroo.tools.featurizer.FeaturizerCrossValidator;
 import org.cogroo.tools.featurizer.FeaturizerEvaluationMonitor;
@@ -66,7 +66,7 @@ public final class FeaturizerCrossValidatorTool extends
 
     FeaturizerCrossValidator validator;
     try {
-      FeatureDictionaryI tagdict = null;
+      FeatureDictionary tagdict = null;
       if (params.getDict() != null) {
         long start = System.nanoTime();
         tagdict = ExtendedPOSDictionary.create(new FileInputStream(params

@@ -22,11 +22,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.cogroo.addon.addon.conf.AddOnConfiguration;
-import org.cogroo.analyzer.AnalyzerI;
+import org.cogroo.analyzer.Analyzer;
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.analyzer.Pipe;
 import org.cogroo.checker.CheckDocument;
-import org.cogroo.checker.GrammarCheckerAnalyzer;
+import org.cogroo.checker.GrammarChecker;
 import org.cogroo.entities.Mistake;
 import org.cogroo.tools.checker.rules.model.Rule;
 
@@ -34,7 +34,7 @@ import com.sun.star.uno.XComponentContext;
 
 public class CogrooSingleton {
 
-  private static GrammarCheckerAnalyzer COGROO;
+  private static GrammarChecker COGROO;
   private static CogrooSingleton instance = null;
 
   // Logger
@@ -87,9 +87,9 @@ public class CogrooSingleton {
       // RulesProperties.setRootFolder(instance.getRoot());
       ComponentFactory factory = ComponentFactory
           .create(new Locale("pt", "BR"));
-      AnalyzerI pipe = (Pipe) factory.createPipe();
+      Analyzer pipe = (Pipe) factory.createPipe();
       
-      COGROO = new GrammarCheckerAnalyzer(pipe);
+      COGROO = new GrammarChecker(pipe);
       
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, "Error in CoGrOO initialization.", e);

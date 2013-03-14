@@ -15,6 +15,6 @@
  */
 package org.cogroo.dictionary;
 
-public interface FeatureDictionaryI {
+public interface FeatureDictionary {
   public String[] getFeatures(String word, String pos);
 }

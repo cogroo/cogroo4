@@ -29,7 +29,7 @@ import opennlp.tools.util.Span;
  *  The <code> SentenceDetector</code> class gets all the sentences in the document text and store them in a list of sentences. 
  *
  */
-public class SentenceDetector implements AnalyzerI {
+public class SentenceDetector implements Analyzer {
 
   private SentenceDetectorME sentenceDetector;
 

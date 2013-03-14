@@ -15,9 +15,9 @@
  */
 package opennlp.tools.postag;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 
-public interface ExtendedTagDictionary extends TagDictionary, FeatureDictionaryI {
+public interface ExtendedTagDictionary extends TagDictionary, FeatureDictionary {
 
   public String[] getCompleteTag(String word);
 

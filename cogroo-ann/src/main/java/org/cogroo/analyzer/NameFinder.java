@@ -33,7 +33,7 @@ import org.cogroo.util.TextUtils;
  * document sentences and gathers each of these sets in one word.
  * 
  */
-public class NameFinder implements AnalyzerI {
+public class NameFinder implements Analyzer {
 
   private NameFinderME nameFinder;
 

@@ -30,7 +30,7 @@ import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.entities.impl.SyntacticTag;
 import org.cogroo.entities.impl.TokenCogroo;
 import org.cogroo.interpreters.FlorestaTagInterpreter;
-import org.cogroo.interpreters.TagInterpreterI;
+import org.cogroo.interpreters.TagInterpreter;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
 import org.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
@@ -40,7 +40,7 @@ import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 public class SentenceAdapter {
   
   private TagDictionary td;
-  private TagInterpreterI ti = new FlorestaTagInterpreter();
+  private TagInterpreter ti = new FlorestaTagInterpreter();
   private static final Logger LOGGER = Logger.getLogger(SentenceAdapter.class);
   private ChunkerConverter chunkerConverter;
   private SyntacticChunkConverter syntacticChunkerConverter;
@@ -147,9 +147,9 @@ public class SentenceAdapter {
   
   private static class SyntacticChunkConverter {
 
-    private final TagInterpreterI corpusTagInterpreter;
+    private final TagInterpreter corpusTagInterpreter;
 
-    public SyntacticChunkConverter(TagInterpreterI corpusTagInterpreter) {
+    public SyntacticChunkConverter(TagInterpreter corpusTagInterpreter) {
       this.corpusTagInterpreter = corpusTagInterpreter;
     }
 
@@ -242,9 +242,9 @@ public class SentenceAdapter {
 
   private static class ChunkerConverter {
     
-    private final TagInterpreterI corpusTagInterpreter;
+    private final TagInterpreter corpusTagInterpreter;
     
-    public ChunkerConverter(TagInterpreterI corpusTagInterpreter) {
+    public ChunkerConverter(TagInterpreter corpusTagInterpreter) {
       this.corpusTagInterpreter = corpusTagInterpreter;
     }
 

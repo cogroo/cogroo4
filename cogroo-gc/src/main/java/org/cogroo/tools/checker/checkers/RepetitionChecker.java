@@ -24,7 +24,7 @@ import org.cogroo.entities.Sentence;
 import org.cogroo.entities.Token;
 import org.cogroo.tools.checker.AbstractTypedChecker;
 import org.cogroo.tools.checker.JavaRuleDefinition;
-import org.cogroo.tools.checker.RuleDefinitionI;
+import org.cogroo.tools.checker.RuleDefinition;
 
 import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.model.TagMask.Class;
@@ -47,7 +47,7 @@ public class RepetitionChecker extends AbstractTypedChecker {
 		examples.add(createExample("Ele ele foi ao mercado.",
 				"Ele foi ao mercado."));
 
-		RuleDefinitionI repetition = new JavaRuleDefinition(ID, CATEGORY,
+		RuleDefinition repetition = new JavaRuleDefinition(ID, CATEGORY,
 				GROUP, DESCRIPTION, MESSAGE, SHORT, examples);
 		add(repetition);
 	}

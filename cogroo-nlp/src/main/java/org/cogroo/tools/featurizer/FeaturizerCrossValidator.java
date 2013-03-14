@@ -17,7 +17,7 @@ package org.cogroo.tools.featurizer;
 
 import java.io.IOException;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.ObjectStream;
@@ -32,13 +32,13 @@ public class FeaturizerCrossValidator {
 
   private Mean wordAccuracy = new Mean();
   private FeaturizerEvaluationMonitor[] listeners;
-  private FeatureDictionaryI posDict;
+  private FeatureDictionary posDict;
   private String factoryClassName;
   private FeaturizerFactory factory;
   private String cgFlags;
 
   public FeaturizerCrossValidator(String languageCode,
-      TrainingParameters params, FeatureDictionaryI dict, String cgFlags,
+      TrainingParameters params, FeatureDictionary dict, String cgFlags,
       String factoryClass, FeaturizerEvaluationMonitor... listeners) {
 
     this.cgFlags = cgFlags;

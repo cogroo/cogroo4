@@ -26,16 +26,16 @@ import org.cogroo.text.Document;
  * The <code>Pipe</code> class contains a sequence of analyzers.
  * <p>
  * It follows the composite pattern to manage the analyzers. Uses the method
- * {@link #add(AnalyzerI)} to add analyzers into the pipe.
+ * {@link #add(Analyzer)} to add analyzers into the pipe.
  * </p>
  * The {@link #analyze(Document)} method is thread-safe, if all analyzers in it
  * are also thread-safe, which is the case of the default analyzers.
  * 
  */
-public class Pipe implements AnalyzerI {
+public class Pipe implements Analyzer {
 
   protected static final Logger LOGGER = Logger.getLogger(Pipe.class);
-  private List<AnalyzerI> mChildAnalyzers = new ArrayList<AnalyzerI>();
+  private List<Analyzer> mChildAnalyzers = new ArrayList<Analyzer>();
 
   /**
    * Adds an analyzer into the pipe.
@@ -45,13 +45,13 @@ public class Pipe implements AnalyzerI {
    * @param aAnalyzer
    *          is the analyzer to be added in the pipe.
    */
-  public void add(AnalyzerI aAnalyzer) {
+  public void add(Analyzer aAnalyzer) {
     mChildAnalyzers.add(aAnalyzer);
   }
 
   public void analyze(Document document) {
 
-    for (AnalyzerI analyzer : mChildAnalyzers) {
+    for (Analyzer analyzer : mChildAnalyzers) {
       try {
         analyzer.analyze(document);
       } catch (Exception e) {

@@ -32,7 +32,7 @@ import opennlp.tools.util.Span;
  * list of tokens.
  * 
  */
-public class Tokenizer implements AnalyzerI {
+public class Tokenizer implements Analyzer {
 
   private TokenizerME tokenizer;
 

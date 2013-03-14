@@ -29,7 +29,7 @@ import java.util.Map.Entry;
 
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.checker.CheckDocument;
-import org.cogroo.checker.GrammarCheckerAnalyzer;
+import org.cogroo.checker.GrammarChecker;
 import org.cogroo.entities.Mistake;
 import org.cogroo.entities.impl.MistakeImpl;
 import org.cogroo.text.Sentence;
@@ -64,7 +64,7 @@ public class CogrooHtml {
     /**
      * The grammar checker.
      */
-    private GrammarCheckerAnalyzer cogroo;
+    private GrammarChecker cogroo;
     
     /**
      * Examples that were not matched by any rule at all.
@@ -113,7 +113,7 @@ public class CogrooHtml {
       ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
       
       
-      cogroo = new GrammarCheckerAnalyzer(factory.createPipe());
+      cogroo = new GrammarChecker(factory.createPipe());
       
 //      TagDictionary td = new TagDictionary(new FSALexicalDictionary(), false,
 //          new FlorestaTagInterpreter());

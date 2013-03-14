@@ -27,7 +27,7 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 import org.cogroo.tools.featurizer.WordTag;
 
 import morfologik.stemming.Dictionary;
@@ -40,7 +40,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.io.ByteStreams;
 
-public class FSAFeatureDictionary implements FeatureDictionaryI, Iterable<WordTag> {
+public class FSAFeatureDictionary implements FeatureDictionary, Iterable<WordTag> {
 
   private DictionaryLookup dictLookup;
 
@@ -86,7 +86,7 @@ public class FSAFeatureDictionary implements FeatureDictionaryI, Iterable<WordTa
     }
   }
 
-  public static FeatureDictionaryI create(String path)
+  public static FeatureDictionary create(String path)
       throws IllegalArgumentException, IOException {
     FileInputStream fsaData = new FileInputStream(path);
     FileInputStream featuresData = new FileInputStream(
@@ -105,14 +105,14 @@ public class FSAFeatureDictionary implements FeatureDictionaryI, Iterable<WordTa
     return ByteStreams.toByteArray(featuresData);
   }
 
-  public static FeatureDictionaryI create(InputStream fsaData,
+  public static FeatureDictionary create(InputStream fsaData,
       InputStream featuresData) throws IllegalArgumentException, IOException {
     DictionaryLookup dictLookup = new DictionaryLookup(Dictionary.readAndClose(
         fsaData, featuresData));
     return new FSAFeatureDictionary(dictLookup);
   }
 
-  public static FeatureDictionaryI create(byte[] dictData, byte[] dictInfo)
+  public static FeatureDictionary create(byte[] dictData, byte[] dictInfo)
       throws IllegalArgumentException, IOException {
     return create(new ByteArrayInputStream(dictData), new ByteArrayInputStream(
         dictInfo));
@@ -173,13 +173,13 @@ public class FSAFeatureDictionary implements FeatureDictionaryI, Iterable<WordTa
   }
 
   
-  public static FeatureDictionaryI createFromResources(String path)
+  public static FeatureDictionary createFromResources(String path)
       throws IllegalArgumentException, IOException {
     
     InputStream dic = FSAFeatureDictionary.class.getResourceAsStream(path);
     InputStream info = FSAFeatureDictionary.class.getResourceAsStream(Dictionary.getExpectedFeaturesName(path));
     
-    FeatureDictionaryI fsa = create(dic, info);
+    FeatureDictionary fsa = create(dic, info);
     
     dic.close();
     info.close();

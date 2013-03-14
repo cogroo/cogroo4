@@ -25,7 +25,7 @@ import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.util.featuregen.DictionaryFeatureGenerator;
 import opennlp.tools.util.featuregen.WindowFeatureGenerator;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 import org.cogroo.dictionary.impl.FSADictionary;
 import org.cogroo.dictionary.impl.FSAFeatureDictionary;
 import org.cogroo.util.PairWordPOSTag;
@@ -34,7 +34,7 @@ public class PortugueseExtPOSContextGenerator extends
     PortuguesePOSContextGenerator {
 
   private FSADictionary trans;
-  private FeatureDictionaryI feat;
+  private FeatureDictionary feat;
   private WindowFeatureGenerator dfg;
 
   public PortugueseExtPOSContextGenerator(Dictionary dict) {

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.cogroo.analyzer.AnalyzerI;
+import org.cogroo.analyzer.Analyzer;
 import org.cogroo.entities.Mistake;
 import org.cogroo.interpreters.FlorestaTagInterpreter;
 import org.cogroo.text.Document;
@@ -31,7 +31,7 @@ import org.cogroo.text.Token;
 import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.tools.checker.AbstractChecker;
 import org.cogroo.tools.checker.JavaRuleDefinition;
-import org.cogroo.tools.checker.RuleDefinitionI;
+import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.paronym.ParonymList;
 import org.cogroo.tools.checker.rules.util.RuleUtils;
@@ -50,14 +50,14 @@ private static final String ID_PREFIX = "probs:";
   
   private static final Logger LOGGER = Logger.getLogger(ParonymChecker.class);
 
-  private AnalyzerI analyzer;
+  private Analyzer analyzer;
   
   private final ParonymList dictionary;
   private Map<String, String> map;
   
   private final FlorestaTagInterpreter tagInterpreter;
 
-  public ParonymChecker(AnalyzerI analyzer) {
+  public ParonymChecker(Analyzer analyzer) {
     this.analyzer = analyzer;
     
     tagInterpreter = new FlorestaTagInterpreter();
@@ -66,7 +66,7 @@ private static final String ID_PREFIX = "probs:";
     
     examples.add(createExample("Eu tenho uma duvida.",
         "Eu tenho uma dúvida."));
-    RuleDefinitionI definition = new JavaRuleDefinition(ID, CATEGORY, GROUP, DESCRIPTION,
+    RuleDefinition definition = new JavaRuleDefinition(ID, CATEGORY, GROUP, DESCRIPTION,
         MESSAGE, SHORT, examples);
     
     add(definition);

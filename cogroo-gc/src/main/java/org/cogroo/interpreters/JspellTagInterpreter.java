@@ -41,7 +41,7 @@ import org.cogroo.tools.checker.rules.model.TagMask.Punctuation;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 import org.cogroo.tools.checker.rules.model.TagMask.Tense;
 
-public class JspellTagInterpreter implements TagInterpreterI {
+public class JspellTagInterpreter implements TagInterpreter {
 
   private static final Map<Enum<?>, String> ENUM_MTAG_PARTS;
   private static final Map<String, List<Enum<?>>> MTAG_PARTS_ENUM;

@@ -18,7 +18,7 @@ package org.cogroo.analyzer;
 import org.cogroo.text.Document;
 
 /**
- * The <code>AnalyzerI</code> interface is responsible for analyzing part of the
+ * The <code>Analyzer</code> interface is responsible for analyzing part of the
  * document.
  * <p>
  * Some analyzers that implement this interface are:
@@ -38,7 +38,7 @@ import org.cogroo.text.Document;
  * 
  * 
  */
-public interface AnalyzerI {
+public interface Analyzer {
 
   /**
    * Analyzes part of a text or a word.

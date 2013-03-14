@@ -24,7 +24,7 @@ import org.cogroo.tools.checker.rules.model.Example;
  * used to display human readable information about the rules in places like
  * Cogroo Comunidade
  */
-public class JavaRuleDefinition implements RuleDefinitionI {
+public class JavaRuleDefinition implements RuleDefinition {
 
   private final String id;
   private final String category;
@@ -96,7 +96,7 @@ public class JavaRuleDefinition implements RuleDefinitionI {
   /**
    * Will always return RuleType.JAVA
    * 
-   * @see org.cogroo.tools.checker.RuleDefinitionI#getRuleType()
+   * @see org.cogroo.tools.checker.RuleDefinition#getRuleType()
    */
   public RuleType getRuleType() {
     return RuleType.JAVA;
@@ -105,7 +105,7 @@ public class JavaRuleDefinition implements RuleDefinitionI {
   /**
    * Will allways return false
    * 
-   * @see org.cogroo.tools.checker.RuleDefinitionI#isXMLBased()
+   * @see org.cogroo.tools.checker.RuleDefinition#isXMLBased()
    */
   public boolean isXMLBased() {
     return false;

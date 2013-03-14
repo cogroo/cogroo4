@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.cogroo.tools.checker.rules.model.Example;
 
-public interface RuleDefinitionI {
+public interface RuleDefinition {
 
   /**
    * prefixed identifier

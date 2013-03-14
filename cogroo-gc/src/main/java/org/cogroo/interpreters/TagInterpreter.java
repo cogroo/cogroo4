@@ -30,7 +30,7 @@ import org.cogroo.tools.checker.rules.model.TagMask.Punctuation;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 import org.cogroo.tools.checker.rules.model.TagMask.Tense;
 
-public interface TagInterpreterI {
+public interface TagInterpreter {
 
   MorphologicalTag parseMorphologicalTag(String tagString);
 

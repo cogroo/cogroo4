@@ -24,7 +24,7 @@ import org.cogroo.entities.Mistake;
 import org.cogroo.entities.Sentence;
 import org.cogroo.tools.checker.AbstractTypedChecker;
 import org.cogroo.tools.checker.JavaRuleDefinition;
-import org.cogroo.tools.checker.RuleDefinitionI;
+import org.cogroo.tools.checker.RuleDefinition;
 
 import org.cogroo.tools.checker.rules.model.Example;
 
@@ -69,7 +69,7 @@ public class PunctuationChecker extends AbstractTypedChecker {
 								"Este programa é bom!")));
 	}
 
-	private RuleDefinitionI createRuleDefinition(String id, Pattern regex,
+	private RuleDefinition createRuleDefinition(String id, Pattern regex,
 			String message, String shortMessage, Example example) {
 		String description = "Aplica a expressão regular " + regex.pattern()
 				+ " na sentença.";

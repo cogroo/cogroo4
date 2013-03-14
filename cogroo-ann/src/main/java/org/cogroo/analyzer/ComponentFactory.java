@@ -96,11 +96,11 @@ public class ComponentFactory implements ComponentFactoryI {
     return factory;
   }
 
-  public AnalyzerI createSentenceDetector() {
+  public Analyzer createSentenceDetector() {
     long start = System.nanoTime();
     SentenceDetectorME sentenceDetector = null;
     InputStream modelIn = null;
-    AnalyzerI analyzer = null; 
+    Analyzer analyzer = null; 
     if (modelPathMap.containsKey(Analyzers.SENTENCE_DETECTOR)) {
       try {
         modelIn = ComponentFactory.class.getResourceAsStream(modelPathMap
@@ -126,9 +126,9 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
 
-  public AnalyzerI createTokenizer() {
+  public Analyzer createTokenizer() {
     long start = System.nanoTime();
-    AnalyzerI analyzer = null;
+    Analyzer analyzer = null;
     TokenizerME tokenizer = null;
     InputStream modelIn = null;
 
@@ -156,9 +156,9 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
 
-  public AnalyzerI createNameFinder() {
+  public Analyzer createNameFinder() {
     long start = System.nanoTime();
-    AnalyzerI analyzer = null;
+    Analyzer analyzer = null;
     NameFinderME nameFinder = null;
     InputStream modelIn = null;
 
@@ -186,9 +186,9 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
 
-  public AnalyzerI createContractionFinder() {
+  public Analyzer createContractionFinder() {
     long start = System.nanoTime();
-    AnalyzerI analyzer = null;
+    Analyzer analyzer = null;
     NameFinderME contractionFinder = null;
     InputStream modelIn = null;
 
@@ -216,9 +216,9 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
 
-  public AnalyzerI createPOSTagger() {
+  public Analyzer createPOSTagger() {
     long start = System.nanoTime();
-    AnalyzerI analyzer = null;
+    Analyzer analyzer = null;
     POSTaggerME tagger = null;
     InputStream modelIn = null;
 
@@ -246,9 +246,9 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
 
-  public AnalyzerI createFeaturizer() {
+  public Analyzer createFeaturizer() {
     long start = System.nanoTime();
-    AnalyzerI analyzer = null;
+    Analyzer analyzer = null;
     FeaturizerME featurizer = null;
     InputStream modelIn = null;
 
@@ -276,9 +276,9 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
 
-  public AnalyzerI createLemmatizer() {
+  public Analyzer createLemmatizer() {
     long start = System.nanoTime();
-    AnalyzerI analyzer = null;
+    Analyzer analyzer = null;
 
     try {
       FSADictionary dict = FSADictionary
@@ -302,9 +302,9 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
 
-  public AnalyzerI createChunker() {
+  public Analyzer createChunker() {
     long start = System.nanoTime();
-    AnalyzerI analyzer = null;
+    Analyzer analyzer = null;
     ChunkerME chunker = null;
     InputStream modelIn = null;
 
@@ -332,9 +332,9 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
   
-  public AnalyzerI createHeadFinder() {
+  public Analyzer createHeadFinder() {
     long start = System.nanoTime();
-    AnalyzerI analyzer = null;
+    Analyzer analyzer = null;
     ChunkerME headFinder = null;
     InputStream modelIn = null;
 
@@ -362,9 +362,9 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
   
-  public AnalyzerI createShallowParser() {
+  public Analyzer createShallowParser() {
     long start = System.nanoTime();
-    AnalyzerI analyzer = null;
+    Analyzer analyzer = null;
     ChunkerME shallowParser = null;
     InputStream modelIn = null;
 
@@ -401,7 +401,7 @@ public class ComponentFactory implements ComponentFactoryI {
     LOGGER.info(sb.toString());
   }
 
-  public AnalyzerI createPipe() {
+  public Analyzer createPipe() {
     long start = System.nanoTime();
     Pipe pipe = new Pipe();
 
@@ -409,8 +409,8 @@ public class ComponentFactory implements ComponentFactoryI {
     // to accelerate the startup we do it in two steps. First we start initialization with
     // FutureTasks, and finally we wait for the results..
     
-    FutureTask<AnalyzerI> future;
-    List<FutureTask<AnalyzerI>> initializers = new LinkedList<FutureTask<AnalyzerI>>();
+    FutureTask<Analyzer> future;
+    List<FutureTask<Analyzer>> initializers = new LinkedList<FutureTask<Analyzer>>();
     ExecutorService executor = Executors.newCachedThreadPool();
     
     LOGGER.info("Loading pipe assynchronously...");
@@ -418,8 +418,8 @@ public class ComponentFactory implements ComponentFactoryI {
     for (Analyzers analyzer : lc.getPipe().getAnalyzer()) {
       switch (analyzer) {
       case SENTENCE_DETECTOR:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createSentenceDetector();
           }
         });
@@ -427,8 +427,8 @@ public class ComponentFactory implements ComponentFactoryI {
         initializers.add(future);
         break;
       case TOKENIZER:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createTokenizer();
           }
         });
@@ -436,8 +436,8 @@ public class ComponentFactory implements ComponentFactoryI {
         initializers.add(future);
         break;
       case NAME_FINDER:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createNameFinder();
           }
         });
@@ -445,8 +445,8 @@ public class ComponentFactory implements ComponentFactoryI {
         initializers.add(future);
         break;
       case CONTRACTION_FINDER:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createContractionFinder();
           }
         });
@@ -454,8 +454,8 @@ public class ComponentFactory implements ComponentFactoryI {
         initializers.add(future);
         break;
       case POS_TAGGER:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createPOSTagger();
           }
         });
@@ -463,8 +463,8 @@ public class ComponentFactory implements ComponentFactoryI {
         initializers.add(future);
         break;
       case FEATURIZER:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createFeaturizer();
           }
         });
@@ -472,8 +472,8 @@ public class ComponentFactory implements ComponentFactoryI {
         initializers.add(future);
         break;
       case LEMMATIZER:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createLemmatizer();
           }
         });
@@ -481,8 +481,8 @@ public class ComponentFactory implements ComponentFactoryI {
         initializers.add(future);
         break;
       case CHUNKER:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createChunker();
           }
         });
@@ -490,8 +490,8 @@ public class ComponentFactory implements ComponentFactoryI {
         initializers.add(future);
         break;
       case HEAD_FINDER:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createHeadFinder();
           }
         });
@@ -499,8 +499,8 @@ public class ComponentFactory implements ComponentFactoryI {
         initializers.add(future);
         break;
       case SHALLOW_PARSER:
-        future = new FutureTask<AnalyzerI>(new Callable<AnalyzerI>() {
-          public AnalyzerI call() {
+        future = new FutureTask<Analyzer>(new Callable<Analyzer>() {
+          public Analyzer call() {
             return createShallowParser();
           }
         });
@@ -513,7 +513,7 @@ public class ComponentFactory implements ComponentFactoryI {
     }
     
     // now we get it...
-    for (FutureTask<AnalyzerI> futureTask : initializers) {
+    for (FutureTask<Analyzer> futureTask : initializers) {
       try {
         pipe.add(futureTask.get());
       } catch (InterruptedException e) {

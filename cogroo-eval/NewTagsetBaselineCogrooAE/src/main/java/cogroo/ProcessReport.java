@@ -26,7 +26,7 @@ import java.util.Arrays;
 
 import org.apache.uima.resource.ResourceInitializationException;
 import org.cogroo.checker.CheckDocument;
-import org.cogroo.checker.GrammarCheckerAnalyzer;
+import org.cogroo.checker.GrammarChecker;
 import org.cogroo.entities.Sentence;
 import org.cogroo.entities.Token;
 import org.cogroo.entities.impl.MorphologicalTag;
@@ -34,20 +34,20 @@ import org.cogroo.entities.tree.Leaf;
 import org.cogroo.entities.tree.Node;
 import org.cogroo.entities.tree.TreeElement;
 import org.cogroo.interpreters.FlorestaTagInterpreter;
-import org.cogroo.interpreters.TagInterpreterI;
+import org.cogroo.interpreters.TagInterpreter;
 
 import cogroo.uima.ae.NewTagsetBaselineCogrooAE;
 
 public class ProcessReport {
 
-  GrammarCheckerAnalyzer pipe;
+  GrammarChecker pipe;
   private String report;
   private String output;
 
   public ProcessReport(String resources, String report, String output)
       throws IllegalArgumentException, IOException, ResourceInitializationException {
     
-    pipe = (GrammarCheckerAnalyzer) NewTagsetBaselineCogrooAE.createCogroo();
+    pipe = (GrammarChecker) NewTagsetBaselineCogrooAE.createCogroo();
     
     
     this.report = report;
@@ -159,7 +159,7 @@ public class ProcessReport {
   // tag interpreter is responsible for serializing and reading tags.
   // .. the LegacyTagInterpreter follow a variant of GC tagset:
   // .. http://beta.visl.sdu.dk/visl/pt/info/portsymbol.html
-  private static final TagInterpreterI tagInterpreter = new FlorestaTagInterpreter();
+  private static final TagInterpreter tagInterpreter = new FlorestaTagInterpreter();
 
   private static String mtagToStr(MorphologicalTag tag) {
     return tagInterpreter.serialize(tag);

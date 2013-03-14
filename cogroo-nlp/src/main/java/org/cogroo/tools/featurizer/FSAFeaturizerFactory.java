@@ -20,7 +20,7 @@ import java.util.Map;
 
 import opennlp.tools.util.model.ArtifactSerializer;
 
-import org.cogroo.dictionary.FeatureDictionaryI;
+import org.cogroo.dictionary.FeatureDictionary;
 import org.cogroo.dictionary.impl.FSADictionary;
 import org.cogroo.dictionary.impl.FSAFeatureDictionary;
 import org.cogroo.util.serializers.ByteArraySerializer;
@@ -36,7 +36,7 @@ public class FSAFeaturizerFactory extends FeaturizerFactory {
   private byte[] dictInfo;
   private byte[] dictData;
 
-  private FeatureDictionaryI fsaFeatureDictionary;
+  private FeatureDictionary fsaFeatureDictionary;
 
   /**
    * Creates a {@link FSAFeaturizerFactory} that provides the default
@@ -50,12 +50,12 @@ public class FSAFeaturizerFactory extends FeaturizerFactory {
    * programmatically create a factory.
    * 
    */
-  public FSAFeaturizerFactory(FeatureDictionaryI featureDictionary, String cgFlags) {
-    super((FeatureDictionaryI) null, cgFlags);
+  public FSAFeaturizerFactory(FeatureDictionary featureDictionary, String cgFlags) {
+    super((FeatureDictionary) null, cgFlags);
   }
   
   @Override
-  protected void init(FeatureDictionaryI featureDictionary, String cgFlags) {
+  protected void init(FeatureDictionary featureDictionary, String cgFlags) {
     super.init(featureDictionary, cgFlags);
 
     // get the dictionary path
@@ -80,7 +80,7 @@ public class FSAFeaturizerFactory extends FeaturizerFactory {
   }
   
   @Override
-  protected FeatureDictionaryI loadFeatureDictionary() {
+  protected FeatureDictionary loadFeatureDictionary() {
     if (this.fsaFeatureDictionary == null) {
       if (artifactProvider != null) {
         Object obj = artifactProvider.getArtifact(FSA_POSDICT);

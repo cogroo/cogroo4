@@ -29,7 +29,7 @@ import org.cogroo.text.impl.ChunkImpl;
 import org.cogroo.tools.chunker2.ChunkerME;
 import org.cogroo.util.TextUtils;
 
-public class Chunker implements AnalyzerI {
+public class Chunker implements Analyzer {
   private ChunkerME chunker;
 
   public Chunker(ChunkerME chunker) {

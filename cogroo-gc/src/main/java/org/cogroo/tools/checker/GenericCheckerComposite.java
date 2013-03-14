@@ -78,8 +78,8 @@ public abstract class GenericCheckerComposite<T> implements GenericChecker<T> {
     return 0;
   }
 
-  public List<RuleDefinitionI> getRulesDefinition() {
-    List<RuleDefinitionI> definitions = new LinkedList<RuleDefinitionI>();
+  public List<RuleDefinition> getRulesDefinition() {
+    List<RuleDefinition> definitions = new LinkedList<RuleDefinition>();
     for (GenericChecker<T> d : mChildCheckers) {
       definitions.addAll(d.getRulesDefinition());
     }

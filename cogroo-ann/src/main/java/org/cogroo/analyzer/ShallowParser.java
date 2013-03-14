@@ -30,7 +30,7 @@ import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.util.Span;
 
 
-public class ShallowParser implements AnalyzerI {
+public class ShallowParser implements Analyzer {
   private ChunkerME shallowParser;
 
   public ShallowParser(ChunkerME shallowParser) {

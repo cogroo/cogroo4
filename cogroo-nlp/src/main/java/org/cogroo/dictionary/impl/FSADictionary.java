@@ -33,7 +33,7 @@ import morfologik.stemming.WordData;
 import opennlp.tools.postag.TagDictionary;
 
 import org.apache.log4j.Logger;
-import org.cogroo.dictionary.LemmaDictionaryI;
+import org.cogroo.dictionary.LemmaDictionary;
 import org.cogroo.util.PairWordPOSTag;
 
 import com.google.common.base.Optional;
@@ -43,7 +43,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.io.ByteStreams;
 
-public class FSADictionary implements TagDictionary, LemmaDictionaryI, Iterable<String> {
+public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<String> {
 
   protected static final Logger LOGGER = Logger.getLogger(FSADictionary.class);
   private DictionaryLookup dictLookup;

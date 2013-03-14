@@ -37,7 +37,7 @@ public abstract class AbstractGenericChecker<T> implements GenericChecker<T> {
   private Set<String> ignored = Collections
       .synchronizedSet(new HashSet<String>());
 
-  private Map<String, RuleDefinitionI> definitions = new HashMap<String, RuleDefinitionI>();
+  private Map<String, RuleDefinition> definitions = new HashMap<String, RuleDefinition>();
 
   protected boolean isCheckRule(String ruleId) {
     return !ignored.contains(ruleId);
@@ -52,7 +52,7 @@ public abstract class AbstractGenericChecker<T> implements GenericChecker<T> {
 
   protected Mistake createMistake(String ruleID, String[] suggestions,
       int start, int end, String text) {
-    RuleDefinitionI ruleDefinition = getRuleDefinition(ruleID);
+    RuleDefinition ruleDefinition = getRuleDefinition(ruleID);
 
     return new MistakeImpl(ruleDefinition.getId(), getPriority(), ruleDefinition.getMessage(),
         ruleDefinition.getShortMessage(), suggestions, start, end,
@@ -62,7 +62,7 @@ public abstract class AbstractGenericChecker<T> implements GenericChecker<T> {
   protected Mistake createMistake(String ruleID, String[] longMessageArgs,
       String[] shortMessageArgs, String[] suggestions, int start, int end,
       String text) {
-    RuleDefinitionI ruleDefinition = getRuleDefinition(ruleID);
+    RuleDefinition ruleDefinition = getRuleDefinition(ruleID);
 
     return new MistakeImpl(ruleDefinition.getId(), getPriority(),
         String.format(ruleDefinition.getMessage(), (Object[]) longMessageArgs),
@@ -79,13 +79,13 @@ public abstract class AbstractGenericChecker<T> implements GenericChecker<T> {
     ignored.clear();
   }
 
-  public AbstractGenericChecker add(RuleDefinitionI ruleDefinition) {
+  public AbstractGenericChecker add(RuleDefinition ruleDefinition) {
     this.definitions.put(ruleDefinition.getId(), ruleDefinition);
     return this;
   }
 
-  public RuleDefinitionI getRuleDefinition(String ruleID) {
-    RuleDefinitionI ruleDefinition = definitions.get(ruleID);
+  public RuleDefinition getRuleDefinition(String ruleID) {
+    RuleDefinition ruleDefinition = definitions.get(ruleID);
     if (ruleDefinition == null) {
       LOGGER.fatal("Unknow rule ID: " + ruleID);
       List<Example> empty = Collections.emptyList();
@@ -95,7 +95,7 @@ public abstract class AbstractGenericChecker<T> implements GenericChecker<T> {
     return ruleDefinition;
   }
 
-  public Collection<RuleDefinitionI> getRulesDefinition() {
+  public Collection<RuleDefinition> getRulesDefinition() {
     if (definitions.isEmpty()) {
       LOGGER
           .fatal("Rules were not defined properly! Please define the rules using the add method of AbstractChecker.");

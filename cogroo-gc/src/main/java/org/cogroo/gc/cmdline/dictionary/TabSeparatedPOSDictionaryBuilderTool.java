@@ -45,7 +45,7 @@ import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.formats.ad.ADFeaturizerSampleStream;
 import org.cogroo.interpreters.FlorestaTagInterpreter;
 import org.cogroo.interpreters.JspellTagInterpreter;
-import org.cogroo.interpreters.TagInterpreterI;
+import org.cogroo.interpreters.TagInterpreter;
 import org.cogroo.tools.featurizer.FeatureSample;
 
 public class TabSeparatedPOSDictionaryBuilderTool extends
@@ -221,8 +221,8 @@ BasicCmdLineTool {
   }
 
   public static void parseOneEntryPerLine(Reader in,
-      SortedMap<String, Set<Triple>> entries, TagInterpreterI tago,
-      TagInterpreterI tagd, Set<String> knownFeats, Set<String> knownPostags,
+      SortedMap<String, Set<Triple>> entries, TagInterpreter tago,
+      TagInterpreter tagd, Set<String> knownFeats, Set<String> knownPostags,
       boolean allowInvalidFeats, boolean includeFeatures) throws IOException {
 
     knownFeats = new TreeSet<String>(knownFeats);

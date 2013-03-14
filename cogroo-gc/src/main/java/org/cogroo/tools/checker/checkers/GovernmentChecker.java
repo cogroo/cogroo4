@@ -25,7 +25,7 @@ import org.cogroo.text.SyntacticChunk;
 import org.cogroo.text.Token;
 import org.cogroo.tools.checker.AbstractChecker;
 import org.cogroo.tools.checker.JavaRuleDefinition;
-import org.cogroo.tools.checker.RuleDefinitionI;
+import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.verbs.Noun;
 import org.cogroo.tools.checker.rules.verbs.Prep;
@@ -43,7 +43,7 @@ public class GovernmentChecker extends AbstractChecker {
     examples
         .add(createExample("Ele assiste o filme.", "Ele assiste ao filme."));
 
-    RuleDefinitionI wordCombination = new JavaRuleDefinition(ID, CATEGORY,
+    RuleDefinition wordCombination = new JavaRuleDefinition(ID, CATEGORY,
         GROUP, DESCRIPTION, MESSAGE, SHORT, examples);
     add(wordCombination);
 

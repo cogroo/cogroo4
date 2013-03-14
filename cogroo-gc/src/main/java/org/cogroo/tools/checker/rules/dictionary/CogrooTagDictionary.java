@@ -16,7 +16,7 @@
 package org.cogroo.tools.checker.rules.dictionary;
 
 import org.cogroo.entities.impl.MorphologicalTag;
-import org.cogroo.interpreters.TagInterpreterI;
+import org.cogroo.interpreters.TagInterpreter;
 
 import org.cogroo.tools.checker.rules.model.TagMask;
 
@@ -111,6 +111,6 @@ public interface CogrooTagDictionary {
 	
 	public boolean exists(String word, boolean cs);
 
-  public TagInterpreterI getTagInterpreter();
+  public TagInterpreter getTagInterpreter();
 
 }

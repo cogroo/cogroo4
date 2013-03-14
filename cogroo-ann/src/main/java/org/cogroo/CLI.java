@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.Scanner;
 
-import org.cogroo.analyzer.AnalyzerI;
+import org.cogroo.analyzer.Analyzer;
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.text.Document;
 import org.cogroo.text.impl.DocumentImpl;
@@ -46,7 +46,7 @@ public class CLI {
 
     ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
 
-    AnalyzerI pipe = factory.createPipe();
+    Analyzer pipe = factory.createPipe();
 
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");

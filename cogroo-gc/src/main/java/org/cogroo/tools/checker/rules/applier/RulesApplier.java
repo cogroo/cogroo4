@@ -34,7 +34,7 @@ import org.cogroo.entities.TokenGroup;
 import org.cogroo.entities.impl.MistakeImpl;
 import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.entities.impl.TokenCogroo;
-import org.cogroo.tools.checker.RuleDefinitionI;
+import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.TypedChecker;
 import org.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import org.cogroo.tools.checker.rules.util.RuleUtils;
@@ -514,15 +514,15 @@ public final class RulesApplier implements TypedChecker {
 		return 1000;
 	}
 
-	private Collection<RuleDefinitionI> definitions;
+	private Collection<RuleDefinition> definitions;
 
-	public synchronized Collection<RuleDefinitionI> getRulesDefinition() {
+	public synchronized Collection<RuleDefinition> getRulesDefinition() {
 		if (definitions != null) {
 			return definitions;
 		}
 		
 		List<Rule> rules =RulesXmlAccess.getInstance().getRules().getRule();
-		List<RuleDefinitionI> d = new ArrayList<RuleDefinitionI>(
+		List<RuleDefinition> d = new ArrayList<RuleDefinition>(
 				rules.size());
 		for (Rule rule : rules) {
 			d.add(new XMLRuleDefinition(ID_PREFIX, rule));
