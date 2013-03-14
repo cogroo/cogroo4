@@ -162,6 +162,7 @@ public class Categories {
     elems.put("xml:125", "ver");
     elems.put("xml:126", "cra");
     elems.put("xml:127", "con|cov");
+    elems.put("xml:128", "cov");
 
     elems.put("space:EXTRA_BETWEEN_WORDS", "esp");
     elems.put("space:EXTRA_BEFORE_RIGHT_PUNCT", "esp");

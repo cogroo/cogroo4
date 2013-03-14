@@ -29,6 +29,7 @@ import org.cogroo.entities.Mistake;
 import org.cogroo.interpreters.FlorestaTagInterpreter;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
+import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.tools.checker.Checker;
 import org.cogroo.tools.checker.CheckerComposite;
 import org.cogroo.tools.checker.RuleDefinitionI;
@@ -36,6 +37,7 @@ import org.cogroo.tools.checker.SentenceAdapter;
 import org.cogroo.tools.checker.TypedChecker;
 import org.cogroo.tools.checker.TypedCheckerComposite;
 import org.cogroo.tools.checker.checkers.GovernmentChecker;
+import org.cogroo.tools.checker.checkers.ParonymChecker;
 import org.cogroo.tools.checker.checkers.PunctuationChecker;
 import org.cogroo.tools.checker.checkers.RepetitionChecker;
 import org.cogroo.tools.checker.checkers.SpaceChecker;
@@ -52,7 +54,7 @@ import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.util.MistakeComparator;
 
 
-public class GrammarCheckerAnalyzer implements AnalyzerI {
+public class GrammarCheckerAnalyzer {
   
   private static final Logger LOGGER = Logger.getLogger(GrammarCheckerAnalyzer.class);
 
@@ -65,6 +67,8 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   private SentenceAdapter sentenceAdapter;
 
   private TypedCheckerComposite typedCheckers;
+
+  private AnalyzerI pipe;
   
   private static final MistakeComparator MISTAKE_COMPARATOR = new MistakeComparator();
 
@@ -91,12 +95,13 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
    * @throws IllegalArgumentException
    * @throws IOException
    */
-  public GrammarCheckerAnalyzer() throws IllegalArgumentException, IOException {
-    this(false, null);
+  public GrammarCheckerAnalyzer(AnalyzerI pipe) throws IllegalArgumentException, IOException {
+    this(pipe, false, null);
   }
   
-  public GrammarCheckerAnalyzer(boolean allowOverlap, long[] activeXmlRules) throws IllegalArgumentException, IOException {
+  public GrammarCheckerAnalyzer(AnalyzerI pipe, boolean allowOverlap, long[] activeXmlRules) throws IllegalArgumentException, IOException {
     
+    this.pipe = pipe;
     // initialize resources...
     // today we load the tag dictionary this way, but in the future it should be
     // shared the rules and the models.
@@ -117,8 +122,8 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     // create other typed checkers
     
     // how to get the abbreviation dictionary? 
-    //typedCheckersList.add(new SpaceChecker(loadAbbDict()));
-    //typedCheckersList.add(new PunctuationChecker());
+    typedCheckersList.add(new SpaceChecker(loadAbbDict()));
+    typedCheckersList.add(new PunctuationChecker());
     typedCheckersList.add(new RepetitionChecker());
     
     typedCheckers = new TypedCheckerComposite(typedCheckersList, false);
@@ -126,7 +131,8 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     // all non typed checkers will be added to this:
     List<Checker> checkerList = new ArrayList<Checker>();
     
-    checkerList.add(new GovernmentChecker());
+    // checkerList.add(new GovernmentChecker());
+    checkerList.add(new ParonymChecker(this.pipe));
 
     this.checkers = new CheckerComposite(checkerList, false);
    
@@ -161,30 +167,36 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     return new RulesApplier(rtp, td);
   }
 
-  public void analyze(Document document) {
-    if (document instanceof CheckDocument) {
-      List<Mistake> mistakes = new ArrayList<Mistake>();
-      List<Sentence> sentences = document.getSentences();
-      List<org.cogroo.entities.Sentence> typedSentences = new ArrayList<org.cogroo.entities.Sentence>(sentences.size());
-      for (Sentence sentence : sentences) {
-        mistakes.addAll(this.checkers.check(sentence));
-        
-        org.cogroo.entities.Sentence typedSentence = this.sentenceAdapter.asTypedSentence(sentence);
-        typedSentences.add(typedSentence);
-        
-        mistakes.addAll(this.typedCheckers.check(typedSentence));
-      }
-      ((CheckDocument) document).setSentencesLegacy(typedSentences);
-      Collections.sort(mistakes, MISTAKE_COMPARATOR);
-      
-      if(this.allowOverlap == false)
-        mistakes = filterOverlap(document, mistakes);
-      
-      ((CheckDocument) document).setMistakes(mistakes);
-    } else {
-      throw new IllegalArgumentException("An instance of "
-          + CheckDocument.class + " was expected.");
+  public void analyze(CheckDocument document, boolean filterInvalidSuggestions) {
+
+    pipe.analyze(document);
+
+    List<Mistake> mistakes = new ArrayList<Mistake>();
+    List<Sentence> sentences = document.getSentences();
+    List<org.cogroo.entities.Sentence> typedSentences = new ArrayList<org.cogroo.entities.Sentence>(sentences.size());
+    for (Sentence sentence : sentences) {
+      mistakes.addAll(this.checkers.check(sentence));
+
+      org.cogroo.entities.Sentence typedSentence = this.sentenceAdapter.asTypedSentence(sentence);
+      typedSentences.add(typedSentence);
+
+      mistakes.addAll(this.typedCheckers.check(typedSentence));
     }
+    ((CheckDocument) document).setSentencesLegacy(typedSentences);
+    Collections.sort(mistakes, MISTAKE_COMPARATOR);
+
+    if(this.allowOverlap == false)
+      mistakes = filterOverlap(document, mistakes);
+
+    if(filterInvalidSuggestions) {
+      filterWrongSuggestions(document, mistakes);
+    }
+
+    ((CheckDocument) document).setMistakes(mistakes);
+  }
+
+  public void analyze(CheckDocument document) {
+    this.analyze(document, true);
   }
 
   private List<Mistake> filterOverlap(Document doc, List<Mistake> mistakes) {
@@ -209,6 +221,40 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     return mistakesNoOverlap;
   }
 
+  private void filterWrongSuggestions(Document document, List<Mistake> mistakes)
+  {
+    String documentText = document.getText();
+
+    for (Mistake mistake : mistakes) {
+      
+      List<String> rightSuggestions = new ArrayList<String>();
+      
+      for (String suggestion : mistake.getSuggestions()) {
+
+        String alternativeText = documentText.substring(0, mistake.getStart())
+            + suggestion + documentText.substring(mistake.getEnd());
+        
+        CheckDocument alternative = new CheckDocument(alternativeText);
+        this.analyze(alternative, false);
+        
+        if(alternative.getMistakes().size() == 0) { //No errors in suggestion
+          if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("\n****** Filtering suggestions **********: " + alternativeText + "   (OK!)\n");
+          }
+          rightSuggestions.add(suggestion);
+        } else {
+          if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("\n****** Filtering suggestions **********: " + alternativeText + "   (WRONG!)\n");
+          }
+        }
+        
+        if(rightSuggestions.size() > 0) {
+          mistake.setSuggestions(rightSuggestions.toArray(new String[rightSuggestions.size()]));
+        }
+      }
+    }
+  }
+
   public void ignoreRule(String ruleIdentifier) {
     this.checkers.ignore(ruleIdentifier);
   }
@@ -217,21 +263,13 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
   public void resetIgnoredRules(){
     this.checkers.resetIgnored();
   }
-  
-  public static void main(String[] args) throws IllegalArgumentException, IOException {
-    
-    GrammarCheckerAnalyzer gca = new GrammarCheckerAnalyzer();
-//    printCategories(gca.typedCheckers.getRulesDefinition());
-    printExamples(gca.typedCheckers.getRulesDefinition());
-    printExamples(gca.checkers.getRulesDefinition());
-  }
 
   private static void printExamples(List<RuleDefinitionI> rulesDefinition) {
     
     for (RuleDefinitionI def : rulesDefinition) {
       for (Example ex : def.getExamples()) {
         System.out.println(ex.getIncorrect());
-//        System.out.println(def.getCategory());
+        // System.out.println(def.getCategory());
       }
     }
   }

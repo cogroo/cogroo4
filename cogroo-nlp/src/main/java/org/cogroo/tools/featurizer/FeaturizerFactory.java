@@ -169,11 +169,11 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
 
         this.poisonedDictionaryTags = Collections.unmodifiableSet(poisoned);
         
-        if (poisonedDictionaryTags.size() > 0) {
-          System.err
-              .println("WARNING: Feature dictioinary contains tags which are unkown by the model! "
-                  + this.poisonedDictionaryTags.toString());
-        }
+//        if (poisonedDictionaryTags.size() > 0) {
+//          System.err
+//              .println("WARNING: Feature dictioinary contains tags which are unkown by the model! "
+//                  + this.poisonedDictionaryTags.toString());
+//        }
       }
     }
   }

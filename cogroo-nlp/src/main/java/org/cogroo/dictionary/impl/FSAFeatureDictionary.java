@@ -122,7 +122,7 @@ public class FSAFeatureDictionary implements FeatureDictionaryI, Iterable<WordTa
       IOException {
 
     long start = System.nanoTime();
-    FSAFeatureDictionary td = (FSAFeatureDictionary) create("fsa_dictionaries/featurizer/pt_br_feats.dict");
+    FSAFeatureDictionary td = (FSAFeatureDictionary) create("../lang/pt_br/cogroo-res/fsa_dictionaries/featurizer/pt_br_feats.dict");
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
     Scanner kb = new Scanner(System.in);

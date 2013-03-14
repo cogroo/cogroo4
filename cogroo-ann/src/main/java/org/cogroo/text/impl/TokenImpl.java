@@ -53,6 +53,8 @@ public class TokenImpl implements Token {
   private String syntacticTag;
   
   private Map<Analyzers, String> additionalContext = new HashMap<Analyzers, String>();
+
+  private double posTagProb;
   
   public TokenImpl(int start, int end, String lexeme) {
     this(start, end, lexeme, null, null, null);
@@ -181,6 +183,16 @@ public class TokenImpl implements Token {
 
   public void setBoundaries(int start, int end) {
     span = new Span(start, end);
+  }
+
+  @Override
+  public double getPOSTagProb() {
+    return posTagProb;
+  }
+
+  @Override
+  public void setPOSTagProb(double prob) {
+    posTagProb = prob;
   }
 
 }

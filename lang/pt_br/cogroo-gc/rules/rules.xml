@@ -3068,12 +3068,12 @@
 			</PatternElement>
 		</Pattern>
 		<Boundaries>
-			<Lower>0</Lower>
+			<Lower>1</Lower>
 			<Upper>0</Upper>
 		</Boundaries>
 		<Suggestion>
-			<SuggestionAsString>1=&gt;"há"</SuggestionAsString>
-			<Replace index="1">
+			<SuggestionAsString>0=&gt;"há"</SuggestionAsString>
+			<Replace index="0">
 				<Lexeme>há</Lexeme>
 			</Replace>
 		</Suggestion>
@@ -7756,7 +7756,7 @@
 		</Example>
 		<Example>
 			<Incorrect>Os canetas vermelhas estão sem tinta.</Incorrect>
-			<Correct>As canetas vermelhas estão sem tinta</Correct>
+			<Correct>As canetas vermelhas estão sem tinta.</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>lais</Author>
@@ -8899,7 +8899,7 @@
 								<Mask>
 									<TagMask>
 										<SyntacticFunction>subject predicative</SyntacticFunction>
-										<Class>adjective</Class>
+										<!-- <Class>adjective</Class> -->
 									</TagMask>
 								</Mask>
 							</Element>
@@ -8918,7 +8918,7 @@
 											</Mask>
 										</Element>
 									</PatternElement>
-									<PatternElement>
+									<!-- <PatternElement>
 										<Element>
 											<Negated>true</Negated>
 											<Mask>
@@ -8927,7 +8927,7 @@
 												</TagReference>
 											</Mask>
 										</Element>
-									</PatternElement>
+									</PatternElement> -->
 								</Or>
 							</Composition>
 						</PatternElement>
@@ -9280,6 +9280,175 @@
 			<Incorrect>Sangue são o preço.</Incorrect>
 			<Correct>Sangue e vida são o preço.</Correct>
 		</Example>	
+		<ModificationHistory>
+			<Author>Colen</Author>
+			<Date>2008-10-25T12:00:00.000-03:00</Date>
+		</ModificationHistory>
+	</Rule>
+	
+	<Rule id="128" active="true">
+		<Method>subject-verb</Method>
+		<Type>Concordância do sujeito com o adjetivo predicativo</Type>
+		<Group>pronome + verbo de ligação + adjetivo predicativo</Group>
+		<Message>O adjetivo na função de predicativo concorda em número (singular ou plural) com o verbo.</Message>
+		<ShortMessage>O adjetivo na função de predicativo concorda com o verbo.</ShortMessage>
+		<Pattern>
+			<PatternElement>
+				<Composition>
+					<And>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<SyntacticFunction>subject</SyntacticFunction>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+					</And>
+				</Composition>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<PrimitiveMask>ser</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>estar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>parecer</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>continuar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>ficar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>permanecer</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>tornar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>andar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>virar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>achar</PrimitiveMask>
+					</Mask>
+					<Mask>
+						<PrimitiveMask>encontrar</PrimitiveMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Composition>
+					<And>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<SyntacticFunction>subject predicative</SyntacticFunction>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<PatternElement>
+							<Composition>
+								<Or>
+									<PatternElement>
+										<Element>
+											<Negated>true</Negated>
+											<Mask>
+												<TagReference index="1">
+													<Property>Number</Property>
+												</TagReference>
+											</Mask>
+										</Element>
+									</PatternElement>
+								</Or>
+							</Composition>
+						</PatternElement>
+					</And>
+				</Composition>
+			</PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>0</Lower>
+			<Upper>0</Upper>
+		</Boundaries>
+		<Suggestion>
+			<!-- <SuggestionAsString>2=&gt;2_M_P_</SuggestionAsString> -->
+			<Replace index="1">
+				<Reference index="2">
+					<Property>Number</Property>
+				</Reference>
+			</Replace>
+		</Suggestion>
+		<!-- M_P - M_S -->
+		<Example>
+			<Incorrect>Eles é legais.</Incorrect>
+			<Correct>Eles são legais.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>Nós sou verdes.</Incorrect>
+			<Correct>Nós somos verdes.</Correct>
+		</Example>
+		<!-- F_P - F_S -->
+		<Example>
+			<Incorrect>As bonecas era vermelhas.</Incorrect>
+			<Correct>As bonecas eram vermelhas.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>Elas era belas.</Incorrect>
+			<Correct>Elas eram belas.</Correct>
+		</Example>
+		<!-- M_S - M_P -->
+		<Example>
+			<Incorrect>Ele são legal.</Incorrect>
+			<Correct>Ele é legal.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>Eu somos verde.</Incorrect>
+			<Correct>Eu sou verde.</Correct>
+		</Example>
+		<!-- F_S - F_P -->
+		<Example>
+			<Incorrect>A boneca eram vermelha.</Incorrect>
+			<Correct>A boneca era vermelha.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>Ela eram bela mulher.</Incorrect>
+			<Correct>Ela era bela mulher.</Correct>
+		</Example>
+		<!-- M_P - F_S -->
+		<Example>
+			<Incorrect>Eles é vermelhos.</Incorrect>
+			<Correct>Eles são vermelhos.</Correct>
+		</Example>
+		<!-- F_P - M_S -->
+		<Example>
+			<Incorrect>As bonecas era vermelhas.</Incorrect>
+			<Correct>As bonecas eram vermelhas.</Correct>
+		</Example>		
+		<!-- M_S - F_P -->
+		<Example>
+			<Incorrect>Ele são vermelho.</Incorrect>
+			<Correct>Ele é vermelho.</Correct>
+		</Example>	
+		<!-- F_S - M_P -->
+		<Example>
+			<Incorrect>A boneca são vermelha.</Incorrect>
+			<Correct>A boneca é vermelha.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>O pão e a mantega é saborosos.</Incorrect>
+			<Correct>O pão e a mantega são saborosos.</Correct>
+		</Example>
 		<ModificationHistory>
 			<Author>Colen</Author>
 			<Date>2008-10-25T12:00:00.000-03:00</Date>
