@@ -29,7 +29,6 @@ import org.cogroo.entities.Mistake;
 import org.cogroo.interpreters.FlorestaTagInterpreter;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
-import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.tools.checker.Checker;
 import org.cogroo.tools.checker.CheckerComposite;
 import org.cogroo.tools.checker.RuleDefinitionI;
