@@ -18,11 +18,7 @@ package org.cogroo.checker;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.util.InvalidFormatException;
@@ -39,10 +35,10 @@ import org.cogroo.tools.checker.RuleDefinitionI;
 import org.cogroo.tools.checker.SentenceAdapter;
 import org.cogroo.tools.checker.TypedChecker;
 import org.cogroo.tools.checker.TypedCheckerComposite;
+import org.cogroo.tools.checker.checkers.GovernmentChecker;
 import org.cogroo.tools.checker.checkers.PunctuationChecker;
 import org.cogroo.tools.checker.checkers.RepetitionChecker;
 import org.cogroo.tools.checker.checkers.SpaceChecker;
-import org.cogroo.tools.checker.checkers.GovernmentChecker;
 import org.cogroo.tools.checker.rules.applier.RulesApplier;
 import org.cogroo.tools.checker.rules.applier.RulesProvider;
 import org.cogroo.tools.checker.rules.applier.RulesTreesAccess;
@@ -123,7 +119,7 @@ public class GrammarCheckerAnalyzer implements AnalyzerI {
     // how to get the abbreviation dictionary? 
     //typedCheckersList.add(new SpaceChecker(loadAbbDict()));
     //typedCheckersList.add(new PunctuationChecker());
-    //typedCheckersList.add(new RepetitionChecker());
+    typedCheckersList.add(new RepetitionChecker());
     
     typedCheckers = new TypedCheckerComposite(typedCheckersList, false);
 

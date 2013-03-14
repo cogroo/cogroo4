@@ -112,7 +112,18 @@ public class RepetitionChecker extends AbstractTypedChecker {
 			return false;
 		}
 		
+		// TODO Exception:
+		// Os livros devem ser devolvidos em no máximo dez dias.
+//		if (word.equals("em")) {
+//            return true;
+//        }
 		
+		// TODO Exception: 
+		// As linhas E e F do metrô serão interditadas.
+//		if (word.equals("e")) {
+//          return true;
+//        }
+				
 		// TODO: Remove this exception. 
 		if (word.equals("1")) {
 			return true;
