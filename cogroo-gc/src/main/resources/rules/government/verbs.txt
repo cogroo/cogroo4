@@ -6,20 +6,20 @@ a: satisfazer, contentar: *
 _: angustiar, provocar mal-estar: *
 por: desejar: * 
 
-#antipatizar
-com: : *
+%#antipatizar
+%com: : *
 
 #aspirar
-_: inspirar, tragar, sorver: ar, pó, fumaça, gás, aroma, cheiro, odor
-a: almejar, desejar: prêmio, cargo, emprego, posição, colocação
+_: inspirar, tragar, sorver: ar, pó, fumaça, gás, aroma, cheiro, odor, fragrância
+a: almejar, desejar: prêmio, cargo, emprego, posição, colocação, vitória
 
 #assistir
-_: socorrer, auxiliar, ajudar: paciente, acidentado, enfermo, doente
-a: ver, presenciar: show, espetáculo, filme, peça, programa
+_: socorrer, auxiliar, ajudar: paciente, acidentado, enfermo, doente, inválido, necessitado, cego, pobre
+a: ver, presenciar: show, espetáculo, filme, peça, programa, TV, episódio, série, novela, trilogia
 em: residir, morar:
 
 #atender
-_: deferir, receber: visita, telefone, telefonema, chamada, NP
+_: deferir, receber: visita, telefone, telefonema, chamada
 a: levar em consideração: pedido, solicitação, expectativa, apelo
 
 #chamar
@@ -36,8 +36,8 @@ em: : *
 % _: : *
 % Falha com "desfrutar algo de alguém"
 
-#namorar
-_: : *
+%#namorar
+%_: : *
 
 #obedecer
 a: seguir os comandos de alguém: *
@@ -68,9 +68,9 @@ a: : *
 #simpatizar
 com: : *
 
-#usufruir
-_: : *
+%#usufruir
+%_: : *
 
 #visar
-_: dar visto, mirar: cheque, documento
-a: almejar, pretender: título, cargo
+_: dar visto, mirar: cheque, documento, atestado, comprovante, nota, prova
+a: almejar, pretender: título, cargo, prêmio, colocação, posição, emprego
