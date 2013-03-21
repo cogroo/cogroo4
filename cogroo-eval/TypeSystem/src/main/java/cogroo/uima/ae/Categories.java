@@ -168,6 +168,7 @@ public class Categories {
     elems.put("space:EXTRA_BEFORE_RIGHT_PUNCT", "esp");
     elems.put("space:EXTRA_AFTER_LEFT_PUNCT", "esp");
     elems.put("space:MISSING_SPACE_AFTER_PUNCT", "esp");
+    elems.put("government:GOVERNMENT", "reg");
 
     RULES_AND_CATEGORIES = Collections.unmodifiableMap(elems);
 

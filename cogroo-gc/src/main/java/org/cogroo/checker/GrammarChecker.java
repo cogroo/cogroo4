@@ -133,7 +133,7 @@ public class GrammarChecker {
     // all non typed checkers will be added to this:
     List<Checker> checkerList = new ArrayList<Checker>();
     
-    // checkerList.add(new GovernmentChecker());
+    checkerList.add(new GovernmentChecker());
     checkerList.add(new ParonymChecker(this.pipe));
 
     this.checkers = new CheckerComposite(checkerList, false);

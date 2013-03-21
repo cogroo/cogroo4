@@ -20,7 +20,7 @@ export UIMA_HOME=~/Programas/apache-uima
 
 export CORPUS_ROOT=~/workspace/corpus
 
-export REPO_ROOT=~/worspace/Repo
+export REPO_ROOT=~/workspace/Repo
 
 export COGROO_3=~/workspace/Cogroo3
 
