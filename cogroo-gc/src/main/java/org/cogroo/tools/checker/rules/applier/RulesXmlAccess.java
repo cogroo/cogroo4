@@ -15,6 +15,7 @@
  */
 package org.cogroo.tools.checker.rules.applier;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +46,14 @@ public class RulesXmlAccess implements RulesAccess {
 
 //  private static final Logger LOGGER = Logger.getLogger(RulesXmlAccess.class);
   private static RulesXmlAccess instance;
+  
+  private URL schemaName;
+
+  private Schema schema;
+
+  private URL xmlFile;
+  
+  private String serializedRule;
 
   private RulesXmlAccess() {
   }
@@ -58,6 +67,12 @@ public class RulesXmlAccess implements RulesAccess {
     this.loadSchema();
   }
   
+  private RulesXmlAccess(String serializedRule, URL schemaFile) {
+    this.serializedRule = serializedRule;
+    this.schemaName = schemaFile;
+    this.loadSchema();
+  }
+  
   public static synchronized RulesAccess getInstance() {
     if(instance == null) {
       URL xml = RulesXmlAccess.class.getClassLoader().getResource("rules/rules.xml");
@@ -66,12 +81,11 @@ public class RulesXmlAccess implements RulesAccess {
     }
     return instance;
   }
-
-  private URL schemaName;
-
-  private Schema schema;
-
-  private URL xmlFile;
+  
+  public static synchronized RulesAccess getInstance(String serializedRule) {
+      URL xsd = RulesXmlAccess.class.getClassLoader().getResource("rules/schema/rules.xsd");
+      return new RulesXmlAccess(serializedRule, xsd);
+  }
 
   private void loadSchema() {
     if (this.schema == null) {
@@ -100,12 +114,22 @@ public class RulesXmlAccess implements RulesAccess {
     Validator validator = this.schema.newValidator();
     InputStream in = null;
     try {
-      in = this.xmlFile.openStream();
+      if(this.xmlFile != null) {
+        in = this.xmlFile.openStream();
+      } else {
+        // TODO: check if we need to specify the encoding
+        in = new ByteArrayInputStream(this.serializedRule.getBytes()) ;
+      }
       validator.validate(new StreamSource(in));
     } catch (SAXException e) {
       throw new RulesException("Rules file does not conform to the schema", e);
     } catch (IOException e) {
-      throw new RulesException("Could not read file " + this.xmlFile, e);
+      if(this.xmlFile != null) {
+        throw new RulesException("Could not read file " + this.xmlFile, e);
+      } else {
+        throw new RulesException("Could not read serialized rule " + this.serializedRule, e);
+      }
+        
     } finally {
       Closeables.closeQuietly(in);
     }
@@ -135,17 +159,28 @@ public class RulesXmlAccess implements RulesAccess {
   public Rules getRules() {
     Rules rules = null;
     InputStream in = null;
-    try {
-      in = xmlFile.openStream();
-      rules = unmarshal(in);
-    } catch (JAXBException e) {
-      throw new RulesException("Invalid rules file: " + this.xmlFile, e);
-    } catch (FileNotFoundException e) {
-      throw new RulesException("Could not find rules file: " + this.xmlFile, e);
-    } catch (IOException e) {
-      throw new RulesException("Could not open  file: " + this.xmlFile, e);
-    } finally {
-      Closeables.closeQuietly(in);
+    if(xmlFile != null){
+      try {
+        in = xmlFile.openStream();
+        rules = unmarshal(in);
+      } catch (JAXBException e) {
+        throw new RulesException("Invalid rules file: " + this.xmlFile, e);
+      } catch (FileNotFoundException e) {
+        throw new RulesException("Could not find rules file: " + this.xmlFile, e);
+      } catch (IOException e) {
+        throw new RulesException("Could not open  file: " + this.xmlFile, e);
+      } finally {
+        Closeables.closeQuietly(in);
+      }
+    } else {
+      try {
+        in = new ByteArrayInputStream(this.serializedRule.getBytes()) ;
+        rules = unmarshal(in);
+      } catch (JAXBException e) {
+        throw new RulesException("Invalid serialized rules: " + this.serializedRule, e);
+      } finally {
+        Closeables.closeQuietly(in);
+      }
     }
     return rules;
   }

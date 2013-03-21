@@ -152,6 +152,44 @@ public class GrammarChecker {
       }
     }
   }
+  
+  public GrammarChecker (Analyzer pipe, String serializedRule) throws IllegalArgumentException, IOException {
+    this.pipe = pipe;
+    // initialize resources...
+    // today we load the tag dictionary this way, but in the future it should be
+    // shared the rules and the models.
+    td = new TagDictionary(new FSALexicalDictionary(), false,
+        new FlorestaTagInterpreter());
+    
+    sentenceAdapter = new SentenceAdapter(td);
+    
+    //*************************************************************************
+    // Create typed checkers
+    //*************************************************************************
+    List<TypedChecker> typedCheckersList = new ArrayList<TypedChecker>();
+    
+    // add the rules applier, from XSD
+    typedCheckersList.add(createSingletonRuleChecker(serializedRule));
+
+    
+    typedCheckers = new TypedCheckerComposite(typedCheckersList, false);
+
+    // all non typed checkers will be added to this:
+    List<Checker> checkerList = new ArrayList<Checker>();
+
+    this.checkers = new CheckerComposite(checkerList, false);
+    
+    if(LOGGER.isDebugEnabled()) {
+      LOGGER.debug("Created following rules:");
+      int count = 0;
+      for (RuleDefinition def : this.typedCheckers.getRulesDefinition()) {
+        LOGGER.debug(count++ + ": " + def.getId());
+      }
+      for (RuleDefinition def : this.checkers.getRulesDefinition()) {
+        LOGGER.debug(count++ + ": " + def.getId());
+      }
+    }
+  }
 
   private Dictionary loadAbbDict() throws InvalidFormatException, IOException {
     Dictionary abbDict = new Dictionary(this.getClass().getResourceAsStream("/dictionaries/pt_br/abbr.xml"));
@@ -163,6 +201,17 @@ public class GrammarChecker {
     RulesProvider xmlProvider = new RulesProvider(RulesXmlAccess.getInstance(),
         false);
     RulesTreesBuilder rtb = new RulesTreesBuilder(xmlProvider, activeRules);
+    RulesTreesAccess rta = new RulesTreesFromScratchAccess(rtb);
+    RulesTreesProvider rtp = new RulesTreesProvider(rta, false);
+
+    return new RulesApplier(rtp, td);
+  }
+  
+  private TypedChecker createSingletonRuleChecker(String serializedRule) {
+    // Create XML rules applier
+    RulesProvider xmlProvider = new RulesProvider(RulesXmlAccess.getInstance(serializedRule),
+        true);
+    RulesTreesBuilder rtb = new RulesTreesBuilder(xmlProvider, null);
     RulesTreesAccess rta = new RulesTreesFromScratchAccess(rtb);
     RulesTreesProvider rtp = new RulesTreesProvider(rta, false);
 
