@@ -118,8 +118,7 @@ public class GovernmentChecker extends AbstractChecker {
                 }
               }
             }
-          } else
-            continue;
+          }
         }
       }
     }
