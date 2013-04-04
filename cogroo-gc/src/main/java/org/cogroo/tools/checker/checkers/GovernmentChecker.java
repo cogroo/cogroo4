@@ -34,7 +34,7 @@ import org.cogroo.tools.checker.rules.verbs.Verbs;
 
 public class GovernmentChecker extends AbstractChecker {
 
-  private static final String ID_PREFIX = "word combination:";
+  private static final String ID_PREFIX = "government:";
 
   private final Verbs verbs;
 
@@ -50,7 +50,7 @@ public class GovernmentChecker extends AbstractChecker {
     verbs = new Verbs();
   }
 
-  static final String ID = ID_PREFIX + "WORD_COMB_TOKEN";
+  static final String ID = ID_PREFIX + "GOVERNMENT";
   static final String CATEGORY = "Erros sintáticos";
   static final String GROUP = "Regência verbal";
   static final String DESCRIPTION = "Procura por verbos e analisa sua regência.";
