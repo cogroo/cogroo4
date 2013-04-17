@@ -215,7 +215,7 @@ sub createCommand {
 	my $execArgs = shift;
 	my $properties = shift;
 
-	$ENV{'MAVEN_OPTS'} = "-Xms512m -Xmx1100m -XX:PermSize=256m";
+	$ENV{'MAVEN_OPTS'} = "-Xms512m -Xmx900m -XX:PermSize=256m";
 	
 	my $command = 'mvn -e -o -q exec:java "-Dexec.mainClass=';
 	

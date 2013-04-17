@@ -18,9 +18,11 @@ package org.cogroo.checker;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.Set;
 
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.util.InvalidFormatException;
@@ -56,7 +58,7 @@ import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.util.MistakeComparator;
 
 
-public class GrammarChecker {
+public class GrammarChecker implements CheckAnalyzer {
   
   private static final Logger LOGGER = Logger.getLogger(GrammarChecker.class);
 
@@ -191,6 +193,15 @@ public class GrammarChecker {
     }
   }
 
+  public Set<RuleDefinition> getRuleDefinitions() {
+    Set<RuleDefinition> ruleDefinitions = new HashSet<RuleDefinition>();
+    
+    ruleDefinitions.addAll(this.typedCheckers.getRulesDefinition());
+    ruleDefinitions.addAll(this.checkers.getRulesDefinition());
+    
+    return ruleDefinitions;
+  }
+  
   private Dictionary loadAbbDict() throws InvalidFormatException, IOException {
     Dictionary abbDict = new Dictionary(this.getClass().getResourceAsStream("/dictionaries/pt_br/abbr.xml"));
     return abbDict;
