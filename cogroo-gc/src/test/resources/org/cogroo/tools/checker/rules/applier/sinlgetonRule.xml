@@ -1,28 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!--
-
-    Copyright (C) 2012 cogroo <cogroo@cogroo.org>
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-            http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
--->
-<Rules xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/Rules.xsd">
-	<Rule id="1" active="true">
+<Rules>
+	<Rule id="1000" active="true">
 		<Method>general</Method>
-		<Type>Crase</Type>
-		<Group>à + substantivo masculino</Group>
-		<Message>O sinal indicativo de crase indica que temos "a" + "a" expressos em um só "à". Somente ocorre crase quando há encontro de preposição "a" com artigo ou pronome demonstrativo "a"/"as". Portanto, não ocorre crase antes de palavras masculinas.</Message>
-		<ShortMessage>Não ocorre crase antes de palavras masculinas.</ShortMessage>
+		<Type>Craseee</Type>
+		<Group>a group</Group>
+		<Message>msg</Message>
+		<ShortMessage>a short msg</ShortMessage>
 		<Pattern>
 			<PatternElement>
 				<Element>
@@ -68,8 +50,8 @@
 			</Replace>
 		</Suggestion>
 		<Example>
-			<Incorrect>Refiro-me à trabalho remunerado.</Incorrect>
-			<Correct>Refiro-me ao trabalho remunerado. Refiro-me a trabalho remunerado.</Correct>
+			<Incorrect>ex1</Incorrect>
+			<Correct>exx1</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>sueli</Author>

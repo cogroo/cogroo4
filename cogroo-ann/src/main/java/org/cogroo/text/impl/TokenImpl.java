@@ -30,7 +30,7 @@ import com.google.common.base.Objects;
 
 /**
  * The <code>TokenImpl</code> class represents a token, which is a word, its
- * lemma, its morphological tag and the position of it in the sentence.
+ * lemma, its morphological posTag and the position of it in the sentence.
  */
 public class TokenImpl implements Token {
 
@@ -43,8 +43,8 @@ public class TokenImpl implements Token {
   /** Is the primitive form of the <code>lemma</code> */
   private String[] lemmas;
 
-  /** Is the morphological tag of the <code>lemma</code> */
-  private String tag;
+  /** Is the morphological posTag of the <code>lemma</code> */
+  private String posTag;
   
   private String features;
   
@@ -64,7 +64,7 @@ public class TokenImpl implements Token {
     this.span = new Span(start, end);
     this.lexeme = lexeme;
     this.lemmas = lemmas;
-    this.tag = tag;
+    this.posTag = tag;
     this.features = features;
   }
 
@@ -95,11 +95,11 @@ public class TokenImpl implements Token {
   }
 
   public String getPOSTag() {
-    return tag;
+    return posTag;
   }
 
   public void setPOSTag(String tag) {
-    this.tag = tag;
+    this.posTag = tag;
   }
   
   public void setFeatures(String features) {
@@ -163,7 +163,7 @@ public class TokenImpl implements Token {
   @Override
   public String toString() {
 
-    return Objects.toStringHelper(this).add("lxm", lexeme).add("lm", Arrays.toString(lemmas)).add("tag", tag).add("feat", features)
+    return Objects.toStringHelper(this).add("lxm", lexeme).add("lm", Arrays.toString(lemmas)).add("posTag", posTag).add("feat", features)
     // .add("span", span)
         .toString();
   }

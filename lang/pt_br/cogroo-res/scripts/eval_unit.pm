@@ -198,6 +198,9 @@ sub executeTr {
 	printToLog "At: " . cwd() . "\n";
 
 	my $start_time = [ Time::HiRes::gettimeofday() ];
+	
+	print $command;
+	
 	my @res        = `$command 2>&1`;
 	my $diff       = Time::HiRes::tv_interval($start_time);
 
@@ -215,9 +218,9 @@ sub createCommand {
 	my $execArgs = shift;
 	my $properties = shift;
 
-	$ENV{'MAVEN_OPTS'} = "-Xms512m -Xmx900m -XX:PermSize=256m";
+	$ENV{'MAVEN_OPTS'} = "-Xms512m -Xmx4000m -XX:PermSize=256m";
 	
-	my $command = 'mvn -e -o -q exec:java "-Dexec.mainClass=';
+	my $command = 'mvn -e -q exec:java "-Dexec.mainClass=';
 	
 	if($cliTool eq "opennlp") {
 		$command .= 'opennlp.tools.cmdline.CLI';

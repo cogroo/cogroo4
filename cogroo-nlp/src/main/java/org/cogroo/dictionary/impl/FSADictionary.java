@@ -48,7 +48,7 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
   protected static final Logger LOGGER = Logger.getLogger(FSADictionary.class);
   private DictionaryLookup dictLookup;
   
-  private Cache<String, Optional<String[]>> tagCache = CacheBuilder.newBuilder()
+  private LoadingCache<String, Optional<String[]>> tagCache = CacheBuilder.newBuilder()
       .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
       .build(new CacheLoader<String, Optional<String[]>>() {
         public Optional<String[]> load(String key) {

@@ -27,24 +27,24 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import org.cogroo.dictionary.FeatureDictionary;
-import org.cogroo.tools.featurizer.WordTag;
-
 import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
 
+import org.cogroo.dictionary.FeatureDictionary;
+import org.cogroo.tools.featurizer.WordTag;
+
 import com.google.common.base.Optional;
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.io.ByteStreams;
 
 public class FSAFeatureDictionary implements FeatureDictionary, Iterable<WordTag> {
 
   private DictionaryLookup dictLookup;
 
-  private Cache<WordTag, Optional<String[]>> cache = CacheBuilder.newBuilder()
+  private LoadingCache<WordTag, Optional<String[]>> cache = CacheBuilder.newBuilder()
       .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
       .build(new CacheLoader<WordTag, Optional<String[]>>() {
         public Optional<String[]> load(WordTag key) {
