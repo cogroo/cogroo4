@@ -59,7 +59,7 @@ This program does...
      -a <alg>  : MAXENT or PERCEPTRON
      -o <opt>  : training options (separated by ,)
      -p <num>  : num of threads (8 is default)
-     -v <vmode>: how to change the cutoff: ap or gp
+     -v <vmode>: how to change the cutoff: ap, gp or <number> (for fixed)
      -b <bound>: comma separated boundaries of cutoff. ie: 10,30
      -s <stp>  : cutoff step
     example: $0 -h
@@ -86,7 +86,7 @@ sub evaluate() {
 		die "the tool name is missing";
 	} 
 	
-	if($opt{v} ne 'ap' && $opt{v} ne 'gp') {
+	if(($opt{v} ne 'ap' && $opt{v} ne 'gp') && ! ($opt{v} =~ m/\d+/)) {
 		die "the -v arg is missing or invalid \n";
 	}
 	
@@ -134,6 +134,8 @@ sub evaluate() {
 		for(my $i = 2; $i <= 512; $i *= 2) {
 			push(@cutoffArr, $i);	
 		}
+	} elsif($opt{v} =~ m/\d+/) {
+		push(@cutoffArr, $opt{v});
 	} else {
 		die "-v option not implemented \n";
 	}

@@ -100,7 +100,7 @@
 		<dependency>
 			<groupId>org.apache.opennlp</groupId>
 			<artifactId>opennlp-uima</artifactId>
-			<version>1.5.3-SNAPSHOT</version>
+			<version>1.5.3</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>opennlp-tools</artifactId>
