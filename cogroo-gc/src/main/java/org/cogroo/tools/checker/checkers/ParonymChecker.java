@@ -24,7 +24,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.cogroo.analyzer.Analyzer;
 import org.cogroo.entities.Mistake;
-import org.cogroo.interpreters.FlorestaTagInterpreter;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
@@ -55,12 +54,8 @@ private static final String ID_PREFIX = "probs:";
   private final ParonymList dictionary;
   private Map<String, String> map;
   
-  private final FlorestaTagInterpreter tagInterpreter;
-
   public ParonymChecker(Analyzer analyzer) {
     this.analyzer = analyzer;
-    
-    tagInterpreter = new FlorestaTagInterpreter();
     
     List<Example> examples = new ArrayList<Example>();
     
@@ -88,6 +83,10 @@ private static final String ID_PREFIX = "probs:";
 
     List<Mistake> mistakes= new ArrayList<Mistake>();
     
+    if(sentence.getTokens().size() < 2) {
+      return mistakes;
+    }
+    
     for(int i = 0; i < sentence.getTokens().size(); i++) {
       Token originalToken = sentence.getTokens().get(i);
       String wanted = originalToken.getLexeme();
@@ -106,8 +105,10 @@ private static final String ID_PREFIX = "probs:";
         this.analyzer.analyze(alternative);
         
         Sentence alternativeSentence = alternative.getSentences().get(0);
-        if(sentence.getTokensProb() < alternativeSentence.getTokensProb()){
+        if(alternativeSentence.getTokensProb() - sentence.getTokensProb() > 0.1){
           if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Prob original: " + sentence.getTokensProb());
+            LOGGER.debug("Prob alternat: " + alternativeSentence.getTokensProb());
             LOGGER.debug("\n****** Possível correção **********:\n" + sentenceText + " -> " + alternativeText);
           }
           Token alternativeToken = alternativeSentence.getTokens().get(i);

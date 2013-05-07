@@ -53,24 +53,27 @@ public class POSTagger implements Analyzer {
       String[] tags;
       
       double[] probs;
+      String[][] ac = TextUtils.additionalContext(tokens,
+          Arrays.asList(Analyzers.CONTRACTION_FINDER, Analyzers.NAME_FINDER));
+      String[] toks = TextUtils.tokensToString(sentence.getTokens());
       synchronized (this.tagger) {
-        tags = tagger.tag(
-            TextUtils.tokensToString(sentence.getTokens()), TextUtils
-                .additionalContext(tokens, Arrays.asList(
-                    Analyzers.CONTRACTION_FINDER, Analyzers.NAME_FINDER)));
+        tags = tagger.tag(toks, ac);
         probs = tagger.probs();
       }
       
-      double finalProb = 0;
-      for (double prob : probs) {
-        finalProb += Math.log(prob);
-      }
+      double finalProb = computeFinalProb(probs);
       
       sentence.setTokensProb(finalProb);
       
       if (LOGGER.isDebugEnabled()) {
-        LOGGER.debug("Probabilidades do tagger:\n" + Arrays.toString(probs));
-        LOGGER.debug("Log do produto das probabilidades: " + finalProb);
+        StringBuilder sb = new StringBuilder("Probabilidades do tagger:\n");
+        for (int i = 0; i < toks.length; i++) {
+          sb.append("[").append(toks[i]).append("_").append(tags[i])
+              .append(" ").append(probs[i]).append("] ");
+        }
+        LOGGER.debug(sb.toString());
+        
+        LOGGER.debug("Soma dos logs das probabilidades: " + finalProb);
       }
       
       tags = GenderUtil.removeGender(tags);
@@ -86,6 +89,23 @@ public class POSTagger implements Analyzer {
     }
   }
   
+  private double computeFinalProb(double[] probs) {
+    double finalProb = 0;
+    if(true) {
+      for (double prob : probs) {
+        finalProb += Math.log(prob);
+      }      
+    } else {
+      for (double prob : probs) {
+        finalProb += prob;
+      } 
+    } 
+    if(probs.length > 0) {
+      finalProb = finalProb / probs.length;
+    }
+    return finalProb;
+  }
+
   private String[] toTokensArray(List<Token> tokens) {
     String[] arr = new String[tokens.size()];
     for (int i = 0; i < tokens.size(); i++) {
