@@ -16,7 +16,6 @@
 package org.cogroo.tools.postag;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -84,7 +83,6 @@ public class PortuguesePOSSequenceValidator implements
       List<String> tagList = filterMWE(queryDictionary(word, true));
 
       if (tagList != null && tagList.size() > 0) {
-        System.out.println("Taglist for " + word + ": " + Arrays.toString(tagList.toArray()));
         tokExists = true;
         if("prop".equals(outcome) && Character.isUpperCase(word.charAt(0))) {
           return true;
