@@ -16,11 +16,10 @@
 package org.cogroo.tools.postag;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import com.google.common.base.Strings;
 
 import opennlp.tools.postag.TagDictionary;
 import opennlp.tools.util.SequenceValidator;
@@ -28,11 +27,14 @@ import opennlp.tools.util.SequenceValidator;
 public class PortuguesePOSSequenceValidator implements
     SequenceValidator<String> {
 
+  private boolean storeUnknown = false;
   public TagDictionary tagDictionary;
   private SortedSet<String> unknown;
 
   public PortuguesePOSSequenceValidator(TagDictionary tagDictionary) {
-    unknown = new TreeSet<String>();
+    if(storeUnknown) {
+      unknown = new TreeSet<String>();
+    }
     this.tagDictionary = tagDictionary;
   }
 
@@ -82,14 +84,20 @@ public class PortuguesePOSSequenceValidator implements
       List<String> tagList = filterMWE(queryDictionary(word, true));
 
       if (tagList != null && tagList.size() > 0) {
+        System.out.println("Taglist for " + word + ": " + Arrays.toString(tagList.toArray()));
         tokExists = true;
+        if("prop".equals(outcome) && Character.isUpperCase(word.charAt(0))) {
+          return true;
+        } else 
         if (contains(tagList, outcome)) {
           isValid = true;
         }
       }
 
       if (!tokExists) {
-        this.unknown.add(word);
+        if(storeUnknown) {
+          this.unknown.add(word);
+        }
         isValid = true;
       }
 
@@ -123,11 +131,13 @@ public class PortuguesePOSSequenceValidator implements
   @Override
   protected void finalize() throws Throwable {
     super.finalize();
-    // System.out.println("... palavras desconhecidas ...");
-    // for (String unk : this.unknown) {
-    // System.out.println(unk);
-    // }
-    // System.out.println("... fim ...");
+    if (storeUnknown) {
+      System.out.println("... palavras desconhecidas ...");
+      for (String unk : this.unknown) {
+        System.out.println(unk);
+      }
+      System.out.println("... fim ...");
+    }
   }
 
   static boolean validOutcome(String outcome, String[] sequence) {

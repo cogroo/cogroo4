@@ -37,7 +37,6 @@ import org.cogroo.dictionary.LemmaDictionary;
 import org.cogroo.util.PairWordPOSTag;
 
 import com.google.common.base.Optional;
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -247,7 +246,13 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
       IOException {
 
     long start = System.nanoTime();
-    FSADictionary td = (FSADictionary) create("../lang/pt_br/cogroo-res/fsa_dictionaries/pos/pt_br_jspell_corpus.dict");
+    
+
+    String path = "/fsa_dictionaries/pos/pt_br_jspell_corpus";
+    InputStream dict = FSADictionary.class.getResourceAsStream(path + ".dict");
+    InputStream info = FSADictionary.class.getResourceAsStream(path + ".info");
+    
+    FSADictionary td = (FSADictionary) create(dict, info);
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
     Scanner kb = new Scanner(System.in);
@@ -255,7 +260,7 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
     String input = kb.nextLine();
     while (!input.equals("q")) {
       if (input.equals("0")) {
-        input = "árvores";
+        input = "cão";
       }
       List<PairWordPOSTag> pair = td.getTagsAndLemms(input);
       for (PairWordPOSTag pairWordPOSTag : pair) {

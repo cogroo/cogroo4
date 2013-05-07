@@ -27,6 +27,7 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.StringTokenizer;
@@ -118,6 +119,8 @@ BasicCmdLineTool {
           params.getAllowInvalidFeats(), params.getIsIncludeFeatures());
 
       in.close();
+      
+      Map<String, Set<String>> added = new TreeMap<String, Set<String>>();
 
       if (params.getIncludeFromCorpus()) {
         sentenceStream = new ADFeaturizerSampleStream(new FileInputStream(
@@ -142,13 +145,26 @@ BasicCmdLineTool {
               Triple t = asTriple(tags[i], lemmas[i], feats[i],
                   params.getIsIncludeFeatures());
               put(tok, t, entries);
-              System.err.println("  added: " + tok + ": " + t);
+              if(!"prop".equals(t.getClazz())) {
+                if(!added.containsKey(tok)) {
+                  added.put(tok, new HashSet<String>());
+                }
+                added.get(tok).add(t.toString());
+              }
             }
           }
 
           sample = sentenceStream.read();
         }
         sentenceStream.close();
+        
+        for (String k : added.keySet()) {
+          Set<String> e = added.get(k);
+          for (String v : e) {
+            System.out.println(k + " - " + v);
+          }
+        }
+        
       }
 
       out = new OutputStreamWriter(new FileOutputStream(dictOutFile), "UTF-8");
