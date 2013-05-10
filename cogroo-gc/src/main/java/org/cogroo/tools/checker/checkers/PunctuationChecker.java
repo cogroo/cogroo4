@@ -148,6 +148,6 @@ public class PunctuationChecker extends AbstractTypedChecker {
 	}
 
 	public int getPriority() {
-		return 210;
+		return 2000;
 	}
 }

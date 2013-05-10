@@ -354,20 +354,22 @@ public class GrammarChecker implements CheckAnalyzer {
 
     ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
 
-    //long[] rules = {127};
-//    pipe.add(new GrammarCheckerAnalyzer(true, rules));
+    long[] rules = {129};
     
-    GrammarChecker cogroo = new GrammarChecker(factory.createPipe());
+    GrammarChecker cogroo = new GrammarChecker(factory.createPipe(), false, rules);
+//    GrammarChecker cogroo = new GrammarChecker(factory.createPipe());
 
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");
     Scanner kb = new Scanner(System.in);
-    System.out.print("Enter the sentence: ");
+    System.out.print("Enter the sentence, q to quit, 0 for the default, or 1 to print the examples: ");
     String input = kb.nextLine();
 
     while (!input.equals("q")) {
       if (input.equals("0")) {
         input = "Foi ferido por uma balas perdidas.";
+      } else if(input.equals("1")) {
+        printExamples(new ArrayList<RuleDefinition>(cogroo.getRuleDefinitions()));
       }
 
       CheckDocument document = new CheckDocument();
@@ -380,6 +382,6 @@ public class GrammarChecker implements CheckAnalyzer {
       input = kb.nextLine();
     }
   }
-  
+
   
 }

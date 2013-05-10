@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
+import opennlp.tools.util.Span;
+
 import org.cogroo.entities.Chunk;
 import org.cogroo.entities.Sentence;
 import org.cogroo.entities.SyntacticChunk;
@@ -30,6 +32,8 @@ import org.cogroo.entities.Token;
 import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.entities.impl.TokenCogroo;
 import org.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
+import org.cogroo.tools.checker.rules.model.Boundaries;
+import org.cogroo.tools.checker.rules.model.Rule;
 import org.cogroo.tools.checker.rules.model.Rule.Method;
 import org.cogroo.tools.checker.rules.model.Suggestion;
 import org.cogroo.tools.checker.rules.model.Suggestion.Replace;
@@ -41,6 +45,8 @@ import org.cogroo.tools.checker.rules.model.TagMask.Number;
 import org.cogroo.tools.checker.rules.util.RuleUtils;
 import org.cogroo.tools.checker.rules.util.TagMaskUtils;
 
+import com.google.common.base.Optional;
+
 /**
  * This class makes suggestions to correct the mistakes.
  * 
@@ -50,50 +56,216 @@ import org.cogroo.tools.checker.rules.util.TagMaskUtils;
  * @version $Id: SuggestionBuilder.java 400 2007-04-19 02:36:40Z msuzumura $
  */
 public class SuggestionBuilder {
+  
+  private CogrooTagDictionary dictionary;
+  
+  public SuggestionBuilder(CogrooTagDictionary dict) {
+    this.dictionary = dict;
+  }
+  
+  public String[] getTokenSuggestions(List<Token> matched, Token next, Rule rule) {
+    // Each suggestionsAsString position will contain a suggestion.
+    Set<String> suggestionsAsString = new HashSet<String>();
+    for (Suggestion suggestion : rule.getSuggestion()) {
+      String s = getTokenSuggestions(matched,
+          next, suggestion, rule.getBoundaries());
+      if (s != null && s.length() > 0)
+        suggestionsAsString.add(s);
+    }
 
-	/**
-	 * Determines suggestions for the mistake found in the sentence.
-	 * 
-	 * @param sentence
-	 *            the processed sentence
-	 * @param lower
-	 *            the first token of the mistake
-	 * @param upper
-	 *            the last token of the mistake
-	 * @param suggestions
-	 *            the suggestions patterns from the rule
-	 * @param dictionary
-	 *            a tag-word-primitive dictionary
-	 * @return an array of suggestions to correct the mistake
-	 */
-	public static String[] getSuggestions(Sentence sentence, boolean considerChunk, int baseIndex, int lower, int upper, List<Suggestion> suggestions, CogrooTagDictionary dictionary, Method method) {
-		// Each suggestionsAsString position will contain a suggestion.
-		Set<String> suggestionsAsString = new HashSet<String>();
-		for (Suggestion suggestion : suggestions) {
-			String s = getSuggestions(sentence, considerChunk, baseIndex, lower, upper, suggestion, dictionary, method);
-			if(s!= null && s.length() > 0)
-				suggestionsAsString.add(s);
-		}
-		
-		return suggestionsAsString.toArray(new String[suggestionsAsString.size()]);
-	}
+    return suggestionsAsString.toArray(new String[suggestionsAsString.size()]);
+  }
+  
+  public String[] getSyntacticSuggestions(List<SyntacticChunk> matched, Token next, Rule rule) {
+    // Each suggestionsAsString position will contain a suggestion.
+    Set<String> suggestionsAsString = new HashSet<String>();
+    for (Suggestion suggestion : rule.getSuggestion()) {
+      String s = getSyntacticSuggestions(matched,
+          next, suggestion, rule.getBoundaries());
+      if (s != null && s.length() > 0)
+        suggestionsAsString.add(s);
+    }
+
+    return suggestionsAsString.toArray(new String[suggestionsAsString.size()]);
+  }
+  
+  private String getTokenSuggestions(List<Token> matched, Token next,
+      Suggestion suggestion, Boundaries boundaries) {
+    
+    // Gets only the tokens that are referred by the mistake. It considers chunks and subjverb!
+    Token[] underlinedTokens = SuggestionBuilder.tokensSubArray(matched, boundaries);
+    
+    String[] mistakenTokensAsString = SuggestionBuilder.tokensSubArrayAsString(underlinedTokens);
+    
+    // Tells if a token was replaced by an empty string.
+    boolean replacedByEmptyString[] = new boolean[mistakenTokensAsString.length];
+    
+    // If can not determine an inflection for the replacement, reject the suggestion.
+    boolean reject = false;
+    
+    // Replaces.
+    /*
+        <Replace> work as follows.
+        Lexeme  TagReference    Action
+        0       0               does nothing
+        0       1               gets primitive from the token in the sentence and queries for an inflection
+        1       0               replaces for the lexeme
+        1       1               gets primitive (<Lexeme>) from the <Replace> and queries for an inflection
+    */
+    for (Replace replace : suggestion.getReplace()) {
+        if (replace.getTagReference() == null && replace.getLexeme() != null) { // L1, T0.
+            // i.e., replacing a token with the given lexeme.
+            // Beware of upper case...
+            String replacement = replace.getLexeme();
+            int replaceIndex = (int) replace.getIndex();
+            mistakenTokensAsString[replaceIndex] = RuleUtils.useCasedString(mistakenTokensAsString[(int) replace.getIndex()], replacement);
+            replacedByEmptyString[replaceIndex] = replacement.equals("") ? true : false;
+        }
+        else { // T1.
+            String[] primitive;
+            int replaceIndex = (int) replace.getIndex();
+            if (replace.getLexeme() != null) { // L1, T1.
+                // Gets the primitive from Replace and queries the dictionary for a replacement.
+                String[] arr = {replace.getLexeme()};
+                primitive = arr;
+            } else { // L0, T1.
+                // Gets the primitive from the sentence and queries the dictionary for a replacement.
+                  primitive = matched.get((int) replace.getIndex()) .getPrimitive();
+            }
+            
+            // @ wildcard from CoGrOO 1.0 is tricky, very tricky.
+            // The idea here is that if there was a @ in the suggestion, we must get the gender or the
+            // number of that particular token in order to correctly query the dictionary.
+            
+            TagMask tagMask = new TagMask();
+            int index = 0;
+            TagMask cloneTagMask;
+            MorphologicalTag refMorphTag = null;
+            if(replace.getTagReference() != null)
+            {
+                tagMask = replace.getTagReference().getTagMask();
+                index = (int) replace.getTagReference().getIndex();
+                refMorphTag = underlinedTokens[index].getMorphologicalTag();
+            }
+            else if( replace.getReference() != null)
+            {
+                tagMask = new TagMask();
+                index = (int) replace.getReference().getIndex();
+                refMorphTag = matched.get(index).getMorphologicalTag();
+            }
+            
+            cloneTagMask = TagMaskUtils.clone(tagMask);
+            
+            // Gets the morphological tag of the referred token.
+            
+            if( replace.getReference() != null )
+            {
+                cloneTagMask = RuleUtils.createTagMaskFromReference(replace.getReference(), refMorphTag, null, null);
+            }
+            else
+            {
+                if (cloneTagMask.getGender() == Gender.NEUTRAL) {
+                    Gender gender = refMorphTag.getGenderE();
+                    if (Gender.MALE.equals(gender)) {
+                        cloneTagMask.setGender(Gender.MALE);
+                    } else if (Gender.FEMALE.equals(gender)) {
+                        cloneTagMask.setGender(Gender.FEMALE);
+                    }
+                }
+                if (cloneTagMask.getNumber() == Number.NEUTRAL) {
+                    Number number = refMorphTag.getNumberE();
+                    if (Number.SINGULAR.equals(number)) {
+                        cloneTagMask.setNumber(Number.SINGULAR);
+                    } else if (Number.PLURAL.equals(number)) {
+                        cloneTagMask.setNumber(Number.PLURAL);
+                    }
+                }
+            }
+            
+            Token originalToken;
+            originalToken = underlinedTokens[replaceIndex];
+            
+            RuleUtils.completeMissingParts(cloneTagMask, originalToken.getMorphologicalTag());
+            
+            List<String> flexList = new ArrayList<String>();
+            if(primitive != null) {
+              for (String p : primitive) {
+                String[] farr = dictionary.getInflectedPrimitive(p, cloneTagMask, false);
+                if(farr != null) {
+                  flexList.addAll(Arrays.asList(farr));
+                }
+              }
+            }
+            
+            String[] flexArr = flexList.toArray(new String[flexList.size()]); // Can be empty.
+            String flex = getBestFlexedWord(flexArr, originalToken, cloneTagMask);
+            
+            
+            if (flex.equals("")) {
+                reject = true;
+            } else {
+                // This workaround is so lame...
+                flex = SuggestionBuilder.discardBeginningHyphen(flex);
+                flex = RuleUtils.useCasedString(mistakenTokensAsString[(int) replace.getIndex()], flex);
+                
+                mistakenTokensAsString[(int) (replace.getIndex())] = flex;
+            }
+        }
+    }
+    
+    if (!reject) { // If not reject, there's still hope... if reject, do not swap nor concatenate.
+        // Swaps.
+        for (Swap swap : suggestion.getSwap()) {
+            int a = (int) swap.getA();
+            int b = (int) swap.getB();
+            String temp = SuggestionBuilder.discardBeginningHyphen(mistakenTokensAsString[a]);
+            mistakenTokensAsString[a] = SuggestionBuilder.discardBeginningHyphen(mistakenTokensAsString[b]);
+            mistakenTokensAsString[b] = temp;
+        }
+        
+        // Replaces if the lexeme matches with the mapping key.
+        for (ReplaceMapping replaceMapping : suggestion.getReplaceMapping()) {
+            long index = replaceMapping.getIndex();
+            if (replaceMapping.getKey().equals(mistakenTokensAsString[(int) index].toLowerCase())) {
+                mistakenTokensAsString[(int) index] = RuleUtils.useCasedString(mistakenTokensAsString[(int) index], replaceMapping.getValue());
+            }
+        }
+        
+        // if the last token was a contraction, we should keep the other part of it in the suggestion
+        if(replacedByEmptyString[replacedByEmptyString.length -  1]) {
+          if(next != null) {
+            Token removed = matched.get(matched.size() - 1);
+            
+            if(next.getSpan().equals(removed.getSpan())) {
+              mistakenTokensAsString[replacedByEmptyString.length -  1] = next.getLexeme();
+              replacedByEmptyString[replacedByEmptyString.length -  1] = false;
+            }
+          }
+        }
+        
+        // Concatenates the suggestions to obtain a single string.
+        String suggestionAsString = "";
+        for (int i = 0; i < mistakenTokensAsString.length; i++) {
+            if (mistakenTokensAsString[i].startsWith("-") || replacedByEmptyString[i]) {
+                suggestionAsString += mistakenTokensAsString[i];
+            } else {
+                suggestionAsString += " " + mistakenTokensAsString[i];
+            }
+        }
+        // Adds this suggestion to the suggestions determined so far.
+        return suggestionAsString.trim();
+    }
+    return null;
+  }
+  
 	
-	public static String getSuggestions(Sentence sentence, boolean considerChunk, int baseIndex, int lower, int upper, Suggestion suggestion, CogrooTagDictionary dictionary, Method method) {
-		
+	private String getSyntacticSuggestions(List<SyntacticChunk> matched, Token next,
+	      Suggestion suggestion, Boundaries boundaries) {
+		Token[] matchedTokens = extractTokens(matched);
 		// Gets only the tokens that are referred by the mistake. It considers chunks and subjverb!
-		Token[] underlinedTokens = SuggestionBuilder.tokensSubArray(sentence, lower, upper, considerChunk);
+		Token[] underlinedTokens = tokensSubArraySynt(matched, boundaries);
 		
-		// the reference should should also consider chunks
-		SyntacticChunk[] underlinedSyntacticChunks = null;
-		SyntacticChunk[] syntacticChunks = null;
-		
-		Chunk chunk = underlinedTokens[0].getChunk();
-//		int innerChunkIndex = 
-		
-		if(method.equals(Method.SUBJECT_VERB)) {
-		  underlinedSyntacticChunks = getSyntacticChunks(underlinedTokens);
-		  syntacticChunks = getSyntacticChunks(sentence.getTokens().toArray(new Token[sentence.getTokens().size()]));
-		}
+		Span[] tokenIndex = tokenIndex(matched);
 		
 		String[] mistakenTokensAsString = SuggestionBuilder.tokensSubArrayAsString(underlinedTokens);
 		
@@ -117,27 +289,28 @@ public class SuggestionBuilder {
 				// Beware of upper case...
 				String replacement = replace.getLexeme();
 				int replaceIndex = (int) replace.getIndex();
-				mistakenTokensAsString[replaceIndex] = RuleUtils.useCasedString(mistakenTokensAsString[(int) replace.getIndex()], replacement);
-				replacedByEmptyString[replaceIndex] = replacement.equals("") ? true : false;
+				// get the tokens of that chunk and mark as removed
+				Span p = tokenIndex[replaceIndex];
+				for (int i = p.getStart() + 1; i < p.getEnd(); i++) {
+				  mistakenTokensAsString[i] = "";
+				  replacedByEmptyString[i] = true;
+                }
+				
+				mistakenTokensAsString[p.getStart()] = RuleUtils.useCasedString(mistakenTokensAsString[(int) replace.getIndex()], replacement);
+				replacedByEmptyString[p.getStart()] = replacement.equals("") ? true : false;
 			}
 			else { // T1.
-				String[] primitive;
+				List<String[]> primitives = new ArrayList<String[]>();
 				int replaceIndex = (int) replace.getIndex();
 				if (replace.getLexeme() != null) { // L1, T1.
 					// Gets the primitive from Replace and queries the dictionary for a replacement.
 				    String[] arr = {replace.getLexeme()};
-					primitive = arr;
+					primitives.add(arr);
 				} else { // L0, T1.
 					// Gets the primitive from the sentence and queries the dictionary for a replacement.
-				  
-				  if(Method.SUBJECT_VERB == method) {
-                    primitive = syntacticChunks[(int)(baseIndex + replace.getIndex())].getTokens().get(0).getPrimitive();
-                  } if(Method.PHRASE_LOCAL == method) {
-                    primitive = chunk.getTokens().get((int) replace.getIndex() + baseIndex) .getPrimitive();
-                  } else {
-				      primitive = sentence.getTokens().get((int) replace.getIndex() + baseIndex) .getPrimitive();
-				    }
-//				    primitive = underlinedTokens[replaceIndex + lower].getPrimitive();
+				  for (Token toks : matched.get((int) replace.getIndex()).getTokens()) {
+                    primitives.add(toks.getPrimitive());
+                  }
 				}
 				
 				// @ wildcard from CoGrOO 1.0 is tricky, very tricky.
@@ -152,18 +325,13 @@ public class SuggestionBuilder {
 				{
 					tagMask = replace.getTagReference().getTagMask();
 					index = (int) replace.getTagReference().getIndex();
-					refMorphTag = underlinedTokens[index].getMorphologicalTag();
+					refMorphTag = matched.get(index).getMorphologicalTag();
 				}
 				else if( replace.getReference() != null)
 				{
 					tagMask = new TagMask();
-					index = (int) replace.getReference().getIndex() + baseIndex;
-					if(method.equals(Method.SUBJECT_VERB)) {
-					  refMorphTag = syntacticChunks[index].getMorphologicalTag();
-					  //sentence.getSyntacticChunks().get(index).getMorphologicalTag();
-					} else {
-					  refMorphTag = sentence.getTokens().get(index).getMorphologicalTag();
-					}
+					index = (int) replace.getReference().getIndex();
+					refMorphTag = matched.get(index).getMorphologicalTag();
 				}
 				
 				cloneTagMask = TagMaskUtils.clone(tagMask);
@@ -194,44 +362,43 @@ public class SuggestionBuilder {
 					}
 				}
 				
-				Token originalToken;
-				if(Method.SUBJECT_VERB == method) {
-				  originalToken = underlinedSyntacticChunks[replaceIndex].getTokens().get(0);
-				} else {
-				  originalToken = underlinedTokens[replaceIndex];
-				}
+				List<Token> originalTokens = matched.get(replaceIndex).getTokens();
 				
-				RuleUtils.completeMissingParts(cloneTagMask, originalToken.getMorphologicalTag());
+				String[] fixed = new String[matchedTokens.length];
 				
-				List<String> flexList = new ArrayList<String>();
-				if(primitive != null) {
-				  for (String p : primitive) {
-				    String[] farr = dictionary.getInflectedPrimitive(p, cloneTagMask, false);
-				    if(farr != null) {
-				      flexList.addAll(Arrays.asList(farr));
-				    }
+				if(primitives != null) {
+				  for (int i = 0; i < primitives.size(); i++) {
+				    String[] primitive = primitives.get(i);
+				    Token ot = originalTokens.get(i);
+				    
+				    TagMask tm = TagMaskUtils.clone(cloneTagMask);
+				    RuleUtils.completeMissingParts(tm, ot.getMorphologicalTag());
+				    
+				    List<String> flexList = new ArrayList<String>();
+	                  for (String p : primitive) {
+	                    String[] farr = dictionary.getInflectedPrimitive(p, tm, false);
+	                    if(farr != null) {
+	                      flexList.addAll(Arrays.asList(farr));
+	                    }
+	                  } 
+	                  
+	                    String[] flexArr = flexList.toArray(new String[flexList.size()]); // Can be empty.
+	                    
+	                    String f = getBestFlexedWord(flexArr, ot, cloneTagMask);
+	                    f = SuggestionBuilder.discardBeginningHyphen(f);
+	                    f = RuleUtils.useCasedString(ot.getLexeme(), f);
+	                    
+//	                    mistakenTokensAsString[replaceIndex + i] = f;
+	                    fixed[tokenIndex[replaceIndex].getStart() + i] = f;
                   }
 				}
+				int start = tokenIndex[boundaries.getLower()].getStart();
+				for (int i = start; i < start + mistakenTokensAsString.length; i++) {
+                  if(fixed[i] != null) {
+                    mistakenTokensAsString[i - start] = fixed[i];
+                  }
+                }
 				
-				String[] flexArr = flexList.toArray(new String[flexList.size()]); // Can be empty.
-				String flex = getBestFlexedWord(flexArr, originalToken, cloneTagMask);
-				
-				
-				if (flex.equals("")) {
-					reject = true;
-				} else {
-					// This workaround is so lame...
-					flex = SuggestionBuilder.discardBeginningHyphen(flex);
-					flex = RuleUtils.useCasedString(mistakenTokensAsString[(int) replace.getIndex()], flex);
-					
-					if(Method.SUBJECT_VERB == method) {
-					  int i = underlinedSyntacticChunks[(int) (replace.getIndex())].getFirstToken();
-					  mistakenTokensAsString[i - lower] = flex;  
-					} else {
-					  mistakenTokensAsString[(int) (replace.getIndex())] = flex;
-					}
-					
-				}
 			}
 		}
 		
@@ -252,19 +419,18 @@ public class SuggestionBuilder {
 					mistakenTokensAsString[(int) index] = RuleUtils.useCasedString(mistakenTokensAsString[(int) index], replaceMapping.getValue());
 				}
 			}
-			
-			// if the last token was a contraction, we should keep the other part of it in the suggestion
-			if(replacedByEmptyString[replacedByEmptyString.length -  1]) {
-			  if(sentence.getTokens().size() > upper + 1) {
-			    Token removed = sentence.getTokens().get(upper);
-			    Token next = sentence.getTokens().get(upper + 1);
-			    
-			    if(next.getSpan().equals(removed.getSpan())) {
-			      mistakenTokensAsString[replacedByEmptyString.length -  1] = next.getLexeme();
-			      replacedByEmptyString[replacedByEmptyString.length -  1] = false;
-			    }
-			  }
-			}
+	        
+	        // if the last token was a contraction, we should keep the other part of it in the suggestion
+//	        if(replacedByEmptyString[replacedByEmptyString.length -  1]) {
+//	          if(next != null) {
+//	            Token removed = matched.get(matched.size() - 1);
+//	            
+//	            if(next.getSpan().equals(removed.getSpan())) {
+//	              mistakenTokensAsString[replacedByEmptyString.length -  1] = next.getLexeme();
+//	              replacedByEmptyString[replacedByEmptyString.length -  1] = false;
+//	            }
+//	          }
+//	        }
 			
 			// Concatenates the suggestions to obtain a single string.
 			String suggestionAsString = "";
@@ -301,7 +467,27 @@ public class SuggestionBuilder {
 //		return subArray;
 //	}
 	
-	private static SyntacticChunk[] getSyntacticChunks(Token[] tokens) {
+  private Token[] extractTokens(List<SyntacticChunk> matched) {
+    List<Token> out = new ArrayList<Token>();
+    for (SyntacticChunk sc : matched) {
+      out.addAll(sc.getTokens());
+    }
+    return out.toArray(new Token[out.size()]);
+  }
+
+  private Span[] tokenIndex(List<SyntacticChunk> matched) {
+    List<Span> out = new ArrayList<Span>();
+    int count = 0;
+    for (SyntacticChunk syntacticChunk : matched) {
+      int start = count;
+      int end = count + syntacticChunk.getTokens().size(); 
+      out.add(new Span(start, end));
+      count += syntacticChunk.getTokens().size();
+    }
+    return out.toArray(new Span[out.size()]);
+  }
+
+  private static SyntacticChunk[] getSyntacticChunks(Token[] tokens) {
 	  
 	  Stack<SyntacticChunk> stack = new Stack<SyntacticChunk>();
 	  
@@ -319,7 +505,11 @@ public class SuggestionBuilder {
 	{
 		String[] subArray = new String[tokens.length];
 		for (int i = 0; i < tokens.length; i++) {
-			subArray[i] = ((TokenCogroo)tokens[i]).getLexeme();
+		    if(tokens[i] != null) {
+		      subArray[i] = ((TokenCogroo)tokens[i]).getLexeme();
+		    } else {
+		      subArray[i] = null;
+		    }
 		}	
 		return subArray;
 	}
@@ -349,6 +539,26 @@ public class SuggestionBuilder {
 		
 		return rootTokens.toArray(new Token[rootTokens.size()]);
 	}
+	
+  private static Token[] tokensSubArraySynt(List<SyntacticChunk> matched,
+      Boundaries boundaries) {
+    int start = boundaries.getLower();
+    int end = matched.size() + boundaries.getUpper();
+    List<SyntacticChunk> syntChunks = matched.subList(start, end);
+
+    List<Token> out = new ArrayList<Token>();
+    for (SyntacticChunk sc : syntChunks) {
+      out.addAll(sc.getTokens());
+    }
+    return out.toArray(new Token[out.size()]);
+  }
+	
+  private static Token[] tokensSubArray(List<Token> tokens, Boundaries boundaries) {
+    int start = boundaries.getLower();
+    int end = tokens.size() + boundaries.getUpper();
+    List<Token> rootTokens = tokens.subList(start, end);
+    return rootTokens.toArray(new Token[rootTokens.size()]);
+  }
 	
 	private static List<Token> getTokensRecursively(Token rootToken)
 	{

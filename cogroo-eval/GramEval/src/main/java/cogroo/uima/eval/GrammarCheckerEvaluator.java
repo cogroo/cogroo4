@@ -89,7 +89,7 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
           new FileOutputStream(pathToReportFMeasure), "UTF-8"));
       mHtmlWriter = new HtmlWriter(pathToHtmlFMeasure, "Analysis", corpusName);
       mReportDetails
-          .append("Type\tID\tTarget Err\tTarget Cat\tPred Err\tPred Cat\tRule\tRule Group\tSentence\n");
+          .append("Type\tID\tTarget Err\tTarget Cat\tPred Err\tPred Cat\tRule\tRule Group\tSuggestion\tSentence\n");
     } catch (IOException e) {
       new RuntimeException("Couldn't init file", e);
     }
@@ -108,7 +108,7 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
         .getAnnotationIndex(GoldenGrammarError.type);
     for (Annotation annotation : goldenGrammarErrorIndex) {
       GoldenGrammarError a = (GoldenGrammarError) annotation;
-      Error s = new Error(a.getBegin(), a.getEnd(), a.getCategory());
+      Error s = new Error(a.getBegin(), a.getEnd(), a.getCategory(), "TTT");
       targetGrammarErrors.add(s);
       mFMeasure.addTarget();
       mFMeasure.addTarget(a.getCategory());
@@ -123,7 +123,7 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
         cat = "";
       }
       cat += "#" + a.getRuleId();
-      Error s = new Error(a.getBegin(), a.getEnd(), cat);
+      Error s = new Error(a.getBegin(), a.getEnd(), cat, a.getReplace());
       s.setRuleId(a.getRuleId());
       predictedGrammarErrors.add(s);
     }
@@ -132,7 +132,7 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
         .getAnnotationIndex(GoldenSentence.type);
     for (Annotation annotation : sentIndex) {
       GoldenSentence a = (GoldenSentence) annotation;
-      Error s = new Error(a.getBegin(), a.getEnd(), a.getId());
+      Error s = new Error(a.getBegin(), a.getEnd(), a.getId(), "SSS");
       sentences.add(s);
       mFMeasure.addSentence();
     }
@@ -147,10 +147,10 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
 
   private List<Error> removeRules(List<Error> predictedGrammarErrors) {
     List<Error> out = new ArrayList<Error>();
-    for (Error Error : predictedGrammarErrors) {
-      String cat = Error.getType().substring(0, Error.getType().indexOf("#"));
-      Error e = new Error(Error.getStart(), Error.getEnd(), cat);
-      e.setRuleId(Error.getRuleId());
+    for (Error error : predictedGrammarErrors) {
+      String cat = error.getType().substring(0, error.getType().indexOf("#"));
+      Error e = new Error(error.getStart(), error.getEnd(), cat, error.getSuggestion());
+      e.setRuleId(error.getRuleId());
       out.add(e);
     }
     return out;
@@ -322,6 +322,13 @@ public class GrammarCheckerEvaluator extends JCasAnnotator_ImplBase {
     }
     String text = s.getCoveredText(docText).toString()
         .replaceAll("[\t\n]", "   ");
+    
+    if(p != null) {
+      line.append(p.getSuggestion()).append("\t");
+    } else {
+      line.append("\t");
+    }
+    
     line.append(text);
     // if(text.contains("Existe alguma criatura meio estátua, meio mulher?")) {
     // System.out.println();

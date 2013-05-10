@@ -179,6 +179,7 @@
 						<xs:enumeration value="subject predicative"/>
 						<xs:enumeration value="subject predicative"/>
 						<xs:enumeration value="identifying apposition"/>
+						<xs:enumeration value="adverbial adjunct"/>
 						<xs:enumeration value="none"/>
 					</xs:restriction>
 				</xs:simpleType>
@@ -378,10 +379,13 @@
 		<xs:annotation>
 			<xs:documentation>Add opertators to Elements</xs:documentation>
 		</xs:annotation>
-		<xs:choice>
-			<xs:element name="Element" type="Element"/>
-			<xs:element name="Composition" type="Composition"/>
-		</xs:choice>
+		<xs:sequence>
+			<xs:element name="Optional" type="xs:boolean" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="Element" type="Element"/>
+				<xs:element name="Composition" type="Composition"/>
+			</xs:choice>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Operator">
 		<xs:annotation>

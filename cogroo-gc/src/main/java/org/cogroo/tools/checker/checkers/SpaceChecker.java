@@ -128,7 +128,7 @@ public class SpaceChecker extends AbstractTypedChecker {
 	public String getIdPrefix() {
 		return ID_PREFIX;
 	}
-
+	
 	public List<Mistake> check(Sentence sentence) {
 		String text = sentence.getSentence();
 		List<Mistake> mistakes = new LinkedList<Mistake>();
@@ -352,7 +352,7 @@ public class SpaceChecker extends AbstractTypedChecker {
 	}
 
 	public int getPriority() {
-		return 200;
+		return 2000;
 	}
 
 }

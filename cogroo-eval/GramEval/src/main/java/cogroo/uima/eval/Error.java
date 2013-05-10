@@ -25,6 +25,7 @@ public class Error implements Comparable<Error> {
 
   private final String type;
   private String ruleId;
+  private final String suggestion;
 
   /**
    * Initializes a new Span Object.
@@ -36,7 +37,7 @@ public class Error implements Comparable<Error> {
    * @param type
    *          the type of the span
    */
-  public Error(int s, int e, String type) {
+  public Error(int s, int e, String type, String suggestion) {
 
     if (s < 0 || e < 0)
       throw new IllegalArgumentException(
@@ -49,6 +50,15 @@ public class Error implements Comparable<Error> {
     start = s;
     end = e;
     this.type = type;
+    if(suggestion == null) {
+      this.suggestion = "";
+    } else {
+      this.suggestion = suggestion;
+    }
+  }
+  
+  public Error(int s, int e, String type) {
+    this(s, e, type, "");
   }
 
   /**
@@ -60,7 +70,7 @@ public class Error implements Comparable<Error> {
    *          end of span.
    */
   public Error(int s, int e) {
-    this(s, e, null);
+    this(s, e, null, "");
   }
 
   /**
@@ -71,9 +81,13 @@ public class Error implements Comparable<Error> {
    * @param offset
    */
   public Error(Error span, int offset) {
-    this(span.start + offset, span.end + offset, span.getType());
+    this(span.start + offset, span.end + offset, span.getType(), "");
   }
 
+  public String getSuggestion() {
+    return suggestion;
+  }
+  
   /**
    * Return the start of a span.
    * 

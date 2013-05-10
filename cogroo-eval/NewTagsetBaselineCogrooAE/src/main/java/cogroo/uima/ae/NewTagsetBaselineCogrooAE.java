@@ -17,6 +17,7 @@ package cogroo.uima.ae;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.uima.UimaContext;
@@ -133,7 +134,7 @@ public class NewTagsetBaselineCogrooAE extends JCasAnnotator_ImplBase {
           ge.setError(text.substring(mistake.getStart(), mistake.getEnd()));
           if (mistake.getSuggestions() != null
               && mistake.getSuggestions().length > 0)
-            ge.setReplace(mistake.getSuggestions()[0]);
+            ge.setReplace(Arrays.toString(mistake.getSuggestions()));
           ge.addToIndexes();
         }
       } catch (Throwable e) {

@@ -31,8 +31,11 @@ import org.cogroo.entities.Sentence;
 import org.cogroo.entities.SyntacticChunk;
 import org.cogroo.entities.Token;
 import org.cogroo.entities.TokenGroup;
+import org.cogroo.entities.impl.ChunkCogroo;
+import org.cogroo.entities.impl.ChunkTag;
 import org.cogroo.entities.impl.MistakeImpl;
 import org.cogroo.entities.impl.MorphologicalTag;
+import org.cogroo.entities.impl.SyntacticTag;
 import org.cogroo.entities.impl.TokenCogroo;
 import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.TypedChecker;
@@ -40,11 +43,14 @@ import org.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import org.cogroo.tools.checker.rules.util.RuleUtils;
 import org.cogroo.tools.checker.rules.util.RulesProperties;
 
+import org.cogroo.tools.checker.rules.model.Boundaries;
 import org.cogroo.tools.checker.rules.model.Element;
 import org.cogroo.tools.checker.rules.model.Mask;
 import org.cogroo.tools.checker.rules.model.PatternElement;
 import org.cogroo.tools.checker.rules.model.Rule;
 import org.cogroo.tools.checker.rules.model.Rule.Method;
+import org.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
+import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 import org.cogroo.tools.checker.rules.model.TagMask;
 
 /**
@@ -56,9 +62,12 @@ import org.cogroo.tools.checker.rules.model.TagMask;
  */
 public final class RulesApplier implements TypedChecker {
 	
-	public RulesApplier(RulesTreesProvider rulesTreesProvider, CogrooTagDictionary dictionary) {
+	private SuggestionBuilder suggestionBuilder;
+
+  public RulesApplier(RulesTreesProvider rulesTreesProvider, CogrooTagDictionary dictionary) {
 		this.rulesTreesProvider = rulesTreesProvider;
 		this.dictionary = dictionary;
+		this.suggestionBuilder = new SuggestionBuilder(this.dictionary);
 	}
 	
 	/**
@@ -67,6 +76,8 @@ public final class RulesApplier implements TypedChecker {
 	private static final Logger LOGGER = Logger.getLogger(RulesApplier.class);
 
 	private static final String ID_PREFIX = "xml:";
+
+  private static final Object OUT_OF_BOUNDS = "%%OUT_OF_BOUNDS%%";
 	
 	private final Set<String> ignoredRules = new HashSet<String>();
 	
@@ -93,15 +104,47 @@ public final class RulesApplier implements TypedChecker {
 		
 		// Insert two empty tokens at the sentence start and end
 		List<Token> tokens = new ArrayList<Token>();
-		Token empty1 = new TokenCogroo("", new Span(0, 0));
+		Token empty1 = new TokenCogroo("%%OUT_OF_BOUNDS%%", new Span(0, 0));
 		empty1.setMorphologicalTag(new MorphologicalTag());
+		ChunkTag ct = new ChunkTag();
+		ct.setChunkFunction(ChunkFunction.OTHER);
+		empty1.setChunkTag(ct);
 		tokens.add(empty1);
 		tokens.addAll(sentence.getTokens());
-		Token empty2 = new TokenCogroo("", new Span(0, 0));
+		Token empty2 = new TokenCogroo("%%OUT_OF_BOUNDS%%", new Span(0, 0));
 		empty2.setMorphologicalTag(new MorphologicalTag());
+		empty2.setChunkTag(ct);
 		tokens.add(empty2);
 		sentence.setTokens(tokens);
 		
+		List<Chunk> chunkz = new ArrayList<Chunk>();
+		Chunk chunk1 = new ChunkCogroo(Collections.singletonList(empty1), 0);
+        chunk1.setMorphologicalTag(new MorphologicalTag());
+		empty1.setChunk(chunk1);
+		chunkz.add(chunk1);
+		chunkz.addAll(sentence.getChunks());
+	    Chunk chunk2 = new ChunkCogroo(Collections.singletonList(empty2), 0);
+	    chunk2.setMorphologicalTag(new MorphologicalTag());
+	    empty2.setChunk(chunk2);
+	    chunkz.add(chunk2);
+	    sentence.setChunks(chunkz);
+	    
+	    
+	    List<SyntacticChunk> synts = new ArrayList<SyntacticChunk>();
+	    SyntacticChunk synt1 = new SyntacticChunk(Collections.singletonList(chunk1));
+        SyntacticTag st = new SyntacticTag();
+        st.setSyntacticFunction(SyntacticFunction.NONE);
+	    synt1.setSyntacticTag(st);
+	    empty1.setSyntacticChunk(synt1);
+	    synts.add(synt1);
+	    synts.addAll(sentence.getSyntacticChunks());
+	    SyntacticChunk synt2 = new SyntacticChunk(Collections.singletonList(chunk1));
+        synt2.setSyntacticTag(st);
+        empty2.setSyntacticChunk(synt2);
+        synts.add(synt2);
+        sentence.setSyntacticChunks(synts);
+	    
+        
 		// mistakes will hold mistakes found in the sentence.
 		List<Mistake> mistakes = new ArrayList<Mistake>();
 
@@ -116,7 +159,7 @@ public final class RulesApplier implements TypedChecker {
     			// For each token, gets back to the initial state (hence 0).
     			List<State> nextStates = rulesTree.getRoot().getNextStates();
     			// i is the index of the token that began the rule applying process.
-    			mistakes = this.getMistakes(mistakes, nextStates, sentence, i, i, sentence);
+    			mistakes = this.getMistakes(mistakes, nextStates, sentence, i, i, new ArrayList<Token>(), sentence);
     		}
 		}
 		
@@ -133,7 +176,7 @@ public final class RulesApplier implements TypedChecker {
     				// For each token, gets back to the initial state (hence 0).
     				List<State> nextStates = rulesTree.getRoot().getNextStates();
     				// j is the index of the token that began the rule applying process.
-    				mistakes = this.getMistakes(mistakes, nextStates, chunks.get(i), j, j, sentence);
+    				mistakes = this.getMistakes(mistakes, nextStates, chunks.get(i), j, j, new ArrayList<Token>(), sentence);
     			}
     		}
 		}
@@ -145,7 +188,7 @@ public final class RulesApplier implements TypedChecker {
     		List<SyntacticChunk> syntacticChunks = sentence.getSyntacticChunks();
     		for (int i = 0; i < syntacticChunks.size(); i++) {
     			List<State> nextStates = rulesTree.getRoot().getNextStates();
-    			mistakes = this.getMistakes(mistakes, nextStates, syntacticChunks, i, i, sentence);
+    			mistakes = this.getMistakes(mistakes, nextStates, syntacticChunks, i, i, new ArrayList<SyntacticChunk>(), sentence);
     		}
 		}
 		
@@ -179,18 +222,23 @@ public final class RulesApplier implements TypedChecker {
 	 * @return the mistakes in the parameter <code>mistakes</code> plus the mistakes found in this
 	 *         invocation, if any
 	 */
-	private List<Mistake> getMistakes(List<Mistake> mistakes, List<State> currentStates, TokenGroup tokenGroup, int baseTokenIndex, int currentTokenIndex, Sentence sentence) {
-	    Method method = Method.GENERAL;
-	    
-        int offset = 0;
+	private List<Mistake> getMistakes(List<Mistake> mistakes, List<State> currentStates, TokenGroup tokenGroup, int baseTokenIndex, int currentTokenIndex, ArrayList<Token> matched, Sentence sentence) {
+
+	    int offset = 0;
         if (tokenGroup instanceof Chunk) {
           offset = ((Chunk) tokenGroup).getFirstToken();
-          method = Method.PHRASE_LOCAL;
         }
 	    
 		for (State state : currentStates) {
-			boolean tokenAndElementMatched = this.match(tokenGroup.getTokens().get(currentTokenIndex), state.getElement(), baseTokenIndex + offset, sentence);
+		    PatternElement patternElement = state.getElement();
+		    Token token = tokenGroup.getTokens().get(currentTokenIndex);
+			boolean tokenAndElementMatched = this.match(token, patternElement, baseTokenIndex + offset, sentence);
 			if (tokenAndElementMatched) {
+			  
+		        // need to clone because due to recursive implementation
+		        ArrayList<Token> matchedClone = cloneList(matched);
+		        matchedClone.add(token);
+			    
 				if (state instanceof AcceptState) {
 					// Got a mistake!
 					Rule rule = ((AcceptState) state).getRule();
@@ -204,8 +252,12 @@ public final class RulesApplier implements TypedChecker {
 					int upperCountedByChars = sentence.getTokens().get(upper).getSpan().getEnd();
 					// Suggestions.
                     String[] suggestions = new String[0];
-					try {
-					  suggestions = SuggestionBuilder.getSuggestions(sentence, false, baseTokenIndex, lower, upper, rule.getSuggestion(), dictionary, method);
+	                Token next = null;    
+                    if(tokenGroup.getTokens().size() > currentTokenIndex + 1) {
+                      next = tokenGroup.getTokens().get(currentTokenIndex + 1);
+	                }
+                    try {
+                      suggestions = suggestionBuilder.getTokenSuggestions(matchedClone, next, rule);
 					} catch(NullPointerException e) {
 					  LOGGER.error("Failed to apply rule " + rule.getId() + " in: " + sentence.getSentence(), e);
 					}
@@ -214,14 +266,22 @@ public final class RulesApplier implements TypedChecker {
 					mistakes.add(mistake);
 				} else if (currentTokenIndex + 1 < tokenGroup.getTokens().size()) {
 					// Keep looking: recurse.
-					this.getMistakes(mistakes, state.getNextStates(), tokenGroup, baseTokenIndex, currentTokenIndex + 1, sentence);
+					this.getMistakes(mistakes, state.getNextStates(), tokenGroup, baseTokenIndex, currentTokenIndex + 1, matchedClone, sentence);
 				}
+			} else if(isOptional(patternElement)) {
+			  // it is valid only if the next is valid here!
+			  // just keep looking without movin to the next token
+			  this.getMistakes(mistakes, state.getNextStates(), tokenGroup, baseTokenIndex, currentTokenIndex, matched, sentence);
 			}
 		}
 		return mistakes;
 	}
-	
-	private int getPriority(Rule rule) {
+
+  private boolean isOptional(PatternElement patternElement) {
+    return patternElement.isOptional() != null && patternElement.isOptional();
+  }
+
+  private int getPriority(Rule rule) {
 	  if(rule.getPriority() != null) 
 	    return rule.getPriority().intValue();
     return (int)(getPriority() - rule.getId());
@@ -246,30 +306,49 @@ public final class RulesApplier implements TypedChecker {
 	 * @return the mistakes in the parameter <code>mistakes</code> plus the mistakes found in this
 	 *         invocation, if any
 	 */
-	private List<Mistake> getMistakes(List<Mistake> mistakes, List<State> currentStates, List<SyntacticChunk> syntacticChunks, int baseChunkIndex, int currentChunkIndex, Sentence sentence) {
-		for (State state : currentStates) {
-			boolean chunkAndElementMatched = this.match(syntacticChunks.get(currentChunkIndex), state.getElement(), baseChunkIndex, sentence);
+	private List<Mistake> getMistakes(List<Mistake> mistakes, List<State> currentStates, List<SyntacticChunk> syntacticChunks, int baseChunkIndex, int currentChunkIndex, ArrayList<SyntacticChunk> matched, Sentence sentence) {
+        
+        for (State state : currentStates) {
+            
+		    PatternElement patternElement = state.getElement();
+		    SyntacticChunk sc = syntacticChunks.get(currentChunkIndex);
+			boolean chunkAndElementMatched = this.match(sc, patternElement, baseChunkIndex, sentence);
 			if (chunkAndElementMatched) {
+			    // need to clone due to recursive implementation
+	            ArrayList<SyntacticChunk> matchedClone = cloneList(matched);
+	            matchedClone.add(sc);
+	            
 				if (state instanceof AcceptState) {
 					// Got a mistake!
 					Rule rule = ((AcceptState) state).getRule();
 					// The mistake is located between the chunks indicated by lower and upper.
 					// Gets the lower index by chars.
-					int lower = sentence.getSyntacticChunks().get(baseChunkIndex + rule.getBoundaries().getLower()).getFirstToken();
-					int upper = sentence.getSyntacticChunks().get(currentChunkIndex).getFirstToken() + rule.getBoundaries().getUpper();
-					int lowerCountedByChars = sentence.getTokens().get(lower).getSpan().getStart();
-					// Gets the upper index by chars.
-					SyntacticChunk chunkUpper = sentence.getSyntacticChunks().get(currentChunkIndex);
-					int upperCountedByChars = chunkUpper.getTokens().get(chunkUpper.getTokens().size() - 1).getSpan().getEnd();
+					Boundaries b = rule.getBoundaries();
+					
+					int start = matchedClone.get(b.getLower()).getTokens().get(0).getSpan().getStart();
+					List<Token> lastChk = matchedClone.get(matchedClone.size() - 1 + b.getUpper()).getTokens();
+					int end = lastChk.get(lastChk.size() - 1).getSpan().getEnd();
+					
 					// Suggestions.
-					String[] suggestions = SuggestionBuilder.getSuggestions(sentence, true, baseChunkIndex, lower, upper, rule.getSuggestion(), dictionary, Method.SUBJECT_VERB);
-					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), getPriority(rule), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
+                    String[] suggestions = suggestionBuilder.getSyntacticSuggestions(
+                        matchedClone, null, rule);
+                    Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(),
+                        getPriority(rule), rule.getMessage(), rule.getShortMessage(),
+                        suggestions, start, end, rule.getExample(),
+                        sentence.getSentence());
 					mistakes.add(mistake);
 				} else if (currentChunkIndex + 1 < syntacticChunks.size()) {
 					// Keep looking: recurse.
-					this.getMistakes(mistakes, state.getNextStates(), syntacticChunks, baseChunkIndex, currentChunkIndex + 1, sentence);
+					this.getMistakes(mistakes, state.getNextStates(), syntacticChunks, baseChunkIndex, currentChunkIndex + 1, matchedClone, sentence);
 				}
-			}
+			} else if(isOptional(patternElement)) {
+              // need to clone due to recursive implementation
+              ArrayList<SyntacticChunk> matchedClone = cloneList(matched);
+              matchedClone.add(NullSyntacticChunk.instance());
+              // it is valid only if the next is valid here!
+              // just keep looking without movin to the next token
+			  this.getMistakes(mistakes, state.getNextStates(), syntacticChunks, baseChunkIndex, currentChunkIndex, matchedClone, sentence);
+            }
 		}
 		return mistakes;
 	}
@@ -416,7 +495,7 @@ public final class RulesApplier implements TypedChecker {
 			// If the token must match the mask.
 			if (!negated) {
 				// If not negated, match starts as false and just one match is needed to make it true.
-				if (mask.getLexemeMask() != null && mask.getLexemeMask().equalsIgnoreCase(chunk.toString())) {
+				if (mask.getLexemeMask() != null && mask.getLexemeMask().equalsIgnoreCase(chunk.toPlainText())) {
 					match = true;
 				} else if (mask.getTagMask() != null && chunk.getMorphologicalTag() != null) {
 					match = match | (chunk.getMorphologicalTag().matchExact(mask.getTagMask(), false) && chunk.getSyntacticTag().match(mask.getTagMask()));
@@ -425,10 +504,13 @@ public final class RulesApplier implements TypedChecker {
 				} else if (mask.getTagReference() != null && chunk.getMorphologicalTag() != null) {
 					TagMask t = RuleUtils.createTagMaskFromReferenceSyntatic(mask.getTagReference(), sentence, baseTokenIndex);
 					match = match | (chunk.getMorphologicalTag().match(t, false) && (t.getSyntacticFunction() == null || chunk.getSyntacticTag().match(t)));
-				}
+				} else if (mask.getOutOfBounds() != null
+				     && chunk.getTokens().get(0).getLexeme().equals(OUT_OF_BOUNDS)) {
+                    match = true;
+                }
 			} else { // The token must NOT match the mask.
 				// If negated, match starts as true and just one match is needed to make it false.
-				if ( mask.getLexemeMask() != null && mask.getLexemeMask().equalsIgnoreCase(chunk.toString())) {
+				if ( mask.getLexemeMask() != null && mask.getLexemeMask().equalsIgnoreCase(chunk.toPlainText())) {
 					match = false;
 				} else if (mask.getTagMask() != null) {
 					match = match & !(chunk.getMorphologicalTag().matchExact(mask.getTagMask(), false) && (mask.getTagMask().getSyntacticFunction() == null || chunk.getSyntacticTag().match(mask.getTagMask())));
@@ -437,7 +519,10 @@ public final class RulesApplier implements TypedChecker {
               }  else if (mask.getTagReference() != null) {
 					TagMask t = RuleUtils.createTagMaskFromReferenceSyntatic(mask.getTagReference(), sentence, baseTokenIndex);
 					match = match & !(chunk.getMorphologicalTag().match(t,false) && (t.getSyntacticFunction() == null || chunk.getSyntacticTag().match(t)));
-				}
+			  } else if (mask.getOutOfBounds() != null && 
+			        sentence.getSyntacticChunks().indexOf(chunk) == sentence.getSyntacticChunks().size() - 1) {
+                    match = false;
+              }
 			}
 		}
 		return match;
@@ -543,5 +628,10 @@ public final class RulesApplier implements TypedChecker {
       }
     }
     return match;
+  }
+  
+  @SuppressWarnings("unchecked")
+  private <T> ArrayList<T> cloneList(ArrayList<T> matched) {
+    return (ArrayList<T>) matched.clone();
   }
 }
