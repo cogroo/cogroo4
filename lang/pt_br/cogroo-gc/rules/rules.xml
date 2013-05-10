@@ -16,7 +16,7 @@
     limitations under the License.
 
 -->
-<Rules xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/Rules.xsd">
+<Rules xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/Users/wcolen/git/cogroo4/cogroo-gc/src/main/resources/rules/schema/rules.xsd">
 	<Rule id="1" active="true">
 		<Method>general</Method>
 		<Type>Crase</Type>
@@ -8450,6 +8450,14 @@
 				</Element>
 			</PatternElement>
 			<PatternElement>
+				<Optional>true</Optional>
+				<Element>
+					<Mask>
+						<LexemeMask>não</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
 				<Composition>
 					<And>
 						<PatternElement>
@@ -8526,6 +8534,10 @@
 			<Incorrect>Eles vai comprar banana.</Incorrect>
 			<Correct>Eles vão comprar banana.</Correct>
 		</Example>
+		<Example>
+			<Incorrect>Elas não tem carro.</Incorrect>
+			<Correct>Elas não têm carro.</Correct>
+		</Example>
 		<ModificationHistory>
 			<Author>anon</Author>
 			<Date>2005-01-26T17:27:00.000-03:00</Date>
@@ -8545,6 +8557,14 @@
 							<SyntacticFunction>subject</SyntacticFunction>
 							<Number>singular</Number>
 						</TagMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Optional>true</Optional>
+				<Element>
+					<Mask>
+						<LexemeMask>não</LexemeMask>
 					</Mask>
 				</Element>
 			</PatternElement>
@@ -8611,6 +8631,10 @@
 		<Example>
 			<Incorrect>Ele vão comprar banana.</Incorrect>
 			<Correct>Ele vai comprar banana.</Correct>
+		</Example>
+		<Example>
+			<Incorrect>Ele não vão comprar banana.</Incorrect>
+			<Correct>Ele não vai comprar banana.</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>anon</Author>
@@ -8941,7 +8965,7 @@
 		</Boundaries>
 		<Suggestion>
 			<!-- <SuggestionAsString>2=&gt;2_M_P_</SuggestionAsString> -->
-			<Replace index="0">
+			<Replace index="2">
 				<Reference index="0">
 					<Property>Gender</Property>
 					<Property>Number</Property>
@@ -9455,4 +9479,101 @@
 		</ModificationHistory>
 	</Rule>
 	
+	<Rule id="129" active="true">
+		<Method>subject-verb</Method>
+		<Type>Concordância sujeito-verbo</Type>
+		<Group>sujeito + verbo + .</Group>
+		<Message>Verificou-se erro de concordância entre o sujeito e o verbo.</Message>
+		<ShortMessage>Verificou-se erro de concordância entre o sujeito e o verbo.</ShortMessage>
+		<Pattern>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<TagMask>
+							<SyntacticFunction>subject</SyntacticFunction>
+						</TagMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Optional>true</Optional>
+				<Element>
+					<Mask>
+						<LexemeMask>não</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Composition>
+					<And>
+						<PatternElement>
+							<Element>
+								<Negated>true</Negated>
+								<Mask>
+									<TagReference index="0">
+										<Property>Number</Property>
+									</TagReference>
+								</Mask>
+							</Element>							
+						</PatternElement>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<SyntacticFunction>verb</SyntacticFunction>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+					</And>
+				</Composition>
+			</PatternElement>
+			<PatternElement>
+				<Composition>
+					<Or>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<TagMask>
+										<Punctuation>abs</Punctuation>
+									</TagMask>
+								</Mask>
+							</Element>
+						</PatternElement>
+						<PatternElement>
+							<Element>
+								<Mask>
+									<OutOfBounds />
+								</Mask>
+							</Element>
+						</PatternElement>
+					</Or>
+				</Composition>
+			</PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>2</Lower>
+			<Upper>-1</Upper>
+		</Boundaries>
+
+		<Suggestion>
+			<Replace index="2">
+				<Reference index="0">
+					<Property>Number</Property>
+				</Reference>
+			</Replace>
+		</Suggestion>
+		<Example>
+			<Incorrect>Nós foi</Incorrect>
+			<Correct>Nós fomos</Correct>
+		</Example>
+		<Example>
+			<Incorrect>Nós não foi.</Incorrect>
+			<Correct>Nós não fomos.</Correct>
+		</Example>
+		<ModificationHistory>
+			<Author>anon</Author>
+			<Date>2005-01-26T17:27:00.000-03:00</Date>
+		</ModificationHistory>
+	</Rule>
 </Rules>
