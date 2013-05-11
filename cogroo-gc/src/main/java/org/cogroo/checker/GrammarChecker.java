@@ -239,7 +239,7 @@ public class GrammarChecker implements CheckAnalyzer {
     for (Sentence sentence : sentences) {
       mistakes.addAll(this.checkers.check(sentence));
 
-      org.cogroo.entities.Sentence typedSentence = this.sentenceAdapter.asTypedSentence(sentence);
+      org.cogroo.entities.Sentence typedSentence = this.sentenceAdapter.asTypedSentence(sentence, document.getText());
       typedSentences.add(typedSentence);
 
       mistakes.addAll(this.typedCheckers.check(typedSentence));
@@ -356,8 +356,8 @@ public class GrammarChecker implements CheckAnalyzer {
 
     long[] rules = {129};
     
-    GrammarChecker cogroo = new GrammarChecker(factory.createPipe(), false, rules);
-//    GrammarChecker cogroo = new GrammarChecker(factory.createPipe());
+//    GrammarChecker cogroo = new GrammarChecker(factory.createPipe(), false, rules);
+    GrammarChecker cogroo = new GrammarChecker(factory.createPipe());
 
     System.out.println("Loading time ["
         + ((System.nanoTime() - start) / 1000000) + "ms]");

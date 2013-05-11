@@ -63,6 +63,8 @@ public class Sentence implements Serializable, TokenGroup {
 
   private Span span;
 
+  private String doc;
+
   /**
    * Gets the representation of the sentence as a plain text.
    * 
@@ -86,9 +88,19 @@ public class Sentence implements Serializable, TokenGroup {
    * @return the original sentence
    */
   public String getSentence() {
-    return this.sentence;
+    if(sentence != null)
+      return this.sentence;
+    else if(doc != null) {
+      return span.getCoveredText(doc).toString();
+    } else {
+      return null;
+    }
   }
-
+  
+  public String getDocumentText() {
+    return this.doc;
+  }
+  
   /**
    * Sets the original sentence.
    * 
@@ -96,6 +108,10 @@ public class Sentence implements Serializable, TokenGroup {
    */
   public void setSentence(String sentence) {
     this.sentence = sentence;
+  }
+
+  public void setDocumentText(String document) {
+    this.doc = document;
   }
 
   public void setSpan(Span aSpan) {
@@ -205,4 +221,5 @@ public class Sentence implements Serializable, TokenGroup {
   public int hashCode() {
     return Objects.hashCode(this.sentence, this.tokens, this.chunks, this.root, this.offset);
   }
+
 }

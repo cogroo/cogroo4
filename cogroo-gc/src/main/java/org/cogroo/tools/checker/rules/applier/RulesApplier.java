@@ -257,12 +257,16 @@ public final class RulesApplier implements TypedChecker {
                       next = tokenGroup.getTokens().get(currentTokenIndex + 1);
 	                }
                     try {
-                      suggestions = suggestionBuilder.getTokenSuggestions(matchedClone, next, rule);
+                      suggestions = suggestionBuilder.getTokenSuggestions(sentence, matchedClone, next, rule);
 					} catch(NullPointerException e) {
 					  LOGGER.error("Failed to apply rule " + rule.getId() + " in: " + sentence.getSentence(), e);
 					}
 					
-					Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(), getPriority(rule), rule.getMessage(), rule.getShortMessage(), suggestions, lowerCountedByChars + sentence.getOffset(), upperCountedByChars + sentence.getOffset(), rule.getExample(), sentence.getSentence());
+                    Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(),
+                        getPriority(rule), rule.getMessage(), rule.getShortMessage(),
+                        suggestions, lowerCountedByChars + sentence.getOffset(),
+                        upperCountedByChars + sentence.getOffset(), rule.getExample(),
+                        sentence.getDocumentText());
 					mistakes.add(mistake);
 				} else if (currentTokenIndex + 1 < tokenGroup.getTokens().size()) {
 					// Keep looking: recurse.
@@ -325,17 +329,17 @@ public final class RulesApplier implements TypedChecker {
 					// Gets the lower index by chars.
 					Boundaries b = rule.getBoundaries();
 					
-					int start = matchedClone.get(b.getLower()).getTokens().get(0).getSpan().getStart();
+					int start = matchedClone.get(b.getLower()).getTokens().get(0).getSpan().getStart() + sentence.getOffset();
 					List<Token> lastChk = matchedClone.get(matchedClone.size() - 1 + b.getUpper()).getTokens();
-					int end = lastChk.get(lastChk.size() - 1).getSpan().getEnd();
+					int end = lastChk.get(lastChk.size() - 1).getSpan().getEnd() + sentence.getOffset();
 					
 					// Suggestions.
-                    String[] suggestions = suggestionBuilder.getSyntacticSuggestions(
+                    String[] suggestions = suggestionBuilder.getSyntacticSuggestions(sentence,
                         matchedClone, null, rule);
                     Mistake mistake = new MistakeImpl(ID_PREFIX + rule.getId(),
                         getPriority(rule), rule.getMessage(), rule.getShortMessage(),
                         suggestions, start, end, rule.getExample(),
-                        sentence.getSentence());
+                        sentence.getDocumentText());
 					mistakes.add(mistake);
 				} else if (currentChunkIndex + 1 < syntacticChunks.size()) {
 					// Keep looking: recurse.

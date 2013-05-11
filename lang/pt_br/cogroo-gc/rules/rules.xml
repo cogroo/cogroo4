@@ -8530,6 +8530,15 @@
 			<Lower>0</Lower>
 			<Upper>0</Upper>
 		</Boundaries>
+
+		<Suggestion>
+			<Replace index="2">
+				<Reference index="0">
+					<Property>Number</Property>
+					<Property>Person</Property>
+				</Reference>
+			</Replace>
+		</Suggestion>
 		<Example>
 			<Incorrect>Eles vai comprar banana.</Incorrect>
 			<Correct>Eles vão comprar banana.</Correct>
@@ -8628,6 +8637,15 @@
 			<Lower>0</Lower>
 			<Upper>0</Upper>
 		</Boundaries>
+
+		<Suggestion>
+			<Replace index="2">
+				<Reference index="0">
+					<Property>Number</Property>
+					<Property>Person</Property>
+				</Reference>
+			</Replace>
+		</Suggestion>
 		<Example>
 			<Incorrect>Ele vão comprar banana.</Incorrect>
 			<Correct>Ele vai comprar banana.</Correct>
@@ -9410,6 +9428,7 @@
 			<Replace index="1">
 				<Reference index="2">
 					<Property>Number</Property>
+					<Property>Person</Property>
 				</Reference>
 			</Replace>
 		</Suggestion>
@@ -9560,6 +9579,7 @@
 			<Replace index="2">
 				<Reference index="0">
 					<Property>Number</Property>
+					<Property>Person</Property>
 				</Reference>
 			</Replace>
 		</Suggestion>

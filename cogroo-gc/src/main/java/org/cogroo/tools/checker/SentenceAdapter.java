@@ -51,9 +51,9 @@ public class SentenceAdapter {
     this.syntacticChunkerConverter = new SyntacticChunkConverter(ti);
   }
 
-  public org.cogroo.entities.Sentence asTypedSentence(Sentence sentence) {
+  public org.cogroo.entities.Sentence asTypedSentence(Sentence sentence, String document) {
     org.cogroo.entities.Sentence typedSentence = new org.cogroo.entities.Sentence();
-    typedSentence.setSentence(sentence.getText());
+    typedSentence.setDocumentText(document);
     typedSentence.setOffset(sentence.getStart());
     typedSentence.setSpan(new Span(sentence.getStart(), sentence.getEnd()));
 

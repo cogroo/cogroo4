@@ -25,6 +25,8 @@ import java.util.Stack;
 
 import opennlp.tools.util.Span;
 
+import org.cogroo.ContractionUtility;
+import org.cogroo.analyzer.ContractionFinder;
 import org.cogroo.entities.Chunk;
 import org.cogroo.entities.Sentence;
 import org.cogroo.entities.SyntacticChunk;
@@ -63,11 +65,11 @@ public class SuggestionBuilder {
     this.dictionary = dict;
   }
   
-  public String[] getTokenSuggestions(List<Token> matched, Token next, Rule rule) {
+  public String[] getTokenSuggestions(Sentence sentence, List<Token> matched, Token next, Rule rule) {
     // Each suggestionsAsString position will contain a suggestion.
     Set<String> suggestionsAsString = new HashSet<String>();
     for (Suggestion suggestion : rule.getSuggestion()) {
-      String s = getTokenSuggestions(matched,
+      String s = getTokenSuggestions(sentence, matched,
           next, suggestion, rule.getBoundaries());
       if (s != null && s.length() > 0)
         suggestionsAsString.add(s);
@@ -76,11 +78,11 @@ public class SuggestionBuilder {
     return suggestionsAsString.toArray(new String[suggestionsAsString.size()]);
   }
   
-  public String[] getSyntacticSuggestions(List<SyntacticChunk> matched, Token next, Rule rule) {
+  public String[] getSyntacticSuggestions(Sentence sentence, List<SyntacticChunk> matched, Token next, Rule rule) {
     // Each suggestionsAsString position will contain a suggestion.
     Set<String> suggestionsAsString = new HashSet<String>();
     for (Suggestion suggestion : rule.getSuggestion()) {
-      String s = getSyntacticSuggestions(matched,
+      String s = getSyntacticSuggestions(sentence, matched,
           next, suggestion, rule.getBoundaries());
       if (s != null && s.length() > 0)
         suggestionsAsString.add(s);
@@ -89,7 +91,7 @@ public class SuggestionBuilder {
     return suggestionsAsString.toArray(new String[suggestionsAsString.size()]);
   }
   
-  private String getTokenSuggestions(List<Token> matched, Token next,
+  private String getTokenSuggestions(Sentence sentence, List<Token> matched, Token next,
       Suggestion suggestion, Boundaries boundaries) {
     
     // Gets only the tokens that are referred by the mistake. It considers chunks and subjverb!
@@ -259,11 +261,14 @@ public class SuggestionBuilder {
   }
   
 	
-	private String getSyntacticSuggestions(List<SyntacticChunk> matched, Token next,
+	private String getSyntacticSuggestions(Sentence sentence, List<SyntacticChunk> matched, Token next,
 	      Suggestion suggestion, Boundaries boundaries) {
 		Token[] matchedTokens = extractTokens(matched);
 		// Gets only the tokens that are referred by the mistake. It considers chunks and subjverb!
 		Token[] underlinedTokens = tokensSubArraySynt(matched, boundaries);
+		
+        Span underlinedSpan = new Span(underlinedTokens[0].getSpan().getStart(),
+            underlinedTokens[underlinedTokens.length - 1].getSpan().getEnd());
 		
 		Span[] tokenIndex = tokenIndex(matched);
 		
@@ -384,9 +389,14 @@ public class SuggestionBuilder {
 	                  
 	                    String[] flexArr = flexList.toArray(new String[flexList.size()]); // Can be empty.
 	                    
-	                    String f = getBestFlexedWord(flexArr, ot, cloneTagMask);
-	                    f = SuggestionBuilder.discardBeginningHyphen(f);
-	                    f = RuleUtils.useCasedString(ot.getLexeme(), f);
+	                    String f;
+	                    if(flexArr.length > 0) {
+	                      f = getBestFlexedWord(flexArr, ot, cloneTagMask);
+	                      f = SuggestionBuilder.discardBeginningHyphen(f);
+	                      f = RuleUtils.useCasedString(ot.getLexeme(), f);
+	                    } else {
+	                      f = ot.getLexeme();
+	                    }
 	                    
 //	                    mistakenTokensAsString[replaceIndex + i] = f;
 	                    fixed[tokenIndex[replaceIndex].getStart() + i] = f;
@@ -432,17 +442,42 @@ public class SuggestionBuilder {
 //	          }
 //	        }
 			
-			// Concatenates the suggestions to obtain a single string.
-			String suggestionAsString = "";
-			for (int i = 0; i < mistakenTokensAsString.length; i++) {
-				if (mistakenTokensAsString[i].startsWith("-") || replacedByEmptyString[i]) {
-					suggestionAsString += mistakenTokensAsString[i];
-				} else {
-					suggestionAsString += " " + mistakenTokensAsString[i];
-				}
+			StringBuilder suggestionAsStr = new StringBuilder(underlinedSpan.getCoveredText(sentence.getSentence()));
+			int offset = underlinedTokens[0].getSpan().getStart();
+			Span previous = new Span(Integer.MAX_VALUE, Integer.MAX_VALUE);
+			for (int i = mistakenTokensAsString.length - 1; i >= 0; i--) {
+			  if(mistakenTokensAsString[i] != null) {
+			    Span s = underlinedTokens[i].getSpan();
+			    if(previous.equals(s)) {
+			      // contraction?
+			      String contraction = ContractionUtility.toContraction(mistakenTokensAsString[i].toLowerCase(), mistakenTokensAsString[i+1].toLowerCase());
+                  mistakenTokensAsString[i] = RuleUtils.useCasedString(underlinedTokens[i].getSpan().getCoveredText(sentence.getDocumentText()).toString(), contraction);
+			      s = new Span(previous.getStart(), previous.getStart() + mistakenTokensAsString[i+1].length());
+			    }
+			    previous = s;
+			    suggestionAsStr.replace(s.getStart()-offset, s.getEnd()-offset, mistakenTokensAsString[i]);
+			  }
+              if(replacedByEmptyString[i] && i > 0 && i < mistakenTokensAsString.length - 1) {
+                int end = underlinedTokens[i].getSpan().getStart();
+                int start = underlinedTokens[i-1].getSpan().getEnd();
+                
+                suggestionAsStr.replace(start, end, "");
+              }
 			}
+			
+			// Concatenates the suggestions to obtain a single string.
+//			String suggestionAsString = "";
+//			for (int i = 0; i < mistakenTokensAsString.length; i++) {
+//			  if(mistakenTokensAsString[i] != null) {
+//				if (mistakenTokensAsString[i].startsWith("-") || replacedByEmptyString[i]) {
+//					suggestionAsString += mistakenTokensAsString[i];
+//				} else {
+//					suggestionAsString += " " + mistakenTokensAsString[i];
+//				}
+//			  }
+//			}
 			// Adds this suggestion to the suggestions determined so far.
-			return suggestionAsString.trim();
+			return suggestionAsStr.toString().trim();
 		}
 		return null;
 	}
@@ -505,7 +540,7 @@ public class SuggestionBuilder {
 	{
 		String[] subArray = new String[tokens.length];
 		for (int i = 0; i < tokens.length; i++) {
-		    if(tokens[i] != null) {
+		    if(isNotNull(tokens[i])) {
 		      subArray[i] = ((TokenCogroo)tokens[i]).getLexeme();
 		    } else {
 		      subArray[i] = null;
@@ -514,7 +549,13 @@ public class SuggestionBuilder {
 		return subArray;
 	}
 	
-	/**
+	private static boolean isNotNull(Token token) {
+	  if(token == null || token instanceof NullToken)
+	    return false;
+	  return true;
+  }
+
+  /**
 	 * Gets the tokens from the <code>tokens</code> array which are between <code>lower</code> and
 	 * <code>upper</code> positions.
 	 * 
@@ -594,30 +635,21 @@ public class SuggestionBuilder {
 	
 	private static String getBestFlexedWord(String[] flex, Token original, TagMask tagMask)
 	{
-		
+	    String lexeme = original.getLexeme().toLowerCase();
+		// choose the one with smaller distance
 		if(flex.length > 1)
 		{
-			// lets choose the most common
-			HashMap<String, Integer> visitedLexemes = new HashMap<String, Integer>();
-			
-			for (String pair : flex) {
-				String lex = pair.toLowerCase();
-				if(!visitedLexemes.containsKey(lex))
-					visitedLexemes.put(lex, new Integer(0));
-				else
-					visitedLexemes.put(lex, new Integer(visitedLexemes.get(lex) + 1));
-			}
-			String selectedLexeme = null;
-			int bestValue = 0;
-			for (String lex : visitedLexemes.keySet()) {
-				if(bestValue <= visitedLexemes.get(lex))
-				{
-					bestValue = visitedLexemes.get(lex);
-					selectedLexeme = lex;
-				}
-			}
-			return selectedLexeme;
-			
+		    int minDist = Integer.MAX_VALUE;
+		    String selected = null;
+		    for (String candidate : flex) {
+              int d = levenshteinDistance(lexeme, candidate);
+              if(d < minDist) {
+                minDist = d;
+                selected = candidate;
+              }
+            }
+		    
+		    return selected;
 		}
 		else if(flex.length == 1)
 		{
@@ -627,6 +659,48 @@ public class SuggestionBuilder {
 		// lenght 0
 		return "";
 		
+	}
+	
+	// from http://en.wikipedia.org/wiki/Levenshtein_distance 
+	// Hjelmqvist, Sten (26 Mar 2012), Fast, memory efficient Levenshtein algorithm
+	private static int levenshteinDistance(String s, String t)
+	{
+	    // degenerate cases
+	    if (s == t) return 0;
+	    if (s.length() == 0) return t.length();
+	    if (t.length() == 0) return s.length();
+	 
+	    // create two work vectors of integer distances
+	    int[] v0 = new int[t.length() + 1];
+	    int[] v1 = new int[t.length() + 1];
+	 
+	    // initialize v0 (the previous row of distances)
+	    // this row is A[0][i]: edit distance for an empty s
+	    // the distance is just the number of characters to delete from t
+	    for (int i = 0; i < v0.length; i++)
+	        v0[i] = i;
+	 
+	    for (int i = 0; i < s.length(); i++)
+	    {
+	        // calculate v1 (current row distances) from the previous row v0
+	 
+	        // first element of v1 is A[i+1][0]
+	        //   edit distance is delete (i+1) chars from s to match empty t
+	        v1[0] = i + 1;
+	 
+	        // use formula to fill in the rest of the row
+	        for (int j = 0; j < t.length(); j++)
+	        {
+	            int cost = (s.charAt(i) == t.charAt(j)) ? 0 : 1;
+	            v1[j + 1] = Math.min(Math.min(v1[j] + 1, v0[j + 1] + 1), v0[j] + cost);
+	        }
+	 
+	        // copy v1 (current row) to v0 (previous row) for next interation
+	        for (int j = 0; j < v0.length; j++)
+	            v0[j] = v1[j];
+	    }
+	 
+	    return v1[t.length()];
 	}
 	
 }
