@@ -58,7 +58,7 @@
 		<module>../cogroo-ann</module>
 		<module>../cogroo-gc</module>
 		<module>../lang</module>
- 		<module>../cogroo-eval</module>
+<!--  		<module>../cogroo-eval</module> -->
 	</modules>
 
 	<scm>
