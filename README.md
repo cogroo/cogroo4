@@ -30,7 +30,7 @@ Execute `mvn install` inside the folder `cogroo`.
 
 Usage
 -----
-TODO
+[Using the API](http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/API_CoGrOO_4x)
 
 License
 -------
