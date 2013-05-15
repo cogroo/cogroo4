@@ -97,6 +97,13 @@ public class RepetitionChecker extends AbstractTypedChecker {
 
 		Class first = tokens.get(i - 1).getMorphologicalTag().getClazzE();
 		Class second = tokens.get(i).getMorphologicalTag().getClazzE();
+		
+		int startFirst = tokens.get(i - 1).getSpan().getStart();
+		int startSecond = tokens.get(i).getSpan().getStart();
+		
+		if(startFirst == startSecond) { // contraction
+		  return true;
+		}
 
 		if (word.equals("se")) {
 			if (first.equals(Class.SUBORDINATING_CONJUNCTION)
