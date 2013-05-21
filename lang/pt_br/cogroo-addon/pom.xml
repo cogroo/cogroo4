@@ -92,26 +92,35 @@
 								<taskdef resource="net/sf/antcontrib/antcontrib.properties"
 									classpathref="maven.plugin.classpath" />
 								<if>
-									<isset property="OXT_VERSION" />
+									<isset property="performRelease" />
 									<then>
-										<echo message="************** Using previously set OXT_VERSION: ${OXT_VERSION} **************" />
+										<echo message="************** RELEASE PROFILE **************" />
+										<echo message="OXT_VERSION = ${project.version}" file="target/oxt_version.property" />
 									</then>
 									<else>
-										<tstamp>
-											<format property="TSTAMP" pattern="yyyyMMddHHmmss"
-												locale="GMT" />
-										</tstamp>
-										<echo message="********** TSTAMP: ${TSTAMP} Version: ${project.version} **********" />
-										<echo message="${project.version}" file="target/version.property" />
-										<loadfile property="OXT_VERSION" srcFile="target/version.property">
-											<filterchain>
-												<tokenfilter>
-													<replaceregex pattern="-SNAPSHOT" replace=".${TSTAMP}"
-														flags="g" />
-												</tokenfilter>
-											</filterchain>
-										</loadfile>
-										<echo message="OXT_VERSION = ${OXT_VERSION}" file="target/oxt_version.property" />
+										<if>
+											<isset property="OXT_VERSION" />
+											<then>
+												<echo message="************** Using previously set OXT_VERSION: ${OXT_VERSION} **************" />
+											</then>
+											<else>
+												<tstamp>
+													<format property="TSTAMP" pattern="yyyyMMddHHmmss"
+														locale="GMT" />
+												</tstamp>
+												<echo message="********** TSTAMP: ${TSTAMP} Version: ${project.version} **********" />
+												<echo message="${project.version}" file="target/version.property" />
+												<loadfile property="OXT_VERSION" srcFile="target/version.property">
+													<filterchain>
+														<tokenfilter>
+															<replaceregex pattern="-SNAPSHOT" replace=".${TSTAMP}"
+																flags="g" />
+														</tokenfilter>
+													</filterchain>
+												</loadfile>
+												<echo message="OXT_VERSION = ${OXT_VERSION}" file="target/oxt_version.property" />
+											</else>
+										</if>
 									</else>
 								</if>
 							</target>
@@ -213,43 +222,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-
-			<!-- <plugin> -->
-			<!-- <artifactId>maven-assembly-plugin</artifactId> -->
-			<!-- <inherited>true</inherited> -->
-			<!-- <configuration> -->
-			<!-- <descriptorRefs> -->
-			<!-- <descriptorRef>src</descriptorRef> -->
-			<!-- </descriptorRefs> -->
-			<!-- </configuration> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>src</id> -->
-			<!-- <phase>verify</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>attached</goal> -->
-			<!-- </goals> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
-
-
-
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>downloads-maven-plugin</artifactId>
-				<version>0.6</version>
-				<configuration>
-					<repositoryName>cogroo4</repositoryName>
-					<repositoryOwner>cogroo</repositoryOwner>
-					<description>${project.version} release of ${project.name}</description>
-					<override>true</override>
-					<includes>
-						<include>*.oxt</include>
-						<include>update-site/*.xml</include>
-					</includes>
-				</configuration>
 			</plugin>
 
 			<plugin>
