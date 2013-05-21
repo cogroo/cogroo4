@@ -62,9 +62,9 @@
 	</modules>
 
 	<scm>
-		<connection>scm:git:git://github.com/cogroo/cogroo4.git</connection>
-		<url>scm:git:git://github.com/cogroo/cogroo4.git</url>
-		<developerConnection>scm:git:git://github.com/cogroo/cogroo4.git</developerConnection>
+		<connection>scm:git:git@github.com:cogroo/cogroo4.git</connection>
+		<url>scm:git:git@github.com:cogroo/cogroo4.git</url>
+		<developerConnection>scm:git:git@github.com:cogroo/cogroo4.git</developerConnection>
 	</scm>
 
 	<dependencyManagement>
