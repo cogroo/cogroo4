@@ -54,11 +54,11 @@
 	</licenses>
 
 	<modules>
-		<module>../cogroo-nlp</module>
-		<module>../cogroo-ann</module>
-		<module>../cogroo-gc</module>
-		<module>../lang</module>
-<!--  		<module>../cogroo-eval</module> -->
+		<module>cogroo-nlp</module>
+		<module>cogroo-ann</module>
+		<module>cogroo-gc</module>
+		<module>lang</module>
+<!--  		<module>cogroo-eval</module> -->
 	</modules>
 
 	<scm>
