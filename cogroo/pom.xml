@@ -54,9 +54,9 @@
 	</licenses>
 
 	<modules>
-		<module>../cogroo-nlp</module>
-		<module>../cogroo-ann</module>
-		<module>../cogroo-gc</module>
+		<module>../cogroo_nlp</module>
+		<module>../cogroo_ann</module>
+		<module>../cogroo_gc</module>
 		<module>../lang</module>
 <!--  		<module>../cogroo-eval</module> -->
 	</modules>
