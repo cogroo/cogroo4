@@ -5,7 +5,7 @@
 	<parent>
   		<groupId>org.cogroo.lang.pt_br</groupId>
   		<artifactId>parent</artifactId>
-  		<version>4.0.0-SNAPSHOT</version>
+  		<version>4.0.0</version>
 		<relativePath>..</relativePath>
 	</parent>
 	
@@ -93,20 +93,16 @@
 									<isset property="performRelease" />
 									<then>
 										<echo message="************** RELEASE PROFILE **************" />
-										<echo message="OXT_VERSION = ${project.version}" 
-														file="target/oxt_version.property" append="true"/>
-										<echo message="UPDATE_SITE = http://sourceforge.net/projects/cogroo/files/cogroo4/update-site.xml${line.separator}" 
-														file="target/oxt_version.property" append="true"/>
-										<echo message="OXT_PATH = http://sourceforge.net/projects/cogroo/files/cogroo4/${project.version}/cogroo-${project.version}.oxt${line.separator}" 
-														file="target/oxt_version.property" append="true"/>
-										<echo message="RELEASE_NOTES = http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/Release_notes${line.separator}" 
-														file="target/oxt_version.property" append="true"/>
+										<echo message="OXT_VERSION = ${project.version}" file="target/oxt_version.property" append="true" />
+										<echo message="UPDATE_SITE = http://sourceforge.net/projects/cogroo/files/cogroo4/update-site.xml${line.separator}" file="target/oxt_version.property" append="true" />
+										<echo message="OXT_PATH = http://sourceforge.net/projects/cogroo/files/cogroo4/${project.version}/cogroo-${project.version}.oxt${line.separator}" file="target/oxt_version.property" append="true" />
+										<echo message="RELEASE_NOTES = http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/Release_notes${line.separator}" file="target/oxt_version.property" append="true" />
 									</then>
 									<else>
 										<if>
 											<isset property="OXT_VERSION" />
 											<then>
-												<echo message="************** Using previously set OXT configuration  **************" />
+												<echo message="************** Using previously set OXT configuration **************" />
 											</then>
 											<else>
 												<tstamp>
@@ -121,14 +117,10 @@
 														</tokenfilter>
 													</filterchain>
 												</loadfile>
-												<echo message="OXT_VERSION = ${OXT_VERSION}${line.separator}" 
-														file="target/oxt_version.property" append="true"/>
-												<echo message="UPDATE_SITE = http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/update-site.xml${line.separator}" 
-														file="target/oxt_version.property" append="true"/>
-												<echo message="OXT_PATH = http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/${project.version}/cogroo-${project.version}.oxt${line.separator}" 
-														file="target/oxt_version.property" append="true"/>
-												<echo message="RELEASE_NOTES = https://github.com/cogroo/cogroo4/commits/master${line.separator}" 
-														file="target/oxt_version.property" append="true"/>
+												<echo message="OXT_VERSION = ${OXT_VERSION}${line.separator}" file="target/oxt_version.property" append="true" />
+												<echo message="UPDATE_SITE = http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/update-site.xml${line.separator}" file="target/oxt_version.property" append="true" />
+												<echo message="OXT_PATH = http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/${project.version}/cogroo-${project.version}.oxt${line.separator}" file="target/oxt_version.property" append="true" />
+												<echo message="RELEASE_NOTES = https://github.com/cogroo/cogroo4/commits/master${line.separator}" file="target/oxt_version.property" append="true" />
 											</else>
 										</if>
 									</else>
