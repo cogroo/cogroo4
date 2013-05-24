@@ -22,6 +22,8 @@ import org.cogroo.entities.Sentence;
 import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.util.TextUtils;
 
+import com.google.common.base.Strings;
+
 
 public class CheckDocument extends DocumentImpl {
   
@@ -46,12 +48,19 @@ public class CheckDocument extends DocumentImpl {
   
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder(TextUtils.nicePrint(this));
-    sb.append("\n");
-    sb.append("Mistakes count: " + mistakes.size());
+    StringBuilder sb = new StringBuilder(TextUtils.nicePrint(this) + "\n");
+    sb.append(getMistakesAsString());
+    
+    return sb.toString();
+  }
+  
+  public String getMistakesAsString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Mistakes count: ").append(mistakes.size()).append("\n");
     for (int i = 0; i < mistakes.size(); i++) {
-      sb.append("  Mistake [").append(i).append("]\n");
-      sb.append(mistakes.get(i));
+      sb.append("{Mistake [").append(i).append("]\n");
+      sb.append(mistakes.get(i)).append("\n");
+      sb.append("}").append("\n");
     }
     
     return sb.toString();
