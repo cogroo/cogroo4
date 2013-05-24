@@ -40,6 +40,10 @@ public interface Token {
   public String getChunkTag();
   
   public String getSyntacticTag();
+  
+  public boolean isChunkHead();
+  
+  public void isChunkHead(boolean ch);
 
   public void setFeatures(String features);
 

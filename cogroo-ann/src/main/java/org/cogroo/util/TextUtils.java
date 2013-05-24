@@ -19,12 +19,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.cogroo.config.Analyzers;
-import org.cogroo.text.Chunk;
 import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
-import org.cogroo.text.SyntacticChunk;
 import org.cogroo.text.Token;
-
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
@@ -71,18 +68,18 @@ public class TextUtils {
     boolean printAdditionalContext = false;
     StringBuilder output = new StringBuilder();
 
-    output.append("Entered text: ").append(document.getText()).append("\n\n");
+    output.append("Document text: ").append(document.getText()).append("\n\n");
 
     if (document.getSentences() != null) {
       int cont = 0;
       for (Sentence sentence : document.getSentences()) {
         cont++;
-        output.append("  Sentence ").append(cont).append(": ")
+        output.append("{Sentence ").append(cont).append(": ")
             .append(sentence.getText()).append("\n");
 
         List<Token> tokens = sentence.getTokens();
 
-        String format = "  %10s %10s %9s %8s\n";
+        String format;
 
         Joiner joiner = Joiner.on(", ");
 
@@ -91,28 +88,40 @@ public class TextUtils {
           String[] posTags = new String[tokens.size()];
           String[] features = new String[tokens.size()];
           String[] lemmas = new String[tokens.size()];
+          String[] chunks = new String[tokens.size()];
+          String[] schunks = new String[tokens.size()];
 
-          output.append("   Tokens:\n");
+          output.append("   (token, class tag, feature tag, lexeme, chunks, function)\n");
           for (int i = 0; i < tokens.size(); i++) {
+            Token t = tokens.get(i);
+            
+            lexemes[i] = Strings.nullToEmpty(t.getLexeme());
+            posTags[i] = Strings.nullToEmpty(t.getPOSTag());
+            features[i] = Strings.nullToEmpty(t.getFeatures());
 
-            lexemes[i] = Strings.nullToEmpty(tokens.get(i).getLexeme());
-            posTags[i] = Strings.nullToEmpty(tokens.get(i).getPOSTag());
-            features[i] = Strings.nullToEmpty(tokens.get(i).getFeatures());
-
-            if (tokens.get(i).getLemmas() != null)
-              lemmas[i] = joiner.join(tokens.get(i).getLemmas());
+            if (t.getLemmas() != null)
+              lemmas[i] = joiner.join(t.getLemmas());
             else
               lemmas[i] = "";
+            
+            String head = "";
+            if(t.isChunkHead()) {
+              head = "*";
+            }
+            chunks[i] = t.getChunkTag() + head;
+            
+            schunks[i] = t.getSyntacticTag();
           }
 
-          format = " | %-" + maxSize(lexemes) + "s | %-" + maxSize(posTags)
+          format = "   | %-" + maxSize(lexemes) + "s | %-" + maxSize(posTags)
               + "s | %-" + maxSize(features) + "s | %-" + maxSize(lemmas)
+              + "s | %-" + maxSize(chunks) + "s | %-" + maxSize(schunks)
               + "s |\n";
 
           for (int i = 0; i < tokens.size(); i++) {
 
             output.append(String.format(format, lexemes[i], posTags[i],
-                features[i], lemmas[i]));
+                features[i], lemmas[i], chunks[i], schunks[i]));
 
           }
           output.append("\n");
@@ -136,23 +145,10 @@ public class TextUtils {
 
         }
 
-        if (sentence.getChunks() != null) {
-          List<Chunk> chunks = sentence.getChunks();
-          for (Chunk chunk : chunks) {
-            output.append(chunk.toString());
-          }
-        }
+        output.append("   Syntax tree: \n   ");
+        output.append(sentence.asTree().toSyntaxTree());
         
-        if (sentence.getSyntacticChunks() != null) {
-          List<SyntacticChunk> chunks = sentence.getSyntacticChunks();
-          for (SyntacticChunk sc : chunks) {
-            output.append(sc.toString());
-          }
-        }
-        
-        output.append(sentence.asTree());
-        
-        output.append("\n");
+        output.append("\n}\n");
       }
     }
     return output.toString();

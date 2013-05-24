@@ -51,8 +51,10 @@ public class HeadFinder implements Analyzer {
       
       for (Chunk chunk : chunks)
         for (int i = chunk.getStart(); i < chunk.getEnd(); i++)
-          if (heads[i].equals("B-H"))
+          if (heads[i].equals("B-H")) {
+            tokens.get(i).isChunkHead(true);
             chunk.setHeadIndex(i);
+          }
     }
   }
 

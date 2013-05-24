@@ -55,6 +55,8 @@ public class TokenImpl implements Token {
   private Map<Analyzers, String> additionalContext = new HashMap<Analyzers, String>();
 
   private double posTagProb;
+
+  private boolean isChunkHead;
   
   public TokenImpl(int start, int end, String lexeme) {
     this(start, end, lexeme, null, null, null);
@@ -193,6 +195,16 @@ public class TokenImpl implements Token {
   @Override
   public void setPOSTagProb(double prob) {
     posTagProb = prob;
+  }
+
+  @Override
+  public boolean isChunkHead() {
+    return this.isChunkHead;
+  }
+
+  @Override
+  public void isChunkHead(boolean ch) {
+    this.isChunkHead = ch;
   }
 
 }
