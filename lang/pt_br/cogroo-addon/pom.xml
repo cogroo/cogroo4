@@ -94,12 +94,15 @@
 									<then>
 										<echo message="************** RELEASE PROFILE **************" />
 										<echo message="OXT_VERSION = ${project.version}" file="target/oxt_version.property" />
+										<echo message="UPDATE_SITE = ${UPDATE_SITE}" file="http://sourceforge.net/projects/cogroo/files/cogroo4/update-site-release.xml" />
 									</then>
 									<else>
 										<if>
 											<isset property="OXT_VERSION" />
 											<then>
-												<echo message="************** Using previously set OXT_VERSION: ${OXT_VERSION} **************" />
+												<echo message="************** Using previously set OXT configuration  **************" />
+												<echo message="   OXT_VERSION: ${OXT_VERSION}" />
+												<echo message="   UPDATE_SITE: ${UPDATE_SITE}" />
 											</then>
 											<else>
 												<tstamp>
@@ -115,6 +118,7 @@
 													</filterchain>
 												</loadfile>
 												<echo message="OXT_VERSION = ${OXT_VERSION}" file="target/oxt_version.property" />
+												<echo message="UPDATE_SITE = ${UPDATE_SITE}" file="http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/update-site-snapshot.xml" />
 											</else>
 										</if>
 									</else>
@@ -131,8 +135,8 @@
 						<phase>verify</phase>
 						<configuration>
 							<target>
-								<echo message="Change name: ${project.artifactId}-${project.version}-bin.oxt.zip to ${project.artifactId}-${project.version}.oxt" />
-								<copy file="target/${project.artifactId}-${project.version}-bin.oxt.zip" tofile="target/${project.artifactId}-${project.version}.oxt" />
+								<echo message="Change name: cogroo-${project.version}-bin.oxt.zip to cogroo-${project.version}.oxt" />
+								<copy file="target/cogroo-${project.version}-bin.oxt.zip" tofile="target/cogroo-${project.version}.oxt" />
 							</target>
 						</configuration>
 						<goals>
@@ -200,7 +204,7 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<finalName>${project.artifactId}-${project.version}</finalName>
+					<finalName>cogroo-${project.version}</finalName>
 					<descriptors>
 						<descriptor>${basedir}/mvn/addonAssembly.xml</descriptor>
 					</descriptors>

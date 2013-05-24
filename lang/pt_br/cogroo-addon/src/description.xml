@@ -44,7 +44,7 @@
         <name lang="en" xlink:href="http://cogroo.org">CoGrOO</name>
     </publisher>
     <update-information>
-        <src xlink:href="http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/update-site-snapshot.xml"/>
+        <src xlink:href="${UPDATE_SITE}"/>
     </update-information>
     <extension-description>
         <src lang="pt-BR" xlink:href="description/description_pt_BR.txt"/>
