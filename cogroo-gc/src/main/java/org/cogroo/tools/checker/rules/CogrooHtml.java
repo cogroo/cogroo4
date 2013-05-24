@@ -105,15 +105,11 @@ public class CogrooHtml {
 
     private String path;
 
-    public CogrooHtml() throws Exception {
-      File f = new File("reports/rules_status.html");
+    public CogrooHtml(File f, GrammarChecker cogroo) throws Exception {
       path = f.getAbsolutePath();
-      out = Files.newWriter(new File("reports/rules_status.html"), Charset.forName("UTF-8"));
+      out = Files.newWriter(f, Charset.forName("UTF-8"));
       
-      ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
-      
-      
-      cogroo = new GrammarChecker(factory.createPipe());
+      this.cogroo = cogroo;
       
 //      TagDictionary td = new TagDictionary(new FSALexicalDictionary(), false,
 //          new FlorestaTagInterpreter());
@@ -132,7 +128,7 @@ public class CogrooHtml {
       return xmlProvider.getRules();
     }
     
-    private void test() throws Exception {
+    public void evaluate() throws Exception {
         this.printHtmlHeader();
         
         int totalRules = 0;
@@ -429,10 +425,6 @@ public class CogrooHtml {
                             {
                                 suggestionIsOk = true;
                             }
-                            else
-                            {
-                                System.out.println();
-                            }
                         }
                     }
                     
@@ -596,8 +588,9 @@ public class CogrooHtml {
     }
     
     public static void main(String[] args) throws Exception {
-        CogrooHtml testCogrooHtml = new CogrooHtml();
-        testCogrooHtml.test();
+        ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
+        CogrooHtml testCogrooHtml = new CogrooHtml(new File("reports/rules_status.html"), new GrammarChecker(factory.createPipe()));
+        testCogrooHtml.evaluate();
     }
 
 }

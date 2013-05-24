@@ -19,223 +19,303 @@
 <Rules xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Rules.xsd">
 	<Rule id="1" active="true">
 		<Method>general</Method>
-		<Type/>
-		<Group/>
-		<Message/>
+		<Type>Crase</Type>
+		<Group>à + substantivo masculino</Group>
+		<Message>O sinal indicativo de crase indica que temos "a" + "a" expressos em um só "à". Somente ocorre crase quando há encontro de preposição "a" com artigo ou pronome demonstrativo "a"/"as". Portanto, não ocorre crase antes de palavras masculinas.</Message>
+		<ShortMessage>Não ocorre crase antes de palavras masculinas.</ShortMessage>
 		<Pattern>
-			<PatternElement><Element>
-				<Mask>
-					<LexemeMask>a</LexemeMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Mask>
-					<LexemeMask>a</LexemeMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Mask>
-					<TagMask>
-						<Class>verb</Class>
-					</TagMask>
-				</Mask>
-			</Element></PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<TagMask>
+							<Class>noun</Class>
+							<Gender>male</Gender>
+							<Number>singular</Number>
+						</TagMask>
+					</Mask>
+				</Element>
+			</PatternElement>
 		</Pattern>
 		<Boundaries>
 			<Lower>0</Lower>
 			<Upper>-1</Upper>
 		</Boundaries>
-		<Suggestion/>
+		<Suggestion>
+			<Replace index="0">
+				<Lexeme/>
+			</Replace>
+			<Replace index="1">
+				<Lexeme>ao</Lexeme>
+			</Replace>
+		</Suggestion>
+		<Suggestion>
+			<Replace index="0">
+				<Lexeme/>
+			</Replace>
+		</Suggestion>
 		<Example>
-			<Incorrect/>
-			<Correct/>
+			<Incorrect>Refiro-me à trabalho remunerado.</Incorrect>
+			<Correct>Refiro-me ao trabalho remunerado. Refiro-me a trabalho remunerado.</Correct>
 		</Example>
 		<ModificationHistory>
-			<Author/>
-			<Date>2006-09-30T23:40:10.0Z</Date>
+			<Author>sueli</Author>
+			<Date>2005-09-28T17:40:53.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
 	<Rule id="2" active="true">
 		<Method>general</Method>
-		<Type/>
-		<Group/>
-		<Message>O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.</Message>
+		<Type>Crase</Type>
+		<Group>à + substativo masculino</Group>
+		<Message>Não haverá crase antes de palavras masculinas. O sinal indicativo de crase indica que temos "a" + "a" expressos em um só "à". Somente ocorre crase quando há encontro de preposição "a" com artigo ou pronome demonstrativo "a"/"as".</Message>
+		<ShortMessage>Não ocorre crase antes de palavras masculinas.</ShortMessage>
 		<Pattern>
-			<PatternElement><Element>
-				<Mask>
-					<TagMask>
-						<Class>noun</Class>
-						<Gender>male</Gender>
-						<Number>plural</Number>
-					</TagMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Mask>
-					<TagMask>
-						<Class>adjective</Class>
-						<Gender>male</Gender>
-						<Number>singular</Number>
-					</TagMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Negated>true</Negated>
-				<Mask>
-					<LexemeMask>e</LexemeMask>
-				</Mask>
-				<Mask>
-					<LexemeMask>ou</LexemeMask>
-				</Mask>
-			</Element></PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<TagMask>
+							<Class>noun</Class>
+							<Gender>male</Gender>
+							<Number>plural</Number>
+						</TagMask>
+					</Mask>
+				</Element>
+			</PatternElement>
 		</Pattern>
 		<Boundaries>
 			<Lower>0</Lower>
 			<Upper>-1</Upper>
 		</Boundaries>
-		<Suggestion/>
+		<Suggestion>
+			<Replace index="0">
+				<Lexeme/>
+			</Replace>
+			<Replace index="1">
+				<Lexeme>a</Lexeme>
+			</Replace>
+		</Suggestion>
 		<Example>
-			<Incorrect/>
-			<Correct/>
+			<Incorrect>Refiro-me à trabalhos remunerados.</Incorrect>
+			<Correct>Refiro-me aos trabalhos remunerados. Refiro-me a trabalhos remunerados.</Correct>
 		</Example>
 		<ModificationHistory>
-			<Author/>
-			<Date>2006-09-30T23:51:10.0Z</Date>
+			<Author>sueli</Author>
+			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
 	<Rule id="3" active="true">
 		<Method>general</Method>
-		<Type/>
-		<Group/>
-		<Message/>
+		<Type>Crase</Type>
+		<Group>à + substativo feminino plural</Group>
+		<Message>O sinal indicativo de crase indica que temos "a" + "a" expressos em um só "à". Somente ocorre crase quando há encontro de preposição "a" com artigo ou pronome demonstrativo "a"/"as".</Message>
+		<ShortMessage>Não há crase neste caso, somente no plural ("às").</ShortMessage>
 		<Pattern>
-			<PatternElement><Element>
-				<Mask>
-					<LexemeMask>a</LexemeMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Mask>
-					<LexemeMask>a</LexemeMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Mask>
-					<TagMask>
-						<Class>noun</Class>
-						<Gender>male</Gender>
-						<Number>singular</Number>
-					</TagMask>
-				</Mask>
-			</Element></PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<TagMask>
+							<Class>noun</Class>
+							<Gender>female</Gender>
+							<Number>plural</Number>
+						</TagMask>
+					</Mask>
+				</Element>
+			</PatternElement>
 		</Pattern>
 		<Boundaries>
 			<Lower>0</Lower>
 			<Upper>-1</Upper>
 		</Boundaries>
-		<Suggestion/>
+		<Suggestion>
+			<Replace index="0">
+				<Lexeme/>
+			</Replace>
+			<Replace index="1">
+				<Lexeme>a</Lexeme>
+			</Replace>
+		</Suggestion>
 		<Example>
-			<Incorrect>O bonito casacos ficaram prontos.</Incorrect>
-			<Correct>Os bonitos casacos ficaram prontos.</Correct>
+			<Incorrect>Refiro-me à reuniões extraordinárias.</Incorrect>
+			<Correct>Refiro-me às reuniões extraordinárias. Refiro-me a reuniões extraordinárias.</Correct>
 		</Example>
 		<ModificationHistory>
-			<Author/>
-			<Date>2006-09-30T23:51:10.0Z</Date>
+			<Author>sueli</Author>
+			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
 	<Rule id="4" active="true">
 		<Method>general</Method>
-		<Type/>
-		<Group/>
-		<Message>Pronomes de tratamento não admitem artigo, portanto não haverá crase antes deles. A única exceção é o pronome senhora, que admite artigo e, se houver também preposição, haverá crase. - "a" "a" "Vossa" "(Senhoria|Majestade|Eminência|Excelência|Reverendíssima|Santidade)"</Message>
+		<Type>Crase</Type>
+		<Group>à + verbo</Group>
+		<Message>Não acontece crase antes de verbo. O sinal indicativo de crase indica que temos "a" + "a" expressos em um só "à". Somente ocorre crase quando há encontro de preposição "a" com artigo ou pronome demonstrativo "a"/"as" (antes de verbo não há artigo nem pronome demonstrativo "a" ou "as". O "a" antes de verbo será apenas preposição, portanto sem crase).</Message>
+		<ShortMessage>Não acontece crase antes de verbo.</ShortMessage>
 		<Pattern>
-			<PatternElement><Element>
-				<Mask>
-					<LexemeMask>a</LexemeMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Mask>
-					<LexemeMask>a</LexemeMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Mask>
-					<LexemeMask>Vossa</LexemeMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Mask>
-					<LexemeMask>Senhoria</LexemeMask>
-				</Mask>
-				<Mask>
-					<LexemeMask>Majestade</LexemeMask>
-				</Mask>
-				<Mask>
-					<LexemeMask>Eminência</LexemeMask>
-				</Mask>
-				<Mask>
-					<LexemeMask>Excelência</LexemeMask>
-				</Mask>
-				<Mask>
-					<LexemeMask>Reverendíssima</LexemeMask>
-				</Mask>
-				<Mask>
-					<LexemeMask>Santidade</LexemeMask>
-				</Mask>
-			</Element></PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<TagMask>
+							<Class>finitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>gerund verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>infinitive verb</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>participle verb</Class>
+						</TagMask>
+					</Mask>
+				</Element>
+			</PatternElement>
 		</Pattern>
 		<Boundaries>
 			<Lower>0</Lower>
-			<Upper>-2</Upper>
+			<Upper>-1</Upper>
 		</Boundaries>
-		<Suggestion/>
+		<Suggestion>
+			<Replace index="0">
+				<Lexeme/>
+			</Replace>
+			<Replace index="1">
+				<Lexeme>a</Lexeme>
+			</Replace>
+		</Suggestion>
 		<Example>
-			<Incorrect>Enviei os documentos à Vossa Excelência.</Incorrect>
-			<Correct>Enviei os documentos a Vossa Excelência.</Correct>
+			<Incorrect>Fomos levados à crer.</Incorrect>
+			<Correct>Fomos levados a crer.</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>sueli</Author>
-			<Date>2006-09-30T23:51:10.0Z</Date>
+			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
 	<Rule id="5" active="true">
-		<Method>phrase-local</Method>
-		<Type/>
-		<Group/>
-		<Message>O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.</Message>
+		<Method>general</Method>
+		<Type>Crase</Type>
+		<Group>a + indicador de horas</Group>
+		<Message>Ocorre crase em expressões indicativas de horas.</Message>
+		<ShortMessage>Ocorre crase em expressões indicativas de horas.</ShortMessage>
 		<Pattern>
-			<PatternElement><Element>
-				<Mask>
-					<TagMask>
-						<Class>noun</Class>
-						<Gender>male</Gender>
-						<Number>singular</Number>
-					</TagMask>
-				</Mask>
-			</Element></PatternElement>
-			<PatternElement><Element>
-				<Mask>
-					<TagMask>
-						<Class>adjective</Class>
-						<Gender>male</Gender>
-						<Number>plural</Number>
-					</TagMask>
-				</Mask>
-			</Element></PatternElement>
+			<PatternElement>
+				<Element>
+					<Negated>true</Negated>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<TagMask>
+							<Class>numeral</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>article</Class>
+						</TagMask>
+					</Mask>
+					<Mask>
+						<TagMask>
+							<Class>pronoun</Class>
+						</TagMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>hora</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
 		</Pattern>
 		<Boundaries>
-			<Lower>0</Lower>
-			<Upper>0</Upper>
+			<Lower>1</Lower>
+			<Upper>-1</Upper>
 		</Boundaries>
-		<Suggestion/>
+		<Suggestion>
+			<Replace index="0">
+				<Lexeme>à</Lexeme>
+			</Replace>
+		</Suggestion>
 		<Example>
-			<Incorrect>O casaco bonitos ficou pronto.</Incorrect>
-			<Correct>O casaco bonito ficou pronto.</Correct>
+			<Incorrect>A uma hora estaremos partindo.</Incorrect>
+			<Correct>À uma hora estaremos partindo.</Correct>
 		</Example>
 		<ModificationHistory>
 			<Author>sueli</Author>
-			<Date>2006-09-30T23:51:10.0Z</Date>
+			<Date>2005-09-21T12:00:00.000-03:00</Date>
 		</ModificationHistory>
 	</Rule>
 </Rules>
