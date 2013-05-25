@@ -9,7 +9,6 @@ Source organization
 The code is organized as maven subprojects:
 
 * cogroo4
-  * cogroo: Maven aggregator (builds everything but the eval projects)
   * cogroo-nlp: low level customizations of Apache OpenNLP and tools, like the Featurizer tool and FSA dictionaries
   * cogroo-ann: a framework composed of Annotators and Pipes, this allow easy abstraction of Apache OpenNLP
   * cogroo-gc: the grammar checker core, based on the framework from cogroo-ann
@@ -26,7 +25,7 @@ The code is organized as maven subprojects:
 Building
 --------
 
-Execute `mvn install` inside the folder `cogroo`.
+Execute `mvn clean install` inside the root folder.
 
 Usage
 -----
