@@ -1,0 +1,30 @@
+CoGrOO
+Copyright 2004 - 2013 - CoGrOO Team, CCSL/USP
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+They are:
+ Apache OpenNLP
+ Apache Log4j
+ Apache OpenOffice Libraries
+Indirect Apache dependencies:
+ Apache Commons Codec 
+ Apache Commons CLI
+ Apache Commons Lang
+ JSR305
+
+This product contains JWNL developed by the JWNL SourceForge project 
+(http://sourceforge.net/projects/jwordnet/), licensed under the 
+BSD license (see LICENSE file).
+
+This product contains Morfologik developed by the Morfologik SourceForge project 
+(http://sourceforge.net/projects/morfologik/), licensed under the 
+BSD license (see LICENSE file).
+
+This product contains Guava developed by the Guava Google project 
+(https://code.google.com/p/guava-libraries/), licensed under the 
+Apache license (see LICENSE file).
+
+This product contains JAXB developed by the JAXB project 
+(https://jaxb.java.net), licensed under the 
+CDDL 1.1 license (see LICENSE file).

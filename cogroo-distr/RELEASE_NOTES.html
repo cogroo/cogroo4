@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Release notes</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+body { font:80% Verdana,Tahoma,Arial,sans-serif; }
+h1, h2, h3, h4 {  font-family: "Trebuchet MS",Georgia,"Times New Roman",serif; }
+ul.toc { padding: 4px; margin-left: 0; }
+ul.toc li { list-style-type:none; }
+ul.toc li.heading2 { margin-left: 1em; }
+ul.toc li.heading3 { margin-left: 2em; }
+a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
+a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
+h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor { display: inline; color: #ddd; }
+</style>
+</head>
+<body>
+<a name="Release-notes"></a>
+<h1 >Release notes<a href="#Release-notes" class="wiki-anchor">&para;</a></h1>
+
+
+	<p>Notas sobre as versões do corretor gramatical <a href="http://cogroo.sourceforge.net/" class="external">CoGrOO</a>. <a href="http://cogroo.sourceforge.net/download/current.html" class="external">Versão atual</a>  <a href="http://cogroo.sourceforge.net/download/oldversions.html" class="external">versões anteriores</a></p>
+
+
+	<a name="400-30Maio2013"></a>
+<h3 >4.0.0 - 30/Maio/2013<a href="#400-30Maio2013" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>Esta versão foi reescrita do zero. Todos os modelos linguísticos e dicionários foram refeitos, assim como o duto do corretor gramatical foi aprimorado. Uma nova API foi desenvolvida.<br />Com as alterações houve uma grande melhoria na qualidade do corretor gramatical, que agora apresenta uma melhor relação entre verdadeiros e falsos positivos.</p>
+
+
+	<a name="Novas-funcionalidades"></a>
+<h4 >Novas funcionalidades<a href="#Novas-funcionalidades" class="wiki-anchor">&para;</a></h4>
+
+
+	<p>[*Base*]</p>
+
+
+	<ol>
+	<li>O programa foi totalmente redesenhado, desde a arquitetura do software e código até os modelos linguísticos.</li>
+		<li><a href="http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/API_CoGrOO_4x" class="external">Nova API</a> (quebra de compatibilidade com a versão 3.x)</li>
+		<li><a href="https://github.com/cogroo/jspell.br" class="external">Novo dicionário</a></li>
+		<li><a href="http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/Linha_de_Comando" class="external">Nova linha de comando</a></li>
+	</ol>
+
+
+[*Regras*]
+	<ol>
+	<li>Aprimoramento das regras sujeito verbo</li>
+		<li>Regras de regência</li>
+		<li>Introdução de elementos opcionais</li>
+	</ol>
+
+
+	<p>[*Controle de versões*]</p>
+
+
+	<ol>
+	<li>Os fontes agora são hospedados no <a href="https://github.com/cogroo/cogroo4" class="external">GitHub</a></li>
+	</ol>
+
+
+	<a name="Correções"></a>
+<h4 >Correções<a href="#Correções" class="wiki-anchor">&para;</a></h4>
+
+
+	<p>Diversas correções e aprimoramentos.</p>
+
+
+	<p><strong>NOTES:</strong> Require Java 1.6 or better | Compatible with LibreOffice &#38; Apache OpenOffice (3.0.1 or better)</p>
+
+
+	<p><strong>CHANGE:</strong> Completely new development | Dictionary based on Jspell.br | Fewer false positives | Rule improvements</p>
+
+
+	<a name="321-12Outubro2012"></a>
+<h3 >3.2.1 - 12/Outubro/2012<a href="#321-12Outubro2012" class="wiki-anchor">&para;</a></h3>
+
+
+	<a name="Novas-funcionalidades-2"></a>
+<h4 >Novas funcionalidades<a href="#Novas-funcionalidades-2" class="wiki-anchor">&para;</a></h4>
+
+
+[ <strong>AddOn</strong> ]
+	<ol>
+	<li>No LibreOffice aparece uma nova opção no menu de contexto de um erro gramatical (quando clicamos com o direito no erro com o sublinhado azul). É a opção "Explicações...". Ela vai abrir o browser e mostrar detalhes deste erro no CoGrOO Comunidade. (feature <a href="http://ccsl.ime.usp.br/redmine/issues/636" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Add extended explanation link (LibreOffice) (Closed)">#636</a>)</li>
+	</ol>
+
+
+	<a name="Correções-2"></a>
+<h4 >Correções<a href="#Correções-2" class="wiki-anchor">&para;</a></h4>
+
+
+	<p>[ <strong>AddOn</strong> ]</p>
+
+
+	<ol>
+	<li>Corrigimos um bug que impedia reportar erros no Comunidade diretamente do AddOn (bug <a href="http://ccsl.ime.usp.br/redmine/issues/634" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="CoGrOO AddOn is not properly connecting with CoGrOO Comunidade (Closed)">#634</a>)</li>
+	</ol>
+
+
+	<p>[ <strong>Regras</strong> ]</p>
+
+
+	<ol>
+	<li>Melhorias nas regras 17 ... 24 (Concordância adjetivo-substantivo). A regra 17 foi alterada para usar o mecanismo e referencias, e com isso desativamos as regras 18, 19 e 20. O Mesmo foi feito para a regra 20, e desativamos as regras 21, 22, 23 e 24 (bug <a href="http://ccsl.ime.usp.br/redmine/issues/633" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Fixed issue with rules 17~24 (Closed)">#633</a>)</li>
+		<li>Corrigimos um erro que causava exception na regra de pontuação (bug <a href="http://ccsl.ime.usp.br/redmine/issues/618" class="issue status-3 priority-2" title="StringIndexOutOfBoundsException in SpaceChecker class (Resolved)">#618</a>)</li>
+	</ol>
+
+
+	<p><strong>NOTES:</strong> Require Java 1.5 or better | Compatible with LibreOffice &#38; Apache OpenOffice (3.0.1 or better)</p>
+
+
+	<p><strong>CHANGE:</strong> Bugs fixing, including one that prevent reporting errors | Rule improvements | Explanations at LibreOffice</p>
+
+
+	<a name="320-24Abril2012"></a>
+<h3 >3.2.0 - 24/Abril/2012<a href="#320-24Abril2012" class="wiki-anchor">&para;</a></h3>
+
+
+	<a name="Novas-funcionalidades-3"></a>
+<h4 >Novas funcionalidades<a href="#Novas-funcionalidades-3" class="wiki-anchor">&para;</a></h4>
+
+
+[ <strong>Regras</strong> ]
+	<ol>
+	<li>As regras <a href="http://ccsl.ime.usp.br/cogroo/comunidade/rules/124" class="external">117</a>, <a href="http://ccsl.ime.usp.br/cogroo/comunidade/rules/124" class="external">118</a> e <a href="http://ccsl.ime.usp.br/cogroo/comunidade/rules/124" class="external">124</a> foram reabilitadas. (<a href="http://ccsl.ime.usp.br/redmine/issues/587" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Reenable rules 117, 118 and 124 (Closed)">#587</a>)</li>
+		<li>Foram criadas regras simples que visam corrigir problemas com pontuação, espaçamento e repetição de palavras. <a href="http://ccsl.ime.usp.br/redmine/issues/486" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Create a space validator checker (Closed)">#486</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/566" class="issue status-5 priority-2 closed" title="Punctuation checkers (Closed)">#566</a> e <a href="http://ccsl.ime.usp.br/redmine/issues/583" class="issue status-5 priority-2 closed assigned-to-me" title="Repetition Checker (Closed)">#583</a>, respectivamente.</li>
+	</ol>
+
+
+[ <strong>Base</strong> ]
+	<ol>
+	<li>Adicionado campo context na classe Mistakes. <a href="http://ccsl.ime.usp.br/redmine/issues/585" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Include a context field to Mistake (Closed)">#585</a>.</li>
+	</ol>
+
+
+	<a name="Correções-3"></a>
+<h4 >Correções<a href="#Correções-3" class="wiki-anchor">&para;</a></h4>
+
+
+	<ol>
+	<li>A quantidade de falsos positivos reduziu-se pela metade, devido a pequenas correções aplicadas. <a href="http://ccsl.ime.usp.br/redmine/issues/586" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Code improvements to reduce false positives (Closed)">#586</a>.</li>
+		<li>Aprimoramento da lógica do SentenceDetectorME, reportado por Alessandro Kissaba. <a href="http://ccsl.ime.usp.br/redmine/issues/556" class="issue status-5 priority-2 closed assigned-to-me" title="Logic error in SentenceDetectorME class (Closed)">#556</a>.</li>
+		<li>Pequenos bugs resolvidos e melhorias aplicadas: <a href="http://ccsl.ime.usp.br/redmine/issues/501" class="issue status-5 priority-2 closed created-by-me" title="Improve toString methods to make debug easier (Closed)">#501</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/560" class="issue status-5 priority-2 closed" title="CoGrOO HTML not working (Closed)">#560</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/561" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Update build system to work with the latest version of M2Eclipse (Closed)">#561</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/565" class="issue status-5 priority-2 closed" title="Checkers with the same priority (Closed)">#565</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/575" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Build configuration should set file encoding explicitly (Closed)">#575</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/576" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="End of sentence was not properly set in add-on (Closed)">#576</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/577" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Checkers should consider the sentence start to compute the error position (Closed)">#577</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/578" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Update plugin project to use new OO version and new libraries (Closed)">#578</a> e <a href="http://ccsl.ime.usp.br/redmine/issues/580" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Fix potential bugs pointed by FindBugs (Closed)">#580</a>.</li>
+	</ol>
+
+
+	<p><strong>NOTES:</strong> Require Java 1.5 or better | Compatible with LibreOffice &#38; Apache OpenOffice (3.0.1 or better)</p>
+
+
+	<p><strong>CHANGE:</strong> Less false positives | Bugs fixing | Creation of new rules</p>
+
+
+	<a name="312-17Junho2011"></a>
+<h3 >3.1.2 - 17/Junho/2011<a href="#312-17Junho2011" class="wiki-anchor">&para;</a></h3>
+
+
+	<a name="Novas-funcionalidades-4"></a>
+<h4 >Novas funcionalidades<a href="#Novas-funcionalidades-4" class="wiki-anchor">&para;</a></h4>
+
+
+[ <strong>Relacionados ao CoGrOO Comunidade</strong> ]
+	<ol>
+	<li>Agora é possível enviar relatório de erro clicando em um link gerado pela extensão. Para acessar siga "Ferramentas >> Corretor Gramatical CoGrOO >> Reportar erro..." e clique em "Clique aqui para reportar pelo navegador" (<a href="http://ccsl.ime.usp.br/redmine/issues/457" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Report error from plugin using a web link (Closed)">#457</a>)</li>
+	</ol>
+
+
+[ <strong>Regras</strong> ]
+	<ol>
+	<li>As regras <a href="http://ccsl.ime.usp.br/cogroo/comunidade/rules/124" class="external">117</a>, <a href="http://ccsl.ime.usp.br/cogroo/comunidade/rules/124" class="external">118</a> e <a href="http://ccsl.ime.usp.br/cogroo/comunidade/rules/124" class="external">124</a> apresentavam muitos falsos positivos e foram desativadas. Elas serão reativadas quando o novo chunker e shallow parser for integrado. (<a href="http://ccsl.ime.usp.br/redmine/issues/431" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Disable rules 117, 118 and 124. (Closed)">#431</a>)</li>
+	</ol>
+
+
+	<a name="Correções-4"></a>
+<h4 >Correções<a href="#Correções-4" class="wiki-anchor">&para;</a></h4>
+
+
+	<ol>
+	<li>Em alguns ambientes não era possível enviar erro pela extensão. (<a href="http://ccsl.ime.usp.br/redmine/issues/432" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Reporting error from plugin fails in some environments (Closed)">#432</a>)</li>
+		<li>CoGrOO não estava 100% compatível com Java 1.5 (<a href="http://ccsl.ime.usp.br/redmine/issues/459" class="issue status-5 priority-3 closed created-by-me assigned-to-me" title="Cogroo should be compliant with Java 1.5 (Closed)">#459</a>)</li>
+		<li>Resolvidos alguns outros pequenos bugs: <a href="http://ccsl.ime.usp.br/redmine/issues/402" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Remove serialized.trees.file property (Closed)">#402</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/401" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Multithread problem while using Cache (Closed)">#401</a>, <a href="http://ccsl.ime.usp.br/redmine/issues/277" class="issue status-5 priority-2 closed created-by-me assigned-to-me" title="Replace the correct sentence of the rule #121 (Closed)">#277</a></li>
+	</ol>
+
+
+	<p><strong>NOTES:</strong> Integrated with CoGrOO Community | Require Java 1.5 or better | Compatible with LibreOffice &#38; OpenOffice.org (3.0.1 or better)</p>
+
+
+	<p><strong>CHANGE:</strong> Integrated with CoGrOO Community | Less false positives | Minor bug fixes</p>
+
+
+	<a name="310-26Novembro2010"></a>
+<h3 >3.1.0 - 26/Novembro/2010<a href="#310-26Novembro2010" class="wiki-anchor">&para;</a></h3>
+
+
+	<a name="Novas-funcionalidades-5"></a>
+<h4 >Novas funcionalidades<a href="#Novas-funcionalidades-5" class="wiki-anchor">&para;</a></h4>
+
+
+[ <strong>Relacionados ao CoGrOO Comunidade</strong> ]
+	<ol>
+	<li>Capacidade de enviar relatórios de omissões e intervenções indevidas para o portal [<a class="external" href="http://ccsl.ime.usp.br/cogroo/comunidade">http://ccsl.ime.usp.br/cogroo/comunidade</a> CoGrOO Comunidade]</li>
+		<li>Grava usuário e senha do portal de forma segura, esses dados são enviados criptografados para o portal</li>
+	</ol>
+
+
+	<p>[ <strong>Relacionado com a interface OOo</strong> ]
+ # Novo item "Corretor Gramatical CoGrOO >> Reportar erro..." no menu Ferramentas para abrir o formulário de envio de relatórios para o [<a class="external" href="http://ccsl.ime.usp.br/cogroo/comunidade">http://ccsl.ime.usp.br/cogroo/comunidade</a> CoGrOO Comunidade]
+ # Menu de contexto no Writer "Reportar erro do CoGrOO..." para abrir o formulário de envio de relatórios para o [<a class="external" href="http://ccsl.ime.usp.br/cogroo/comunidade">http://ccsl.ime.usp.br/cogroo/comunidade</a> CoGrOO Comunidade]</p>
+
+
+	<p>[ <strong>Infraestrutura</strong> ]
+ # Diversas mudanças na arquitetura
+ # Melhoria de desempenho aplicando profiler</p>
+
+
+	<a name="Correções-5"></a>
+<h4 >Correções<a href="#Correções-5" class="wiki-anchor">&para;</a></h4>
+
+
+	<p><strong>NOTES:</strong> Integrated with CoGrOO Community | Require Java 1.5 or better | Compatible with OOo 3.0.1 or better</p>
+
+
+	<p><strong>CHANGE:</strong> Integrated with CoGrOO Community | Architecture changes</p>
+
+
+	<a name="305-26Maio2009"></a>
+<h3 >3.0.5 - 26/Maio/2009<a href="#305-26Maio2009" class="wiki-anchor">&para;</a></h3>
+
+
+	<a name="Novas-funcionalidades-6"></a>
+<h4 >Novas funcionalidades<a href="#Novas-funcionalidades-6" class="wiki-anchor">&para;</a></h4>
+
+
+	<p>[ <strong>Relacionado ao novo logo</strong> ]</p>
+
+
+	<ol>
+	<li>Novo ícone no Gerenciador de Extensões;</li>
+		<li>Novo logo no menu Ajuda >> CoGrOO >> Sobre</li>
+		<li>Novo logo na janela Ortografia e Gramática (quando o CoGrOO encontrar um erro)</li>
+	</ol>
+
+
+	<p>[ <strong>Relacionado com a interface OOo</strong> ]
+ # Novo item "Corretor Gramatical CoGrOO" no menu Ferramentas (com o tempo eliminaremos o do menu Ajuda)
+ # "Ignorar regra" agora habilitado: você pode ignorar uma regra pela janela Ortografia e Gramática - essa regra não será mais usada nesse documento. Para que ela seja ativa use Ferramentas >> Corretor Gramatical CoGrOO >> Reiniciar verificação</p>
+
+
+	<p>[ <strong>Infraestrutura</strong> ]
+ # Melhorias nos modelos de análise morfológica e sintática
+ # Atualização das bibliotecas usadas para análise gramatical</p>
+
+
+	<p>[ <strong>Distribuição</strong> ]
+ # Pastas de projetos renomeadas para refletir o nome do artefato gerado
+ # Source reestruturado para simplificar a compilação. Acompanha arquivo README com instruções</p>
+
+
+	<a name="Correções-6"></a>
+<h4 >Correções<a href="#Correções-6" class="wiki-anchor">&para;</a></h4>
+
+
+	<p><strong>NOTES:</strong> Require Java 1.5 or better | Compatible with OOo 3.0.1 or better</p>
+
+
+	<p><strong>CHANGE:</strong> New banners, Icons and logo | Ignore Rule capability | Updated 3rd party libraries | Updated NLP models | New source packaging</p>
+
+
+	<a name="304-13Abril2009"></a>
+<h3 >3.0.4 - 13/Abril/2009<a href="#304-13Abril2009" class="wiki-anchor">&para;</a></h3>
+
+
+	<a name="Novas-funcionalidades-7"></a>
+<h4 >Novas funcionalidades<a href="#Novas-funcionalidades-7" class="wiki-anchor">&para;</a></h4>
+
+
+	<a name="Correções-7"></a>
+<h4 >Correções<a href="#Correções-7" class="wiki-anchor">&para;</a></h4>
+
+
+	<ol>
+	<li>Diversos problemas com o detector de palavras foram corrigidos</li>
+		<li>Melhor tratamento de números decimais e sequências especiais: URL, e-mail etc.</li>
+	</ol>
+
+
+	<a name="303-21Fevereiro2009"></a>
+<h3 >3.0.3 - 21/Fevereiro/2009<a href="#303-21Fevereiro2009" class="wiki-anchor">&para;</a></h3>
+
+
+	<a name="Novas-funcionalidades-8"></a>
+<h4 >Novas funcionalidades<a href="#Novas-funcionalidades-8" class="wiki-anchor">&para;</a></h4>
+
+
+	<ol>
+	<li>Regras - novo marcador XML ara limites de texto.</li>
+	</ol>
+
+
+	<ol>
+	<li>Novo banner na janela "Sobre"</li>
+	</ol>
+
+
+	<a name="Correções-8"></a>
+<h4 >Correções<a href="#Correções-8" class="wiki-anchor">&para;</a></h4>
+
+
+	<p><strong>Problema com caracteres errados na tela Sobre, no Linux</strong>
+
+	<ol>
+	<li>Todos os arquivos foram convertidos para UTF-8.</li>
+		<li>Projetos do Eclipse configurados para usar UTF-8 e convenção de quebra de linhas compatível com MS Windows</li>
+		<li>Janela que informa licença corrigida para exibir em UTF-8</li>
+		<li>Regras corrigidas
+ # Fazem 55 minutos - estava tentando concordar 55 com minutos.
+ # No entanto - sugeria colocar virgula antes de "No entanto" mesmo no começo da frase.
+ # Portanto, futebol - sugeria colocar virgula antes de "Portanto" mesmo no começo da frase.</li>
+		<li>Desenvolvedor: William - 11/fevereiro/2009</li>
+	</ol>
+</p>
+
+
+	<a name="302-30Janeiro2009"></a>
+<h3 >3.0.2 - 30/Janeiro/2009<a href="#302-30Janeiro2009" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>Apenas a partir da versão 3.0.3</p>
+</body>
+</html>

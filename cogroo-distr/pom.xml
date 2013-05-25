@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.    
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>cogroo</artifactId>
+		<groupId>org.cogroo</groupId>
+		<version>4.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<artifactId>cogroo-distr</artifactId>
+	<packaging>pom</packaging>
+	<name>CoGrOO Distribution</name>
+
+	<dependencies>
+		<!-- pt_br -->
+		<dependency>
+			<groupId>org.cogroo.lang.pt_br</groupId>
+			<artifactId>cogroo-addon-pt_br</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			      <plugin>
+			        <groupId>org.apache.maven.plugins</groupId>
+			        <artifactId>maven-dependency-plugin</artifactId>
+			        <version>2.8</version>
+			        <executions>
+			          <execution>
+			            <id>copy</id>
+			            <phase>generate-sources</phase>
+			            <goals>
+			              <goal>copy</goal>
+			            </goals>
+			            <configuration>
+			              <artifactItems>
+			                <artifactItem>
+			                   	<groupId>org.cogroo.lang.pt_br</groupId>
+								<artifactId>cogroo-addon-pt_br</artifactId>
+							    <version>${project.version}</version>
+							    <classifier>bin</classifier>
+							    <type>oxt.zip</type>
+			                  <overWrite>false</overWrite>
+			                  <outputDirectory>${project.build.directory}</outputDirectory>
+			                  <destFileName>cogroo-${project.version}.oxt</destFileName>
+			                </artifactItem>
+			                <artifactItem>
+			                   	<groupId>org.cogroo.lang.pt_br</groupId>
+								<artifactId>cogroo-addon-pt_br</artifactId>
+							    <version>${project.version}</version>
+							    <classifier>update-site</classifier>
+							    <type>xml</type>
+			                  <overWrite>false</overWrite>
+			                  <outputDirectory>${project.build.directory}/update_site</outputDirectory>
+			                  <destFileName>update-site.xml</destFileName>
+			                </artifactItem>
+			              </artifactItems>
+			              <overWriteReleases>false</overWriteReleases>
+			              <overWriteSnapshots>true</overWriteSnapshots>
+			            </configuration>
+			          </execution>
+			        </executions>
+			      </plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>bundle-project-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/assembly/bin.xml</descriptor>
+								<descriptor>src/main/assembly/src.xml</descriptor>
+							</descriptors>
+							<tarLongFileMode>gnu</tarLongFileMode>
+
+							<finalName>cogroo-${project.version}</finalName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sourceforge-structure</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/assembly/sf.xml</descriptor>
+							</descriptors>
+							<tarLongFileMode>gnu</tarLongFileMode>
+
+							<finalName>cogroo</finalName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>generate checksums for binary artifacts</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<phase>process-sources</phase>
+						<configuration>
+							<target>
+								<checksum algorithm="sha1" format="MD5SUM">
+									<fileset dir="${project.build.directory}">
+										<include name="*.zip" />
+										<include name="*.gz" />
+										<include name="*.oxt" />
+									</fileset>
+								</checksum>
+								<checksum algorithm="md5" format="MD5SUM">
+									<fileset dir="${project.build.directory}">
+										<include name="*.zip" />
+										<include name="*.gz" />
+										<include name="*.oxt" />
+									</fileset>
+								</checksum>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

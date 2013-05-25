@@ -1,0 +1,51 @@
+NOTES: Require Java 1.6 or better | Compatible with LibreOffice & Apache OpenOffice (3.0.1 or better)
+
+CHANGES: Completely new development | Dictionary based on Jspell.br | Fewer false positives | Rule improvements 
+
+CoGrOO ${pom.version}
+=====================
+
+Arquivos distribuidos
+-------------------------------------
+
+Diversos arquivos fazem parte dessa distribuição:
+* cogroo-${pom.version}.oxt - plug-in corretor gramatical para o Apache OpenOffice e LibreOffice
+* cogroo-${pom.version}.bin.tar.gz (ou .zip) - binários da API e linha de comando (execute "sh bin/cogroo" no GNU/Linux ou "bin/cogroo.bat" no Windows)
+* cogroo-${pom.version}.src.tar.gz (ou .zip) - código fonte desta versão
+* arquivos md5 e sha1 - para verificação de integridade
+
+Compilando a partir dos fontes
+-------------------------------------
+
+Para compilar a partir dos fontes é necessário Maven 3.0.0 ou melhor.
+
+Para uma compilação completa basta executar o seguinte comando na raiz dos fontes:
+    mvn clean install
+   
+Você encontrará os resultado em :
+    cogroo-distr/target/cogroo-distr/${pom.version}
+
+Novidades do CoGrOO ${pom.version}
+---------------------------------------
+
+Esta versão foi reescrita do zero. Todos os modelos linguísticos e dicionários foram refeitos,
+assim como o duto do corretor gramatical foi aprimorado. Uma nova API foi desenvolvida.
+Com as alterações houve uma grande melhoria na qualidade do corretor gramatical, que agora
+apresenta uma melhor relação entre verdadeiros e falsos positivos.
+
+Veja mais novidades no Release Notes e no site do projeto: http://cogroo.org
+
+Links relacionados:
+Nova API: http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/API_CoGrOO_4x
+O que fazem os submodulos Maven: http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/Projetos_do_Cogroo_4
+Dissertação de Mestrado relacionada a este projeto: http://www.teses.usp.br/teses/disponiveis/45/45134/tde-02052013-135414/pt-br.php 
+
+Requisitos
+------------
+Apache OpenOffice ou LibreOffice com Java 1.6 para plug-in corretor gramatical
+Java 1.6 para API
+Maven 3.0.0 para compilação
+
+Controle de versões
+------------
+Desde a versão 4.0.0 os fontes do projeto se encontram em http://github.com/cogroo
