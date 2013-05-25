@@ -93,16 +93,20 @@
 									<isset property="performRelease" />
 									<then>
 										<echo message="************** RELEASE PROFILE **************" />
-										<echo message="OXT_VERSION = ${project.version}" file="target/oxt_version.property" />
-										<echo message="UPDATE_SITE = ${UPDATE_SITE}" file="http://sourceforge.net/projects/cogroo/files/cogroo4/update-site-release.xml" />
+										<echo message="OXT_VERSION = ${project.version}" 
+														file="target/oxt_version.property" append="true"/>
+										<echo message="UPDATE_SITE = http://sourceforge.net/projects/cogroo/files/cogroo4/update-site.xml${line.separator}" 
+														file="target/oxt_version.property" append="true"/>
+										<echo message="OXT_PATH = http://sourceforge.net/projects/cogroo/files/cogroo4/${project.version}/cogroo-${project.version}.oxt${line.separator}" 
+														file="target/oxt_version.property" append="true"/>
+										<echo message="RELEASE_NOTES = http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/Release_notes${line.separator}" 
+														file="target/oxt_version.property" append="true"/>
 									</then>
 									<else>
 										<if>
 											<isset property="OXT_VERSION" />
 											<then>
 												<echo message="************** Using previously set OXT configuration  **************" />
-												<echo message="   OXT_VERSION: ${OXT_VERSION}" />
-												<echo message="   UPDATE_SITE: ${UPDATE_SITE}" />
 											</then>
 											<else>
 												<tstamp>
@@ -117,26 +121,18 @@
 														</tokenfilter>
 													</filterchain>
 												</loadfile>
-												<echo message="OXT_VERSION = ${OXT_VERSION}" file="target/oxt_version.property" />
-												<echo message="UPDATE_SITE = ${UPDATE_SITE}" file="http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/update-site-snapshot.xml" />
+												<echo message="OXT_VERSION = ${OXT_VERSION}${line.separator}" 
+														file="target/oxt_version.property" append="true"/>
+												<echo message="UPDATE_SITE = http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/update-site.xml${line.separator}" 
+														file="target/oxt_version.property" append="true"/>
+												<echo message="OXT_PATH = http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/${project.version}/cogroo-${project.version}.oxt${line.separator}" 
+														file="target/oxt_version.property" append="true"/>
+												<echo message="RELEASE_NOTES = https://github.com/cogroo/cogroo4/commits/master${line.separator}" 
+														file="target/oxt_version.property" append="true"/>
 											</else>
 										</if>
 									</else>
 								</if>
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-
-					<execution>
-						<id>rename file</id>
-						<phase>verify</phase>
-						<configuration>
-							<target>
-								<echo message="Change name: cogroo-${project.version}-bin.oxt.zip to cogroo-${project.version}.oxt" />
-								<copy file="target/cogroo-${project.version}-bin.oxt.zip" tofile="target/cogroo-${project.version}.oxt" />
 							</target>
 						</configuration>
 						<goals>
@@ -227,7 +223,6 @@
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						<!-- here the phase you need -->
 						<phase>process-sources</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -258,7 +253,7 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<file>${basedir}/target/update-site/update-site-snapshot.xml</file>
+									<file>${basedir}/target/update-site/update-site.xml</file>
 									<type>xml</type>
 									<classifier>update-site</classifier>
 								</artifact>

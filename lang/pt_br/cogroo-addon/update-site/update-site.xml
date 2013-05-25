@@ -20,14 +20,14 @@
 	<identifier value="org.cogroo.addon.oxt" />
 	<version value="${OXT_VERSION}" />
 	<update-download>
-		<src xlink:href="http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/cogroo-${project.version}.oxt" />
+		<src xlink:href="${OXT_PATH}" />
 	</update-download>
 	<publisher>
 		<name xlink:href="http://cogroo.org" lang="pt">CoGrOO</name>
 		<name xlink:href="http://cogroo.org" lang="en">CoGrOO</name>
 	</publisher>
 	<release-notes>
-		<src xlink:href="https://github.com/cogroo/cogroo4/commits/master" lang="pt" />
-		<src xlink:href="https://github.com/cogroo/cogroo4/commits/master" lang="en" />
+		<src xlink:href="${RELEASE_NOTES}" lang="pt" />
+		<src xlink:href="${RELEASE_NOTES}" lang="en" />
 	</release-notes>
 </description>
