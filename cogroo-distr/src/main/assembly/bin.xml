@@ -72,5 +72,13 @@
 			<filtered>true</filtered>
 		</fileSet>
 		
+		<fileSet>
+			<directory>../target/site/apidocs</directory>
+			<filtered>true</filtered>
+			<fileMode>644</fileMode>
+			<directoryMode>755</directoryMode>
+			<outputDirectory>docs</outputDirectory>
+		</fileSet>
+		
 	</fileSets>
 </assembly>

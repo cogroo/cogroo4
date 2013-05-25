@@ -10,8 +10,8 @@ Arquivos distribuidos
 
 Diversos arquivos fazem parte dessa distribuição:
 * cogroo-${pom.version}.oxt - plug-in corretor gramatical para o Apache OpenOffice e LibreOffice
-* cogroo-${pom.version}.bin.tar.gz (ou .zip) - binários da API e linha de comando (execute "sh bin/cogroo" no GNU/Linux ou "bin/cogroo.bat" no Windows)
-* cogroo-${pom.version}.src.tar.gz (ou .zip) - código fonte desta versão
+* cogroo-${pom.version}-bin.tar.gz (ou .zip) - binários da API e linha de comando (execute "sh bin/cogroo" no GNU/Linux ou "bin/cogroo.bat" no Windows)
+* cogroo-${pom.version}-src.tar.gz (ou .zip) - código fonte desta versão
 * arquivos md5 e sha1 - para verificação de integridade
 
 Compilando a partir dos fontes
