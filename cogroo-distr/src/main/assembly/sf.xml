@@ -43,8 +43,8 @@
     </fileSet>
 		
 	    <fileSet>
-	      <directory>target/update_site</directory>
-	      <outputDirectory></outputDirectory>
+	      <directory>.</directory>
+	      <outputDirectory>${project.version}</outputDirectory>
 	      <filtered>true</filtered>
 	      <fileMode>644</fileMode>
 	      <directoryMode>755</directoryMode> 
