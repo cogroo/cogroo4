@@ -41,6 +41,22 @@
 				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
+		
+		<plugins>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                   <archive>
+                       <manifest>
+                           <addClasspath>true</addClasspath>
+                           <mainClass>org.cogroo.gc.cmdline.EndUserCLI</mainClass>
+                       </manifest>
+                   </archive>
+                </configuration>
+            </plugin>
+		</plugins>
 	</build>
 	
 	<description>Brazillian Portuguese grammar checker.</description>

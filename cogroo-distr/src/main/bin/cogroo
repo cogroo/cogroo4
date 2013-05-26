@@ -32,4 +32,4 @@ fi
 # Might fail if $0 is a link
 COGROO_HOME=`dirname "$0"`/..
 
-$JAVACMD -Xmx1024m -jar $COGROO_HOME/lib/cogroo-gc-${project.version}.jar $@
+$JAVACMD -Xmx1024m -jar $COGROO_HOME/lib/cogroo-gc-pt_br-${project.version}.jar $@

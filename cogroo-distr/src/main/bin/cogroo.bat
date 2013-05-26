@@ -39,8 +39,6 @@ IF "%COGROO_HOME%" == "" (
 	FOR %%A IN ("%COGROO_HOME%") DO SET COGROO_HOME=%%~sfA
 )
 
-FOR %%A IN ("%COGROO_HOME%\lib\*.jar") DO SET JAR_FILE=%%A
-
-%JAVA_CMD% -Xmx1024m -jar %JAR_FILE% %*
+%JAVA_CMD% -Xmx1024m -jar %COGROO_HOME%\lib\cogroo-gc-pt_br-${project.version}.jar %*
 
 ENDLOCAL

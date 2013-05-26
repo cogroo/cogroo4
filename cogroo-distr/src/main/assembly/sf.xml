@@ -43,7 +43,7 @@
     </fileSet>
 		
 	    <fileSet>
-	      <directory>.</directory>
+	      <directory>target/update_site</directory>
 	      <outputDirectory></outputDirectory>
 	      <filtered>true</filtered>
 	      <fileMode>644</fileMode>
