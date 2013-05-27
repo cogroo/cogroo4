@@ -17,7 +17,7 @@
 
 -->
 <description xmlns="http://openoffice.org/extensions/update/2006" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<identifier value="org.cogroo.addon.oxt" />
+	<identifier value="br.usp.pcs.lta.cogroo.ooointegration.oxt" />
 	<version value="${OXT_VERSION}" />
 	<update-download>
 		<src xlink:href="${OXT_PATH}" />
