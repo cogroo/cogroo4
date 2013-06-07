@@ -145,7 +145,7 @@
 						<goals>
 							<goal>aggregate</goal>
 						</goals>
-						<phase>package</phase>
+<!-- 						<phase>package</phase> -->
 						<inherited>false</inherited>
 					</execution>
 					<execution>
