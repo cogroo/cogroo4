@@ -40,18 +40,16 @@ import org.cogroo.entities.impl.TokenCogroo;
 import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.TypedChecker;
 import org.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
-import org.cogroo.tools.checker.rules.util.RuleUtils;
-import org.cogroo.tools.checker.rules.util.RulesProperties;
-
 import org.cogroo.tools.checker.rules.model.Boundaries;
 import org.cogroo.tools.checker.rules.model.Element;
 import org.cogroo.tools.checker.rules.model.Mask;
 import org.cogroo.tools.checker.rules.model.PatternElement;
 import org.cogroo.tools.checker.rules.model.Rule;
-import org.cogroo.tools.checker.rules.model.Rule.Method;
+import org.cogroo.tools.checker.rules.model.TagMask;
 import org.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
-import org.cogroo.tools.checker.rules.model.TagMask;
+import org.cogroo.tools.checker.rules.util.RuleUtils;
+import org.cogroo.tools.checker.rules.util.RulesProperties;
 
 /**
  * Applies error rules to a {@link Sentence} object.
@@ -62,7 +60,7 @@ import org.cogroo.tools.checker.rules.model.TagMask;
  */
 public final class RulesApplier implements TypedChecker {
 	
-	private SuggestionBuilder suggestionBuilder;
+  private SuggestionBuilder suggestionBuilder;
 
   public RulesApplier(RulesTreesProvider rulesTreesProvider, CogrooTagDictionary dictionary) {
 		this.rulesTreesProvider = rulesTreesProvider;
@@ -75,9 +73,9 @@ public final class RulesApplier implements TypedChecker {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(RulesApplier.class);
 
-	private static final String ID_PREFIX = "xml:";
+	public static final String ID_PREFIX = "xml:";
 
-  private static final Object OUT_OF_BOUNDS = "%%OUT_OF_BOUNDS%%";
+    private static final String OUT_OF_BOUNDS = "%%OUT_OF_BOUNDS%%";
 	
 	private final Set<String> ignoredRules = new HashSet<String>();
 	
@@ -102,48 +100,7 @@ public final class RulesApplier implements TypedChecker {
 			start = System.nanoTime();
 		}
 		
-		// Insert two empty tokens at the sentence start and end
-		List<Token> tokens = new ArrayList<Token>();
-		Token empty1 = new TokenCogroo("%%OUT_OF_BOUNDS%%", new Span(0, 0));
-		empty1.setMorphologicalTag(new MorphologicalTag());
-		ChunkTag ct = new ChunkTag();
-		ct.setChunkFunction(ChunkFunction.OTHER);
-		empty1.setChunkTag(ct);
-		tokens.add(empty1);
-		tokens.addAll(sentence.getTokens());
-		Token empty2 = new TokenCogroo("%%OUT_OF_BOUNDS%%", new Span(0, 0));
-		empty2.setMorphologicalTag(new MorphologicalTag());
-		empty2.setChunkTag(ct);
-		tokens.add(empty2);
-		sentence.setTokens(tokens);
-		
-		List<Chunk> chunkz = new ArrayList<Chunk>();
-		Chunk chunk1 = new ChunkCogroo(Collections.singletonList(empty1), 0);
-        chunk1.setMorphologicalTag(new MorphologicalTag());
-		empty1.setChunk(chunk1);
-		chunkz.add(chunk1);
-		chunkz.addAll(sentence.getChunks());
-	    Chunk chunk2 = new ChunkCogroo(Collections.singletonList(empty2), 0);
-	    chunk2.setMorphologicalTag(new MorphologicalTag());
-	    empty2.setChunk(chunk2);
-	    chunkz.add(chunk2);
-	    sentence.setChunks(chunkz);
-	    
-	    
-	    List<SyntacticChunk> synts = new ArrayList<SyntacticChunk>();
-	    SyntacticChunk synt1 = new SyntacticChunk(Collections.singletonList(chunk1));
-        SyntacticTag st = new SyntacticTag();
-        st.setSyntacticFunction(SyntacticFunction.NONE);
-	    synt1.setSyntacticTag(st);
-	    empty1.setSyntacticChunk(synt1);
-	    synts.add(synt1);
-	    synts.addAll(sentence.getSyntacticChunks());
-	    SyntacticChunk synt2 = new SyntacticChunk(Collections.singletonList(chunk1));
-        synt2.setSyntacticTag(st);
-        empty2.setSyntacticChunk(synt2);
-        synts.add(synt2);
-        sentence.setSyntacticChunks(synts);
-	    
+		insertOutOfBounds(sentence);
         
 		// mistakes will hold mistakes found in the sentence.
 		List<Mistake> mistakes = new ArrayList<Mistake>();
@@ -200,7 +157,51 @@ public final class RulesApplier implements TypedChecker {
 		return mistakes;
 	}
 
-	/**
+  private void insertOutOfBounds(Sentence sentence) {
+    // Insert two empty tokens at the sentence start and end
+    List<Token> tokens = new ArrayList<Token>();
+    Token empty1 = new TokenCogroo(OUT_OF_BOUNDS, new Span(0, 0));
+    empty1.setMorphologicalTag(new MorphologicalTag());
+    ChunkTag ct = new ChunkTag();
+    ct.setChunkFunction(ChunkFunction.OTHER);
+    empty1.setChunkTag(ct);
+    tokens.add(empty1);
+    tokens.addAll(sentence.getTokens());
+    Token empty2 = new TokenCogroo(OUT_OF_BOUNDS, new Span(0, 0));
+    empty2.setMorphologicalTag(new MorphologicalTag());
+    empty2.setChunkTag(ct);
+    tokens.add(empty2);
+    sentence.setTokens(tokens);
+
+    List<Chunk> chunkz = new ArrayList<Chunk>();
+    Chunk chunk1 = new ChunkCogroo(Collections.singletonList(empty1), 0);
+    chunk1.setMorphologicalTag(new MorphologicalTag());
+    empty1.setChunk(chunk1);
+    chunkz.add(chunk1);
+    chunkz.addAll(sentence.getChunks());
+    Chunk chunk2 = new ChunkCogroo(Collections.singletonList(empty2), 0);
+    chunk2.setMorphologicalTag(new MorphologicalTag());
+    empty2.setChunk(chunk2);
+    chunkz.add(chunk2);
+    sentence.setChunks(chunkz);
+
+    List<SyntacticChunk> synts = new ArrayList<SyntacticChunk>();
+    SyntacticChunk synt1 = new SyntacticChunk(Collections.singletonList(chunk1));
+    SyntacticTag st = new SyntacticTag();
+    st.setSyntacticFunction(SyntacticFunction.NONE);
+    synt1.setSyntacticTag(st);
+    empty1.setSyntacticChunk(synt1);
+    synts.add(synt1);
+    synts.addAll(sentence.getSyntacticChunks());
+    SyntacticChunk synt2 = new SyntacticChunk(Collections.singletonList(chunk1));
+    synt2.setSyntacticTag(st);
+    empty2.setSyntacticChunk(synt2);
+    synts.add(synt2);
+    sentence.setSyntacticChunks(synts);
+
+  }
+
+  /**
 	 * A recursive method that iterates the sentence given a base token group (sentence or chunk). Used to
 	 * match general and phrase local rules.
 	 * 
@@ -554,7 +555,7 @@ public final class RulesApplier implements TypedChecker {
 		}		
 	}
 	
-	public  void filterIgnoredRules(List<Mistake> rules)
+	public void filterIgnoredRules(List<Mistake> rules)
 	{
 		List<Mistake> ret = new ArrayList<Mistake>();
 		synchronized (ignoredRules) {

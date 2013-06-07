@@ -56,6 +56,7 @@ import org.cogroo.tools.checker.rules.dictionary.FSALexicalDictionary;
 import org.cogroo.tools.checker.rules.dictionary.TagDictionary;
 import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.util.MistakeComparator;
+import org.cogroo.tools.checker.rules.validator.RulePostValidatorProvider;
 
 
 public class GrammarChecker implements CheckAnalyzer {
@@ -73,6 +74,8 @@ public class GrammarChecker implements CheckAnalyzer {
   private TypedCheckerComposite typedCheckers;
 
   private Analyzer pipe;
+  
+  private RulePostValidatorProvider validator = new RulePostValidatorProvider();
   
   private static final MistakeComparator MISTAKE_COMPARATOR = new MistakeComparator();
 
@@ -247,8 +250,11 @@ public class GrammarChecker implements CheckAnalyzer {
     ((CheckDocument) document).setSentencesLegacy(typedSentences);
     Collections.sort(mistakes, MISTAKE_COMPARATOR);
 
-    if(this.allowOverlap == false)
+    mistakes = filterInvalid(document, mistakes);
+    
+    if(this.allowOverlap == false) {
       mistakes = filterOverlap(document, mistakes);
+    }
 
     if(filterInvalidSuggestions) {
       filterWrongSuggestions(document, mistakes);
@@ -259,6 +265,17 @@ public class GrammarChecker implements CheckAnalyzer {
 
   public void analyze(CheckDocument document) {
     this.analyze(document, true);
+  }
+
+  private List<Mistake> filterInvalid(CheckDocument document,
+      List<Mistake> mistakes) {
+    List<Mistake> filtered = new ArrayList<Mistake>();
+    for (Mistake mistake : mistakes) {
+      if(validator.isValid(mistake, document)) {
+        filtered.add(mistake);
+      }
+    }
+    return filtered;
   }
 
   private List<Mistake> filterOverlap(Document doc, List<Mistake> mistakes) {

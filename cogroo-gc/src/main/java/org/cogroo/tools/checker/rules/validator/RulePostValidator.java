@@ -13,33 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.cogroo.tools.checker.rules.applier;
+package org.cogroo.tools.checker.rules.validator;
 
-import org.cogroo.entities.Token;
+import org.cogroo.entities.Mistake;
+import org.cogroo.text.Document;
 
-public class NullToken extends Token {
+public interface RulePostValidator {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
+  public boolean isValid(Mistake mistake, Document doc);
 
-  private static final NullToken instance = new NullToken();
-  
-  public void setLexeme(String lexeme) {
-    // do nothing
-  }
-  
-  private NullToken() {
-    
-  }
-  
-  public static Token instance() {
-    return instance;
-  }
-
-  @Override
-  public String toString() {
-    return "NULL";
-  }
 }
