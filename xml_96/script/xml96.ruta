@@ -1,8 +1,0 @@
-// Regra xml96: regência verbal -> usufruir/evitar regendo preposição 'de'.
-//DECLARE verbo;
-//W{REGEXP("v-fin") -> MARK(verbo)};
-TYPESYSTEM TypeSystem;
-DECLARE Noun;
-DECLARE Verb;
-opennlp.uima.Token{FEATURE("pos","n")-> MARK(Noun)};
-opennlp.uima.Token{FEATURE("pos","v-fin") -> MARK(Verb)};

@@ -216,14 +216,14 @@
             <nameValuePair>
                 <name>mainScript</name>
                 <value>
-                    <string>xml96</string>
+                    <string>Rule1</string>
                 </value>
             </nameValuePair>
             <nameValuePair>
                 <name>scriptPaths</name>
                 <value>
                     <array>
-                        <string>/home/eduardo.araujo1/workspace/xml_96/script</string>
+                        <string>/home/vinicius.vendramini/CoGrOO/cogroo4/RUTA/script</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -231,7 +231,7 @@
                 <name>descriptorPaths</name>
                 <value>
                     <array>
-                        <string>/home/eduardo.araujo1/workspace/xml_96/descriptor</string>
+                        <string>/home/vinicius.vendramini/CoGrOO/cogroo4/RUTA/descriptor</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -239,7 +239,7 @@
                 <name>resourcePaths</name>
                 <value>
                     <array>
-                        <string>/home/eduardo.araujo1/workspace/xml_96/resources</string>
+                        <string>/home/vinicius.vendramini/CoGrOO/cogroo4/RUTA/resources</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -275,30 +275,60 @@
             </nameValuePair>
         </configurationParameterSettings>
         <typeSystemDescription>
-            <name>xml96TypeSystem</name>
+            <name>Rule1TypeSystem</name>
             <imports>
                 <import location="BasicTypeSystem.xml"/>
                 <import location="TypeSystem.xml"/>
             </imports>
             <types>
                 <typeDescription>
-                    <name>xml96.Noun</name>
-                    <description>Type defined in null.xml96</description>
+                    <name>Rule1.PRP_A</name>
+                    <description>Type defined in null.Rule1</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
-                    <name>xml96.Verb</name>
-                    <description>Type defined in null.xml96</description>
+                    <name>Rule1.ARTFMD</name>
+                    <description>Type defined in null.Rule1</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
-                    <name>xml96.Noun</name>
-                    <description>Type defined in null.xml96</description>
+                    <name>Rule1.CRASE</name>
+                    <description>Type defined in null.Rule1</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
-                    <name>xml96.Verb</name>
-                    <description>Type defined in null.xml96</description>
+                    <name>Rule1.SUBSM</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>Rule1.ERRADO</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>Rule1.PRP_A</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>Rule1.ARTFMD</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>Rule1.CRASE</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>Rule1.SUBSM</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>Rule1.ERRADO</name>
+                    <description>Type defined in null.Rule1</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
             </types>
@@ -319,12 +349,18 @@
             </capability>
             <capability>
                 <inputs>
-                    <type>xml96.Noun</type>
-                    <type>xml96.Verb</type>
+                    <type>Rule1.PRP_A</type>
+                    <type>Rule1.ARTFMD</type>
+                    <type>Rule1.CRASE</type>
+                    <type>Rule1.SUBSM</type>
+                    <type>Rule1.ERRADO</type>
                 </inputs>
                 <outputs>
-                    <type>xml96.Noun</type>
-                    <type>xml96.Verb</type>
+                    <type>Rule1.PRP_A</type>
+                    <type>Rule1.ARTFMD</type>
+                    <type>Rule1.CRASE</type>
+                    <type>Rule1.SUBSM</type>
+                    <type>Rule1.ERRADO</type>
                 </outputs>
                 <languagesSupported/>
             </capability>
