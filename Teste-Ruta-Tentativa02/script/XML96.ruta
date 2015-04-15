@@ -1,0 +1,21 @@
+TYPESYSTEM TypeSystem;
+
+DECLARE PRP_A;  // preposição 'a'
+DECLARE ARTFMD; // artigo feminino definido ( == 'a' )
+DECLARE CRASE;
+
+DECLARE SUBSM; // substantivo masculino
+
+DECLARE ERRADO;
+
+opennlp.uima.Token{AND(FEATURE("pos", "prp"), FEATURE("lexeme", "a")) -> PRP_A};
+opennlp.uima.Token{AND(FEATURE("pos", "art"), FEATURE("features", "F=S"), FEATURE("lexeme", "a")) -> ARTFMD};
+
+opennlp.uima.Token{AND(IS(PRP_A), IS(ARTFMD), NOT(IS(CRASE))) -> CRASE};
+
+opennlp.uima.Token{
+AND(FEATURE("pos", "n"), 
+    OR(FEATURE("features", "M=S"),
+       FEATURE("features", "M=P")))-> SUBSM};
+       
+CRASE SUBSM{-> MARK(ERRADO)};

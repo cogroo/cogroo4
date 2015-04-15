@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <name>XML96TypeSystem</name>
+    <imports>
+        <import location="BasicTypeSystem.xml"/>
+        <import location="TypeSystem.xml"/>
+    </imports>
+    <types>
+        <typeDescription>
+            <name>XML96.PRP_A</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>XML96.ARTFMD</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>XML96.CRASE</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>XML96.SUBSM</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>XML96.ERRADO</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>XML96.PRP_A</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>XML96.ARTFMD</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>XML96.CRASE</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>XML96.SUBSM</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>XML96.ERRADO</name>
+            <description>Type defined in null.XML96</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+    </types>
+</typeSystemDescription>
