@@ -1,4 +1,5 @@
 .project
+cogroo-uima/exemplos/processed/*
 .classpath
 .settings
 **/target/**

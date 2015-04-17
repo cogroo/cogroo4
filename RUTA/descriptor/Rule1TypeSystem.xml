@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <name>Rule1TypeSystem</name>
+    <imports>
+        <import location="BasicTypeSystem.xml"/>
+        <import location="TypeSystem.xml"/>
+    </imports>
+    <types>
+        <typeDescription>
+            <name>Rule1.PRP_A</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.ARTFMD</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.CRASE</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.SUBSM</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.ERRADO</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.PRP_A</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.ARTFMD</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.CRASE</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.SUBSM</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.ERRADO</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+    </types>
+</typeSystemDescription>
