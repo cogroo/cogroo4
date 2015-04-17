@@ -1,0 +1,67 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM TypeSystem;
+
+IMPORT opennlp.uima.Chunk           FROM TypeSystem AS cgChunk;
+IMPORT opennlp.uima.Sentence        FROM TypeSystem AS cgSentence;
+IMPORT opennlp.uima.SyntacticChunk  FROM TypeSystem AS cgSChunk;
+IMPORT opennlp.uima.Token           FROM TypeSystem AS cgToken;
+
+// Essas declarações são de tipos gerais; talvez não precisem ser implementadas.
+DECLARE ADJECTIVE;    
+DECLARE ADVERB;    
+DECLARE ARTICLE;
+    DECLARE DEFINITE, INDEFINITE;
+DECLARE CONJUNCTION;
+    DECLARE SUBORDINATING_CONJUNCTION;     
+    DECLARE COORDINATING_CONJUNCTION;     
+DECLARE INTERJECTION;     
+DECLARE NOUN;      
+    DECLARE PROPER_NOUN;   
+DECLARE NUMERAL;
+DECLARE PREPOSITION;    
+DECLARE PRONOUN;
+    DECLARE PERSONAL_PRONOUN, DETERMINATIVE_PRONOUN, INDEPENDENT_PRONOUN;   
+DECLARE VERB;      
+    DECLARE FINITE_VERB, INFINITE_VERB, PARTICIPLE_VERB, GERUND_VERB;             // Finiteness
+    DECLARE PRESENT, IMPERFECT, SIMPLE_PERFECT, PLU_PERFECT, FUTURE, CONDITIONAL; // Tense
+    DECLARE INDICATIVE, SUBJUNCTIVE, IMPERATIVE;                                  // Mood
+
+
+//nominative
+//accusative
+//dative
+//prepositive
+
+
+DECLARE HYPHEN_SEP_PREFIX;     
+DECLARE SPECIFIER;   
+DECLARE DETERMINER;    
+
+DECLARE MALE, FEMALE;
+DECLARE SINGULAR, PLURAL;
+DECLARE FIRST_PERSON, SECOND_PERSON, THIRD_PERSON;
+
+
+
+cgToken{FEATURE("pos","n") -> NOUN};
+
+
+cgToken{FEATURE("pos", "art") -> ARTICLE};
+cgToken{AND(IS(ARTICLE), FEATURE("lemma", "um")) -> INDEFINITE};
+cgToken{AND(IS(ARTICLE), FEATURE("lemma", "o")) -> DEFINITE};
+
+cgToken{FEATURE("features", "M=S") -> MALE, SINGULAR};
+cgToken{FEATURE("features", "M=P") -> MALE, PLURAL};
+cgToken{FEATURE("features", "F=S") -> FEMALE, SINGULAR};
+cgToken{FEATURE("features", "F=P") -> FEMALE, PLURAL};
+
+cgToken{FEATURE("pos","v-fin") -> VERB, FINITE_VERB};
+cgToken{FEATURE("pos","v-inf") -> VERB, INFINITE_VERB};
+cgToken{FEATURE("pos","v-pep") -> VERB, PARTICIPLE_VERB};
+cgToken{FEATURE("pos","v-ger") -> VERB, GERUND_VERB};
+
+
+
+
+
