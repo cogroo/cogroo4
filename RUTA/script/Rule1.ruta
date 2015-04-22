@@ -1,21 +1,52 @@
 TYPESYSTEM TypeSystem;
 
-DECLARE PRP_A;  // preposição 'a'
-DECLARE ARTFMD; // artigo feminino definido ( == 'a' )
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+DECLARE PREPOSITION;
+DECLARE ARTICLE;
+DECLARE FEMALE;
+DECLARE MALE;
+DECLARE SINGULAR;
+DECLARE PLURAL;
+DECLARE NOUN;
+DECLARE VERB;
+
+
+
+DECLARE LEXEME_A;
+DECLARE PREPOSITION_A;
+DECLARE ARTICLE_A; 
 DECLARE CRASE;
 
-DECLARE SUBSM; // substantivo masculino
+DECLARE MALE_NOUN;
+DECLARE PLURAL_NOUN;
 
-DECLARE ERRADO;
+DECLARE Annotation PROBLEM (String description);
 
-opennlp.uima.Token{AND(FEATURE("pos", "prp"), FEATURE("lexeme", "a")) -> PRP_A};
-opennlp.uima.Token{AND(FEATURE("pos", "art"), FEATURE("features", "F=S"), FEATURE("lexeme", "a")) -> ARTFMD};
+cgToken{FEATURE("pos", "prp") -> PREPOSITION};
+cgToken{FEATURE("pos", "art") -> ARTICLE};
+cgToken{OR(FEATURE("features", "F=S"), FEATURE("features", "F=P")) -> FEMALE};
+cgToken{OR(FEATURE("features", "F=S"), FEATURE("features", "M=S")) -> SINGULAR};
+cgToken{OR(FEATURE("features", "F=P"), FEATURE("features", "M=P")) -> PLURAL};
+cgToken{FEATURE("pos", "n") -> NOUN};
+cgToken{OR(FEATURE("features", "M=S"), FEATURE("features", "M=P")) -> MALE};
 
-opennlp.uima.Token{AND(IS(PRP_A), IS(ARTFMD), NOT(IS(CRASE))) -> CRASE};
+cgToken{FEATURE("pos", "v-fin") -> VERB};
+cgToken{FEATURE("pos", "v-inf") -> VERB};
+cgToken{FEATURE("pos", "v-pep") -> VERB};
+cgToken{FEATURE("pos", "v-ger") -> VERB};
 
-opennlp.uima.Token{
-AND(FEATURE("pos", "n"), 
-    OR(FEATURE("features", "M=S"),
-       FEATURE("features", "M=P")))-> SUBSM};
-       
-CRASE SUBSM{-> MARK(ERRADO)};
+
+
+cgToken{FEATURE("lexeme", "a") -> LEXEME_A};
+cgToken{AND(IS(PREPOSITION), IS(LEXEME_A)) -> PREPOSITION_A};
+cgToken{AND(AND(AND(IS(ARTICLE), IS(FEMALE)), IS(SINGULAR)), IS(LEXEME_A)) -> ARTICLE_A};
+cgToken{AND(AND(IS(PREPOSITION_A), IS(ARTICLE_A)), NOT(IS(CRASE))) -> CRASE};
+
+cgToken{AND(IS(MALE), IS(NOUN)) -> MALE_NOUN};
+cgToken{AND(IS(PLURAL), IS(NOUN)) -> PLURAL_NOUN};
+
+
+CRASE MALE_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo masculino.")};
+CRASE PLURAL_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo no plural.")};
+CRASE VERB{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase antes de verbo.")};
