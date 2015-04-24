@@ -15,11 +15,16 @@ DECLARE VERB;
 
 DECLARE LEXEME_A;
 DECLARE PREPOSITION_A;
-DECLARE ARTICLE_A; 
+DECLARE ARTICLE_A;
 DECLARE CRASE;
+DECLARE CRASE_A;
+DECLARE CRASE_AS;
+
 
 DECLARE MALE_NOUN;
 DECLARE PLURAL_NOUN;
+DECLARE SINGULAR_NOUN;
+
 
 DECLARE Annotation PROBLEM (String description);
 
@@ -38,15 +43,25 @@ cgToken{FEATURE("pos", "v-ger") -> VERB};
 
 
 
-cgToken{FEATURE("lexeme", "a") -> LEXEME_A};
+cgToken{OR(FEATURE("lexeme", "a"), FEATURE("lexeme", "as")) -> LEXEME_A};
 cgToken{AND(IS(PREPOSITION), IS(LEXEME_A)) -> PREPOSITION_A};
-cgToken{AND(AND(AND(IS(ARTICLE), IS(FEMALE)), IS(SINGULAR)), IS(LEXEME_A)) -> ARTICLE_A};
+cgToken{AND(AND(AND(IS(ARTICLE), IS(FEMALE))), IS(LEXEME_A)) -> ARTICLE_A};
 cgToken{AND(AND(IS(PREPOSITION_A), IS(ARTICLE_A)), NOT(IS(CRASE))) -> CRASE};
+
+cgToken{AND(AND(IS(CRASE), IS(SINGULAR)), NOT(IS(CRASE_A))) -> CRASE_A};
+cgToken{AND(AND(IS(CRASE), IS(PLURAL)), NOT(IS(CRASE_AS))) -> CRASE_AS};
+
 
 cgToken{AND(IS(MALE), IS(NOUN)) -> MALE_NOUN};
 cgToken{AND(IS(PLURAL), IS(NOUN)) -> PLURAL_NOUN};
+cgToken{AND(IS(SINGULAR), IS(NOUN)) -> SINGULAR_NOUN};
 
 
 CRASE MALE_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo masculino.")};
-CRASE PLURAL_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo no plural.")};
+CRASE_A PLURAL_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo no plural.")};
+CRASE_AS SINGULAR_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo no singular.")};
+
 CRASE VERB{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase antes de verbo.")};
+
+// Regra 9, regra 10
+
