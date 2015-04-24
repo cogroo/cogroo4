@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <name>baseTypeSystem</name>
+    <imports>
+        <import location="BasicTypeSystem.xml"/>
+        <import location="TypeSystem.xml"/>
+    </imports>
+    <types>
+        <typeDescription>
+            <name>cogroo.ruta.base.ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.ADVERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.ARTICLE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.DEFINITE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INDEFINITE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.CONJUNCTION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SUBORDINATING_CONJUNCTION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.COORDINATING_CONJUNCTION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INTERJECTION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.NOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PROPER_NOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.NUMERAL</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PREPOSITION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PRONOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PERSONAL_PRONOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.DETERMINATIVE_PRONOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INDEPENDENT_PRONOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.FINITE_VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INFINITE_VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PARTICIPLE_VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.GERUND_VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PRESENT</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.IMPERFECT</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SIMPLE_PERFECT</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PLU_PERFECT</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.FUTURE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.CONDITIONAL</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INDICATIVE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SUBJUNCTIVE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.IMPERATIVE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.MALE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.FEMALE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SINGULAR</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PLURAL</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.FIRST_PERSON</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SECOND_PERSON</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.THIRD_PERSON</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.ADVERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.ARTICLE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.DEFINITE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INDEFINITE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.CONJUNCTION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SUBORDINATING_CONJUNCTION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.COORDINATING_CONJUNCTION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INTERJECTION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.NOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PROPER_NOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.NUMERAL</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PREPOSITION</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PRONOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PERSONAL_PRONOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.DETERMINATIVE_PRONOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INDEPENDENT_PRONOUN</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.FINITE_VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INFINITE_VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PARTICIPLE_VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.GERUND_VERB</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PRESENT</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.IMPERFECT</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SIMPLE_PERFECT</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PLU_PERFECT</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.FUTURE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.CONDITIONAL</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.INDICATIVE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SUBJUNCTIVE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.IMPERATIVE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.MALE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.FEMALE</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SINGULAR</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.PLURAL</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.FIRST_PERSON</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.SECOND_PERSON</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.base.THIRD_PERSON</name>
+            <description>Type defined in cogroo.ruta.base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+    </types>
+</typeSystemDescription>

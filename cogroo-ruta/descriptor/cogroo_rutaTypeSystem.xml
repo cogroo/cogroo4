@@ -162,21 +162,6 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>cogroo.ruta.cogroo_ruta.HYPHEN_SEP_PREFIX</name>
-            <description>Type defined in cogroo.ruta.cogroo_ruta</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>cogroo.ruta.cogroo_ruta.SPECIFIER</name>
-            <description>Type defined in cogroo.ruta.cogroo_ruta</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>cogroo.ruta.cogroo_ruta.DETERMINER</name>
-            <description>Type defined in cogroo.ruta.cogroo_ruta</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
             <name>cogroo.ruta.cogroo_ruta.MALE</name>
             <description>Type defined in cogroo.ruta.cogroo_ruta</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
@@ -363,21 +348,6 @@
         </typeDescription>
         <typeDescription>
             <name>cogroo.ruta.cogroo_ruta.IMPERATIVE</name>
-            <description>Type defined in cogroo.ruta.cogroo_ruta</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>cogroo.ruta.cogroo_ruta.HYPHEN_SEP_PREFIX</name>
-            <description>Type defined in cogroo.ruta.cogroo_ruta</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>cogroo.ruta.cogroo_ruta.SPECIFIER</name>
-            <description>Type defined in cogroo.ruta.cogroo_ruta</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>cogroo.ruta.cogroo_ruta.DETERMINER</name>
             <description>Type defined in cogroo.ruta.cogroo_ruta</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
