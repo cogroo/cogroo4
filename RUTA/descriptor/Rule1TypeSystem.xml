@@ -77,6 +77,11 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
+            <name>Rule1.FEMALE_NOUN</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
             <name>Rule1.MALE_NOUN</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
@@ -88,6 +93,11 @@
         </typeDescription>
         <typeDescription>
             <name>Rule1.SINGULAR_NOUN</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.EM_RELACAO</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
@@ -174,6 +184,11 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
+            <name>Rule1.FEMALE_NOUN</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
             <name>Rule1.MALE_NOUN</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
@@ -185,6 +200,11 @@
         </typeDescription>
         <typeDescription>
             <name>Rule1.SINGULAR_NOUN</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.EM_RELACAO</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>

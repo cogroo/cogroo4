@@ -21,9 +21,12 @@ DECLARE CRASE_A;
 DECLARE CRASE_AS;
 
 
+DECLARE FEMALE_NOUN;
 DECLARE MALE_NOUN;
 DECLARE PLURAL_NOUN;
 DECLARE SINGULAR_NOUN;
+
+DECLARE EM_RELACAO;
 
 
 DECLARE Annotation PROBLEM (String description);
@@ -43,7 +46,7 @@ cgToken{FEATURE("pos", "v-ger") -> VERB};
 
 
 
-cgToken{OR(FEATURE("lexeme", "a"), FEATURE("lexeme", "as")) -> LEXEME_A};
+cgToken{OR(REGEXP(cgToken.lexeme, "a", true), REGEXP(cgToken.lexeme, "as", true)) -> LEXEME_A};
 cgToken{AND(IS(PREPOSITION), IS(LEXEME_A)) -> PREPOSITION_A};
 cgToken{AND(AND(AND(IS(ARTICLE), IS(FEMALE))), IS(LEXEME_A)) -> ARTICLE_A};
 cgToken{AND(AND(IS(PREPOSITION_A), IS(ARTICLE_A)), NOT(IS(CRASE))) -> CRASE};
@@ -53,8 +56,12 @@ cgToken{AND(AND(IS(CRASE), IS(PLURAL)), NOT(IS(CRASE_AS))) -> CRASE_AS};
 
 
 cgToken{AND(IS(MALE), IS(NOUN)) -> MALE_NOUN};
+cgToken{AND(IS(FEMALE), IS(NOUN)) -> FEMALE_NOUN};
 cgToken{AND(IS(PLURAL), IS(NOUN)) -> PLURAL_NOUN};
 cgToken{AND(IS(SINGULAR), IS(NOUN)) -> SINGULAR_NOUN};
+
+
+cgToken{REGEXP(cgToken.lexeme, "em_relação", true) -> EM_RELACAO};
 
 
 CRASE MALE_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo masculino.")};
@@ -62,6 +69,8 @@ CRASE_A PLURAL_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase co
 CRASE_AS SINGULAR_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo no singular.")};
 
 CRASE VERB{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase antes de verbo.")};
+
+EM_RELACAO LEXEME_A{NOT(IS(CRASE))} FEMALE_NOUN {NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "A expressão em relação pede crase.")};
 
 // Regra 9, regra 10
 

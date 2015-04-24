@@ -352,6 +352,11 @@
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
+                    <name>Rule1.FEMALE_NOUN</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
                     <name>Rule1.MALE_NOUN</name>
                     <description>Type defined in null.Rule1</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
@@ -363,6 +368,11 @@
                 </typeDescription>
                 <typeDescription>
                     <name>Rule1.SINGULAR_NOUN</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>Rule1.EM_RELACAO</name>
                     <description>Type defined in null.Rule1</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
@@ -449,6 +459,11 @@
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
+                    <name>Rule1.FEMALE_NOUN</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
                     <name>Rule1.MALE_NOUN</name>
                     <description>Type defined in null.Rule1</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
@@ -460,6 +475,11 @@
                 </typeDescription>
                 <typeDescription>
                     <name>Rule1.SINGULAR_NOUN</name>
+                    <description>Type defined in null.Rule1</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>Rule1.EM_RELACAO</name>
                     <description>Type defined in null.Rule1</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
@@ -507,9 +527,11 @@
                     <type>Rule1.CRASE</type>
                     <type>Rule1.CRASE_A</type>
                     <type>Rule1.CRASE_AS</type>
+                    <type>Rule1.FEMALE_NOUN</type>
                     <type>Rule1.MALE_NOUN</type>
                     <type>Rule1.PLURAL_NOUN</type>
                     <type>Rule1.SINGULAR_NOUN</type>
+                    <type>Rule1.EM_RELACAO</type>
                     <type>Rule1.PROBLEM</type>
                 </inputs>
                 <outputs>
@@ -527,9 +549,11 @@
                     <type>Rule1.CRASE</type>
                     <type>Rule1.CRASE_A</type>
                     <type>Rule1.CRASE_AS</type>
+                    <type>Rule1.FEMALE_NOUN</type>
                     <type>Rule1.MALE_NOUN</type>
                     <type>Rule1.PLURAL_NOUN</type>
                     <type>Rule1.SINGULAR_NOUN</type>
+                    <type>Rule1.EM_RELACAO</type>
                     <type>Rule1.PROBLEM</type>
                 </outputs>
                 <languagesSupported/>
