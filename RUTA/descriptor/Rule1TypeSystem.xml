@@ -67,12 +67,27 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
+            <name>Rule1.CRASE_A</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.CRASE_AS</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
             <name>Rule1.MALE_NOUN</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
             <name>Rule1.PLURAL_NOUN</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.SINGULAR_NOUN</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
@@ -149,12 +164,27 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
+            <name>Rule1.CRASE_A</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.CRASE_AS</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
             <name>Rule1.MALE_NOUN</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
             <name>Rule1.PLURAL_NOUN</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.SINGULAR_NOUN</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
