@@ -45,11 +45,13 @@ DECLARE FIRST_PERSON, SECOND_PERSON, THIRD_PERSON;
 
 
 cgToken{FEATURE("pos","n") -> NOUN};
+cgToken{FEATURE("pos","prop") -> NOUN, PROPER_NOUN};
 
 
 cgToken{FEATURE("pos", "art") -> ARTICLE};
-cgToken{AND(IS(ARTICLE), FEATURE("lemma", "um")) -> INDEFINITE};
-cgToken{AND(IS(ARTICLE), FEATURE("lemma", "o")) -> DEFINITE};
+// TODO: FEATURE("lemma",*) tá dando problema. Talvez por "lemma" ser um vetor?
+//cgToken{AND(IS(ARTICLE), FEATURE("lemma", "um")) -> INDEFINITE};
+//cgToken{AND(IS(ARTICLE), FEATURE("lemma", "o")) -> DEFINITE};
 
 cgToken{FEATURE("features", "M=S") -> MALE, SINGULAR};
 cgToken{FEATURE("features", "M=P") -> MALE, PLURAL};
@@ -61,6 +63,47 @@ cgToken{FEATURE("pos","v-inf") -> VERB, INFINITE_VERB};
 cgToken{FEATURE("pos","v-pep") -> VERB, PARTICIPLE_VERB};
 cgToken{FEATURE("pos","v-ger") -> VERB, GERUND_VERB};
 
+cgToken{FEATURE("pos","adj") -> ADJECTIVE};
+
+cgToken{FEATURE("pos","adv") -> ADVERB};
+
+cgToken{FEATURE("pos","intj") -> INTERJECTION};
+
+cgToken{FEATURE("pos","num") -> NUMERAL};
+
+cgToken{FEATURE("pos","conj-s") -> CONJUNCTION, SUBORDINATING_CONJUNCTION};
+cgToken{FEATURE("pos","conj-c") -> CONJUNCTION, COORDINATING_CONJUNCTION};
+
+cgToken{FEATURE("pos","prp") -> PREPOSITION};
+
+cgToken{FEATURE("pos","pron-pers") -> PRONOUN, PERSONAL_PRONOUN};
+cgToken{FEATURE("pos","pron-det") -> PRONOUN, DETERMINATIVE_PRONOUN};
+cgToken{FEATURE("pos","pron-indp") -> PRONOUN, INDEPENDENT_PRONOUN};
+
+// TODO: O bloco não está sendo executado.
+BLOCK(verb) cgToken{OR(IS(VERB),IS(PERSONAL_PRONOUN))}
+{
+    STRING feat;
+    cgToken{->GETFEATURE("pos",feat)};
+    
+    cgToken{REGEXP("1[PS]",feat) -> FIRST_PERSON};
+    cgToken{REGEXP("2[PS]",feat) -> SECOND_PERSON};
+    cgToken{REGEXP("3[PS]",feat) -> THIRD_PERSON};
+    
+    cgToken{REGEXP("PR",feat) -> PRESENT};
+    cgToken{REGEXP("IMPF",feat) -> IMPERFECT};
+    cgToken{REGEXP("PS",feat) -> SIMPLE_PERFECT};
+    cgToken{REGEXP("MQP",feat) -> PLU_PERFECT};
+    cgToken{REGEXP("FUT",feat) -> FUTURE};
+    cgToken{REGEXP("COND",feat) -> CONDITIONAL};
+    
+    cgToken{REGEXP("IND",feat) -> INDICATIVE};
+    cgToken{REGEXP("SUBJ",feat) -> SUBJUNCTIVE};
+    cgToken{REGEXP("IMP",feat) -> IMPERATIVE};
+    
+    cgToken{REGEXP("[1-3]P",feat) -> PLURAL};
+    cgToken{REGEXP("[1-3]S",feat) -> SINGULAR};
+}
 
 
 
