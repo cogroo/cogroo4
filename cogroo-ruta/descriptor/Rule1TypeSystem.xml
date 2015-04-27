@@ -4,48 +4,9 @@
     <imports>
         <import location="BasicTypeSystem.xml"/>
         <import location="TypeSystem.xml"/>
+        <import location="BaseTypeSystem.xml"/>
     </imports>
     <types>
-        <typeDescription>
-            <name>Rule1.PREPOSITION</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.ARTICLE</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.FEMALE</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.MALE</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.SINGULAR</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.PLURAL</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.NOUN</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.VERB</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
         <typeDescription>
             <name>Rule1.LEXEME_A</name>
             <description>Type defined in null.Rule1</description>
@@ -112,46 +73,6 @@
                     <rangeTypeName>uima.cas.String</rangeTypeName>
                 </featureDescription>
             </features>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.PREPOSITION</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.ARTICLE</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.FEMALE</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.MALE</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.SINGULAR</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.PLURAL</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.NOUN</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Rule1.VERB</name>
-            <description>Type defined in null.Rule1</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
             <name>Rule1.LEXEME_A</name>

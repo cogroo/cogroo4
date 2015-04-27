@@ -223,7 +223,7 @@
                 <name>scriptPaths</name>
                 <value>
                     <array>
-                        <string>/home/eduardo.araujo1/cogroo4/cogroo-ruta/script</string>
+                        <string>/home/vinicius.matos/LabXP/cogroo4/cogroo-ruta/script</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -231,7 +231,7 @@
                 <name>descriptorPaths</name>
                 <value>
                     <array>
-                        <string>/home/eduardo.araujo1/cogroo4/cogroo-ruta/descriptor</string>
+                        <string>/home/vinicius.matos/LabXP/cogroo4/cogroo-ruta/descriptor</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -239,14 +239,16 @@
                 <name>resourcePaths</name>
                 <value>
                     <array>
-                        <string>/home/eduardo.araujo1/cogroo4/cogroo-ruta/resources</string>
+                        <string>/home/vinicius.matos/LabXP/cogroo4/cogroo-ruta/resources</string>
                     </array>
                 </value>
             </nameValuePair>
             <nameValuePair>
                 <name>additionalScripts</name>
                 <value>
-                    <array/>
+                    <array>
+                        <string>Base</string>
+                    </array>
                 </value>
             </nameValuePair>
             <nameValuePair>
@@ -279,48 +281,9 @@
             <imports>
                 <import location="BasicTypeSystem.xml"/>
                 <import location="TypeSystem.xml"/>
+                <import location="BaseTypeSystem.xml"/>
             </imports>
             <types>
-                <typeDescription>
-                    <name>Rule1.PREPOSITION</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.ARTICLE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.FEMALE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.MALE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.SINGULAR</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PLURAL</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.VERB</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
                 <typeDescription>
                     <name>Rule1.LEXEME_A</name>
                     <description>Type defined in null.Rule1</description>
@@ -387,46 +350,6 @@
                             <rangeTypeName>uima.cas.String</rangeTypeName>
                         </featureDescription>
                     </features>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PREPOSITION</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.ARTICLE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.FEMALE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.MALE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.SINGULAR</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PLURAL</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.VERB</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
                     <name>Rule1.LEXEME_A</name>
@@ -513,14 +436,6 @@
             </capability>
             <capability>
                 <inputs>
-                    <type>Rule1.PREPOSITION</type>
-                    <type>Rule1.ARTICLE</type>
-                    <type>Rule1.FEMALE</type>
-                    <type>Rule1.MALE</type>
-                    <type>Rule1.SINGULAR</type>
-                    <type>Rule1.PLURAL</type>
-                    <type>Rule1.NOUN</type>
-                    <type>Rule1.VERB</type>
                     <type>Rule1.LEXEME_A</type>
                     <type>Rule1.PREPOSITION_A</type>
                     <type>Rule1.ARTICLE_A</type>
@@ -535,14 +450,6 @@
                     <type>Rule1.PROBLEM</type>
                 </inputs>
                 <outputs>
-                    <type>Rule1.PREPOSITION</type>
-                    <type>Rule1.ARTICLE</type>
-                    <type>Rule1.FEMALE</type>
-                    <type>Rule1.MALE</type>
-                    <type>Rule1.SINGULAR</type>
-                    <type>Rule1.PLURAL</type>
-                    <type>Rule1.NOUN</type>
-                    <type>Rule1.VERB</type>
                     <type>Rule1.LEXEME_A</type>
                     <type>Rule1.PREPOSITION_A</type>
                     <type>Rule1.ARTICLE_A</type>

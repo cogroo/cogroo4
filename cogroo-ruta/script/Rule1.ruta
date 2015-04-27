@@ -2,15 +2,8 @@ TYPESYSTEM TypeSystem;
 
 IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
 
-DECLARE PREPOSITION;
-DECLARE ARTICLE;
-DECLARE FEMALE;
-DECLARE MALE;
-DECLARE SINGULAR;
-DECLARE PLURAL;
-DECLARE NOUN;
-DECLARE VERB;
-
+SCRIPT Base;
+Document{-> CALL(Base)};
 
 
 DECLARE LEXEME_A;
@@ -31,18 +24,6 @@ DECLARE EM_RELACAO;
 
 DECLARE Annotation PROBLEM (String description);
 
-cgToken{FEATURE("pos", "prp") -> PREPOSITION};
-cgToken{FEATURE("pos", "art") -> ARTICLE};
-cgToken{OR(FEATURE("features", "F=S"), FEATURE("features", "F=P")) -> FEMALE};
-cgToken{OR(FEATURE("features", "F=S"), FEATURE("features", "M=S")) -> SINGULAR};
-cgToken{OR(FEATURE("features", "F=P"), FEATURE("features", "M=P")) -> PLURAL};
-cgToken{FEATURE("pos", "n") -> NOUN};
-cgToken{OR(FEATURE("features", "M=S"), FEATURE("features", "M=P")) -> MALE};
-
-cgToken{FEATURE("pos", "v-fin") -> VERB};
-cgToken{FEATURE("pos", "v-inf") -> VERB};
-cgToken{FEATURE("pos", "v-pep") -> VERB};
-cgToken{FEATURE("pos", "v-ger") -> VERB};
 
 
 
