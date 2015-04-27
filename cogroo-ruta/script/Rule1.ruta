@@ -6,7 +6,7 @@ SCRIPT Base;
 Document{-> CALL(Base)};
 
 
-DECLARE LEXEME_A;
+DECLARE LEXEME_A, LEXEME_AS, LEXEME_A_OR_AS;
 DECLARE PREPOSITION_A;
 DECLARE ARTICLE_A;
 DECLARE CRASE;
@@ -24,9 +24,14 @@ DECLARE EM_RELACAO;
 
 DECLARE Annotation PROBLEM (String description);
 
-cgToken{REGEXP(cgToken.lexeme, "a(s?)", true) -> LEXEME_A};
-cgToken{AND(IS(PREPOSITION), IS(LEXEME_A)) -> PREPOSITION_A};
-cgToken{AND(AND(AND(IS(ARTICLE), IS(FEMALE))), IS(LEXEME_A)) -> ARTICLE_A};
+DECLARE Annotation SUGGESTION (String text);  // Proposta de meio de indicar a correção, feita apenas em uma regra
+
+
+cgToken{REGEXP(cgToken.lexeme, "a", true) -> LEXEME_A};
+cgToken{REGEXP(cgToken.lexeme, "as", true) -> LEXEME_AS};
+cgToken{OR(IS(LEXEME_A), IS(LEXEME_AS))-> LEXEME_A_OR_AS};
+cgToken{AND(IS(PREPOSITION), IS(LEXEME_A_OR_AS)) -> PREPOSITION_A};
+cgToken{AND(AND(AND(IS(ARTICLE), IS(FEMALE))), IS(LEXEME_A_OR_AS)) -> ARTICLE_A};
 cgToken{AND(IS(PREPOSITION_A), IS(ARTICLE_A)) -> MARKONCE(CRASE)};
 
 cgToken{AND(IS(CRASE), IS(SINGULAR)) -> MARKONCE(CRASE_A)};
@@ -41,11 +46,31 @@ cgToken{AND(IS(SINGULAR), IS(NOUN)) -> SINGULAR_NOUN};
 
 cgToken{REGEXP(cgToken.lexeme, "em_relação", true) -> EM_RELACAO};
 
-
+// rules 1 and 2
 CRASE MALE_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM, 1, 2, "description" = "Crase com substantivo masculino.")};
-CRASE_A PLURAL_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM, 1, 2, "description" = "Crase com substantivo no plural.")};
-CRASE_AS SINGULAR_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM, 1, 2, "description" = "Crase com substantivo no singular.")};
 
+// rules 2 and 3
+CRASE_A PLURAL_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM, 1, 2, "description" = "Crase com substantivo no plural.")};
+
+// rule 4
 CRASE VERB{NOT(IS(PROBLEM)) -> CREATE(PROBLEM, 1, 2, "description" = "Crase antes de verbo.")};
 
-//EM_RELACAO LEXEME_A{NOT(IS(CRASE))} FEMALE_NOUN {NOT(IS(PROBLEM)) -> CREATE(PROBLEM, 1, 2, 3, "description" = "A expressão em relação pede crase.")};
+// this rule was removed because it will become redundant as soon as the 95th rule is done
+// CRASE_AS SINGULAR_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM, 1, 2, "description" = "Crase com substantivo no singular.")};
+
+
+// rules 5 e 6
+cgToken{AND(NOT(IS(CRASE)), IS(LEXEME_A )) -> CREATE(SUGGESTION, "text" = "à")} cgToken{OR(IS(NUMERAL), IS(ARTICLE), IS(PRONOUN))} cgToken{REGEXP(cgToken.lexeme, "hora") -> CREATE(PROBLEM, 1, 2, 3, "description" = "Ocorre crase em expressões indicativas de horas.")};
+cgToken{AND(NOT(IS(CRASE)), IS(LEXEME_AS)) -> CREATE(SUGGESTION, "text" = "às")} cgToken{OR(IS(NUMERAL), IS(ARTICLE), IS(PRONOUN))} cgToken{REGEXP(cgToken.lexeme, "horas") -> CREATE(PROBLEM, 1, 2, 3, "description" = "Ocorre crase em expressões indicativas de horas.")};
+
+// rules 7 and 8
+cgToken{AND(NOT(IS(CRASE)), IS(LEXEME_A))} cgToken{REGEXP(cgToken.lexeme, "(direita|esquerda)", true)} cgToken{REGEXP(cgToken.lexeme, "de", true) -> CREATE(PROBLEM, 1, 2, 3, "description" = "Ocorre crase em expressões indicativas de modo, tempo, lugar etc.")};
+
+// rule 15
+CRASE_A cgToken{REGEXP(cgToken.lexeme, "você", true) -> CREATE(PROBLEM, 1, 2, "description" = "Pronomes de tratamento não admitem artigo, logo não há crase aqui.")};
+
+// rule 16
+CRASE_A cgToken{REGEXP(cgToken.lexeme, "vossa_(senhoria|majestade|eminência|excelência|reverendíssima|santidade)", true) -> CREATE(PROBLEM, 1, 2,  "description" = "Pronomes de tratamento não admitem artigo, logo não há crase aqui.")};
+
+// rules 25, 26 and 27
+cgToken{REGEXP(cgToken.lexeme, "em", true)} cgToken{REGEXP(cgToken.lexeme, "anex(os|a|as)", true) -> CREATE(PROBLEM, 1, 2, "description" = "A expressão \"em anexo\" é invariável.")};

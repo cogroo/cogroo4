@@ -13,6 +13,16 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
+            <name>Rule1.LEXEME_AS</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.LEXEME_A_OR_AS</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
             <name>Rule1.PREPOSITION_A</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
@@ -75,7 +85,29 @@
             </features>
         </typeDescription>
         <typeDescription>
+            <name>Rule1.SUGGESTION</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>text</name>
+                    <description>text</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+        <typeDescription>
             <name>Rule1.LEXEME_A</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.LEXEME_AS</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.LEXEME_A_OR_AS</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
@@ -137,6 +169,18 @@
                 <featureDescription>
                     <name>description</name>
                     <description>description</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.SUGGESTION</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>text</name>
+                    <description>text</description>
                     <rangeTypeName>uima.cas.String</rangeTypeName>
                 </featureDescription>
             </features>

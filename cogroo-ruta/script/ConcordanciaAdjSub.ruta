@@ -18,6 +18,8 @@ DECLARE SINGULAR_ADJECTIVE;
 
 DECLARE Annotation PROBLEM (String description);
 
+// rules 17 to 24 
+
 cgToken{AND(IS(MALE), IS(NOUN)) -> MALE_NOUN};
 cgToken{AND(IS(FEMALE), IS(NOUN)) -> FEMALE_NOUN};
 cgToken{AND(IS(PLURAL), IS(NOUN)) -> PLURAL_NOUN};
