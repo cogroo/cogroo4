@@ -1,4 +1,4 @@
-cogroo-uima/exemplos/processed/*
+cogroo-ruta/descriptors/*Engine.xml
 .classpath
 .settings
 **/target/**
