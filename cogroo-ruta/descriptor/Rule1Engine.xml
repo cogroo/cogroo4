@@ -223,7 +223,7 @@
                 <name>scriptPaths</name>
                 <value>
                     <array>
-                        <string>/home/vinicius.vendramini/CoGrOO/cogroo4/RUTA/script</string>
+                        <string>/home/vinicius.vendramini/CoGrOO/cogroo4/cogroo-ruta/script</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -231,7 +231,7 @@
                 <name>descriptorPaths</name>
                 <value>
                     <array>
-                        <string>/home/vinicius.vendramini/CoGrOO/cogroo4/RUTA/descriptor</string>
+                        <string>/home/vinicius.vendramini/CoGrOO/cogroo4/cogroo-ruta/descriptor</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -239,7 +239,7 @@
                 <name>resourcePaths</name>
                 <value>
                     <array>
-                        <string>/home/vinicius.vendramini/CoGrOO/cogroo4/RUTA/resources</string>
+                        <string>/home/vinicius.vendramini/CoGrOO/cogroo4/cogroo-ruta/resources</string>
                     </array>
                 </value>
             </nameValuePair>

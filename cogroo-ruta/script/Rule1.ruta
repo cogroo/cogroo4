@@ -71,6 +71,3 @@ CRASE_AS SINGULAR_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase
 CRASE VERB{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase antes de verbo.")};
 
 EM_RELACAO LEXEME_A{NOT(IS(CRASE))} FEMALE_NOUN {NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "A expressão em relação pede crase.")};
-
-// Regra 9, regra 10
-
