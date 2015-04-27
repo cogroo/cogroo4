@@ -1,21 +1,76 @@
 TYPESYSTEM TypeSystem;
 
-DECLARE PRP_A;  // preposição 'a'
-DECLARE ARTFMD; // artigo feminino definido ( == 'a' )
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+DECLARE PREPOSITION;
+DECLARE ARTICLE;
+DECLARE FEMALE;
+DECLARE MALE;
+DECLARE SINGULAR;
+DECLARE PLURAL;
+DECLARE NOUN;
+DECLARE VERB;
+
+
+
+DECLARE LEXEME_A;
+DECLARE PREPOSITION_A;
+DECLARE ARTICLE_A;
 DECLARE CRASE;
+DECLARE CRASE_A;
+DECLARE CRASE_AS;
 
-DECLARE SUBSM; // substantivo masculino
 
-DECLARE ERRADO;
+DECLARE FEMALE_NOUN;
+DECLARE MALE_NOUN;
+DECLARE PLURAL_NOUN;
+DECLARE SINGULAR_NOUN;
 
-opennlp.uima.Token{AND(FEATURE("pos", "prp"), FEATURE("lexeme", "a")) -> PRP_A};
-opennlp.uima.Token{AND(FEATURE("pos", "art"), FEATURE("features", "F=S"), FEATURE("lexeme", "a")) -> ARTFMD};
+DECLARE EM_RELACAO;
 
-opennlp.uima.Token{AND(IS(PRP_A), IS(ARTFMD), NOT(IS(CRASE))) -> CRASE};
 
-opennlp.uima.Token{
-AND(FEATURE("pos", "n"), 
-    OR(FEATURE("features", "M=S"),
-       FEATURE("features", "M=P")))-> SUBSM};
-       
-CRASE SUBSM{-> MARK(ERRADO)};
+DECLARE Annotation PROBLEM (String description);
+
+cgToken{FEATURE("pos", "prp") -> PREPOSITION};
+cgToken{FEATURE("pos", "art") -> ARTICLE};
+cgToken{OR(FEATURE("features", "F=S"), FEATURE("features", "F=P")) -> FEMALE};
+cgToken{OR(FEATURE("features", "F=S"), FEATURE("features", "M=S")) -> SINGULAR};
+cgToken{OR(FEATURE("features", "F=P"), FEATURE("features", "M=P")) -> PLURAL};
+cgToken{FEATURE("pos", "n") -> NOUN};
+cgToken{OR(FEATURE("features", "M=S"), FEATURE("features", "M=P")) -> MALE};
+
+cgToken{FEATURE("pos", "v-fin") -> VERB};
+cgToken{FEATURE("pos", "v-inf") -> VERB};
+cgToken{FEATURE("pos", "v-pep") -> VERB};
+cgToken{FEATURE("pos", "v-ger") -> VERB};
+
+
+
+cgToken{OR(REGEXP(cgToken.lexeme, "a", true), REGEXP(cgToken.lexeme, "as", true)) -> LEXEME_A};
+cgToken{AND(IS(PREPOSITION), IS(LEXEME_A)) -> PREPOSITION_A};
+cgToken{AND(AND(AND(IS(ARTICLE), IS(FEMALE))), IS(LEXEME_A)) -> ARTICLE_A};
+cgToken{AND(AND(IS(PREPOSITION_A), IS(ARTICLE_A)), NOT(IS(CRASE))) -> CRASE};
+
+cgToken{AND(AND(IS(CRASE), IS(SINGULAR)), NOT(IS(CRASE_A))) -> CRASE_A};
+cgToken{AND(AND(IS(CRASE), IS(PLURAL)), NOT(IS(CRASE_AS))) -> CRASE_AS};
+
+
+cgToken{AND(IS(MALE), IS(NOUN)) -> MALE_NOUN};
+cgToken{AND(IS(FEMALE), IS(NOUN)) -> FEMALE_NOUN};
+cgToken{AND(IS(PLURAL), IS(NOUN)) -> PLURAL_NOUN};
+cgToken{AND(IS(SINGULAR), IS(NOUN)) -> SINGULAR_NOUN};
+
+
+cgToken{REGEXP(cgToken.lexeme, "em_relação", true) -> EM_RELACAO};
+
+
+CRASE MALE_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo masculino.")};
+CRASE_A PLURAL_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo no plural.")};
+CRASE_AS SINGULAR_NOUN{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase com substantivo no singular.")};
+
+CRASE VERB{NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "Crase antes de verbo.")};
+
+EM_RELACAO LEXEME_A{NOT(IS(CRASE))} FEMALE_NOUN {NOT(IS(PROBLEM)) -> CREATE(PROBLEM,"description" = "A expressão em relação pede crase.")};
+
+// Regra 9, regra 10
+

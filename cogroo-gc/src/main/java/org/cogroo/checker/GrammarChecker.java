@@ -45,6 +45,7 @@ import org.cogroo.tools.checker.checkers.ParonymChecker;
 import org.cogroo.tools.checker.checkers.PunctuationChecker;
 import org.cogroo.tools.checker.checkers.RepetitionChecker;
 import org.cogroo.tools.checker.checkers.SpaceChecker;
+import org.cogroo.tools.checker.checkers.UIMAChecker;
 import org.cogroo.tools.checker.rules.applier.RulesApplier;
 import org.cogroo.tools.checker.rules.applier.RulesProvider;
 import org.cogroo.tools.checker.rules.applier.RulesTreesAccess;
@@ -57,6 +58,7 @@ import org.cogroo.tools.checker.rules.dictionary.TagDictionary;
 import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.util.MistakeComparator;
 import org.cogroo.tools.checker.rules.validator.RulePostValidatorProvider;
+
 
 
 public class GrammarChecker implements CheckAnalyzer {
@@ -132,6 +134,7 @@ public class GrammarChecker implements CheckAnalyzer {
     typedCheckersList.add(new SpaceChecker(loadAbbDict()));
     typedCheckersList.add(new PunctuationChecker());
     typedCheckersList.add(new RepetitionChecker());
+    typedCheckersList.add(new UIMAChecker());
     
     typedCheckers = new TypedCheckerComposite(typedCheckersList, false);
 
