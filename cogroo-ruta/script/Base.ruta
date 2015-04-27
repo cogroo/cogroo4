@@ -90,3 +90,6 @@ cgToken{REGEXP(cgToken.features, ".*3[PS].*") -> THIRD_PERSON};
 // NUMBER (singular/plural):
 cgToken{REGEXP(cgToken.features, ".*[1-3]P.*") -> PLURAL};
 cgToken{REGEXP(cgToken.features, ".*[1-3]S.*") -> SINGULAR};
+
+
+
