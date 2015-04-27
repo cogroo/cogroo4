@@ -216,7 +216,7 @@
             <nameValuePair>
                 <name>mainScript</name>
                 <value>
-                    <string>Rule1</string>
+                    <string>ConcordanciaAdjSub</string>
                 </value>
             </nameValuePair>
             <nameValuePair>
@@ -275,225 +275,31 @@
             </nameValuePair>
         </configurationParameterSettings>
         <typeSystemDescription>
-            <name>Rule1TypeSystem</name>
+            <name>ConcordanciaAdjSubTypeSystem</name>
             <imports>
                 <import location="BasicTypeSystem.xml"/>
                 <import location="TypeSystem.xml"/>
             </imports>
             <types>
                 <typeDescription>
-                    <name>Rule1.PREPOSITION</name>
-                    <description>Type defined in null.Rule1</description>
+                    <name>ConcordanciaAdjSub.NOUN</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
-                    <name>Rule1.ARTICLE</name>
-                    <description>Type defined in null.Rule1</description>
+                    <name>ConcordanciaAdjSub.ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
-                    <name>Rule1.FEMALE</name>
-                    <description>Type defined in null.Rule1</description>
+                    <name>ConcordanciaAdjSub.NOUN</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
-                    <name>Rule1.MALE</name>
-                    <description>Type defined in null.Rule1</description>
+                    <name>ConcordanciaAdjSub.ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.SINGULAR</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PLURAL</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.VERB</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.LEXEME_A</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PREPOSITION_A</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.ARTICLE_A</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.CRASE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.CRASE_A</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.CRASE_AS</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.FEMALE_NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.MALE_NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PLURAL_NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.SINGULAR_NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.EM_RELACAO</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PROBLEM</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                    <features>
-                        <featureDescription>
-                            <name>description</name>
-                            <description>description</description>
-                            <rangeTypeName>uima.cas.String</rangeTypeName>
-                        </featureDescription>
-                    </features>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PREPOSITION</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.ARTICLE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.FEMALE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.MALE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.SINGULAR</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PLURAL</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.VERB</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.LEXEME_A</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PREPOSITION_A</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.ARTICLE_A</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.CRASE</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.CRASE_A</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.CRASE_AS</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.FEMALE_NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.MALE_NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PLURAL_NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.SINGULAR_NOUN</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.EM_RELACAO</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                </typeDescription>
-                <typeDescription>
-                    <name>Rule1.PROBLEM</name>
-                    <description>Type defined in null.Rule1</description>
-                    <supertypeName>uima.tcas.Annotation</supertypeName>
-                    <features>
-                        <featureDescription>
-                            <name>description</name>
-                            <description>description</description>
-                            <rangeTypeName>uima.cas.String</rangeTypeName>
-                        </featureDescription>
-                    </features>
                 </typeDescription>
             </types>
         </typeSystemDescription>
@@ -513,48 +319,12 @@
             </capability>
             <capability>
                 <inputs>
-                    <type>Rule1.PREPOSITION</type>
-                    <type>Rule1.ARTICLE</type>
-                    <type>Rule1.FEMALE</type>
-                    <type>Rule1.MALE</type>
-                    <type>Rule1.SINGULAR</type>
-                    <type>Rule1.PLURAL</type>
-                    <type>Rule1.NOUN</type>
-                    <type>Rule1.VERB</type>
-                    <type>Rule1.LEXEME_A</type>
-                    <type>Rule1.PREPOSITION_A</type>
-                    <type>Rule1.ARTICLE_A</type>
-                    <type>Rule1.CRASE</type>
-                    <type>Rule1.CRASE_A</type>
-                    <type>Rule1.CRASE_AS</type>
-                    <type>Rule1.FEMALE_NOUN</type>
-                    <type>Rule1.MALE_NOUN</type>
-                    <type>Rule1.PLURAL_NOUN</type>
-                    <type>Rule1.SINGULAR_NOUN</type>
-                    <type>Rule1.EM_RELACAO</type>
-                    <type>Rule1.PROBLEM</type>
+                    <type>ConcordanciaAdjSub.NOUN</type>
+                    <type>ConcordanciaAdjSub.ADJECTIVE</type>
                 </inputs>
                 <outputs>
-                    <type>Rule1.PREPOSITION</type>
-                    <type>Rule1.ARTICLE</type>
-                    <type>Rule1.FEMALE</type>
-                    <type>Rule1.MALE</type>
-                    <type>Rule1.SINGULAR</type>
-                    <type>Rule1.PLURAL</type>
-                    <type>Rule1.NOUN</type>
-                    <type>Rule1.VERB</type>
-                    <type>Rule1.LEXEME_A</type>
-                    <type>Rule1.PREPOSITION_A</type>
-                    <type>Rule1.ARTICLE_A</type>
-                    <type>Rule1.CRASE</type>
-                    <type>Rule1.CRASE_A</type>
-                    <type>Rule1.CRASE_AS</type>
-                    <type>Rule1.FEMALE_NOUN</type>
-                    <type>Rule1.MALE_NOUN</type>
-                    <type>Rule1.PLURAL_NOUN</type>
-                    <type>Rule1.SINGULAR_NOUN</type>
-                    <type>Rule1.EM_RELACAO</type>
-                    <type>Rule1.PROBLEM</type>
+                    <type>ConcordanciaAdjSub.NOUN</type>
+                    <type>ConcordanciaAdjSub.ADJECTIVE</type>
                 </outputs>
                 <languagesSupported/>
             </capability>

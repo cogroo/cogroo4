@@ -1,0 +1,7 @@
+TYPESYSTEM TypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+DECLARE NOUN;
+DECLARE ADJECTIVE;
+
