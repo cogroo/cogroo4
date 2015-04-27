@@ -223,7 +223,7 @@
                 <name>scriptPaths</name>
                 <value>
                     <array>
-                        <string>/home/vinicius.matos/LabXP/cogroo4/cogroo-ruta/script</string>
+                        <string>/home/eduardo.araujo1/cogroo4/cogroo-ruta/script</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -231,7 +231,7 @@
                 <name>descriptorPaths</name>
                 <value>
                     <array>
-                        <string>/home/vinicius.matos/LabXP/cogroo4/cogroo-ruta/descriptor</string>
+                        <string>/home/eduardo.araujo1/cogroo4/cogroo-ruta/descriptor</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -239,14 +239,16 @@
                 <name>resourcePaths</name>
                 <value>
                     <array>
-                        <string>/home/vinicius.matos/LabXP/cogroo4/cogroo-ruta/resources</string>
+                        <string>/home/eduardo.araujo1/cogroo4/cogroo-ruta/resources</string>
                     </array>
                 </value>
             </nameValuePair>
             <nameValuePair>
                 <name>additionalScripts</name>
                 <value>
-                    <array/>
+                    <array>
+                        <string>Base</string>
+                    </array>
                 </value>
             </nameValuePair>
             <nameValuePair>
@@ -279,27 +281,112 @@
             <imports>
                 <import location="BasicTypeSystem.xml"/>
                 <import location="TypeSystem.xml"/>
+                <import location="BaseTypeSystem.xml"/>
             </imports>
             <types>
                 <typeDescription>
-                    <name>ConcordanciaAdjSub.NOUN</name>
+                    <name>ConcordanciaAdjSub.FEMALE_NOUN</name>
                     <description>Type defined in null.ConcordanciaAdjSub</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
-                    <name>ConcordanciaAdjSub.ADJECTIVE</name>
+                    <name>ConcordanciaAdjSub.MALE_NOUN</name>
                     <description>Type defined in null.ConcordanciaAdjSub</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
-                    <name>ConcordanciaAdjSub.NOUN</name>
+                    <name>ConcordanciaAdjSub.PLURAL_NOUN</name>
                     <description>Type defined in null.ConcordanciaAdjSub</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
                 </typeDescription>
                 <typeDescription>
-                    <name>ConcordanciaAdjSub.ADJECTIVE</name>
+                    <name>ConcordanciaAdjSub.SINGULAR_NOUN</name>
                     <description>Type defined in null.ConcordanciaAdjSub</description>
                     <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.FEMALE_ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.MALE_ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.PLURAL_ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.SINGULAR_ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.PROBLEM</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                    <features>
+                        <featureDescription>
+                            <name>description</name>
+                            <description>description</description>
+                            <rangeTypeName>uima.cas.String</rangeTypeName>
+                        </featureDescription>
+                    </features>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.FEMALE_NOUN</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.MALE_NOUN</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.PLURAL_NOUN</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.SINGULAR_NOUN</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.FEMALE_ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.MALE_ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.PLURAL_ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.SINGULAR_ADJECTIVE</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                </typeDescription>
+                <typeDescription>
+                    <name>ConcordanciaAdjSub.PROBLEM</name>
+                    <description>Type defined in null.ConcordanciaAdjSub</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                    <features>
+                        <featureDescription>
+                            <name>description</name>
+                            <description>description</description>
+                            <rangeTypeName>uima.cas.String</rangeTypeName>
+                        </featureDescription>
+                    </features>
                 </typeDescription>
             </types>
         </typeSystemDescription>
@@ -319,12 +406,26 @@
             </capability>
             <capability>
                 <inputs>
-                    <type>ConcordanciaAdjSub.NOUN</type>
-                    <type>ConcordanciaAdjSub.ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.FEMALE_NOUN</type>
+                    <type>ConcordanciaAdjSub.MALE_NOUN</type>
+                    <type>ConcordanciaAdjSub.PLURAL_NOUN</type>
+                    <type>ConcordanciaAdjSub.SINGULAR_NOUN</type>
+                    <type>ConcordanciaAdjSub.FEMALE_ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.MALE_ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.PLURAL_ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.SINGULAR_ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.PROBLEM</type>
                 </inputs>
                 <outputs>
-                    <type>ConcordanciaAdjSub.NOUN</type>
-                    <type>ConcordanciaAdjSub.ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.FEMALE_NOUN</type>
+                    <type>ConcordanciaAdjSub.MALE_NOUN</type>
+                    <type>ConcordanciaAdjSub.PLURAL_NOUN</type>
+                    <type>ConcordanciaAdjSub.SINGULAR_NOUN</type>
+                    <type>ConcordanciaAdjSub.FEMALE_ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.MALE_ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.PLURAL_ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.SINGULAR_ADJECTIVE</type>
+                    <type>ConcordanciaAdjSub.PROBLEM</type>
                 </outputs>
                 <languagesSupported/>
             </capability>
