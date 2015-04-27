@@ -1,6 +1,4 @@
-.project
 cogroo-uima/exemplos/processed/*
-RUTA/output/*
 .classpath
 .settings
 **/target/**
