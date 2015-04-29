@@ -68,7 +68,17 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
+            <name>Rule1.PRON_TRATAMENTO</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
             <name>Rule1.EM_RELACAO</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.COM_RELACAO</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
@@ -157,7 +167,17 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
+            <name>Rule1.PRON_TRATAMENTO</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
             <name>Rule1.EM_RELACAO</name>
+            <description>Type defined in null.Rule1</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>Rule1.COM_RELACAO</name>
             <description>Type defined in null.Rule1</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
