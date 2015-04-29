@@ -43,7 +43,7 @@ SINGULAR_NOUN
 PLURAL_ADJECTIVE{
 NOT(IS(PROBLEM)) -> CREATE(PROBLEM,1,2,"description" = "Adjetivo não concorda com o substantivo em número.")};
 
-PLURAL_NOUN
+PLURAL_NOUN 
 SINGULAR_ADJECTIVE{
 NOT(IS(PROBLEM)) -> CREATE(PROBLEM,1,2,"description" = "Adjetivo não concorda com o substantivo em número.")};
 

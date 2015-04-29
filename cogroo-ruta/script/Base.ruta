@@ -31,6 +31,7 @@ DECLARE FIRST_PERSON, SECOND_PERSON, THIRD_PERSON;
 
 // adjective
 cgToken{FEATURE("pos","adj") -> ADJECTIVE};
+cgToken{FEATURE("pos","n-adj") -> ADJECTIVE};
 
 // adverb
 cgToken{FEATURE("pos","adv") -> ADVERB};

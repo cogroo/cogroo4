@@ -48,11 +48,6 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Crase.FEMALE_NOUN</name>
-            <description>Type defined in null.Crase</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
             <name>Crase.MALE_NOUN</name>
             <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
@@ -143,11 +138,6 @@
         </typeDescription>
         <typeDescription>
             <name>Crase.CRASE_AS</name>
-            <description>Type defined in null.Crase</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>Crase.FEMALE_NOUN</name>
             <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
