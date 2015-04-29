@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
-    <name>Rule1TypeSystem</name>
+    <name>CraseTypeSystem</name>
     <imports>
         <import location="BasicTypeSystem.xml"/>
         <import location="TypeSystem.xml"/>
@@ -8,83 +8,83 @@
     </imports>
     <types>
         <typeDescription>
-            <name>Rule1.LEXEME_A</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.LEXEME_A</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.LEXEME_AS</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.LEXEME_AS</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.LEXEME_A_OR_AS</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.LEXEME_A_OR_AS</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.PREPOSITION_A</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.PREPOSITION_A</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.ARTICLE_A</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.ARTICLE_A</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.CRASE</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.CRASE</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.CRASE_A</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.CRASE_A</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.CRASE_AS</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.CRASE_AS</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.FEMALE_NOUN</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.FEMALE_NOUN</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.MALE_NOUN</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.MALE_NOUN</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.PLURAL_NOUN</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.PLURAL_NOUN</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.SINGULAR_NOUN</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.SINGULAR_NOUN</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.PRON_TRATAMENTO</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.PRON_TRATAMENTO</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.EM_RELACAO</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.EM_RELACAO</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.COM_RELACAO</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.COM_RELACAO</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.PROBLEM</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.PROBLEM</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
             <features>
                 <featureDescription>
@@ -95,8 +95,8 @@
             </features>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.SUGGESTION</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.SUGGESTION</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
             <features>
                 <featureDescription>
@@ -107,83 +107,83 @@
             </features>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.LEXEME_A</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.LEXEME_A</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.LEXEME_AS</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.LEXEME_AS</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.LEXEME_A_OR_AS</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.LEXEME_A_OR_AS</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.PREPOSITION_A</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.PREPOSITION_A</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.ARTICLE_A</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.ARTICLE_A</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.CRASE</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.CRASE</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.CRASE_A</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.CRASE_A</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.CRASE_AS</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.CRASE_AS</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.FEMALE_NOUN</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.FEMALE_NOUN</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.MALE_NOUN</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.MALE_NOUN</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.PLURAL_NOUN</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.PLURAL_NOUN</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.SINGULAR_NOUN</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.SINGULAR_NOUN</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.PRON_TRATAMENTO</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.PRON_TRATAMENTO</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.EM_RELACAO</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.EM_RELACAO</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.COM_RELACAO</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.COM_RELACAO</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.PROBLEM</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.PROBLEM</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
             <features>
                 <featureDescription>
@@ -194,8 +194,8 @@
             </features>
         </typeDescription>
         <typeDescription>
-            <name>Rule1.SUGGESTION</name>
-            <description>Type defined in null.Rule1</description>
+            <name>Crase.SUGGESTION</name>
+            <description>Type defined in null.Crase</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
             <features>
                 <featureDescription>

@@ -71,9 +71,6 @@ cgToken{REGEXP(cgToken.lexeme, "vossa_(senhoria|majestade|eminência|excelência
 cgToken{REGEXP(cgToken.lexeme, "você", true) -> PRON_TRATAMENTO};
 CRASE_A cgToken{IS(PRON_TRATAMENTO) -> CREATE(PROBLEM, 1, 2,  "description" = "Pronomes de tratamento não admitem artigo, logo não há crase aqui.")};
 
-// rules 25, 26 and 27
-cgToken{REGEXP(cgToken.lexeme, "em", true)} cgToken{REGEXP(cgToken.lexeme, "anex(os|a|as)", true) -> CREATE(PROBLEM, 1, 2, "description" = "A expressão \"em anexo\" é invariável.")};
-
 // rules 9 and 10
 cgToken{REGEXP(cgToken.lexeme, "em_relação", true) ->  EM_RELACAO};
 EM_RELACAO cgToken{AND(IS(LEXEME_A),  NOT(IS(CRASE)))} cgToken{AND(IS(NOUN), IS(FEMALE), IS(SINGULAR), NOT(IS(PROBLEM))) -> CREATE(PROBLEM, 1, 2, 3, 4, "description" = "\"Em relação\" rege a preposição \"a\", logo há crase aqui.")};

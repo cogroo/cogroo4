@@ -1,0 +1,12 @@
+
+TYPESYSTEM TypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+SCRIPT Base;
+Document{-> CALL(Base)};
+
+DECLARE Annotation PROBLEM (String description);
+
+// rules 25, 26 and 27
+cgToken{REGEXP(cgToken.lexeme, "em", true)} cgToken{REGEXP(cgToken.lexeme, "anex(os|a|as)", true) -> CREATE(PROBLEM, 1, 2, "description" = "A expressão \"em anexo\" é invariável.")};

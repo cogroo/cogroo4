@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <name>AnexosTypeSystem</name>
+    <imports>
+        <import location="BasicTypeSystem.xml"/>
+        <import location="TypeSystem.xml"/>
+        <import location="BaseTypeSystem.xml"/>
+    </imports>
+    <types>
+        <typeDescription>
+            <name>Anexos.PROBLEM</name>
+            <description>Type defined in null.Anexos</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>description</name>
+                    <description>description</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+        <typeDescription>
+            <name>Anexos.PROBLEM</name>
+            <description>Type defined in null.Anexos</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>description</name>
+                    <description>description</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+    </types>
+</typeSystemDescription>
