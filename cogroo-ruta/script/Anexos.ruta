@@ -1,12 +1,11 @@
+PACKAGE cogroo.ruta;
 
-TYPESYSTEM TypeSystem;
+TYPESYSTEM BaseTypeSystem;
 
 IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
 
 SCRIPT Base;
 Document{-> CALL(Base)};
-
-DECLARE Annotation PROBLEM (String description);
 
 
 // rules 25, 26 and 27

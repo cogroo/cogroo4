@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
-    <name>AnexosTypeSystem</name>
+    <name>MainTypeSystem</name>
     <imports>
         <import location="BasicTypeSystem.xml"/>
         <import location="TypeSystem.xml"/>
         <import location="BaseTypeSystem.xml"/>
+        <import location="ConcordanciaAdjSubTypeSystem.xml"/>
+        <import location="CraseTypeSystem.xml"/>
+        <import location="AnexosTypeSystem.xml"/>
         <import location="BaseTypeSystem.xml"/>
     </imports>
 </typeSystemDescription>
