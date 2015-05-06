@@ -29,8 +29,16 @@ DECLARE MALE, FEMALE;
 DECLARE SINGULAR, PLURAL;
 DECLARE FIRST_PERSON, SECOND_PERSON, THIRD_PERSON;
 
+DECLARE FEMALE_NOUN;
+DECLARE MALE_NOUN;
+DECLARE PLURAL_NOUN;
+DECLARE SINGULAR_NOUN;
+
+DECLARE Annotation PROBLEM (String description);
+
 // adjective
 cgToken{FEATURE("pos","adj") -> ADJECTIVE};
+cgToken{FEATURE("pos","n-adj") -> ADJECTIVE};
 
 // adverb
 cgToken{FEATURE("pos","adv") -> ADVERB};
@@ -92,4 +100,9 @@ cgToken{REGEXP(cgToken.features, ".*[1-3]P.*") -> PLURAL};
 cgToken{REGEXP(cgToken.features, ".*[1-3]S.*") -> SINGULAR};
 
 
+// combinations 
+cgToken{AND(IS(MALE), IS(NOUN)) -> MALE_NOUN};
+cgToken{AND(IS(FEMALE), IS(NOUN)) -> FEMALE_NOUN};
+cgToken{AND(IS(PLURAL), IS(NOUN)) -> PLURAL_NOUN};
+cgToken{AND(IS(SINGULAR), IS(NOUN)) -> SINGULAR_NOUN};
 

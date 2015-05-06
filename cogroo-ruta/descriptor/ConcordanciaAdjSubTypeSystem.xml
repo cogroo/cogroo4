@@ -8,108 +8,44 @@
     </imports>
     <types>
         <typeDescription>
-            <name>ConcordanciaAdjSub.FEMALE_NOUN</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
+            <name>cogroo.ruta.ConcordanciaAdjSub.FEMALE_ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.ConcordanciaAdjSub</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>ConcordanciaAdjSub.MALE_NOUN</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
+            <name>cogroo.ruta.ConcordanciaAdjSub.MALE_ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.ConcordanciaAdjSub</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>ConcordanciaAdjSub.PLURAL_NOUN</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
+            <name>cogroo.ruta.ConcordanciaAdjSub.PLURAL_ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.ConcordanciaAdjSub</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>ConcordanciaAdjSub.SINGULAR_NOUN</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
+            <name>cogroo.ruta.ConcordanciaAdjSub.SINGULAR_ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.ConcordanciaAdjSub</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>ConcordanciaAdjSub.FEMALE_ADJECTIVE</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
+            <name>cogroo.ruta.ConcordanciaAdjSub.FEMALE_ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.ConcordanciaAdjSub</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>ConcordanciaAdjSub.MALE_ADJECTIVE</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
+            <name>cogroo.ruta.ConcordanciaAdjSub.MALE_ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.ConcordanciaAdjSub</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>ConcordanciaAdjSub.PLURAL_ADJECTIVE</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
+            <name>cogroo.ruta.ConcordanciaAdjSub.PLURAL_ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.ConcordanciaAdjSub</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>ConcordanciaAdjSub.SINGULAR_ADJECTIVE</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
+            <name>cogroo.ruta.ConcordanciaAdjSub.SINGULAR_ADJECTIVE</name>
+            <description>Type defined in cogroo.ruta.ConcordanciaAdjSub</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.PROBLEM</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-            <features>
-                <featureDescription>
-                    <name>description</name>
-                    <description>description</description>
-                    <rangeTypeName>uima.cas.String</rangeTypeName>
-                </featureDescription>
-            </features>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.FEMALE_NOUN</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.MALE_NOUN</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.PLURAL_NOUN</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.SINGULAR_NOUN</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.FEMALE_ADJECTIVE</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.MALE_ADJECTIVE</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.PLURAL_ADJECTIVE</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.SINGULAR_ADJECTIVE</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-        </typeDescription>
-        <typeDescription>
-            <name>ConcordanciaAdjSub.PROBLEM</name>
-            <description>Type defined in null.ConcordanciaAdjSub</description>
-            <supertypeName>uima.tcas.Annotation</supertypeName>
-            <features>
-                <featureDescription>
-                    <name>description</name>
-                    <description>description</description>
-                    <rangeTypeName>uima.cas.String</rangeTypeName>
-                </featureDescription>
-            </features>
         </typeDescription>
     </types>
 </typeSystemDescription>

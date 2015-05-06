@@ -1,0 +1,17 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM BaseTypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+
+SCRIPT ConcordanciaAdjSub;
+SCRIPT Crase;
+SCRIPT Anexos;
+
+SCRIPT Base;
+Document{-> CALL(Base)};
+
+Document{-> CALL(Crase)};
+Document{-> CALL(ConcordanciaAdjSub)};
+Document{-> CALL(Anexos)};
