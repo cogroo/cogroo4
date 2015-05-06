@@ -34,7 +34,8 @@ DECLARE MALE_NOUN;
 DECLARE PLURAL_NOUN;
 DECLARE SINGULAR_NOUN;
 
-DECLARE Annotation PROBLEM (String description);
+DECLARE PROBLEM;
+DECLARE Annotation PROBLEM_DESCRIPTION (String description);
 
 // adjective
 cgToken{FEATURE("pos","adj") -> ADJECTIVE};

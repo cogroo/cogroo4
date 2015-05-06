@@ -220,6 +220,11 @@
             <name>cogroo.ruta.Base.PROBLEM</name>
             <description>Type defined in cogroo.ruta.Base</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.Base.PROBLEM_DESCRIPTION</name>
+            <description>Type defined in cogroo.ruta.Base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
             <features>
                 <featureDescription>
                     <name>description</name>
@@ -440,6 +445,11 @@
         </typeDescription>
         <typeDescription>
             <name>cogroo.ruta.Base.PROBLEM</name>
+            <description>Type defined in cogroo.ruta.Base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.Base.PROBLEM_DESCRIPTION</name>
             <description>Type defined in cogroo.ruta.Base</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
             <features>
