@@ -52,3 +52,11 @@ cgToken{AND(IS(VERB),OR(FEATURE("lexeme","haviam"),FEATURE("lexeme","Haviam")))}
 // Rule 49
 cgToken{AND(IS(VERB),OR(FEATURE("lexeme","haviam"),FEATURE("lexeme","Haviam")))} EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
     CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
+
+// Rule 50
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(haviam|haverão)",true))} NOUN{IS(PLURAL)->MARKONCE(PROBLEM,1,2),
+    CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Haver\" no sentido de existir é usado na 3a. pessoa do singular.")};
+
+// Rule 51
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(devem|deveriam|deverão|podem|poderiam)",true))} cgToken{AND(IS(INFINITE_VERB),FEATURE("lexeme","haver"))} NOUN{IS(PLURAL) ->MARKONCE(PROBLEM,1,2,3),
+    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Haver\" (existir), precedido de verbo aux., é usado na 3a. do singular.")};
