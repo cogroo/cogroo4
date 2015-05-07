@@ -1,0 +1,54 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM BaseTypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+DECLARE FAZER_TEMPO;
+DECLARE EXP_TEMPO;
+DECLARE EXP_TEMPO_P;
+DECLARE VERB_LIST;
+
+// TODO: Falta testar: faltaram os engines dos scripts.
+
+// Os erros apontados pelo eclipse são gerados pela falta dos engines.
+
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(fazem|fizeram|farão)",true)) -> FAZER_TEMPO};
+cgToken{AND(IS(NOUN),REGEXP(cgToken.lexeme,"(horas|dias|semanas|meses|bimestres|
+    trimestres|quadrimestres|semestres|anos|décadas|séculos|milênios)",true)) -> EXP_TEMPO_P};
+cgToken{OR(IS(EXP_TEMPO_P),REGEXP(cgToken.lexeme,"(hora|dia|semana|mês|bimestre|
+    trimestre|quadrimestre|semestre|ano|década|século|milênio)",true)) -> EXP_TEMPO};
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(vão|iam|devem|deviam|deveriam|
+    deverão|podem|podiam|poderiam|poderão)",true)) -> VERB_LIST};
+
+// Rule 42
+NOUN{NOT(IS(PERSONAL_PRONOUN))} FAZER_TEMPO EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
+    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+    
+// Rule 43
+NOUN{NOT(IS(PERSONAL_PRONOUN))} FAZER_TEMPO NUMERAL EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
+    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+    
+// Rule 44
+NOUN{NOT(IS(PERSONAL_PRONOUN))} VERB_LIST cgToken{AND(IS(VERB),FEATURE("lexeme","fazer"))} NUMERAL EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
+    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+    
+// Rule 45
+NOUN{NOT(IS(PERSONAL_PRONOUN))} VERB_LIST cgToken{AND(IS(VERB),FEATURE("lexeme","fazer"))} EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
+    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+    
+// Rule 46
+cgToken{NOT(IS(NUMERAL))} cgToken{FEATURE("lexeme","a")} NUMERAL EXP_TEMPO{->MARKONCE(PROBLEM,1,2,3),
+    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
+    
+// Rule 47
+cgToken{AND(IS(PREPOSITION),FEATURE("lexeme","a"))} EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2),
+    CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
+    
+// Rule 48
+cgToken{AND(IS(VERB),OR(FEATURE("lexeme","haviam"),FEATURE("lexeme","Haviam")))} NUMERAL EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
+    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
+    
+// Rule 49
+cgToken{AND(IS(VERB),OR(FEATURE("lexeme","haviam"),FEATURE("lexeme","Haviam")))} EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
+    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
