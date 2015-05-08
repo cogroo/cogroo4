@@ -5,6 +5,5 @@
         <import location="BasicTypeSystem.xml"/>
         <import location="TypeSystem.xml"/>
         <import location="BaseTypeSystem.xml"/>
-        <import location="BaseTypeSystem.xml"/>
     </imports>
 </typeSystemDescription>
