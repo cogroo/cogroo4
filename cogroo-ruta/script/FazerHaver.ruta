@@ -22,41 +22,61 @@ cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(vão|iam|devem|deviam|deveriam|
     deverão|podem|podiam|poderiam|poderão)",true)) -> VERB_LIST};
 
 // Rule 42
-NOUN{NOT(IS(PERSONAL_PRONOUN))} FAZER_TEMPO EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
-    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+cgToken{NOT(IS(PERSONAL_PRONOUN))}
+FAZER_TEMPO
+EXP_TEMPO_P
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
     
 // Rule 43
-NOUN{NOT(IS(PERSONAL_PRONOUN))} FAZER_TEMPO NUMERAL EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
-    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
-    
+cgToken{NOT(IS(PERSONAL_PRONOUN))}
+FAZER_TEMPO
+NUMERAL EXP_TEMPO_P
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+   
 // Rule 44
-NOUN{NOT(IS(PERSONAL_PRONOUN))} VERB_LIST cgToken{AND(IS(VERB),FEATURE("lexeme","fazer"))} NUMERAL EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
-    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+cgToken{NOT(IS(PERSONAL_PRONOUN))}
+VERB_LIST
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
+NUMERAL EXP_TEMPO_P
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
     
 // Rule 45
-NOUN{NOT(IS(PERSONAL_PRONOUN))} VERB_LIST cgToken{AND(IS(VERB),FEATURE("lexeme","fazer"))} EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
-    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+cgToken{NOT(IS(PERSONAL_PRONOUN))}
+VERB_LIST
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
+EXP_TEMPO_P
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
     
-// Rule 46
-cgToken{NOT(IS(NUMERAL))} cgToken{FEATURE("lexeme","a")} NUMERAL EXP_TEMPO{->MARKONCE(PROBLEM,1,2,3),
-    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
+// TODO: Rule 46
+//cgToken{NOT(IS(NUMERAL))}
+//cgToken{REGEXP(cgToken.lexeme, "a", true)}
+//NUMERAL
+//EXP_TEMPO
+//{->MARKONCE(PROBLEM,2,3,4), CREATE(PROBLEM_DESCRIPTION,2,3,4,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
     
 // Rule 47
-cgToken{AND(IS(PREPOSITION),FEATURE("lexeme","a"))} EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2),
-    CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
+cgToken{AND(IS(PREPOSITION),REGEXP(cgToken.lexeme, "a", true))}
+EXP_TEMPO_P
+{->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
     
 // Rule 48
-cgToken{AND(IS(VERB),OR(FEATURE("lexeme","haviam"),FEATURE("lexeme","Haviam")))} NUMERAL EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
-    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "haviam", true))}
+NUMERAL EXP_TEMPO_P
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
     
 // Rule 49
-cgToken{AND(IS(VERB),OR(FEATURE("lexeme","haviam"),FEATURE("lexeme","Haviam")))} EXP_TEMPO_P{->MARKONCE(PROBLEM,1,2,3),
-    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "haviam", true))}
+EXP_TEMPO_P
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
 
 // Rule 50
-cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(haviam|haverão)",true))} NOUN{IS(PLURAL)->MARKONCE(PROBLEM,1,2),
-    CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Haver\" no sentido de existir é usado na 3a. pessoa do singular.")};
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(haviam|haverão)",true))}
+NOUN{IS(PLURAL)
+->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Haver\" no sentido de existir é usado na 3a. pessoa do singular.")};
 
 // Rule 51
-cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(devem|deveriam|deverão|podem|poderiam)",true))} cgToken{AND(IS(INFINITE_VERB),FEATURE("lexeme","haver"))} NOUN{IS(PLURAL) ->MARKONCE(PROBLEM,1,2,3),
-    CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Haver\" (existir), precedido de verbo aux., é usado na 3a. do singular.")};
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(devem|deveriam|deverão|podem|poderiam)",true))}
+cgToken{AND(IS(INFINITE_VERB),FEATURE("lexeme","haver"))} NOUN{IS(PLURAL) 
+->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Haver\" (existir), precedido de verbo aux., é usado na 3a. do singular.")};
+
+

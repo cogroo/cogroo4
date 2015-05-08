@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <name>FazerHaverTypeSystem</name>
+    <imports>
+        <import location="BasicTypeSystem.xml"/>
+        <import location="TypeSystem.xml"/>
+        <import location="BaseTypeSystem.xml"/>
+    </imports>
+    <types>
+        <typeDescription>
+            <name>cogroo.ruta.FazerHaver.FAZER_TEMPO</name>
+            <description>Type defined in cogroo.ruta.FazerHaver</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.FazerHaver.EXP_TEMPO</name>
+            <description>Type defined in cogroo.ruta.FazerHaver</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.FazerHaver.EXP_TEMPO_P</name>
+            <description>Type defined in cogroo.ruta.FazerHaver</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.FazerHaver.VERB_LIST</name>
+            <description>Type defined in cogroo.ruta.FazerHaver</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.FazerHaver.FAZER_TEMPO</name>
+            <description>Type defined in cogroo.ruta.FazerHaver</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.FazerHaver.EXP_TEMPO</name>
+            <description>Type defined in cogroo.ruta.FazerHaver</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.FazerHaver.EXP_TEMPO_P</name>
+            <description>Type defined in cogroo.ruta.FazerHaver</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.FazerHaver.VERB_LIST</name>
+            <description>Type defined in cogroo.ruta.FazerHaver</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+    </types>
+</typeSystemDescription>

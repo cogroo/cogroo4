@@ -7,19 +7,21 @@ IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
 DECLARE MEIA_SUB;
 DECLARE MEIA_NUM;
 
-// TODO: Falta testar: faltaram os engines dos scripts.
-
-// Os erros apontados pelo eclipse são gerados pela falta dos engines.
-
 // meia/meias adjetivo
 cgToken{AND(IS(NOUN),REGEXP(cgToken.lexeme,"mei(as|os|a)",true)) -> MEIA_SUB};
-cgToken{AND(IS(NUMERAL),FEATURE("lemma","meio")) -> MEIA_NUM};
+cgToken{AND(IS(NUMERAL),REGEXP(cgToken.lexeme,"mei(o|a|os|as)",true)) -> MEIA_NUM};
 
 // Rules 38, 39
-MEIA_SUB ADJECTIVE{->MARKONCE(PROBLEM,1,2),CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "A palavra \"meio\" usada no sentido de \"um pouco\" (advérbio) é invariável.")};
+MEIA_SUB
+ADJECTIVE{
+->MARKONCE(PROBLEM,1,2),CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "A palavra \"meio\" usada no sentido de \"um pouco\" (advérbio) é invariável.")};
 
 // Rule 40
-MEIA_NUM FEMALE_NOUN{->MARKONCE(PROBLEM,1,2),CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Meio\" usado no sentido de \"metade\" (numeral) concorda com o substantivo.")};
+MEIA_NUM
+FEMALE_NOUN{
+->MARKONCE(PROBLEM,1,2),CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Meio\" usado no sentido de \"metade\" (numeral) concorda com o substantivo.")};
 
 // Rule 41
-MEIA_NUM MALE_NOUN{IS(PLURAL) ->MARKONCE(PROBLEM,1,2),CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Meio\" usado no sentido de \"metade\" (numeral) concorda com o substantivo.")};
+MEIA_NUM
+MALE_NOUN{IS(PLURAL) 
+->MARKONCE(PROBLEM,1,2),CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Meio\" usado no sentido de \"metade\" (numeral) concorda com o substantivo.")};

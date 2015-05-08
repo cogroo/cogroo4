@@ -7,6 +7,8 @@
         <import location="BaseTypeSystem.xml"/>
         <import location="ConcordanciaAdjSubTypeSystem.xml"/>
         <import location="CraseTypeSystem.xml"/>
+        <import location="UsoDeMeioTypeSystem.xml"/>
+        <import location="FazerHaverTypeSystem.xml"/>
         <import location="AnexosTypeSystem.xml"/>
         <import location="BaseTypeSystem.xml"/>
     </imports>

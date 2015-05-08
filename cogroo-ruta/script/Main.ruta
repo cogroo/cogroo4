@@ -8,8 +8,8 @@ IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
 SCRIPT ConcordanciaAdjSub;
 SCRIPT Crase;
 SCRIPT Anexos;
-//SCRIPT UsoDeMeio;
-//SCRIPT FazerHaver;
+SCRIPT UsoDeMeio;
+SCRIPT FazerHaver;
 
 SCRIPT Base;
 Document{-> CALL(Base)};
@@ -17,5 +17,5 @@ Document{-> CALL(Base)};
 Document{-> CALL(Crase)};
 Document{-> CALL(ConcordanciaAdjSub)};
 Document{-> CALL(Anexos)};
-//Document{-> CALL(UsoDeMeio)};
-//Document{-> CALL(FazerHaver)};
+Document{-> CALL(UsoDeMeio)};
+Document{-> CALL(FazerHaver)};
