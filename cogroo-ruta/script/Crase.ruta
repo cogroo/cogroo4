@@ -12,7 +12,7 @@ DECLARE PRON_TRATAMENTO;
 DECLARE EM_RELACAO, COM_RELACAO;
 
 
-DECLARE Annotation SUGGESTION (String text);  // Proposta de meio de indicar a correção, feita apenas em uma regra
+
 
 
 cgToken{REGEXP(cgToken.lexeme, "a", true) -> LEXEME_A};
@@ -55,18 +55,18 @@ NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_DESCRIPTION, 1, 2, "
 // rules 5 e 6
 cgToken{AND(NOT(IS(CRASE)), IS(LEXEME_A )) -> CREATE(SUGGESTION, "text" = "à")}
 cgToken{OR(IS(NUMERAL), IS(ARTICLE), IS(PRONOUN))} cgToken{AND(REGEXP(cgToken.lexeme, "hora"),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "Ocorre crase em expressões indicativas de horas.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "Ocorre crase em expressões indicativas de horas.")};
 
 cgToken{AND(NOT(IS(CRASE)), IS(LEXEME_AS)) -> CREATE(SUGGESTION, "text" = "às")}
 cgToken{OR(IS(NUMERAL), IS(ARTICLE), IS(PRONOUN))} cgToken{AND(REGEXP(cgToken.lexeme, "horas"),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "Ocorre crase em expressões indicativas de horas.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "Ocorre crase em expressões indicativas de horas.")};
 
 
 // rules 7 and 8
 cgToken{AND(NOT(IS(CRASE)), IS(LEXEME_A))}
 cgToken{REGEXP(cgToken.lexeme, "(direita|esquerda)", true)}
 cgToken{AND(REGEXP(cgToken.lexeme, "de", true),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "Ocorre crase em expressões indicativas de modo, tempo, lugar etc.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "Ocorre crase em expressões indicativas de modo, tempo, lugar etc.")};
 
 // rules 15 and 16
 cgToken{REGEXP(cgToken.lexeme, "vossa_(senhoria|majestade|eminência|excelência|reverendíssima|santidade)", true) -> PRON_TRATAMENTO};
@@ -74,37 +74,37 @@ cgToken{REGEXP(cgToken.lexeme, "você", true) -> PRON_TRATAMENTO};
 
 CRASE_A
 cgToken{AND(IS(PRON_TRATAMENTO),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_DESCRIPTION, 1, 2,  "description" = "Pronomes de tratamento não admitem artigo, logo não há crase aqui.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_DESCRIPTION, 1, 2,  "description" = "Pronomes de tratamento não admitem artigo, logo não há crase aqui.")};
 
 // rules 9 and 10
 EM_RELACAO 
 cgToken{AND(IS(LEXEME_A),  NOT(IS(CRASE)))}
 cgToken{AND(IS(NOUN), IS(FEMALE), IS(SINGULAR), 
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Em relação\" rege a preposição \"a\", logo há crase aqui.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Em relação\" rege a preposição \"a\", logo há crase aqui.")};
 
 EM_RELACAO
 cgToken{AND(IS(LEXEME_AS), NOT(IS(CRASE)))}
 cgToken{AND(IS(NOUN), IS(FEMALE), IS(PLURAL  ),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Em relação\" rege a preposição \"a\", logo há crase aqui.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Em relação\" rege a preposição \"a\", logo há crase aqui.")};
 
 // rules 11 and 12
 COM_RELACAO
 cgToken{AND(IS(LEXEME_A ), NOT(IS(CRASE)))}
 cgToken{AND(IS(NOUN), IS(FEMALE), IS(SINGULAR),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Com relação\" rege a preposição \"a\", logo há crase aqui.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Com relação\" rege a preposição \"a\", logo há crase aqui.")};
 
 COM_RELACAO
 cgToken{AND(IS(LEXEME_AS), NOT(IS(CRASE)))}
 cgToken{AND(IS(NOUN), IS(FEMALE), IS(PLURAL  ),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Com relação\" rege a preposição \"a\", logo há crase aqui.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Com relação\" rege a preposição \"a\", logo há crase aqui.")};
 
 // rules 13 and 14
 cgToken{REGEXP(cgToken.lexeme, "devido", true)}
 cgToken{AND(IS(LEXEME_A ), NOT(IS(CRASE)))}
 cgToken{AND(IS(NOUN), IS(FEMALE), IS(SINGULAR),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Com relação\" rege a preposição \"a\", logo há crase aqui.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Com relação\" rege a preposição \"a\", logo há crase aqui.")};
 
 cgToken{REGEXP(cgToken.lexeme, "devido", true)}
 cgToken{AND(IS(LEXEME_AS), NOT(IS(CRASE)))}
 cgToken{AND(IS(NOUN), IS(FEMALE), IS(PLURAL  ),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Com relação\" rege a preposição \"a\", logo há crase aqui.")};
+    NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, 4, "description" = "\"Com relação\" rege a preposição \"a\", logo há crase aqui.")};

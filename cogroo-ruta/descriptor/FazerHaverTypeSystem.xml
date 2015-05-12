@@ -13,7 +13,7 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>cogroo.ruta.FazerHaver.EXP_TEMPO</name>
+            <name>cogroo.ruta.FazerHaver.EXP_TEMPO_S</name>
             <description>Type defined in cogroo.ruta.FazerHaver</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
@@ -33,7 +33,7 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
-            <name>cogroo.ruta.FazerHaver.EXP_TEMPO</name>
+            <name>cogroo.ruta.FazerHaver.EXP_TEMPO_S</name>
             <description>Type defined in cogroo.ruta.FazerHaver</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>

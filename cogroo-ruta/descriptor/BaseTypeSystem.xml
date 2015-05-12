@@ -234,6 +234,18 @@
             </features>
         </typeDescription>
         <typeDescription>
+            <name>cogroo.ruta.Base.SUGGESTION</name>
+            <description>Type defined in cogroo.ruta.Base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>text</name>
+                    <description>text</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+        <typeDescription>
             <name>cogroo.ruta.Base.ADJECTIVE</name>
             <description>Type defined in cogroo.ruta.Base</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
@@ -456,6 +468,18 @@
                 <featureDescription>
                     <name>description</name>
                     <description>description</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.Base.SUGGESTION</name>
+            <description>Type defined in cogroo.ruta.Base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>text</name>
+                    <description>text</description>
                     <rangeTypeName>uima.cas.String</rangeTypeName>
                 </featureDescription>
             </features>

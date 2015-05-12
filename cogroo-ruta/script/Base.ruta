@@ -36,6 +36,7 @@ DECLARE SINGULAR_NOUN;
 
 DECLARE PROBLEM;
 DECLARE Annotation PROBLEM_DESCRIPTION (String description);
+DECLARE Annotation SUGGESTION (String text);
 
 // adjective
 cgToken{FEATURE("pos","adj") -> ADJECTIVE};
