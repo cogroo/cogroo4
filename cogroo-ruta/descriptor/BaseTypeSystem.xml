@@ -222,6 +222,23 @@
             <supertypeName>uima.tcas.Annotation</supertypeName>
         </typeDescription>
         <typeDescription>
+            <name>cogroo.ruta.Base.PROBLEM_INFO</name>
+            <description>Type defined in cogroo.ruta.Base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>description</name>
+                    <description>description</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>suggestion</name>
+                    <description>suggestion</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+        <typeDescription>
             <name>cogroo.ruta.Base.PROBLEM_DESCRIPTION</name>
             <description>Type defined in cogroo.ruta.Base</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
@@ -459,6 +476,23 @@
             <name>cogroo.ruta.Base.PROBLEM</name>
             <description>Type defined in cogroo.ruta.Base</description>
             <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+        <typeDescription>
+            <name>cogroo.ruta.Base.PROBLEM_INFO</name>
+            <description>Type defined in cogroo.ruta.Base</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>description</name>
+                    <description>description</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>suggestion</name>
+                    <description>suggestion</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
         </typeDescription>
         <typeDescription>
             <name>cogroo.ruta.Base.PROBLEM_DESCRIPTION</name>
