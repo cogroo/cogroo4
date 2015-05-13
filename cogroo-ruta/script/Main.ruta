@@ -14,6 +14,7 @@ SCRIPT FazerHaver;
 SCRIPT MimETi;
 SCRIPT Preferir;
 SCRIPT ColocacaoPronominal;
+SCRIPT MauMal;
 
 SCRIPT Base;
 Document{-> CALL(Base)};
@@ -26,3 +27,4 @@ Document{-> CALL(FazerHaver)};
 Document{-> CALL(MimETi)};
 Document{-> CALL(Preferir)};
 Document{-> CALL(ColocacaoPronominal)};
+Document{-> CALL(MauMal)};

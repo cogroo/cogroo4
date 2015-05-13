@@ -22,7 +22,7 @@ cgToken{REGEXP(cgToken.lexeme, "(nenhum|nenhuma)", true)}
 NOUN
 VERB 
 END_PRONOUN
-{ -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_INFO, 1, 2, 3,
+{ -> MARKONCE(PROBLEM, 1, 2, 3, 4), CREATE(PROBLEM_INFO, 1, 2, 3, 4,
     "description" = "As palavras de sentido negativo atraem o pronome átono para antes do verbo.",
     "suggestion" = "<Swap a=\"2\" b=\"3\"/>")};
     

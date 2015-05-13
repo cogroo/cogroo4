@@ -17,7 +17,7 @@ DECLARE INTERJECTION;
 DECLARE NOUN;      
     DECLARE PROPER_NOUN;   
 DECLARE NUMERAL;
-DECLARE PREPOSITION;    
+DECLARE PREPOSITION;
 DECLARE PRONOUN;
     DECLARE PERSONAL_PRONOUN, DETERMINATIVE_PRONOUN, INDEPENDENT_PRONOUN;   
 DECLARE VERB;      
@@ -36,7 +36,10 @@ DECLARE SINGULAR_NOUN;
 
 DECLARE PROBLEM;
 DECLARE Annotation PROBLEM_INFO (String description, String suggestion);
+
 DECLARE Annotation SUGGESTION (String text);
+
+
 
 // adjective
 cgToken{FEATURE("pos","adj") -> ADJECTIVE};
@@ -75,7 +78,7 @@ cgToken{FEATURE("pos","pron-indp") -> PRONOUN, INDEPENDENT_PRONOUN};
 // verb
 cgToken{FEATURE("pos","v-fin") -> VERB, FINITE_VERB};
 cgToken{FEATURE("pos","v-inf") -> VERB, INFINITE_VERB};
-cgToken{FEATURE("pos","v-pep") -> VERB, PARTICIPLE_VERB};
+cgToken{FEATURE("pos","v-pcp") -> VERB, PARTICIPLE_VERB};
 cgToken{FEATURE("pos","v-ger") -> VERB, GERUND_VERB};
 cgToken{REGEXP(cgToken.features, ".*IND.*") -> INDICATIVE};
 cgToken{REGEXP(cgToken.features, ".*SUBJ.*") -> SUBJUNCTIVE};

@@ -1,1 +1,3 @@
 Regras 38-41: A classe gramatical do "meio" e derivados não é checada, consequentemente as regras não funcionam como esperado.
+Regra 57: A regra conflita com uma regra anterior de concordância (ver exemplo correspondente).
+Regra 58: Não há verificação do que há após o "mal", gerando falso positivo em frases como "Sou mal educado." 
