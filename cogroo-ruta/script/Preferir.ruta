@@ -1,0 +1,28 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM BaseTypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+DECLARE LEXEME_DE;
+DECLARE LEXEME_O;
+DECLARE LEXEME_DO;
+
+cgToken {REGEXP(cgToken.lexeme, "de", true) -> MARK(LEXEME_DE)};
+cgToken {REGEXP(cgToken.lexeme, "o", true) -> MARK(LEXEME_O)};
+cgToken {AND(IS(LEXEME_DE), IS(LEXEME_O)) -> MARKONCE(LEXEME_DO)};
+
+// Rule 59
+cgToken {AND(REGEXP(cgToken.lexeme, "pref.+"), IS(VERB))}
+cgToken {REGEXP(cgToken.lexeme, "mais") -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_INFO, 1, 2,
+    "description" = "Suprima o \"mais\". O sentido de preferir é \"querer mais\". \"Preferir mais\" é redundante.",
+    "suggestion" = "<Replace index=\"1\"> <Lexeme/> </Replace>")};
+
+// Rule 60
+cgToken {AND(REGEXP(cgToken.lexeme, "pref.+"), IS(VERB))}
+NOUN
+LEXEME_DO 
+cgToken {REGEXP(cgToken.lexeme, "que")} 
+NOUN { -> MARKONCE(PROBLEM, 1, 2, 3, 4, 5, 6), CREATE(PROBLEM_INFO, 1, 2, 3, 4, 5, 6,
+    "description" = "\"Quem prefere, prefere alguma coisa a alguma coisa\". Não se usa \"do que\". A preposição adequada é \"a\".",
+    "suggestion" = "<Replace index=\"2\"> <Lexeme/> </Replace> <Replace index=\"3\"> <Lexeme/> </Replace> <Replace index=\"4\"> <Lexeme>a</Lexeme> </Replace>")};

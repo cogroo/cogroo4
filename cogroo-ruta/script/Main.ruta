@@ -12,6 +12,7 @@ SCRIPT Anexos;
 SCRIPT UsoDeMeio;
 SCRIPT FazerHaver;
 SCRIPT MimETi;
+SCRIPT Preferir;
 
 SCRIPT Base;
 Document{-> CALL(Base)};
@@ -22,3 +23,4 @@ Document{-> CALL(Anexos)};
 Document{-> CALL(UsoDeMeio)};
 Document{-> CALL(FazerHaver)};
 Document{-> CALL(MimETi)};
+Document{-> CALL(Preferir)};
