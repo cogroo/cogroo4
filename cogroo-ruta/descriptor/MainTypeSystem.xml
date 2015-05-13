@@ -8,6 +8,7 @@
         <import location="ConcordanciaAdjSubTypeSystem.xml"/>
         <import location="CraseTypeSystem.xml"/>
         <import location="UsoDeMeioTypeSystem.xml"/>
+        <import location="ColocacaoPronominalTypeSystem.xml"/>
         <import location="PreferirTypeSystem.xml"/>
         <import location="MimETiTypeSystem.xml"/>
         <import location="FazerHaverTypeSystem.xml"/>

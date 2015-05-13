@@ -1,0 +1,28 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM BaseTypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+DECLARE END_PRONOUN;
+DECLARE END_NOS;
+
+PERSONAL_PRONOUN {REGEXP(cgToken.lexeme, "-(me|te|se|lhe|nos|vos|lhes)", true) -> MARK(END_PRONOUN)};
+
+// Rule 61 and 62
+cgToken{REGEXP(cgToken.lexeme, "(não|nunca|ninguém|nada|jamais)", true)}
+VERB 
+END_PRONOUN
+{ -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_INFO, 1, 2, 3,
+    "description" = "As palavras de sentido negativo atraem o pronome átono para antes do verbo.",
+    "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
+    
+// Rule 63
+cgToken{REGEXP(cgToken.lexeme, "(nenhum|nenhuma)", true)}
+NOUN
+VERB 
+END_PRONOUN
+{ -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_INFO, 1, 2, 3,
+    "description" = "As palavras de sentido negativo atraem o pronome átono para antes do verbo.",
+    "suggestion" = "<Swap a=\"2\" b=\"3\"/>")};
+    

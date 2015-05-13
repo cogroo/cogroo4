@@ -13,6 +13,7 @@ SCRIPT UsoDeMeio;
 SCRIPT FazerHaver;
 SCRIPT MimETi;
 SCRIPT Preferir;
+SCRIPT ColocacaoPronominal;
 
 SCRIPT Base;
 Document{-> CALL(Base)};
@@ -24,3 +25,4 @@ Document{-> CALL(UsoDeMeio)};
 Document{-> CALL(FazerHaver)};
 Document{-> CALL(MimETi)};
 Document{-> CALL(Preferir)};
+Document{-> CALL(ColocacaoPronominal)};
