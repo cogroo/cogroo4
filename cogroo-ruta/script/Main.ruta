@@ -11,6 +11,7 @@ SCRIPT Crase;
 SCRIPT Anexos;
 SCRIPT UsoDeMeio;
 SCRIPT FazerHaver;
+SCRIPT MimETi;
 
 SCRIPT Base;
 Document{-> CALL(Base)};
@@ -20,3 +21,4 @@ Document{-> CALL(ConcordanciaAdjSub)};
 Document{-> CALL(Anexos)};
 Document{-> CALL(UsoDeMeio)};
 Document{-> CALL(FazerHaver)};
+Document{-> CALL(MimETi)};

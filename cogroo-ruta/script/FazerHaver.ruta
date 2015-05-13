@@ -22,11 +22,11 @@ cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(vão|iam|devem|deviam|deveriam|
 cgToken{NOT(IS(PERSONAL_PRONOUN))}
 FAZER_TEMPO{-> CREATE(SUGGESTION, "text"="<ReplaceMapping index=\"1\" key=\"fazem\" value=\"faz\"/> <ReplaceMapping index=\"1\" key=\"fizeram\" value=\"fez\"/> <ReplaceMapping index=\"1\" key=\"farão\" value=\"fará\"/>")}
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_INFO,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
 
 FAZER_TEMPO{STARTSWITH(cgSentence) -> CREATE(SUGGESTION, "text"="<ReplaceMapping index=\"0\" key=\"fazem\" value=\"faz\"/> <ReplaceMapping index=\"0\" key=\"fizeram\" value=\"fez\"/> <ReplaceMapping index=\"0\" key=\"farão\" value=\"fará\"/>")}
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+{->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
 
  
 // Rule 43
@@ -34,12 +34,12 @@ cgToken{NOT(IS(PERSONAL_PRONOUN))}
 FAZER_TEMPO{-> CREATE(SUGGESTION, "text"="<ReplaceMapping index=\"1\" key=\"fazem\" value=\"faz\"/> <ReplaceMapping index=\"1\" key=\"fizeram\" value=\"fez\"/> <ReplaceMapping index=\"1\" key=\"farão\" value=\"fará\"/>")}
 NUMERAL
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_DESCRIPTION,1,2,3,4,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+{->MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_INFO,1,2,3,4,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
 
 FAZER_TEMPO{STARTSWITH(cgSentence) -> CREATE(SUGGESTION, "text"="<ReplaceMapping index=\"0\" key=\"fazem\" value=\"faz\"/> <ReplaceMapping index=\"0\" key=\"fizeram\" value=\"fez\"/> <ReplaceMapping index=\"0\" key=\"farão\" value=\"fará\"/>")}
 NUMERAL
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_INFO,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
 
 // Rule 44
 cgToken{NOT(IS(PERSONAL_PRONOUN))}
@@ -47,64 +47,64 @@ VERB_LIST{-> CREATE(SUGGESTION, "text" = "<ReplaceMapping index=\"1\" key=\"vão
 cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
 NUMERAL
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2,3,4,5), CREATE(PROBLEM_DESCRIPTION,1,2,3,4,5,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+{->MARKONCE(PROBLEM,1,2,3,4,5), CREATE(PROBLEM_INFO,1,2,3,4,5,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
 
 VERB_LIST{STARTSWITH(cgSentence) -> CREATE(SUGGESTION, "text" = "<ReplaceMapping index=\"0\" key=\"vão\" value=\"vai\"/> <ReplaceMapping index=\"0\" key=\"iam\" value=\"ia\"/> <ReplaceMapping index=\"0\" key=\"devem\" value=\"deve\"/> <ReplaceMapping index=\"0\" key=\"deviam\" value=\"devia\"/> <ReplaceMapping index=\"0\" key=\"deveriam\" value=\"deveria\"/> <ReplaceMapping index=\"0\" key=\"deverão\" value=\"deverá\"/> <ReplaceMapping index=\"0\" key=\"podem\" value=\"pode\"/> <ReplaceMapping index=\"0\" key=\"podiam\" value=\"podia\"/> <ReplaceMapping index=\"0\" key=\"poderiam\" value=\"poderia\"/> <ReplaceMapping index=\"0\" key=\"poderão\" value=\"poderá\"/>")}
 cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
 NUMERAL
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_DESCRIPTION,1,2,3,4, "description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+{->MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_INFO,1,2,3,4, "description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
      
 // Rule 45
 cgToken{NOT(IS(PERSONAL_PRONOUN))}
 VERB_LIST{-> CREATE(SUGGESTION, "text" = "<ReplaceMapping index=\"1\" key=\"vão\" value=\"vai\"/> <ReplaceMapping index=\"1\" key=\"iam\" value=\"ia\"/> <ReplaceMapping index=\"1\" key=\"devem\" value=\"deve\"/> <ReplaceMapping index=\"1\" key=\"deviam\" value=\"devia\"/> <ReplaceMapping index=\"1\" key=\"deveriam\" value=\"deveria\"/> <ReplaceMapping index=\"1\" key=\"deverão\" value=\"deverá\"/> <ReplaceMapping index=\"1\" key=\"podem\" value=\"pode\"/> <ReplaceMapping index=\"1\" key=\"podiam\" value=\"podia\"/> <ReplaceMapping index=\"1\" key=\"poderiam\" value=\"poderia\"/> <ReplaceMapping index=\"1\" key=\"poderão\" value=\"poderá\"/>")}
 cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_DESCRIPTION,1,2,3,4,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+{->MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_INFO,1,2,3,4,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
 
 VERB_LIST{STARTSWITH(cgSentence) -> CREATE(SUGGESTION, "text" = "<ReplaceMapping index=\"0\" key=\"vão\" value=\"vai\"/> <ReplaceMapping index=\"0\" key=\"iam\" value=\"ia\"/> <ReplaceMapping index=\"0\" key=\"devem\" value=\"deve\"/> <ReplaceMapping index=\"0\" key=\"deviam\" value=\"devia\"/> <ReplaceMapping index=\"0\" key=\"deveriam\" value=\"deveria\"/> <ReplaceMapping index=\"0\" key=\"deverão\" value=\"deverá\"/> <ReplaceMapping index=\"0\" key=\"podem\" value=\"pode\"/> <ReplaceMapping index=\"0\" key=\"podiam\" value=\"podia\"/> <ReplaceMapping index=\"0\" key=\"poderiam\" value=\"poderia\"/> <ReplaceMapping index=\"0\" key=\"poderão\" value=\"poderá\"/>")}
 cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_INFO,1,2,3,"description" = "\"Fazer\", quando indica tempo, deve permanecer no singular.")};
      
 // Rule 46
 cgToken{NOT(IS(NUMERAL))}
 cgToken{REGEXP(cgToken.lexeme, "a", true) -> CREATE(SUGGESTION, "text" = "<Replace index=\"1\"> <Lexeme>há</Lexeme> </Replace>")}
 NUMERAL
 cgToken{OR(IS(EXP_TEMPO_S), IS(EXP_TEMPO_P))
-->MARKONCE(PROBLEM,2,3,4), CREATE(PROBLEM_DESCRIPTION,2,3,4,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
+->MARKONCE(PROBLEM,2,3,4), CREATE(PROBLEM_INFO,2,3,4,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
     
 cgToken{AND(STARTSWITH(cgSentence), REGEXP(cgToken.lexeme, "a", true)) -> CREATE(SUGGESTION, "text" = "<Replace index=\"0\"> <Lexeme>há</Lexeme> </Replace>")}
 NUMERAL
 cgToken{OR(IS(EXP_TEMPO_S), IS(EXP_TEMPO_P))
-->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
+->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_INFO,1,2,3,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
 
 
 // Rule 47
 cgToken{REGEXP(cgToken.lexeme, "a", true) -> CREATE(SUGGESTION, "text" = "<Replace index=\"0\"> <Lexeme>há</Lexeme> </Replace>")}
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
+{->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "Opte pelo verbo \"haver\", no singular, para indicar tempo decorrido.")};
     
 // Rule 48
 cgToken{REGEXP(cgToken.lexeme, "haviam", true) -> CREATE(SUGGESTION, "text" = "<Replace index=\"0\"> <Lexeme>havia</Lexeme> </Replace>")}
 NUMERAL
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
+{->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_INFO,1,2,3,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
     
 // Rule 49
 cgToken{REGEXP(cgToken.lexeme, "haviam", true) -> CREATE(SUGGESTION, "text" = "<Replace index=\"0\"> <Lexeme>havia</Lexeme> </Replace>")}
 EXP_TEMPO_P
-{->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
+{->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "As formas do verbo \"haver\" ficam no singular quando indicam tempo decorrido.")};
 
 // Rule 50
 cgToken{REGEXP(cgToken.lexeme,"(haviam|haverão)",true) -> CREATE(SUGGESTION, "text" = "<ReplaceMapping index=\"0\" key=\"haviam\" value=\"havia\"/> <ReplaceMapping index=\"0\" key=\"haverão\" value=\"haverá\"/>")}
 PLURAL_NOUN{
-->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Haver\" no sentido de existir é usado na 3a. pessoa do singular.")};
+->MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "\"Haver\" no sentido de existir é usado na 3a. pessoa do singular.")};
 
 // Rule 51
 cgToken{REGEXP(cgToken.lexeme,"(devem|deveriam|deverão|podem|poderiam)",true) -> CREATE(SUGGESTION, "text" = "")}
 cgToken{REGEXP(cgToken.lexeme,"haver", true)}
 PLURAL_NOUN{
-->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_DESCRIPTION,1,2,3,"description" = "\"Haver\" (existir), precedido de verbo aux., é usado na 3a. do singular.")};
+->MARKONCE(PROBLEM,1,2,3), CREATE(PROBLEM_INFO,1,2,3,"description" = "\"Haver\" (existir), precedido de verbo aux., é usado na 3a. do singular.")};
 
 

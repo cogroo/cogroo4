@@ -1,0 +1,48 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM BaseTypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+// Rule 52
+cgToken {REGEXP(cgToken.lexeme, "mim", true)}
+INFINITE_VERB 
+{-> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,
+    "description" = "Se o pronome \"mim\" é sujeito do verbo no infinitivo, o pronome a ser usado é \"eu\".",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>eu</Lexeme> </Replace>")};
+
+// Rule 53
+cgToken {REGEXP(cgToken.lexeme, "entre", true)}
+cgToken {REGEXP(cgToken.lexeme, "(ele|ela)", true)}
+cgToken {REGEXP(cgToken.lexeme, "e", true)}
+cgToken {REGEXP(cgToken.lexeme, "eu", true)
+-> MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_INFO,1,2,3,4,
+    "description" = "O pronome \"eu\" não pode ser regido de preposição. (Neste caso a preposição é \"entre\".)",
+    "suggestion" = "<Replace index=\"3\"> <Lexeme>mim</Lexeme> </Replace>")};
+
+// Rule 54
+cgToken {REGEXP(cgToken.lexeme, "entre", true)}
+cgToken {REGEXP(cgToken.lexeme, "eu", true)}
+cgToken {REGEXP(cgToken.lexeme, "e", true)}
+cgToken {REGEXP(cgToken.lexeme, "(ele|ela)", true)
+-> MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_INFO,1,2,3,4,
+    "description" = "O pronome \"eu\" não pode ser regido de preposição. (Neste caso a preposição é \"entre\".)",
+    "suggestion" = "<Replace index=\"1\"> <Lexeme>mim</Lexeme> </Replace>")};
+
+// Rule 55
+cgToken {REGEXP(cgToken.lexeme, "entre", true)}
+cgToken {REGEXP(cgToken.lexeme, "(ele|ela)", true)}
+cgToken {REGEXP(cgToken.lexeme, "e", true)}
+cgToken {REGEXP(cgToken.lexeme, "tu", true)
+-> MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_INFO,1,2,3,4,
+    "description" = "O pronome \"tu\" não pode ser regido de preposição. (Neste caso a preposição é \"entre\".)",
+    "suggestion" = "<Replace index=\"3\"> <Lexeme>ti</Lexeme> </Replace>")};
+
+// Rule 56
+cgToken {REGEXP(cgToken.lexeme, "entre", true)}
+cgToken {REGEXP(cgToken.lexeme, "tu", true)}
+cgToken {REGEXP(cgToken.lexeme, "e", true)}
+cgToken {REGEXP(cgToken.lexeme, "(ele|ela)", true)
+-> MARKONCE(PROBLEM,1,2,3,4), CREATE(PROBLEM_INFO,1,2,3,4,
+    "description" = "O pronome \"tu\" não pode ser regido de preposição. (Neste caso a preposição é \"entre\".)",
+    "suggestion" = "<Replace index=\"1\"> <Lexeme>ti</Lexeme> </Replace>")};

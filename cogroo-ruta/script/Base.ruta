@@ -35,7 +35,7 @@ DECLARE PLURAL_NOUN;
 DECLARE SINGULAR_NOUN;
 
 DECLARE PROBLEM;
-DECLARE Annotation PROBLEM_DESCRIPTION (String description);
+DECLARE Annotation PROBLEM_INFO (String description, String suggestion);
 DECLARE Annotation SUGGESTION (String text);
 
 // adjective

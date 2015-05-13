@@ -8,28 +8,28 @@ IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
 // rules 25, 26 and 27
 cgToken{REGEXP(cgToken.lexeme, "em", true)}
 cgToken{AND(REGEXP(cgToken.lexeme, "anex(os|a|as)", true),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_DESCRIPTION, 1, 2, "description" = "A expressão \"em anexo\" é invariável.")};
+NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_INFO, 1, 2, "description" = "A expressão \"em anexo\" é invariável.")};
 
 // rule 28, 32, 33, 37
 cgToken{AND(IS(VERB), IS(THIRD_PERSON))}
 cgToken{REGEXP(cgToken.lexeme, "anex(os|as)", true)}
 cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN))),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "O adjetivo \"anexo\" é variável, portanto concorda com o substantivo a que se refere.")};
+NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_INFO, 1, 2, 3, "description" = "O adjetivo \"anexo\" é variável, portanto concorda com o substantivo a que se refere.")};
 
 // rule 29, 30, 34, 35
 cgToken{AND(IS(VERB), IS(THIRD_PERSON))}
 cgToken{REGEXP(cgToken.lexeme, "anex(o|a)", true)}
 cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN))),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "O adjetivo \"anexo\" é variável, portanto concorda com o substantivo a que se refere.")};
+NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_INFO, 1, 2, 3, "description" = "O adjetivo \"anexo\" é variável, portanto concorda com o substantivo a que se refere.")};
 
 // rule 31, 36
 cgToken{AND(IS(VERB), IS(THIRD_PERSON))}
 cgToken{REGEXP(cgToken.lexeme, "anex(a|as)", true)}
 cgToken{AND(AND(IS(MALE), OR(IS(ARTICLE), IS(NOUN))),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "O adjetivo \"anexo\" é variável, portanto concorda com o substantivo a que se refere.")};
+NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_INFO, 1, 2, 3, "description" = "O adjetivo \"anexo\" é variável, portanto concorda com o substantivo a que se refere.")};
 
 // rule 31.5
 cgToken{AND(IS(VERB), IS(THIRD_PERSON))}
 cgToken{REGEXP(cgToken.lexeme, "anex(o|os)", true)}
 cgToken{AND(AND(IS(FEMALE), OR(IS(ARTICLE), IS(NOUN))),
-NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_DESCRIPTION, 1, 2, 3, "description" = "O adjetivo \"anexo\" é variável, portanto concorda com o substantivo a que se refere.")};
+NOT(IS(PROBLEM))) -> MARKONCE(PROBLEM, 1, 2, 3), CREATE(PROBLEM_INFO, 1, 2, 3, "description" = "O adjetivo \"anexo\" é variável, portanto concorda com o substantivo a que se refere.")};
