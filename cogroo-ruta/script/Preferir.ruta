@@ -13,13 +13,13 @@ cgToken {REGEXP(cgToken.lexeme, "o", true) -> MARK(LEXEME_O)};
 cgToken {AND(IS(LEXEME_DE), IS(LEXEME_O)) -> MARKONCE(LEXEME_DO)};
 
 // Rule 59
-cgToken {AND(REGEXP(cgToken.lexeme, "pref.+"), IS(VERB))}
+cgToken {AND(REGEXP(cgToken.lexeme, "pref(e|i)r.+"), IS(VERB))}
 cgToken {REGEXP(cgToken.lexeme, "mais") -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_INFO, 1, 2,
     "description" = "Suprima o \"mais\". O sentido de preferir é \"querer mais\". \"Preferir mais\" é redundante.",
     "suggestion" = "<Replace index=\"1\"> <Lexeme/> </Replace>")};
 
 // Rule 60
-cgToken {AND(REGEXP(cgToken.lexeme, "pref.+"), IS(VERB))}
+cgToken {AND(REGEXP(cgToken.lexeme, "pref(e|i)r.+"), IS(VERB))}
 NOUN
 LEXEME_DO 
 cgToken {REGEXP(cgToken.lexeme, "que")} 
