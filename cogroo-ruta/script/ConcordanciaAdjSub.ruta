@@ -18,35 +18,28 @@ cgToken{AND(IS(FEMALE), IS(ADJECTIVE)) -> FEMALE_ADJECTIVE};
 cgToken{AND(IS(PLURAL), IS(ADJECTIVE)) -> PLURAL_ADJECTIVE};
 cgToken{AND(IS(SINGULAR), IS(ADJECTIVE)) -> SINGULAR_ADJECTIVE};
 
-
-MALE_NOUN
-FEMALE_ADJECTIVE{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "Adjetivo não concorda com o substantivo em gênero.")};
-
-FEMALE_NOUN
-MALE_ADJECTIVE{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "Adjetivo não concorda com o substantivo em gênero.")};
-
-SINGULAR_NOUN
-PLURAL_ADJECTIVE{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "Adjetivo não concorda com o substantivo em número.")};
-
-PLURAL_NOUN 
-SINGULAR_ADJECTIVE{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "Adjetivo não concorda com o substantivo em número.")};
-
-FEMALE_ADJECTIVE
-MALE_NOUN{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "Substantivo não concorda com o adjetivo em gênero.")};
-
-MALE_ADJECTIVE
-FEMALE_NOUN{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "Substantivo não concorda com o adjetivo em gênero.")};
-
+// rule 17 - 20
+NOUN{IS(SINGULAR)}
 PLURAL_ADJECTIVE
-SINGULAR_NOUN{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "Substantivo não concorda com o adjetivo em número.")};
-
+{-> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,
+    "description" = "O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.",
+    "suggestion" = "<Replace index=\"0\"> <Reference index=\"1\"> <Property>Number</Property> <Property>Gender</Property> </Reference> </Replace>")};
+    
+NOUN{IS(PLURAL)}
 SINGULAR_ADJECTIVE
-PLURAL_NOUN{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,"description" = "Substantivo não concorda com o adjetivo em número.")};
+{-> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,
+    "description" = "O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.",
+    "suggestion" = "<Replace index=\"0\"> <Reference index=\"1\"> <Property>Number</Property> <Property>Gender</Property> </Reference> </Replace>")};
+
+// rule 21 - 24
+PLURAL_ADJECTIVE
+NOUN{IS(SINGULAR)
+-> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,
+    "description" = "O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.",
+    "suggestion" = "<Replace index=\"0\"> <Reference index=\"1\"> <Property>Number</Property> <Property>Gender</Property> </Reference> </Replace>")};
+    
+SINGULAR_ADJECTIVE
+NOUN{IS(PLURAL)
+-> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_INFO,1,2,
+    "description" = "O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.",
+    "suggestion" = "<Replace index=\"0\"> <Reference index=\"1\"> <Property>Number</Property> <Property>Gender</Property> </Reference> </Replace>")};

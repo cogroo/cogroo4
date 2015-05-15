@@ -3,7 +3,7 @@ PACKAGE cogroo.ruta;
 TYPESYSTEM BaseTypeSystem;
 
 IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
-IMPORT opennlp.uima.Sentence        FROM TypeSystem AS cgSentence;
+IMPORT opennlp.uima.Sentence FROM TypeSystem AS cgSentence;
 
 
 SCRIPT ConcordanciaAdjSub;
