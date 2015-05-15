@@ -1,22 +1,25 @@
 package org.cogroo.tools.checker.checkers;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.FSIndex;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
 import org.apache.uima.cas.text.AnnotationFS;
-import org.apache.uima.resource.ResourceSpecifier;
-import org.apache.uima.util.XMLInputSource;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.apache.uima.ruta.engine.Ruta;
 import org.cogroo.analyzer.Analyzer;
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.checker.CheckDocument;
@@ -29,6 +32,8 @@ import org.cogroo.tools.checker.checkers.uima.UimaCasAdapter;
 
 public class UIMAChecker extends AbstractTypedChecker {
 	
+	private static final Logger LOGGER = Logger.getLogger(UIMAChecker.class);
+	
 	private AnalysisEngine ae;
 	private UimaCasAdapter converter;
 	private Type mProblemType;
@@ -36,23 +41,20 @@ public class UIMAChecker extends AbstractTypedChecker {
 	private Feature mDescriptionFeature;
 
 	public UIMAChecker() {
-		File specFile = new File(
-				"/Users/colen/git/cogroo4_labxp2015/cogroo-ruta/descriptor/MainEngine.xml");
-
-		XMLInputSource in;
+		
+		TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription("MainTypeSystem");
 		try {
-			in = new XMLInputSource(specFile);
-			ResourceSpecifier specifier = UIMAFramework.getXMLParser()
-					.parseResourceSpecifier(in);
-			// for import by name... set the datapath in the ResourceManager
-			this.ae = UIMAFramework.produceAnalysisEngine(specifier);
+			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription("Main", tsd);
 			
-			this.converter = new UimaCasAdapter();
-
-		} catch (Exception e) { // TODO: tratar exceptions corretamente
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.ae = UIMAFramework.produceAnalysisEngine(aeDes);
+		} catch (Exception e1) {
+			LOGGER.fatal("Failed to start Ruta AE", e1);
+			throw new RuntimeException("Failed to start Ruta AE",e1);
 		}
+		
+			
+		this.converter = new UimaCasAdapter();
+
 	}
 
 	@Override
