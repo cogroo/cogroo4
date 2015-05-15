@@ -1,4 +1,6 @@
-.project
+cogroo-ruta/descriptor/*Engine.xml
+cogroo-ruta/output/*
+cogroo-ruta/test/temp/*
 .classpath
 .settings
 **/target/**

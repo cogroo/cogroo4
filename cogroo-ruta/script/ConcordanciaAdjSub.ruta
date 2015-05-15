@@ -1,0 +1,52 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM BaseTypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+
+
+DECLARE FEMALE_ADJECTIVE;
+DECLARE MALE_ADJECTIVE;
+DECLARE PLURAL_ADJECTIVE;
+DECLARE SINGULAR_ADJECTIVE;
+
+// rules 17 to 24 
+
+cgToken{AND(IS(MALE), IS(ADJECTIVE)) -> MALE_ADJECTIVE};
+cgToken{AND(IS(FEMALE), IS(ADJECTIVE)) -> FEMALE_ADJECTIVE};
+cgToken{AND(IS(PLURAL), IS(ADJECTIVE)) -> PLURAL_ADJECTIVE};
+cgToken{AND(IS(SINGULAR), IS(ADJECTIVE)) -> SINGULAR_ADJECTIVE};
+
+
+MALE_NOUN
+FEMALE_ADJECTIVE{
+NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Adjetivo não concorda com o substantivo em gênero.")};
+
+FEMALE_NOUN
+MALE_ADJECTIVE{
+NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Adjetivo não concorda com o substantivo em gênero.")};
+
+SINGULAR_NOUN
+PLURAL_ADJECTIVE{
+NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Adjetivo não concorda com o substantivo em número.")};
+
+PLURAL_NOUN 
+SINGULAR_ADJECTIVE{
+NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Adjetivo não concorda com o substantivo em número.")};
+
+FEMALE_ADJECTIVE
+MALE_NOUN{
+NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Substantivo não concorda com o adjetivo em gênero.")};
+
+MALE_ADJECTIVE
+FEMALE_NOUN{
+NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Substantivo não concorda com o adjetivo em gênero.")};
+
+PLURAL_ADJECTIVE
+SINGULAR_NOUN{
+NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Substantivo não concorda com o adjetivo em número.")};
+
+SINGULAR_ADJECTIVE
+PLURAL_NOUN{
+NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM,1,2), CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "Substantivo não concorda com o adjetivo em número.")};

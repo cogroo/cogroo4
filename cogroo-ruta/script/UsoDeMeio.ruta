@@ -1,0 +1,36 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM BaseTypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+DECLARE MEIA_SUB;
+DECLARE MEIA_NUM;
+
+// meia/meias adjetivo
+cgToken{AND(IS(NOUN),REGEXP(cgToken.lexeme,"mei(o|as|os|a)",true)) -> MEIA_SUB};
+cgToken{AND(IS(NUMERAL),REGEXP(cgToken.lexeme,"mei(o|a|os|as)",true)) -> MEIA_NUM};
+
+// Rules 38
+cgToken{REGEXP(cgToken.lexeme, "meia(s?)", true) ->  CREATE(SUGGESTION, "text" = "<Replace index=\"0\"> <Lexeme>meio</Lexeme> </Replace>")}
+ADJECTIVE{
+->MARKONCE(PROBLEM, 1, 2),CREATE(PROBLEM_DESCRIPTION, 1, 2, "description" = "A palavra \"meio\" usada no sentido de \"um pouco\" é advérbio, portanto invariável. Exceção: meia/meias pode ser substantivo. Exemplo: Minhas meias azuis estão manchadas.")};
+
+// Rules 39
+cgToken{REGEXP(cgToken.lexeme, "meios", true) ->  CREATE(SUGGESTION, "text" = "<Replace index=\"0\"> <Lexeme>meio</Lexeme> </Replace>")}
+ADJECTIVE{
+->MARKONCE(PROBLEM, 1, 2),CREATE(PROBLEM_DESCRIPTION, 1, 2, "description" = "A palavra \"meio\" usada no sentido de \"um pouco\" é advérbio, portanto invariável.")};
+
+// Rule 40
+cgToken{REGEXP(cgToken.lexeme, "meio", true), IS(SINGULAR) ->  CREATE(SUGGESTION, "text" = "<Replace index=\"0\"> <TagReference index=\"1\"> <TagMask> <Gender>female</Gender> <Number>neutral</Number> </TagMask> </TagReference> </Replace>")}
+FEMALE_NOUN{
+->MARKONCE(PROBLEM, 1, 2),CREATE(PROBLEM_DESCRIPTION, 1, 2, "description" = "\"Meio\" usado no sentido de \"metade\" (numeral) concorda com o substantivo.")};
+
+cgToken{REGEXP(cgToken.lexeme, "meio", true), IS(PLURAL) ->  CREATE(SUGGESTION, "text" = "meias")}
+FEMALE_NOUN{
+->MARKONCE(PROBLEM, 1, 2),CREATE(PROBLEM_DESCRIPTION, 1, 2, "description" = "\"Meio\" usado no sentido de \"metade\" (numeral) concorda com o substantivo.")};
+
+// Rule 41
+cgToken{REGEXP(cgToken.lexeme, "meio", true) -> CREATE(SUGGESTION, "text" = "<Replace index=\"0\"> <Lexeme>meios</Lexeme> </Replace>")}
+MALE_NOUN{IS(PLURAL) 
+->MARKONCE(PROBLEM, 1, 2),CREATE(PROBLEM_DESCRIPTION,1,2,"description" = "\"Meio\" usado no sentido de \"metade\" (numeral) concorda com o substantivo.")};
