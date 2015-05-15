@@ -1,0 +1,33 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM BaseTypeSystem;
+
+IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
+
+DECLARE SE_OU_QUANDO;
+DECLARE EU_OU_ELE;
+DECLARE VERB_IRREG_75_77; // irregular verbs used in the rules 75 to 77
+
+cgToken{OR(REGEXP(cgToken.lexeme, "se", true), REGEXP(cgToken.lexeme, "quando", true)) -> SE_OU_QUANDO};
+cgToken{OR(REGEXP(cgToken.lexeme, "eu", true), REGEXP(cgToken.lexeme, "ele", true)) -> EU_OU_ELE};
+cgToken{REGEXP(cgToken.lexeme, "(caber|dizer|fazer|ir|manter|poder|pôr|saber|supor|ver)", true) -> VERB_IRREG_75_77};
+
+
+// rules 75 and 76
+SE_OU_QUANDO
+cgToken{OR(IS(EU_OU_ELE), IS(PROPER_NOUN))}
+VERB_IRREG_75_77{->
+    CREATE(PROBLEM_INFO, 1, 2, 3, "description" = "Conjugação de um verbo irregular no futuro do subjuntivo.",
+                                  "suggestion"  = "<ReplaceMapping index=\"0\" key=\"caber\" value=\"couber\"/> <ReplaceMapping index=\"0\" key=\"dizer\" value=\"disser\"/> <ReplaceMapping index=\"0\" key=\"fazer\" value=\"fizer\"/> <ReplaceMapping index=\"0\" key=\"ir\" value=\"for\"/> <ReplaceMapping index=\"0\" key=\"manter\" value=\"mantiver\"/> <ReplaceMapping index=\"0\" key=\"poder\" value=\"puder\"/> <ReplaceMapping index=\"0\" key=\"pôr\" value=\"puser\"/> <ReplaceMapping index=\"0\" key=\"saber\" value=\"souber\"/> <ReplaceMapping index=\"0\" key=\"supor\" value=\"supuser\"/> <ReplaceMapping index=\"0\" key=\"ver\" value=\"vir\"/>"),
+    MARKONCE(PROBLEM, 1, 2, 3)
+    };
+
+// rule 77
+SE_OU_QUANDO
+ARTICLE
+NOUN
+VERB_IRREG_75_77{->
+    CREATE(PROBLEM_INFO, 1, 2, 3, 4, "description" = "Conjugação de um verbo irregular no futuro do subjuntivo.",
+        "suggestion"  = "<ReplaceMapping index=\"0\" key=\"caber\" value=\"couber\"/> <ReplaceMapping index=\"0\" key=\"dizer\" value=\"disser\"/> <ReplaceMapping index=\"0\" key=\"fazer\" value=\"fizer\"/> <ReplaceMapping index=\"0\" key=\"ir\" value=\"for\"/> <ReplaceMapping index=\"0\" key=\"manter\" value=\"mantiver\"/> <ReplaceMapping index=\"0\" key=\"poder\" value=\"puder\"/> <ReplaceMapping index=\"0\" key=\"pôr\" value=\"puser\"/> <ReplaceMapping index=\"0\" key=\"saber\" value=\"souber\"/> <ReplaceMapping index=\"0\" key=\"supor\" value=\"supuser\"/> <ReplaceMapping index=\"0\" key=\"ver\" value=\"vir\"/>"),
+    MARKONCE(PROBLEM, 1, 2, 3, 4)
+    };
