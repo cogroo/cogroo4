@@ -9,7 +9,7 @@ DECLARE END_NOS;
 
 PERSONAL_PRONOUN {REGEXP(cgToken.lexeme, "-(me|te|se|lhe|nos|vos|lhes)", true) -> MARK(END_PRONOUN)};
 
-// Rule 61 and 62
+// Rules 61 and 62
 cgToken{REGEXP(cgToken.lexeme, "(não|nunca|ninguém|nada|jamais)", true)}
 VERB 
 END_PRONOUN
@@ -17,7 +17,7 @@ END_PRONOUN
     "description" = "As palavras de sentido negativo atraem o pronome átono para antes do verbo.",
     "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
     
-// Rule 63 and 64
+// Rules 63 and 64
 cgToken{REGEXP(cgToken.lexeme, "(nenhum|nenhuma)", true)}
 NOUN
 VERB 
@@ -26,7 +26,7 @@ END_PRONOUN
     "description" = "As palavras de sentido negativo atraem o pronome átono para antes do verbo.",
     "suggestion" = "<Swap a=\"2\" b=\"3\"/>")};
     
-// Rule 65 and 66
+// Rules 65 and 66
 cgToken{REGEXP(cgToken.lexeme, "(que|quem|quando|se|porque)", true)}
 VERB 
 END_PRONOUN
@@ -35,7 +35,7 @@ cgToken{NOT(IS(VERB))
     "description" = "Os pronomes relativos e as conjunções subordinativas atraem o pronome para antes do verbo.",
     "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
     
-// Rule 67 and 68
+// Rules 67 and 68
 cgToken{REGEXP(cgToken.lexeme, "(sempre|já|bem|aqui|onde|mais|talvez|ainda|como)", true)}
 VERB 
 END_PRONOUN
@@ -44,7 +44,7 @@ cgToken{NOT(IS(VERB))
      "description" = "Certos advérbios (sempre, já, bem, aqui, onde, mais, talvez, ainda, como, por que) atraem o pronome para antes do verbo.",
     "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
     
-// Rule 69 and 70
+// Rules 69 and 70
 cgToken{REGEXP(cgToken.lexeme,"por",true)}
 cgToken{REGEXP(cgToken.lexeme,"que",true)}
 ARTICLE
@@ -55,7 +55,7 @@ END_PRONOUN
     "description" = "Certos advérbios (sempre, já, bem, aqui, onde, mais, talvez, ainda, como, por que) atraem o pronome para antes do verbo.",
     "suggestion" = "<Swap a=\"4\" b=\"5\"/>")};
     
-// Rule 71 and 72
+// Rules 71 and 72
 cgToken{REGEXP(cgToken.lexeme,"(tudo|pouco|algo)",true)}
 VERB
 END_PRONOUN
@@ -63,7 +63,7 @@ END_PRONOUN
     "description" = "Os pronomes indefinidos \"tudo, pouco, algo\" atraem o pronome para antes do verbo.",
     "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
     
-// Rule 73 and 74
+// Rules 73 and 74
 cgToken{REGEXP(cgToken.lexeme,"(só|ou|ora|quer)",true)}
 VERB
 END_PRONOUN

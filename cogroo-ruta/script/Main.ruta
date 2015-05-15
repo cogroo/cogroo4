@@ -15,6 +15,7 @@ SCRIPT MimETi;
 SCRIPT Preferir;
 SCRIPT ColocacaoPronominal;
 SCRIPT MauMal;
+SCRIPT FutSubjIrreg;
 
 SCRIPT Base;
 Document{-> CALL(Base)};
@@ -28,3 +29,4 @@ Document{-> CALL(MimETi)};
 Document{-> CALL(Preferir)};
 Document{-> CALL(ColocacaoPronominal)};
 Document{-> CALL(MauMal)};
+Document{-> CALL(FutSubjIrreg)};
