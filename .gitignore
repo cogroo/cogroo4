@@ -1,6 +1,7 @@
 cogroo-ruta/descriptor/*Engine.xml
 cogroo-ruta/output/*
 cogroo-ruta/test/temp/*
+cogroo-uima/exemplos/processed/*
 .classpath
 .settings
 **/target/**

@@ -3,7 +3,7 @@ PACKAGE cogroo.ruta;
 TYPESYSTEM BaseTypeSystem;
 
 IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
-
+IMPORT uima.cas.StringArray;
 
 DECLARE MAL, MAU;
 
