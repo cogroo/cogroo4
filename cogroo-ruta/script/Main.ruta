@@ -21,8 +21,6 @@ SCRIPT Base;
 Document{-> CALL(Base)};
 
 Document{-> CALL(Crase)};
-Document{-> CALL(ConcordanciaAdjSub)};
-Document{-> CALL(Anexos)};
 Document{-> CALL(UsoDeMeio)};
 Document{-> CALL(FazerHaver)};
 Document{-> CALL(MimETi)};
