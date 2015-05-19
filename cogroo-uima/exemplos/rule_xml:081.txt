@@ -1,0 +1,5 @@
+Os alunos candidataram-se as vagas de estagiários.
+Paulo candidatou-se a vaga de inspetor de produção.
+
+Os alunos candidataram-se às vagas de estagiários.
+Paulo candidatou-se à vaga de inspetor de produção.

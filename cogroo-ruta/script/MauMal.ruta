@@ -3,7 +3,7 @@ PACKAGE cogroo.ruta;
 TYPESYSTEM BaseTypeSystem;
 
 IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
-
+IMPORT uima.cas.StringArray;
 
 DECLARE MAL, MAU;
 
@@ -19,3 +19,4 @@ cgToken{OR(IS(ADJECTIVE), IS(PARTICIPLE_VERB)) -> MARKONCE(PROBLEM, 1, 2)};
 //cgToken{  -> MARKONCE(PROBLEM, 1, 2)}
 //MAL{-> CREATE(PROBLEM_INFO, 1, 2, "description" = "Mau é adjetivo (o feminino é \"má\" e o plural é \"maus\") e mal é advérbio (forma invariável). Para distinguir o uso adequado de mal/mau, refaça a frase utilizando bem e bom."
 //                          , "suggestion" = "<Replace index=\"0\"> <Lexeme>eu</Lexeme> </Replace>")};
+
