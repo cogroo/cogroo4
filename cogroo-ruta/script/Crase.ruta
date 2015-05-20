@@ -35,21 +35,21 @@ cgToken{REGEXP(cgToken.lexeme, "relação", true)  -> CREATE(COM_RELACAO, 1, 2, 
 // rules 1 and 2
 CRASE
 MALE_NOUN{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_INFO, 1, 2,
+ -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_INFO, 1, 2,
     "description" = "Crase com substantivo masculino.",
     "suggestion" = "<Replace index=\"0\">  <Lexeme/> </Replace><Replace index=\"1\">    <Lexeme>ao</Lexeme>  </Replace>")};
 
 // rules 2 and 3
 CRASE_A
 PLURAL_NOUN{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_INFO, 1, 2,
+ -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_INFO, 1, 2,
     "description" = "Crase com substantivo no plural.",
     "suggestion" = "<Replace index=\"0\">  <Lexeme/> </Replace><Replace index=\"1\">    <Lexeme>a</Lexeme>  </Replace>")};
 
 // rule 4
 CRASE
 VERB{
-NOT(IS(PROBLEM)) -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_INFO, 1, 2,
+ -> MARKONCE(PROBLEM, 1, 2), CREATE(PROBLEM_INFO, 1, 2,
     "description" = "Crase antes de verbo.",
     "suggestion" = "<Replace index=\"0\">  <Lexeme/> </Replace><Replace index=\"1\">    <Lexeme>a</Lexeme>  </Replace>")};
 
