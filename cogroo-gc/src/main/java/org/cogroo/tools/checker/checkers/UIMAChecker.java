@@ -1,6 +1,8 @@
 package org.cogroo.tools.checker.checkers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -30,6 +32,9 @@ import org.cogroo.tools.checker.AbstractTypedChecker;
 import org.cogroo.tools.checker.checkers.uima.AnnotatorUtil;
 import org.cogroo.tools.checker.checkers.uima.UimaCasAdapter;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+
 public class UIMAChecker extends AbstractTypedChecker {
 	
 	private static final Logger LOGGER = Logger.getLogger(UIMAChecker.class);
@@ -44,7 +49,9 @@ public class UIMAChecker extends AbstractTypedChecker {
 		
 		TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription("MainTypeSystem");
 		try {
-			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription("Main", tsd);
+			URL url = Resources.getResource("Main.ruta");
+			String text = Resources.toString(url, Charsets.UTF_8);
+			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text, tsd);
 			
 			this.ae = UIMAFramework.produceAnalysisEngine(aeDes);
 		} catch (Exception e1) {
@@ -119,7 +126,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 		Analyzer cogroo = factory.createPipe();
 		GrammarChecker gc = new GrammarChecker(cogroo);
 		
-		CheckDocument document = new CheckDocument("As conclusões estão meias confusas. A conclusão está meia confusa.");
+		CheckDocument document = new CheckDocument("Entreguei isto à ele.");
 		// passe o doc pelo pipe
 		gc.analyze(document);
 		
