@@ -12,6 +12,8 @@ cgToken{REGEXP(cgToken.lexeme, "anex(os|a|as)", true)
     "description" = "A expressão \"em anexo\" é invariável.",
     "suggestion" = "<Replace index=\"1\"> <Lexeme>anexo</Lexeme> </Replace>")};
 
+// TODO: The verb should not be necessary in any of the following rules.
+
 // rule 28
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
 cgToken{REGEXP(cgToken.lexeme, "anexos", true)}
