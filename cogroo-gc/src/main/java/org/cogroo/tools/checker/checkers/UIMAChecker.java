@@ -52,6 +52,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 			URL url = Resources.getResource("Main.ruta");
 			String text = Resources.toString(url, Charsets.UTF_8);
 			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text, tsd);
+			//aeDes.set
 			
 			this.ae = UIMAFramework.produceAnalysisEngine(aeDes);
 		} catch (Exception e1) {
@@ -68,7 +69,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 	public List<Mistake> check(Sentence sentence) {
 
 		try {
-
+			
 			CAS cas = ae.newCAS();
 			converter.populateCas(sentence.getTextSentence(), cas);
 			ae.process(cas);
@@ -83,13 +84,15 @@ public class UIMAChecker extends AbstractTypedChecker {
 			
 			FSIndex<AnnotationFS> problemDescription = cas.getAnnotationIndex(mProblemDescription);
 			
+			System.out.println("Batata " + problemDescription.size()
+					+ "\n -> " + problems.size());
+			
 			for (AnnotationFS problem : problemDescription) {
 				System.out.println("Encontrou: " + problem.getCoveredText() + " -> " + problem.getFeatureValueAsString(mDescriptionFeature));
 			}
 			
 
 		} catch (Exception e) { // TODO: tratar exceptions corretamente
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -126,11 +129,11 @@ public class UIMAChecker extends AbstractTypedChecker {
 		Analyzer cogroo = factory.createPipe();
 		GrammarChecker gc = new GrammarChecker(cogroo);
 		
-		CheckDocument document = new CheckDocument("Entreguei isto à ele.");
+		CheckDocument document = new CheckDocument("Refiro-me à trabalho remunerado.");
 		// passe o doc pelo pipe
 		gc.analyze(document);
 		
 		// obtenha os resultados em document.getMistakes(), ou simplesmente imprima o documento
-		System.out.println(document);
+		//System.out.println(document);
 	}
 }
