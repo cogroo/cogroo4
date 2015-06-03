@@ -2,7 +2,6 @@ package org.cogroo.tools.checker.checkers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -12,7 +11,6 @@ import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.FSIndex;
 import org.apache.uima.cas.Feature;
@@ -28,6 +26,7 @@ import org.cogroo.checker.CheckDocument;
 import org.cogroo.checker.GrammarChecker;
 import org.cogroo.entities.Mistake;
 import org.cogroo.entities.Sentence;
+import org.cogroo.tools.RuleParser;
 import org.cogroo.tools.checker.AbstractTypedChecker;
 import org.cogroo.tools.checker.checkers.uima.AnnotatorUtil;
 import org.cogroo.tools.checker.checkers.uima.UimaCasAdapter;
@@ -40,7 +39,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 	private static final Logger LOGGER = Logger.getLogger(UIMAChecker.class);
 	
 	private AnalysisEngine ae;
-	private UimaCasAdapter converter;
+	private final UimaCasAdapter converter;
 	private Type mProblemType;
 	private Type mProblemDescription;
 	private Feature mDescriptionFeature;
@@ -135,5 +134,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 		
 		// obtenha os resultados em document.getMistakes(), ou simplesmente imprima o documento
 		//System.out.println(document);
+		
+		RuleParser.getRuleDefinition("Main.ruta");
 	}
 }
