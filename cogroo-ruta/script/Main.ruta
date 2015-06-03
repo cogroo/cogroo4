@@ -16,6 +16,8 @@ DECLARE FEMALE,MALE,SINGULAR,PLURAL,ARTICLE;
 DECLARE MALE_NOUN;
 DECLARE NOUN;
 
+//DECLARE Annotation PROBLEM (String id, String category, String group,
+//                            String description, String message, String shortMessage, String examples);
 DECLARE PROBLEM;
 
 cgToken{FEATURE("pos","n") -> NOUN};
@@ -27,4 +29,4 @@ cgToken{FEATURE("features", "F=P") -> FEMALE, PLURAL};
 cgToken{FEATURE("features", "M=S") -> MALE, SINGULAR};
 cgToken{FEATURE("features", "M=P") -> MALE, PLURAL};
 
-cgToken{->PROBLEM};
+cgToken{-> CREATE(PROBLEM)};

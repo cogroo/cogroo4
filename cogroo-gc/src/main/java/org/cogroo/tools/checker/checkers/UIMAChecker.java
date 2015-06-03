@@ -135,6 +135,6 @@ public class UIMAChecker extends AbstractTypedChecker {
 		// obtenha os resultados em document.getMistakes(), ou simplesmente imprima o documento
 		//System.out.println(document);
 		
-		RuleParser.getRuleDefinition("Main.ruta");
+		RuleParser.getRuleDefinition("Untitled.txt");
 	}
 }
