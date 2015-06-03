@@ -1,1 +1,6 @@
 language: java
+notifications:
+  email:
+    recipients:
+      - cogroo_labxp2015@googlegroups.com
+    on_success: never # default: change
