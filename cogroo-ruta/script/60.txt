@@ -1,0 +1,8 @@
+id = 60
+category = Verbo preferir
+group = regência do verbo preferir
+description = 
+message = "Quem prefere, prefere alguma coisa a alguma coisa". Não se usa "do que". A preposição adequada é "a".
+shortMessage = Não use "preferir isso do que aquilo", mas sim "a aquilo".
+correctExample = Eu prefiro festa a balada.
+incorrectExample = Eu prefiro festa do que balada.

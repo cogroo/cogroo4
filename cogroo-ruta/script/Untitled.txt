@@ -1,3 +1,0 @@
-id = HOW COULD THIS HAPPEN TO ME???
-
-message = I'VE MADE MY MISTAKES!!

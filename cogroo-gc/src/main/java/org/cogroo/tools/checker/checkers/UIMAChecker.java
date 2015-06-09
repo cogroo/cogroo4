@@ -2,7 +2,7 @@ package org.cogroo.tools.checker.checkers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,6 +28,7 @@ import org.cogroo.entities.Mistake;
 import org.cogroo.entities.Sentence;
 import org.cogroo.tools.RuleParser;
 import org.cogroo.tools.checker.AbstractTypedChecker;
+import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.checkers.uima.AnnotatorUtil;
 import org.cogroo.tools.checker.checkers.uima.UimaCasAdapter;
 
@@ -51,12 +52,24 @@ public class UIMAChecker extends AbstractTypedChecker {
 			URL url = Resources.getResource("Main.ruta");
 			String text = Resources.toString(url, Charsets.UTF_8);
 			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text, tsd);
-			//aeDes.set
 			
 			this.ae = UIMAFramework.produceAnalysisEngine(aeDes);
 		} catch (Exception e1) {
 			LOGGER.fatal("Failed to start Ruta AE", e1);
 			throw new RuntimeException("Failed to start Ruta AE",e1);
+		}
+		
+		int i = 1;
+		while (true) {
+			String filename = i + ".txt";
+			RuleDefinition ruleDef = RuleParser.getRuleDefinition(filename);
+						
+			if (ruleDef == null) {
+				break;
+			}
+						
+			add(ruleDef);
+			i++;
 		}
 		
 			
@@ -67,18 +80,18 @@ public class UIMAChecker extends AbstractTypedChecker {
 	@Override
 	public List<Mistake> check(Sentence sentence) {
 
+		List<Mistake> mistakes = new LinkedList<Mistake>();
+		
 		try {
 			
 			CAS cas = ae.newCAS();
 			converter.populateCas(sentence.getTextSentence(), cas);
 			ae.process(cas);
-			
 			initTypeSystem(cas.getTypeSystem());
 			
 			FSIndex<AnnotationFS> problems = cas.getAnnotationIndex(mProblemType);
-			
 			for (AnnotationFS problem : problems) {
-				System.out.println("Encontrou: " + problem.getCoveredText());
+				mistakes.add(createMistake("1", createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
 			}
 			
 			FSIndex<AnnotationFS> problemDescription = cas.getAnnotationIndex(mProblemDescription);
@@ -95,9 +108,16 @@ public class UIMAChecker extends AbstractTypedChecker {
 			e.printStackTrace();
 		}
 
-		return Collections.emptyList();
-	}
+		return mistakes;
+	} 
 
+	private String[] createSuggestion(String error) {
+
+		String[] array = { error };
+
+		return array;
+	}
+	
 	private boolean typeSystemInitialized = false;
 	private synchronized void initTypeSystem(TypeSystem typeSystem) throws AnalysisEngineProcessException {
 		if(typeSystemInitialized == true) {
@@ -131,10 +151,6 @@ public class UIMAChecker extends AbstractTypedChecker {
 		CheckDocument document = new CheckDocument("Refiro-me à trabalho remunerado.");
 		// passe o doc pelo pipe
 		gc.analyze(document);
-		
-		// obtenha os resultados em document.getMistakes(), ou simplesmente imprima o documento
-		//System.out.println(document);
-		
-		RuleParser.getRuleDefinition("Untitled.txt");
+	
 	}
 }

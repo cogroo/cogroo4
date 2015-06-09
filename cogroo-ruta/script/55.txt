@@ -1,0 +1,8 @@
+id = 55
+category = Emprego do mim e ti
+group = eu regido por preposição
+description = 
+message = O pronome "eu" não pode ser regido de preposição. (Neste caso a preposição é "entre".)
+shortMessage = O pronome "eu" não pode ser regido de preposição.
+correctExample = Entre ele e ti só há discórdia. Entre ti e ele só há discórdia.
+incorrectExample = Entre ele e tu só há discórdia.

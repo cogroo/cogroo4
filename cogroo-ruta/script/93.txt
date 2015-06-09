@@ -1,0 +1,10 @@
+id = 93
+category = Crase
+group = regência verbal - crase
+description = 
+message = O que é equivalente, é equivalente a alguma coisa. Temos, portanto preposição a. Se o complemento for feminino, teremos crase.
+shortMessage = "Equivalente" rege a preposição "a". Com compl. feminino, há crase.
+correctExample = A vitória deste ano terá sido equivalente às derrotas anteriores?
+incorrectExample = A vitória deste ano terá sido equivalente as derrotas anteriores?
+correctExample = Nosso esforço era equivalente à ousadia de José.
+incorrectExample = Nosso esforço era equivalente a ousadia de José.

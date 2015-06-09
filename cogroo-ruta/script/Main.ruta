@@ -4,29 +4,7 @@ TYPESYSTEM TypeSystem;
 
 IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
 
-DECLARE LEXEME_A, LEXEME_AS, LEXEME_A_OR_AS;
-DECLARE PREPOSITION_A, ARTICLE_A;
-DECLARE CRASE, CRASE_A, CRASE_AS;
 
-DECLARE PRON_TRATAMENTO;
-DECLARE EM_RELACAO, COM_RELACAO;
+DECLARE Annotation PROBLEM (String id);
 
-DECLARE PREPOSITION;
-DECLARE FEMALE,MALE,SINGULAR,PLURAL,ARTICLE;
-DECLARE MALE_NOUN;
-DECLARE NOUN;
-
-//DECLARE Annotation PROBLEM (String id, String category, String group,
-//                            String description, String message, String shortMessage, String examples);
-DECLARE PROBLEM;
-
-cgToken{FEATURE("pos","n") -> NOUN};
-
-
-
-cgToken{FEATURE("features", "F=S") -> FEMALE, SINGULAR};
-cgToken{FEATURE("features", "F=P") -> FEMALE, PLURAL};
-cgToken{FEATURE("features", "M=S") -> MALE, SINGULAR};
-cgToken{FEATURE("features", "M=P") -> MALE, PLURAL};
-
-cgToken{-> CREATE(PROBLEM)};
+cgToken{-> CREATE(PROBLEM, "id" = "1")};

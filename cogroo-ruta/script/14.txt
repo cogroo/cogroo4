@@ -1,0 +1,8 @@
+id = 14
+category = Crase
+group = devido a
+description = 
+message = "devido" rege a preposição "a". Se for seguido de substantivo feminino plural determinado, haverá crase.
+shortMessage = "Devido" rege a preposição "a", logo há crase aqui.
+correctExample = Devido às cobranças injustas.
+incorrectExample = Devido as cobranças injustas.

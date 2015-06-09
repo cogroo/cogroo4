@@ -1,0 +1,12 @@
+id = 104
+category = Concordância Artigo-Substantivo
+group = artigo feminino + substantivo masculino
+description = 
+message = Os artigos definidos (o, a, os, as) e os artigos indefinidos (um, uma, uns, umas) concordam em número (singular ou plural) e em gênero (masculino ou feminino) com o substantivo a que se referem.
+shortMessage = Os artigos concordam com o substantivo a que se referem.
+correctExample = Os meninos quebraram as vidraças.
+incorrectExample = As meninos quebraram as vidraças.
+correctExample = Uma amiga sempre ajuda nas horas difíceis.
+incorrectExample = Uma amigos sempre ajuda nas horas difíceis.
+correctExample = Os professores não deram aulas.
+incorrectExample = As professores não deram aulas.
