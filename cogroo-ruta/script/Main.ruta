@@ -7,4 +7,4 @@ IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
 
 DECLARE Annotation PROBLEM (String id);
 
-cgToken{-> CREATE(PROBLEM, "id" = "1")};
+cgToken cgToken{-> CREATE(PROBLEM, "id" = "1")};

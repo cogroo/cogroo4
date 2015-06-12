@@ -50,6 +50,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 		TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription("MainTypeSystem");
 		try {
 			URL url = Resources.getResource("Main.ruta");
+			System.out.println(url.toString());
 			String text = Resources.toString(url, Charsets.UTF_8);
 			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text, tsd);
 			
@@ -85,10 +86,15 @@ public class UIMAChecker extends AbstractTypedChecker {
 		try {
 			
 			CAS cas = ae.newCAS();
+			
+			// http://article.gmane.org/gmane.comp.apache.uima.general/6274
+			cas.setDocumentText(sentence.getDocumentText());
+			
+			
 			converter.populateCas(sentence.getTextSentence(), cas);
 			ae.process(cas);
 			initTypeSystem(cas.getTypeSystem());
-			
+			System.out.println("O TEXTO É: " + cas.getDocumentText());
 			FSIndex<AnnotationFS> problems = cas.getAnnotationIndex(mProblemType);
 			for (AnnotationFS problem : problems) {
 				mistakes.add(createMistake("1", createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
