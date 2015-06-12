@@ -42,8 +42,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 	private AnalysisEngine ae;
 	private final UimaCasAdapter converter;
 	private Type mProblemType;
-	private Type mProblemDescription;
-	private Feature mDescriptionFeature;
+	private Feature mIDFeature;
 
 	public UIMAChecker() {
 		
@@ -87,22 +86,19 @@ public class UIMAChecker extends AbstractTypedChecker {
 			CAS cas = ae.newCAS();
 			converter.populateCas(sentence.getTextSentence(), cas);
 			ae.process(cas);
-			initTypeSystem(cas.getTypeSystem());
+			TypeSystem typeSystem = cas.getTypeSystem();
+			initTypeSystem(typeSystem);
+			
+//			Feature idFeature = typeSystem.getFeatureByFullName("id");
 			
 			FSIndex<AnnotationFS> problems = cas.getAnnotationIndex(mProblemType);
 			for (AnnotationFS problem : problems) {
-				mistakes.add(createMistake("1", createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
+				String id = problem.getFeatureValueAsString(mIDFeature);
+				System.out.println("Morango" + id);
+				mistakes.add(createMistake(id, createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
 			}
 			
-			FSIndex<AnnotationFS> problemDescription = cas.getAnnotationIndex(mProblemDescription);
-			
-			System.out.println("Batata " + problemDescription.size()
-					+ "\n -> " + problems.size());
-			
-			for (AnnotationFS problem : problemDescription) {
-				System.out.println("Encontrou: " + problem.getCoveredText() + " -> " + problem.getFeatureValueAsString(mDescriptionFeature));
-			}
-			
+			System.out.println("Batata -> " + problems.size());
 
 		} catch (Exception e) { // TODO: tratar exceptions corretamente
 			e.printStackTrace();
@@ -124,10 +120,8 @@ public class UIMAChecker extends AbstractTypedChecker {
 			return;
 		}
 		mProblemType = AnnotatorUtil.getType(typeSystem,
-				"cogroo.ruta.Base.PROBLEM");
-		mProblemDescription = AnnotatorUtil.getType(typeSystem,
-				"cogroo.ruta.Base.PROBLEM_DESCRIPTION");
-		mDescriptionFeature = AnnotatorUtil.getRequiredFeature(mProblemDescription, "description",
+				"cogroo.ruta.Main.PROBLEM");
+		mIDFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "id",
 				CAS.TYPE_NAME_STRING);
 		
 		typeSystemInitialized = true;
