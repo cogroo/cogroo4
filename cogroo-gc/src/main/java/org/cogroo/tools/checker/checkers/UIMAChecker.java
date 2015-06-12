@@ -2,6 +2,7 @@ package org.cogroo.tools.checker.checkers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -44,13 +45,14 @@ public class UIMAChecker extends AbstractTypedChecker {
 	private Type mProblemType;
 	private Type mProblemDescription;
 	private Feature mDescriptionFeature;
+	
+	private final HashSet<Integer> done = new HashSet<Integer>();
 
 	public UIMAChecker() {
 		
 		TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription("MainTypeSystem");
 		try {
 			URL url = Resources.getResource("Main.ruta");
-			System.out.println(url.toString());
 			String text = Resources.toString(url, Charsets.UTF_8);
 			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text, tsd);
 			
@@ -80,6 +82,12 @@ public class UIMAChecker extends AbstractTypedChecker {
 
 	@Override
 	public List<Mistake> check(Sentence sentence) {
+		
+		// TODO: added for now in order to prevent this method to run more than once
+		if (done.contains(sentence.getOffset()))
+			System.exit(0);
+		done.add(sentence.getOffset());
+		
 
 		List<Mistake> mistakes = new LinkedList<Mistake>();
 		
@@ -94,7 +102,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 			converter.populateCas(sentence.getTextSentence(), cas);
 			ae.process(cas);
 			initTypeSystem(cas.getTypeSystem());
-			System.out.println("O TEXTO É: " + cas.getDocumentText());
+//			System.out.println("O TEXTO É: " + cas.getDocumentText());
 			FSIndex<AnnotationFS> problems = cas.getAnnotationIndex(mProblemType);
 			for (AnnotationFS problem : problems) {
 				mistakes.add(createMistake("1", createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
@@ -102,8 +110,8 @@ public class UIMAChecker extends AbstractTypedChecker {
 			
 			FSIndex<AnnotationFS> problemDescription = cas.getAnnotationIndex(mProblemDescription);
 			
-			System.out.println("Batata " + problemDescription.size()
-					+ "\n -> " + problems.size());
+//			System.out.println("Batata " + problemDescription.size()
+//					+ "\n -> " + problems.size());
 			
 			for (AnnotationFS problem : problemDescription) {
 				System.out.println("Encontrou: " + problem.getCoveredText() + " -> " + problem.getFeatureValueAsString(mDescriptionFeature));
@@ -154,7 +162,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 		Analyzer cogroo = factory.createPipe();
 		GrammarChecker gc = new GrammarChecker(cogroo);
 		
-		CheckDocument document = new CheckDocument("Refiro-me à trabalho remunerado.");
+		CheckDocument document = new CheckDocument("Quanto à lápis, não entendo. Quanto à computador, não entendo. Refiro-me à trabalhos remunerados. Refiro-me à reuniões extraordinárias. Fomos levados à crer. A uma hora estaremos partindo. As duas horas estaremos partindo. Os ônibus estacionaram a direita do pátio. Os ônibus estacionaram a esquerda do pátio. Em relação as atividades programadas. Com relação as atividades programadas. Devido as cobranças injustas. Enviei os documentos à você. Enviei os documentos à Vossa Excelência.  Quanto ao lápis, não entendo. Quanto ao computador, não entendo. Refiro-me aos trabalhos remunerados. Refiro-me às reuniões extraordinárias. Refiro-me a reuniões extraordinárias. Fomos levados a crer. À uma hora estaremos partindo. Daqui a uma hora estaremos partindo. Às duas horas estaremos partindo. Os ônibus estacionaram à direita do pátio. Os ônibus estacionaram à esquerda do pátio. Em relação a segurança dos menores. Em relação à segurança dos menores. Em relação às atividades programadas. Com relação a segurança dos menores. Com relação à segurança dos menores. Com relação às atividades programadas. Devido à cobrança injusta. Devido às cobranças injustas. Devido a cobrança injusta. Enviei os documentos a você. Enviei os documentos a Vossa Excelência.");
 		// passe o doc pelo pipe
 		gc.analyze(document);
 	
