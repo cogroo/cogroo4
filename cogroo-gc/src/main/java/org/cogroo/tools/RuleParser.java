@@ -1,6 +1,5 @@
 package org.cogroo.tools;
 
-import java.awt.List;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -43,15 +42,11 @@ public class RuleParser {
 				line = line.trim();
 				
 				if (line.length() == 0) continue;
-				
-				System.out.println("Uva: " + line);
-				
+								
 				String[] fields = line.split("=", 2);
 
 				if (fields.length < 2) continue;
-				
-				System.out.println("Campo: " + fields[0] + ", valor: " + fields[1]);
-			
+							
 				fields[0] = fields[0].trim();
 				fields[1] = fields[1].trim();
 				
