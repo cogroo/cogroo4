@@ -1,10 +1,10 @@
 package org.cogroo.tools.checker.checkers.uima;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASRuntimeException;
 import org.apache.uima.cas.Feature;
-import org.apache.uima.cas.StringArrayFS;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
 import org.apache.uima.cas.text.AnnotationFS;
@@ -77,7 +77,7 @@ public class UimaCasAdapter {
 
 		// lemma feature
 		mLemmaFeature = AnnotatorUtil.getRequiredFeature(mTokenType, "lemma",
-				CAS.TYPE_NAME_STRING_ARRAY);
+				CAS.TYPE_NAME_STRING);
 
 		// features feature
 		mFeaturesFeature = AnnotatorUtil.getRequiredFeature(mTokenType,
@@ -137,12 +137,17 @@ public class UimaCasAdapter {
 						token.getLexeme());
 
 				// add lemma annotations
-				StringArrayFS lemmas = tcas.createStringArrayFS(token
-						.getLemmas().length);
-				lemmas.copyFromArray(token.getLemmas(), 0, 0,
-						token.getLemmas().length);
-				tokenAnnotationArr[i].setFeatureValue(this.mLemmaFeature,
-						lemmas);
+				String[] lemmas = token.getLemmas();
+				
+				String lemma = StringUtils.join(lemmas, ", ");
+				tokenAnnotationArr[i].setStringValue(this.mLemmaFeature, lemma);
+				
+//				StringArrayFS lemmas = tcas.createStringArrayFS(token
+//						.getLemmas().length);
+//				lemmas.copyFromArray(token.getLemmas(), 0, 0,
+//						token.getLemmas().length);
+//				tokenAnnotationArr[i].setFeatureValue(this.mLemmaFeature,
+//						lemmas);
 
 				tokenAnnotationArr[i].setStringValue(this.mFeaturesFeature,
 						token.getFeatures());

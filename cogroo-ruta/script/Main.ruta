@@ -1,3 +1,4 @@
+
 PACKAGE cogroo.ruta;
 
 TYPESYSTEM TypeSystem;
@@ -7,4 +8,8 @@ IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
 
 DECLARE Annotation PROBLEM (String id);
 
-cgToken cgToken{-> CREATE(PROBLEM, "id" = "1")};
+//cgToken {-> CREATE(PROBLEM, "id" = "1")};
+
+cgToken{REGEXP(cgToken.lemma, "([^,]*,)*(seguir)(,[^,]*)*", true) -> CREATE(PROBLEM, "id" = "1")};
+
+

@@ -43,7 +43,9 @@ public class UIMAChecker extends AbstractTypedChecker {
 	private AnalysisEngine ae;
 	private final UimaCasAdapter converter;
 	private Type mProblemType;
+	private Type mTokenType;
 	private Feature mIDFeature;
+	private Feature mLemmaFeature;
 
 	
 	private final HashSet<Integer> done = new HashSet<Integer>();
@@ -110,6 +112,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 			FSIndex<AnnotationFS> problems = cas.getAnnotationIndex(mProblemType);
 			for (AnnotationFS problem : problems) {
 				String id = problem.getFeatureValueAsString(mIDFeature);
+				System.out.println("Maçã: " + problem.getCoveredText());
 				mistakes.add(createMistake(id, createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
 			}
 			
@@ -137,6 +140,11 @@ public class UIMAChecker extends AbstractTypedChecker {
 		mProblemType = AnnotatorUtil.getType(typeSystem,
 				"cogroo.ruta.Main.PROBLEM");
 		mIDFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "id",
+				CAS.TYPE_NAME_STRING);
+		
+		mTokenType = AnnotatorUtil.getType(typeSystem,
+				"opennlp.uima.Token");
+		mLemmaFeature = AnnotatorUtil.getRequiredFeature(mTokenType, "lemma",
 				CAS.TYPE_NAME_STRING);
 		
 		typeSystemInitialized = true;
