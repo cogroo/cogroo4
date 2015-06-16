@@ -1,0 +1,34 @@
+<buildpath>
+  <buildpathentry path="src/main/ruta/" kind="src">
+    <attributes>
+      <attribute name="ruta" value="script"/>
+    </attributes>
+  </buildpathentry>
+  <buildpathentry path="target/generated-sources/ruta/descriptor/" kind="src">
+    <attributes>
+      <attribute name="ruta" value="descriptor"/>
+    </attributes>
+  </buildpathentry>
+  <buildpathentry path="src/main/resources/" kind="src">
+    <attributes>
+      <attribute name="ruta" value="resources"/>
+    </attributes>
+  </buildpathentry>
+  <buildpathentry path="org.eclipse.dltk.launching.INTERPRETER_CONTAINER" kind="con"/>
+  <buildpathentry path="../cogroo-ruta/script/" kind="src">
+    <attributes>
+      <attribute name="ruta" value="script"/>
+    </attributes>
+  </buildpathentry>
+  <buildpathentry path="/home/vinicius.matos/LabXP/cogroo-integra/cogroo4/cogroo-gc/target/generated-sources/ruta/descriptor/" kind="src">
+    <attributes>
+      <attribute name="ruta" value="descriptor"/>
+    </attributes>
+  </buildpathentry>
+  <buildpathentry path="RUTA_BUILD_VARS" kind="var">
+    <attributes>
+      <attribute name="typeSystemSuffix" value="TypeSystem"/>
+      <attribute name="analysisEngineSuffix" value="Engine"/>
+    </attributes>
+  </buildpathentry>
+</buildpath>
