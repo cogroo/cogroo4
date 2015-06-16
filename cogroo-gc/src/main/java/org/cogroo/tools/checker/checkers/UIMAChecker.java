@@ -161,6 +161,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 	}
 	
 	public static void main(String[] args) throws IllegalArgumentException, IOException {
+		System.out.println("main:");
 		ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
 		Analyzer cogroo = factory.createPipe();
 		GrammarChecker gc = new GrammarChecker(cogroo);
