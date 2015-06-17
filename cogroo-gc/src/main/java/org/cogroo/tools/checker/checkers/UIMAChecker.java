@@ -51,7 +51,8 @@ public class UIMAChecker extends AbstractTypedChecker {
 	private final HashSet<Integer> done = new HashSet<Integer>();
 
 	public UIMAChecker() {
-		
+		// TODO: move the following lines to a new class:
+		// AnalysisEngineFactory: create typesystem and analysis engine 
 		TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription("MainTypeSystem");
 		try {
 			URL url = Resources.getResource("Main.ruta");

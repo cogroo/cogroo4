@@ -1,0 +1,8 @@
+id = 88
+category = emprego de eu e mim
+group = a + eu
+description = 
+message = O pronome "eu" não deve ser preposicionado. Use, nesse caso, "a mim".
+shortMessage = "Eu" não deve ser preposicionado. Use "a mim".
+correctExample = Quanto a mim, estou pronto para renunciar.
+incorrectExample = Quanto a eu, estou pronto para renunciar.

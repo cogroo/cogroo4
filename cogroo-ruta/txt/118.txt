@@ -1,0 +1,10 @@
+id = 118
+category = Concordância sujeito-verbo
+group = sujeito singular + verbo plural
+description = 
+message = Verificou-se erro de concordância entre o sujeito e o verbo.
+shortMessage = Verificou-se erro de concordância entre o sujeito e o verbo.
+correctExample = Ele vai comprar banana.
+incorrectExample = Ele vão comprar banana.
+correctExample = Ele não vai comprar banana.
+incorrectExample = Ele não vão comprar banana.

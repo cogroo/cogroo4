@@ -195,4 +195,48 @@ public class UimaCasAdapter {
 //		}
 	}
 
+	public Type getSentenceType() {
+		return mSentenceType;
+	}
+
+	public Type getTokenType() {
+		return mTokenType;
+	}
+
+	public Type getChunkType() {
+		return mChunkType;
+	}
+
+	public Feature getPosFeature() {
+		return mPosFeature;
+	}
+
+	public Feature getChunkFeature() {
+		return mChunkFeature;
+	}
+
+	public Feature getLemmaFeature() {
+		return mLemmaFeature;
+	}
+
+	public Feature getFeaturesFeature() {
+		return mFeaturesFeature;
+	}
+
+	public Feature getLexemeFeature() {
+		return mLexemeFeature;
+	}
+
+	public Feature getChunkHead() {
+		return mChunkHead;
+	}
+
+	public Type getSyntacticChunkType() {
+		return mSyntacticChunkType;
+	}
+
+	public Feature getSyntacticChunkFeature() {
+		return mSyntacticChunkFeature;
+	}
+
 }

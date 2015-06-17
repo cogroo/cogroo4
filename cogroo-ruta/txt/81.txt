@@ -1,0 +1,10 @@
+id = 81
+category = Crase
+group = regência verbal
+description = 
+message = O verbo "candidatar-se" constrói-se com preposição "a". Se o complemento (aquilo a que o sujeito se candidata) for feminino, teremos crase.
+shortMessage = "Candidatar-se" constrói-se com prep. "a". Há crase com compl. feminino.
+correctExample = Os alunos candidataram-se às vagas de estagiários.
+incorrectExample = Os alunos candidataram-se as vagas de estagiários.
+correctExample = Paulo candidatou-se à vaga de inspetor de produção.
+incorrectExample = Paulo candidatou-se a vaga de inspetor de produção.

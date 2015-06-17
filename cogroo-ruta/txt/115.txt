@@ -1,0 +1,12 @@
+id = 115
+category = Concordância Numeral-Substantivo
+group = Concordância Numeral-Substantivo
+description = 
+message = Os numerais concordam em número (singular ou plural) e em gênero (masculino ou feminino) com o substantivo a que se referem.
+shortMessage = Os numerais concordam com o substantivo a que se referem.
+correctExample = Eu comprei duas bolas.
+incorrectExample = Eu comprei duas bola.
+correctExample = Eu comprei dois carros.
+incorrectExample = Eu comprei dois carro.
+correctExample = Eu comprei dois carros.
+incorrectExample = Eu comprei duas carro.
