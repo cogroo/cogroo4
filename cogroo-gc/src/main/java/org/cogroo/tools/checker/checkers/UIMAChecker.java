@@ -69,11 +69,11 @@ public class UIMAChecker extends AbstractTypedChecker {
 		while (true) {
 			String filename = i + ".txt";
 			RuleDefinition ruleDef = RuleParser.getRuleDefinition(filename);
-						
+
 			if (ruleDef == null) {
 				break;
 			}
-						
+
 			add(ruleDef);
 			i++;
 		}
@@ -112,9 +112,9 @@ public class UIMAChecker extends AbstractTypedChecker {
 			
 			FSIndex<AnnotationFS> problems = cas.getAnnotationIndex(mProblemType);
 			for (AnnotationFS problem : problems) {
-				String id = problem.getFeatureValueAsString(mIDFeature);
+//				String id = problem.getFeatureValueAsString(mIDFeature);
 				System.out.println("Maçã: " + problem.getCoveredText());
-				mistakes.add(createMistake(id, createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
+				mistakes.add(createMistake("1", createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
 			}
 			
 			System.out.println("Batata -> " + problems.size());
@@ -140,8 +140,8 @@ public class UIMAChecker extends AbstractTypedChecker {
 		}
 		mProblemType = AnnotatorUtil.getType(typeSystem,
 				"cogroo.ruta.Main.PROBLEM");
-		mIDFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "id",
-				CAS.TYPE_NAME_STRING);
+//		mIDFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "id",
+//				CAS.TYPE_NAME_STRING);
 		
 		mTokenType = AnnotatorUtil.getType(typeSystem,
 				"opennlp.uima.Token");

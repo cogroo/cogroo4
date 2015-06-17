@@ -1,0 +1,76 @@
+#agradar
+_: acariciar, afagar: *
+a: satisfazer, contentar: *
+
+#ansiar
+_: angustiar, provocar mal-estar: *
+por: desejar: * 
+
+%#antipatizar
+%com: : *
+
+#aspirar
+_: inspirar, tragar, sorver: ar, pó, fumaça, gás, aroma, cheiro, odor, fragrância
+a: almejar, desejar: prêmio, cargo, emprego, posição, colocação, vitória
+
+#assistir
+_: socorrer, auxiliar, ajudar: paciente, acidentado, enfermo, doente, inválido, necessitado, cego, pobre
+a: ver, presenciar: show, espetáculo, filme, peça, programa, TV, episódio, série, novela, trilogia
+em: residir, morar:
+
+#atender
+_: deferir, receber: visita, telefone, telefonema, chamada
+a: levar em consideração: pedido, solicitação, expectativa, apelo
+
+#chamar
+_: convocar, fazer vir: *
+de: apelidar: *
+por: invocar: *
+
+#cogitar
+_: : *
+de: : *
+em: : *
+
+% #desfrutar
+% _: : *
+% Falha com "desfrutar algo de alguém"
+
+%#namorar
+%_: : *
+
+#obedecer
+a: seguir os comandos de alguém: *
+
+#pagar
+_: referência à coisa: *
+a: referência à pessoa: * 
+
+%#perdoar
+%_: referência à coisa: *
+%a: referência à pessoa: *
+
+%#prevenir
+%_: evitar dano: *
+%de: avisar com antecedência: *
+
+%#querer
+%_: desejar, pretender: *
+%a: ter afeto: *
+
+%#renunciar
+%_: : *
+%a: : *
+
+#revidar
+a: : *
+
+#simpatizar
+com: : *
+
+%#usufruir
+%_: : *
+
+#visar
+_: dar visto, mirar: cheque, documento, atestado, comprovante, nota, prova
+a: almejar, pretender: título, cargo, prêmio, colocação, posição, emprego
