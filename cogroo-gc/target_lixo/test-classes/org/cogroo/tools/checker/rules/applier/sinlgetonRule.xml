@@ -1,0 +1,61 @@
+<Rules>
+	<Rule id="1000" active="true">
+		<Method>general</Method>
+		<Type>Craseee</Type>
+		<Group>a group</Group>
+		<Message>msg</Message>
+		<ShortMessage>a short msg</ShortMessage>
+		<Pattern>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<LexemeMask>a</LexemeMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+			<PatternElement>
+				<Element>
+					<Mask>
+						<TagMask>
+							<Class>noun</Class>
+							<Gender>male</Gender>
+							<Number>singular</Number>
+						</TagMask>
+					</Mask>
+				</Element>
+			</PatternElement>
+		</Pattern>
+		<Boundaries>
+			<Lower>0</Lower>
+			<Upper>-1</Upper>
+		</Boundaries>
+		<Suggestion>
+			<Replace index="0">
+				<Lexeme/>
+			</Replace>
+			<Replace index="1">
+				<Lexeme>ao</Lexeme>
+			</Replace>
+		</Suggestion>
+		<Suggestion>
+			<Replace index="0">
+				<Lexeme/>
+			</Replace>
+		</Suggestion>
+		<Example>
+			<Incorrect>ex1</Incorrect>
+			<Correct>exx1</Correct>
+		</Example>
+		<ModificationHistory>
+			<Author>sueli</Author>
+			<Date>2005-09-28T17:40:53.000-03:00</Date>
+		</ModificationHistory>
+	</Rule>
+</Rules>
