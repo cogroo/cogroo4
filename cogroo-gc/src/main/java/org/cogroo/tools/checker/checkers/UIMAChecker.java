@@ -53,11 +53,11 @@ public class UIMAChecker extends AbstractTypedChecker {
 	public UIMAChecker() {
 		// TODO: move the following lines to a new class:
 		// AnalysisEngineFactory: create typesystem and analysis engine 
-		TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription("MainTypeSystem");
+		TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription("cogroo.ruta.MainTypeSystem");
 		try {
-			URL url = Resources.getResource("Main.ruta");
+			URL url = Resources.getResource("cogroo/ruta/Main.ruta");
 			String text = Resources.toString(url, Charsets.UTF_8);
-			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text, tsd);
+			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text,tsd);
 			
 			this.ae = UIMAFramework.produceAnalysisEngine(aeDes);
 		} catch (Exception e1) {

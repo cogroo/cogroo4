@@ -45,6 +45,9 @@
 			<resource>
 				<directory>script</directory>
 			</resource>
+			<resource>
+				<directory>target/generated-sources/ruta/descriptor</directory>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>
@@ -154,6 +157,34 @@
 				 </execution>
 				</executions>
 				</plugin>
+				
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-uima-ruta-files</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>target/generated-sources/ruta/descriptor/cogroo/ruta/MainEngine.xml</file>
+									<type>xml</type>
+									<classifier>ruta1</classifier>
+								</artifact>
+								<artifact>
+									<file>target/generated-sources/ruta/descriptor/cogroo/ruta/MainTypeSystem.xml</file>
+									<type>xml</type>
+									<classifier>ruta2</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
