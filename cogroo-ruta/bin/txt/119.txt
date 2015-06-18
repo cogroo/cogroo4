@@ -1,0 +1,14 @@
+id = 119
+category = Verbo haver
+group = haver no sentido de existir
+description = 
+message = O verbo haver no sentido de existir é impessoal. Permanece sempre na terceira pessoa do singular.
+shortMessage = "Haver" no sentido de existir é usado na 3a. pessoa do singular.
+correctExample = Havia três ratos na cozinha.
+incorrectExample = Haviam três ratos na cozinha.
+correctExample = Havia quatro nuvens escuras no céu.
+incorrectExample = Haviam quatro nuvens escuras no céu.
+correctExample = Haverá cinco ratos na cozinha.
+incorrectExample = Haverão cinco ratos na cozinha.
+correctExample = Haverá quinze nuvens escuras no céu.
+incorrectExample = Haverão quinze nuvens escuras no céu.

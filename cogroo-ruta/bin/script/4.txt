@@ -1,0 +1,8 @@
+id = 4
+category = Crase
+group = à + verbo
+description = 
+message = Não acontece crase antes de verbo. O sinal indicativo de crase indica que temos "a" + "a" expressos em um só "à". Somente ocorre crase quando há encontro de preposição "a" com artigo ou pronome demonstrativo "a"/"as" (antes de verbo não há artigo nem pronome demonstrativo "a" ou "as". O "a" antes de verbo será apenas preposição, portanto sem crase).
+shortMessage = Não acontece crase antes de verbo.
+correctExample = Fomos levados a crer.
+incorrectExample = Fomos levados à crer.

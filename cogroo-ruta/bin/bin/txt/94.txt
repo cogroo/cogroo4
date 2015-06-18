@@ -1,0 +1,14 @@
+id = 94
+category = Crase
+group = regência verbal - crase
+description = 
+message = O verbo "equivaler" constrói-se com a preposição "a". Se o complemento (equivale a algo) for feminino, teremos crase.
+shortMessage = "Equivaler" constrói-se com prep. "a". Há crase com compl. feminino.
+correctExample = A revolta equivaleu às injustiças.
+incorrectExample = A revolta equivaleu as injustiças.
+correctExample = A revolta equivaleu à injustiça cometida.
+incorrectExample = A revolta equivaleu a injustiça cometida.
+correctExample = Esse valor equivale à jornada de um dia.
+incorrectExample = Esse valor equivale a jornada de um dia.
+correctExample = Esse valor equivale à dura jornada de um dia.
+incorrectExample = Esse valor equivale a dura jornada de um dia.

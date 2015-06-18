@@ -1,0 +1,12 @@
+id = 78
+category = Crase
+group = regência verbal
+description = 
+message = O verbo "ir" constrói-se com preposição "a". Se o complemento (lugar a que se vai) for feminino, teremos crase.
+shortMessage = "Ir" constrói-se com prep. "a". Há crase com compl. feminino.
+correctExample = Vamos às cidades históricas.
+incorrectExample = Vamos as cidades históricas.
+correctExample = Crianças vão à escola.
+incorrectExample = Crianças vão a escola.
+correctExample = Nós fomos à livraria ontem.
+incorrectExample = Nós fomos a livraria ontem.

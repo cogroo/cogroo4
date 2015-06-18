@@ -1,0 +1,12 @@
+id = 73
+category = Colocação pronominal
+group = só, ou, ora ou quer + pronome oblíquo
+description = 
+message = "só, ou, ora e quer" atraem o pronome para antes do verbo.
+shortMessage = "só, ou, ora e quer" atraem o pronome para antes do verbo.
+correctExample = Só te cansou à toa, pois o sacrifício foi em vão.
+incorrectExample = Só cansou-te à toa, pois o sacrifício foi em vão.
+correctExample = Ou se esforça, ou será reprovado.
+incorrectExample = Ou esforça-se, ou será reprovado.
+correctExample = Quer se tenha o aval, quer não o tenha, fecharemos o negócio.
+incorrectExample = Quer tenha-se o aval, quer não o tenha, fecharemos o negócio.

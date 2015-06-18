@@ -1,0 +1,106 @@
+====
+    Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+====
+
+################################################################################
+# Problemas SEM solução
+5 - ~"a" "a" (NUM|DET) "hora"
+6 - ~"a" "as" (NUM|DET) "horas"
+46 - ~(NUM) "a" NUM ...
+66 - Corta muito estranho: impedi + u
+################################################################################
+
+################################################################################
+# Regras desativadas
+- caso do "em" + "os"
+x62 - "(não|nunca|ninguém|nada|jamais)" V_ "em" "os" => o em + os virou -nos na regra 61
+x64 - "(nenhum|nenhuma)" N_ V_ "em" "os" => o em + os virou -nos na regra 63
+x66
+x68
+x70
+x72
+x74
+################################################################################
+
+################################################################################
+# Regras com x na frente foram implementadas e testadas.
+
+# Problemas
+x28 - _V[\w|_]*3P "anexos" (N_M_S|DET_M_S) // XXX active=false, falso positivo: "seguem anexos o documento e a foto"
+x29 - _V[\w|_]*3P "anexo" (N_M_P|DET_M_P)
+x30 - _V[\w|_]*3P "anexa" (N_F_P|DET_F_P)
+x31 - _V[\w|_]*3P "anexas" (N_M_P|DET_M_P)
+x32 - _V[\w|_]*3P "anexas" (N_F_S|DET_F_S) // XXX active=false, falso positivo: "seguem anexas a carta e a foto"
+x33 - _V[\w|_]*3S "anexos" (N_M_S|DET_M_S)
+x34 - _V[\w|_]*S "anexo" (N_M_P|DET_M_P) => mudado para 3S
+x35 - _V[\w|_]*3S "anexa" (N_F_P|DET_F_P)
+x36 - _V[\w|_]*3S "anexas" (N_M_P|DET_M_P)
+x37 - _V[\w|_]*3S "anexas" (N_F_S|DET_F_S)
+
+# Problemas com verbo no infinitivo
+x58 - (ser|estar|parecer) "mal"
+x59 - {preferir} "mais"
+x60 - {preferir} N_ "de" "o" "que" N_
+x78 - {ir} "(a|as)" N_F_@_
+x79 - {aderir} "(a|as)" (N_F_@_|ADJ_F_@)
+x80 - {pertencer} "(a|as)" (N_F_@_|ADJ_F_@)
+x81 - {candidatar} "se" "(a|as)" (N_F_@_|ADJ_F_@)
+x82 - {obedecer|desobedecer} "(a|as)" (N_F_@_|ADJ_F_@)
+x83 - PERS_M_3P_NOM_ {ser} N_M_S_ ????????????? como assim substantivo??? é adjetivo!
+x85 - {reagir} ADV_ "(a|as)" (N_F_@_|ADJ_F_@)
+x86 - {obedecer} "os" N_M_P_
+x90 - {namorar} "(com)"
+x93 - {ser} "(equivalente|equivalentes)" "(a|as)" (N_F_@_|ADJ_F_@_)
+x94 - {equivaler} "(a|as)" (N_F_@_|ADJ_F_@_)
+x96 - {evitar|usufruir} "(de)" ===============================> sugestão com de + a tem problema
+x97 - {demorar|torcer|votar} "(para)"
+x98 - {arrasar} "(com)"
+x99 - {habituar} "(me|te|se|vos)" "(com)"
+x100 - "(me|te|se|vos)" {habituar} "(com)" =======================================> junção para formar crase
+101 - "habituamo" "em" "os" "com" ??????????? juntar na 100 - porém não consegui formular nenhum exemplo
+x102 - "em" "os" {habituar} "com"
+x107 - {acarretar} "em"
+x109 - {assistir} "a" "(apresentação|peça)"
+
+# Regras de pontuação
+x111 - PNT_NSEP "ou" "seja" ~PNT_NSEP
+x112 - ~PNT_NSEP "ou" "seja" PNT_NSEP
+x113 - ~PNT_NSEP "em" "o" "entanto"
+
+# Regras sujeito-verbo
+x117
+x118
+################################################################################
+
+################################################################################
+# Warnings
+
+# Regras estranhas
+38 - mensagem estranha
+89 - sem sentido
+
+# Regras quebradas em duas
+87 - nos
+
+# Dúvidas (se a transformação para o formato novo está correta)
+7 ~"a" "a" "direita" "(de|do|da|dos|das)" => só foi usado "de"
+47 - completado com mais lexemes (horas, dias etc.)
+48 - completado com mais lexemes (horas, dias etc.)
+52 - V_INF_
+57 - "mau" (ADJ|PCP)
+108 - segunda a sexta
+################################################################################
+
+Mensagens verificadas até a regra 42

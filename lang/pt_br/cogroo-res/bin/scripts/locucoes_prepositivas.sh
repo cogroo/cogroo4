@@ -1,0 +1,1 @@
+sh scripts/opennlp DictionaryBuilder -inputFile src/dic_data/locucoes_prepositiva.txt -outputFile dictionaries/pt_br/locucoes_prepositivas.xml -encoding UTF-8

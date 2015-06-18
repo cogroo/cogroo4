@@ -1,0 +1,12 @@
+id = 63
+category = Colocação pronominal
+group = palavras de sentido negativo + substantivo + verbo + pronome oblíquo
+description = 
+message = As palavras de sentido negativo atraem o pronome átono para antes do verbo.
+shortMessage = Palavras negativas atraem o pronome átono para antes do verbo.
+correctExample = Nenhum homem lhe quer bem.
+incorrectExample = Nenhum homem quer-lhe bem.
+correctExample = Nenhuma aventura te atrai.
+incorrectExample = Nenhuma aventura atrai-te.
+correctExample = Nenhuma idéia nos ocorreu até então.
+incorrectExample = Nenhuma idéia ocorreu-nos até então.

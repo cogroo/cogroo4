@@ -1,0 +1,8 @@
+id = 6
+category = Crase
+group = a + indicador de horas
+description = 
+message = Ocorre crase em expressões indicativas de horas.
+shortMessage = Ocorre crase em expressões indicativas de horas.
+correctExample = Às duas horas estaremos partindo.
+incorrectExample = As duas horas estaremos partindo.

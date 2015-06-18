@@ -1,0 +1,8 @@
+id = 41
+category = Uso de meio
+group = meio como adjetivo
+description = 
+message = A palavra "meio" usada no sentido de metade é adjetivo numeral fracionário, portanto concorda com o substantivo a que se refere.
+shortMessage = "Meio" usado no sentido de "metade" (numeral) concorda com o substantivo.
+correctExample = São quinze meios litros de óleo.
+incorrectExample = São quinze meio litros de óleo.

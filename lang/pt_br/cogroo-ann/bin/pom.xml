@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+  		<groupId>org.cogroo.lang.pt_br</groupId>
+  		<artifactId>parent</artifactId>
+  		<version>4.0.1-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<artifactId>cogroo-ann-pt_br</artifactId>
+	<packaging>jar</packaging>
+	<name>cogroo-ann-pt_br</name>
+	<description>Pipe configuration for pt-br</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.cogroo</groupId>
+			<artifactId>cogroo-ann</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cogroo-res-pt_br</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<targetPath>fsa_dictionaries</targetPath>
+				<directory>fsa_dictionaries</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+	</build>
+	
+</project>

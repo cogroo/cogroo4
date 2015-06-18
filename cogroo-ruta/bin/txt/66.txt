@@ -1,0 +1,10 @@
+id = 66
+category = Colocação pronominal
+group = pronome relativo ou conjunção subordinativa + verbo + pronome oblíquo
+description = 
+message = Os pronomes relativos e as conjunções subordinativas atraem o pronome para antes do verbo.
+shortMessage = Pron. relativos e conj. subordinativas atraem o pronome para antes do verbo.
+correctExample = ???
+incorrectExample = Quando virem-nos dirigir o carro, se fosse-nos permitido andar de carro, já que a lei que proíbe-nos de dirigir bêbado está em vigor. Quem impediu-nos de entrar o fez por não estarmos devidamente trajados. Porque compete-nos a excelência.
+correctExample = 
+incorrectExample = Creio que 

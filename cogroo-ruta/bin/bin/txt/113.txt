@@ -1,0 +1,8 @@
+id = 113
+category = emprego de vírgulas
+group = expressões entre vírgulas
+description = 
+message = Deve haver vírgula antes de "no entanto", se esta expressar relação entre sentenças.
+shortMessage = Deve haver vírgula antes de "no entanto".
+correctExample = Eu vejo tudo, no entanto não vejo nada.
+incorrectExample = Eu vejo tudo no entanto não vejo nada.

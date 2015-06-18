@@ -1,0 +1,8 @@
+id = 125
+category = Concordância do sujeito com o verbo do predicado
+group = núcleo do sujeito + verbo
+description = 
+message = O sujeito concorda em número (singular ou plural) com o predicado.
+shortMessage = O sujeito concorda em número com o predicado.
+correctExample = Nós vamos para lá.
+incorrectExample = Nós vai para lá.

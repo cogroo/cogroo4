@@ -1,6 +1,4 @@
 <buildpath>
-  <buildpathentry path="org.eclipse.dltk.launching.INTERPRETER_CONTAINER" kind="con"/>
-  <buildpathentry path="script" kind="src"/>
   <buildpathentry path="script/" kind="src">
     <attributes>
       <attribute name="ruta" value="script"/>
@@ -16,6 +14,7 @@
       <attribute name="ruta" value="resources"/>
     </attributes>
   </buildpathentry>
+  <buildpathentry path="org.eclipse.dltk.launching.INTERPRETER_CONTAINER" kind="con"/>
   <buildpathentry path="RUTA_BUILD_VARS" kind="var">
     <attributes>
       <attribute name="typeSystemSuffix" value="TypeSystem"/>

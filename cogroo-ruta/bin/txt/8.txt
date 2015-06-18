@@ -1,0 +1,8 @@
+id = 8
+category = Crase
+group = a + lado de
+description = 
+message = Ocorre crase em expressões indicativas de modo, tempo, lugar etc.
+shortMessage = Ocorre crase em expressões como esta.
+correctExample = Os ônibus estacionaram à esquerda do pátio.
+incorrectExample = Os ônibus estacionaram a esquerda do pátio.

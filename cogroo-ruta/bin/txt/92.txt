@@ -1,0 +1,8 @@
+id = 92
+category = Concordância adjetivo-substantivo
+group = meio-dia e meia
+description = 
+message = Neste caso, o adjetivo "meia" concorda com o substantivo "hora", que está subentendido.
+shortMessage = "Meia" concorda com o substantivo "hora", subentendido.
+correctExample = Chegamos para o almoço ao meio-dia e meia.
+incorrectExample = Chegamos para o almoço ao meio-dia e meio.

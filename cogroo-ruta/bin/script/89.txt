@@ -1,0 +1,12 @@
+id = 89
+category = Crase
+group = à + pronomes pessoais
+description = 
+message = Os pronomes pessoais "mim", "ti", "ele", "ela", "eles", "elas", "si", "nós", "nos", "vós", "vos" não admitem artigo, portanto não haverá crase antes deles. 
+shortMessage = Não há crase porque alguns pronomes pessoais não admitem artigo.
+correctExample = Ela, com certeza, mentiu; quanto a ele, parece que foi sincero.
+incorrectExample = Ela, com certeza, mentiu; quanto à ele, parece que foi sincero.
+correctExample = Na hora do aperto, sempre recorrem a mim.
+incorrectExample = Na hora do aperto, sempre recorrem à mim.
+correctExample = Graças a vós, tudo se resolveu a tempo.
+incorrectExample = Graças à vós, tudo se resolveu a tempo.

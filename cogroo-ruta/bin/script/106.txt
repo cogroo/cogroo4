@@ -1,0 +1,8 @@
+id = 106
+category = à medida em que/à medida que
+group = vícios de expressão
+description = 
+message = A expressão correta é "à medida que".
+shortMessage = A expressão correta é "à medida que".
+correctExample = À medida que subíamos, o ar tornava-se mais rarefeito.
+incorrectExample = À medida em que subíamos, o ar tornava-se mais rarefeito.

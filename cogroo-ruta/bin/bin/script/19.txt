@@ -1,0 +1,8 @@
+id = 19
+category = Concordância adjetivo-substantivo
+group = substantivo + adjetivo
+description = 
+message = O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.
+shortMessage = O adjetivo concorda com o substantivo a que se refere.
+correctExample = As faces rosadas das crianças.
+incorrectExample = As faces rosada das crianças.

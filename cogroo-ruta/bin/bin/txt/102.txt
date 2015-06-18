@@ -1,0 +1,10 @@
+id = 102
+category = regência verbal
+group = regência verbo habituar-se
+description = 
+message = Atenção para a regência do verbo "habituar-se"; em lugar de "habituar-se com", utilize "habituar-se a".
+shortMessage = Regência do verbo incorreta. Use "habituar-se a".
+correctExample = Não nos habituamos à injustiça.
+incorrectExample = Não nos habituamos com a injustiça.
+correctExample = Assim que nos habituarmos ao seu ritmo, seremos mais eficientes.
+incorrectExample = Assim que nos habituarmos com o seu ritmo, seremos mais eficientes.

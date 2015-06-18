@@ -1,0 +1,1 @@
+Regras 38-41: A classe gramatical do "meio" e derivados não é checada, consequentemente as regras não funcionam como esperado.

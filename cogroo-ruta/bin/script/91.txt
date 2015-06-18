@@ -1,0 +1,10 @@
+id = 91
+category = Crase
+group = crase - regência de alguns nomes - compl. plural
+description = 
+message = Quando um nome que rege preposição "a" é complementado por palavra feminina plural determinada pelo artigo "as", ocorrerá crase.
+shortMessage = Alguns nomes regem a preposição "a", logo há crase aqui.
+correctExample = Estávamos acostumados às folgas semanais.
+incorrectExample = Estávamos acostumados as folgas semanais.
+correctExample = Não tivemos acesso às provas.
+incorrectExample = Não tivemos acesso as provas.

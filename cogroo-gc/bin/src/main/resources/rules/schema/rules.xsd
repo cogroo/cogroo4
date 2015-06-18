@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" jaxb:extensionBindingPrefixes="xjc" jaxb:version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings>
+				<xjc:serializable uid="1"/>
+			</jaxb:globalBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	<xs:element name="Rules">
+		<xs:annotation>
+			<xs:documentation>List of rules</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Rule" type="Rule" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Rule">
+		<xs:annotation>
+			<xs:documentation>The error rule</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Method">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Method" />
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="general" />
+						<xs:enumeration value="phrase-local" />
+						<xs:enumeration value="subject-verb" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Type" type="xs:string" />
+			<xs:element name="Group" type="xs:string" />
+			<xs:element name="Message" type="xs:string" />
+            <xs:element name="ShortMessage" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="Pattern" type="Pattern" />
+			<xs:element name="Boundaries" type="Boundaries" />
+			<xs:element name="Suggestion" type="Suggestion" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="Example" type="Example" maxOccurs="unbounded" />
+			<xs:element name="ModificationHistory" type="ModificationHistory" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:unsignedInt" use="required"/>
+		<xs:attribute name="active" type="xs:boolean" use="required"/>
+		<xs:attribute name="priority" type="xs:unsignedInt" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="Pattern">
+		<xs:annotation>
+			<xs:documentation>The error pattern that will be sought in the text</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PatternElement" type="PatternElement" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Boundaries">
+		<xs:annotation>
+			<xs:documentation>The positions in which the rule will be marked</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Lower" type="xs:int"/>
+			<xs:element name="Upper" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Suggestion">
+		<xs:annotation>
+			<xs:documentation>Template to suggest a way to correct a grammar mistake</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SuggestionAsString" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Legacy suggestion string from version 1.0 (it is not used)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Replace" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Lexeme" type="xs:string" minOccurs="0"/>
+						<xs:element name="TagReference" type="TagReference" minOccurs="0"/>
+						<xs:element name="Reference" type="Reference" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="index" type="xs:unsignedInt" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ReplaceMapping" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="index" type="xs:unsignedInt" use="required"/>
+					<xs:attribute name="key" type="xs:string" use="required"/>
+					<xs:attribute name="value" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Swap" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="a" type="xs:unsignedInt" use="required"/>
+					<xs:attribute name="b" type="xs:unsignedInt" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Example">
+		<xs:annotation>
+			<xs:documentation>A pair of sentences: an incorrect and a correct one</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Incorrect" type="xs:string"/>
+			<xs:element name="Correct" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModificationHistory">
+		<xs:annotation>
+			<xs:documentation>Tracks changes to each rule</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Author" type="xs:string"/>
+			<xs:element name="Date" type="xs:dateTime"/>
+			<xs:element name="Comment" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Element">
+		<xs:annotation>
+			<xs:documentation>A pattern piece</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Negated" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Mask" type="Mask" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Mask">
+		<xs:annotation>
+			<xs:documentation>A mask for a token or a tag</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="LexemeMask" type="xs:string"/>
+			<xs:element name="PrimitiveMask" type="xs:string"/>
+			<xs:element name="TagMask" type="TagMask"/>
+			<xs:element name="TagReference" type="Reference"/>
+			<xs:element name="OutOfBounds" type="xs:string"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TagMask">
+		<xs:annotation>
+			<xs:documentation>A mask for a tag</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SyntacticFunction" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="SyntacticFunction"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="subject"/>
+						<xs:enumeration value="verb"/>
+						<xs:enumeration value="indirect object"/>
+						<xs:enumeration value="direct object"/>
+						<xs:enumeration value="subject predicative"/>
+						<xs:enumeration value="subject predicative"/>
+						<xs:enumeration value="identifying apposition"/>
+						<xs:enumeration value="adverbial adjunct"/>
+						<xs:enumeration value="none"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ChunkFunction" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="ChunkFunction"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="boundary noun phrase"/>
+						<xs:enumeration value="boundary noun phrase main"/>
+						<xs:enumeration value="boundary verb phrase main"/>
+						<xs:enumeration value="intermediary noun phrase"/>
+						<xs:enumeration value="intermediary noun phrase main"/>
+						<xs:enumeration value="intermediary verb phrase"/>
+						<xs:enumeration value="other"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Class" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Class"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+					
+						<xs:enumeration value="noun"/>
+						<xs:enumeration value="noun adjective"/>
+						
+						<xs:enumeration value="proper noun"/>
+						
+<!-- 						<xs:enumeration value="independent pronoun"/> -->
+						<xs:enumeration value="personal pronoun"/>
+						<xs:enumeration value="pronoun"/>
+<!-- 						<xs:enumeration value="determiner pronoun"/> -->
+								
+<!-- 						<xs:enumeration value="specifier"/> -->
+<!-- 						<xs:enumeration value="determiner"/> -->
+						<xs:enumeration value="article"/>
+						<xs:enumeration value="adjective"/>
+						<xs:enumeration value="adverb"/>
+						<xs:enumeration value="infinitive verb"/>
+						<xs:enumeration value="numeral"/>
+						<xs:enumeration value="subordinating conjunction"/>
+						<xs:enumeration value="coordinating conjunction"/>
+						<xs:enumeration value="interjection"/>
+						<xs:enumeration value="prefix"/>
+						<xs:enumeration value="preposition"/>
+						<xs:enumeration value="punctuation mark"/>
+<!-- 						<xs:enumeration value="unit"/> -->
+						<xs:enumeration value="finitive verb"/>
+						<xs:enumeration value="participle verb"/>
+						<xs:enumeration value="gerund verb"/>				
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Gender" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Gender"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="male"/>
+						<xs:enumeration value="female"/>
+						<xs:enumeration value="neutral"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Number" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Number"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="singular"/>
+						<xs:enumeration value="plural"/>
+						<xs:enumeration value="neutral"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Case" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Case"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="nominative"/>
+						<xs:enumeration value="accusative"/>
+						<xs:enumeration value="dative"/>
+						<xs:enumeration value="prepositive"/>
+						<xs:enumeration value="accusative-dative"/>
+						<xs:enumeration value="nominative-prepositive"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Person" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Person"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="first"/>
+						<xs:enumeration value="second"/>
+						<xs:enumeration value="third"/>
+						<xs:enumeration value="first-third"/>
+						<xs:enumeration value="none-first-third"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Tense" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Tense"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="present"/>
+						<xs:enumeration value="preterito imperfeito"/>
+						<xs:enumeration value="preterito perfeito"/>
+						<xs:enumeration value="preterito mais-que-perfeito"/>
+						<xs:enumeration value="future"/>
+						<xs:enumeration value="conditional"/>
+						<xs:enumeration value="preterito perfeito-mais-que-perfeito"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Mood" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Mood"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="indicative"/>
+						<xs:enumeration value="subjunctive"/>
+						<xs:enumeration value="imperative"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+<!-- 			<xs:element name="Finiteness" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Finiteness"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="finite"/>
+						<xs:enumeration value="infinitive"/>
+						<xs:enumeration value="participle"/>
+						<xs:enumeration value="gerund"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element> -->
+			<xs:element name="Punctuation" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Punctuation"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="abs"/>
+						<xs:enumeration value="nsep"/>
+						<xs:enumeration value="bin"/>
+						<xs:enumeration value="rel"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TagReference">
+		<xs:annotation>
+			<xs:documentation>References a tag from a different token</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TagMask" type="TagMask"/>
+		</xs:sequence>
+		<xs:attribute name="index" type="xs:unsignedInt" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="PatternElement">
+		<xs:annotation>
+			<xs:documentation>Add opertators to Elements</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Optional" type="xs:boolean" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="Element" type="Element"/>
+				<xs:element name="Composition" type="Composition"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Operator">
+		<xs:annotation>
+			<xs:documentation>And / Or operators</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PatternElement" type="PatternElement" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Composition">
+		<xs:annotation>
+			<xs:documentation>Composition: select AND or OR</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="And" type="Operator"/>
+			<xs:element name="Or" type="Operator"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Reference">
+		<xs:sequence>
+			<xs:element name="Property" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="Property"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="SyntacticFunction"/>
+						<xs:enumeration value="ChunkFunction"/>
+						<xs:enumeration value="Class"/>
+						<xs:enumeration value="Gender"/>
+						<xs:enumeration value="Number"/>
+						<xs:enumeration value="Case"/>
+						<xs:enumeration value="Person"/>
+						<xs:enumeration value="Tense"/>
+						<xs:enumeration value="Mood"/>
+						<xs:enumeration value="Finiteness"/>
+						<xs:enumeration value="Punctuation"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="index" type="xs:unsignedInt" use="required"/>
+	</xs:complexType>
+</xs:schema>

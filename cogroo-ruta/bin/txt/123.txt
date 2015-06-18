@@ -1,0 +1,8 @@
+id = 123
+category = Expressões redundantes
+group = Redundância semântica
+description = 
+message = "Conviver junto" ou "conviver juntos" são expressões redundantes. Suprima a palavra "junto" ou "juntos".
+shortMessage = Expressões redundante. Suprima "junto" ou "juntos".
+correctExample = Não convivemos porque não nos damos muito bem.
+incorrectExample = Não convivemos juntos porque não nos damos muito bem.

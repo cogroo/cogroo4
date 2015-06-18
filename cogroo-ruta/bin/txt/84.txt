@@ -1,0 +1,12 @@
+id = 84
+category = Crase
+group = Crase - regência de alguns nomes
+description = 
+message = Quando um nome que rege preposição "a" é complementado por palavra feminina, ocorrerá crase.
+shortMessage = Alguns nomes regem a preposição "a", logo há crase aqui.
+correctExample = Ela estava acomodada à vida de solteira.
+incorrectExample = Ela estava acomodada a vida de solteira.
+correctExample = Estava destinada à delicada tarefa de ser mãe.
+incorrectExample = Estava destinada a delicada tarefa de ser mãe.
+correctExample = Ela foi exposta à radiação.
+incorrectExample = Ela foi exposta a radiação.

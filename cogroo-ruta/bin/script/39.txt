@@ -1,0 +1,10 @@
+id = 39
+category = Uso de meio
+group = meio no sentido de "um pouco"
+description = 
+message = A palavra "meio" usada no sentido de "um pouco" é advérbio, portanto invariável.
+shortMessage = A palavra "meio" usada no sentido de "um pouco" (advérbio) é invariável.
+correctExample = As dificuldades financeiras deixam papai e mamãe meio tristes.
+incorrectExample = As dificuldades financeiras deixam papai e mamãe meios tristes.
+correctExample = Os testes estão meio fracos.
+incorrectExample = Os testes estão meios fracos.

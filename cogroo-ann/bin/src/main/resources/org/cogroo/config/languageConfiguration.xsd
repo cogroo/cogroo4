@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<xs:schema elementFormDefault="qualified"
+	attributeFormDefault="unqualified" jaxb:extensionBindingPrefixes="xjc"
+	jaxb:version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings>
+				<xjc:serializable uid="1" />
+			</jaxb:globalBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:element name="languageConfiguration">
+		<xs:annotation>
+			<xs:documentation>Language Configuration</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="locale" type="xs:string"></xs:element>
+				<xs:element name="model" type="Model"
+					maxOccurs="unbounded" minOccurs="1">
+				</xs:element>
+				<xs:element name="pipe" type="Pipe"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="Model">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="type" use="required" type="Analyzer">
+
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+
+	<xs:simpleType name="Analyzer">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:typesafeEnumClass name="Analyzers" />
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sentenceDetector" />
+			<xs:enumeration value="tokenizer" />
+			<xs:enumeration value="nameFinder" />
+			<xs:enumeration value="contractionFinder" />
+			<xs:enumeration value="posTagger" />
+			<xs:enumeration value="featurizer" />
+			<xs:enumeration value="lemmatizer" />
+			<xs:enumeration value="chunker" />
+			<xs:enumeration value="headFinder" />
+			<xs:enumeration value="shallowParser" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:complexType name="Pipe">
+		<xs:sequence>
+			<xs:element name="analyzer" type="Analyzer" maxOccurs="unbounded"
+				minOccurs="1"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
