@@ -1,8 +1,0 @@
-id = 13
-category = Crase
-group = devido a
-description = 
-message = "Devido" rege a preposição "a". Se for seguido de substantivo feminino singular determinado, haverá crase.
-shortMessage = "Devido" rege a preposição "a", logo há crase aqui.
-correctExample = Devido à cobrança injusta.
-incorrectExample = Devido a cobrança injusta.

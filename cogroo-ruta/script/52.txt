@@ -1,8 +1,0 @@
-id = 52
-category = Emprego do mim e ti
-group = mim + verbo no infinitivo
-description = 
-message = Se o pronome "mim" é sujeito do verbo no infinitivo, o pronome a ser usado é "eu".
-shortMessage = Use "eu" ao invés de "mim" como sujeito de verbo no infinitivo.
-correctExample = Para eu estudar, silêncio é necessário.
-incorrectExample = Para mim estudar, silêncio é necessário.

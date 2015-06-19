@@ -1,8 +1,0 @@
-id = 83
-category = Concordância do sujeito com o adjetivo predicativo
-group = pronome + verbo de ligação + adjetivo predicativo
-description = 
-message = O adjetivo na função de predicativo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o sujeito.
-shortMessage = O adjetivo na função de predicativo concorda com o sujeito.
-correctExample = Eles são estudiosos.
-incorrectExample = Eles são estudioso.

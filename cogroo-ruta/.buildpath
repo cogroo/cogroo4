@@ -15,6 +15,11 @@
     </attributes>
   </buildpathentry>
   <buildpathentry path="org.eclipse.dltk.launching.INTERPRETER_CONTAINER" kind="con"/>
+  <buildpathentry path="target/generated-sources/ruta/descriptor/cogroo/ruta" kind="src">
+    <attributes>
+      <attribute name="ruta" value="descriptor"/>
+    </attributes>
+  </buildpathentry>
   <buildpathentry path="RUTA_BUILD_VARS" kind="var">
     <attributes>
       <attribute name="typeSystemSuffix" value="TypeSystem"/>

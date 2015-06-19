@@ -1,8 +1,0 @@
-id = 47
-category = Verbo haver
-group = haver + denotação de tempo
-description = 
-message = Na escolha entre "a" e "há", sempre que indicar tempo decorrido opte por "há", que corresponde ao verbo haver, em forma impessoal, sempre no singular.
-shortMessage = Opte pelo verbo "haver", no singular, para indicar tempo decorrido.
-correctExample = Há anos não nos vemos.
-incorrectExample = A anos não nos vemos.

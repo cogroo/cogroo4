@@ -1,8 +1,0 @@
-id = 96
-category = regência verbal
-group = regência do verbo evitar, usufruir.
-description = 
-message = Os verbos "evitar" e "usufruir" não regem preposição "de". São transitivos diretos.
-shortMessage = Os verbos "evitar" e "usufruir" não regem preposição "de".
-correctExample = Nós usufruímos a alegria de estar com vocês.
-incorrectExample = Nós usufruímos da alegria de estar com vocês.

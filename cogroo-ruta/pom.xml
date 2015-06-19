@@ -49,6 +49,8 @@
 				<directory>target/generated-sources/ruta/descriptor</directory>
 			</resource>
 		</resources>
+		
+		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.uima</groupId>
@@ -93,6 +95,7 @@
 				 <!-- default value: none -->
 				 <descriptorPaths>
 				  <descriptorPath>${project.build.directory}/generated-sources/ruta/descriptor</descriptorPath>
+				  <descriptorPath>${basedir}/descriptor</descriptorPath>
 				 </descriptorPaths>
 				
 				 <!-- Resource paths of the generated analysis engine descriptor. -->
@@ -179,6 +182,11 @@
 									<file>target/generated-sources/ruta/descriptor/cogroo/ruta/MainTypeSystem.xml</file>
 									<type>xml</type>
 									<classifier>ruta2</classifier>
+								</artifact>
+								<artifact>
+									<file>target/classes/cogroo/ruta/MainTypeSystem.xml</file>
+									<type>xml</type>
+									<classifier>ruta3</classifier>
 								</artifact>
 							</artifacts>
 						</configuration>

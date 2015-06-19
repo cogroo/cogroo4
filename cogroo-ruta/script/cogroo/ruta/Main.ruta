@@ -4,8 +4,8 @@ TYPESYSTEM TypeSystem;
 
 IMPORT opennlp.uima.Token FROM TypeSystem AS cgToken;
 
-DECLARE PROBLEM;
-cgToken {-> CREATE(PROBLEM)};
+DECLARE Annotation PROBLEM (String id, String segundo);
+cgToken cgToken cgToken {-> CREATE(PROBLEM, "id" = "1", "segundo" = "2")};
 
 //DECLARE Annotation PROBLEM (String id);
 //cgToken{REGEXP(cgToken.lemma, "([^,]*,)*(o)(,[^,]*)*", true) -> CREATE(PROBLEM, "id" = "1")};

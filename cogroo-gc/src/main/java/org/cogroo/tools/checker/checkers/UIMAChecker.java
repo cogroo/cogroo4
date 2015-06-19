@@ -57,7 +57,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 		try {
 			URL url = Resources.getResource("cogroo/ruta/Main.ruta");
 			String text = Resources.toString(url, Charsets.UTF_8);
-			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text,tsd);
+			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text, tsd);
 			
 			this.ae = UIMAFramework.produceAnalysisEngine(aeDes);
 		} catch (Exception e1) {
@@ -108,13 +108,15 @@ public class UIMAChecker extends AbstractTypedChecker {
 			TypeSystem typeSystem = cas.getTypeSystem();
 			initTypeSystem(typeSystem);
 			
-//			Feature idFeature = typeSystem.getFeatureByFullName("id");
-			
+			System.out.println(mIDFeature);
 			FSIndex<AnnotationFS> problems = cas.getAnnotationIndex(mProblemType);
 			for (AnnotationFS problem : problems) {
-//				String id = problem.getFeatureValueAsString(mIDFeature);
-				System.out.println("Maçã: " + problem.getCoveredText());
-				mistakes.add(createMistake("1", createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
+				String id = problem.getFeatureValueAsString(mIDFeature);
+				System.out.println(problem.getFeatureValueAsString(
+				AnnotatorUtil.getRequiredFeature(mProblemType, "segundo",
+						CAS.TYPE_NAME_STRING)));
+				System.out.println("Maçã: " + problem.getCoveredText() + "\n ID = " + id);
+//				mistakes.add(createMistake(id, createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
 			}
 			
 			System.out.println("Batata -> " + problems.size());
@@ -140,9 +142,8 @@ public class UIMAChecker extends AbstractTypedChecker {
 		}
 		mProblemType = AnnotatorUtil.getType(typeSystem,
 				"cogroo.ruta.Main.PROBLEM");
-//		mIDFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "id",
-//				CAS.TYPE_NAME_STRING);
-		
+		mIDFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "id",
+				CAS.TYPE_NAME_STRING);
 		mTokenType = AnnotatorUtil.getType(typeSystem,
 				"opennlp.uima.Token");
 		mLemmaFeature = AnnotatorUtil.getRequiredFeature(mTokenType, "lemma",

@@ -1,8 +1,0 @@
-id = 9
-category = Crase
-group = em relação a + substantivo feminino
-description = 
-message = A expressão "em relação" rege a preposição "a". Se for seguida de substantivo feminino singular determinado, haverá crase.
-shortMessage = "Em relação" rege a preposição "a", logo há crase aqui.
-correctExample = Em relação à segurança dos menores.
-incorrectExample = Em relação a segurança dos menores.

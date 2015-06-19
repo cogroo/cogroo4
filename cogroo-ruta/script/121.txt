@@ -1,8 +1,0 @@
-id = 121
-category = Gerundismo
-group = Gerundismo
-description = 
-message = Verifique o excesso de verbos em sequência.
-shortMessage = Verifique o excesso de verbos em sequência.
-correctExample = Nós poderemos agendar a visita para amanhã.
-incorrectExample = Nós poderemos estar agendando a visita para amanhã.

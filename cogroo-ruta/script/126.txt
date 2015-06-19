@@ -1,8 +1,0 @@
-id = 126
-category = Crase
-group = à + pronomes de tratamento
-description = 
-message = Pronomes de tratamento não admitem artigo, portanto não haverá crase antes deles. A única exceção é o pronome "senhora", que admite artigo e, se houver também preposição, haverá crase.
-shortMessage = Pronomes de tratamento não admitem artigo, logo não há crase aqui.
-correctExample = Enviei os documentos a Vossa Excelência.
-incorrectExample = Enviei os documentos à Vossa Excelência.

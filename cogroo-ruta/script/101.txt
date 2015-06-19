@@ -1,8 +1,0 @@
-id = 101
-category = regência verbal
-group = regência verbo habituar-se
-description = 
-message = Atenção para a regência do verbo "habituar-se": em lugar de "habituar-se com", utilize "habituar-se a".
-shortMessage = Regência do verbo incorreta. Use "habituar-se a".
-correctExample = Habituamo-nos à miséria.
-incorrectExample = Habituamo-nos com a miséria.
