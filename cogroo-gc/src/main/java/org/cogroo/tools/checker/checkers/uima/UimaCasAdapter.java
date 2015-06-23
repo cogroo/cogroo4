@@ -139,7 +139,7 @@ public class UimaCasAdapter {
 				// add lemma annotations
 				String[] lemmas = token.getLemmas();
 				
-				String lemma = StringUtils.join(lemmas, ", ");
+				String lemma = StringUtils.join(lemmas, " ");
 				tokenAnnotationArr[i].setStringValue(this.mLemmaFeature, lemma);
 				
 //				StringArrayFS lemmas = tcas.createStringArrayFS(token

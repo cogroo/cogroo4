@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAFramework;
@@ -44,8 +45,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 	private final UimaCasAdapter converter;
 	private Type mProblemType;
 	private Type mTokenType;
-	private Feature mIDFeature;
-	private Feature mLemmaFeature;
+	private Feature mIDFeature, mSuggestionFeature; 
 
 	
 	private final HashSet<Integer> done = new HashSet<Integer>();
@@ -78,7 +78,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 			i++;
 		}
 		
-			
+		
 		this.converter = new UimaCasAdapter();
 
 	}
@@ -107,19 +107,20 @@ public class UIMAChecker extends AbstractTypedChecker {
 			
 			TypeSystem typeSystem = cas.getTypeSystem();
 			initTypeSystem(typeSystem);
-			
-			System.out.println(mIDFeature);
+			Set<Integer> processed = new HashSet<Integer>();
 			FSIndex<AnnotationFS> problems = cas.getAnnotationIndex(mProblemType);
 			for (AnnotationFS problem : problems) {
+				if (processed.contains(problem.getBegin()))
+					continue;
+				else
+					processed.add(problem.getBegin());
 				String id = problem.getFeatureValueAsString(mIDFeature);
-				System.out.println(problem.getFeatureValueAsString(
-				AnnotatorUtil.getRequiredFeature(mProblemType, "segundo",
-						CAS.TYPE_NAME_STRING)));
-				System.out.println("Maçã: " + problem.getCoveredText() + "\n ID = " + id);
+				String suggestion = problem.getFeatureValueAsString(mSuggestionFeature);
+				System.out.println("ID = '" + id + "'");
+				System.out.println("TEXTO DO PROBLEM: '" + problem.getCoveredText() + "'");
+				System.out.println("SUGESTÃO: '" +  suggestion + "'");
 //				mistakes.add(createMistake(id, createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
 			}
-			
-			System.out.println("Batata -> " + problems.size());
 
 		} catch (Exception e) { // TODO: tratar exceptions corretamente
 			e.printStackTrace();
@@ -144,10 +145,12 @@ public class UIMAChecker extends AbstractTypedChecker {
 				"cogroo.ruta.Main.PROBLEM");
 		mIDFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "id",
 				CAS.TYPE_NAME_STRING);
-		mTokenType = AnnotatorUtil.getType(typeSystem,
-				"opennlp.uima.Token");
-		mLemmaFeature = AnnotatorUtil.getRequiredFeature(mTokenType, "lemma",
+		mSuggestionFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "suggestion",
 				CAS.TYPE_NAME_STRING);
+//		mTokenType = AnnotatorUtil.getType(typeSystem,
+//				"opennlp.uima.Token");
+//		mLemmaFeature = AnnotatorUtil.getRequiredFeature(mTokenType, "lemma",
+//				CAS.TYPE_NAME_STRING);
 		
 		typeSystemInitialized = true;
 	}
@@ -163,12 +166,11 @@ public class UIMAChecker extends AbstractTypedChecker {
 	}
 	
 	public static void main(String[] args) throws IllegalArgumentException, IOException {
-		System.out.println("main novo:");
 		ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
 		Analyzer cogroo = factory.createPipe();
 		GrammarChecker gc = new GrammarChecker(cogroo);
-		
-		CheckDocument document = new CheckDocument("Quanto à lápis, não entendo. Quanto à computador, não entendo. Refiro-me à trabalhos remunerados. Refiro-me à reuniões extraordinárias. Fomos levados à crer. A uma hora estaremos partindo. As duas horas estaremos partindo. Os ônibus estacionaram a direita do pátio. Os ônibus estacionaram a esquerda do pátio. Em relação as atividades programadas. Com relação as atividades programadas. Devido as cobranças injustas. Enviei os documentos à você. Enviei os documentos à Vossa Excelência.  Quanto ao lápis, não entendo. Quanto ao computador, não entendo. Refiro-me aos trabalhos remunerados. Refiro-me às reuniões extraordinárias. Refiro-me a reuniões extraordinárias. Fomos levados a crer. À uma hora estaremos partindo. Daqui a uma hora estaremos partindo. Às duas horas estaremos partindo. Os ônibus estacionaram à direita do pátio. Os ônibus estacionaram à esquerda do pátio. Em relação a segurança dos menores. Em relação à segurança dos menores. Em relação às atividades programadas. Com relação a segurança dos menores. Com relação à segurança dos menores. Com relação às atividades programadas. Devido à cobrança injusta. Devido às cobranças injustas. Devido a cobrança injusta. Enviei os documentos a você. Enviei os documentos a Vossa Excelência.");
+//		CheckDocument document = new CheckDocument("Quanto à lápis, não entendo. Quanto à computador, não entendo. Refiro-me à trabalhos remunerados. Refiro-me à reuniões extraordinárias. Fomos levados à crer. A uma hora estaremos partindo. As duas horas estaremos partindo. Os ônibus estacionaram a direita do pátio. Os ônibus estacionaram a esquerda do pátio. Em relação as atividades programadas. Com relação as atividades programadas. Devido as cobranças injustas. Enviei os documentos à você. Enviei os documentos à Vossa Excelência.  Quanto ao lápis, não entendo. Quanto ao computador, não entendo. Refiro-me aos trabalhos remunerados. Refiro-me às reuniões extraordinárias. Refiro-me a reuniões extraordinárias. Fomos levados a crer. À uma hora estaremos partindo. Daqui a uma hora estaremos partindo. Às duas horas estaremos partindo. Os ônibus estacionaram à direita do pátio. Os ônibus estacionaram à esquerda do pátio. Em relação a segurança dos menores. Em relação à segurança dos menores. Em relação às atividades programadas. Com relação a segurança dos menores. Com relação à segurança dos menores. Com relação às atividades programadas. Devido à cobrança injusta. Devido às cobranças injustas. Devido a cobrança injusta. Enviei os documentos a você. Enviei os documentos a Vossa Excelência.");
+		CheckDocument document = new CheckDocument("Eu sou mal. Eu pareço mal. Eu estou mal.");
 		// passe o doc pelo pipe
 		gc.analyze(document);
 	

@@ -88,20 +88,21 @@
 				 <!-- Script paths of the generated analysis engine descriptor. -->
 				 <!-- default value: none -->
 				 <scriptPaths>
-				  <scriptPath>${basedir}/script</scriptPath>
+<!-- 				  <scriptPath>${basedir}/script</scriptPath> -->
 				 </scriptPaths>
 				
 				 <!-- Descriptor paths of the generated analysis engine descriptor. -->
 				 <!-- default value: none -->
 				 <descriptorPaths>
 				  <descriptorPath>${project.build.directory}/generated-sources/ruta/descriptor</descriptorPath>
-				  <descriptorPath>${basedir}/descriptor</descriptorPath>
+				  <!--descriptorPath>${basedir}/descriptor</descriptorPath-->
+				  <descriptorPath>${project.build.directory}/../descriptor</descriptorPath>
 				 </descriptorPaths>
 				
 				 <!-- Resource paths of the generated analysis engine descriptor. -->
 				 <!-- default value: none -->
 				 <resourcePaths>
-				  <resourcePath>${basedir}/src/main/resources/</resourcePath>
+<!-- 				  <resourcePath>${basedir}/src/main/resources/</resourcePath> -->
 				  <resourcePath>${project.build.directory}/generated-sources/ruta/resources/</resourcePath>
 				 </resourcePaths>
 				
@@ -146,7 +147,7 @@
 				 <buildPaths>
 				  <buildPath>script:script/</buildPath>
 				  <buildPath>descriptor:target/generated-sources/ruta/descriptor/</buildPath>
-				  <buildPath>resources:src/main/resources/</buildPath>
+<!-- 				  <buildPath>resources:src/main/resources/</buildPath> -->
 				 </buildPaths>
 				
 				</configuration>
