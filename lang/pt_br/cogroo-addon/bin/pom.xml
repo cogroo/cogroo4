@@ -1,0 +1,275 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+	<parent>
+  		<groupId>org.cogroo.lang.pt_br</groupId>
+  		<artifactId>parent</artifactId>
+  		<version>4.0.1-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>cogroo-addon-pt_br</artifactId>
+	<name>Grammar Checker Libre|OpenOffice pt-BR Addon</name>
+	<packaging>jar</packaging>
+	
+	<description>CoGrOO pt-BR OXT</description>
+	
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>juh</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>jurt</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>ridl</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>unoil</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cogroo-gc-pt_br</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<sourceDirectory>src</sourceDirectory>
+		<filters>
+			<filter>target/oxt_version.property</filter>
+		</filters>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src</directory>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>time stamp</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<exportAntProperties>true</exportAntProperties>
+							<target>
+								<echo message="************** Will check for OXT_VERSION: ${OXT_VERSION} **************" />
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
+								<if>
+									<contains string="${project.version}" substring="-SNAPSHOT" />
+									<then>
+										<if>
+											<isset property="OXT_VERSION" />
+											<then>
+												<echo message="************** Using previously set OXT configuration **************" />
+											</then>
+											<else>
+												<tstamp>
+													<format property="TSTAMP" pattern="yyyyMMddHHmmss" locale="GMT" />
+												</tstamp>
+												<echo message="********** TSTAMP: ${TSTAMP} Version: ${project.version} **********" />
+												<echo message="${project.version}" file="target/version.property" />
+												<loadfile property="OXT_VERSION" srcFile="target/version.property">
+													<filterchain>
+														<tokenfilter>
+															<replaceregex pattern="-SNAPSHOT" replace=".${TSTAMP}" flags="g" />
+														</tokenfilter>
+													</filterchain>
+												</loadfile>
+												<echo message="OXT_VERSION = ${OXT_VERSION}${line.separator}" file="target/oxt_version.property" append="false" />
+												<echo message="UPDATE_SITE = http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/update-site.xml${line.separator}" file="target/oxt_version.property" append="true" />
+												<echo message="OXT_PATH = http://sourceforge.net/projects/cogroo/files/cogroo4/snapshot/${project.version}/cogroo-${project.version}.oxt${line.separator}" file="target/oxt_version.property" append="true" />
+												<echo message="RELEASE_NOTES = https://github.com/cogroo/cogroo4/commits/master${line.separator}" file="target/oxt_version.property" append="true" />
+											</else>
+										</if>
+									</then>
+									<else>
+										<echo message="************** RELEASE PROFILE **************" />
+										<echo message="OXT_VERSION = ${project.version}${line.separator}" file="target/oxt_version.property" append="false" />
+										<echo message="UPDATE_SITE = http://sourceforge.net/projects/cogroo/files/cogroo4/update-site.xml${line.separator}" file="target/oxt_version.property" append="true" />
+										<echo message="OXT_PATH = http://sourceforge.net/projects/cogroo/files/cogroo4/${project.version}/cogroo-${project.version}.oxt${line.separator}" file="target/oxt_version.property" append="true" />
+										<echo message="RELEASE_NOTES = http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/Release_notes${line.separator}" file="target/oxt_version.property" append="true" />
+									</else>
+								</if>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+				</executions>
+				<dependencies>
+			
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+					    <groupId>org.apache.ant</groupId>
+					    <artifactId>ant-nodeps</artifactId>
+					    <version>1.8.1</version>
+					</dependency>
+	
+				</dependencies>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<finalName>${project.artifactId}-${project.version}</finalName>
+					<excludes>
+						<exclude>**/*.xcs</exclude>
+						<exclude>**/*.xcu</exclude>
+						<exclude>**/*.xml</exclude>
+						<include>**/LICENSE*</include>
+						<include>**/license*</include>
+					</excludes>
+					<archive>
+						<manifestEntries>
+							<RegistrationClassName>org.cogroo.addon.CentralRegistrationClass</RegistrationClassName>
+							<UNO-Type-Path />
+						</manifestEntries>
+						<manifestSections>
+							<manifestSection>
+								<name>org/cogroo/addon/CentralRegistrationClass.class</name>
+								<manifestEntries>
+									<RegistrationClasses>org.cogroo.addon.Main</RegistrationClasses>
+								</manifestEntries>
+							</manifestSection>
+						</manifestSections>
+
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<finalName>cogroo-${project.version}</finalName>
+					<descriptors>
+						<descriptor>${basedir}/mvn/addonAssembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<inherited>false</inherited>
+				<executions>
+					<execution>
+						<id>oxt</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/update-site</outputDirectory>
+							<resources>
+								<resource>
+									<directory>update-site</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${basedir}/target/update-site/update-site.xml</file>
+									<type>xml</type>
+									<classifier>update-site</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

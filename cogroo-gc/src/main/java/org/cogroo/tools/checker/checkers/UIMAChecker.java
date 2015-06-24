@@ -104,8 +104,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 			for (AnnotationFS problem : problems) {
 				if (processed.contains(problem.getBegin()))
 					continue;
-				else
-					processed.add(problem.getBegin());
+				else processed.add(problem.getBegin());
 				String id = problem.getFeatureValueAsString(mIDFeature);
 				String suggestion = problem
 						.getFeatureValueAsString(mSuggestionFeature);
@@ -125,7 +124,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 							"EXEMPLO CORRETO: '%s'\nEXEMPLO INCORRETO: '%s'\n",
 							example.getCorrect(), example.getIncorrect());
 				mistakes.add(createMistake(id,
-						createSuggestion(problem.getCoveredText()),
+						createSuggestion(suggestion),
 						problem.getBegin(), problem.getEnd(),
 						sentence.getSentence()));
 
@@ -135,9 +134,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 			e.printStackTrace();
 		}
 
-		for (Mistake m : mistakes) {
-			System.out.println(m.getFullMessage());
-		}
+		for (Mistake m : mistakes) System.out.println(m.getFullMessage());
 		return mistakes;
 	}
 

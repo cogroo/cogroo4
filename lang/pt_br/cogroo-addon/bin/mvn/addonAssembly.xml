@@ -1,0 +1,86 @@
+<!--
+
+    Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<assembly>
+	<id>bin.oxt</id>
+	<formats>
+		<format>zip</format>
+		<format>dir</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>target/cogroo</directory>
+			<outputDirectory>registry/data/org/cogroo/oooext
+			</outputDirectory>
+			<useDefaultExcludes>true</useDefaultExcludes>
+			<filtered>false</filtered>
+
+			<includes>
+				<include>data/**</include>
+				<include>rules/**</include>
+				<include>schema/**</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>src</directory>
+			<outputDirectory></outputDirectory>
+			<useDefaultExcludes>true</useDefaultExcludes>
+			<filtered>true</filtered>
+			<includes>
+				<include>*.properties</include>
+				<include>description.xml</include>
+				<include>LICENSE*</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>images</directory>
+			<outputDirectory>images</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>description</directory>
+			<outputDirectory>description</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>registry</directory>
+			<outputDirectory>registry</outputDirectory>
+		</fileSet>
+	</fileSets>
+	<files>
+		<file>
+			<source>src/uno-extension-manifest.xml</source>
+			<filtered>true</filtered>
+			<outputDirectory>META-INF</outputDirectory>
+			<destName>manifest.xml</destName>
+		</file>
+		<file>
+			<source>target/${pom.artifactId}-${pom.version}.jar</source>
+			<outputDirectory></outputDirectory>
+			<destName>${pom.artifactId}.jar</destName>
+		</file>
+	</files>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+			<scope>runtime</scope>
+			<useProjectAttachments>false</useProjectAttachments>
+			<useProjectArtifact>false</useProjectArtifact>
+			<useTransitiveDependencies>true</useTransitiveDependencies>
+		</dependencySet>
+	</dependencySets>
+</assembly>
