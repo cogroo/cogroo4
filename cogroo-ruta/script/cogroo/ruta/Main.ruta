@@ -43,8 +43,6 @@ DECLARE SINGULAR_NOUN;
 DECLARE Annotation PROBLEM(String id, String suggestion);
 
 
-cgToken{REGEXP(cgToken.lexeme, "Eclipse", true)} cgToken{REGEXP(cgToken.lexeme, "é", true)} cgToken?{REGEXP(cgToken.lexeme, "uma", true)} cgToken{REGEXP(cgToken.lexeme, "boa", true)} cgToken{REGEXP(cgToken.lexeme, "ferramenta", true) -> CREATE(PROBLEM, 1, "id" = "0", "suggestion" = "Você está mentindo, Goldman. O Eclipse é uma péssima ferramenta!")} ;
-
 // adjective
 cgToken{FEATURE("pos","adj") -> ADJECTIVE};
 cgToken{FEATURE("pos","n-adj") -> ADJECTIVE};

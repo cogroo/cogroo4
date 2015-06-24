@@ -28,9 +28,12 @@ import org.cogroo.checker.CheckDocument;
 import org.cogroo.checker.GrammarChecker;
 import org.cogroo.entities.Mistake;
 import org.cogroo.entities.Sentence;
+import org.cogroo.tools.RuleParser;
 import org.cogroo.tools.checker.AbstractTypedChecker;
+import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.checkers.uima.AnnotatorUtil;
 import org.cogroo.tools.checker.checkers.uima.UimaCasAdapter;
+import org.cogroo.tools.checker.rules.model.Example;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -64,20 +67,10 @@ public class UIMAChecker extends AbstractTypedChecker {
 			throw new RuntimeException("Failed to start Ruta AE", e1);
 		}
 
-		// String fileName = "filename.txt";
-		//
-		// URL url = Resources.getResource(fileName);
-		// try {
-		// for (String line : Resources.readLines(url, Charsets.UTF_8)) {
-		// line = line.trim();
-		// RuleDefinition ruleDef = RuleParser.getRuleDefinition(line);
-		//
-		// add(ruleDef);
-		// }
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-
+		String fileName = "cogroo/ruta/Regras.txt";
+		URL url = Resources.getResource(fileName);
+		for (RuleDefinition ruleDef : RuleParser.getRuleDefinitionList(url))
+			add(ruleDef);
 		this.converter = new UimaCasAdapter();
 
 	}
@@ -116,25 +109,34 @@ public class UIMAChecker extends AbstractTypedChecker {
 				String id = problem.getFeatureValueAsString(mIDFeature);
 				String suggestion = problem
 						.getFeatureValueAsString(mSuggestionFeature);
+				RuleDefinition rd = getRuleDefinition(id);
 				System.out.println("ID = '" + id + "'");
 				System.out.println("TEXTO DO PROBLEM: '"
 						+ problem.getCoveredText() + "'");
 				System.out.println("SUGESTÃO: '" + suggestion + "'");
-				// RuleDefinition ruleDef = RuleParser.getRuleDefinition(id
-				// + ".txt");
-				// if (ruleDef != null)
-				// System.out.println("DESCRIÇÃO: '"
-				// + ruleDef.getDescription() + "'");
-				// mistakes.add(createMistake(id,
-				// createSuggestion(problem.getCoveredText()),
-				// problem.getBegin(), problem.getEnd(),
-				// sentence.getSentence()));
+				System.out.println("MENSAGEM: '" + rd.getMessage() + "'");
+				System.out.println("MENSAGEM CURTA: '" + rd.getShortMessage()
+						+ "'");
+				System.out.println("DESCRIÇÃO: '" + rd.getDescription() + "'");
+				System.out.println("CATEGORIA: '" + rd.getCategory() + "'");
+				System.out.println("GRUPO: '" + rd.getCategory() + "'");
+				for (Example example : rd.getExamples())
+					System.out.format(
+							"EXEMPLO CORRETO: '%s'\nEXEMPLO INCORRETO: '%s'\n",
+							example.getCorrect(), example.getIncorrect());
+				mistakes.add(createMistake(id,
+						createSuggestion(problem.getCoveredText()),
+						problem.getBegin(), problem.getEnd(),
+						sentence.getSentence()));
 			}
 
 		} catch (Exception e) { // TODO: tratar exceptions corretamente
 			e.printStackTrace();
 		}
 
+		for (Mistake m : mistakes) {
+			System.out.println(m.getFullMessage());
+		}
 		return mistakes;
 	}
 

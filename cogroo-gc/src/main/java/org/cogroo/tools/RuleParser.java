@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,21 +23,35 @@ public class RuleParser {
 
 	}
 
-	public static Set<RuleDefinition> getsRuleDefinition(String fileName) {
-		List<RuleDefinition> rules = new ArrayList<RuleDefinition>();
-		URL url;
+	private static List<Example> buildExampleArray(
+			List<String> correctExamples, List<String> incorrectExamples) {
+		List<Example> examples = new ArrayList<Example>();
+		while (!correctExamples.isEmpty() && !incorrectExamples.isEmpty()) {
+			String ce = correctExamples.remove(0);
+			String ie = incorrectExamples.remove(0);
+			Example example = new Example();
+			example.setCorrect(ce);
+			example.setIncorrect(ie);
+			examples.add(example);
+		}
+		return examples;
+	}
 
+	public static Set<RuleDefinition> getRuleDefinitionList(String fileName) {
+		URL url;
 		try {
 			url = Resources.getResource(fileName);
+			System.out.println(url);
 		} catch (Exception e) {
 			return Collections.emptySet();
 		}
+		return getRuleDefinitionList(url);
+	}
 
+	public static Set<RuleDefinition> getRuleDefinitionList(URL url) {
+		Set<RuleDefinition> rules = new HashSet<RuleDefinition>();
 		try {
 			Map<String, String> rule = new HashMap<String, String>();
-
-			boolean isExample = false;
-
 			List<String> correctExamples = new ArrayList<String>();
 			List<String> incorrectExamples = new ArrayList<String>();
 			for (String line : Resources.readLines(url, Charsets.UTF_8)) {
@@ -44,15 +59,14 @@ public class RuleParser {
 				line = line.trim();
 
 				if (line.length() == 0) {
-					List<Example> examples = new ArrayList<Example>();
-					while (!correctExamples.isEmpty()
-							&& !incorrectExamples.isEmpty()) {
-
-					}
+					List<Example> examples = buildExampleArray(correctExamples,
+							incorrectExamples);
 					rules.add(new JavaRuleDefinition(rule.get("id"), rule
 							.get("category"), rule.get("group"), rule
 							.get("description"), rule.get("message"), rule
 							.get("shortMessage"), examples));
+					correctExamples.clear();
+					incorrectExamples.clear();
 					continue;
 				}
 				String[] fields = line.split("=", 2);
@@ -96,7 +110,6 @@ public class RuleParser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		return null;
+		return rules;
 	}
 }
