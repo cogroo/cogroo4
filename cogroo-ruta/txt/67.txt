@@ -1,0 +1,12 @@
+id = 67
+category = Colocação pronominal
+group = advérbio + verbo + pronome oblíquo
+description = 
+message = Certos advérbios (sempre, já, bem, aqui, onde, mais, talvez, ainda, como, por que) atraem o pronome para antes do verbo.
+shortMessage = Certos advérbios atraem o pronome para antes do verbo.
+correctExample = O sol já se põe e os soldados não retornaram.
+incorrectExample = O sol já põe-se e os soldados não retornaram.
+correctExample = Um guia de ruas da cidade talvez te ajude.
+incorrectExample = Um guia de ruas da cidade talvez ajude-te.
+correctExample = Mais se aprende com o exemplo.
+incorrectExample = Mais aprende-se com o exemplo.

@@ -1,0 +1,187 @@
+#!/bin/sh
+
+MOD=model/pt-$2.model
+ENC=ISO-8859-1
+
+if [ "$1" = "cf" ]; then
+   CP=/Users/wcolen/Documents/wrks/corpus/Bosque/Bosque_CF_8.0.ad.txt
+fi
+if [ "$1" = "cp" ]; then
+   CP=/Users/wcolen/Documents/wrks/corpus/Bosque/Bosque_CP_8.0.ad.txt
+fi
+if [ "$1" = "cfcp" ]; then
+   CP=/Users/wcolen/Documents/wrks/corpus/Bosque/Bosque_CFCP_8.0.ad.txt
+fi
+if [ "$1" = "vcf" ]; then
+   CP=/Users/wcolen/Documents/wrks/corpus/FlorestaVirgem/FlorestaVirgem_CF_3.0_ad.txt
+fi
+if [ "$1" = "ama" ]; then
+   CP=/Users/wcolen/Documents/wrks/corpus/amazonia.ad
+fi
+if [ "$1" = "lit" ]; then
+   CP=/Users/wcolen/Documents/wrks/corpus/selva_lit.ad
+fi
+if [ "$1" = "cie" ]; then
+   CP=/Users/wcolen/Documents/wrks/corpus/selva_cie.ad
+fi
+
+####
+PARAMS=
+if [ "$3" = "m5" ]; then
+   PARAMS=" -params scripts/maxent_5.properties"
+fi
+if [ "$3" = "m10" ]; then
+   PARAMS=" -params scripts/maxent_10.properties"
+fi
+if [ "$3" = "m50" ]; then
+   PARAMS=" -params scripts/maxent_50.properties"
+fi
+if [ "$3" = "p5" ]; then
+   PARAMS=" -params scripts/perceptron_5.properties"
+fi
+if [ "$3" = "p10" ]; then
+   PARAMS=" -params scripts/perceptron_10.properties"
+fi
+if [ "$3" = "p50" ]; then
+   PARAMS=" -params scripts/perceptron_50.properties"
+fi
+####
+
+TMP=corpus/$RANDOM.cp
+> $TMP
+
+TAGDIC=/Users/wcolen/Documents/wrks/opennlp/cogroo4/cogroo-dict/target/tagdict.xml
+
+# Sent
+# cf: 0.9576712511683803
+# cfcp: 0.9362900809109979
+# cp: 0.9239613840980584
+# vcf: 0.9858049532504455 - 0.985554832574203 com abb
+
+#  -abbDict dict/gde.xml
+
+if [ "$2" = "sent" ]; then
+   	scripts/opennlp SentenceDetectorConverter ad -encoding $ENC -data $CP -includeTitles false > $TMP
+	scripts/opennlp SentenceDetectorTrainer -lang pt -encoding MacRoman -data $TMP -model $MOD $PARAMS
+	#scripts/opennlp SentenceDetectorEvaluator -encoding MacRoman -data $TMP -model $MOD -misclassified true
+	scripts/opennlp SentenceDetectorCrossValidator -lang pt -encoding MacRoman -data $TMP -misclassified true $PARAMS
+fi
+
+# Tokenizer
+# cf: 0.9983222534784857 / 0.9983790295622118 /
+# cfcp: 0.998697627889638
+# cp: 0.998435821570586
+# vcf: 0.9990888507080368 (50) / 0.9988427102119068 (150) / 0.9991955330086812 (5)
+
+# -abbDict dict/gde.xml
+
+if [ "$2" = "token" ]; then
+	TMPTOK=corpus/$RANDOM.cp2
+   	scripts/opennlp TokenNameFinderConverter ad -encoding $ENC -data $CP > $TMPTOK
+   	scripts/opennlp TokenizerConverter namefinder -encoding MacRoman -data $TMPTOK -detokenizer ../opennlp/opennlp-tools/lang/pt/tokenizer/pt-detokenizer.xml > $TMP 
+  	scripts/opennlp TokenizerTrainer -lang pt -encoding MacRoman -data $TMP -model $MOD $PARAMS
+  	#scripts/opennlp TokenizerMEEvaluator -encoding MacRoman -data $TMP -model $MOD -misclassified true
+	scripts/opennlp TokenizerCrossValidator -lang pt -encoding MacRoman -data $TMP -misclassified true $PARAMS
+  	
+   	rm $TMPTOK
+fi
+
+# ExpNameFinder
+#Precision: 0.8118085106382978
+#Recall: 0.651665243381725
+#F-Measure: 0.722974893415443
+
+if [ "$2" = "exp" ]; then
+   	scripts/opennlp TokenNameFinderConverter adexp -encoding $ENC -data $CP -tags intj,spec,num,pron-indef,n,adj,prp,adv,conj-s > $TMP 
+  	scripts/opennlp TokenNameFinderTrainer -lang pt -encoding MacRoman -data $TMP -model $MOD $PARAMS
+  	#scripts/opennlp TokenNameFinderEvaluator -encoding MacRoman -data $TMP -model $MOD -misclassified true -detailedF true
+	scripts/opennlp TokenNameFinderCrossValidator -lang pt -encoding MacRoman -data $TMP -misclassified true -detailedF true $PARAMS
+  	
+fi
+
+# NameFinder
+# cf: 0.8585632612478251
+# vcf: 0.8658972296526309
+if [ "$2" = "prop" ]; then
+   	scripts/opennlp TokenNameFinderConverter adexp -encoding $ENC -data $CP -tags prop > $TMP 
+  	 scripts/opennlp TokenNameFinderTrainer -lang pt -encoding MacRoman -data $TMP -model $MOD $PARAMS
+	scripts/opennlp TokenNameFinderCrossValidator -lang pt -encoding MacRoman -data $TMP -misclassified true -detailedF true $PARAMS
+  	
+fi
+
+#Precision: 0.7943822711482761
+#Recall: 0.7510416856201896
+#F-Measure: 0.7721042466528556
+if [ "$2" = "ner" ]; then
+   	#scripts/opennlp TokenNameFinderConverter ad -encoding $ENC -data $CP >> corpus/mix.txt
+   	# scripts/opennlp TokenNameFinderConverter ad -encoding $ENC -data $CP > $TMP 
+  	scripts/opennlp TokenNameFinderTrainer -lang pt -encoding MacRoman -data corpus/mix.txt -model $MOD $PARAMS
+	scripts/opennlp TokenNameFinderCrossValidator -lang pt -encoding MacRoman -data corpus/mix.txt -misclassified true -detailedF true $PARAMS
+  	
+fi
+
+# Contractions
+# cf:
+# Precision: 0.993904720334227
+# Recall: 0.9765799712036272
+# F-Measure: 0.9851661850827448
+
+if [ "$2" = "con" ]; then
+   	scripts/opennlp TokenNameFinderConverter adcon -encoding $ENC -data $CP > $TMP 
+  	scripts/opennlp TokenNameFinderTrainer -lang pt -encoding MacRoman -data $TMP -model $MOD  -cutoff 50
+	#scripts/opennlp TokenNameFinderCrossValidator -lang pt -encoding MacRoman -data $TMP -cutoff 50
+  	
+fi
+
+# POSTagger
+# 0.9653404111727792 (no inflection)
+if [ "$2" = "pos" ]; then
+   	#scripts/opennlp POSTaggerConverter ad -encoding $ENC -data $CP -lang pt -expandME false -includeFeatures false > $TMP
+  	#scripts/opennlp POSTaggerTrainer -lang pt -encoding MacRoman -data $TMP -model $MOD $PARAMS
+  	#scripts/opennlp POSTaggerEvaluator -encoding MacRoman -data $TMP -model $MOD -misclassified true
+  	echo scripts/opennlp POSTaggerCrossValidator.ad -lang pt -encoding $ENC -data $CP $PARAMS -misclassified true -dict $TAGDIC -expandME false -includeFeatures false 
+	scripts/opennlp POSTaggerCrossValidator.ad -lang pt -encoding $ENC -data $CP $PARAMS -misclassified true -dict $TAGDIC -expandME false -includeFeatures false
+  	
+fi
+
+# Chunker
+# cf -
+# Precision: 0.9641729893778452
+# Recall: 0.9564949043339506
+# F-Measure: 0.9603185998533957
+
+# CF:        TOTAL: precision:   94,00%;  recall:   93,90%; F1:   93,95%.
+#          PP: precision:   98,01%;  recall:   97,86%; F1:   97,93%. [target: 12063; tp: 11805; fp: 240]
+#          NP: precision:   93,04%;  recall:   92,74%; F1:   92,89%. [target: 25189; tp: 23360; fp: 1747]
+#          VP: precision:   92,57%;  recall:   93,05%; F1:   92,81%. [target: 8248; tp: 7675; fp: 616]
+#        ADVP: precision:   88,90%;  recall:   89,12%; F1:   89,01%. [target: 2372; tp: 2114; fp: 264]
+
+if [ "$2" = "chk" ]; then
+  	#scripts/opennlp ChunkerTrainerME -lang pt -encoding MacRoman -data $TMP -model $MOD $PARAMS
+	echo scripts/opennlp ChunkerCrossValidator.ad -lang pt -encoding $ENC -data $CP -misclassified true -detailedF true $PARAMS -useCGTags true
+  	
+fi
+
+# Chunker Head Finder
+# CF: Evaluated 4212 samples with 23476 entities; found: 23253 entities; correct: 23189.
+#       TOTAL: precision:   99,72%;  recall:   98,78%; F1:   99,25%.
+#           H: precision:   99,72%;  recall:   98,78%; F1:   99,25%. [target: 23476; tp: 23189; fp:  64]
+
+if [ "$2" = "hf" ]; then
+   	scripts/opennlp ChunkerConverter adheadfinder -encoding $ENC -data $CP > $TMP
+  	scripts/opennlp ChunkerTrainerME -lang pt -encoding MacRoman -data $TMP -model $MOD $PARAMS
+	scripts/opennlp ChunkerCrossValidator -lang pt -encoding MacRoman -data $TMP -misclassified true -detailedF true $PARAMS
+fi
+
+#-functTags SUBJ,P
+if [ "$2" = "sp" ]; then
+   	scripts/opennlp ChunkerConverter adshallowparser -encoding $ENC -data $CP -functTags P,SUBJ,ACC,SC,PIV,OC,DAT > $TMP
+  	#scripts/opennlp ChunkerTrainerME -lang pt -encoding MacRoman -data $TMP -model $MOD $PARAMS
+  	#scripts/opennlp ChunkerEvaluator -encoding MacRoman -data $TMP -model $MOD -misclassified true
+	scripts/opennlp ChunkerCrossValidator -lang pt -encoding MacRoman -data $TMP -misclassified true -detailedF true $PARAMS
+  	
+fi
+
+ rm $TMP
+
+echo Finished using $CP

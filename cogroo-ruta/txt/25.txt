@@ -1,0 +1,8 @@
+id = 25
+category = Em anexo
+group = em anexo
+description = 
+message = A expressão "em anexo" é invariável.
+shortMessage = A expressão "em anexo" é invariável.
+correctExample = Seguem em anexo os documentos solicitados.
+incorrectExample = Seguem em anexos os documentos solicitados.

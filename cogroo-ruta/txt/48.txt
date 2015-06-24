@@ -1,0 +1,8 @@
+id = 48
+category = Verbo haver
+group = haver + denotação de tempo
+description = 
+message = As formas do verbo "haver" ficam no singular quando indicam tempo decorrido.
+shortMessage = As formas do verbo "haver" ficam no singular quando indicam tempo decorrido.
+correctExample = Havia dois anos que nos vimos pela última vez.
+incorrectExample = Haviam dois anos que nos vimos pela última vez.

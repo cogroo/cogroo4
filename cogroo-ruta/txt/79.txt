@@ -1,0 +1,10 @@
+id = 79
+category = Crase
+group = regência verbal
+description = 
+message = O verbo "aderir" constrói-se com a preposição "a". Se o complemento (aquilo a que se adere) for feminino, teremos crase.
+shortMessage = "Aderir" constrói-se com prep. "a". Há crase com compl. feminino.
+correctExample = Os alunos aderiram às novas idéias do jovem professor.
+incorrectExample = Os alunos aderiram as novas idéias do jovem professor.
+correctExample = A cola aderiu à camada da pele.
+incorrectExample = A cola aderiu a camada da pele.

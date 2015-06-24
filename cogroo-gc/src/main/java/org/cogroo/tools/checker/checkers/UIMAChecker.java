@@ -1,67 +1,158 @@
 package org.cogroo.tools.checker.checkers;
 
-import java.io.File;
-import java.util.Collections;
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
-import org.apache.uima.resource.ResourceSpecifier;
-import org.apache.uima.util.XMLInputSource;
+import org.apache.uima.cas.FSIndex;
+import org.apache.uima.cas.Feature;
+import org.apache.uima.cas.Type;
+import org.apache.uima.cas.TypeSystem;
+import org.apache.uima.cas.text.AnnotationFS;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.apache.uima.ruta.engine.Ruta;
+import org.cogroo.analyzer.Analyzer;
+import org.cogroo.analyzer.ComponentFactory;
+import org.cogroo.checker.CheckDocument;
+import org.cogroo.checker.GrammarChecker;
 import org.cogroo.entities.Mistake;
+import org.cogroo.entities.Sentence;
+import org.cogroo.tools.RuleParser;
 import org.cogroo.tools.checker.AbstractTypedChecker;
+import org.cogroo.tools.checker.RuleDefinition;
+import org.cogroo.tools.checker.checkers.uima.AnnotatorUtil;
+import org.cogroo.tools.checker.checkers.uima.UimaCasAdapter;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 
 public class UIMAChecker extends AbstractTypedChecker {
+	
+	private static final Logger LOGGER = Logger.getLogger(UIMAChecker.class);
+	
+	private AnalysisEngine ae;
+	private final UimaCasAdapter converter;
+	private Type mProblemType;
+	private Type mTokenType;
+	private Feature mIDFeature, mSuggestionFeature; 
+
+	
+	private final HashSet<Integer> done = new HashSet<Integer>();
+
+	public UIMAChecker() {
+		// TODO: move the following lines to a new class:
+		// AnalysisEngineFactory: create typesystem and analysis engine 
+		TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription("cogroo.ruta.MainTypeSystem");
+		try {
+			URL url = Resources.getResource("cogroo/ruta/Main.ruta");
+			String text = Resources.toString(url, Charsets.UTF_8);
+			AnalysisEngineDescription aeDes = Ruta.createAnalysisEngineDescription(text, tsd);
+			
+			this.ae = UIMAFramework.produceAnalysisEngine(aeDes);
+		} catch (Exception e1) {
+			LOGGER.fatal("Failed to start Ruta AE", e1);
+			throw new RuntimeException("Failed to start Ruta AE",e1);
+		}
+		
+		int i = 1;
+		while (true) {
+			String filename = i + ".txt";
+			RuleDefinition ruleDef = RuleParser.getRuleDefinition(filename);
+
+			if (ruleDef == null) {
+				break;
+			}
+
+			add(ruleDef);
+			i++;
+		}
+		
+		
+		this.converter = new UimaCasAdapter();
+
+	}
 
 	@Override
-	public List<Mistake> check(org.cogroo.entities.Sentence sentence) {
+	public List<Mistake> check(Sentence sentence) {
 		
-//		String[] suggestions = { "use o uima!" };
-//		
-//		Mistake mistake = createMistake("01", suggestions,
-//			      0, 5, arg0.getSentence());
-//		
-//		List<Mistake> mistakes = new LinkedList<Mistake>();
-//
-//		mistakes.add(mistake);
+		// TODO: added for now in order to prevent this method to run more than once
+		if (done.contains(sentence.getOffset()))
+			System.exit(0);
+		done.add(sentence.getOffset());
 		
+
+		List<Mistake> mistakes = new LinkedList<Mistake>();
 		
-		
-		// TODO: >>> colocar no construtor do UIMAChecker
-		File specFile = new File("/home/vinicius.vendramini/CoGrOO/cogroo4/RUTA/descriptor/Rule1Engine.xml");
-		
-		XMLInputSource in;
 		try {
-			in = new XMLInputSource(specFile);
-			ResourceSpecifier specifier = UIMAFramework.getXMLParser().
-					parseResourceSpecifier(in);
-			// for import by name... set the datapath in the ResourceManager
-			AnalysisEngine ae = UIMAFramework.produceAnalysisEngine(specifier);
-			
-			// <<<<
 			
 			CAS cas = ae.newCAS();
 			
-			// TODO: >>> Como transformar Sentence do CoGrOO em anotacoes no CAS aqui nesse ponto?
+			// http://article.gmane.org/gmane.comp.apache.uima.general/6274
+			cas.setDocumentText(sentence.getDocumentText());
 			
-			cas.setDocumentText("This is my document.");
 			
-			
-			// <<<
-			
-			// OK, rodar o RUTA
+			converter.populateCas(sentence.getTextSentence(), cas);
 			ae.process(cas);
 			
-			// Criar Mistakes a partir das anotacoes PROBLEM e retornar a lista de Mistakes.
-			
+			TypeSystem typeSystem = cas.getTypeSystem();
+			initTypeSystem(typeSystem);
+			Set<Integer> processed = new HashSet<Integer>();
+			FSIndex<AnnotationFS> problems = cas.getAnnotationIndex(mProblemType);
+			for (AnnotationFS problem : problems) {
+				if (processed.contains(problem.getBegin()))
+					continue;
+				else
+					processed.add(problem.getBegin());
+				String id = problem.getFeatureValueAsString(mIDFeature);
+				String suggestion = problem.getFeatureValueAsString(mSuggestionFeature);
+				System.out.println("ID = '" + id + "'");
+				System.out.println("TEXTO DO PROBLEM: '" + problem.getCoveredText() + "'");
+				System.out.println("SUGESTÃO: '" +  suggestion + "'");
+//				mistakes.add(createMistake(id, createSuggestion(problem.getCoveredText()), problem.getBegin(), problem.getEnd(), sentence.getSentence()));
+			}
+
 		} catch (Exception e) { // TODO: tratar exceptions corretamente
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		return mistakes;
+	} 
 
-		return Collections.emptyList();
+	private String[] createSuggestion(String error) {
+
+		String[] array = { error };
+
+		return array;
+	}
+	
+	private boolean typeSystemInitialized = false;
+	private synchronized void initTypeSystem(TypeSystem typeSystem) throws AnalysisEngineProcessException {
+		if(typeSystemInitialized == true) {
+			return;
+		}
+		mProblemType = AnnotatorUtil.getType(typeSystem,
+				"cogroo.ruta.Main.PROBLEM");
+		mIDFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "id",
+				CAS.TYPE_NAME_STRING);
+		mSuggestionFeature = AnnotatorUtil.getRequiredFeature(mProblemType, "suggestion",
+				CAS.TYPE_NAME_STRING);
+//		mTokenType = AnnotatorUtil.getType(typeSystem,
+//				"opennlp.uima.Token");
+//		mLemmaFeature = AnnotatorUtil.getRequiredFeature(mTokenType, "lemma",
+//				CAS.TYPE_NAME_STRING);
+		
+		typeSystemInitialized = true;
 	}
 
 	@Override
@@ -73,6 +164,15 @@ public class UIMAChecker extends AbstractTypedChecker {
 	public int getPriority() {
 		return 100;
 	}
-
-
+	
+	public static void main(String[] args) throws IllegalArgumentException, IOException {
+		ComponentFactory factory = ComponentFactory.create(new Locale("pt", "BR"));
+		Analyzer cogroo = factory.createPipe();
+		GrammarChecker gc = new GrammarChecker(cogroo);
+//		CheckDocument document = new CheckDocument("Quanto à lápis, não entendo. Quanto à computador, não entendo. Refiro-me à trabalhos remunerados. Refiro-me à reuniões extraordinárias. Fomos levados à crer. A uma hora estaremos partindo. As duas horas estaremos partindo. Os ônibus estacionaram a direita do pátio. Os ônibus estacionaram a esquerda do pátio. Em relação as atividades programadas. Com relação as atividades programadas. Devido as cobranças injustas. Enviei os documentos à você. Enviei os documentos à Vossa Excelência.  Quanto ao lápis, não entendo. Quanto ao computador, não entendo. Refiro-me aos trabalhos remunerados. Refiro-me às reuniões extraordinárias. Refiro-me a reuniões extraordinárias. Fomos levados a crer. À uma hora estaremos partindo. Daqui a uma hora estaremos partindo. Às duas horas estaremos partindo. Os ônibus estacionaram à direita do pátio. Os ônibus estacionaram à esquerda do pátio. Em relação a segurança dos menores. Em relação à segurança dos menores. Em relação às atividades programadas. Com relação a segurança dos menores. Com relação à segurança dos menores. Com relação às atividades programadas. Devido à cobrança injusta. Devido às cobranças injustas. Devido a cobrança injusta. Enviei os documentos a você. Enviei os documentos a Vossa Excelência.");
+		CheckDocument document = new CheckDocument("Eu sou mal. Eu pareço mal. Eu estou mal.");
+		// passe o doc pelo pipe
+		gc.analyze(document);
+	
+	}
 }

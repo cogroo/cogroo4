@@ -1,0 +1,44 @@
+<ErrorReport xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ErrorReport.xsd">
+	<Version>3.0.0</Version>
+    <Text>Fomos levados à crer. Os menino são burros de doer.</Text>
+    <BadInterventions>
+        <BadIntervention>
+            <Classification>falseError</Classification>
+            <Comment>Um falso erro</Comment>f
+            <Rule>xml:4</Rule>
+            <Span>
+                <Start>14</Start>
+                <End>15</End>
+            </Span>
+        </BadIntervention>
+        <BadIntervention>
+            <Classification>inappropriateDescription</Classification>
+            <Comment>uma di</Comment>
+            <Rule>xml:95</Rule>
+            <Span>
+                <Start>22</Start>
+                <End>31</End>
+            </Span>
+        </BadIntervention>
+    </BadInterventions>
+    <Omissions>
+        <Omission>
+            <Category>Colocação pronominal</Category>
+            <ReplaceBy>nada</ReplaceBy>
+            <Comment>Não é nada</Comment>
+            <Span>
+                <Start>6</Start>
+                <End>13</End>
+            </Span>
+        </Omission>
+        <Omission>
+            <CustomCategory>fdfsd</CustomCategory>
+            <ReplaceBy>Blah blah</ReplaceBy>
+            <Comment>Um comantário</Comment>
+            <Span>
+                <Start>32</Start>
+                <End>42</End>
+            </Span>
+        </Omission>
+	</Omissions>
+</ErrorReport>

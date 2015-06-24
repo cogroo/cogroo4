@@ -1,0 +1,10 @@
+id = 70
+category = Colocação pronominal
+group = advérbio + verbo + pronome oblíquo
+description = 
+message = Certos advérbios (sempre, já, bem, aqui, onde, mais, talvez, ainda, como, por que) atraem o pronome para antes do verbo.
+shortMessage = Certos advérbios atraem o pronome para antes do verbo.
+correctExample = Por que a comida nos fez mal?
+incorrectExample = Por que a comida fez-nos mal?
+correctExample = Por que o cachorro nos mordeu a perna?
+incorrectExample = Por que o cachorro mordeu-nos a perna?

@@ -1,0 +1,204 @@
+====
+    Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+====
+
+1	0=>""|1=>"ao"
+1	0=>""
+2	0,1:="a"
+3	0,1=>"a"
+4	0,1=>"a"
+5	1=>"à"
+6	1=>"às"
+7	1=>"à"
+8	1=>"à"
+9	2=>"à"
+10	2=>"às"
+11	2=>"à"
+12	2=>"às"
+13	1=>"à"
+14	1=>"às"
+15	0,1=>"a"
+16	0,1=>"a"
+
+
+// OK ---------------
+17	0=>0_M_S_
+17	1=>1_M_P_
+18	0=>0_M_P_
+18	1=>1_M_S_
+19	0=>0_F_S_
+19	1=>1_F_P_
+20	0=>0_F_P_
+20	1=>1_F_S_
+21	0=>0_M_P_
+21	1=>1_M_S_
+22	0=>0_M_S_
+22	1=>1_M_P_
+23	0=>0_F_P_
+23	1=>1_F_S_
+24	0=>0_F_S_
+24	1=>1_F_P_
+// ------------------
+
+
+25	1=>"anexo"
+26	1=>"anexo"
+27	1=>"anexo"
+28	1=>"anexo"
+29	1=>"anexos"
+30	1=>"anexas"
+31	1=>"anexos"
+32	1=>"anexa"
+33	1=>"anexo"
+34	1=>"anexos"
+35	1=>"anexas"
+36	1=>"anexos"
+37	1=>"anexa"
+38	0=>"meio"
+39	0=>"meio"
+
+// XXX COMO QUE FUNCIONA???
+40	0=>0_F_1@_
+
+
+41	0=>"meios"
+
+// Not the best, but replace mapping works.
+XXX REVIEW LATER negated element in the beginning (personal pronoun).
+42	0=>{0}_3S_ NEW (ReplaceMapping) OK
+43	0=>{0}_3S_ NEW (ReplaceMapping) OK
+44	0=>{0}_3S_ NEW (ReplaceMapping) OK
+45	0=>{0}_3S_ NEW (ReplaceMapping) OK
+
+
+46	1=>"há" XXX negated
+47	0=>"há"
+48	0=>"havia"
+49	0=>"havia"
+50	0=>"havia" NEW (ReplaceMapping)
+119	0=>"havia" NEW (ReplaceMapping)
+
+// Not the best, but replace mapping works.
+XXX negated element in the beginning.
+51	0=>{0}_3S_
+120	0=>{0}_3S_
+
+
+52	0=>"eu"
+53	3=>"mim"
+54	1=>"mim"
+55	3=>"ti"
+56	1=>"ti"
+57	0=>"mal"
+
+// XXX WHAT?????? /////////////
+58	2=>"mau"_3@_3@_
+23:44:23,109 DEBUG Cogroo:159 - Show tree [Eu sou mal.]: 
+	[SUBJ][B-NP*] Eu --> {eu}_PERS_M/F_1S_NOM_
+	[MV][B-VP*] sou --> {ser}_V_PR_1S_IND_VFIN_
+	[-][O] mal --> {mal}_ADV_
+	[-][O] . --> {}_-PNT_ABS
+23:44:23,484  INFO RulesTreeBuilder:136 - Rules DFA built in 364ms
+23:44:23,484  INFO RulesTreeBuilder:353 - Rebuilt all rules trees.
+23:44:23,484  INFO RulesApplier:106 - Rules applied in 367833us
+23:44:23,484 DEBUG Cogroo:166 - rule[58], span[3, 10]
+23:44:23,484  INFO Cogroo:172 - Check sentence time: 424034us
+Rule [58]
+Mistake: [3..10] = [sou mal]
+Mau é adjetivo (o feminino é "má" e o plural é "maus") e mal é advérbio (forma invariável). Para distinguir o uso adequado de mal/mau, refaça a frase utilizando bem e bom. A forma equivalente a "bem" é "mal", e a forma equivalente a "bom" é "mau".
+Suggestion: [sou pior]
+///////////////////////////////
+
+59	1=>""
+60	2,3,4=>"a"
+61	1<=>2
+62	3=>""|1<=>2|1=>"nos"
+63	2<=>3
+64	4=>""|2<=>3|2=>"nos"
+65	1<=>2
+66	3=>""|1<=>2|1=>"nos"
+67	1<=>2
+68	3=>""|1<=>2|1=>"nos"
+69	4<=>5
+70	6=>""|4<=>5|4=>"nos"
+71	1<=>2
+72	3=>""|1<=>2|1=>"nos"
+73	1<=>2
+74	3=>""|1<=>2|1=>"nos"
+75	NEW (ReplaceMapping)
+76	NEW (ReplaceMapping)
+77	NEW (ReplaceMapping)
+78	NEW (ReplaceMapping)
+79	NEW (ReplaceMapping)
+80	NEW (ReplaceMapping)
+81	NEW (ReplaceMapping)
+82	NEW (ReplaceMapping)
+83	2=>2_M_P_
+84	1=>"à"
+85	NEW (ReplaceMapping)
+86	1=>"aos"
+87	0=>""
+89	0=>""
+88	1=>"mim"
+90	1=>""
+91	1=>"às"
+92	2=>"meia"
+93	NEW (ReplaceMapping)
+94	NEW (ReplaceMapping)
+95	0=>0_1@_1@_
+95	1=>1_0@_0@_ ====================== good to check uppercased chars in the beginning of the sentence
+96	1=>""
+97	XXX break in two
+98	1=>""
+99	2=>"a"
+100	2=>"a"
+101	1,2=>"-nos"|3=>"a"
+102	0,1=>"nos"|3=>"a"
+
+// XXX muito ruim
+103	0=>0_1@_1@_
+103	1=>1_0@_0@_
+104	0=>0_1@_1@_
+104	1=>1_0@_0@_
+105	0=>0_1@_1@_
+105	1=>1_0@_0@_
+
+
+106	3=>""
+107	1=>""
+108	2=>""
+109	1=>"à"
+
+110	1=>"de"+2 XXX contraction patch
+
+// Commas
+111	2=>2+"," => replace mapping workaround
+112	0=>0+"," => replace mapping workaround XXX uncomment suggestion
+113	0=>0+"," => replace mapping workaround XXX contraction patch
+
+
+114	0=>0_1@_1@_
+114	1=>1_0@_0@_
+115	0=>0_1@_1@_
+115	1=>1_0@_0@_
+116	0=>0_1@_1@_
+116	1=>1_0@_0@_
+
+117	XXX subj-verb
+118	XXX subj-verb
+121	XXX gerundismo
+
+122	OK
+123	OK

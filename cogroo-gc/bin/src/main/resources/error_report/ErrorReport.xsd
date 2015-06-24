@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" elementFormDefault="qualified" attributeFormDefault="unqualified" jaxb:extensionBindingPrefixes="xjc" jaxb:version="2.0">
+
+
+    <xs:complexType name="Omission">
+    	<xs:sequence>
+    		<xs:element name="Category" type="xs:string" maxOccurs="1"
+    			minOccurs="0">
+    		</xs:element>
+    		<xs:element name="CustomCategory" type="xs:string"
+    			maxOccurs="1" minOccurs="0">
+    		</xs:element>
+            <xs:element name="ReplaceBy" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+            <xs:element name="Comment" type="xs:string" maxOccurs="1"
+    			minOccurs="0">
+    		</xs:element>
+    		<xs:element name="Span" type="Span" maxOccurs="1"
+    			minOccurs="1">
+    		</xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BadIntervention">
+    	<xs:sequence>
+    		<xs:element name="Classification" maxOccurs="1"
+    			minOccurs="1">
+    			<xs:simpleType>
+    				<xs:annotation>
+    					<xs:appinfo>
+    						<jaxb:typesafeEnumClass
+    							name="BadInterventionClassification" />
+    					</xs:appinfo>
+    				</xs:annotation>
+    				<xs:restriction base="xs:string">
+    					<xs:enumeration value="falseError" />
+    					<xs:enumeration
+    						value="inappropriateDescription" />
+    					<xs:enumeration value="inappropriateSuggestion" />
+    				</xs:restriction>
+    			</xs:simpleType>
+    		</xs:element>
+    		<xs:element name="Comment" type="xs:string" maxOccurs="1"
+    			minOccurs="0">
+    		</xs:element>
+    		<xs:element name="Rule" type="xs:string" maxOccurs="1"
+    			minOccurs="1">
+    		</xs:element>
+    		<xs:element name="Span" type="Span" maxOccurs="1" minOccurs="1"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Span">
+    	<xs:sequence>
+    		<xs:element name="Start" type="xs:int"></xs:element>
+    		<xs:element name="End" type="xs:int"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="IgnoreError">
+    	<xs:sequence>
+    		<xs:element name="Span" type="Span" maxOccurs="1" minOccurs="1"></xs:element>
+    		<xs:element name="Rule" type="xs:int" maxOccurs="1" minOccurs="1"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="ErrorReport">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="Version" type="xs:string"
+    				maxOccurs="1" minOccurs="1">
+    			</xs:element>
+    			<xs:element name="Text" type="xs:string" maxOccurs="1"
+    				minOccurs="1">
+    			</xs:element>
+				<xs:element name="BadInterventions"
+					maxOccurs="1" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element
+								name="BadIntervention" type="BadIntervention"
+								maxOccurs="unbounded" minOccurs="1">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Omissions" maxOccurs="1"
+					minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Omission"
+								type="Omission" maxOccurs="unbounded" minOccurs="1">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+</xs:schema>
