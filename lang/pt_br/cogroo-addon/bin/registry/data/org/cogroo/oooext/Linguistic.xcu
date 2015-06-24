@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!-- 
+
+-->
+<oor:component-data oor:name="Linguistic"
+                    oor:package="org.openoffice.Office" xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <node oor:name="ServiceManager">
+        <node oor:name="GrammarCheckers">
+            <!-- (TODO: 1) Change to your package.Main class name -->
+            <node oor:name="org.cogroo.addon.Main" oor:op="fuse">
+                <prop oor:name="Locales" oor:type="oor:string-list">
+                    <!-- (2) Add locale for each supported language -->
+                    <value>pt-BR</value>
+                </prop>
+            </node>
+        </node>
+    </node>
+    <node oor:name="Images">
+        <node oor:name="ServiceNameEntries">
+            <node oor:name="org.cogroo.addon.Main" oor:op="fuse">
+                <prop oor:name="VendorImagesNode" oor:type="xs:string">
+                    <value>org.cogroo.addon.Main.Images</value>
+                </prop>
+            </node>
+        </node>
+        <node oor:name="VendorImages">
+            <node oor:name="org.cogroo.addon.Main.Images" oor:op="fuse">
+                <prop oor:name="SpellAndGrammarDialogImage" oor:type="xs:string">
+                    <value>%origin%/../../../../../images/cogrooVendor.png</value>
+                </prop>
+                <prop oor:name="SpellAndGrammarDialogImage_HC" oor:type="xs:string">
+                    <value>%origin%/../../../../../images/cogrooVendor.png</value>
+                </prop>
+            </node>
+        </node>
+    </node>
+</oor:component-data>
+
