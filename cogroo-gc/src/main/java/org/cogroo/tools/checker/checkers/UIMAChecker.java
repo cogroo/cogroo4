@@ -128,6 +128,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 						createSuggestion(problem.getCoveredText()),
 						problem.getBegin(), problem.getEnd(),
 						sentence.getSentence()));
+
 			}
 
 		} catch (Exception e) { // TODO: tratar exceptions corretamente

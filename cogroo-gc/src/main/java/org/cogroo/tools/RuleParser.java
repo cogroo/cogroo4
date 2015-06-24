@@ -63,8 +63,9 @@ public class RuleParser {
 							incorrectExamples);
 					rules.add(new JavaRuleDefinition(rule.get("id"), rule
 							.get("category"), rule.get("group"), rule
-							.get("description"), rule.get("message"), rule
-							.get("shortMessage"), examples));
+							.get("description"),
+							"RUTA: " + rule.get("message"), "RUTA: "
+									+ rule.get("shortMessage"), examples));
 					correctExamples.clear();
 					incorrectExamples.clear();
 					continue;
