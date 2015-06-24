@@ -1,8 +1,0 @@
-id = 110
-category = regência nominal
-group = valorização de
-description = 
-message = "Valorização" rege preposição "de" e não preposição "a".
-shortMessage = "Valorização" rege preposição "de" e não preposição "a".
-correctExample = Hoje se busca a valorização do corpo em detrimento do espírito.
-incorrectExample = Hoje se busca a valorização ao corpo em detrimento do espírito.

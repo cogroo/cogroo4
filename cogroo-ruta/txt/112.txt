@@ -1,8 +1,0 @@
-id = 112
-category = emprego de vírgulas
-group = expressões entre vírgulas
-description = 
-message = A expressão "ou seja" deve ser isolada por vírgulas.
-shortMessage = A expressão "ou seja" deve ser isolada por vírgulas.
-correctExample = O trabalho mais importante, ou seja, a coleta de dados, já foi iniciado.
-incorrectExample = O trabalho mais importante ou seja, a coleta de dados, já foi iniciado.

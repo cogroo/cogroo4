@@ -1,8 +1,0 @@
-id = 107
-category = regência verbal
-group = verbo acarretar
-description = 
-message = O verbo "acarretar" é transitivo direto. É inadequado o uso da preposição "em".
-shortMessage = É inadequado o uso da preposição "em".
-correctExample = O mau uso dos aparelhos acarretou enormes custos de produção.
-incorrectExample = O mau uso dos aparelhos acarretou nos enormes custos de produção.

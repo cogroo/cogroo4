@@ -1,8 +1,0 @@
-id = 3
-category = Crase
-group = à + substativo feminino plural
-description = 
-message = O sinal indicativo de crase indica que temos "a" + "a" expressos em um só "à". Somente ocorre crase quando há encontro de preposição "a" com artigo ou pronome demonstrativo "a"/"as".
-shortMessage = Não há crase neste caso, somente no plural ("às").
-correctExample = Refiro-me às reuniões extraordinárias. Refiro-me a reuniões extraordinárias.
-incorrectExample = Refiro-me à reuniões extraordinárias.

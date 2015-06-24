@@ -1,8 +1,0 @@
-id = 86
-category = regência verbal
-group = regência do verbo obedecer/desobedecer
-description = 
-message = Os verbos "obedecer"/"desobedecer" constroem-se com preposição "a". Quem obedece, obedece a alguém.
-shortMessage = "(Des)obedecer" constrói-se com preposição "a".
-correctExample = Nós obedeceremos aos princípios básicos de convivência.
-incorrectExample = Nós obedeceremos os princípios básicos de convivência.

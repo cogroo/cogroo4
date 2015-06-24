@@ -1,8 +1,0 @@
-id = 1
-category = Crase
-group = à + substantivo masculino
-description = 
-message = O sinal indicativo de crase indica que temos "a" + "a" expressos em um só "à". Somente ocorre crase quando há encontro de preposição "a" com artigo ou pronome demonstrativo "a"/"as". Portanto, não ocorre crase antes de palavras masculinas.
-shortMessage = Não ocorre crase antes de palavras masculinas.
-correctExample = Refiro-me ao trabalho remunerado. Refiro-me a trabalho remunerado.
-incorrectExample = Refiro-me à trabalho remunerado.

@@ -1,8 +1,0 @@
-id = 22
-category = Concordância adjetivo-substantivo
-group = adjetivo + substantivo
-description = 
-message = O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.
-shortMessage = O adjetivo concorda com o substantivo a que se refere.
-correctExample = Os belos carros ficaram prontos.
-incorrectExample = Os belos carro ficaram prontos.

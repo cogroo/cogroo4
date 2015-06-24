@@ -1,8 +1,0 @@
-id = 11
-category = Crase
-group = com relação a
-description = 
-message = A expressão "com relação" rege a preposição "a". Se for seguida de substantivo feminino singular, haverá crase.
-shortMessage = "Com relação" rege a preposição "a", logo há crase aqui.
-correctExample = Com relação à segurança dos menores,
-incorrectExample = Com relação a segurança dos menores,

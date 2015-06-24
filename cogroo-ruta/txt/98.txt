@@ -1,8 +1,0 @@
-id = 98
-category = regência verbal
-group = regência do verbo arrasar
-description = 
-message = O verbo "arrasar" não rege preposição "com". É transitivo direto.
-shortMessage = O verbo "arrasar" não rege preposição "com".
-correctExample = Ele arrasou os jogadores que perderam.
-incorrectExample = Ele arrasou com os jogadores que perderam.

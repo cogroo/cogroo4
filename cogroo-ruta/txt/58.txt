@@ -1,8 +1,0 @@
-id = 58
-category = Emprego de mau e mal
-group = uso de mal
-description = 
-message = Mau é adjetivo (o feminino é "má" e o plural é "maus") e mal é advérbio (forma invariável). Para distinguir o uso adequado de mal/mau, refaça a frase utilizando bem e bom. A forma equivalente a "bem" é "mal", e a forma equivalente a "bom" é "mau".
-shortMessage = O contrário de "bem" é "mal", e o de "bom" é "mau".
-correctExample = Eu sou mau.
-incorrectExample = Eu sou mal.

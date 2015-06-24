@@ -1,8 +1,0 @@
-id = 30
-category = Em anexo
-group = anexo como adjetivo
-description = 
-message = O adjetivo "anexo" é variável, portanto concorda com o substantivo a que se refere.
-shortMessage = .
-correctExample = Seguem anexas as cartas de apresentação.
-incorrectExample = Seguem anexa as cartas de apresentação.

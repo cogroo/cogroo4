@@ -1,8 +1,0 @@
-id = 27
-category = Em anexo
-group = em anexo
-description = 
-message = A expressão "em anexo" é invariável.
-shortMessage = A expressão "em anexo" é invariável.
-correctExample = Seguem em anexo as cartas de apresentação.
-incorrectExample = Seguem em anexas as cartas de apresentação.
