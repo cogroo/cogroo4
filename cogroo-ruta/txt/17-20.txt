@@ -1,0 +1,21 @@
+id = 17-20
+category = Concordância adjetivo-substantivo
+group = substantivo + adjetivo
+description = 
+message = O adjetivo concorda em gênero (masculino ou feminino) e número (singular ou plural) com o substantivo a que se refere.
+shortMessage = O adjetivo concorda com o substantivo a que se refere.
+correctExample = Os casacos bonitos ficaram prontos.
+incorrectExample = Os casacos bonito ficaram prontos.
+correctExample = O casaco feio ficou pronto.
+incorrectExample = O casaco feios ficou pronto.
+correctExample = As faces rosadas das crianças.
+incorrectExample = As faces rosada das crianças.
+correctExample = A face rosada da criança.
+incorrectExample = A face rosadas da criança.
+correctExample = O casaco feio ficou pronto.
+incorrectExample = O casaco feios ficou pronto.
+correctExample = As faces rosadas das crianças.
+incorrectExample = As faces rosada das crianças.
+correctExample = A face rosada da criança.
+incorrectExample = A face rosadas da criança.
+
