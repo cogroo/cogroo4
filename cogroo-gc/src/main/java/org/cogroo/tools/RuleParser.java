@@ -55,10 +55,8 @@ public class RuleParser {
 			List<String> correctExamples = new ArrayList<String>();
 			List<String> incorrectExamples = new ArrayList<String>();
 			for (String line : Resources.readLines(url, Charsets.UTF_8)) {
-
 				line = line.trim();
-
-				if (line.length() == 0) {
+				if (line.length() == 0 && rule.containsKey("id")) {
 					List<Example> examples = buildExampleArray(correctExamples,
 							incorrectExamples);
 					rules.add(new JavaRuleDefinition(rule.get("id"), rule
@@ -68,6 +66,7 @@ public class RuleParser {
 									+ rule.get("shortMessage"), examples));
 					correctExamples.clear();
 					incorrectExamples.clear();
+					rule.clear();
 					continue;
 				}
 				String[] fields = line.split("=", 2);
@@ -83,25 +82,6 @@ public class RuleParser {
 				else if (fields[0].equals("incorrectExample"))
 					incorrectExamples.add(fields[1]);
 
-				// if (fields[0].equals("correctExample")) {
-				// if (!isExample)
-				// example = new Example();
-				// isExample = true;
-				// example.setCorrect(fields[1]);
-				// } else if (fields[0].equals("incorrectExample")) {
-				// if (!isExample)
-				// example = new Example();
-				// isExample = true;
-				// example.setIncorrect(fields[1]);
-				// }
-				//
-				// if (isExample) {
-				// isExample = false;
-				// example.setIncorrect(fields[1]);
-				// examples.add(example);
-				// } else
-				// || fields[0].equals("incorrectExample")) {
-				//
 				else {
 					rule.put(fields[0], fields[1]);
 				}
