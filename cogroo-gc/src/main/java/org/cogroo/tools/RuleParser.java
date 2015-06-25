@@ -34,6 +34,8 @@ public class RuleParser {
 			example.setIncorrect(ie);
 			examples.add(example);
 		}
+		correctExamples.clear();
+		incorrectExamples.clear();
 		return examples;
 	}
 
@@ -64,8 +66,6 @@ public class RuleParser {
 							.get("description"),
 							"RUTA: " + rule.get("message"), "RUTA: "
 									+ rule.get("shortMessage"), examples));
-					correctExamples.clear();
-					incorrectExamples.clear();
 					rule.clear();
 					continue;
 				}

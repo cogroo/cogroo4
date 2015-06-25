@@ -47,14 +47,20 @@ public class UIMAChecker extends AbstractTypedChecker {
 	private Type mProblemType;
 	private Type mTokenType;
 	private Feature mIDFeature, mSuggestionFeature;
+	private final boolean developing = false;
 
 	private final HashSet<Integer> done = new HashSet<Integer>();
 
 	public UIMAChecker() {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Initializing UIMA Checker constructor.");
+		}
 		// TODO: move the following lines to a new class:
 		// AnalysisEngineFactory: create typesystem and analysis engine
+
 		TypeSystemDescription tsd = TypeSystemDescriptionFactory
 				.createTypeSystemDescription("cogroo.ruta.MainTypeSystem");
+
 		try {
 			URL url = Resources.getResource("cogroo/ruta/Main.ruta");
 			String text = Resources.toString(url, Charsets.UTF_8);
@@ -72,16 +78,21 @@ public class UIMAChecker extends AbstractTypedChecker {
 		for (RuleDefinition ruleDef : RuleParser.getRuleDefinitionList(url))
 			add(ruleDef);
 		this.converter = new UimaCasAdapter();
-
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("UIMA Checker constructor finished.");
+		}
 	}
 
 	@Override
 	public List<Mistake> check(Sentence sentence) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug(String.format("Checking sentence: '%s'", sentence));
+		}
 
 		// TODO: added for now in order to prevent this method to run more than
 		// once
-		if (done.contains(sentence.getOffset()))
-			System.exit(0);
+		// if (done.contains(sentence.getOffset()))
+		// System.exit(0);
 		done.add(sentence.getOffset());
 
 		List<Mistake> mistakes = new LinkedList<Mistake>();
@@ -104,8 +115,15 @@ public class UIMAChecker extends AbstractTypedChecker {
 			for (AnnotationFS problem : problems) {
 				if (processed.contains(problem.getBegin()))
 					continue;
-				else processed.add(problem.getBegin());
+				else
+					processed.add(problem.getBegin());
+
 				String id = problem.getFeatureValueAsString(mIDFeature);
+
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("Found a mistake, id = " + id);
+				}
+
 				String suggestion = problem
 						.getFeatureValueAsString(mSuggestionFeature);
 				RuleDefinition rd = getRuleDefinition(id);
@@ -123,18 +141,19 @@ public class UIMAChecker extends AbstractTypedChecker {
 					System.out.format(
 							"EXEMPLO CORRETO: '%s'\nEXEMPLO INCORRETO: '%s'\n",
 							example.getCorrect(), example.getIncorrect());
-				mistakes.add(createMistake(id,
-						createSuggestion(suggestion),
+				mistakes.add(createMistake(id, createSuggestion(""),
 						problem.getBegin(), problem.getEnd(),
 						sentence.getSentence()));
 
 			}
 
 		} catch (Exception e) { // TODO: tratar exceptions corretamente
-			e.printStackTrace();
+			// e.printStackTrace();
+			LOGGER.fatal("Exception checking sentence with Ruta. ", e);
 		}
 
-		for (Mistake m : mistakes) System.out.println(m.getFullMessage());
+		// for (Mistake m : mistakes)
+		// System.out.println(m.getFullMessage());
 		return mistakes;
 	}
 
@@ -184,8 +203,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 		GrammarChecker gc = new GrammarChecker(cogroo);
 		// CheckDocument document = new
 		// CheckDocument("Quanto à lápis, não entendo. Quanto à computador, não entendo. Refiro-me à trabalhos remunerados. Refiro-me à reuniões extraordinárias. Fomos levados à crer. A uma hora estaremos partindo. As duas horas estaremos partindo. Os ônibus estacionaram a direita do pátio. Os ônibus estacionaram a esquerda do pátio. Em relação as atividades programadas. Com relação as atividades programadas. Devido as cobranças injustas. Enviei os documentos à você. Enviei os documentos à Vossa Excelência.  Quanto ao lápis, não entendo. Quanto ao computador, não entendo. Refiro-me aos trabalhos remunerados. Refiro-me às reuniões extraordinárias. Refiro-me a reuniões extraordinárias. Fomos levados a crer. À uma hora estaremos partindo. Daqui a uma hora estaremos partindo. Às duas horas estaremos partindo. Os ônibus estacionaram à direita do pátio. Os ônibus estacionaram à esquerda do pátio. Em relação a segurança dos menores. Em relação à segurança dos menores. Em relação às atividades programadas. Com relação a segurança dos menores. Com relação à segurança dos menores. Com relação às atividades programadas. Devido à cobrança injusta. Devido às cobranças injustas. Devido a cobrança injusta. Enviei os documentos a você. Enviei os documentos a Vossa Excelência.");
-		CheckDocument document = new CheckDocument(
-				"Arquivos branco. O Eclipse é boa ferramenta.");
+		CheckDocument document = new CheckDocument("Fomos levados à crer.");
 		// passe o doc pelo pipe
 		gc.analyze(document);
 
