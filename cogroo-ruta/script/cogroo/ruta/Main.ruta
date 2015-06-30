@@ -172,9 +172,9 @@ cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
 // rule 34
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
 cgToken{REGEXP(cgToken.lexeme, "anexo", true)}
-cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
+cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "34",
-    "suggestion" = "<Replace index=\"0\"> <TagReference index=\"0\"> <TagMask> <Class>finitive verb</Class> <Number>plural</Number> <Person>third</Person> <Tense>present</Tense> <Mood>indicative</Mood> </TagMask> </TagReference> </Replace> <Replace index=\"1\"> <Lexeme>anexos</Lexeme> </Replace>")};
+    "suggestion" = "replace 1 with 1 in (class=finitive-verb number=plural person=third tense=present mood=indicative) ; replace 2 with 'anexos'")};
 
 // rule 35
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
@@ -213,7 +213,7 @@ cgToken{REGEXP(cgToken.lexeme, "(não|nunca|ninguém|nada|jamais)", true)}
 VERB 
 END_PRONOUN
 { -> CREATE(PROBLEM, 1, 2, 3, "id" = "61-62",
-    "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
+    "suggestion" = "swap 2 3")};
     
 // Rules 63 and 64
 cgToken{REGEXP(cgToken.lexeme, "(nenhum|nenhuma)", true)}
@@ -282,7 +282,7 @@ cgToken{AND(IS(SINGULAR), IS(ADJECTIVE)) -> SINGULAR_ADJECTIVE};
 NOUN{IS(SINGULAR)}
 PLURAL_ADJECTIVE
 {-> CREATE(PROBLEM,1,2, "id" = "17-20",
-    "suggestion" = "<Replace index=\"0\"> <Reference index=\"1\"> <Property>Number</Property> <Property>Gender</Property> </Reference> </Replace>")};
+    "suggestion" = "set (gender number) of 1 to match 2 | set (gender number) of 2 to match 1")};
     
 NOUN{IS(PLURAL)}
 SINGULAR_ADJECTIVE
@@ -448,12 +448,12 @@ cgToken{NOT(IS(PERSONAL_PRONOUN))}
 FAZER_TEMPO
 EXP_TEMPO_P
 {->CREATE(PROBLEM,1,2,3, "id" = "42",
-    "suggestion"="<ReplaceMapping index=\"1\" key=\"fazem\" value=\"faz\"/> <ReplaceMapping index=\"1\" key=\"fizeram\" value=\"fez\"/> <ReplaceMapping index=\"1\" key=\"farão\" value=\"fará\"/>")};
+    "suggestion"="replace 2 with {'fazem' => 'faz' 'fizeram' => 'fez' 'farão' => 'fará'}")};
 
 FAZER_TEMPO{STARTSWITH(cgSentence)}
 EXP_TEMPO_P
 {->CREATE(PROBLEM,1,2, "id" = "42",
-    "suggestion"="<ReplaceMapping index=\"0\" key=\"fazem\" value=\"faz\"/> <ReplaceMapping index=\"0\" key=\"fizeram\" value=\"fez\"/> <ReplaceMapping index=\"0\" key=\"farão\" value=\"fará\"/>")};
+    "suggestion"="replace 1 with {'fazem' => 'faz' 'fizeram' => 'fez' 'farão' => 'fará'}")};
 
  
 // Rule 43
