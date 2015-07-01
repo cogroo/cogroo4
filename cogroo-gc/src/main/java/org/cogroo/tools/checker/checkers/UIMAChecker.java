@@ -205,9 +205,12 @@ public class UIMAChecker extends AbstractTypedChecker {
 							System.out
 									.format("TROCAR TOKEN '%s' POR '%s' COM OS SEGUINTES ATRIBUTOS:\n",
 											tokens[i], tokens[j]);
+							// tokens[i] <- (tokens[j] with the attributes of
+							// hash)
+							// how?
 							for (String p : hash.keySet()) {
 								System.out.format("%s=%s  ", p, hash.get(p));
-								// how?
+
 							}
 							System.out.println();
 						} else if ((m = REPLACE_R.matcher(sugItem)).find()) {
@@ -218,12 +221,13 @@ public class UIMAChecker extends AbstractTypedChecker {
 							while (m2.find()) {
 								properties.add(m2.group(1));
 							}
+							// for each item in hash, set attribute of token[1]
+							// how?
 							System.out
 									.format("DEFINIR AS SEGUINTES PROPRIEDADES DE '%s' PARA CONCORDAR COM '%s':\n",
 											tokens[i], tokens[j]);
 							for (String p : properties) {
 								System.out.format("%s ", p);
-								// how?
 							}
 							System.out.println();
 						}
