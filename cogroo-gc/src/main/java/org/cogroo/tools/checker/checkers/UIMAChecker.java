@@ -3,7 +3,6 @@ package org.cogroo.tools.checker.checkers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +10,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import opennlp.tools.util.Span;
 
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAFramework;
@@ -32,12 +33,17 @@ import org.cogroo.checker.CheckDocument;
 import org.cogroo.checker.GrammarChecker;
 import org.cogroo.entities.Mistake;
 import org.cogroo.entities.Sentence;
+import org.cogroo.entities.Token;
 import org.cogroo.tools.RuleParser;
 import org.cogroo.tools.checker.AbstractTypedChecker;
 import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.checkers.uima.AnnotatorUtil;
 import org.cogroo.tools.checker.checkers.uima.UimaCasAdapter;
+import org.cogroo.tools.checker.rules.applier.SuggestionBuilder;
+import org.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import org.cogroo.tools.checker.rules.model.Example;
+import org.cogroo.tools.checker.rules.model.TagMask;
+import org.cogroo.tools.checker.rules.util.TagMaskUtils;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -62,16 +68,20 @@ public class UIMAChecker extends AbstractTypedChecker {
 			.compile("'([^']+)'\\s*=>\\s*'([^']+)'");
 	private static final Pattern REPLACE_TAGR = Pattern
 			.compile("replace\\s+(\\d+)\\s+with\\s+(\\d+)\\s+in\\s+\\(((\\s*(number|gender|class|person|tense|mood)\\s*=\\s*[\\w-]+\\s*)+)\\)");
-	private static final Pattern REPLACE_TAGR2 = Pattern
-			.compile("(number|gender|class|person|tense|mood)\\s*=\\s*([\\w-]+)");
 	private static final Pattern REPLACE_R = Pattern
 			.compile("set\\s+\\((\\s*(gender|number|class|person|tense|mood)\\s*)+\\)\\s+of\\s+(\\d+)\\s+to\\s+match\\s+(\\d+)");
-	private static final Pattern REPLACE_R2 = Pattern
-			.compile("(gender|number|class|person|tense|mood)");
 
 	private final HashSet<Integer> done = new HashSet<Integer>();
 
-	public UIMAChecker() {
+	private final CogrooTagDictionary tagDictionary;
+
+	private final SuggestionBuilder suggestionBuilder;
+
+	public UIMAChecker(CogrooTagDictionary td) {
+
+		this.tagDictionary = td;
+		this.suggestionBuilder = new SuggestionBuilder(this.tagDictionary);
+
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Initializing UIMA Checker constructor.");
 		}
@@ -137,6 +147,10 @@ public class UIMAChecker extends AbstractTypedChecker {
 					continue;
 				else
 					processed.add(problem.getBegin());
+
+				List<Token> coveredTokens = getTokens(sentence,
+						problem.getBegin(), problem.getEnd());
+
 				List<String> suggestions = new ArrayList<String>(4);
 				String id = problem.getFeatureValueAsString(mIDFeature);
 
@@ -181,7 +195,6 @@ public class UIMAChecker extends AbstractTypedChecker {
 							tokens[i] = text;
 						} else if ((m = REPLACE_MAPPING.matcher(sugItem))
 								.find()) {
-							System.out.println("AQUI");
 							int i = Integer.parseInt(m.group(1)) - 1;
 							Matcher m2 = REPLACE_MAPPING2.matcher(m.group(2));
 							while (m2.find()) {
@@ -193,43 +206,20 @@ public class UIMAChecker extends AbstractTypedChecker {
 						} else if ((m = REPLACE_TAGR.matcher(sugItem)).find()) {
 							int i = Integer.parseInt(m.group(1)) - 1;
 							int j = Integer.parseInt(m.group(2)) - 1;
-							System.out.format("(%s)\n", m.group(3));
-							Matcher m2 = REPLACE_TAGR2.matcher(m.group(3));
-							HashMap<String, String> hash = new HashMap<String, String>(
-									4);
-							while (m2.find()) {
-								String property = m2.group(1);
-								String value = m2.group(2);
-								hash.put(property, value);
-							}
-							System.out
-									.format("TROCAR TOKEN '%s' POR '%s' COM OS SEGUINTES ATRIBUTOS:\n",
-											tokens[i], tokens[j]);
-							// tokens[i] <- (tokens[j] with the attributes of
-							// hash)
-							// how?
-							for (String p : hash.keySet()) {
-								System.out.format("%s=%s  ", p, hash.get(p));
+							String tagMaskStr = m.group(3);
+							TagMask tagMask = TagMaskUtils.parse(tagMaskStr);
 
-							}
-							System.out.println();
+							tokens[i] = suggestionBuilder.getBestFlexedWord(
+									coveredTokens.get(j), tagMask);
 						} else if ((m = REPLACE_R.matcher(sugItem)).find()) {
 							int i = Integer.parseInt(m.group(3)) - 1;
 							int j = Integer.parseInt(m.group(4)) - 1;
-							Matcher m2 = REPLACE_R2.matcher(m.group(1));
-							HashSet<String> properties = new HashSet<String>(4);
-							while (m2.find()) {
-								properties.add(m2.group(1));
-							}
-							// for each item in hash, set attribute of token[1]
-							// how?
-							System.out
-									.format("DEFINIR AS SEGUINTES PROPRIEDADES DE '%s' PARA CONCORDAR COM '%s':\n",
-											tokens[i], tokens[j]);
-							for (String p : properties) {
-								System.out.format("%s ", p);
-							}
-							System.out.println();
+							String tagMaskStr = m.group(1);
+							TagMask tagMask = TagMaskUtils
+									.createTagMaskFromToken(
+											coveredTokens.get(j), tagMaskStr);
+							tokens[i] = suggestionBuilder.getBestFlexedWord(
+									coveredTokens.get(i), tagMask);
 						}
 					}
 					StringBuilder s = new StringBuilder(tokens[0]);
@@ -282,6 +272,18 @@ public class UIMAChecker extends AbstractTypedChecker {
 	@Override
 	public int getPriority() {
 		return 100;
+	}
+
+	private List<Token> getTokens(Sentence sentence, int begin, int end) {
+		List<Token> tokens = new ArrayList<>();
+		Span span = new Span(begin, end);
+
+		for (Token token : sentence.getTokens()) {
+			if (span.contains(token.getSpan())) {
+				tokens.add(token);
+			}
+		}
+		return tokens;
 	}
 
 	public static void main(String[] args) throws IllegalArgumentException,

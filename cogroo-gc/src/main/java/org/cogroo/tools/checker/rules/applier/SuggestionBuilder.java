@@ -194,21 +194,7 @@ public class SuggestionBuilder {
 				RuleUtils.completeMissingParts(cloneTagMask,
 						originalToken.getMorphologicalTag());
 
-				List<String> flexList = new ArrayList<String>();
-				if (primitive != null) {
-					for (String p : primitive) {
-						String[] farr = dictionary.getInflectedPrimitive(p,
-								cloneTagMask, false);
-						if (farr != null) {
-							flexList.addAll(Arrays.asList(farr));
-						}
-					}
-				}
-
-				String[] flexArr = flexList
-						.toArray(new String[flexList.size()]); // Can be empty.
-				String flex = getBestFlexedWord(flexArr, originalToken,
-						cloneTagMask);
+				String flex = getBestFlexedWord(originalToken, tagMask);
 
 				if (flex.equals("")) {
 					reject = true;
@@ -754,6 +740,30 @@ public class SuggestionBuilder {
 		}
 
 		return v1[t.length()];
+	}
+
+	public String getBestFlexedWord(Token token, TagMask tm) {
+		List<String> flexList = new ArrayList<String>();
+
+		String[] primitives = token.getPrimitive();
+		TagMask cloneTagMask = TagMaskUtils.clone(tm);
+
+		if (primitives != null) {
+			for (String p : primitives) {
+				String[] farr = dictionary.getInflectedPrimitive(p,
+						cloneTagMask, false);
+				if (farr != null) {
+					flexList.addAll(Arrays.asList(farr));
+				}
+			}
+		}
+
+		String[] flexArr = flexList.toArray(new String[flexList.size()]); // Can
+																			// be
+																			// empty.
+		String flex = getBestFlexedWord(flexArr, token, cloneTagMask);
+
+		return flex;
 	}
 
 }

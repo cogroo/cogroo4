@@ -31,7 +31,7 @@ replace\s+(\d+)\s+with\s+'([^']+)'
 
 TagReference
 Regra 34
-    replace 1 with 1 in (number=plural gender=female class = finite-verb)
+    replace 1 with 1 in (number=plural gender=female class = finitive-verb)
 replace\s+(\d+)\s+with\s+(\d+)\s+in\s+\(((\s*(number|gender|class|person|tense|mood)\s*=\s*[\w-]+\s*)+)\)
 (number|gender|class|person|tense|mood)\s*=\s*([\w-]+)
     

@@ -15,16 +15,25 @@
  */
 package org.cogroo.tools.checker.rules.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.cogroo.entities.Token;
 import org.cogroo.tools.checker.rules.model.TagMask;
 
 /**
- * Utility methods to work with {@link TagMask}s. Specially to clone a {@link TagMask}
- * .
+ * Utility methods to work with {@link TagMask}s. Specially to clone a
+ * {@link TagMask} .
  * 
  * @author colen
- *
+ * 
  */
 public class TagMaskUtils {
+
+	private static final Pattern REPLACE_TAGR2 = Pattern
+			.compile("(number|gender|class|person|tense|mood)\\s*=\\s*([\\w-]+)");
+	private static final Pattern REPLACE_R2 = Pattern
+			.compile("(gender|number|class|person|tense|mood)");
 
 	/**
 	 * Creates an identical copy of the parameter <code>tagMask</code>.
@@ -46,6 +55,75 @@ public class TagMaskUtils {
 		clone.setSyntacticFunction(tagMask.getSyntacticFunction());
 		clone.setTense(tagMask.getTense());
 		return clone;
+	}
+
+	public static TagMask parse(String text) {
+		TagMask tm = new TagMask();
+		Matcher m = REPLACE_TAGR2.matcher(text);
+
+		while (m.find()) {
+			String property = m.group(1);
+			String value = m.group(2).replace('-', ' ');
+
+			switch (property) {
+			case "number":
+				tm.setNumber(TagMask.Number.fromValue(value));
+				break;
+			case "gender":
+				tm.setGender(TagMask.Gender.fromValue(value));
+				break;
+			case "class":
+				tm.setClazz(TagMask.Class.fromValue(value));
+				break;
+			case "person":
+				tm.setPerson(TagMask.Person.fromValue(value));
+				break;
+			case "tense":
+				tm.setTense(TagMask.Tense.fromValue(value));
+				break;
+			case "mood":
+				tm.setMood(TagMask.Mood.fromValue(value));
+				break;
+			default:
+				break;
+			}
+
+		}
+
+		return tm;
+	}
+
+	public static TagMask createTagMaskFromToken(Token token, String text) {
+		TagMask tm = new TagMask();
+		Matcher m = REPLACE_R2.matcher(text);
+		while (m.find()) {
+			String property = m.group(1);
+			switch (property) {
+			case "number":
+				tm.setNumber(token.getMorphologicalTag().getNumberE());
+				break;
+			case "gender":
+				tm.setGender(token.getMorphologicalTag().getGenderE());
+				break;
+			case "class":
+				tm.setClazz(token.getMorphologicalTag().getClazzE());
+				break;
+			case "person":
+				tm.setPerson(token.getMorphologicalTag().getPersonE());
+				break;
+			case "tense":
+				tm.setTense(token.getMorphologicalTag().getTense());
+				break;
+			case "mood":
+				tm.setMood(token.getMorphologicalTag().getMood());
+				break;
+			default:
+				break;
+			}
+
+		}
+
+		return tm;
 	}
 
 }
