@@ -287,7 +287,7 @@ PLURAL_ADJECTIVE
 NOUN{IS(PLURAL)}
 SINGULAR_ADJECTIVE
 {-> CREATE(PROBLEM,1,2, "id" = "17-20",
-    "suggestion" = "<Replace index=\"0\"> <Reference index=\"1\"> <Property>Number</Property> <Property>Gender</Property> </Reference> </Replace>")};
+    "suggestion" = "set (gender number) of 1 to match 2 | set (gender number) of 2 to match 1")};
 
 // rule 21 to 24
 PLURAL_ADJECTIVE

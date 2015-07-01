@@ -211,8 +211,6 @@ public class UIMAChecker extends AbstractTypedChecker {
 							}
 							System.out.println();
 						} else if ((m = REPLACE_R.matcher(sugItem)).find()) {
-							// TODO: corrigir regex para entrar aqui!
-							System.out.println(".......");
 							int i = Integer.parseInt(m.group(3)) - 1;
 							int j = Integer.parseInt(m.group(4)) - 1;
 							Matcher m2 = REPLACE_R2.matcher(m.group(1));
@@ -227,6 +225,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 								System.out.format("%s ", p);
 								// how?
 							}
+							System.out.println();
 						}
 					}
 					StringBuilder s = new StringBuilder(tokens[0]);
@@ -243,12 +242,8 @@ public class UIMAChecker extends AbstractTypedChecker {
 			}
 
 		} catch (Exception e) { // TODO: tratar exceptions corretamente
-			// e.printStackTrace();
 			LOGGER.fatal("Exception checking sentence with Ruta. ", e);
 		}
-
-		// for (Mistake m : mistakes)
-		// System.out.println(m.getFullMessage());
 		return mistakes;
 	}
 
@@ -272,11 +267,6 @@ public class UIMAChecker extends AbstractTypedChecker {
 				CAS.TYPE_NAME_STRING);
 		mSuggestionFeature = AnnotatorUtil.getRequiredFeature(mProblemType,
 				"suggestion", CAS.TYPE_NAME_STRING);
-		// mTokenType = AnnotatorUtil.getType(typeSystem,
-		// "opennlp.uima.Token");
-		// mLemmaFeature = AnnotatorUtil.getRequiredFeature(mTokenType, "lemma",
-		// CAS.TYPE_NAME_STRING);
-
 		typeSystemInitialized = true;
 	}
 
