@@ -59,6 +59,12 @@ public class TagMaskUtils {
 		return clone;
 	}
 
+	/**
+	 * @param text
+	 *            a string containing the attributes and its values, e.g.,
+	 *            "number=plural gender=male"
+	 * @return a TagMask object with the attributes and its values
+	 */
 	public static TagMask parse(String text) {
 		TagMask tm = new TagMask();
 		Matcher m = REPLACE_TAGR2.matcher(text);
@@ -96,6 +102,16 @@ public class TagMaskUtils {
 		return tm;
 	}
 
+	/**
+	 * Returns a TagMask with the attributes collected from the given token.
+	 * 
+	 * @param token
+	 *            the token whose attributes will be collected.
+	 * @param text
+	 *            a string containing the attributes to get from the token,
+	 *            e.g., "number  gender"
+	 * @returna a TagMask object with the attributes collected
+	 */
 	public static TagMask createTagMaskFromToken(Token token, String text) {
 		TagMask tm = new TagMask();
 		Matcher m = REPLACE_R2.matcher(text);

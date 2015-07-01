@@ -2,6 +2,9 @@ package org.cogroo.tools.checker.rules.util;
 
 import static org.junit.Assert.assertEquals;
 
+import org.cogroo.entities.Token;
+import org.cogroo.entities.impl.MorphologicalTag;
+import org.cogroo.entities.impl.TokenCogroo;
 import org.cogroo.tools.checker.rules.model.TagMask;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +38,12 @@ public class TagMaskUtilsTest {
 
 	@Test
 	public void testCreateTagMaskFromToken() {
-
+		Token token = new TokenCogroo("dummy", 42);
+		MorphologicalTag tag = new MorphologicalTag();
+		tag.setGender(TagMask.Gender.FEMALE);
+		token.setMorphologicalTag(tag);
+		TagMask tm = TagMaskUtils
+				.createTagMaskFromToken(token, "gender number");
+		assertEquals(token.getMorphologicalTag().getGenderE(), tm.getGender());
 	}
-
 }

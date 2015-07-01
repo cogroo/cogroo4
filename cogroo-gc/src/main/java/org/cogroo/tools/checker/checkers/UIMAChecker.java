@@ -14,9 +14,7 @@ import java.util.regex.Pattern;
 import opennlp.tools.util.Span;
 
 import org.apache.log4j.Logger;
-import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.FSIndex;
@@ -24,9 +22,6 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
 import org.apache.uima.cas.text.AnnotationFS;
-import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
-import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.apache.uima.ruta.engine.Ruta;
 import org.cogroo.analyzer.Analyzer;
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.checker.CheckDocument;
@@ -37,6 +32,7 @@ import org.cogroo.entities.Token;
 import org.cogroo.tools.RuleParser;
 import org.cogroo.tools.checker.AbstractTypedChecker;
 import org.cogroo.tools.checker.RuleDefinition;
+import org.cogroo.tools.checker.checkers.uima.AEFactory;
 import org.cogroo.tools.checker.checkers.uima.AnnotatorUtil;
 import org.cogroo.tools.checker.checkers.uima.UimaCasAdapter;
 import org.cogroo.tools.checker.rules.applier.SuggestionBuilder;
@@ -45,14 +41,13 @@ import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.model.TagMask;
 import org.cogroo.tools.checker.rules.util.TagMaskUtils;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 public class UIMAChecker extends AbstractTypedChecker {
 
 	private static final Logger LOGGER = Logger.getLogger(UIMAChecker.class);
 
-	private AnalysisEngine ae;
+	private final AnalysisEngine ae;
 	private final UimaCasAdapter converter;
 	private Type mProblemType;
 	private Type mTokenType;
@@ -85,24 +80,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Initializing UIMA Checker constructor.");
 		}
-		// TODO: move the following lines to a new class:
-		// AnalysisEngineFactory: create typesystem and analysis engine
-
-		TypeSystemDescription tsd = TypeSystemDescriptionFactory
-				.createTypeSystemDescription("cogroo.ruta.MainTypeSystem");
-
-		try {
-			URL url = Resources.getResource("cogroo/ruta/Main.ruta");
-			String text = Resources.toString(url, Charsets.UTF_8);
-			AnalysisEngineDescription aeDes = Ruta
-					.createAnalysisEngineDescription(text, tsd);
-
-			this.ae = UIMAFramework.produceAnalysisEngine(aeDes);
-		} catch (Exception e1) {
-			LOGGER.fatal("Failed to start Ruta AE", e1);
-			throw new RuntimeException("Failed to start Ruta AE", e1);
-		}
-
+		this.ae = AEFactory.createRutaAE();
 		String fileName = "cogroo/ruta/Regras.txt";
 		URL url = Resources.getResource(fileName);
 		for (RuleDefinition ruleDef : RuleParser.getRuleDefinitionList(url))
