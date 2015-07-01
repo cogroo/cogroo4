@@ -31,9 +31,11 @@ import org.cogroo.tools.checker.rules.model.TagMask;
 public class TagMaskUtils {
 
 	private static final Pattern REPLACE_TAGR2 = Pattern
-			.compile("(number|gender|class|person|tense|mood)\\s*=\\s*([\\w-]+)");
-	private static final Pattern REPLACE_R2 = Pattern
-			.compile("(gender|number|class|person|tense|mood)");
+			.compile("(\\w+)\\s*=\\s*([\\w-]+)");
+	// .compile("(number|gender|class|person|tense|mood)\\s*=\\s*([\\w-]+)");
+	private static final Pattern REPLACE_R2 = Pattern.compile("(\\w+)");
+
+	// .compile("(gender|number|class|person|tense|mood)");
 
 	/**
 	 * Creates an identical copy of the parameter <code>tagMask</code>.
@@ -85,7 +87,8 @@ public class TagMaskUtils {
 				tm.setMood(TagMask.Mood.fromValue(value));
 				break;
 			default:
-				break;
+				throw new IllegalArgumentException("Invalid property: '"
+						+ property + "'");
 			}
 
 		}

@@ -298,7 +298,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 		// "Já fazem dias que não o vejo.");
 		// "Jamais ocorreu-nos esta ideia; agora está anexo os documentos solicitados.");
 		// passe o doc pelo pipe
-				"Os casacos bonito ficaram prontos.");
+				"segue anexos o documento solicitado.");
 		gc.analyze(document);
 
 	}

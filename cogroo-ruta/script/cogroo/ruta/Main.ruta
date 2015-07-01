@@ -164,10 +164,10 @@ cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(FEMALE)))
 
 // rule 33
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
-cgToken{REGEXP(cgToken.lexeme, "anexo", true)}
+cgToken{REGEXP(cgToken.lexeme, "anexos", true)}
 cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "33",
-    "suggestion" = "<Replace index=\"1\"> <Lexeme>anexo</Lexeme> </Replace>")};
+    "suggestion" = "replace 2 with 'anexo'")};
 
 // rule 34
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
