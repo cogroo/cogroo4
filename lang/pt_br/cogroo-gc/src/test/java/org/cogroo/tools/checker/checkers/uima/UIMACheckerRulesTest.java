@@ -27,7 +27,8 @@ public class UIMACheckerRulesTest {
 
 	private static GrammarChecker cogroo;
 
-	private static Pattern PROBLEM = Pattern.compile("\\[(.*?)\\]\\((.*?)\\)");
+	private static Pattern PROBLEM = Pattern
+			.compile("\\[(.*?)\\]\\s*\\((.+?)\\)");
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -39,6 +40,7 @@ public class UIMACheckerRulesTest {
 
 	}
 
+	// ACCEPTANCE TEST
 	// Test all the lines of the filename. This method assumes that there is at
 	// most one problem per line.
 	private List<String> testSuggestions(String filename) throws IOException {
@@ -52,9 +54,11 @@ public class UIMACheckerRulesTest {
 				continue;
 			StringBuilder l = new StringBuilder(line);
 			Matcher m = PROBLEM.matcher(l);
+
 			List<String> expectedSuggestions = new ArrayList<String>();
 			List<Mistake> mistakes;
 			if (m.find()) {
+				String id = m.group(2);
 				// parts[0] = original excerpt; parts[1] = suggestions
 				String[] parts = m.group(1).split("=>", 2);
 				// original = original clean text
@@ -78,42 +82,49 @@ public class UIMACheckerRulesTest {
 									lineNumber));
 				else {
 					Mistake mistake = mistakes.get(0);
-					for (String suggestion : mistake.getSuggestions())
-						obtainedSuggestions.add(new StringBuilder(l).replace(
-								mistake.getStart(), mistake.getEnd(),
-								suggestion).toString());
-					Collections.sort(expectedSuggestions);
-					Collections.sort(obtainedSuggestions);
-					int i = 0, j = 0;
-					while (i < expectedSuggestions.size()
-							&& j < obtainedSuggestions.size()) {
-						int cmp = expectedSuggestions.get(i).compareTo(
-								obtainedSuggestions.get(j));
-						if (cmp < 0) {
+					if (mistake.getRuleIdentifier().trim().equals(id.trim())) {
+						for (String suggestion : mistake.getSuggestions())
+							obtainedSuggestions.add(new StringBuilder(l)
+									.replace(mistake.getStart(),
+											mistake.getEnd(), suggestion)
+									.toString());
+						Collections.sort(expectedSuggestions);
+						Collections.sort(obtainedSuggestions);
+						int i = 0, j = 0;
+						while (i < expectedSuggestions.size()
+								&& j < obtainedSuggestions.size()) {
+							int cmp = expectedSuggestions.get(i).compareTo(
+									obtainedSuggestions.get(j));
+							if (cmp < 0) {
+								errors.add(String
+										.format("Did not obtain the expected suggestion: '%s' (at line %d).",
+												expectedSuggestions.get(i++),
+												lineNumber));
+							} else if (cmp > 0) {
+								errors.add(String
+										.format("Did not expect the obtainted suggestion: '%s' (at line %d).",
+												obtainedSuggestions.get(j++),
+												lineNumber));
+							} else {
+								i++;
+								j++;
+							}
+						}
+						while (i < expectedSuggestions.size())
 							errors.add(String
 									.format("Did not obtain the expected suggestion: '%s' (at line %d).",
 											expectedSuggestions.get(i++),
 											lineNumber));
-						} else if (cmp > 0) {
+						while (j < obtainedSuggestions.size())
 							errors.add(String
 									.format("Did not expect the obtainted suggestion: '%s' (at line %d).",
 											obtainedSuggestions.get(j++),
 											lineNumber));
-						} else {
-							i++;
-							j++;
-						}
+					} else {
+						errors.add(String
+								.format("Unexpected problem with id '%s' (at line %d).",
+										mistake.getRuleIdentifier(), lineNumber));
 					}
-					while (i < expectedSuggestions.size())
-						errors.add(String
-								.format("Did not obtain the expected suggestion: '%s' (at line %d).",
-										expectedSuggestions.get(i++),
-										lineNumber));
-					while (j < obtainedSuggestions.size())
-						errors.add(String
-								.format("Did not expect the obtainted suggestion: '%s' (at line %d).",
-										obtainedSuggestions.get(j++),
-										lineNumber));
 				}
 
 			} else {
@@ -128,12 +139,22 @@ public class UIMACheckerRulesTest {
 		return errors;
 	}
 
+	private String test(String filename) throws IOException {
+		List<String> suggestionList = testSuggestions("cogroo/ruta/Tests/"
+				+ filename);
+		String[] suggestions = suggestionList.toArray(new String[suggestionList
+				.size()]);
+		return StringUtils.join(suggestions, "\n");
+	}
+
 	@Test
 	public void testCheckAnexos() throws IOException {
-		String errors = StringUtils
-				.join(testSuggestions("cogroo/ruta/Tests/Anexos.txt").toArray(),
-						"\n");
-		assertEquals("", errors);
+		assertEquals("", test("Anexos.txt"));
+	}
+
+	@Test
+	public void testCheckColocacaoPronominal() throws IOException {
+		assertEquals("", test("ColocacaoPronominal.txt"));
 	}
 
 	private List<Mistake> checkText(String text) {

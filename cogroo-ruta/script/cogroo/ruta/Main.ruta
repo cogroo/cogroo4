@@ -215,13 +215,28 @@ END_PRONOUN
 { -> CREATE(PROBLEM, 1, 2, 3, "id" = "61-62",
     "suggestion" = "swap 2 3")};
     
+cgToken{REGEXP(cgToken.lexeme, "(não|nunca|ninguém|nada|jamais)", true)}
+VERB 
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "61-62",
+    "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
+    
 // Rules 63 and 64
 cgToken{REGEXP(cgToken.lexeme, "(nenhum|nenhuma)", true)}
 NOUN
 VERB 
 END_PRONOUN
 { -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "63-64",
-    "suggestion" = "<Swap a=\"2\" b=\"3\"/>")};
+    "suggestion" = "swap 3 4")};
+
+cgToken{REGEXP(cgToken.lexeme, "(nenhum|nenhuma)", true)}
+NOUN
+VERB 
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, 5, "id" = "63-64",
+    "suggestion" = "swap 3 4; replace 3 with 'nos'; replace 5 with ''")};
     
 // Rules 65 and 66
 cgToken{REGEXP(cgToken.lexeme, "(que|quem|quando|se|porque)", true)}
@@ -229,7 +244,15 @@ VERB
 END_PRONOUN
 cgToken{NOT(IS(VERB))
  -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "65-66",
-     "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
+     "suggestion" = "swap 2 3")};
+
+cgToken{REGEXP(cgToken.lexeme, "(que|quem|quando|se|porque)", true)}
+VERB 
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)}
+cgToken{NOT(IS(VERB))
+ -> CREATE(PROBLEM, 1, 2, 3, 4, 5, "id" = "65-66",
+     "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
     
 // Rules 67 and 68
 cgToken{REGEXP(cgToken.lexeme, "(sempre|já|bem|aqui|onde|mais|talvez|ainda|como)", true)}
@@ -237,7 +260,15 @@ VERB
 END_PRONOUN
 cgToken{NOT(IS(VERB))
  -> CREATE(PROBLEM, 1, 2, 3, "id" = "67-68",
-     "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
+     "suggestion" = "swap 2 3")};
+
+cgToken{REGEXP(cgToken.lexeme, "(sempre|já|bem|aqui|onde|mais|talvez|ainda|como)", true)}
+VERB 
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)}
+cgToken{NOT(IS(VERB))
+ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "67-68",
+     "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
     
 // Rules 69 and 70
 cgToken{REGEXP(cgToken.lexeme, "por", true)}
@@ -247,23 +278,45 @@ NOUN
 VERB
 END_PRONOUN
 { -> CREATE(PROBLEM, 1, 2, 3, 4, 5, 6, "id" = "69-70",
-    "suggestion" = "<Swap a=\"4\" b=\"5\"/>")};
+    "suggestion" = "swap 5 6")};
+
+cgToken{REGEXP(cgToken.lexeme, "por", true)}
+cgToken{REGEXP(cgToken.lexeme, "que", true)}
+ARTICLE
+NOUN
+VERB
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, 5, 6, 7, "id" = "69-70",
+    "suggestion" = "swap 5 6; replace 5 with 'nos'; replace 7 with ''")};
     
 // Rules 71 and 72
-cgToken{REGEXP(cgToken.lexeme,"(tudo|pouco|algo)",true)}
+cgToken{REGEXP(cgToken.lexeme, "(tudo|pouco|algo)",true)}
 VERB
 END_PRONOUN
 { -> CREATE(PROBLEM, 1, 2, 3, "id" = "71-72",
-    "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
+    "suggestion" = "swap 2 3")};
+    
+cgToken{REGEXP(cgToken.lexeme, "(tudo|pouco|algo)",true)}
+VERB
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "71-72",
+    "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
     
 // Rules 73 and 74
 cgToken{REGEXP(cgToken.lexeme,"(só|ou|ora|quer)",true)}
 VERB
 END_PRONOUN
 { -> CREATE(PROBLEM, 1, 2, 3, "id" = "73-74",
-    "suggestion" = "<Swap a=\"1\" b=\"2\"/>")};
+    "suggestion" = "swap 2 3")};
 
-
+cgToken{REGEXP(cgToken.lexeme,"(só|ou|ora|quer)",true)}
+VERB
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "73-74",
+    "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
 
 //////////////////////////////////////////////////////////////
 /////////////////////////////// REGRAS - CONCORDÂNCIA ADJ.-SUB.
