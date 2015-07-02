@@ -35,7 +35,7 @@ MALE_NOUN{
  -> CREATE(PROBLEM, 1, 2, "id" = "1-2",
      "suggestion" = "...")};
      
-Isso fará com que, sempre que houver um "à" (CRASE_A) seguido de um substantivo masculino (MALE_NOUN), será criado um PROBLEM nos tokens 1 e 2 da regra (no caso, todos), com id "1-2". A sintaxe da suggestion foi omitida aqui e será explicada posteriormente.
+Isso fará com que, sempre que houver um "à" (CRASE_A) seguido de um substantivo masculino (MALE_NOUN), será criado um PROBLEM nos tokens 1 e 2 do problem (no caso, todos), com id "1-2". A sintaxe da suggestion foi omitida aqui e será explicada posteriormente.
  
 Obs.: O CoGrOO nem sempre marca corretamente as classes gramaticais, por isso algumas vezes as regras falharão, ainda que estejam escritas corretamente.
 
@@ -47,11 +47,11 @@ Há cinco tipos de sugestões, que são apresentados a seguir em forma de exempl
 
 1. Trocar lexeme por string previamente conhecida:
 replace 3 with 'souber'
-Isto trocará o terceiro token da regra por 'souber'.
+Isto trocará o terceiro token do problem por 'souber'.
 
 2. Permutar dois tokens:
 swap 3 4
-Isto trocará de posições os tokens 3 e 4 da regra.
+Isto trocará de posições os tokens 3 e 4 do problem.
 
 3. Trocar com mapping:
 replace 1 with {'caber' => 'couber' 'fazer' => 'fizer'}
@@ -59,12 +59,12 @@ Isto trocará o token 1 de acordo com seu valor original: se for 'caber', passar
 
 4. Trocar tags (gênero, número, etc.) por tags previamente conhecidas
 replace 5 with 1 in (number=plural gender=female)
-Isto substituirá o 5º token da regra pela palavra que anteriormente estava no 1º token da regra, porém após a modificação do gênero (para feminino) e do número (para plural). Pode haver uma ou mais tags definidas dentro dos parênteses.
+Isto substituirá o 5º token do problem pela palavra que anteriormente estava no 1º token do problem, porém após a modificação do gênero (para feminino) e do número (para plural). Pode haver uma ou mais tags definidas dentro dos parênteses.
 Obs.: geralmente, os índices (que no exemplo acima são 5 e 1) são iguais, isto é, flexionamos uma palavra e mantemo-las na posição original.
 
 5. Trocar tags de um token para concordar com outro token
 set (gender number) of 1 to match 2 
-Isto trocará o gênero e o número do 1º token para concordarem com o gênero e o número do 2º token da regra. Pode haver uma ou mais tags nos parênteses.
+Isto trocará o gênero e o número do 1º token para concordarem com o gênero e o número do 2º token do problem. Pode haver uma ou mais tags nos parênteses.
 
 
 Para sugerir mais de uma substituição simultaneamente, basta separar os comandos por ";", como no exemplo abaixo:
@@ -84,6 +84,8 @@ Exemplo:
 Comprei [casacos bonito => casacos bonitos / casaco bonito](17) ontem.
 
 Linhas começando com # são ignoradas, e podem ser utilizadas para comentários ou para testes desativados.
+
+Atualmente o código que faz os testes supõe que há no máximo UM problema por frase.
 
 == LINK 
 
