@@ -91,6 +91,32 @@ public class UIMAChecker extends AbstractTypedChecker {
 		}
 	}
 
+	private static String applyCase(String s, int type) {
+		switch (type) {
+		case 0:
+			return s.toLowerCase();
+		case 1:
+			return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+		case 2:
+			return s.toUpperCase();
+		default:
+			throw new IllegalArgumentException();
+		}
+	}
+
+	private static int getCase(String s) {
+		char first = s.charAt(0);
+		char second = s.length() > 1 ? s.charAt(1) : 'a';
+		// if a word has only one letter, suppose the "other letters" are
+		// lower-case.
+		if (Character.isLowerCase(first))
+			return 0;
+		else if (Character.isUpperCase(second))
+			return 2;
+		else
+			return 1;
+	}
+
 	@Override
 	public List<Mistake> check(Sentence sentence) {
 		if (LOGGER.isDebugEnabled()) {
@@ -200,9 +226,12 @@ public class UIMAChecker extends AbstractTypedChecker {
 									coveredTokens.get(i), tagMask);
 						}
 					}
-					StringBuilder s = new StringBuilder(tokens[0]);
+					StringBuilder s = new StringBuilder(applyCase(tokens[0],
+							getCase(originalTokens[0])));
 					for (int k = 1; k < tokens.length; k++) {
-						s.append(" " + tokens[k]);
+						s.append(" "
+								+ applyCase(tokens[k],
+										getCase(originalTokens[k])));
 					}
 					System.out.format("SUGESTÃO: '%s'\n", s);
 					suggestions.add(s.toString());

@@ -123,7 +123,7 @@ cgToken{AND(IS(SINGULAR), IS(NOUN)) -> SINGULAR_NOUN};
 cgToken{REGEXP(cgToken.lexeme, "em", true)}
 cgToken{REGEXP(cgToken.lexeme, "anex(os|a|as)", true)
 -> CREATE(PROBLEM, 1, 2, "id" = "25-27", 
-    "suggestion" = "<Replace index=\"1\"> <Lexeme>anexo</Lexeme> </Replace>")};
+    "suggestion" = "replace 2 with 'anexo'")};
 
 // TODO: The verb should not be necessary in any of the following rules.
 
@@ -132,35 +132,35 @@ cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
 cgToken{REGEXP(cgToken.lexeme, "anexos", true)}
 cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "28", 
-    "suggestion" = "<Replace index=\"0\"> <TagReference index=\"0\"> <TagMask> <Class>finitive verb</Class> <Number>singular</Number> <Person>third</Person> <Tense>present</Tense> <Mood>indicative</Mood> </TagMask> </TagReference> </Replace> <Replace index=\"1\"> <Lexeme>anexo</Lexeme> </Replace>")};
+    "suggestion" = "replace 2 with 'anexo'")};
     
 // rule 29
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
 cgToken{REGEXP(cgToken.lexeme, "anexo", true)}
 cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "29",
-    "suggestion" = "<Replace index=\"1\"> <Lexeme>anexos</Lexeme> </Replace>")};
+    "suggestion" = "replace 2 with 'anexos'")};
 
 // rule 30
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
 cgToken{REGEXP(cgToken.lexeme, "anexa", true)}
 cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(FEMALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "30",
-    "suggestion" = "<Replace index=\"1\"> <Lexeme>anexas</Lexeme> </Replace>")};
+    "suggestion" = "replace 2 with 'anexas'")};
 
 // rule 31
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
 cgToken{REGEXP(cgToken.lexeme, "anexas", true)}
 cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "31",
-    "suggestion" = "<Replace index=\"1\"> <Lexeme>anexos</Lexeme> </Replace>")};
+    "suggestion" = "replace 2 with 'anexos'")};
 
 // rule 32
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
 cgToken{REGEXP(cgToken.lexeme, "anexas", true)}
 cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(FEMALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "32",
-    "suggestion" = "<Replace index=\"0\"> <TagReference index=\"0\"> <TagMask> <Class>finitive verb</Class> <Number>singular</Number> <Person>third</Person> <Tense>present</Tense> <Mood>indicative</Mood> </TagMask> </TagReference> </Replace> <Replace index=\"1\"> <Lexeme>anexa</Lexeme> </Replace>")};
+    "suggestion" = "replace 2 with 'anexa'")};
 
 // rule 33
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
@@ -181,21 +181,21 @@ cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
 cgToken{REGEXP(cgToken.lexeme, "anexa", true)}
 cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(FEMALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "35",
-    "suggestion" = "<Replace index=\"0\"> <TagReference index=\"0\"> <TagMask> <Class>finitive verb</Class> <Number>plural</Number> <Person>third</Person> <Tense>present</Tense> <Mood>indicative</Mood> </TagMask> </TagReference> </Replace> <Replace index=\"1\"> <Lexeme>anexas</Lexeme> </Replace>")};
+    "suggestion" = "replace 1 with 1 in (class=finitive-verb number=plural person=third tense=present mood=indicative) ; replace 2 with 'anexas'")};
 
 // rule 36
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
 cgToken{REGEXP(cgToken.lexeme, "anexas", true)}
 cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "36", 
-    "suggestion" = "<Replace index=\"0\"> <TagReference index=\"0\"> <TagMask> <Class>finitive verb</Class> <Number>plural</Number> <Person>third</Person> <Tense>present</Tense> <Mood>indicative</Mood> </TagMask> </TagReference> </Replace> <Replace index=\"1\"> <Lexeme>anexos</Lexeme> </Replace>")};
+    "suggestion" = "replace 1 with 1 in (class=finitive-verb number=plural person=third tense=present mood=indicative) ; replace 2 with 'anexos'")};
 
 // rule 37
 cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
 cgToken{REGEXP(cgToken.lexeme, "anexas", true)}
 cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(FEMALE)))
 -> CREATE(PROBLEM, 1, 2, 3, "id" = "37",
-    "suggestion" = "<Replace index=\"1\"> <Lexeme>anexa</Lexeme> </Replace>")};
+    "suggestion" = "replace 2 with 'anexa'")};
 
 
 

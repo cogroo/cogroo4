@@ -1,0 +1,21 @@
+Quando ele [dizer => ]( ) o que pensa, estaremos acabados.
+Se ele [fazer => ]( ) algo errado, logo saberemos.
+Quando ele [manter => ]( ) a palavra, ficaremos surpresos.
+Quando ele [pôr => ]( ) as coisas em ordem, ele viajará para o exterior.
+Se eu [ver => ]( ) meu irmão novamente, perguntar-lhe-ei sobre esse assunto.
+Quando Maria [pôr => ]( ) as coisas em ordem, ela viajará para fora do país.
+Se João [ver => ]( ) meu irmão novamente, perguntar-lhe-á sobre esse assunto.
+Quando a professora [pôr => ]( ) as coisas em ordem, ela aplicará novas provas.
+Se o cachorro [ver => ]( ) o gato novamente, latirá para ele.
+Mas quando o gato [saber => ]( ) desviar do cachorro, nada acontecerá.
+
+Quando ele disser o que pensa, estaremos acabados.
+Se ele fizer algo errado, logo saberemos.
+Quando ele mantiver a palavra, ficaremos surpresos.
+Quando ele puser as coisas em ordem, ele viajará para o exterior.
+Se eu vir meu irmão novamente, perguntar-lhe-ei sobre esse assunto.
+Quando Maria puser as coisas em ordem, ela viajará para fora do país.
+Se João vir meu irmão novamente, perguntar-lhe-á sobre esse assunto.
+Quando a professora puser as coisas em ordem, ela aplicará novas provas.
+Se o cachorro vir o gato novamente, latirá para ele.
+Mas quando o gato souber desviar do cachorro, nada acontecerá.

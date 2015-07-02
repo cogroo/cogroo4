@@ -2,9 +2,17 @@ package org.cogroo.tools.checker.checkers.uima;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.commons.io.Charsets;
+import org.apache.commons.lang.StringUtils;
 import org.cogroo.analyzer.Analyzer;
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.checker.CheckDocument;
@@ -13,9 +21,13 @@ import org.cogroo.entities.Mistake;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.common.io.Resources;
+
 public class UIMACheckerRulesTest {
 
 	private static GrammarChecker cogroo;
+
+	private static Pattern PROBLEM = Pattern.compile("\\[(.*?)\\]\\((.*?)\\)");
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -27,13 +39,101 @@ public class UIMACheckerRulesTest {
 
 	}
 
-	@Test
-	public void testCheck34() {
-		String sentence = "segue anexos o documento solicitado.";
-		List<Mistake> mistakes = checkText(sentence);
+	// Test all the lines of the filename. This method assumes that there is at
+	// most one problem per line.
+	private List<String> testSuggestions(String filename) throws IOException {
+		List<String> errors = new ArrayList<String>();
+		URL url = Resources.getResource(filename);
+		int lineNumber = 0;
+		for (String line : Resources.readLines(url, Charsets.UTF_8)) {
+			lineNumber++;
+			line = line.trim();
+			if (line.isEmpty() || line.charAt(0) == '#')
+				continue;
+			StringBuilder l = new StringBuilder(line);
+			Matcher m = PROBLEM.matcher(l);
+			List<String> expectedSuggestions = new ArrayList<String>();
+			List<Mistake> mistakes;
+			if (m.find()) {
+				// parts[0] = original excerpt; parts[1] = suggestions
+				String[] parts = m.group(1).split("=>", 2);
+				// original = original clean text
+				StringBuilder original = l.replace(m.start(), m.end(),
+						parts[0].trim());
 
-		assertEquals(33, mistakes.get(0).getRuleIdentifier());
-		assertEquals("segue anexo o", mistakes.get(0).getSuggestions()[0]);
+				for (String sugg : parts[1].split("/")) {
+					expectedSuggestions.add(new StringBuilder(line).replace(
+							m.start(), m.end(), sugg.trim()).toString());
+				}
+
+				List<String> obtainedSuggestions = new ArrayList<String>();
+				mistakes = checkText(original.toString());
+				if (mistakes.size() > 1)
+					errors.add(String
+							.format("Error in the test: there may be at most one problem per line (at line %d).",
+									lineNumber));
+				else if (mistakes.size() == 0)
+					errors.add(String
+							.format("False negative: expected 1 problem; got 0 (at line %d).",
+									lineNumber));
+				else {
+					Mistake mistake = mistakes.get(0);
+					for (String suggestion : mistake.getSuggestions())
+						obtainedSuggestions.add(new StringBuilder(l).replace(
+								mistake.getStart(), mistake.getEnd(),
+								suggestion).toString());
+					Collections.sort(expectedSuggestions);
+					Collections.sort(obtainedSuggestions);
+					int i = 0, j = 0;
+					while (i < expectedSuggestions.size()
+							&& j < obtainedSuggestions.size()) {
+						int cmp = expectedSuggestions.get(i).compareTo(
+								obtainedSuggestions.get(j));
+						if (cmp < 0) {
+							errors.add(String
+									.format("Did not obtain the expected suggestion: '%s' (at line %d).",
+											expectedSuggestions.get(i++),
+											lineNumber));
+						} else if (cmp > 0) {
+							errors.add(String
+									.format("Did not expect the obtainted suggestion: '%s' (at line %d).",
+											obtainedSuggestions.get(j++),
+											lineNumber));
+						} else {
+							i++;
+							j++;
+						}
+					}
+					while (i < expectedSuggestions.size())
+						errors.add(String
+								.format("Did not obtain the expected suggestion: '%s' (at line %d).",
+										expectedSuggestions.get(i++),
+										lineNumber));
+					while (j < obtainedSuggestions.size())
+						errors.add(String
+								.format("Did not expect the obtainted suggestion: '%s' (at line %d).",
+										obtainedSuggestions.get(j++),
+										lineNumber));
+				}
+
+			} else {
+				// we expected no problem, but got some
+				int n = checkText(l.toString()).size();
+				if (n > 0)
+					errors.add(String.format(
+							"Expected 0 problem, got %d (at line %d).", n,
+							lineNumber));
+			}
+		}
+		return errors;
+	}
+
+	@Test
+	public void testCheckAnexos() throws IOException {
+		String errors = StringUtils
+				.join(testSuggestions("cogroo/ruta/Tests/Anexos.txt").toArray(),
+						"\n");
+		assertEquals("", errors);
 	}
 
 	private List<Mistake> checkText(String text) {
