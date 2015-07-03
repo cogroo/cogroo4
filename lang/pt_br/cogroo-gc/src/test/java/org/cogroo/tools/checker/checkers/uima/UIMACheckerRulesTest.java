@@ -157,6 +157,11 @@ public class UIMACheckerRulesTest {
 		assertEquals("", test("ColocacaoPronominal.txt"));
 	}
 
+	@Test
+	public void testCheckConcordanciaAdjSub() throws IOException {
+		assertEquals("", test("ConcordanciaAdjSub.txt"));
+	}
+
 	private List<Mistake> checkText(String text) {
 		CheckDocument document = new CheckDocument(text);
 		cogroo.analyze(document);

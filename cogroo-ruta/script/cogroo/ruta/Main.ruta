@@ -335,23 +335,23 @@ cgToken{AND(IS(SINGULAR), IS(ADJECTIVE)) -> SINGULAR_ADJECTIVE};
 NOUN{IS(SINGULAR)}
 PLURAL_ADJECTIVE
 {-> CREATE(PROBLEM,1,2, "id" = "17-20",
-    "suggestion" = "set (gender number) of 1 to match 2 | set (gender number) of 2 to match 1")};
+    "suggestion" = "set (number) of 2 to match 1")};
     
 NOUN{IS(PLURAL)}
 SINGULAR_ADJECTIVE
 {-> CREATE(PROBLEM,1,2, "id" = "17-20",
-    "suggestion" = "set (gender number) of 1 to match 2 | set (gender number) of 2 to match 1")};
+    "suggestion" = "set (number) of 2 to match 1")};
 
 // rule 21 to 24
 PLURAL_ADJECTIVE
 NOUN{IS(SINGULAR)
 -> CREATE(PROBLEM,1,2, "id" = "21-24",
-    "suggestion" = "<Replace index=\"0\"> <Reference index=\"1\"> <Property>Number</Property> <Property>Gender</Property> </Reference> </Replace>")};
+    "suggestion" = "set (number) of 2 to match 1")};
     
 SINGULAR_ADJECTIVE
 NOUN{IS(PLURAL)
 -> CREATE(PROBLEM,1,2, "id" = "21-24",
-    "suggestion" = "<Replace index=\"0\"> <Reference index=\"1\"> <Property>Number</Property> <Property>Gender</Property> </Reference> </Replace>")};
+    "suggestion" = "set (number) of 2 to match 1")};
 
 
 
@@ -364,10 +364,6 @@ DECLARE CRASE, CRASE_A, CRASE_AS;
 
 DECLARE PRON_TRATAMENTO;
 DECLARE EM_RELACAO, COM_RELACAO;
-
-
-
-
 
 cgToken{REGEXP(cgToken.lexeme, "a", true) -> LEXEME_A};
 cgToken{REGEXP(cgToken.lexeme, "as", true) -> LEXEME_AS};
@@ -388,15 +384,20 @@ cgToken{REGEXP(cgToken.lexeme, "relação", true)  -> CREATE(COM_RELACAO, 1, 2, 
 
 // rules 1 and 2
 CRASE
-MALE_NOUN{
+MALE_NOUN{IS(SINGULAR)
  -> CREATE(PROBLEM, 1, 2, "id" = "1-2",
-     "suggestion" = "<Replace index=\"0\">  <Lexeme/> </Replace><Replace index=\"1\">    <Lexeme>ao</Lexeme>  </Replace>")};
+     "suggestion" = "replace 2 with '' | replace 1 with 'ao'; replace 2 with ''")};
 
-// rules 3
+CRASE
+MALE_NOUN{IS(PLURAL)
+ -> CREATE(PROBLEM, 1, 2, "id" = "1-2",
+     "suggestion" = "replace 2 with ''")};
+
+// rule 3
 CRASE_A
 PLURAL_NOUN{
  IS(FEMALE) -> CREATE(PROBLEM, 1, 2, "id" = "3",
-     "suggestion" = "<Replace index=\"0\">  <Lexeme/> </Replace><Replace index=\"1\">    <Lexeme>a</Lexeme>  </Replace>")};
+     "suggestion" = "replace 2 with ''")};
 
 // rule 4
 CRASE
