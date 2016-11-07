@@ -28,16 +28,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
-import opennlp.model.AbstractModel;
-import opennlp.tools.namefind.NameFinderME;
-import opennlp.tools.namefind.TokenNameFinderModel;
-import opennlp.tools.postag.POSModel;
-import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.sentdetect.SentenceDetectorME;
-import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.tools.tokenize.TokenizerME;
-import opennlp.tools.tokenize.TokenizerModel;
-
 import org.apache.log4j.Logger;
 import org.cogroo.config.Analyzers;
 import org.cogroo.config.LanguageConfiguration;
@@ -50,6 +40,16 @@ import org.cogroo.tools.featurizer.FeaturizerME;
 import org.cogroo.tools.featurizer.FeaturizerModel;
 
 import com.google.common.io.Closeables;
+
+import opennlp.tools.ml.model.MaxentModel;
+import opennlp.tools.namefind.NameFinderME;
+import opennlp.tools.namefind.TokenNameFinderModel;
+import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSTaggerME;
+import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.sentdetect.SentenceModel;
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.tokenize.TokenizerModel;
 
 public class ComponentFactory implements ComponentFactoryI {
 
@@ -393,7 +393,7 @@ public class ComponentFactory implements ComponentFactoryI {
     return analyzer;
   }
 
-  private void logOutcomes(AbstractModel chunkerModel) {
+  private void logOutcomes(MaxentModel chunkerModel) {
     StringBuilder sb = new StringBuilder("Outcomes: ");
     for (int i = 0; i < chunkerModel.getNumOutcomes(); i++) {
       sb.append(chunkerModel.getOutcome(i)).append(" ");

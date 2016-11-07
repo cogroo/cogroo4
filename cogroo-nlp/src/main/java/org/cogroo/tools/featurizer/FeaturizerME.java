@@ -20,10 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import opennlp.model.AbstractModel;
-import opennlp.model.EventStream;
-import opennlp.model.MaxentModel;
-import opennlp.model.TrainUtil;
+import org.cogroo.tools.chunker2.ChunkerEventStream;
+
+import opennlp.tools.ml.EventTrainer;
+import opennlp.tools.ml.TrainerFactory;
+import opennlp.tools.ml.model.Event;
+import opennlp.tools.ml.model.MaxentModel;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.BeamSearch;
 import opennlp.tools.util.ObjectStream;
@@ -131,10 +133,12 @@ public class FeaturizerME implements Featurizer {
 
     Map<String, String> manifestInfoEntries = new HashMap<String, String>();
 
-    EventStream es = new FeaturizerEventStream(in, factory.getFeaturizerContextGenerator());
+    ObjectStream<Event> es = new FeaturizerEventStream(in, factory.getFeaturizerContextGenerator());
 
-    AbstractModel maxentModel = TrainUtil.train(es, mlParams.getSettings(),
-        manifestInfoEntries);
+    EventTrainer trainer = TrainerFactory.getEventTrainer(
+            mlParams.getSettings(), manifestInfoEntries);
+
+    MaxentModel maxentModel = trainer.train(es);
 
     return new FeaturizerModel(lang, maxentModel, manifestInfoEntries, factory);
   }

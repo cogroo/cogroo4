@@ -55,8 +55,7 @@ public final class FeaturizerCrossValidatorTool extends
 
     mlParams = CmdLineUtil.loadTrainingParameters(params.getParams(), false);
     if (mlParams == null) {
-      mlParams = ModelUtil.createTrainingParameters(params.getIterations(),
-          params.getCutoff());
+      mlParams = ModelUtil.createDefaultTrainingParameters();
     }
 
     List<EvaluationMonitor<FeatureSample>> listeners = new LinkedList<EvaluationMonitor<FeatureSample>>();

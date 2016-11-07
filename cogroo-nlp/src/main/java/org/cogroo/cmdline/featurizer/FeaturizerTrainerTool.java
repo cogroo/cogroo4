@@ -57,8 +57,7 @@ public class FeaturizerTrainerTool extends
 
     mlParams = CmdLineUtil.loadTrainingParameters(params.getParams(), false);
     if (mlParams == null) {
-      mlParams = ModelUtil.createTrainingParameters(params.getIterations(),
-          params.getCutoff());
+      mlParams = ModelUtil.createDefaultTrainingParameters();
     }
     
     File modelOutFile = params.getModel();

@@ -21,6 +21,11 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.cogroo.cmdline.chunker2.Chunker2CrossValidatorTool.CVToolParams;
+import org.cogroo.tools.chunker2.ChunkerCrossValidator;
+import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
+import org.cogroo.tools.chunker2.ChunkerFactory;
+
 import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.AbstractCrossValidatorTool;
 import opennlp.tools.cmdline.CmdLineUtil;
@@ -30,11 +35,6 @@ import opennlp.tools.cmdline.params.DetailedFMeasureEvaluatorParams;
 import opennlp.tools.util.eval.EvaluationMonitor;
 import opennlp.tools.util.eval.FMeasure;
 import opennlp.tools.util.model.ModelUtil;
-
-import org.cogroo.cmdline.chunker2.Chunker2CrossValidatorTool.CVToolParams;
-import org.cogroo.tools.chunker2.ChunkerCrossValidator;
-import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
-import org.cogroo.tools.chunker2.ChunkerFactory;
 
 
 public final class Chunker2CrossValidatorTool
@@ -56,8 +56,7 @@ public final class Chunker2CrossValidatorTool
 
     mlParams = CmdLineUtil.loadTrainingParameters(params.getParams(), false);
     if (mlParams == null) {
-      mlParams = ModelUtil.createTrainingParameters(params.getIterations(),
-          params.getCutoff());
+      mlParams = ModelUtil.createDefaultTrainingParameters();
     }
 
     List<EvaluationMonitor<ChunkSample>> listeners = new LinkedList<EvaluationMonitor<ChunkSample>>();

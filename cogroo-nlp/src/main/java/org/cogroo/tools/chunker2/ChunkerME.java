@@ -20,18 +20,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import opennlp.model.AbstractModel;
-import opennlp.model.EventStream;
-import opennlp.model.MaxentModel;
-import opennlp.model.TrainUtil;
+import org.cogroo.tools.featurizer.WordTag;
+
 import opennlp.tools.chunker.ChunkSample;
+import opennlp.tools.ml.EventTrainer;
+import opennlp.tools.ml.TrainerFactory;
+import opennlp.tools.ml.model.Event;
+import opennlp.tools.ml.model.MaxentModel;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.BeamSearch;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.Sequence;
 import opennlp.tools.util.TrainingParameters;
-
-import org.cogroo.tools.featurizer.WordTag;
 
 /**
  * The class represents a maximum-entropy-based chunker. Such a chunker can be
@@ -134,10 +134,12 @@ public class ChunkerME implements Chunker {
 
     Map<String, String> manifestInfoEntries = new HashMap<String, String>();
 
-    EventStream es = new ChunkerEventStream(in, factory.getContextGenerator());
+    ObjectStream<Event> es = new ChunkerEventStream(in, factory.getContextGenerator());
 
-    AbstractModel maxentModel = TrainUtil.train(es, mlParams.getSettings(),
-        manifestInfoEntries);
+    EventTrainer trainer = TrainerFactory.getEventTrainer(
+            mlParams.getSettings(), manifestInfoEntries);
+
+    MaxentModel maxentModel = trainer.train(es);
 
     return new ChunkerModel(lang, maxentModel, manifestInfoEntries, factory);
   }

@@ -23,7 +23,6 @@ import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.TrainingParameters;
 import opennlp.tools.util.eval.CrossValidationPartitioner;
 import opennlp.tools.util.eval.FMeasure;
-import opennlp.tools.util.model.ModelUtil;
 
 public class ChunkerCrossValidator {
 
@@ -33,31 +32,6 @@ public class ChunkerCrossValidator {
   private FMeasure fmeasure = new FMeasure();
   private ChunkerEvaluationMonitor[] listeners;
   private ChunkerFactory chunkerFactory;
-
-  /**
-   * @deprecated Use
-   *             {@link #ChunkerCrossValidator(String, TrainingParameters, ChunkerFactory, ChunkerEvaluationMonitor...)}
-   *             instead.
-   */
-  @Deprecated
-  public ChunkerCrossValidator(String languageCode, int cutoff, int iterations) {
-
-    this.languageCode = languageCode;
-
-    params = ModelUtil.createTrainingParameters(iterations, cutoff);
-    listeners = null;
-  }
-
-  /**
-   * @deprecated Use {@link #ChunkerCrossValidator(String, TrainingParameters, ChunkerFactory, ChunkerEvaluationMonitor...)} instead. 
-   */
-  public ChunkerCrossValidator(String languageCode, TrainingParameters params,
-      ChunkerEvaluationMonitor... listeners) {
-
-    this.languageCode = languageCode;
-    this.params = params;
-    this.listeners = listeners;
-  }
   
   public ChunkerCrossValidator(String languageCode, TrainingParameters params,
       ChunkerFactory factory, ChunkerEvaluationMonitor... listeners) {

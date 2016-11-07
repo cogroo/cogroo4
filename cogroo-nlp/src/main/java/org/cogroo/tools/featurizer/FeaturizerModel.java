@@ -21,7 +21,8 @@ import java.util.Map;
 
 import org.cogroo.dictionary.FeatureDictionary;
 
-import opennlp.model.AbstractModel;
+import opennlp.tools.ml.model.AbstractModel;
+import opennlp.tools.ml.model.MaxentModel;
 import opennlp.tools.util.BaseToolFactory;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.model.ArtifactSerializer;
@@ -40,7 +41,7 @@ public class FeaturizerModel extends BaseModel {
 //  private static final String TAG_DICTIONARY_ENTRY_NAME = "tags.tagdict";
 //  private Set<String> poisonedDictionaryTags;
 
-  public FeaturizerModel(String languageCode, AbstractModel featurizerModel,
+  public FeaturizerModel(String languageCode, MaxentModel featurizerModel,
       Map<String, String> manifestInfoEntries, FeaturizerFactory factory) {
 
     super(COMPONENT_NAME, languageCode, manifestInfoEntries, factory);

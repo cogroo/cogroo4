@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import opennlp.model.AbstractModel;
+import opennlp.tools.ml.model.AbstractModel;
+import opennlp.tools.ml.model.MaxentModel;
 import opennlp.tools.util.BaseToolFactory;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.model.ArtifactSerializer;
@@ -36,7 +37,7 @@ public class ChunkerModel extends BaseModel {
   private static final String COMPONENT_NAME = "ChunkerME2";
   public static final String CHUNKER_MODEL_ENTRY_NAME = "chunker2.model";
 
-  public ChunkerModel(String languageCode, AbstractModel featurizerModel,
+  public ChunkerModel(String languageCode, MaxentModel featurizerModel,
       Map<String, String> manifestInfoEntries, ChunkerFactory factory) {
 
     super(COMPONENT_NAME, languageCode, manifestInfoEntries, factory);

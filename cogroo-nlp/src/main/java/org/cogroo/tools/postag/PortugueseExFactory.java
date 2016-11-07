@@ -15,8 +15,8 @@
  */
 package org.cogroo.tools.postag;
 
-import opennlp.model.AbstractModel;
 import opennlp.tools.dictionary.Dictionary;
+import opennlp.tools.ml.model.AbstractModel;
 import opennlp.tools.postag.POSContextGenerator;
 import opennlp.tools.postag.POSDictionary;
 import opennlp.tools.postag.TagDictionary;

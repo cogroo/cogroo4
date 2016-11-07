@@ -15,23 +15,24 @@
  */
 package org.cogroo.tools.chunker2;
 
-import java.io.IOException;
-
-import opennlp.model.Event;
-import opennlp.tools.chunker.ChunkSample;
-import opennlp.tools.util.ObjectStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.cogroo.tools.featurizer.WordTag;
+
+import opennlp.tools.chunker.ChunkSample;
+import opennlp.tools.ml.model.Event;
+import opennlp.tools.util.AbstractEventStream;
+import opennlp.tools.util.ObjectStream;
 
 /**
  * Class for creating an event stream out of data files for training a chunker.
  */
-public class ChunkerEventStream extends opennlp.model.AbstractEventStream {
+public class ChunkerEventStream extends AbstractEventStream<ChunkSample> {
 
   private ChunkerContextGenerator cg;
-  private ObjectStream<ChunkSample> data;
-  private Event[] events;
-  private int ei;
 
   /**
    * Creates a new event stream based on the specified data stream using the
@@ -45,45 +46,22 @@ public class ChunkerEventStream extends opennlp.model.AbstractEventStream {
    */
   public ChunkerEventStream(ObjectStream<ChunkSample> d,
       ChunkerContextGenerator cg) {
+    super(d);
     this.cg = cg;
-    data = d;
-    ei = 0;
-    addNewEvents();
   }
 
-  public Event next() {
-
-    hasNext();
-
-    return events[ei++];
-  }
-
-  public boolean hasNext() {
-    if (ei == events.length) {
-      addNewEvents();
-      ei = 0;
-    }
-    return ei < events.length;
-  }
-
-  private void addNewEvents() {
-
-    ChunkSample sample;
-    try {
-      sample = data.read();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
+  @Override
+  protected Iterator<Event> createEvents(ChunkSample sample) {
     if (sample != null) {
-      events = new Event[sample.getSentence().length];
+      List<Event> events = new ArrayList<Event>();
       WordTag[] seqArray = WordTag.create(sample);
       String[] predsArray = sample.getPreds();
-      for (int ei = 0, el = events.length; ei < el; ei++) {
-        events[ei] = new Event(predsArray[ei], cg.getContext(ei, seqArray, predsArray));
+      for (int ei = 0, el = sample.getSentence().length; ei < el; ei++) {
+        events.add(new Event(predsArray[ei], cg.getContext(ei, seqArray, predsArray)));
       }
+      return events.iterator();
     } else {
-      events = new Event[0];
+      return Collections.emptyListIterator();
     }
   }
 }
