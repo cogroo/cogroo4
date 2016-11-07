@@ -1,0 +1,114 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.cogroo:cogroo-ruta:jar:4.0.1-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for com.mycila.maven-license-plugin:maven-license-plugin is missing. @ org.cogroo:cogroo:4.0.1-SNAPSHOT, /home/eduardo.araujo1/cogroo4/pom.xml, line 92, column 18
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Cogroo Ruta 4.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ cogroo-ruta ---
+[INFO] Deleting /home/eduardo.araujo1/cogroo4/cogroo-ruta/target
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.0:enforce (enforce-maven) @ cogroo-ruta ---
+[INFO] 
+[INFO] --- ruta-maven-plugin:2.3.0:generate (default) @ cogroo-ruta ---
+Jun 18, 2015 11:59:52 AM org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider registerDefaultFilters
+INFORMAÇÕES: JSR-330 'javax.inject.Named' annotation found and supported for component scanning
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Trying to build Main: java.io.FileNotFoundException: Build process can't find TypeSystem in Main
+[WARNING] Failed to build UIMA Ruta script: Main
+[WARNING] Failed to build UIMA Ruta script: Main
+[WARNING] Failed to build UIMA Ruta script: Main
+[WARNING] Failed to build UIMA Ruta script: Main
+[WARNING] Failed to build UIMA Ruta script: Main
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ cogroo-ruta ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 3 resources
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ cogroo-ruta ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ cogroo-ruta ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/eduardo.araujo1/cogroo4/cogroo-ruta/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ cogroo-ruta ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12:test (default-test) @ cogroo-ruta ---
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/eduardo.araujo1/cogroo4/cogroo-ruta/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ cogroo-ruta ---
+[INFO] Building jar: /home/eduardo.araujo1/cogroo4/cogroo-ruta/target/cogroo-ruta-4.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-javadoc-plugin:2.9:jar (create-javadoc-jar) @ cogroo-ruta ---
+[INFO] 
+[INFO] >>> maven-source-plugin:2.1.2:jar (create-source-jar) > generate-sources @ cogroo-ruta >>>
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.0:enforce (enforce-maven) @ cogroo-ruta ---
+[INFO] 
+[INFO] --- ruta-maven-plugin:2.3.0:generate (default) @ cogroo-ruta ---
+Jun 18, 2015 11:59:56 AM org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider registerDefaultFilters
+INFORMAÇÕES: JSR-330 'javax.inject.Named' annotation found and supported for component scanning
+[INFO] 
+[INFO] <<< maven-source-plugin:2.1.2:jar (create-source-jar) < generate-sources @ cogroo-ruta <<<
+[INFO] 
+[INFO] --- maven-source-plugin:2.1.2:jar (create-source-jar) @ cogroo-ruta ---
+[INFO] cogroo already added, skipping
+[INFO] cogroo/ruta already added, skipping
+[INFO] cogroo already added, skipping
+[INFO] cogroo/ruta already added, skipping
+[INFO] Building jar: /home/eduardo.araujo1/cogroo4/cogroo-ruta/target/cogroo-ruta-4.0.1-SNAPSHOT-sources.jar
+[INFO] cogroo already added, skipping
+[INFO] cogroo/ruta already added, skipping
+[INFO] cogroo already added, skipping
+[INFO] cogroo/ruta already added, skipping
+[INFO] 
+[INFO] --- build-helper-maven-plugin:1.7:attach-artifact (add-uima-ruta-files) @ cogroo-ruta ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ cogroo-ruta ---
+[INFO] Installing /home/eduardo.araujo1/cogroo4/cogroo-ruta/target/cogroo-ruta-4.0.1-SNAPSHOT.jar to /home/eduardo.araujo1/.m2/repository/org/cogroo/cogroo-ruta/4.0.1-SNAPSHOT/cogroo-ruta-4.0.1-SNAPSHOT.jar
+[INFO] Installing /home/eduardo.araujo1/cogroo4/cogroo-ruta/pom.xml to /home/eduardo.araujo1/.m2/repository/org/cogroo/cogroo-ruta/4.0.1-SNAPSHOT/cogroo-ruta-4.0.1-SNAPSHOT.pom
+[INFO] Installing /home/eduardo.araujo1/cogroo4/cogroo-ruta/target/cogroo-ruta-4.0.1-SNAPSHOT-sources.jar to /home/eduardo.araujo1/.m2/repository/org/cogroo/cogroo-ruta/4.0.1-SNAPSHOT/cogroo-ruta-4.0.1-SNAPSHOT-sources.jar
+[INFO] Installing /home/eduardo.araujo1/cogroo4/cogroo-ruta/target/generated-sources/ruta/descriptor/cogroo/ruta/MainEngine.xml to /home/eduardo.araujo1/.m2/repository/org/cogroo/cogroo-ruta/4.0.1-SNAPSHOT/cogroo-ruta-4.0.1-SNAPSHOT-ruta1.xml
+[INFO] Installing /home/eduardo.araujo1/cogroo4/cogroo-ruta/target/generated-sources/ruta/descriptor/cogroo/ruta/MainTypeSystem.xml to /home/eduardo.araujo1/.m2/repository/org/cogroo/cogroo-ruta/4.0.1-SNAPSHOT/cogroo-ruta-4.0.1-SNAPSHOT-ruta2.xml
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 7.584 s
+[INFO] Finished at: 2015-06-18T11:59:57-03:00
+[INFO] Final Memory: 42M/335M
+[INFO] ------------------------------------------------------------------------

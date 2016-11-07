@@ -1,0 +1,7 @@
+Quando a professora pôr as coisas em ordem, ela aplicará novas provas.
+Se o cachorro ver o gato novamente, latirá para ele.
+Mas quando o gato saber desviar do cachorro, nada acontecerá.
+
+Quando a professora puser as coisas em ordem, ela aplicará novas provas.
+Se o cachorro vir o gato novamente, latirá para ele.
+Mas quando o gato souber desviar do cachorro, nada acontecerá.

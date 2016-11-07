@@ -1,0 +1,37 @@
+Quanto [à lápis => a lápis / ao lápis](1-2), não entendo.
+Quanto [à computador => a computador / ao computador](1-2), não entendo.
+Refiro-me [à trabalhos => a trabalhos](3) remunerados.
+Refiro-me [à reuniões => a reuniões](3) extraordinárias.
+Fomos levados [à crer => a crer](4). 
+[A uma hora => À uma hora](5) estaremos partindo.
+[As duas horas => Às duas horas](6) estaremos partindo.
+Os ônibus estacionaram [a direita do => à direita do](7-8) pátio.
+Os ônibus estacionaram [a esquerda do => à esquerda do](7-8) pátio.
+[Em relação as atividades => Em relação às atividades]() programadas.
+[Com relação as atividades => Com relação às atividades]( ) programadas.
+[Devido as cobranças => Devido às cobranças]() injustas.
+Enviei os documentos [à você => a você]( ) .
+Enviei os documentos [à Vossa Excelência => a Vossa Excelência]( ). 
+
+Quanto ao lápis, não entendo.
+Quanto ao computador, não entendo.
+Refiro-me aos trabalhos remunerados.
+Refiro-me às reuniões extraordinárias.
+Refiro-me a reuniões extraordinárias.
+Fomos levados a crer.
+À uma hora estaremos partindo.
+Daqui a uma hora estaremos partindo.
+Às duas horas estaremos partindo.
+Os ônibus estacionaram à direita do pátio.
+Os ônibus estacionaram à esquerda do pátio.
+Em relação a segurança dos menores.
+Em relação à segurança dos menores.
+Em relação às atividades programadas.
+Com relação a segurança dos menores.
+Com relação à segurança dos menores.
+Com relação às atividades programadas.
+Devido à cobrança injusta.
+Devido às cobranças injustas.
+Devido a cobrança injusta.
+Enviei os documentos a você.
+Enviei os documentos a Vossa Excelência.

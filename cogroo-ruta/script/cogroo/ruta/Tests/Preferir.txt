@@ -1,0 +1,9 @@
+Eu [prefiro mais => ]( ) comer no bandejão.
+Eu [prefiro festa do que balada. => ]( ) 
+Ele [prefere peixe do que frango. => ]( ) 
+Ele [prefere peixe cozido do que frango. => ]( ) 
+
+Eu prefiro comer no bandejão.
+Eu prefiro festa a balada.
+Ele prefere peixe a frango.
+Ele prefere peixe cozido a frango.

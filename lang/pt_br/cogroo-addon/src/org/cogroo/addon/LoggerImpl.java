@@ -28,20 +28,23 @@ public class LoggerImpl {
 	public static final String lineSeparator = System
 			.getProperty("line.separator");
 
-	private static final String path = Resources.getProperty("LOG_FILE_PATTERN");
-	//private static final String path = "%t/br.usp.pcs.lta.cogroo.ooointegration.%u/logs/trace_%g.log";
+	private static final String path = Resources
+			.getProperty("LOG_FILE_PATTERN");
+	// private static final String path =
+	// "%t/br.usp.pcs.lta.cogroo.ooointegration.%u/logs/trace_%g.log";
 
 	private static boolean initialized = false;
 
 	private static FileHandler handler;
 
-	private static final Level defaultLevel = Level.parse(Resources.getProperty("LOG_LEVEL"));
-	//private static final Level defaultLevel = Level.ALL;
+	private static final Level defaultLevel = Level.parse(Resources
+			.getProperty("LOG_LEVEL"));
+	// private static final Level defaultLevel = Level.ALL;
 
 	private static final String tempDir = getTmpFolder();
 
 	private static final String homeDir = System.getProperty("user.name");
-	
+
 	private static final String userName = System.getProperty("user.name");
 
 	private static void init() {
@@ -51,11 +54,9 @@ public class LoggerImpl {
 				// http://java.sun.com/j2se/1.4.2/docs/api/java/util/logging
 				// /FileHandler.html
 				createPath(path);
-									
+
 				handler = new FileHandler(replacePath(path), 100000, 5, true);
 				handler.setFormatter(new SimpleFormatter());
-				
-				
 
 			} catch (SecurityException e) {
 				// can't log from here
@@ -68,12 +69,11 @@ public class LoggerImpl {
 		initialized = true;
 	}
 
-        public static String getPath() {
-            return replacePath(path);
-        }
+	public static String getPath() {
+		return replacePath(path);
+	}
 
-	public static boolean isInitialized()
-	{
+	public static boolean isInitialized() {
 		return initialized;
 	}
 
@@ -87,7 +87,7 @@ public class LoggerImpl {
 
 	private static String replacePath(String oriPath) {
 		String newPath = oriPath.replace("%t", tempDir);
-		newPath =  newPath.replace("%h", homeDir); 
+		newPath = newPath.replace("%h", homeDir);
 		newPath = newPath.replace("%u", userName);
 		try {
 			newPath = new File(newPath).getCanonicalPath();
@@ -103,11 +103,11 @@ public class LoggerImpl {
 			parent.mkdirs();
 	}
 
-        private static String getTmpFolder() {
-            String tmp = System.getProperty("java.io.tmpdir");
-            // workaround for MAC OSX
-            if (tmp.startsWith("/var/folders/")) tmp = "/tmp/";
-            return tmp;
-        }
+	private static String getTmpFolder() {
+		String tmp = System.getProperty("java.io.tmpdir");
+		// workaround for MAC OSX
+		if (tmp.startsWith("/var/folders/"))
+			tmp = "/tmp/";
+		return tmp;
+	}
 }
-

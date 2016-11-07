@@ -160,6 +160,8 @@ public class Sentence implements Serializable, TokenGroup {
 
   private List<SyntacticChunk> syntacticChunks = null;
 
+private org.cogroo.text.Sentence newSentence;
+
   public List<SyntacticChunk> getSyntacticChunks() {
     return syntacticChunks;
   }
@@ -221,5 +223,13 @@ public class Sentence implements Serializable, TokenGroup {
   public int hashCode() {
     return Objects.hashCode(this.sentence, this.tokens, this.chunks, this.root, this.offset);
   }
+
+	public void setTextSentence(org.cogroo.text.Sentence sentence2) {
+		this.newSentence = sentence2;
+	}
+	
+	public org.cogroo.text.Sentence getTextSentence() {
+		return this.newSentence;
+	}
 
 }

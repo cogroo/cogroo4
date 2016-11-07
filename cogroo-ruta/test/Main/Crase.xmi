@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="UTF-8"?><xmi:XMI xmlns:tcas="http:///uima/tcas.ecore" xmlns:xmi="http://www.omg.org/XMI" xmlns:cas="http:///uima/cas.ecore" xmlns:type="http:///org/apache/uima/ruta/type.ecore" xmlns:FazerHaver="http:///cogroo/ruta/FazerHaver.ecore" xmlns:FutSubjIrreg="http:///cogroo/ruta/FutSubjIrreg.ecore" xmlns:Preferir="http:///cogroo/ruta/Preferir.ecore" xmlns:MauMal="http:///cogroo/ruta/MauMal.ecore" xmlns:ConcordanciaAdjSub="http:///cogroo/ruta/ConcordanciaAdjSub.ecore" xmlns:Crase="http:///cogroo/ruta/Crase.ecore" xmlns:Base="http:///cogroo/ruta/Base.ecore" xmlns:ColocacaoPronominal="http:///cogroo/ruta/ColocacaoPronominal.ecore" xmlns:uima="http:///opennlp/uima.ecore" xmlns:UsoDeMeio="http:///cogroo/ruta/UsoDeMeio.ecore" xmi:version="2.0">
+    <cas:NULL xmi:id="0"/>
+    <tcas:DocumentAnnotation xmi:id="8" sofa="1" begin="0" end="1254" language="pt-br"/>
+    <uima:Sentence xmi:id="13" sofa="1" begin="0" end="28"/>
+    <uima:Sentence xmi:id="21" sofa="1" begin="63" end="97"/>
+    <uima:Sentence xmi:id="29" sofa="1" begin="136" end="157"/>
+    <uima:Sentence xmi:id="37" sofa="1" begin="189" end="222"/>
+    <uima:Sentence xmi:id="45" sofa="1" begin="266" end="309"/>
+    <uima:Sentence xmi:id="53" sofa="1" begin="348" end="386"/>
+    <uima:Sentence xmi:id="61" sofa="1" begin="417" end="445"/>
+    <uima:Sentence xmi:id="69" sofa="1" begin="488" end="517"/>
+    <uima:Sentence xmi:id="77" sofa="1" begin="553" end="589"/>
+    <uima:Sentence xmi:id="85" sofa="1" begin="629" end="666"/>
+    <uima:Sentence xmi:id="93" sofa="1" begin="689" end="719"/>
+    <uima:Sentence xmi:id="101" sofa="1" begin="757" end="790"/>
+    <uima:Sentence xmi:id="109" sofa="1" begin="834" end="877"/>
+    <uima:Sentence xmi:id="117" sofa="1" begin="914" end="949"/>
+    <uima:Sentence xmi:id="125" sofa="1" begin="988" end="1024"/>
+    <uima:Sentence xmi:id="133" sofa="1" begin="1062" end="1100"/>
+    <uima:Sentence xmi:id="141" sofa="1" begin="1128" end="1157"/>
+    <uima:Sentence xmi:id="149" sofa="1" begin="1185" end="1213"/>
+    <uima:Sentence xmi:id="153" sofa="1" begin="1214" end="1254"/>
+    <uima:Sentence xmi:id="145" sofa="1" begin="1158" end="1184"/>
+    <uima:Sentence xmi:id="137" sofa="1" begin="1101" end="1127"/>
+    <uima:Sentence xmi:id="129" sofa="1" begin="1025" end="1061"/>
+    <uima:Sentence xmi:id="121" sofa="1" begin="950" end="987"/>
+    <uima:Sentence xmi:id="113" sofa="1" begin="878" end="913"/>
+    <uima:Sentence xmi:id="105" sofa="1" begin="791" end="833"/>
+    <uima:Sentence xmi:id="97" sofa="1" begin="720" end="756"/>
+    <uima:Sentence xmi:id="89" sofa="1" begin="667" end="688"/>
+    <uima:Sentence xmi:id="81" sofa="1" begin="590" end="628"/>
+    <uima:Sentence xmi:id="73" sofa="1" begin="518" end="552"/>
+    <uima:Sentence xmi:id="65" sofa="1" begin="446" end="486"/>
+    <uima:Sentence xmi:id="57" sofa="1" begin="387" end="416"/>
+    <uima:Sentence xmi:id="49" sofa="1" begin="310" end="347"/>
+    <uima:Sentence xmi:id="41" sofa="1" begin="223" end="265"/>
+    <uima:Sentence xmi:id="33" sofa="1" begin="158" end="188"/>
+    <uima:Sentence xmi:id="25" sofa="1" begin="98" end="135"/>
+    <uima:Sentence xmi:id="17" sofa="1" begin="29" end="62"/>
+    <uima:Token xmi:id="157" sofa="1" begin="0" end="6" pos="adv" features="-" lexeme="Quanto">
+        <lemma>quanto</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="179" sofa="1" begin="7" end="8" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="201" sofa="1" begin="14" end="15" pos="," features="-" lexeme=","/>
+    <uima:Token xmi:id="220" sofa="1" begin="20" end="27" pos="v-fin" features="PR=1S=IND" lexeme="entendo">
+        <lemma>entender</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="242" sofa="1" begin="29" end="35" pos="adv" features="-" lexeme="Quanto">
+        <lemma>quanto</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="264" sofa="1" begin="36" end="37" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="287" sofa="1" begin="48" end="49" pos="," features="-" lexeme=","/>
+    <uima:Token xmi:id="306" sofa="1" begin="54" end="61" pos="v-fin" features="PR=1S=IND" lexeme="entendo">
+        <lemma>entender</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="328" sofa="1" begin="63" end="69" pos="prop" features="M=S" lexeme="Refiro"/>
+    <uima:Token xmi:id="344" sofa="1" begin="73" end="74" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="366" sofa="1" begin="75" end="84" pos="n" features="M=P" lexeme="trabalhos">
+        <lemma>trabalho</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="388" sofa="1" begin="96" end="97" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="407" sofa="1" begin="104" end="107" pos="pron-pers" features="M=1S=ACC" lexeme="-me"/>
+    <uima:Token xmi:id="426" sofa="1" begin="108" end="109" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="448" sofa="1" begin="119" end="134" pos="adj" features="F=P" lexeme="extraordinárias">
+        <lemma>extraordinário</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="470" sofa="1" begin="136" end="141" pos="v-fin" features="PS=1P=IND" lexeme="Fomos">
+        <lemma>ir</lemma>
+        <lemma>ser</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="493" sofa="1" begin="150" end="151" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="515" sofa="1" begin="152" end="156" pos="v-inf" features="-" lexeme="crer">
+        <lemma>crer</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="537" sofa="1" begin="158" end="159" pos="art" features="F=S" lexeme="A">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="559" sofa="1" begin="164" end="168" pos="n" features="F=S" lexeme="hora">
+        <lemma>hora</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="581" sofa="1" begin="179" end="187" pos="v-ger" features="-" lexeme="partindo">
+        <lemma>partir</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="603" sofa="1" begin="189" end="191" pos="art" features="F=P" lexeme="As">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="625" sofa="1" begin="197" end="202" pos="n" features="F=P" lexeme="horas">
+        <lemma>hora</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="647" sofa="1" begin="213" end="221" pos="v-ger" features="-" lexeme="partindo">
+        <lemma>partir</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="669" sofa="1" begin="223" end="225" pos="art" features="M=P" lexeme="Os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="691" sofa="1" begin="233" end="245" pos="v-fin" features="PS=3P=IND" lexeme="estacionaram">
+        <lemma>estacionar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="713" sofa="1" begin="248" end="255" pos="n" features="F=S" lexeme="direita">
+        <lemma>direita</lemma>
+        <lemma>direito</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="736" sofa="1" begin="256" end="258" pos="art" features="M=S" lexeme="o">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="758" sofa="1" begin="264" end="265" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="780" sofa="1" begin="269" end="275" pos="n" features="M=P" lexeme="ônibus">
+        <lemma>ônibus</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="802" sofa="1" begin="289" end="290" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="824" sofa="1" begin="300" end="302" pos="prp" features="-" lexeme="de">
+        <lemma>de</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="846" sofa="1" begin="303" end="308" pos="n" features="M=S" lexeme="pátio">
+        <lemma>pátio</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="868" sofa="1" begin="310" end="320" pos="prp" features="-" lexeme="Em_relação"/>
+    <uima:Token xmi:id="887" sofa="1" begin="324" end="334" pos="n" features="F=P" lexeme="atividades">
+        <lemma>atividade</lemma>
+        <lemma>ativo</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="910" sofa="1" begin="346" end="347" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="932" sofa="1" begin="352" end="359" pos="n" features="F=S" lexeme="relação">
+        <lemma>relação</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="954" sofa="1" begin="363" end="373" pos="n" features="F=P" lexeme="atividades">
+        <lemma>atividade</lemma>
+        <lemma>ativo</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="977" sofa="1" begin="385" end="386" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="996" sofa="1" begin="394" end="396" pos="art" features="F=P" lexeme="as">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1018" sofa="1" begin="407" end="415" pos="adj" features="F=P" lexeme="injustas">
+        <lemma>justo</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1040" sofa="1" begin="417" end="423" pos="v-fin" features="PS=1S=IND" lexeme="Enviei">
+        <lemma>enviar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1062" sofa="1" begin="427" end="437" pos="n" features="M=P" lexeme="documentos">
+        <lemma>documento</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1084" sofa="1" begin="438" end="439" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1106" sofa="1" begin="444" end="445" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1128" sofa="1" begin="453" end="455" pos="art" features="M=P" lexeme="os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1150" sofa="1" begin="467" end="468" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1172" sofa="1" begin="469" end="485" pos="n" features="F=S" lexeme="Vossa_Excelência"/>
+    <uima:Token xmi:id="1191" sofa="1" begin="488" end="494" pos="adv" features="-" lexeme="Quanto">
+        <lemma>quanto</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1213" sofa="1" begin="495" end="497" pos="art" features="M=S" lexeme="o">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1235" sofa="1" begin="503" end="504" pos="," features="-" lexeme=","/>
+    <uima:Token xmi:id="1254" sofa="1" begin="509" end="516" pos="v-fin" features="PR=1S=IND" lexeme="entendo">
+        <lemma>entender</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1276" sofa="1" begin="518" end="524" pos="adv" features="-" lexeme="Quanto">
+        <lemma>quanto</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1298" sofa="1" begin="525" end="527" pos="art" features="M=S" lexeme="o">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1321" sofa="1" begin="538" end="539" pos="," features="-" lexeme=","/>
+    <uima:Token xmi:id="1340" sofa="1" begin="544" end="551" pos="v-fin" features="PR=1S=IND" lexeme="entendo">
+        <lemma>entender</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1362" sofa="1" begin="553" end="559" pos="prop" features="M=S" lexeme="Refiro"/>
+    <uima:Token xmi:id="1378" sofa="1" begin="563" end="566" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1400" sofa="1" begin="567" end="576" pos="n" features="M=P" lexeme="trabalhos">
+        <lemma>trabalho</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1422" sofa="1" begin="588" end="589" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1441" sofa="1" begin="596" end="599" pos="pron-pers" features="M=1S=ACC" lexeme="-me"/>
+    <uima:Token xmi:id="1460" sofa="1" begin="600" end="602" pos="art" features="F=P" lexeme="as">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1482" sofa="1" begin="612" end="627" pos="adj" features="F=P" lexeme="extraordinárias">
+        <lemma>extraordinário</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1504" sofa="1" begin="629" end="635" pos="prop" features="M=S" lexeme="Refiro"/>
+    <uima:Token xmi:id="1520" sofa="1" begin="639" end="640" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1542" sofa="1" begin="650" end="665" pos="adj" features="F=P" lexeme="extraordinárias">
+        <lemma>extraordinário</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1564" sofa="1" begin="667" end="672" pos="v-fin" features="PS=1P=IND" lexeme="Fomos">
+        <lemma>ir</lemma>
+        <lemma>ser</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1587" sofa="1" begin="681" end="682" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1609" sofa="1" begin="687" end="688" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1631" sofa="1" begin="689" end="690" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1653" sofa="1" begin="695" end="699" pos="n" features="F=S" lexeme="hora">
+        <lemma>hora</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1675" sofa="1" begin="710" end="718" pos="v-ger" features="-" lexeme="partindo">
+        <lemma>partir</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1697" sofa="1" begin="720" end="725" pos="prp" features="-" lexeme="de">
+        <lemma>de</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1719" sofa="1" begin="726" end="727" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1741" sofa="1" begin="732" end="736" pos="n" features="F=S" lexeme="hora">
+        <lemma>hora</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1763" sofa="1" begin="747" end="755" pos="v-ger" features="-" lexeme="partindo">
+        <lemma>partir</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1785" sofa="1" begin="757" end="759" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1807" sofa="1" begin="760" end="764" pos="num" features="F=P" lexeme="duas">
+        <lemma>dois</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1829" sofa="1" begin="771" end="780" pos="v-fin" features="FUT=1P=IND" lexeme="estaremos">
+        <lemma>estar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1851" sofa="1" begin="789" end="790" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1873" sofa="1" begin="794" end="800" pos="n" features="M=P" lexeme="ônibus">
+        <lemma>ônibus</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1895" sofa="1" begin="814" end="815" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1917" sofa="1" begin="816" end="823" pos="n" features="F=S" lexeme="direita">
+        <lemma>direita</lemma>
+        <lemma>direito</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1940" sofa="1" begin="824" end="826" pos="art" features="M=S" lexeme="o">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1962" sofa="1" begin="832" end="833" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1984" sofa="1" begin="837" end="843" pos="n" features="M=P" lexeme="ônibus">
+        <lemma>ônibus</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2006" sofa="1" begin="857" end="858" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2028" sofa="1" begin="859" end="867" pos="n" features="F=S" lexeme="esquerda">
+        <lemma>esquerda</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2050" sofa="1" begin="868" end="870" pos="art" features="M=S" lexeme="o">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2072" sofa="1" begin="876" end="877" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2091" sofa="1" begin="889" end="890" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2113" sofa="1" begin="901" end="904" pos="prp" features="-" lexeme="de">
+        <lemma>de</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2135" sofa="1" begin="905" end="912" pos="n-adj" features="M=P" lexeme="menores">
+        <lemma>menor</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2157" sofa="1" begin="914" end="926" pos="prp" features="-" lexeme="Em_relação_à"/>
+    <uima:Token xmi:id="2176" sofa="1" begin="927" end="936" pos="n" features="F=S" lexeme="segurança">
+        <lemma>segurança</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2198" sofa="1" begin="937" end="940" pos="art" features="M=P" lexeme="os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2220" sofa="1" begin="948" end="949" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2239" sofa="1" begin="961" end="963" pos="art" features="F=P" lexeme="as">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2262" sofa="1" begin="975" end="986" pos="v-pcp" features="F=P" lexeme="programadas">
+        <lemma>programar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2284" sofa="1" begin="988" end="991" pos="prp" features="-" lexeme="Com">
+        <lemma>com</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2306" sofa="1" begin="1000" end="1001" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2328" sofa="1" begin="1012" end="1015" pos="prp" features="-" lexeme="de">
+        <lemma>de</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2350" sofa="1" begin="1016" end="1023" pos="n-adj" features="M=P" lexeme="menores">
+        <lemma>menor</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2372" sofa="1" begin="1025" end="1028" pos="prp" features="-" lexeme="Com">
+        <lemma>com</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2394" sofa="1" begin="1037" end="1038" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2416" sofa="1" begin="1039" end="1048" pos="n" features="F=S" lexeme="segurança">
+        <lemma>segurança</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2438" sofa="1" begin="1049" end="1052" pos="art" features="M=P" lexeme="os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2460" sofa="1" begin="1060" end="1061" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2482" sofa="1" begin="1066" end="1073" pos="n" features="F=S" lexeme="relação">
+        <lemma>relação</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2504" sofa="1" begin="1074" end="1076" pos="art" features="F=P" lexeme="as">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2527" sofa="1" begin="1088" end="1099" pos="v-pcp" features="F=P" lexeme="programadas">
+        <lemma>programar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2549" sofa="1" begin="1101" end="1107" pos="v-pcp" features="M=S" lexeme="Devido">
+        <lemma>devir</lemma>
+        <lemma>dever</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2572" sofa="1" begin="1108" end="1109" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2594" sofa="1" begin="1119" end="1126" pos="adj" features="F=S" lexeme="injusta">
+        <lemma>justo</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2616" sofa="1" begin="1128" end="1134" pos="v-pcp" features="M=S" lexeme="Devido">
+        <lemma>devir</lemma>
+        <lemma>dever</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2639" sofa="1" begin="1135" end="1137" pos="art" features="F=P" lexeme="as">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2661" sofa="1" begin="1148" end="1156" pos="adj" features="F=P" lexeme="injustas">
+        <lemma>justo</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2683" sofa="1" begin="1158" end="1164" pos="prp" features="-" lexeme="Devido"/>
+    <uima:Token xmi:id="2702" sofa="1" begin="1167" end="1175" pos="n" features="F=S" lexeme="cobrança">
+        <lemma>cobrança</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2724" sofa="1" begin="1183" end="1184" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2746" sofa="1" begin="1192" end="1194" pos="art" features="M=P" lexeme="os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2768" sofa="1" begin="1206" end="1207" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2790" sofa="1" begin="1212" end="1213" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2812" sofa="1" begin="1221" end="1223" pos="art" features="M=P" lexeme="os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2834" sofa="1" begin="1235" end="1236" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2853" sofa="1" begin="1253" end="1254" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2845" sofa="1" begin="1237" end="1253" pos="n" features="F=S" lexeme="Vossa_Excelência"/>
+    <uima:Token xmi:id="2823" sofa="1" begin="1224" end="1234" pos="n" features="M=P" lexeme="documentos">
+        <lemma>documento</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2801" sofa="1" begin="1214" end="1220" pos="v-fin" features="PS=1S=IND" lexeme="Enviei">
+        <lemma>enviar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2779" sofa="1" begin="1208" end="1212" pos="pron-pers" features="F=3S=NOM" lexeme="você">
+        <lemma>você</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2757" sofa="1" begin="1195" end="1205" pos="n" features="M=P" lexeme="documentos">
+        <lemma>documento</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2735" sofa="1" begin="1185" end="1191" pos="v-fin" features="PS=1S=IND" lexeme="Enviei">
+        <lemma>enviar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2713" sofa="1" begin="1176" end="1183" pos="adj" features="F=S" lexeme="injusta">
+        <lemma>justo</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2691" sofa="1" begin="1165" end="1166" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2672" sofa="1" begin="1156" end="1157" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2650" sofa="1" begin="1138" end="1147" pos="n" features="F=P" lexeme="cobranças">
+        <lemma>cobrança</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2628" sofa="1" begin="1135" end="1137" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2605" sofa="1" begin="1126" end="1127" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2583" sofa="1" begin="1110" end="1118" pos="n" features="F=S" lexeme="cobrança">
+        <lemma>cobrança</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2561" sofa="1" begin="1108" end="1109" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2538" sofa="1" begin="1099" end="1100" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2515" sofa="1" begin="1077" end="1087" pos="n" features="F=P" lexeme="atividades">
+        <lemma>atividade</lemma>
+        <lemma>ativo</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2493" sofa="1" begin="1074" end="1076" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2471" sofa="1" begin="1062" end="1065" pos="prp" features="-" lexeme="Com">
+        <lemma>com</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2449" sofa="1" begin="1053" end="1060" pos="n-adj" features="M=P" lexeme="menores">
+        <lemma>menor</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2427" sofa="1" begin="1049" end="1052" pos="prp" features="-" lexeme="de">
+        <lemma>de</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2405" sofa="1" begin="1037" end="1038" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2383" sofa="1" begin="1029" end="1036" pos="n" features="F=S" lexeme="relação">
+        <lemma>relação</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2361" sofa="1" begin="1023" end="1024" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2339" sofa="1" begin="1012" end="1015" pos="art" features="M=P" lexeme="os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2317" sofa="1" begin="1002" end="1011" pos="n" features="F=S" lexeme="segurança">
+        <lemma>segurança</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2295" sofa="1" begin="992" end="999" pos="n" features="F=S" lexeme="relação">
+        <lemma>relação</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2273" sofa="1" begin="986" end="987" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2250" sofa="1" begin="964" end="974" pos="n" features="F=P" lexeme="atividades">
+        <lemma>atividade</lemma>
+        <lemma>ativo</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2231" sofa="1" begin="950" end="963" pos="prp" features="-" lexeme="Em_relação_às"/>
+    <uima:Token xmi:id="2209" sofa="1" begin="941" end="948" pos="n-adj" features="M=P" lexeme="menores">
+        <lemma>menor</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2187" sofa="1" begin="937" end="940" pos="prp" features="-" lexeme="de">
+        <lemma>de</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2165" sofa="1" begin="925" end="926" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2146" sofa="1" begin="912" end="913" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2124" sofa="1" begin="901" end="904" pos="art" features="M=P" lexeme="os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2102" sofa="1" begin="891" end="900" pos="n" features="F=S" lexeme="segurança">
+        <lemma>segurança</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2083" sofa="1" begin="878" end="888" pos="prp" features="-" lexeme="Em_relação"/>
+    <uima:Token xmi:id="2061" sofa="1" begin="871" end="876" pos="n" features="M=S" lexeme="pátio">
+        <lemma>pátio</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2039" sofa="1" begin="868" end="870" pos="prp" features="-" lexeme="de">
+        <lemma>de</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="2017" sofa="1" begin="857" end="858" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1995" sofa="1" begin="844" end="856" pos="v-fin" features="PS=3P=IND" lexeme="estacionaram">
+        <lemma>estacionar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1973" sofa="1" begin="834" end="836" pos="art" features="M=P" lexeme="Os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1951" sofa="1" begin="827" end="832" pos="n" features="M=S" lexeme="pátio">
+        <lemma>pátio</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1929" sofa="1" begin="824" end="826" pos="prp" features="-" lexeme="de">
+        <lemma>de</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1906" sofa="1" begin="814" end="815" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1884" sofa="1" begin="801" end="813" pos="v-fin" features="PS=3P=IND" lexeme="estacionaram">
+        <lemma>estacionar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1862" sofa="1" begin="791" end="793" pos="art" features="M=P" lexeme="Os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1840" sofa="1" begin="781" end="789" pos="v-ger" features="-" lexeme="partindo">
+        <lemma>partir</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1818" sofa="1" begin="765" end="770" pos="n" features="F=P" lexeme="horas">
+        <lemma>hora</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1796" sofa="1" begin="757" end="759" pos="art" features="F=P" lexeme="as">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1774" sofa="1" begin="755" end="756" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1752" sofa="1" begin="737" end="746" pos="v-fin" features="FUT=1P=IND" lexeme="estaremos">
+        <lemma>estar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1730" sofa="1" begin="728" end="731" pos="art" features="F=S" lexeme="uma">
+        <lemma>um</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1708" sofa="1" begin="720" end="725" pos="adv" features="-" lexeme="aqui">
+        <lemma>aqui</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1686" sofa="1" begin="718" end="719" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1664" sofa="1" begin="700" end="709" pos="v-fin" features="FUT=1P=IND" lexeme="estaremos">
+        <lemma>estar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1642" sofa="1" begin="691" end="694" pos="art" features="F=S" lexeme="uma">
+        <lemma>um</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1620" sofa="1" begin="689" end="690" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1598" sofa="1" begin="683" end="687" pos="v-inf" features="-" lexeme="crer">
+        <lemma>crer</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1576" sofa="1" begin="673" end="680" pos="v-pcp" features="M=P" lexeme="levados">
+        <lemma>levar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1553" sofa="1" begin="665" end="666" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1531" sofa="1" begin="641" end="649" pos="n" features="F=P" lexeme="reuniões">
+        <lemma>reunião</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1512" sofa="1" begin="635" end="638" pos="pron-pers" features="M=1S=ACC" lexeme="-me"/>
+    <uima:Token xmi:id="1493" sofa="1" begin="627" end="628" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1471" sofa="1" begin="603" end="611" pos="n" features="F=P" lexeme="reuniões">
+        <lemma>reunião</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1449" sofa="1" begin="600" end="602" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1433" sofa="1" begin="590" end="596" pos="prop" features="M=S" lexeme="Refiro"/>
+    <uima:Token xmi:id="1411" sofa="1" begin="577" end="588" pos="v-pcp" features="M=P" lexeme="remunerados">
+        <lemma>remunerar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1389" sofa="1" begin="563" end="566" pos="art" features="M=P" lexeme="os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1370" sofa="1" begin="559" end="562" pos="pron-pers" features="M=1S=ACC" lexeme="-me"/>
+    <uima:Token xmi:id="1351" sofa="1" begin="551" end="552" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1329" sofa="1" begin="540" end="543" pos="adv" features="-" lexeme="não">
+        <lemma>não</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1309" sofa="1" begin="528" end="538" pos="n" features="M=S" lexeme="computador">
+        <lemma>computador</lemma>
+        <lemma>computar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1287" sofa="1" begin="525" end="527" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1265" sofa="1" begin="516" end="517" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1243" sofa="1" begin="505" end="508" pos="adv" features="-" lexeme="não">
+        <lemma>não</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1224" sofa="1" begin="498" end="503" pos="n" features="M=S" lexeme="lápis">
+        <lemma>lápis</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1202" sofa="1" begin="495" end="497" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1180" sofa="1" begin="485" end="486" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1161" sofa="1" begin="467" end="468" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1139" sofa="1" begin="456" end="466" pos="n" features="M=P" lexeme="documentos">
+        <lemma>documento</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1117" sofa="1" begin="446" end="452" pos="v-fin" features="PS=1S=IND" lexeme="Enviei">
+        <lemma>enviar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1095" sofa="1" begin="440" end="444" pos="pron-pers" features="F=3S=NOM" lexeme="você">
+        <lemma>você</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1073" sofa="1" begin="438" end="439" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1051" sofa="1" begin="424" end="426" pos="art" features="M=P" lexeme="os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1029" sofa="1" begin="415" end="416" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="1007" sofa="1" begin="397" end="406" pos="n" features="F=P" lexeme="cobranças">
+        <lemma>cobrança</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="988" sofa="1" begin="387" end="393" pos="prp" features="-" lexeme="Devido"/>
+    <uima:Token xmi:id="966" sofa="1" begin="374" end="385" pos="v-pcp" features="F=P" lexeme="programadas">
+        <lemma>programar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="943" sofa="1" begin="360" end="362" pos="art" features="F=P" lexeme="as">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="921" sofa="1" begin="348" end="351" pos="prp" features="-" lexeme="Com">
+        <lemma>com</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="899" sofa="1" begin="335" end="346" pos="v-pcp" features="F=P" lexeme="programadas">
+        <lemma>programar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="876" sofa="1" begin="321" end="323" pos="art" features="F=P" lexeme="as">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="857" sofa="1" begin="308" end="309" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="835" sofa="1" begin="300" end="302" pos="art" features="M=S" lexeme="o">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="813" sofa="1" begin="291" end="299" pos="n" features="F=S" lexeme="esquerda">
+        <lemma>esquerda</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="791" sofa="1" begin="276" end="288" pos="v-fin" features="PS=3P=IND" lexeme="estacionaram">
+        <lemma>estacionar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="769" sofa="1" begin="266" end="268" pos="art" features="M=P" lexeme="Os">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="747" sofa="1" begin="259" end="264" pos="n" features="M=S" lexeme="pátio">
+        <lemma>pátio</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="725" sofa="1" begin="256" end="258" pos="prp" features="-" lexeme="de">
+        <lemma>de</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="702" sofa="1" begin="246" end="247" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="680" sofa="1" begin="226" end="232" pos="n" features="M=P" lexeme="ônibus">
+        <lemma>ônibus</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="658" sofa="1" begin="221" end="222" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="636" sofa="1" begin="203" end="212" pos="v-fin" features="FUT=1P=IND" lexeme="estaremos">
+        <lemma>estar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="614" sofa="1" begin="192" end="196" pos="num" features="F=P" lexeme="duas">
+        <lemma>dois</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="592" sofa="1" begin="187" end="188" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="570" sofa="1" begin="169" end="178" pos="v-fin" features="FUT=1P=IND" lexeme="estaremos">
+        <lemma>estar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="548" sofa="1" begin="160" end="163" pos="art" features="F=S" lexeme="uma">
+        <lemma>um</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="526" sofa="1" begin="156" end="157" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="504" sofa="1" begin="150" end="151" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="482" sofa="1" begin="142" end="149" pos="v-pcp" features="M=P" lexeme="levados">
+        <lemma>levar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="459" sofa="1" begin="134" end="135" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="437" sofa="1" begin="110" end="118" pos="n" features="F=P" lexeme="reuniões">
+        <lemma>reunião</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="415" sofa="1" begin="108" end="109" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="399" sofa="1" begin="98" end="104" pos="prop" features="M=S" lexeme="Refiro"/>
+    <uima:Token xmi:id="377" sofa="1" begin="85" end="96" pos="v-pcp" features="M=P" lexeme="remunerados">
+        <lemma>remunerar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="355" sofa="1" begin="73" end="74" pos="art" features="F=S" lexeme="a">
+        <lemma>o</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="336" sofa="1" begin="69" end="72" pos="pron-pers" features="M=1S=ACC" lexeme="-me"/>
+    <uima:Token xmi:id="317" sofa="1" begin="61" end="62" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="295" sofa="1" begin="50" end="53" pos="adv" features="-" lexeme="não">
+        <lemma>não</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="275" sofa="1" begin="38" end="48" pos="adj" features="M=S" lexeme="computador">
+        <lemma>computador</lemma>
+        <lemma>computar</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="253" sofa="1" begin="36" end="37" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="231" sofa="1" begin="27" end="28" pos="." features="-" lexeme=".">
+        <lemma>.</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="209" sofa="1" begin="16" end="19" pos="adv" features="-" lexeme="não">
+        <lemma>não</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="190" sofa="1" begin="9" end="14" pos="n" features="M=S" lexeme="lápis">
+        <lemma>lápis</lemma>
+    </uima:Token>
+    <uima:Token xmi:id="168" sofa="1" begin="7" end="8" pos="prp" features="-" lexeme="a">
+        <lemma>a</lemma>
+    </uima:Token>
+    <uima:Chunk xmi:id="2864" sofa="1" begin="0" end="6" chunkType="ADVP" head="157"/>
+    <uima:Chunk xmi:id="2876" sofa="1" begin="7" end="14" chunkType="NP" head="190"/>
+    <uima:Chunk xmi:id="2888" sofa="1" begin="20" end="27" chunkType="VP" head="220"/>
+    <uima:Chunk xmi:id="2900" sofa="1" begin="36" end="37" chunkType="PP" head="253"/>
+    <uima:Chunk xmi:id="2912" sofa="1" begin="50" end="53" chunkType="ADVP" head="295"/>
+    <uima:Chunk xmi:id="2924" sofa="1" begin="63" end="69" chunkType="NP" head="328"/>
+    <uima:Chunk xmi:id="2936" sofa="1" begin="73" end="74" chunkType="PP" head="344"/>
+    <uima:Chunk xmi:id="2948" sofa="1" begin="98" end="104" chunkType="NP" head="399"/>
+    <uima:Chunk xmi:id="2960" sofa="1" begin="108" end="109" chunkType="PP" head="415"/>
+    <uima:Chunk xmi:id="2972" sofa="1" begin="136" end="149" chunkType="VP" head="482"/>
+    <uima:Chunk xmi:id="2984" sofa="1" begin="150" end="151" chunkType="NP" head="504"/>
+    <uima:Chunk xmi:id="2996" sofa="1" begin="158" end="168" chunkType="NP" head="559"/>
+    <uima:Chunk xmi:id="3008" sofa="1" begin="189" end="202" chunkType="NP" head="625"/>
+    <uima:Chunk xmi:id="3020" sofa="1" begin="223" end="232" chunkType="NP" head="680"/>
+    <uima:Chunk xmi:id="3032" sofa="1" begin="246" end="255" chunkType="NP" head="713"/>
+    <uima:Chunk xmi:id="3044" sofa="1" begin="256" end="264" chunkType="NP" head="747"/>
+    <uima:Chunk xmi:id="3056" sofa="1" begin="276" end="288" chunkType="VP" head="791"/>
+    <uima:Chunk xmi:id="3068" sofa="1" begin="300" end="302" chunkType="PP" head="824"/>
+    <uima:Chunk xmi:id="3080" sofa="1" begin="310" end="320" chunkType="PP" head="868"/>
+    <uima:Chunk xmi:id="3092" sofa="1" begin="348" end="351" chunkType="PP" head="921"/>
+    <uima:Chunk xmi:id="3104" sofa="1" begin="360" end="385" chunkType="NP" head="954"/>
+    <uima:Chunk xmi:id="3116" sofa="1" begin="394" end="415" chunkType="NP" head="1007"/>
+    <uima:Chunk xmi:id="3128" sofa="1" begin="424" end="437" chunkType="NP" head="1062"/>
+    <uima:Chunk xmi:id="3140" sofa="1" begin="438" end="444" chunkType="NP" head="1095"/>
+    <uima:Chunk xmi:id="3152" sofa="1" begin="453" end="466" chunkType="NP" head="1139"/>
+    <uima:Chunk xmi:id="3164" sofa="1" begin="467" end="485" chunkType="NP" head="1172"/>
+    <uima:Chunk xmi:id="3176" sofa="1" begin="495" end="497" chunkType="PP" head="1202"/>
+    <uima:Chunk xmi:id="3188" sofa="1" begin="505" end="508" chunkType="ADVP" head="1243"/>
+    <uima:Chunk xmi:id="3200" sofa="1" begin="518" end="524" chunkType="ADVP" head="1276"/>
+    <uima:Chunk xmi:id="3212" sofa="1" begin="525" end="538" chunkType="NP" head="1309"/>
+    <uima:Chunk xmi:id="3224" sofa="1" begin="544" end="551" chunkType="VP" head="1340"/>
+    <uima:Chunk xmi:id="3236" sofa="1" begin="559" end="562" chunkType="NP" head="1370"/>
+    <uima:Chunk xmi:id="3248" sofa="1" begin="563" end="588" chunkType="NP" head="1400"/>
+    <uima:Chunk xmi:id="3260" sofa="1" begin="596" end="599" chunkType="NP" head="1441"/>
+    <uima:Chunk xmi:id="3272" sofa="1" begin="600" end="627" chunkType="NP" head="1471"/>
+    <uima:Chunk xmi:id="3284" sofa="1" begin="635" end="638" chunkType="NP" head="1512"/>
+    <uima:Chunk xmi:id="3296" sofa="1" begin="667" end="680" chunkType="VP" head="1576"/>
+    <uima:Chunk xmi:id="3308" sofa="1" begin="689" end="690" chunkType="PP" head="1620"/>
+    <uima:Chunk xmi:id="3320" sofa="1" begin="700" end="718" chunkType="VP" head="1675"/>
+    <uima:Chunk xmi:id="3332" sofa="1" begin="726" end="736" chunkType="NP" head="1741"/>
+    <uima:Chunk xmi:id="3344" sofa="1" begin="757" end="759" chunkType="PP" head="1785"/>
+    <uima:Chunk xmi:id="3356" sofa="1" begin="771" end="789" chunkType="VP" head="1840"/>
+    <uima:Chunk xmi:id="3368" sofa="1" begin="801" end="813" chunkType="VP" head="1884"/>
+    <uima:Chunk xmi:id="3380" sofa="1" begin="814" end="823" chunkType="NP" head="1917"/>
+    <uima:Chunk xmi:id="3392" sofa="1" begin="824" end="832" chunkType="NP" head="1951"/>
+    <uima:Chunk xmi:id="3404" sofa="1" begin="844" end="856" chunkType="VP" head="1995"/>
+    <uima:Chunk xmi:id="3416" sofa="1" begin="857" end="867" chunkType="NP" head="2028"/>
+    <uima:Chunk xmi:id="3428" sofa="1" begin="868" end="876" chunkType="NP" head="2061"/>
+    <uima:Chunk xmi:id="3440" sofa="1" begin="889" end="900" chunkType="NP" head="2102"/>
+    <uima:Chunk xmi:id="3452" sofa="1" begin="901" end="912" chunkType="NP" head="2135"/>
+    <uima:Chunk xmi:id="3464" sofa="1" begin="925" end="936" chunkType="NP" head="2176"/>
+    <uima:Chunk xmi:id="3476" sofa="1" begin="937" end="948" chunkType="NP" head="2209"/>
+    <uima:Chunk xmi:id="3488" sofa="1" begin="961" end="986" chunkType="NP" head="2250"/>
+    <uima:Chunk xmi:id="3500" sofa="1" begin="992" end="999" chunkType="NP" head="2295"/>
+    <uima:Chunk xmi:id="3512" sofa="1" begin="1012" end="1015" chunkType="PP" head="2328"/>
+    <uima:Chunk xmi:id="3524" sofa="1" begin="1025" end="1028" chunkType="PP" head="2372"/>
+    <uima:Chunk xmi:id="3536" sofa="1" begin="1037" end="1038" chunkType="PP" head="2394"/>
+    <uima:Chunk xmi:id="3548" sofa="1" begin="1049" end="1052" chunkType="PP" head="2427"/>
+    <uima:Chunk xmi:id="3560" sofa="1" begin="1062" end="1065" chunkType="PP" head="2471"/>
+    <uima:Chunk xmi:id="3572" sofa="1" begin="1074" end="1076" chunkType="PP" head="2493"/>
+    <uima:Chunk xmi:id="3584" sofa="1" begin="1101" end="1107" chunkType="VP" head="2549"/>
+    <uima:Chunk xmi:id="3596" sofa="1" begin="1108" end="1126" chunkType="NP" head="2583"/>
+    <uima:Chunk xmi:id="3608" sofa="1" begin="1135" end="1137" chunkType="PP" head="2628"/>
+    <uima:Chunk xmi:id="3620" sofa="1" begin="1158" end="1164" chunkType="PP" head="2683"/>
+    <uima:Chunk xmi:id="3632" sofa="1" begin="1185" end="1191" chunkType="VP" head="2735"/>
+    <uima:Chunk xmi:id="3644" sofa="1" begin="1206" end="1207" chunkType="PP" head="2768"/>
+    <uima:Chunk xmi:id="3656" sofa="1" begin="1214" end="1220" chunkType="VP" head="2801"/>
+    <uima:Chunk xmi:id="3668" sofa="1" begin="1235" end="1236" chunkType="PP" head="2834"/>
+    <uima:Chunk xmi:id="3674" sofa="1" begin="1237" end="1253" chunkType="NP" head="2845"/>
+    <uima:Chunk xmi:id="3662" sofa="1" begin="1221" end="1234" chunkType="NP" head="2823"/>
+    <uima:Chunk xmi:id="3650" sofa="1" begin="1208" end="1212" chunkType="NP" head="2779"/>
+    <uima:Chunk xmi:id="3638" sofa="1" begin="1192" end="1205" chunkType="NP" head="2757"/>
+    <uima:Chunk xmi:id="3626" sofa="1" begin="1165" end="1183" chunkType="NP" head="2702"/>
+    <uima:Chunk xmi:id="3614" sofa="1" begin="1135" end="1156" chunkType="NP" head="2650"/>
+    <uima:Chunk xmi:id="3602" sofa="1" begin="1128" end="1134" chunkType="VP" head="2616"/>
+    <uima:Chunk xmi:id="3590" sofa="1" begin="1108" end="1109" chunkType="PP" head="2561"/>
+    <uima:Chunk xmi:id="3578" sofa="1" begin="1074" end="1099" chunkType="NP" head="2515"/>
+    <uima:Chunk xmi:id="3566" sofa="1" begin="1066" end="1073" chunkType="NP" head="2482"/>
+    <uima:Chunk xmi:id="3554" sofa="1" begin="1049" end="1060" chunkType="NP" head="2449"/>
+    <uima:Chunk xmi:id="3542" sofa="1" begin="1037" end="1048" chunkType="NP" head="2416"/>
+    <uima:Chunk xmi:id="3530" sofa="1" begin="1029" end="1036" chunkType="NP" head="2383"/>
+    <uima:Chunk xmi:id="3518" sofa="1" begin="1012" end="1023" chunkType="NP" head="2350"/>
+    <uima:Chunk xmi:id="3506" sofa="1" begin="1000" end="1011" chunkType="NP" head="2317"/>
+    <uima:Chunk xmi:id="3494" sofa="1" begin="988" end="991" chunkType="PP" head="2284"/>
+    <uima:Chunk xmi:id="3482" sofa="1" begin="950" end="963" chunkType="PP" head="2231"/>
+    <uima:Chunk xmi:id="3470" sofa="1" begin="937" end="940" chunkType="PP" head="2187"/>
+    <uima:Chunk xmi:id="3458" sofa="1" begin="914" end="926" chunkType="PP" head="2157"/>
+    <uima:Chunk xmi:id="3446" sofa="1" begin="901" end="904" chunkType="PP" head="2113"/>
+    <uima:Chunk xmi:id="3434" sofa="1" begin="878" end="888" chunkType="PP" head="2083"/>
+    <uima:Chunk xmi:id="3422" sofa="1" begin="868" end="870" chunkType="PP" head="2039"/>
+    <uima:Chunk xmi:id="3410" sofa="1" begin="857" end="858" chunkType="PP" head="2006"/>
+    <uima:Chunk xmi:id="3398" sofa="1" begin="834" end="843" chunkType="NP" head="1984"/>
+    <uima:Chunk xmi:id="3386" sofa="1" begin="824" end="826" chunkType="PP" head="1929"/>
+    <uima:Chunk xmi:id="3374" sofa="1" begin="814" end="815" chunkType="PP" head="1895"/>
+    <uima:Chunk xmi:id="3362" sofa="1" begin="791" end="800" chunkType="NP" head="1873"/>
+    <uima:Chunk xmi:id="3350" sofa="1" begin="757" end="770" chunkType="NP" head="1818"/>
+    <uima:Chunk xmi:id="3338" sofa="1" begin="737" end="755" chunkType="VP" head="1763"/>
+    <uima:Chunk xmi:id="3326" sofa="1" begin="720" end="725" chunkType="PP" head="1697"/>
+    <uima:Chunk xmi:id="3314" sofa="1" begin="689" end="699" chunkType="NP" head="1653"/>
+    <uima:Chunk xmi:id="3302" sofa="1" begin="681" end="687" chunkType="PP" head="1587"/>
+    <uima:Chunk xmi:id="3290" sofa="1" begin="639" end="665" chunkType="NP" head="1531"/>
+    <uima:Chunk xmi:id="3278" sofa="1" begin="629" end="635" chunkType="NP" head="1504"/>
+    <uima:Chunk xmi:id="3266" sofa="1" begin="600" end="602" chunkType="PP" head="1449"/>
+    <uima:Chunk xmi:id="3254" sofa="1" begin="590" end="596" chunkType="NP" head="1433"/>
+    <uima:Chunk xmi:id="3242" sofa="1" begin="563" end="566" chunkType="PP" head="1378"/>
+    <uima:Chunk xmi:id="3230" sofa="1" begin="553" end="559" chunkType="NP" head="1362"/>
+    <uima:Chunk xmi:id="3218" sofa="1" begin="540" end="543" chunkType="ADVP" head="1329"/>
+    <uima:Chunk xmi:id="3206" sofa="1" begin="525" end="527" chunkType="PP" head="1287"/>
+    <uima:Chunk xmi:id="3194" sofa="1" begin="509" end="516" chunkType="VP" head="1254"/>
+    <uima:Chunk xmi:id="3182" sofa="1" begin="495" end="503" chunkType="NP" head="1224"/>
+    <uima:Chunk xmi:id="3170" sofa="1" begin="488" end="494" chunkType="ADVP" head="1191"/>
+    <uima:Chunk xmi:id="3158" sofa="1" begin="467" end="468" chunkType="PP" head="1150"/>
+    <uima:Chunk xmi:id="3146" sofa="1" begin="446" end="452" chunkType="VP" head="1117"/>
+    <uima:Chunk xmi:id="3134" sofa="1" begin="438" end="439" chunkType="PP" head="1073"/>
+    <uima:Chunk xmi:id="3122" sofa="1" begin="417" end="423" chunkType="VP" head="1040"/>
+    <uima:Chunk xmi:id="3110" sofa="1" begin="387" end="393" chunkType="PP" head="988"/>
+    <uima:Chunk xmi:id="3098" sofa="1" begin="352" end="359" chunkType="NP" head="932"/>
+    <uima:Chunk xmi:id="3086" sofa="1" begin="321" end="346" chunkType="NP" head="887"/>
+    <uima:Chunk xmi:id="3074" sofa="1" begin="300" end="308" chunkType="NP" head="846"/>
+    <uima:Chunk xmi:id="3062" sofa="1" begin="289" end="299" chunkType="NP" head="813"/>
+    <uima:Chunk xmi:id="3050" sofa="1" begin="266" end="275" chunkType="NP" head="780"/>
+    <uima:Chunk xmi:id="3038" sofa="1" begin="256" end="258" chunkType="PP" head="725"/>
+    <uima:Chunk xmi:id="3026" sofa="1" begin="233" end="245" chunkType="VP" head="691"/>
+    <uima:Chunk xmi:id="3014" sofa="1" begin="203" end="221" chunkType="VP" head="647"/>
+    <uima:Chunk xmi:id="3002" sofa="1" begin="169" end="187" chunkType="VP" head="581"/>
+    <uima:Chunk xmi:id="2990" sofa="1" begin="152" end="156" chunkType="VP" head="515"/>
+    <uima:Chunk xmi:id="2978" sofa="1" begin="150" end="151" chunkType="PP" head="493"/>
+    <uima:Chunk xmi:id="2966" sofa="1" begin="108" end="134" chunkType="NP" head="437"/>
+    <uima:Chunk xmi:id="2954" sofa="1" begin="104" end="107" chunkType="NP" head="407"/>
+    <uima:Chunk xmi:id="2942" sofa="1" begin="73" end="96" chunkType="NP" head="366"/>
+    <uima:Chunk xmi:id="2930" sofa="1" begin="69" end="72" chunkType="NP" head="336"/>
+    <uima:Chunk xmi:id="2918" sofa="1" begin="54" end="61" chunkType="VP" head="306"/>
+    <uima:Chunk xmi:id="2906" sofa="1" begin="36" end="48" chunkType="NP" head="275"/>
+    <uima:Chunk xmi:id="2894" sofa="1" begin="29" end="35" chunkType="ADVP" head="242"/>
+    <uima:Chunk xmi:id="2882" sofa="1" begin="16" end="19" chunkType="ADVP" head="209"/>
+    <uima:Chunk xmi:id="2870" sofa="1" begin="7" end="8" chunkType="PP" head="168"/>
+    <uima:SyntacticChunk xmi:id="3680" sofa="1" begin="0" end="14" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3690" sofa="1" begin="20" end="27" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3700" sofa="1" begin="50" end="53" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3710" sofa="1" begin="136" end="149" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3720" sofa="1" begin="152" end="156" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3730" sofa="1" begin="169" end="187" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3740" sofa="1" begin="203" end="221" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3750" sofa="1" begin="233" end="245" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3760" sofa="1" begin="266" end="275" syntChunkType="SUBJ"/>
+    <uima:SyntacticChunk xmi:id="3770" sofa="1" begin="289" end="308" syntChunkType="ACC"/>
+    <uima:SyntacticChunk xmi:id="3780" sofa="1" begin="348" end="359" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3790" sofa="1" begin="387" end="415" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3800" sofa="1" begin="424" end="444" syntChunkType="ACC"/>
+    <uima:SyntacticChunk xmi:id="3810" sofa="1" begin="453" end="485" syntChunkType="ACC"/>
+    <uima:SyntacticChunk xmi:id="3820" sofa="1" begin="505" end="508" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3830" sofa="1" begin="518" end="538" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3840" sofa="1" begin="544" end="551" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3850" sofa="1" begin="681" end="687" syntChunkType="PIV"/>
+    <uima:SyntacticChunk xmi:id="3860" sofa="1" begin="700" end="718" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3870" sofa="1" begin="726" end="736" syntChunkType="SUBJ"/>
+    <uima:SyntacticChunk xmi:id="3880" sofa="1" begin="757" end="770" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3890" sofa="1" begin="791" end="800" syntChunkType="SUBJ"/>
+    <uima:SyntacticChunk xmi:id="3900" sofa="1" begin="814" end="832" syntChunkType="PIV"/>
+    <uima:SyntacticChunk xmi:id="3910" sofa="1" begin="844" end="856" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3920" sofa="1" begin="878" end="912" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3930" sofa="1" begin="950" end="986" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3940" sofa="1" begin="1000" end="1023" syntChunkType="ACC"/>
+    <uima:SyntacticChunk xmi:id="3950" sofa="1" begin="1062" end="1099" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3960" sofa="1" begin="1108" end="1126" syntChunkType="PIV"/>
+    <uima:SyntacticChunk xmi:id="3970" sofa="1" begin="1135" end="1156" syntChunkType="PIV"/>
+    <uima:SyntacticChunk xmi:id="3980" sofa="1" begin="1185" end="1191" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3990" sofa="1" begin="1206" end="1212" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="4000" sofa="1" begin="1221" end="1253" syntChunkType="ACC"/>
+    <uima:SyntacticChunk xmi:id="3995" sofa="1" begin="1214" end="1220" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3985" sofa="1" begin="1192" end="1205" syntChunkType="ACC"/>
+    <uima:SyntacticChunk xmi:id="3975" sofa="1" begin="1158" end="1183" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3965" sofa="1" begin="1128" end="1134" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3955" sofa="1" begin="1101" end="1107" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3945" sofa="1" begin="1025" end="1060" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3935" sofa="1" begin="988" end="999" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3925" sofa="1" begin="914" end="948" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3915" sofa="1" begin="857" end="876" syntChunkType="PIV"/>
+    <uima:SyntacticChunk xmi:id="3905" sofa="1" begin="834" end="843" syntChunkType="SUBJ"/>
+    <uima:SyntacticChunk xmi:id="3895" sofa="1" begin="801" end="813" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3885" sofa="1" begin="771" end="789" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3875" sofa="1" begin="737" end="755" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3865" sofa="1" begin="720" end="725" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3855" sofa="1" begin="689" end="699" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3845" sofa="1" begin="667" end="680" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3835" sofa="1" begin="540" end="543" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3825" sofa="1" begin="509" end="516" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3815" sofa="1" begin="488" end="503" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3805" sofa="1" begin="446" end="452" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3795" sofa="1" begin="417" end="423" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3785" sofa="1" begin="360" end="385" syntChunkType="ACC"/>
+    <uima:SyntacticChunk xmi:id="3775" sofa="1" begin="310" end="346" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3765" sofa="1" begin="276" end="288" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3755" sofa="1" begin="246" end="264" syntChunkType="ACC"/>
+    <uima:SyntacticChunk xmi:id="3745" sofa="1" begin="223" end="232" syntChunkType="SUBJ"/>
+    <uima:SyntacticChunk xmi:id="3735" sofa="1" begin="189" end="202" syntChunkType="SUBJ"/>
+    <uima:SyntacticChunk xmi:id="3725" sofa="1" begin="158" end="168" syntChunkType="SUBJ"/>
+    <uima:SyntacticChunk xmi:id="3715" sofa="1" begin="150" end="151" syntChunkType="PIV"/>
+    <uima:SyntacticChunk xmi:id="3705" sofa="1" begin="54" end="61" syntChunkType="P"/>
+    <uima:SyntacticChunk xmi:id="3695" sofa="1" begin="29" end="48" syntChunkType="ADVL"/>
+    <uima:SyntacticChunk xmi:id="3685" sofa="1" begin="16" end="19" syntChunkType="ADVL"/>
+    <Base:PROBLEM xmi:id="4005" sofa="1" begin="7" end="14"/>
+    <Base:PROBLEM xmi:id="4013" sofa="1" begin="73" end="84"/>
+    <Base:PROBLEM xmi:id="4021" sofa="1" begin="150" end="156"/>
+    <Base:PROBLEM xmi:id="4029" sofa="1" begin="189" end="202"/>
+    <Base:PROBLEM xmi:id="4053" sofa="1" begin="348" end="373"/>
+    <Base:PROBLEM xmi:id="4061" sofa="1" begin="438" end="444"/>
+    <Base:PROBLEM xmi:id="4069" sofa="1" begin="246" end="258"/>
+    <Base:PROBLEM xmi:id="4073" sofa="1" begin="289" end="302"/>
+    <Base:PROBLEM xmi:id="4065" sofa="1" begin="467" end="485"/>
+    <Base:PROBLEM xmi:id="4057" sofa="1" begin="387" end="406"/>
+    <Base:PROBLEM xmi:id="4041" sofa="1" begin="310" end="334"/>
+    <Base:PROBLEM xmi:id="4025" sofa="1" begin="158" end="168"/>
+    <Base:PROBLEM xmi:id="4017" sofa="1" begin="108" end="118"/>
+    <Base:PROBLEM xmi:id="4009" sofa="1" begin="36" end="48"/>
+    <cas:Sofa xmi:id="1" sofaNum="1" sofaID="_InitialView" mimeType="text" sofaString="Quanto à lápis, não entendo.&#10;Quanto à computador, não entendo.&#10;Refiro-me à trabalhos remunerados.&#10;Refiro-me à reuniões extraordinárias.&#10;Fomos levados à crer.&#10;A uma hora estaremos partindo.&#10;As duas horas estaremos partindo.&#10;Os ônibus estacionaram a direita do pátio.&#10;Os ônibus estacionaram a esquerda do pátio.&#10;Em relação as atividades programadas.&#10;Com relação as atividades programadas.&#10;Devido as cobranças injustas.&#10;Enviei os documentos à você.&#10;Enviei os documentos à Vossa Excelência.&#10;&#10;Quanto ao lápis, não entendo.&#10;Quanto ao computador, não entendo.&#10;Refiro-me aos trabalhos remunerados.&#10;Refiro-me às reuniões extraordinárias.&#10;Refiro-me a reuniões extraordinárias.&#10;Fomos levados a crer.&#10;À uma hora estaremos partindo.&#10;Daqui a uma hora estaremos partindo.&#10;Às duas horas estaremos partindo.&#10;Os ônibus estacionaram à direita do pátio.&#10;Os ônibus estacionaram à esquerda do pátio.&#10;Em relação a segurança dos menores.&#10;Em relação à segurança dos menores.&#10;Em relação às atividades programadas.&#10;Com relação a segurança dos menores.&#10;Com relação à segurança dos menores.&#10;Com relação às atividades programadas.&#10;Devido à cobrança injusta.&#10;Devido às cobranças injustas.&#10;Devido a cobrança injusta.&#10;Enviei os documentos a você.&#10;Enviei os documentos a Vossa Excelência."/>
+    <cas:View sofa="1" members="8 13 21 29 37 45 53 61 69 77 85 93 101 109 117 125 133 141 149 153 145 137 129 121 113 105 97 89 81 73 65 57 49 41 33 25 17 157 179 201 220 242 264 287 306 328 344 366 388 407 426 448 470 493 515 537 559 581 603 625 647 669 691 713 736 758 780 802 824 846 868 887 910 932 954 977 996 1018 1040 1062 1084 1106 1128 1150 1172 1191 1213 1235 1254 1276 1298 1321 1340 1362 1378 1400 1422 1441 1460 1482 1504 1520 1542 1564 1587 1609 1631 1653 1675 1697 1719 1741 1763 1785 1807 1829 1851 1873 1895 1917 1940 1962 1984 2006 2028 2050 2072 2091 2113 2135 2157 2176 2198 2220 2239 2262 2284 2306 2328 2350 2372 2394 2416 2438 2460 2482 2504 2527 2549 2572 2594 2616 2639 2661 2683 2702 2724 2746 2768 2790 2812 2834 2853 2845 2823 2801 2779 2757 2735 2713 2691 2672 2650 2628 2605 2583 2561 2538 2515 2493 2471 2449 2427 2405 2383 2361 2339 2317 2295 2273 2250 2231 2209 2187 2165 2146 2124 2102 2083 2061 2039 2017 1995 1973 1951 1929 1906 1884 1862 1840 1818 1796 1774 1752 1730 1708 1686 1664 1642 1620 1598 1576 1553 1531 1512 1493 1471 1449 1433 1411 1389 1370 1351 1329 1309 1287 1265 1243 1224 1202 1180 1161 1139 1117 1095 1073 1051 1029 1007 988 966 943 921 899 876 857 835 813 791 769 747 725 702 680 658 636 614 592 570 548 526 504 482 459 437 415 399 377 355 336 317 295 275 253 231 209 190 168 2864 2876 2888 2900 2912 2924 2936 2948 2960 2972 2984 2996 3008 3020 3032 3044 3056 3068 3080 3092 3104 3116 3128 3140 3152 3164 3176 3188 3200 3212 3224 3236 3248 3260 3272 3284 3296 3308 3320 3332 3344 3356 3368 3380 3392 3404 3416 3428 3440 3452 3464 3476 3488 3500 3512 3524 3536 3548 3560 3572 3584 3596 3608 3620 3632 3644 3656 3668 3674 3662 3650 3638 3626 3614 3602 3590 3578 3566 3554 3542 3530 3518 3506 3494 3482 3470 3458 3446 3434 3422 3410 3398 3386 3374 3362 3350 3338 3326 3314 3302 3290 3278 3266 3254 3242 3230 3218 3206 3194 3182 3170 3158 3146 3134 3122 3110 3098 3086 3074 3062 3050 3038 3026 3014 3002 2990 2978 2966 2954 2942 2930 2918 2906 2894 2882 2870 3680 3690 3700 3710 3720 3730 3740 3750 3760 3770 3780 3790 3800 3810 3820 3830 3840 3850 3860 3870 3880 3890 3900 3910 3920 3930 3940 3950 3960 3970 3980 3990 4000 3995 3985 3975 3965 3955 3945 3935 3925 3915 3905 3895 3885 3875 3865 3855 3845 3835 3825 3815 3805 3795 3785 3775 3765 3755 3745 3735 3725 3715 3705 3695 3685 4005 4013 4021 4029 4053 4061 4069 4073 4065 4057 4041 4025 4017 4009"/>
+</xmi:XMI>

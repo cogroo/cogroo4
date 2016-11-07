@@ -1,0 +1,12 @@
+Não como carne [mau passada. => ]( ) 
+Eu [sou mal. => ]( ) 
+Eu tenho [mal humor. => ]( ) 
+O administrador acordou [mau humorado. => ]( ) 
+O administrador é [mau humorado. => ]( ) 
+
+
+Não como carne mal passada.
+Eu sou mau.
+Eu tenho mau humor.
+O administrador acordou mal humorado.
+O administrador é mal humorado.

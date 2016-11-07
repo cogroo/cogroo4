@@ -1,0 +1,3 @@
+. Editar sugestões do arquivo Main.ruta, seguindo a sintaxe definida no guia (as primeiras estão prontas para servirem de modelo).
+. Editar arquivos de testes, seguindo a sintaxe definida no guia (o de Anexos já está pronto para servir de modelo) e a classe JUint que os chama.
+. Fazer as demais regras existentes no XML, corrigir eventuais problemas e acrescentar mais conforme necessário.
