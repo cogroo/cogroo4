@@ -1,7 +1,8 @@
-package org.cogroo.tools;
+package org.cogroo.ruta.tools;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.io.Charsets;
 import org.cogroo.tools.checker.JavaRuleDefinition;
 import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.rules.model.Example;
@@ -56,7 +56,7 @@ public class RuleParser {
 			Map<String, String> rule = new HashMap<String, String>();
 			List<String> correctExamples = new ArrayList<String>();
 			List<String> incorrectExamples = new ArrayList<String>();
-			for (String line : Resources.readLines(url, Charsets.UTF_8)) {
+			for (String line : Resources.readLines(url, Charset.forName("UTF-8"))) {
 				line = line.trim();
 				if (line.length() == 0 && rule.containsKey("id")) {
 					List<Example> examples = buildExampleArray(correctExamples,

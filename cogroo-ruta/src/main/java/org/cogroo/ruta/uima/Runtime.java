@@ -1,4 +1,4 @@
-package org.cogroo.tools.checker.checkers.uima;
+package org.cogroo.ruta.uima;
 
 import java.io.IOException;
 import java.util.Locale;

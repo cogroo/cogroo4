@@ -1,4 +1,4 @@
-package org.cogroo.tools.checker.checkers;
+package org.cogroo.ruta.checker;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,12 +29,12 @@ import org.cogroo.checker.GrammarChecker;
 import org.cogroo.entities.Mistake;
 import org.cogroo.entities.Sentence;
 import org.cogroo.entities.Token;
-import org.cogroo.tools.RuleParser;
+import org.cogroo.ruta.tools.RuleParser;
+import org.cogroo.ruta.uima.AEFactory;
+import org.cogroo.ruta.uima.AnnotatorUtil;
+import org.cogroo.ruta.uima.UimaCasAdapter;
 import org.cogroo.tools.checker.AbstractTypedChecker;
 import org.cogroo.tools.checker.RuleDefinition;
-import org.cogroo.tools.checker.checkers.uima.AEFactory;
-import org.cogroo.tools.checker.checkers.uima.AnnotatorUtil;
-import org.cogroo.tools.checker.checkers.uima.UimaCasAdapter;
 import org.cogroo.tools.checker.rules.applier.SuggestionBuilder;
 import org.cogroo.tools.checker.rules.dictionary.CogrooTagDictionary;
 import org.cogroo.tools.checker.rules.model.Example;

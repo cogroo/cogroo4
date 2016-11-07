@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.cogroo.tools.checker.checkers.uima;
+package org.cogroo.ruta.uima;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 

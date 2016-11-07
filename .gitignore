@@ -13,3 +13,12 @@ lang/pt_br/cogroo-gc/reports/rules_status.html
 **/.buildpath
 
 cogroo-gc/.buildpath
+*.iml
+.idea
+target
+.classpath
+.project
+.settings
+nbactions.xml
+nb-configuration.xml
+*.DS_Store

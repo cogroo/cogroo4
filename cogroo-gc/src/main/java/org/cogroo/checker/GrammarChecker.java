@@ -24,9 +24,6 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
 
-import opennlp.tools.dictionary.Dictionary;
-import opennlp.tools.util.InvalidFormatException;
-
 import org.apache.log4j.Logger;
 import org.cogroo.analyzer.Analyzer;
 import org.cogroo.analyzer.ComponentFactory;
@@ -45,7 +42,6 @@ import org.cogroo.tools.checker.checkers.ParonymChecker;
 import org.cogroo.tools.checker.checkers.PunctuationChecker;
 import org.cogroo.tools.checker.checkers.RepetitionChecker;
 import org.cogroo.tools.checker.checkers.SpaceChecker;
-import org.cogroo.tools.checker.checkers.UIMAChecker;
 import org.cogroo.tools.checker.rules.applier.RulesApplier;
 import org.cogroo.tools.checker.rules.applier.RulesProvider;
 import org.cogroo.tools.checker.rules.applier.RulesTreesAccess;
@@ -58,6 +54,9 @@ import org.cogroo.tools.checker.rules.dictionary.TagDictionary;
 import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.util.MistakeComparator;
 import org.cogroo.tools.checker.rules.validator.RulePostValidatorProvider;
+
+import opennlp.tools.dictionary.Dictionary;
+import opennlp.tools.util.InvalidFormatException;
 
 public class GrammarChecker implements CheckAnalyzer {
 
@@ -136,7 +135,7 @@ public class GrammarChecker implements CheckAnalyzer {
 		typedCheckersList.add(new SpaceChecker(loadAbbDict()));
 		typedCheckersList.add(new PunctuationChecker());
 		typedCheckersList.add(new RepetitionChecker());
-		typedCheckersList.add(new UIMAChecker(td));
+//		typedCheckersList.add(new UIMAChecker(td));
 
 		typedCheckers = new TypedCheckerComposite(typedCheckersList, false);
 

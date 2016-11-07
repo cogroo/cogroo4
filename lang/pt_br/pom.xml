@@ -45,6 +45,7 @@
 
 	<modules>
 		<module>cogroo-gc</module>
+		<module>cogroo-ruta</module>
 		<module>cogroo-ann</module>
 		<module>cogroo-res</module>
 		<module>cogroo-addon</module>

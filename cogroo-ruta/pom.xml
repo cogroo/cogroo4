@@ -15,6 +15,26 @@
 	<name>Cogroo Ruta</name>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimaj-core</artifactId>
+			<version>2.7.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimaj-tools</artifactId>
+			<version>2.7.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>ruta-core</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
@@ -23,7 +43,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>cogroo-nlp</artifactId>
+			<artifactId>cogroo-gc</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

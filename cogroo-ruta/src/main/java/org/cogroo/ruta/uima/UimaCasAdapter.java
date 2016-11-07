@@ -1,4 +1,4 @@
-package org.cogroo.tools.checker.checkers.uima;
+package org.cogroo.ruta.uima;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
