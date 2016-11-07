@@ -126,8 +126,7 @@ public class GrammarChecker implements CheckAnalyzer {
 		List<TypedChecker> typedCheckersList = new ArrayList<TypedChecker>();
 
 		// add the rules applier, from XSD
-		// Removido para LabXP 2015
-		// typedCheckersList.add(createRulesApplierChecker(activeXmlRules));
+		 typedCheckersList.add(createRulesApplierChecker(activeXmlRules));
 
 		// create other typed checkers
 
