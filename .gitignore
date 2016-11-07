@@ -1,4 +1,7 @@
-.project
+cogroo-ruta/descriptor/*Engine.xml
+cogroo-ruta/output/*
+cogroo-ruta/test/temp/*
+cogroo-uima/exemplos/processed/*
 .classpath
 .settings
 **/target/**
@@ -7,3 +10,15 @@ target
 genGraphics
 lang/pt_br/cogroo-gc/reports/rules_status.html
 **/scripts/eval*
+**/.buildpath
+
+cogroo-gc/.buildpath
+*.iml
+.idea
+target
+.classpath
+.project
+.settings
+nbactions.xml
+nb-configuration.xml
+*.DS_Store

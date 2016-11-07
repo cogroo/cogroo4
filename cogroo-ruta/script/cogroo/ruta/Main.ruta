@@ -1,0 +1,762 @@
+PACKAGE cogroo.ruta;
+
+TYPESYSTEM TypeSystem;
+
+
+IMPORT opennlp.uima.Chunk           FROM TypeSystem AS cgChunk;
+IMPORT opennlp.uima.Sentence        FROM TypeSystem AS cgSentence;
+IMPORT opennlp.uima.SyntacticChunk  FROM TypeSystem AS cgSChunk;
+IMPORT opennlp.uima.Token           FROM TypeSystem AS cgToken;
+
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// BASE 
+
+DECLARE ADJECTIVE;    
+DECLARE ADVERB;    
+DECLARE ARTICLE;
+    DECLARE DEFINITE, INDEFINITE;
+DECLARE CONJUNCTION;
+    DECLARE SUBORDINATING_CONJUNCTION;     
+    DECLARE COORDINATING_CONJUNCTION;     
+DECLARE INTERJECTION;     
+DECLARE NOUN;      
+    DECLARE PROPER_NOUN;   
+DECLARE NUMERAL;
+DECLARE PREPOSITION;
+DECLARE PRONOUN;
+    DECLARE PERSONAL_PRONOUN, DETERMINATIVE_PRONOUN, INDEPENDENT_PRONOUN;   
+DECLARE VERB;      
+    DECLARE FINITE_VERB, INFINITE_VERB, PARTICIPLE_VERB, GERUND_VERB;
+    DECLARE PRESENT, IMPERFECT, SIMPLE_PERFECT, PLU_PERFECT, FUTURE, CONDITIONAL;
+    DECLARE INDICATIVE, SUBJUNCTIVE, IMPERATIVE;
+
+DECLARE MALE, FEMALE;
+DECLARE SINGULAR, PLURAL;
+DECLARE FIRST_PERSON, SECOND_PERSON, THIRD_PERSON;
+
+DECLARE FEMALE_NOUN;
+DECLARE MALE_NOUN;
+DECLARE PLURAL_NOUN;
+DECLARE SINGULAR_NOUN;
+
+DECLARE Annotation PROBLEM(String id, String suggestion);
+
+
+// adjective
+cgToken{FEATURE("pos","adj") -> ADJECTIVE};
+cgToken{FEATURE("pos","n-adj") -> ADJECTIVE};
+
+// adverb
+cgToken{FEATURE("pos","adv") -> ADVERB};
+
+// article
+cgToken{FEATURE("pos", "art") -> ARTICLE};
+cgToken{AND(IS(ARTICLE), REGEXP(cgToken.lexeme, "u.*")) -> INDEFINITE};
+cgToken{AND(IS(ARTICLE), NOT(REGEXP(cgToken.lexeme, "u.*"))) -> DEFINITE};
+
+// conjunction
+cgToken{FEATURE("pos","conj-s") -> CONJUNCTION, SUBORDINATING_CONJUNCTION};
+cgToken{FEATURE("pos","conj-c") -> CONJUNCTION, COORDINATING_CONJUNCTION};
+
+// interjection
+cgToken{FEATURE("pos","intj") -> INTERJECTION};
+
+// noun
+cgToken{FEATURE("pos","n") -> NOUN};
+cgToken{FEATURE("pos","prop") -> NOUN, PROPER_NOUN};
+
+// numeral
+cgToken{FEATURE("pos","num") -> NUMERAL};
+
+// preposition
+cgToken{FEATURE("pos","prp") -> PREPOSITION};
+
+// pronoun
+cgToken{FEATURE("pos","pron-pers") -> PRONOUN, PERSONAL_PRONOUN};
+cgToken{FEATURE("pos","pron-det") -> PRONOUN, DETERMINATIVE_PRONOUN};
+cgToken{FEATURE("pos","pron-indp") -> PRONOUN, INDEPENDENT_PRONOUN};
+
+// verb
+cgToken{FEATURE("pos","v-fin") -> VERB, FINITE_VERB};
+cgToken{FEATURE("pos","v-inf") -> VERB, INFINITE_VERB};
+cgToken{FEATURE("pos","v-pcp") -> VERB, PARTICIPLE_VERB};
+cgToken{FEATURE("pos","v-ger") -> VERB, GERUND_VERB};
+cgToken{REGEXP(cgToken.features, ".*IND.*") -> INDICATIVE};
+cgToken{REGEXP(cgToken.features, ".*SUBJ.*") -> SUBJUNCTIVE};
+cgToken{REGEXP(cgToken.features, ".*IMP.*") -> IMPERATIVE};
+cgToken{REGEXP(cgToken.features, ".*.*PR.*.*") -> PRESENT};
+cgToken{REGEXP(cgToken.features, ".*IMPF.*") -> IMPERFECT};
+cgToken{REGEXP(cgToken.features, ".*PS.*") -> SIMPLE_PERFECT};
+cgToken{REGEXP(cgToken.features, ".*MQP.*") -> PLU_PERFECT};
+cgToken{REGEXP(cgToken.features, ".*FUT.*") -> FUTURE};
+cgToken{REGEXP(cgToken.features, ".*COND.*") -> CONDITIONAL};
+
+// complements 
+// GENDER:
+    cgToken{FEATURE("features", "M=S") -> MALE, SINGULAR};
+cgToken{FEATURE("features", "M=P") -> MALE, PLURAL};
+cgToken{FEATURE("features", "F=S") -> FEMALE, SINGULAR};
+cgToken{FEATURE("features", "F=P") -> FEMALE, PLURAL};
+// PERSON:
+    cgToken{REGEXP(cgToken.features, ".*1[PS].*") -> FIRST_PERSON};
+cgToken{REGEXP(cgToken.features, ".*2[PS].*") -> SECOND_PERSON};
+cgToken{REGEXP(cgToken.features, ".*3[PS].*") -> THIRD_PERSON};
+// NUMBER (singular/plural):
+    cgToken{REGEXP(cgToken.features, ".*[1-3]P.*") -> PLURAL};
+cgToken{REGEXP(cgToken.features, ".*[1-3]S.*") -> SINGULAR};
+
+
+// combinations 
+cgToken{AND(IS(MALE), IS(NOUN)) -> MALE_NOUN};
+cgToken{AND(IS(FEMALE), IS(NOUN)) -> FEMALE_NOUN};
+cgToken{AND(IS(PLURAL), IS(NOUN)) -> PLURAL_NOUN};
+cgToken{AND(IS(SINGULAR), IS(NOUN)) -> SINGULAR_NOUN};
+
+
+
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - ANEXOS
+
+// rules 25, 26 and 27
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "anex(os|a|as)", true)
+-> CREATE(PROBLEM, 1, 2, "id" = "25-27", 
+    "suggestion" = "replace 2 with 'anexo'")};
+
+// TODO: The verb should not be necessary in any of the following rules.
+
+// rule 28
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
+cgToken{REGEXP(cgToken.lexeme, "anexos", true)}
+cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "28", 
+    "suggestion" = "replace 2 with 'anexo'")};
+    
+// rule 29
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
+cgToken{REGEXP(cgToken.lexeme, "anexo", true)}
+cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "29",
+    "suggestion" = "replace 2 with 'anexos'")};
+
+// rule 30
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
+cgToken{REGEXP(cgToken.lexeme, "anexa", true)}
+cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(FEMALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "30",
+    "suggestion" = "replace 2 with 'anexas'")};
+
+// rule 31
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
+cgToken{REGEXP(cgToken.lexeme, "anexas", true)}
+cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "31",
+    "suggestion" = "replace 2 with 'anexos'")};
+
+// rule 32
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(PLURAL))}
+cgToken{REGEXP(cgToken.lexeme, "anexas", true)}
+cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(FEMALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "32",
+    "suggestion" = "replace 2 with 'anexa'")};
+
+// rule 33
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
+cgToken{REGEXP(cgToken.lexeme, "anexos", true)}
+cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "33",
+    "suggestion" = "replace 2 with 'anexo'")};
+
+// rule 34
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
+cgToken{REGEXP(cgToken.lexeme, "anexo", true)}
+cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "34",
+    "suggestion" = "replace 1 with 1 in (class=finitive-verb number=plural person=third tense=present mood=indicative) ; replace 2 with 'anexos'")};
+
+// rule 35
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
+cgToken{REGEXP(cgToken.lexeme, "anexa", true)}
+cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(FEMALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "35",
+    "suggestion" = "replace 1 with 1 in (class=finitive-verb number=plural person=third tense=present mood=indicative) ; replace 2 with 'anexas'")};
+
+// rule 36
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
+cgToken{REGEXP(cgToken.lexeme, "anexas", true)}
+cgToken{AND(AND(IS(PLURAL), OR(IS(ARTICLE), IS(NOUN)), IS(MALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "36", 
+    "suggestion" = "replace 1 with 1 in (class=finitive-verb number=plural person=third tense=present mood=indicative) ; replace 2 with 'anexos'")};
+
+// rule 37
+cgToken{AND(AND(IS(VERB), IS(THIRD_PERSON)), IS(SINGULAR))}
+cgToken{REGEXP(cgToken.lexeme, "anexas", true)}
+cgToken{AND(AND(IS(SINGULAR), OR(IS(ARTICLE), IS(NOUN)), IS(FEMALE)))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "37",
+    "suggestion" = "replace 2 with 'anexa'")};
+
+
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - COLOCAÇÃO PRONOMINAL
+
+
+DECLARE END_PRONOUN;
+DECLARE END_NOS;
+
+PERSONAL_PRONOUN {REGEXP(cgToken.lexeme, "-(me|te|se|lhe|nos|vos|lhes)", true) -> MARK(END_PRONOUN)};
+
+// Rules 61 and 62
+cgToken{REGEXP(cgToken.lexeme, "(não|nunca|ninguém|nada|jamais)", true)}
+VERB 
+END_PRONOUN
+{ -> CREATE(PROBLEM, 1, 2, 3, "id" = "61-62",
+    "suggestion" = "swap 2 3")};
+    
+cgToken{REGEXP(cgToken.lexeme, "(não|nunca|ninguém|nada|jamais)", true)}
+VERB 
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "61-62",
+    "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
+    
+// Rules 63 and 64
+cgToken{REGEXP(cgToken.lexeme, "(nenhum|nenhuma)", true)}
+NOUN
+VERB 
+END_PRONOUN
+{ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "63-64",
+    "suggestion" = "swap 3 4")};
+
+cgToken{REGEXP(cgToken.lexeme, "(nenhum|nenhuma)", true)}
+NOUN
+VERB 
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, 5, "id" = "63-64",
+    "suggestion" = "swap 3 4; replace 3 with 'nos'; replace 5 with ''")};
+    
+// Rules 65 and 66
+cgToken{REGEXP(cgToken.lexeme, "(que|quem|quando|se|porque)", true)}
+VERB 
+END_PRONOUN
+cgToken{NOT(IS(VERB))
+ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "65-66",
+     "suggestion" = "swap 2 3")};
+
+cgToken{REGEXP(cgToken.lexeme, "(que|quem|quando|se|porque)", true)}
+VERB 
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)}
+cgToken{NOT(IS(VERB))
+ -> CREATE(PROBLEM, 1, 2, 3, 4, 5, "id" = "65-66",
+     "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
+    
+// Rules 67 and 68
+cgToken{REGEXP(cgToken.lexeme, "(sempre|já|bem|aqui|onde|mais|talvez|ainda|como)", true)}
+VERB 
+END_PRONOUN
+cgToken{NOT(IS(VERB))
+ -> CREATE(PROBLEM, 1, 2, 3, "id" = "67-68",
+     "suggestion" = "swap 2 3")};
+
+cgToken{REGEXP(cgToken.lexeme, "(sempre|já|bem|aqui|onde|mais|talvez|ainda|como)", true)}
+VERB 
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)}
+cgToken{NOT(IS(VERB))
+ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "67-68",
+     "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
+    
+// Rules 69 and 70
+cgToken{REGEXP(cgToken.lexeme, "por", true)}
+cgToken{REGEXP(cgToken.lexeme, "que", true)}
+ARTICLE
+NOUN
+VERB
+END_PRONOUN
+{ -> CREATE(PROBLEM, 1, 2, 3, 4, 5, 6, "id" = "69-70",
+    "suggestion" = "swap 5 6")};
+
+cgToken{REGEXP(cgToken.lexeme, "por", true)}
+cgToken{REGEXP(cgToken.lexeme, "que", true)}
+ARTICLE
+NOUN
+VERB
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, 5, 6, 7, "id" = "69-70",
+    "suggestion" = "swap 5 6; replace 5 with 'nos'; replace 7 with ''")};
+    
+// Rules 71 and 72
+cgToken{REGEXP(cgToken.lexeme, "(tudo|pouco|algo)",true)}
+VERB
+END_PRONOUN
+{ -> CREATE(PROBLEM, 1, 2, 3, "id" = "71-72",
+    "suggestion" = "swap 2 3")};
+    
+cgToken{REGEXP(cgToken.lexeme, "(tudo|pouco|algo)",true)}
+VERB
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "71-72",
+    "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
+    
+// Rules 73 and 74
+cgToken{REGEXP(cgToken.lexeme,"(só|ou|ora|quer)",true)}
+VERB
+END_PRONOUN
+{ -> CREATE(PROBLEM, 1, 2, 3, "id" = "73-74",
+    "suggestion" = "swap 2 3")};
+
+cgToken{REGEXP(cgToken.lexeme,"(só|ou|ora|quer)",true)}
+VERB
+cgToken{REGEXP(cgToken.lexeme, "em", true)}
+cgToken{REGEXP(cgToken.lexeme, "os", true)
+ -> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "73-74",
+    "suggestion" = "swap 2 3; replace 2 with 'nos'; replace 4 with ''")};
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - CONCORDÂNCIA ADJ.-SUB.
+
+DECLARE FEMALE_ADJECTIVE;
+DECLARE MALE_ADJECTIVE;
+DECLARE PLURAL_ADJECTIVE;
+DECLARE SINGULAR_ADJECTIVE;
+
+cgToken{AND(IS(MALE), IS(ADJECTIVE)) -> MALE_ADJECTIVE};
+cgToken{AND(IS(FEMALE), IS(ADJECTIVE)) -> FEMALE_ADJECTIVE};
+cgToken{AND(IS(PLURAL), IS(ADJECTIVE)) -> PLURAL_ADJECTIVE};
+cgToken{AND(IS(SINGULAR), IS(ADJECTIVE)) -> SINGULAR_ADJECTIVE};
+
+// rule 17 to 20
+NOUN{IS(SINGULAR)}
+PLURAL_ADJECTIVE
+{-> CREATE(PROBLEM,1,2, "id" = "17-20",
+    "suggestion" = "set (number) of 2 to match 1")};
+    
+NOUN{IS(PLURAL)}
+SINGULAR_ADJECTIVE
+{-> CREATE(PROBLEM,1,2, "id" = "17-20",
+    "suggestion" = "set (number) of 2 to match 1")};
+
+// rule 21 to 24
+PLURAL_ADJECTIVE
+NOUN{IS(SINGULAR)
+-> CREATE(PROBLEM,1,2, "id" = "21-24",
+    "suggestion" = "set (number) of 2 to match 1")};
+    
+SINGULAR_ADJECTIVE
+NOUN{IS(PLURAL)
+-> CREATE(PROBLEM,1,2, "id" = "21-24",
+    "suggestion" = "set (number) of 2 to match 1")};
+
+
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - CRASE 
+
+DECLARE LEXEME_A, LEXEME_AS, LEXEME_A_OR_AS;
+DECLARE PREPOSITION_A, ARTICLE_A;
+DECLARE CRASE, CRASE_A, CRASE_AS;
+
+DECLARE PRON_TRATAMENTO;
+DECLARE EM_RELACAO, COM_RELACAO;
+
+cgToken{REGEXP(cgToken.lexeme, "a", true) -> LEXEME_A};
+cgToken{REGEXP(cgToken.lexeme, "as", true) -> LEXEME_AS};
+cgToken{OR(IS(LEXEME_A), IS(LEXEME_AS))-> LEXEME_A_OR_AS};
+cgToken{AND(IS(PREPOSITION), IS(LEXEME_A_OR_AS)) -> PREPOSITION_A};
+cgToken{AND(AND(AND(IS(ARTICLE), IS(FEMALE))), IS(LEXEME_A_OR_AS)) -> ARTICLE_A};
+cgToken{AND(IS(PREPOSITION_A), IS(ARTICLE_A)) -> CREATE(CRASE)};
+
+cgToken{AND(IS(CRASE), IS(SINGULAR)) -> CREATE(CRASE_A)};
+cgToken{AND(IS(CRASE), IS(PLURAL))   -> CREATE(CRASE_AS)};
+ 
+
+cgToken{REGEXP(cgToken.lexeme, "em_relação", true) ->  EM_RELACAO};
+
+cgToken{REGEXP(cgToken.lexeme, "com", true)}
+cgToken{REGEXP(cgToken.lexeme, "relação", true)  -> CREATE(COM_RELACAO, 1, 2, )};
+
+
+// rules 1 and 2
+CRASE
+MALE_NOUN{IS(SINGULAR)
+ -> CREATE(PROBLEM, 1, 2, "id" = "1-2",
+     "suggestion" = "replace 2 with '' | replace 1 with 'ao'; replace 2 with ''")};
+
+CRASE
+MALE_NOUN{IS(PLURAL)
+ -> CREATE(PROBLEM, 1, 2, "id" = "1-2",
+     "suggestion" = "replace 2 with ''")};
+
+// rule 3
+CRASE_A
+PLURAL_NOUN{
+ IS(FEMALE) -> CREATE(PROBLEM, 1, 2, "id" = "3",
+     "suggestion" = "replace 2 with ''")};
+
+// rule 4
+CRASE
+VERB{
+ -> CREATE(PROBLEM, 1, 2, "id" = "4",
+     "suggestion" = "<Replace index=\"0\">  <Lexeme/> </Replace><Replace index=\"1\">    <Lexeme>a</Lexeme>  </Replace>")};
+
+
+// rule 5
+cgToken{AND(NOT(IS(CRASE)), IS(LEXEME_A ))}
+cgToken{OR(IS(NUMERAL), IS(ARTICLE), IS(PRONOUN))}
+cgToken{AND(REGEXP(cgToken.lexeme, "hora"))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "5",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>à</Lexeme></Replace>")};
+
+// rule 6
+cgToken{AND(NOT(IS(CRASE)), IS(LEXEME_AS))}
+cgToken{OR(IS(NUMERAL), IS(ARTICLE), IS(PRONOUN))} cgToken{AND(REGEXP(cgToken.lexeme, "horas"))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "6",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>às</Lexeme></Replace>")};
+
+
+// rules 7 and 8
+cgToken{AND(NOT(IS(CRASE)), IS(LEXEME_A))}
+cgToken{REGEXP(cgToken.lexeme, "(direita|esquerda)", true)}
+cgToken{AND(REGEXP(cgToken.lexeme, "de", true))
+-> CREATE(PROBLEM, 1, 2, 3, "id" = "7-8",
+    "suggestion" = "<Replace index=\"0\"><Lexeme>à</Lexeme></Replace>")};
+
+
+// rule 9
+EM_RELACAO 
+cgToken{AND(IS(LEXEME_A),  NOT(IS(CRASE)))}
+cgToken{AND(IS(NOUN), IS(FEMALE), IS(SINGULAR)) 
+-> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "9",
+    "suggestion" = "<Replace index=\"0\"><Lexeme>à</Lexeme></Replace>")};
+
+// rule 10
+EM_RELACAO
+cgToken{AND(IS(LEXEME_AS), NOT(IS(CRASE)))}
+cgToken{AND(IS(NOUN), IS(FEMALE), IS(PLURAL))
+-> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "10",
+    "suggestion" = "<Replace index=\"0\"><Lexeme>às</Lexeme></Replace>")};
+
+// rule 11
+COM_RELACAO
+cgToken{AND(IS(LEXEME_A ), NOT(IS(CRASE)))}
+cgToken{AND(IS(NOUN), IS(FEMALE), IS(SINGULAR))
+-> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "11",
+    "suggestion" = "<Replace index=\"0\"><Lexeme>à</Lexeme></Replace>")};
+
+// rule 12
+COM_RELACAO
+cgToken{AND(IS(LEXEME_AS), NOT(IS(CRASE)))}
+cgToken{AND(IS(NOUN), IS(FEMALE), IS(PLURAL))
+-> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "12",
+    "suggestion" = "<Replace index=\"0\"><Lexeme>às</Lexeme></Replace>")};
+
+// rule 13
+cgToken{REGEXP(cgToken.lexeme, "devido", true)}
+cgToken{AND(IS(LEXEME_A ), NOT(IS(CRASE)))}
+cgToken{AND(IS(NOUN), IS(FEMALE), IS(SINGULAR))
+-> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "13",
+    "suggestion" = "<Replace index=\"0\"><Lexeme>à</Lexeme></Replace>")};
+
+// rule 14
+cgToken{REGEXP(cgToken.lexeme, "devido", true)}
+cgToken{AND(IS(LEXEME_AS), NOT(IS(CRASE)))}
+cgToken{AND(IS(NOUN), IS(FEMALE), IS(PLURAL))
+-> CREATE(PROBLEM, 1, 2, 3, 4, "id" = "14",
+    "suggestion" = "<Replace index=\"0\"><Lexeme>às</Lexeme></Replace>")};
+
+// rules 15 and 16
+cgToken{REGEXP(cgToken.lexeme, "vossa_(senhoria|majestade|eminência|excelência|reverendíssima|santidade)", true) -> PRON_TRATAMENTO};
+cgToken{REGEXP(cgToken.lexeme, "você", true) -> PRON_TRATAMENTO};
+
+CRASE_A
+cgToken{IS(PRON_TRATAMENTO)
+-> CREATE(PROBLEM, 1, 2, "id" = "15-16", 
+    "suggestion" = "<Replace index=\"0\"><Lexeme/> </Replace><Replace index=\"1\"><Lexeme>a</Lexeme></Replace>")};
+
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - FAZER E HAVER
+
+
+DECLARE FAZER_TEMPO;
+DECLARE EXP_TEMPO_S;
+DECLARE EXP_TEMPO_P;
+DECLARE VERB_LIST;
+
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(fazem|fizeram|farão)",true)) -> FAZER_TEMPO};
+cgToken{AND(IS(NOUN),REGEXP(cgToken.lexeme,"(horas|dias|semanas|meses|bimestres|
+    trimestres|quadrimestres|semestres|anos|décadas|séculos|milênios)",true)) -> EXP_TEMPO_P};
+cgToken{OR(IS(EXP_TEMPO_P),REGEXP(cgToken.lexeme,"(hora|dia|semana|mês|bimestre|
+    trimestre|quadrimestre|semestre|ano|década|século|milênio)",true)) -> EXP_TEMPO_S};
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme,"(vão|iam|devem|deviam|deveriam|
+    deverão|podem|podiam|poderiam|poderão)",true)) -> VERB_LIST};
+
+// Rule 42
+cgToken{NOT(IS(PERSONAL_PRONOUN))}
+FAZER_TEMPO
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2,3, "id" = "42",
+    "suggestion"="replace 2 with {'fazem' => 'faz' 'fizeram' => 'fez' 'farão' => 'fará'}")};
+
+FAZER_TEMPO{STARTSWITH(cgSentence)}
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2, "id" = "42",
+    "suggestion"="replace 1 with {'fazem' => 'faz' 'fizeram' => 'fez' 'farão' => 'fará'}")};
+
+ 
+// Rule 43
+cgToken{NOT(IS(PERSONAL_PRONOUN))}
+FAZER_TEMPO
+NUMERAL
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2,3,4, "id" = "43",
+    "suggestion"="<ReplaceMapping index=\"1\" key=\"fazem\" value=\"faz\"/> <ReplaceMapping index=\"1\" key=\"fizeram\" value=\"fez\"/> <ReplaceMapping index=\"1\" key=\"farão\" value=\"fará\"/>")};
+
+FAZER_TEMPO{STARTSWITH(cgSentence)}
+NUMERAL
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2,3, "id" = "43", 
+    "suggestion"="<ReplaceMapping index=\"0\" key=\"fazem\" value=\"faz\"/> <ReplaceMapping index=\"0\" key=\"fizeram\" value=\"fez\"/> <ReplaceMapping index=\"0\" key=\"farão\" value=\"fará\"/>")};
+
+// Rule 44
+cgToken{NOT(IS(PERSONAL_PRONOUN))}
+VERB_LIST
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
+NUMERAL
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2,3,4,5, "id" = "44",
+    "suggestion" = "<ReplaceMapping index=\"1\" key=\"vão\" value=\"vai\"/> <ReplaceMapping index=\"1\" key=\"iam\" value=\"ia\"/> <ReplaceMapping index=\"1\" key=\"devem\" value=\"deve\"/> <ReplaceMapping index=\"1\" key=\"deviam\" value=\"devia\"/> <ReplaceMapping index=\"1\" key=\"deveriam\" value=\"deveria\"/> <ReplaceMapping index=\"1\" key=\"deverão\" value=\"deverá\"/> <ReplaceMapping index=\"1\" key=\"podem\" value=\"pode\"/> <ReplaceMapping index=\"1\" key=\"podiam\" value=\"podia\"/> <ReplaceMapping index=\"1\" key=\"poderiam\" value=\"poderia\"/> <ReplaceMapping index=\"1\" key=\"poderão\" value=\"poderá\"/>")};
+
+VERB_LIST{STARTSWITH(cgSentence)}
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
+NUMERAL
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2,3,4, "id" = "44",
+    "suggestion" = "<ReplaceMapping index=\"0\" key=\"vão\" value=\"vai\"/> <ReplaceMapping index=\"0\" key=\"iam\" value=\"ia\"/> <ReplaceMapping index=\"0\" key=\"devem\" value=\"deve\"/> <ReplaceMapping index=\"0\" key=\"deviam\" value=\"devia\"/> <ReplaceMapping index=\"0\" key=\"deveriam\" value=\"deveria\"/> <ReplaceMapping index=\"0\" key=\"deverão\" value=\"deverá\"/> <ReplaceMapping index=\"0\" key=\"podem\" value=\"pode\"/> <ReplaceMapping index=\"0\" key=\"podiam\" value=\"podia\"/> <ReplaceMapping index=\"0\" key=\"poderiam\" value=\"poderia\"/> <ReplaceMapping index=\"0\" key=\"poderão\" value=\"poderá\"/>")};
+
+// Rule 45
+cgToken{NOT(IS(PERSONAL_PRONOUN))}
+VERB_LIST
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2,3,4, "id" = "45",
+    "suggestion" = "<ReplaceMapping index=\"1\" key=\"vão\" value=\"vai\"/> <ReplaceMapping index=\"1\" key=\"iam\" value=\"ia\"/> <ReplaceMapping index=\"1\" key=\"devem\" value=\"deve\"/> <ReplaceMapping index=\"1\" key=\"deviam\" value=\"devia\"/> <ReplaceMapping index=\"1\" key=\"deveriam\" value=\"deveria\"/> <ReplaceMapping index=\"1\" key=\"deverão\" value=\"deverá\"/> <ReplaceMapping index=\"1\" key=\"podem\" value=\"pode\"/> <ReplaceMapping index=\"1\" key=\"podiam\" value=\"podia\"/> <ReplaceMapping index=\"1\" key=\"poderiam\" value=\"poderia\"/> <ReplaceMapping index=\"1\" key=\"poderão\" value=\"poderá\"/>")};
+
+VERB_LIST{STARTSWITH(cgSentence)}
+cgToken{AND(IS(VERB),REGEXP(cgToken.lexeme, "fazer", true))}
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2,3, "id" = "45",
+    "suggestion" = "<ReplaceMapping index=\"0\" key=\"vão\" value=\"vai\"/> <ReplaceMapping index=\"0\" key=\"iam\" value=\"ia\"/> <ReplaceMapping index=\"0\" key=\"devem\" value=\"deve\"/> <ReplaceMapping index=\"0\" key=\"deviam\" value=\"devia\"/> <ReplaceMapping index=\"0\" key=\"deveriam\" value=\"deveria\"/> <ReplaceMapping index=\"0\" key=\"deverão\" value=\"deverá\"/> <ReplaceMapping index=\"0\" key=\"podem\" value=\"pode\"/> <ReplaceMapping index=\"0\" key=\"podiam\" value=\"podia\"/> <ReplaceMapping index=\"0\" key=\"poderiam\" value=\"poderia\"/> <ReplaceMapping index=\"0\" key=\"poderão\" value=\"poderá\"/>")};
+     
+// Rule 46
+cgToken{NOT(IS(NUMERAL))}
+cgToken{REGEXP(cgToken.lexeme, "a", true)}
+NUMERAL
+cgToken{OR(IS(EXP_TEMPO_S), IS(EXP_TEMPO_P))
+->CREATE(PROBLEM,2,3,4, "id" = "46",
+    "suggestion" = "<Replace index=\"1\"> <Lexeme>há</Lexeme> </Replace>")};
+    
+cgToken{AND(STARTSWITH(cgSentence), REGEXP(cgToken.lexeme, "a", true))}
+NUMERAL
+cgToken{OR(IS(EXP_TEMPO_S), IS(EXP_TEMPO_P))
+->CREATE(PROBLEM,1,2,3, "id" = "46",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>há</Lexeme> </Replace>")};
+
+
+// Rule 47
+cgToken{REGEXP(cgToken.lexeme, "a", true)}
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2, "id" = "47",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>há</Lexeme> </Replace>")};
+    
+// Rule 48
+cgToken{REGEXP(cgToken.lexeme, "haviam", true)}
+NUMERAL
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2,3, "id" = "48",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>havia</Lexeme> </Replace>")};
+    
+// Rule 49
+cgToken{REGEXP(cgToken.lexeme, "haviam", true)}
+EXP_TEMPO_P
+{->CREATE(PROBLEM,1,2, "id" = "49",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>havia</Lexeme> </Replace>")};
+
+// Rule 50
+cgToken{REGEXP(cgToken.lexeme,"(haviam|haverão)",true)}
+PLURAL_NOUN{
+->CREATE(PROBLEM,1,2, "id" = "50",
+    "suggestion" = "<ReplaceMapping index=\"0\" key=\"haviam\" value=\"havia\"/> <ReplaceMapping index=\"0\" key=\"haverão\" value=\"haverá\"/>")};
+
+// Rule 51
+cgToken{REGEXP(cgToken.lexeme,"(devem|deveriam|deverão|podem|poderiam)",true)}
+cgToken{REGEXP(cgToken.lexeme,"haver", true)}
+PLURAL_NOUN{
+->CREATE(PROBLEM,1,2,3, "id" = "51",
+    "suggestion" = "")};
+
+
+
+
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - FUTURO DO SUBJUNTIVO IRREGULAR
+
+
+DECLARE SE_OU_QUANDO;
+DECLARE EU_OU_ELE;
+DECLARE VERB_IRREG_75_77; // irregular verbs used in the rules 75 to 77
+
+cgToken{OR(REGEXP(cgToken.lexeme, "se", true), REGEXP(cgToken.lexeme, "quando", true)) -> SE_OU_QUANDO};
+cgToken{OR(REGEXP(cgToken.lexeme, "eu", true), REGEXP(cgToken.lexeme, "ele", true)) -> EU_OU_ELE};
+cgToken{REGEXP(cgToken.lexeme, "(caber|dizer|fazer|ir|manter|poder|pôr|saber|supor|ver)", true) -> VERB_IRREG_75_77};
+
+
+// rules 75 and 76
+SE_OU_QUANDO
+cgToken{OR(IS(EU_OU_ELE), IS(PROPER_NOUN))}
+VERB_IRREG_75_77{->
+    CREATE(PROBLEM, 3, "id" = "75-76", "suggestion"  = "<ReplaceMapping index=\"0\" key=\"caber\" value=\"couber\"/> <ReplaceMapping index=\"0\" key=\"dizer\" value=\"disser\"/> <ReplaceMapping index=\"0\" key=\"fazer\" value=\"fizer\"/> <ReplaceMapping index=\"0\" key=\"ir\" value=\"for\"/> <ReplaceMapping index=\"0\" key=\"manter\" value=\"mantiver\"/> <ReplaceMapping index=\"0\" key=\"poder\" value=\"puder\"/> <ReplaceMapping index=\"0\" key=\"pôr\" value=\"puser\"/> <ReplaceMapping index=\"0\" key=\"saber\" value=\"souber\"/> <ReplaceMapping index=\"0\" key=\"supor\" value=\"supuser\"/> <ReplaceMapping index=\"0\" key=\"ver\" value=\"vir\"/>")
+};
+
+// rule 77
+SE_OU_QUANDO
+ARTICLE
+NOUN
+VERB_IRREG_75_77{->
+    CREATE(PROBLEM, 4, "id" = "77", "suggestion"  = "<ReplaceMapping index=\"0\" key=\"caber\" value=\"couber\"/> <ReplaceMapping index=\"0\" key=\"dizer\" value=\"disser\"/> <ReplaceMapping index=\"0\" key=\"fazer\" value=\"fizer\"/> <ReplaceMapping index=\"0\" key=\"ir\" value=\"for\"/> <ReplaceMapping index=\"0\" key=\"manter\" value=\"mantiver\"/> <ReplaceMapping index=\"0\" key=\"poder\" value=\"puder\"/> <ReplaceMapping index=\"0\" key=\"pôr\" value=\"puser\"/> <ReplaceMapping index=\"0\" key=\"saber\" value=\"souber\"/> <ReplaceMapping index=\"0\" key=\"supor\" value=\"supuser\"/> <ReplaceMapping index=\"0\" key=\"ver\" value=\"vir\"/>")
+    };
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - MAU, MAL
+
+
+DECLARE MAL, MAU;
+
+cgToken{REGEXP(cgToken.lexeme, "mau", true) -> MAU};
+cgToken{REGEXP(cgToken.lexeme, "mal", true) -> MAL};
+
+// rule 57
+MAU
+cgToken{OR(IS(ADJECTIVE), IS(PARTICIPLE_VERB)) -> CREATE(PROBLEM, 1, 2, "id" = "57",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>eu</Lexeme> </Replace>")};
+
+// rule 58
+cgToken{REGEXP(cgToken.lemma, "\b(ser|estar|parecer)\b", true)}
+MAL{-> CREATE(PROBLEM, 1, 2, "id" = "58",
+                             "suggestion" = "<Replace index=\"0\"> <Lexeme>eu</Lexeme> </Replace>")};
+
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - MEIO
+
+DECLARE MEIA_SUB;
+DECLARE MEIA_NUM;
+
+// meia/meias adjetivo
+cgToken{AND(IS(NOUN),REGEXP(cgToken.lexeme,"mei(o|as|os|a)",true)) -> MEIA_SUB};
+cgToken{AND(IS(NUMERAL),REGEXP(cgToken.lexeme,"mei(o|a|os|as)",true)) -> MEIA_NUM};
+
+// Rules 38
+cgToken{REGEXP(cgToken.lexeme, "meia(s?)", true)}
+ADJECTIVE{
+->CREATE(PROBLEM, 1, 2, "id" = "38",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>meio</Lexeme> </Replace>")};
+
+// Rules 39
+cgToken{REGEXP(cgToken.lexeme, "meios", true)}
+ADJECTIVE{
+->CREATE(PROBLEM, 1, 2, "id" = "39",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>meio</Lexeme> </Replace>")};
+
+// Rule 40
+cgToken{REGEXP(cgToken.lexeme, "meio", true), IS(SINGULAR)}
+FEMALE_NOUN{
+->CREATE(PROBLEM, 1, 2, "id" = "40",
+    "suggestion" = "<Replace index=\"0\"> <TagReference index=\"1\"> <TagMask> <Gender>female</Gender> <Number>neutral</Number> </TagMask> </TagReference> </Replace>")};
+
+cgToken{REGEXP(cgToken.lexeme, "meio", true), IS(PLURAL) }
+FEMALE_NOUN{
+->CREATE(PROBLEM, 1, 2, "id" = "40",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>meias</Lexeme> </Replace>")};
+
+// Rule 41
+cgToken{REGEXP(cgToken.lexeme, "meio", true)}
+MALE_NOUN{IS(PLURAL) 
+->CREATE(PROBLEM, 1, 2, "id" = "41",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>meios</Lexeme> </Replace>")};
+
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - MIM E TI
+
+
+// Rule 52
+cgToken {REGEXP(cgToken.lexeme, "mim", true)}
+INFINITE_VERB 
+{-> CREATE(PROBLEM,1,2, "id" = "52",
+    "suggestion" = "<Replace index=\"0\"> <Lexeme>eu</Lexeme> </Replace>")};
+
+// Rule 53
+cgToken {REGEXP(cgToken.lexeme, "entre", true)}
+cgToken {REGEXP(cgToken.lexeme, "(ele|ela)", true)}
+cgToken {REGEXP(cgToken.lexeme, "e", true)}
+cgToken {REGEXP(cgToken.lexeme, "eu", true)
+-> CREATE(PROBLEM,1,2,3,4, "id" = "53",
+    "suggestion" = "<Replace index=\"3\"> <Lexeme>mim</Lexeme> </Replace>")};
+
+// Rule 54
+cgToken {REGEXP(cgToken.lexeme, "entre", true)}
+cgToken {REGEXP(cgToken.lexeme, "eu", true)}
+cgToken {REGEXP(cgToken.lexeme, "e", true)}
+cgToken {REGEXP(cgToken.lexeme, "(ele|ela)", true)
+-> CREATE(PROBLEM,1,2,3,4, "id" = "54",
+    "suggestion" = "<Replace index=\"1\"> <Lexeme>mim</Lexeme> </Replace>")};
+
+// Rule 55
+cgToken {REGEXP(cgToken.lexeme, "entre", true)}
+cgToken {REGEXP(cgToken.lexeme, "(ele|ela)", true)}
+cgToken {REGEXP(cgToken.lexeme, "e", true)}
+cgToken {REGEXP(cgToken.lexeme, "tu", true)
+-> CREATE(PROBLEM,1,2,3,4, "id" = "55",
+    "suggestion" = "<Replace index=\"3\"> <Lexeme>ti</Lexeme> </Replace>")};
+
+// Rule 56
+cgToken {REGEXP(cgToken.lexeme, "entre", true)}
+cgToken {REGEXP(cgToken.lexeme, "tu", true)}
+cgToken {REGEXP(cgToken.lexeme, "e", true)}
+cgToken {REGEXP(cgToken.lexeme, "(ele|ela)", true)
+-> CREATE(PROBLEM,1,2,3,4, "id" = "56",
+    "suggestion" = "<Replace index=\"1\"> <Lexeme>ti</Lexeme> </Replace>")};
+
+//////////////////////////////////////////////////////////////
+/////////////////////////////// REGRAS - PREFERIR
+
+
+DECLARE LEXEME_DE;
+DECLARE LEXEME_O;
+DECLARE LEXEME_DO;
+
+cgToken {REGEXP(cgToken.lexeme, "de", true) -> MARK(LEXEME_DE)};
+cgToken {REGEXP(cgToken.lexeme, "o", true) -> MARK(LEXEME_O)};
+cgToken {AND(IS(LEXEME_DE), IS(LEXEME_O)) -> CREATE(LEXEME_DO)};
+
+// Rule 59
+cgToken {AND(REGEXP(cgToken.lemma, "\b(preferir)\b"), IS(VERB))}
+cgToken {REGEXP(cgToken.lexeme, "mais") -> CREATE(PROBLEM, 1, 2, "id" = "59",
+    "suggestion" = "<Replace index=\"1\"> <Lexeme/> </Replace>")};
+
+// Rule 60
+cgToken {AND(REGEXP(cgToken.lemma, "\b(preferir)\b"), IS(VERB))}
+NOUN
+LEXEME_DO 
+cgToken {REGEXP(cgToken.lexeme, "que")} 
+NOUN { -> CREATE(PROBLEM, 1, 2, 3, 4, 5, 6, "id" = "60",
+    "suggestion" = "<Replace index=\"2\"> <Lexeme/> </Replace> <Replace index=\"3\"> <Lexeme/> </Replace> <Replace index=\"4\"> <Lexeme>a</Lexeme> </Replace>")};
+

@@ -1,0 +1,49 @@
+[Já fazem dias => Já faz dias]( ) que não o vejo.
+[Já fizeram semanas => Já fez semanas]( ) que não o vejo.
+[Já farão anos => Já fará anos]( ) que eu não a verei.
+[Já fazem três dias => Já faz três dias]( ) que não o vejo.
+[Já fizeram duas semanas => Já fez duas semanas]( ) que não o vejo.
+[Já farão nove anos => Já fará nove anos]( ) que eu não a verei.
+[Já vão fazer três semanas => Já vai fazer três semanas]( ) que não o vejo.
+[Já iam fazer seis semanas => Já ia fazer seis semanas]( ) que não o vejo.
+[Já podem fazer duas semanas => Já pode fazer duas semanas]( ) que não o vejo.
+[Já vão fazer semanas => Já vai fazer semanas]( ) que não o vejo.
+[Já iam fazer semanas => Já ia fazer semanas]( ) que não o vejo.
+[Já podem fazer semanas => Já pode fazer semanas]( ) que não o vejo.
+[A dez anos => Há dez anos]( ) não nos vemos.
+Suponho que [a dez anos => há dez anos]( ) ocorreu um terremoto.
+Suponha que [daqui há dez anos => daqui a dez anos]( ) ocorra um terremoto.
+[A anos => Há anos]( ) não nos vemos.
+[Haviam dois anos => Havia dois anos]( ) que nos vimos pela última vez.
+[Haviam anos => Havia anos]( ) que nos vimos pela última vez.
+[Haviam ratos => Havia ratos]( ) na cozinha.
+[Haviam nuvens => Havia nuvens]( ) escuras no céu.
+[Haverão ratos => Haverá ratos]( ) na cozinha.
+[Haverão nuvens => Haverá nuvens]( ) escuras no céu.
+[Devem haver ratos => Deve haver ratos]( ) na cozinha.
+[Podem haver nuvens => Pode haver nuvens]( ) escuras no céu.
+
+Já faz dias que não o vejo.
+Já fez semanas que não o vejo.
+Já fará anos que eu não a verei.
+Já faz três dias que não o vejo.
+Já fez duas semanas que não o vejo.
+Já fará nove anos que eu não a verei.
+Já vai fazer três semanas que não o vejo.
+Já ia fazer seis semanas que não o vejo.
+Já pode fazer duas semanas que não o vejo.
+Já vai fazer semanas que não o vejo.
+Já ia fazer semanas que não o vejo.
+Já pode fazer semanas que não o vejo.
+Há dez anos não nos vemos.
+Suponho que há dez anos ocorreu um terremoto.
+Suponha que daqui a dez anos ocorra um terremoto.
+Há anos não nos vemos.
+Havia dois anos que nos vimos pela última vez.
+Havia anos que nos vimos pela última vez.
+Havia ratos na cozinha.
+Havia nuvens escuras no céu.
+Haverá ratos na cozinha.
+Haverá nuvens escuras no céu.
+Deve haver ratos na cozinha.
+Pode haver nuvens escuras no céu.

@@ -1,0 +1,47 @@
+REPLACE   index
+
+           . Lexeme       (trivial)
+        ou . TagReference (algum token existente trocando gender, number... [constantes])
+                              Exemplo: colocar token 1 no plural/feminino
+        ou . Reference    (algum token existente trocando gender, number... [a partir de outro token])
+                              Exemplo: colocar token 1 no gênero/número do token 2
+
+REPLACEMAPPING   index, key, value
+                 é um hash (troca chave por valor)
+
+SWAP   a, b
+         Permutação trivial 
+--------------------------
+
+Swap
+Regra 61
+    swap 1 2
+swap\s+(\d+)\s+(\d+)
+
+ReplaceMapping
+Regra 42
+    replace 1 with {'caber' => 'couber' 'fazer' => 'fizer'}
+replace\s+(\d+)\s+with\s*\{((\s*'[^']+'\s*=>\s*'[^']+'\s*)+)\}
+'[^']+'\s*=>\s*'[^']+'
+    
+Lexeme
+Regra 34
+    replace 1 with 'couber'
+replace\s+(\d+)\s+with\s+'([^']+)'
+
+TagReference
+Regra 34
+    replace 1 with 1 in (number=plural gender=female class = finitive-verb)
+replace\s+(\d+)\s+with\s+(\d+)\s+in\s+\(((\s*(number|gender|class|person|tense|mood)\s*=\s*[\w-]+\s*)+)\)
+(number|gender|class|person|tense|mood)\s*=\s*([\w-]+)
+    
+Reference
+Regra 17
+    set (gender number) of 1 to match 2 
+set\s+\((\s*(gender|number|class|person|tense|mood)\s*)+\)\s+of\s+(\d+)\s+to\s+match\s+(\d+)
+(gender|number|class|person|tense|mood)
+
+SEPARAR REPLACES/SWAPS WITH ;
+SEPARAR SUGESTÕES COM |
+APÓSTROFO USAR ´
+

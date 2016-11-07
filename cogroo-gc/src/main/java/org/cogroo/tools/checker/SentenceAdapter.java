@@ -53,6 +53,7 @@ public class SentenceAdapter {
 
   public org.cogroo.entities.Sentence asTypedSentence(Sentence sentence, String document) {
     org.cogroo.entities.Sentence typedSentence = new org.cogroo.entities.Sentence();
+    typedSentence.setTextSentence(sentence);
     typedSentence.setDocumentText(document);
     typedSentence.setOffset(sentence.getStart());
     typedSentence.setSpan(new Span(sentence.getStart(), sentence.getEnd()));

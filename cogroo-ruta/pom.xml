@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>cogroo</artifactId>
+		<groupId>org.cogroo</groupId>
+		<version>4.0.1-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<artifactId>cogroo-ruta</artifactId>
+	<packaging>jar</packaging>
+	<name>Cogroo Ruta</name>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimaj-core</artifactId>
+			<version>2.7.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimaj-tools</artifactId>
+			<version>2.7.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>ruta-core</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cogroo-gc</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>[1.2,2)</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>descriptor</directory>
+			</resource>
+			<resource>
+				<directory>script</directory>
+			</resource>
+			<resource>
+				<directory>target/generated-sources/ruta/descriptor</directory>
+			</resource>
+		</resources>
+		
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.uima</groupId>
+				<artifactId>ruta-maven-plugin</artifactId>
+				<version>2.3.0</version>
+				<configuration>
+				
+				 <!-- This is a exemplary configuration, which explicitly specifies the 
+				  default configuration values if not mentioned otherwise. -->
+				
+				 <!-- The directory where the generated type system descriptors will 
+				  be written stored. -->
+				 <!-- default value: ${project.build.directory}/generated-sources/
+				   ruta/descriptor -->
+				 <typeSystemOutputDirectory>${project.build.directory}/generated-sources/ruta/descriptor</typeSystemOutputDirectory>
+				
+				 <!-- The directory where the generated analysis engine descriptors will 
+				  be stored. -->
+				 <!-- default value: ${project.build.directory}/generated-sources/ruta/
+				   descriptor -->
+				 <analysisEngineOutputDirectory>${project.build.directory}/generated-sources/ruta/descriptor</analysisEngineOutputDirectory>
+				
+				 <!-- The template descriptor for the generated type system. By default the 
+				   descriptor of the maven dependency is loaded. -->
+				 <!-- default value: none -->
+				 <!-- not used in this example <typeSystemTemplate>...
+				   </typeSystemTemplate> -->
+				
+				 <!-- The template descriptor for the generated analysis engine. 
+				   By default the descriptor of the maven dependency is loaded. -->
+				 <!-- default value: none -->
+				 <!-- not used in this example <analysisEngineTemplate>...
+				   </analysisEngineTemplate> -->
+				
+				 <!-- Script paths of the generated analysis engine descriptor. -->
+				 <!-- default value: none -->
+				 <scriptPaths>
+<!-- 				  <scriptPath>${basedir}/script</scriptPath> -->
+				 </scriptPaths>
+				
+				 <!-- Descriptor paths of the generated analysis engine descriptor. -->
+				 <!-- default value: none -->
+				 <descriptorPaths>
+				  <descriptorPath>${project.build.directory}/generated-sources/ruta/descriptor</descriptorPath>
+				  <!--descriptorPath>${basedir}/descriptor</descriptorPath-->
+				  <descriptorPath>${project.build.directory}/../descriptor</descriptorPath>
+				 </descriptorPaths>
+				
+				 <!-- Resource paths of the generated analysis engine descriptor. -->
+				 <!-- default value: none -->
+				 <resourcePaths>
+<!-- 				  <resourcePath>${basedir}/src/main/resources/</resourcePath> -->
+				  <resourcePath>${project.build.directory}/generated-sources/ruta/resources/</resourcePath>
+				 </resourcePaths>
+				
+				 <!-- Suffix used for the generated type system descriptors. -->
+				 <!-- default value: Engine -->
+				 <analysisEngineSuffix>Engine</analysisEngineSuffix>
+				
+				 <!-- Suffix used for the generated analysis engine descriptors. -->
+				 <!-- default value: TypeSystem -->
+				 <typeSystemSuffix>TypeSystem</typeSystemSuffix>
+				
+				 <!-- Source file encoding. -->
+				 <!-- default value: ${project.build.sourceEncoding} -->
+				 <encoding>UTF-8</encoding>
+				
+				 <!-- Type of type system imports. false = import by location. -->
+				 <!-- default value: false -->
+				 <importByName>false</importByName>
+				
+				 <!-- Option to resolve imports while building. -->
+				 <!-- default value: false -->
+				 <resolveImports>false</resolveImports>
+				
+				 <!-- Amount of retries for building dependent descriptors. Default value 
+				  -1 leads to three retires for each script. -->
+				  <!-- default value: -1 -->
+				 <maxBuildRetries>-1</maxBuildRetries>
+				
+				 <!-- List of packages with language extensions -->
+				 <!-- default value: none -->
+				 <extensionPackages>
+				  <extensionPackage>org.apache.uima.ruta</extensionPackage>
+				 </extensionPackages>
+				
+				 <!-- Add UIMA Ruta nature to .project -->
+				 <!-- default value: false -->
+				 <addRutaNature>true</addRutaNature>
+				
+				
+				 <!-- Buildpath of the UIMA Ruta Workbench (IDE) for this project -->
+				 <!-- default value: none -->
+				 <buildPaths>
+				  <buildPath>script:script/</buildPath>
+				  <buildPath>descriptor:target/generated-sources/ruta/descriptor/</buildPath>
+<!-- 				  <buildPath>resources:src/main/resources/</buildPath> -->
+				 </buildPaths>
+				
+				</configuration>
+				<executions>
+				 <execution>
+				  <id>default</id>
+				  <phase>generate-sources</phase>
+				  <goals>
+				   <goal>generate</goal>
+				  </goals>
+				 </execution>
+				</executions>
+				</plugin>
+				
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-uima-ruta-files</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>target/generated-sources/ruta/descriptor/cogroo/ruta/MainEngine.xml</file>
+									<type>xml</type>
+									<classifier>ruta1</classifier>
+								</artifact>
+								<artifact>
+									<file>target/generated-sources/ruta/descriptor/cogroo/ruta/MainTypeSystem.xml</file>
+									<type>xml</type>
+									<classifier>ruta2</classifier>
+								</artifact>
+								<artifact>
+									<file>target/classes/cogroo/ruta/MainTypeSystem.xml</file>
+									<type>xml</type>
+									<classifier>ruta3</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

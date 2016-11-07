@@ -1,0 +1,5 @@
+Ele vão comprar banana.
+Ele não vão comprar banana.
+
+Ele vai comprar banana.
+Ele não vai comprar banana.

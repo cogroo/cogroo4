@@ -30,7 +30,8 @@ public class RulePostValidatorProvider implements RulePostValidator {
   static {
     Map<String, RulePostValidator> _validator = new HashMap<String, RulePostValidator>();
 
-    _validator.put(id("124"), new Rule124Validator());
+    // TODO: comentado para LABXP 2015
+//    _validator.put(id("124"), new Rule124Validator());
 
     VALIDATORS = Collections.unmodifiableMap(_validator);
   }
