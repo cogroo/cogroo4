@@ -15,8 +15,7 @@
  */
 package opennlp.tools.postag;
 
-import com.google.common.base.Objects;
-
+import java.util.Objects;
 
 public class Triple implements Comparable<Triple>{
   private final String clazz;
@@ -52,16 +51,16 @@ public class Triple implements Comparable<Triple>{
       return true;
     } else if (o instanceof Triple) {
       Triple other = (Triple) o;
-      return Objects.equal(this.clazz, other.clazz) &&
-          Objects.equal(this.lemma, other.lemma) &&
-          Objects.equal(this.feats, other.feats);
+      return Objects.equals(this.clazz, other.clazz) &&
+          Objects.equals(this.lemma, other.lemma) &&
+          Objects.equals(this.feats, other.feats);
     }
     return false;
   }
   
   @Override
   public int hashCode() {
-    return Objects.hashCode(clazz, lemma, feats);
+    return Objects.hash(clazz, lemma, feats);
   }
 
   public int compareTo(Triple o) {

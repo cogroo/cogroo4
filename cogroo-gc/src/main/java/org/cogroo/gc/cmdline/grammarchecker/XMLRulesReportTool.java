@@ -22,19 +22,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Locale;
 
-import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-import opennlp.tools.cmdline.BasicCmdLineTool;
-import opennlp.tools.cmdline.CmdLineUtil;
-import opennlp.tools.cmdline.TerminateToolException;
-
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.analyzer.InitializationException;
 import org.cogroo.checker.GrammarChecker;
 import org.cogroo.tools.checker.rules.CogrooHtml;
+import org.cogroo.util.Closeables;
+import org.cogroo.util.FileUtils;
+import org.cogroo.util.StringsUtil;
 
-import com.google.common.base.Strings;
-import com.google.common.io.ByteStreams;
-import com.google.common.io.Closeables;
+import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
+import opennlp.tools.cmdline.BasicCmdLineTool;
+import opennlp.tools.cmdline.CmdLineUtil;
+import opennlp.tools.cmdline.TerminateToolException;
 
 public class XMLRulesReportTool extends BasicCmdLineTool {
 
@@ -61,7 +60,7 @@ public class XMLRulesReportTool extends BasicCmdLineTool {
     CmdLineUtil.checkOutputFile("report file", outFile);
     
     String country = params.getCountry();
-    if(Strings.isNullOrEmpty(country)) {
+    if(StringsUtil.isNullOrEmpty(country)) {
       throw new TerminateToolException(1, "Country cannot be empty. Example country: BR");
     }
 
@@ -90,7 +89,7 @@ public class XMLRulesReportTool extends BasicCmdLineTool {
       if(!jsFile.exists()) {
         InputStream is = this.getClass().getResourceAsStream("/org/cogroo/gc/htmlreport/overlib.js");
         OutputStream os = new FileOutputStream(jsFile);
-        ByteStreams.copy(is, os);
+        FileUtils.copy(is, os);
         Closeables.closeQuietly(os);
         Closeables.closeQuietly(is);
       }

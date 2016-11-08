@@ -24,40 +24,37 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
+import opennlp.tools.util.Cache;
 
 import org.cogroo.dictionary.FeatureDictionary;
 import org.cogroo.tools.featurizer.WordTag;
 
-import com.google.common.base.Optional;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.io.ByteStreams;
+import static org.cogroo.util.ByteArrayUtil.toByteArray;
+
 
 public class FSAFeatureDictionary implements FeatureDictionary, Iterable<WordTag> {
 
   private DictionaryLookup dictLookup;
 
-  private LoadingCache<WordTag, Optional<String[]>> cache = CacheBuilder.newBuilder()
-      .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
-      .build(new CacheLoader<WordTag, Optional<String[]>>() {
-        public Optional<String[]> load(WordTag key) {
-          String[] val = lookup(key);
-          return Optional.fromNullable(val);
-        }
-      });
-
   public FSAFeatureDictionary(DictionaryLookup dictLookup) {
     this.dictLookup = dictLookup;
   }
 
+  private final Cache cache = new Cache(500);
+  
   private String[] lookup(WordTag key) {
+    if(key == null) {
+      return null;
+    } 
+    
+    String[] arr = (String[]) cache.get(key);
+    if(arr != null) {
+      return arr;
+    }
     synchronized (dictLookup) {
       List<WordData> data = dictLookup.lookup(key.getWord());
       if (data.size() > 0) {
@@ -77,13 +74,7 @@ public class FSAFeatureDictionary implements FeatureDictionary, Iterable<WordTag
 
   // add all features if pos == null
   public String[] getFeatures(String word, String pos) {
-    try {
-      return cache.get(new WordTag(word, pos)).orNull();
-    } catch (ExecutionException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-      return null;
-    }
+      return lookup(new WordTag(word, pos));
   }
 
   public static FeatureDictionary create(String path)
@@ -97,12 +88,12 @@ public class FSAFeatureDictionary implements FeatureDictionary, Iterable<WordTag
   public static byte[] getFSADictionaryInfo(String path) throws IOException {
     FileInputStream featuresData = new FileInputStream(
         Dictionary.getExpectedFeaturesName(path));
-    return ByteStreams.toByteArray(featuresData);
+    return toByteArray(featuresData);
   }
 
   public static byte[] getFSADictionaryData(String path) throws IOException {
     FileInputStream featuresData = new FileInputStream(path);
-    return ByteStreams.toByteArray(featuresData);
+    return toByteArray(featuresData);
   }
 
   public static FeatureDictionary create(InputStream fsaData,

@@ -31,13 +31,11 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.cogroo.tools.checker.rules.exception.RulesException;
-import org.xml.sax.SAXException;
-
 import org.cogroo.tools.checker.rules.model.ObjectFactory;
 import org.cogroo.tools.checker.rules.model.Rule;
 import org.cogroo.tools.checker.rules.model.Rules;
-
-import com.google.common.io.Closeables;
+import org.cogroo.util.Closeables;
+import org.xml.sax.SAXException;
 
 /**
  * Class that provides access to the rules read from a xml file.

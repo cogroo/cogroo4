@@ -22,8 +22,6 @@ import org.cogroo.entities.Sentence;
 import org.cogroo.text.impl.DocumentImpl;
 import org.cogroo.util.TextUtils;
 
-import com.google.common.base.Strings;
-
 
 public class CheckDocument extends DocumentImpl {
   

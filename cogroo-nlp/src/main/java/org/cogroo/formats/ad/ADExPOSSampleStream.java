@@ -23,6 +23,8 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.cogroo.util.StringsUtil;
+
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
@@ -32,7 +34,6 @@ import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 
-import com.google.common.base.Strings;
 
 /**
  * <b>Note:</b> Do not use this class, internal use only!
@@ -218,26 +219,26 @@ public class ADExPOSSampleStream implements ObjectStream<POSSample> {
             throw new IllegalStateException("wrong hyphen pattern");
           }
 
-          if (!Strings.isNullOrEmpty(firstTok)) {
+          if (!StringsUtil.isNullOrEmpty(firstTok)) {
             sentence.add(firstTok);
             tags.add(tag);
             prop.add(null);
             con.add(contraction);
           }
           
-          if (!Strings.isNullOrEmpty(hyphen)) {
+          if (!StringsUtil.isNullOrEmpty(hyphen)) {
             sentence.add(hyphen);
             tags.add("-");
             prop.add(null);
             con.add(contraction);
           }
-          if (!Strings.isNullOrEmpty(secondTok)) {
+          if (!StringsUtil.isNullOrEmpty(secondTok)) {
             sentence.add(secondTok);
             tags.add(tag);
             prop.add(null);
             con.add(contraction);
           }
-          if (!Strings.isNullOrEmpty(rest)) {
+          if (!StringsUtil.isNullOrEmpty(rest)) {
             sentence.add(rest);
             tags.add(tag);
             prop.add(null);

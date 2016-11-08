@@ -1,4 +1,4 @@
-package org.cogroo;
+package org.cogroo.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,6 +22,7 @@ public class ResourcesUtil {
 			sb.append(line + "\n");
 			line = br.readLine();
 		}
+		br.close();
 		return sb.toString();
 	}
 

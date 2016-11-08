@@ -17,11 +17,9 @@ package org.cogroo.entities.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.cogroo.entities.Tag;
-
-import com.google.common.base.Objects;
-
 import org.cogroo.tools.checker.rules.model.TagMask;
 import org.cogroo.tools.checker.rules.model.TagMask.Case;
 import org.cogroo.tools.checker.rules.model.TagMask.Class;
@@ -445,7 +443,7 @@ public class MorphologicalTag extends Tag implements Cloneable {
   }
   
   private boolean match(Class a, Class b) {
-    if(Objects.equal(a, b)) {
+    if(Objects.equals(a, b)) {
       return true;
     }
     if(a != null && a != null) {
@@ -462,7 +460,7 @@ public class MorphologicalTag extends Tag implements Cloneable {
   }
   
   private boolean match(Tense a, Tense b) {
-    if(Objects.equal(a, b)) {
+    if(Objects.equals(a, b)) {
       return true;
     }
     if(a != null && a != null) {

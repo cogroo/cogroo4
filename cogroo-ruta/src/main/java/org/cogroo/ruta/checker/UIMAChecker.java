@@ -1,7 +1,6 @@
 package org.cogroo.ruta.checker;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,8 +9,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import opennlp.tools.util.Span;
 
 import org.apache.log4j.Logger;
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -41,7 +38,7 @@ import org.cogroo.tools.checker.rules.model.Example;
 import org.cogroo.tools.checker.rules.model.TagMask;
 import org.cogroo.tools.checker.rules.util.TagMaskUtils;
 
-import com.google.common.io.Resources;
+import opennlp.tools.util.Span;
 
 public class UIMAChecker extends AbstractTypedChecker {
 
@@ -82,8 +79,7 @@ public class UIMAChecker extends AbstractTypedChecker {
 		}
 		this.ae = AEFactory.createRutaAE();
 		String fileName = "cogroo/ruta/Regras.txt";
-		URL url = Resources.getResource(fileName);
-		for (RuleDefinition ruleDef : RuleParser.getRuleDefinitionList(url))
+		for (RuleDefinition ruleDef : RuleParser.getRuleDefinitionList(fileName))
 			add(ruleDef);
 		this.converter = new UimaCasAdapter();
 		if (LOGGER.isDebugEnabled()) {

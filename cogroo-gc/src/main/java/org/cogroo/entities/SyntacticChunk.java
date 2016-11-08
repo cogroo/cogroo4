@@ -18,8 +18,8 @@ package org.cogroo.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.entities.impl.SyntacticTag;
@@ -27,9 +27,7 @@ import org.cogroo.tools.checker.rules.model.TagMask.Class;
 import org.cogroo.tools.checker.rules.model.TagMask.Gender;
 import org.cogroo.tools.checker.rules.model.TagMask.Number;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
-
-import com.google.common.base.Objects;
-import com.google.common.base.Strings;
+import org.cogroo.util.ToStringHelper;
 
 /**
  * Initially a subject or verb group of Chunks
@@ -175,7 +173,7 @@ public class SyntacticChunk implements Serializable {
 
             tag = tag.clone();
             if(hasFemale && hasMale) {
-                if(Objects.equal(lastGender, Gender.MALE)) {
+                if(Objects.equals(lastGender, Gender.MALE)) {
                   tag.setGender(Gender.MALE);
                 } else {
                   tag.setGender(Gender.NEUTRAL); // could be male, but sometimes one can opt to agree with latter only
@@ -234,7 +232,7 @@ public class SyntacticChunk implements Serializable {
     for (int i = 0; i < childChunks.size(); i++) {
       Chunk c = childChunks.get(i);
       
-      if(i < childChunks.size() - 1 && Objects.equal(c.getType(), "PP") && Objects.equal(childChunks.get(i+1).getType(), "NP")) {
+      if(i < childChunks.size() - 1 && Objects.equals(c.getType(), "PP") && Objects.equals(childChunks.get(i+1).getType(), "NP")) {
         i++;
       } else {
         out.add(c);
@@ -290,7 +288,7 @@ public class SyntacticChunk implements Serializable {
     boolean match = false;
     if(chunk.getTokens().size() == 1) {
       for (String lexeme : arr) {
-        if(Objects.equal(chunk.getTokens().get(0).getLexeme(), lexeme)) {
+        if(Objects.equals(chunk.getTokens().get(0).getLexeme(), lexeme)) {
           match = true;
           break;
         }
@@ -300,7 +298,7 @@ public class SyntacticChunk implements Serializable {
   }
 
   private boolean checkType(Chunk chunk, String string) {
-    return Objects.equal(chunk.getType(), string);
+    return Objects.equals(chunk.getType(), string);
   }
 
   /**
@@ -355,7 +353,7 @@ public class SyntacticChunk implements Serializable {
       if(c.getMorphologicalTag().getClazzE().equals(Class.PREPOSITION)) {
         break;
       }
-      if(Objects.equal(c.getType(), "NP")) {
+      if(Objects.equals(c.getType(), "NP")) {
         filtered.add(c);
       }
     }
@@ -403,10 +401,10 @@ public class SyntacticChunk implements Serializable {
     if (obj instanceof SyntacticChunk) {
       SyntacticChunk that = (SyntacticChunk) obj;
       return /*
-              * Objects.equal(this.tokens, that.tokens) &&
-              * Objects.equal(this.firstToken, that.firstToken) &&
-              */Objects.equal(this.getChildChunks(), that.getChildChunks())
-          && Objects.equal(this.syntacticTag, that.syntacticTag);
+              * Objects.equals(this.tokens, that.tokens) &&
+              * Objects.equals(this.firstToken, that.firstToken) &&
+              */Objects.equals(this.getChildChunks(), that.getChildChunks())
+          && Objects.equals(this.syntacticTag, that.syntacticTag);
     }
     return false;
   }
@@ -416,7 +414,7 @@ public class SyntacticChunk implements Serializable {
    */
   @Override
   public int hashCode() {
-    return Objects.hashCode(this.getChildChunks(), this.syntacticTag);
+    return Objects.hash(this.getChildChunks(), this.syntacticTag);
   }
 
   public List<Chunk> getChildChunks() {
@@ -428,7 +426,7 @@ public class SyntacticChunk implements Serializable {
     
     
 
-    return Objects.toStringHelper(this).add("tag", syntacticTag)
+    return ToStringHelper.toStringHelper(this).add("tag", syntacticTag)
         .add("mtag", this.getMorphologicalTag())
         .add("toks", toPlainText()).toString();
   }

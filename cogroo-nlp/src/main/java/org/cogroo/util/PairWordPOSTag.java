@@ -15,7 +15,7 @@
  */
 package org.cogroo.util;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 public class PairWordPOSTag {
 	
@@ -38,7 +38,7 @@ public class PairWordPOSTag {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(word, posTag);
+		return Objects.hash(word, posTag);
 	}
 	
 	@Override
@@ -53,8 +53,8 @@ public class PairWordPOSTag {
 	    
 	    if(obj instanceof PairWordPOSTag){
 	        final PairWordPOSTag other = (PairWordPOSTag) obj;
-	        return Objects.equal(word, other.word)
-	            && Objects.equal(posTag, other.posTag);
+	        return Objects.equals(word, other.word)
+	            && Objects.equals(posTag, other.posTag);
 	    } else{
 	        return false;
 	    }

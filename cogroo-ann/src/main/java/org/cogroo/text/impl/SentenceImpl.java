@@ -16,6 +16,7 @@
 package org.cogroo.text.impl;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.cogroo.text.Chunk;
 import org.cogroo.text.Document;
@@ -24,10 +25,9 @@ import org.cogroo.text.SyntacticChunk;
 import org.cogroo.text.Token;
 import org.cogroo.text.tree.Node;
 import org.cogroo.text.tree.TreeUtil;
+import org.cogroo.util.ToStringHelper;
 
 import opennlp.tools.util.Span;
-
-import com.google.common.base.Objects;
 
 /**
  * The <code>Sentence</code> class contains the position of the sentence in the
@@ -111,8 +111,8 @@ public class SentenceImpl implements Sentence {
   public boolean equals(Object obj) {
     if (obj instanceof SentenceImpl) {
       SentenceImpl that = (SentenceImpl) obj;
-      return Objects.equal(this.tokens, that.tokens)
-          && Objects.equal(this.span, that.span);
+      return Objects.equals(this.tokens, that.tokens)
+          && Objects.equals(this.span, that.span);
     }
     return false;
   }
@@ -120,13 +120,13 @@ public class SentenceImpl implements Sentence {
   @Override
   public String toString() {
 
-    return Objects.toStringHelper(this).add("span", span).add("tk", tokens)
+    return ToStringHelper.toStringHelper(this).add("span", span).add("tk", tokens)
         .toString();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(span, tokens);
+    return Objects.hash(span, tokens);
   }
 
   @Override

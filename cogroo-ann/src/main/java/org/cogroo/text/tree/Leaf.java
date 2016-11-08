@@ -15,7 +15,7 @@
  */
 package org.cogroo.text.tree;
 
-import com.google.common.base.Joiner;
+import org.cogroo.util.StringsUtil;
 
 public class Leaf extends TreeElement {
 
@@ -86,7 +86,7 @@ public class Leaf extends TreeElement {
       }
       if (hasLemma) {
         sb.append("-");
-        sb.append(Joiner.on('|').join(getLemma()));
+        sb.append(StringsUtil.join(getLemma(), "|"));
       }
     }
 

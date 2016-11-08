@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 /**
  * Class for holding features for a single unit of text.
@@ -139,7 +138,7 @@ public class FeatureSample {
    */
   @Override
   public int hashCode() {
-    return Objects.hashCode(getSentence(), getTags(), getLemmas(), getFeatures());
+    return Objects.hash(getSentence(), getTags(), getLemmas(), getFeatures());
   }
 
 }

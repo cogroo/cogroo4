@@ -17,14 +17,14 @@ package org.cogroo.entities;
 
 import java.io.Serializable;
 import java.util.Arrays;
-
-import opennlp.tools.util.Span;
+import java.util.Objects;
 
 import org.cogroo.entities.impl.ChunkTag;
 import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.entities.impl.SyntacticTag;
+import org.cogroo.util.ToStringHelper;
 
-import com.google.common.base.Objects;
+import opennlp.tools.util.Span;
 
 /**
  * A token is the smallest annotated unit of the text. Examples: "home" "," "."
@@ -168,7 +168,7 @@ public abstract class Token implements Serializable {
   @Override
   public String toString() {
 
-    return Objects.toStringHelper(this).add("lxm", lexeme).add("pr", Arrays.toString(primitive))
+    return ToStringHelper.toStringHelper(this).add("lxm", lexeme).add("pr", Arrays.toString(primitive))
         .add("mp", morphologicalTag).add("ch", chunkTag)
         // .add("lexemeType", lexemeType)
         // .add("span", span)
@@ -179,14 +179,14 @@ public abstract class Token implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof Token) {
       Token that = (Token) obj;
-      return Objects.equal(this.lexeme, that.lexeme)
-          && Objects.equal(this.primitive, that.primitive)
-          && Objects.equal(this.morphologicalTag, that.morphologicalTag)
-          && Objects.equal(this.chunkTag, that.chunkTag)
-//          && Objects.equal(this.syntacticChunk, that.syntacticChunk)
-//          && Objects.equal(this.chunk, that.chunk)
-          && Objects.equal(this.lexemeType, that.lexemeType)
-          && Objects.equal(this.span, that.span);
+      return Objects.equals(this.lexeme, that.lexeme)
+          && Objects.equals(this.primitive, that.primitive)
+          && Objects.equals(this.morphologicalTag, that.morphologicalTag)
+          && Objects.equals(this.chunkTag, that.chunkTag)
+//          && Objects.equals(this.syntacticChunk, that.syntacticChunk)
+//          && Objects.equals(this.chunk, that.chunk)
+          && Objects.equals(this.lexemeType, that.lexemeType)
+          && Objects.equals(this.span, that.span);
     }
     return false;
   }
@@ -197,7 +197,7 @@ public abstract class Token implements Serializable {
    */
   @Override
   public int hashCode() {
-    return Objects.hashCode(this.lexeme, this.primitive, this.morphologicalTag, 
+    return Objects.hash(this.lexeme, this.primitive, this.morphologicalTag, 
                                 this.chunkTag, this.lexemeType, this.span);
   }
 

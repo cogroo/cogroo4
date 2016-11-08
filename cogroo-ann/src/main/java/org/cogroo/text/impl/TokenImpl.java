@@ -19,14 +19,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import opennlp.tools.util.Span;
+import java.util.Objects;
 
 import org.cogroo.config.Analyzers;
 import org.cogroo.text.Token;
+import org.cogroo.util.ToStringHelper;
 
-
-import com.google.common.base.Objects;
+import opennlp.tools.util.Span;
 
 /**
  * The <code>TokenImpl</code> class represents a token, which is a word, its
@@ -155,9 +154,9 @@ public class TokenImpl implements Token {
   public boolean equals(Object obj) {
     if (obj instanceof TokenImpl) {
       TokenImpl that = (TokenImpl) obj;
-      return Objects.equal(this.lexeme, that.lexeme)
-          && Objects.equal(this.lemmas, that.lemmas)
-          && Objects.equal(this.span, that.span);
+      return Objects.equals(this.lexeme, that.lexeme)
+          && Objects.equals(this.lemmas, that.lemmas)
+          && Objects.equals(this.span, that.span);
     }
     return false;
   }
@@ -165,14 +164,14 @@ public class TokenImpl implements Token {
   @Override
   public String toString() {
 
-    return Objects.toStringHelper(this).add("lxm", lexeme).add("lm", Arrays.toString(lemmas)).add("posTag", posTag).add("feat", features)
+    return ToStringHelper.toStringHelper(this).add("lxm", lexeme).add("lm", Arrays.toString(lemmas)).add("posTag", posTag).add("feat", features)
     // .add("span", span)
         .toString();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(lexeme, lemmas, span);
+    return Objects.hash(lexeme, lemmas, span);
   }
 
   public int getStart() {

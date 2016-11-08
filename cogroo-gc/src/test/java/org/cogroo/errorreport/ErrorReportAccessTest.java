@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.cogroo.ResourcesUtil;
 import org.cogroo.tools.errorreport.model.ErrorReport;
+import org.cogroo.util.ResourcesUtil;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -15,9 +15,12 @@
  */
 package org.cogroo.tools.checker.rules;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,8 +43,6 @@ import org.cogroo.tools.checker.rules.model.Rule;
 import org.cogroo.tools.checker.rules.model.Rules;
 import org.cogroo.tools.checker.rules.util.RuleUtils;
 import org.cogroo.tools.checker.rules.util.RuleUtils.RuleInfo;
-
-import com.google.common.io.Files;
 
 /**
  * This class grammar checks all examples from the rules file and prints an html report
@@ -107,8 +108,11 @@ public class CogrooHtml {
 
     public CogrooHtml(File f, GrammarChecker cogroo) throws Exception {
       path = f.getAbsolutePath();
-      out = Files.newWriter(f, Charset.forName("UTF-8"));
       
+      out = new BufferedWriter(new OutputStreamWriter(
+          new FileOutputStream(f), StandardCharsets.UTF_8
+      ));
+
       this.cogroo = cogroo;
       
 //      TagDictionary td = new TagDictionary(new FSALexicalDictionary(), false,

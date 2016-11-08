@@ -17,24 +17,23 @@ package org.cogroo.gc.cmdline.grammarchecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Scanner;
+
+import org.cogroo.analyzer.ComponentFactory;
+import org.cogroo.analyzer.InitializationException;
+import org.cogroo.checker.CheckDocument;
+import org.cogroo.checker.GrammarChecker;
+import org.cogroo.util.FileUtils;
+import org.cogroo.util.StringsUtil;
+import org.cogroo.util.TextUtils;
 
 import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
 import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
 import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.TerminateToolException;
-
-import org.cogroo.analyzer.ComponentFactory;
-import org.cogroo.analyzer.InitializationException;
-import org.cogroo.checker.CheckDocument;
-import org.cogroo.checker.GrammarChecker;
-import org.cogroo.util.TextUtils;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Strings;
-import com.google.common.io.Files;
 
 public class GrammarCheckerTool extends BasicCmdLineTool {
 
@@ -63,7 +62,7 @@ public class GrammarCheckerTool extends BasicCmdLineTool {
     CmdLineUtil.checkLanguageCode(lang);
     
     String country = params.getCountry();
-    if(Strings.isNullOrEmpty(country)) {
+    if(StringsUtil.isNullOrEmpty(country)) {
       throw new TerminateToolException(1, "Country cannot be empty. Example country: BR");
     }
     
@@ -87,7 +86,7 @@ public class GrammarCheckerTool extends BasicCmdLineTool {
       if(rulesFile == null) {
         cogroo = new GrammarChecker(factory.createPipe());
       } else {
-        String serializedRules = Files.toString(rulesFile, Charsets.UTF_8);
+        String serializedRules = FileUtils.readFile(rulesFile, StandardCharsets.UTF_8);
         cogroo = new GrammarChecker(factory.createPipe(), serializedRules);
       }
     } catch(IOException e) {

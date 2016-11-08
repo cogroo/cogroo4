@@ -1,8 +1,9 @@
 package org.cogroo.ruta.tools;
 
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,13 +15,11 @@ import java.util.Set;
 import org.cogroo.tools.checker.JavaRuleDefinition;
 import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.rules.model.Example;
-
-import com.google.common.io.Resources;
+import org.cogroo.util.ResourcesUtil;
 
 public class RuleParser {
 
 	private RuleParser() {
-
 	}
 
 	private static List<Example> buildExampleArray(
@@ -40,23 +39,24 @@ public class RuleParser {
 	}
 
 	public static Set<RuleDefinition> getRuleDefinitionList(String fileName) {
-		URL url;
-		try {
-			url = Resources.getResource(fileName);
-			System.out.println(url);
+	  Path path;
+	  try {
+		  path = ResourcesUtil.getResourceFile(RuleParser.class, fileName).toPath();
+		  System.out.println(path);
 		} catch (Exception e) {
 			return Collections.emptySet();
 		}
-		return getRuleDefinitionList(url);
+		return getRuleDefinitionList(path);
 	}
 
-	public static Set<RuleDefinition> getRuleDefinitionList(URL url) {
+	public static Set<RuleDefinition> getRuleDefinitionList(Path path) {
 		Set<RuleDefinition> rules = new HashSet<RuleDefinition>();
 		try {
 			Map<String, String> rule = new HashMap<String, String>();
 			List<String> correctExamples = new ArrayList<String>();
 			List<String> incorrectExamples = new ArrayList<String>();
-			for (String line : Resources.readLines(url, Charset.forName("UTF-8"))) {
+			
+			for (String line : Files.readAllLines(path, StandardCharsets.UTF_8)) {
 				line = line.trim();
 				if (line.length() == 0 && rule.containsKey("id")) {
 					List<Example> examples = buildExampleArray(correctExamples,
@@ -90,7 +90,7 @@ public class RuleParser {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+        }
 		return rules;
 	}
 }

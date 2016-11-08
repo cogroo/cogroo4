@@ -24,52 +24,40 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-
-import morfologik.stemming.Dictionary;
-import morfologik.stemming.DictionaryLookup;
-import morfologik.stemming.WordData;
-import opennlp.tools.postag.TagDictionary;
 
 import org.apache.log4j.Logger;
 import org.cogroo.dictionary.LemmaDictionary;
 import org.cogroo.util.PairWordPOSTag;
 
-import com.google.common.base.Optional;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.io.ByteStreams;
+import morfologik.stemming.Dictionary;
+import morfologik.stemming.DictionaryLookup;
+import morfologik.stemming.WordData;
+import opennlp.tools.postag.TagDictionary;
+import opennlp.tools.util.Cache;
+
+import static org.cogroo.util.ByteArrayUtil.toByteArray;
 
 public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<String> {
 
   protected static final Logger LOGGER = Logger.getLogger(FSADictionary.class);
   private DictionaryLookup dictLookup;
-  
-  private LoadingCache<String, Optional<String[]>> tagCache = CacheBuilder.newBuilder()
-      .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
-      .build(new CacheLoader<String, Optional<String[]>>() {
-        public Optional<String[]> load(String key) {
-          String[] val = tagLookup(key);
-          return Optional.fromNullable(val);
-        }
-      });
-  
-  private LoadingCache<String, List<PairWordPOSTag>> lemmaTagCache = CacheBuilder.newBuilder()
-      .maximumSize(100).expireAfterWrite(10, TimeUnit.MINUTES)
-      .build(
-          new CacheLoader<String, List<PairWordPOSTag>>() {
-            public List<PairWordPOSTag> load(String key) {
-              return lemmaTagLookup(key);
-            }
-          });
+
 
   private FSADictionary(DictionaryLookup dictLookup) {
     this.dictLookup = dictLookup;
   }
+  
+  private Cache tagCache = new Cache(500);
 
   private String[] tagLookup(String word) {
+    if(word == null || word.isEmpty()) {
+      return null;
+    } else {
+      String[] tags = (String[]) tagCache.get(word);
+      if(tags != null) {
+        return tags;
+      }
+    }
     synchronized (dictLookup) {
       List<WordData> data = dictLookup.lookup(word);
       if (data.size() > 0) {
@@ -79,15 +67,28 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
             tags.add(data.get(i).getTag().toString());
           }
         }
-        if(tags.size() > 0)
-          return tags.toArray(new String[tags.size()]);
+        if(tags.size() > 0) {
+          String[] res = tags.toArray(new String[tags.size()]);
+          tagCache.put(word, res);
+          return res;
+        }
         return null;
       }
     }
     return null;
   }
   
+  private Cache lemmaTagCache = new Cache(500);
+  
   private List<PairWordPOSTag> lemmaTagLookup(String word) {
+    if(word == null || word.isEmpty()) {
+      return null;
+    } else {
+      List<PairWordPOSTag> tags = (List<PairWordPOSTag>) lemmaTagCache.get(word);
+      if(tags != null) {
+        return tags;
+      }
+    }
     List<PairWordPOSTag> list;
     synchronized (dictLookup) {
       List<WordData> data = dictLookup.lookup(word);
@@ -100,7 +101,9 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
                 .toString()));
           }
         }
-        return Collections.unmodifiableList(list);
+        List<PairWordPOSTag> tags = Collections.unmodifiableList(list);
+        lemmaTagCache.put(word, tags);
+        return tags;
       }
     }
     return Collections.emptyList();
@@ -116,41 +119,34 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
   }
 
   public String[] getTags(String word) {
-    try {
-      return tagCache.get(word).orNull();
-    } catch (ExecutionException e) {
-      LOGGER.info("Getting tags for word generated an exception: " + word, e);
+    if (word == null) {
       return null;
     }
+    return tagLookup(word);
   }
-  
   
   public String[] getLemmas(String word, String tag) {
     List<String> output = new ArrayList<String>();
-    try {
-      List<PairWordPOSTag> pairs = lemmaTagCache.get(word);
-      for (PairWordPOSTag pairWordPOSTag : pairs) {
-        boolean match = false;
-        if(pairWordPOSTag.getPosTag().equals(tag)) {
-          match = true;
-        } else {
-          // TODO: this is language specific !!
-          if("n-adj".equals(pairWordPOSTag.getPosTag())) {
-            if("n".equals(tag) || "adj".equals(tag)) {
-              match = true;
-            }
-          } else if("n-adj".equals(tag)) {
-            if("n".equals(pairWordPOSTag.getPosTag()) || "adj".equals(pairWordPOSTag.getPosTag())) {
-              match = true;
-            }
-          } 
+    List<PairWordPOSTag> pairs = lemmaTagLookup(word);
+    for (PairWordPOSTag pairWordPOSTag : pairs) {
+      boolean match = false;
+      if (pairWordPOSTag.getPosTag().equals(tag)) {
+        match = true;
+      } else {
+        // TODO: this is language specific !!
+        if ("n-adj".equals(pairWordPOSTag.getPosTag())) {
+          if ("n".equals(tag) || "adj".equals(tag)) {
+            match = true;
+          }
+        } else if ("n-adj".equals(tag)) {
+          if ("n".equals(pairWordPOSTag.getPosTag())
+              || "adj".equals(pairWordPOSTag.getPosTag())) {
+            match = true;
+          }
         }
-        if(match)
-          output.add(pairWordPOSTag.getWord());
       }
-    } catch (ExecutionException e) {
-      LOGGER.info("Getting tags for word generated an exception: " + word, e);
-      return null;
+      if (match)
+        output.add(pairWordPOSTag.getWord());
     }
     
     return output.toArray(new String[output.size()]);
@@ -158,14 +154,8 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
   
   /** This is used by rule system */
   public List<PairWordPOSTag> getTagsAndLemms(String aWord) {
-    // TODO: acabar isso usando Cache.. Colocar cache no 
-    try {
-      return lemmaTagCache.get(aWord);
-    } catch (ExecutionException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-      return null;
-    } 
+    // TODO: acabar isso usando Cache.. Colocar cache no
+    return lemmaTagLookup(aWord);
   }
 
   public static TagDictionary create(String path)
@@ -179,12 +169,12 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
   public static byte[] getFSADictionaryInfo(String path) throws IOException {
     FileInputStream featuresData = new FileInputStream(
         Dictionary.getExpectedFeaturesName(path));
-    return ByteStreams.toByteArray(featuresData);
+    return toByteArray(featuresData);
   }
 
   public static byte[] getFSADictionaryData(String path) throws IOException {
     FileInputStream featuresData = new FileInputStream(path);
-    return ByteStreams.toByteArray(featuresData);
+    return toByteArray(featuresData);
   }
 
   public static FSADictionary create(InputStream fsaData,

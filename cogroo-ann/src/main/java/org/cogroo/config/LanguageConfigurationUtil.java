@@ -24,11 +24,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.cogroo.analyzer.InitializationException;
-import org.cogroo.config.LanguageConfiguration;
-import org.cogroo.config.ObjectFactory;
-
-
-import com.google.common.io.Closeables;
+import org.cogroo.util.Closeables;
 
 /**
  * The <code>LanguageConfigurationUtil</code> class is responsible for

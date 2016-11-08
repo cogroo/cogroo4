@@ -1,16 +1,15 @@
 package org.cogroo.tools.checker.rules.applier;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
+import org.cogroo.util.FileUtils;
 import org.junit.Test;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.CharStreams;
-import com.google.common.io.Files;
 
 public class RulesXmlAccessTest {
  
@@ -37,10 +36,7 @@ public class RulesXmlAccessTest {
   private String getRule() throws IOException {
     
     URL url = this.getClass().getResource("/org/cogroo/tools/checker/rules/applier/sinlgetonRule.xml");
-    String text = CharStreams.toString(
-        CharStreams.newReaderSupplier(Files.newInputStreamSupplier(new File(url.getFile())) , Charsets.UTF_8));
-  
-    return text;
+    return FileUtils.readFile(new File(url.getFile()), StandardCharsets.UTF_8);
   }
 
 }

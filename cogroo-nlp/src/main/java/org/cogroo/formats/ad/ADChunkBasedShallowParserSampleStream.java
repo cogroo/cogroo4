@@ -29,6 +29,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.cogroo.tools.featurizer.WordTag;
+import org.cogroo.tools.shallowparser.ShallowParserSequenceValidator;
+
 import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
@@ -37,11 +40,6 @@ import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.Span;
-
-import org.cogroo.tools.featurizer.WordTag;
-import org.cogroo.tools.shallowparser.ShallowParserSequenceValidator;
-
-import com.google.common.base.Strings;
 
 /**
  * Parser for Floresta Sita(c)tica Arvores Deitadas corpus, output to for the

@@ -15,12 +15,11 @@
  */
 package org.cogroo.entities.impl;
 
-import org.cogroo.entities.Tag;
+import java.util.Objects;
 
+import org.cogroo.entities.Tag;
 import org.cogroo.tools.checker.rules.model.TagMask;
 import org.cogroo.tools.checker.rules.model.TagMask.ChunkFunction;
-
-import com.google.common.base.Objects;
 
 /**
  * Implements a {@link Tag} for chunk annotation
@@ -89,14 +88,14 @@ public class ChunkTag extends Tag {
   public boolean equals(Object obj) {
     if (obj instanceof ChunkTag) {
       ChunkTag that = (ChunkTag) obj;
-      return Objects.equal(this.chunkFunction, that.chunkFunction);
+      return Objects.equals(this.chunkFunction, that.chunkFunction);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(chunkFunction);
+    return Objects.hash(chunkFunction);
   }
 
 }

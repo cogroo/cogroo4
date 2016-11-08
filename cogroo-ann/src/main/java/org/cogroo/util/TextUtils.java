@@ -23,9 +23,6 @@ import org.cogroo.text.Document;
 import org.cogroo.text.Sentence;
 import org.cogroo.text.Token;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
-
 /**
  * The <code>TextUtils</code> class deals with the code prints.
  */
@@ -81,7 +78,7 @@ public class TextUtils {
 
         String format;
 
-        Joiner joiner = Joiner.on(", ");
+//        Joiner joiner = Joiner.on(", ");
 
         if (tokens != null) {
           String[] lexemes = new String[tokens.size()];
@@ -95,12 +92,12 @@ public class TextUtils {
           for (int i = 0; i < tokens.size(); i++) {
             Token t = tokens.get(i);
             
-            lexemes[i] = Strings.nullToEmpty(t.getLexeme());
-            posTags[i] = Strings.nullToEmpty(t.getPOSTag());
-            features[i] = Strings.nullToEmpty(t.getFeatures());
+            lexemes[i] = StringsUtil.nullToEmpty(t.getLexeme());
+            posTags[i] = StringsUtil.nullToEmpty(t.getPOSTag());
+            features[i] = StringsUtil.nullToEmpty(t.getFeatures());
 
             if (t.getLemmas() != null)
-              lemmas[i] = joiner.join(t.getLemmas());
+              lemmas[i] = StringsUtil.join(t.getLemmas(), ", ");
             else
               lemmas[i] = "";
             

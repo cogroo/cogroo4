@@ -15,7 +15,7 @@
  */
 package org.cogroo.entities;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 import opennlp.tools.util.Span;
 
@@ -73,7 +73,7 @@ public class HeadedSpan extends Span {
    */
   @Override
   public int hashCode() {
-    return Objects.hashCode(this.headPosition);
+    return Objects.hash(this.headPosition);
   }
 
   /**

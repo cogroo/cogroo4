@@ -17,11 +17,11 @@ package org.cogroo.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import org.cogroo.entities.impl.MorphologicalTag;
 import org.cogroo.entities.impl.SyntacticTag;
-
-import com.google.common.base.Objects;
+import org.cogroo.util.ToStringHelper;
 
 /**
  * A Chunk is an annotated group of {@link Token}s. The annotation could be SN,
@@ -89,9 +89,9 @@ public abstract class Chunk implements Serializable, TokenGroup {
   public boolean equals(Object obj) {
     if (obj instanceof Chunk) {
       Chunk that = (Chunk) obj;
-      return Objects.equal(this.tokens, that.tokens)
-          && Objects.equal(this.firstToken, that.firstToken)
-          && Objects.equal(this.morphologicalTag, that.morphologicalTag);
+      return Objects.equals(this.tokens, that.tokens)
+          && Objects.equals(this.firstToken, that.firstToken)
+          && Objects.equals(this.morphologicalTag, that.morphologicalTag);
     }
     return false;
   }
@@ -101,13 +101,13 @@ public abstract class Chunk implements Serializable, TokenGroup {
    */
   @Override
   public int hashCode() {
-    return Objects.hashCode(this.tokens, this.firstToken, this.morphologicalTag);
+    return Objects.hash(this.tokens, this.firstToken, this.morphologicalTag);
   }
 
   @Override
   public String toString() {
-
-    return Objects.toStringHelper(this).add("text", toPlainText())
+    
+    return ToStringHelper.toStringHelper(this).add("text", toPlainText())
         .add("main", getMainToken().getLexeme())
         .add("mtag", morphologicalTag)
         .add("tag", getTokens().get(0).getChunkTag())

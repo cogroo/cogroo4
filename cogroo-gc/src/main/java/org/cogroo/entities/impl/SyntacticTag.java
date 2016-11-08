@@ -15,10 +15,9 @@
  */
 package org.cogroo.entities.impl;
 
+import java.util.Objects;
+
 import org.cogroo.entities.Tag;
-
-import com.google.common.base.Objects;
-
 import org.cogroo.tools.checker.rules.model.TagMask;
 import org.cogroo.tools.checker.rules.model.TagMask.SyntacticFunction;
 
@@ -86,13 +85,13 @@ public class SyntacticTag extends Tag {
   public boolean equals(Object obj) {
     if (obj instanceof SyntacticTag) {
       SyntacticTag that = (SyntacticTag) obj;
-      return Objects.equal(this.syntacticFunction, that.syntacticFunction);
+      return Objects.equals(this.syntacticFunction, that.syntacticFunction);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(this.syntacticFunction);
+    return Objects.hash(this.syntacticFunction);
   }
 }

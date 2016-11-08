@@ -19,19 +19,18 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Locale;
 
-import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
-import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
-import opennlp.tools.cmdline.BasicCmdLineTool;
-import opennlp.tools.cmdline.CmdLineUtil;
-import opennlp.tools.cmdline.TerminateToolException;
-
 import org.cogroo.analyzer.ComponentFactory;
 import org.cogroo.analyzer.InitializationException;
 import org.cogroo.checker.GrammarChecker;
 import org.cogroo.tools.checker.RuleDefinition;
 import org.cogroo.tools.checker.rules.model.Example;
+import org.cogroo.util.StringsUtil;
 
-import com.google.common.base.Strings;
+import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
+import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
+import opennlp.tools.cmdline.BasicCmdLineTool;
+import opennlp.tools.cmdline.CmdLineUtil;
+import opennlp.tools.cmdline.TerminateToolException;
 
 public class ExamplesTool extends BasicCmdLineTool {
 
@@ -56,7 +55,7 @@ public class ExamplesTool extends BasicCmdLineTool {
     CmdLineUtil.checkLanguageCode(lang);
     
     String country = params.getCountry();
-    if(Strings.isNullOrEmpty(country)) {
+    if(StringsUtil.isNullOrEmpty(country)) {
       throw new TerminateToolException(1, "Country cannot be empty. Example country: BR");
     }
 

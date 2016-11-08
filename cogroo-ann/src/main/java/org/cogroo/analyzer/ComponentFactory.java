@@ -38,8 +38,7 @@ import org.cogroo.tools.chunker2.ChunkerME;
 import org.cogroo.tools.chunker2.ChunkerModel;
 import org.cogroo.tools.featurizer.FeaturizerME;
 import org.cogroo.tools.featurizer.FeaturizerModel;
-
-import com.google.common.io.Closeables;
+import org.cogroo.util.Closeables;
 
 import opennlp.tools.ml.model.MaxentModel;
 import opennlp.tools.namefind.NameFinderME;

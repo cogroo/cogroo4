@@ -17,13 +17,13 @@ package org.cogroo.entities;
 
 import java.io.Serializable;
 import java.util.List;
-
-import opennlp.tools.util.Span;
+import java.util.Objects;
 
 import org.cogroo.entities.tree.Node;
 import org.cogroo.entities.tree.TextModel;
+import org.cogroo.util.ToStringHelper;
 
-import com.google.common.base.Objects;
+import opennlp.tools.util.Span;
 
 /**
  * Data structure that represents a natural language sentence. The annotations
@@ -76,7 +76,7 @@ public class Sentence implements Serializable, TokenGroup {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this).add("sent", sentence)
+    return ToStringHelper.toStringHelper(this).add("sent", sentence)
         .add("tks", tokens).add("cks", chunks).add("root", root)
         // .add("offset", offset)
         .toString();
@@ -207,11 +207,11 @@ private org.cogroo.text.Sentence newSentence;
   public boolean equals(Object object) {
     if (object instanceof Sentence) {
       Sentence that = (Sentence) object;
-      return Objects.equal(this.sentence, that.sentence)
-          && Objects.equal(this.tokens, that.tokens)
-          && Objects.equal(this.chunks, that.chunks)
-          && Objects.equal(this.root, that.root)
-          && Objects.equal(this.offset, that.offset);
+      return Objects.equals(this.sentence, that.sentence)
+          && Objects.equals(this.tokens, that.tokens)
+          && Objects.equals(this.chunks, that.chunks)
+          && Objects.equals(this.root, that.root)
+          && Objects.equals(this.offset, that.offset);
     }
     return false;
   }
@@ -221,7 +221,7 @@ private org.cogroo.text.Sentence newSentence;
    */
   @Override
   public int hashCode() {
-    return Objects.hashCode(this.sentence, this.tokens, this.chunks, this.root, this.offset);
+    return Objects.hash(this.sentence, this.tokens, this.chunks, this.root, this.offset);
   }
 
 	public void setTextSentence(org.cogroo.text.Sentence sentence2) {

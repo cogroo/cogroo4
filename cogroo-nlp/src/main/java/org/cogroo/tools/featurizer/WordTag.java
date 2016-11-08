@@ -15,9 +15,9 @@
  */
 package org.cogroo.tools.featurizer;
 
-import opennlp.tools.chunker.ChunkSample;
+import java.util.Objects;
 
-import com.google.common.base.Objects;
+import opennlp.tools.chunker.ChunkSample;
 
 public class WordTag {
 
@@ -92,16 +92,16 @@ public class WordTag {
     if (this == o) {
       return true;
     } else if (o instanceof WordTag) {
-      return Objects.equal(this.word, ((WordTag) o).word)
-          && Objects.equal(this.postag, ((WordTag) o).postag)
-          && Objects.equal(this.chunktag, ((WordTag) o).chunktag);
+      return Objects.equals(this.word, ((WordTag) o).word)
+          && Objects.equals(this.postag, ((WordTag) o).postag)
+          && Objects.equals(this.chunktag, ((WordTag) o).chunktag);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(word, postag, chunktag);
+    return Objects.hash(word, postag, chunktag);
   }
   
   @Override
