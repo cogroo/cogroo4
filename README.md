@@ -1,6 +1,7 @@
 [CoGrOO: Apache Open|LibreOffice Grammar Checker](http://cogroo.org)
 ====================================================================
 
+[![Build Status](https://travis-ci.org/cogroo/cogroo4.svg?branch=master)](https://travis-ci.org/cogroo/cogroo4)
 
 Here you will find the source code of CoGrOO version 4.x.
 

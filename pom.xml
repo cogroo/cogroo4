@@ -17,7 +17,7 @@
 
 	<groupId>org.cogroo</groupId>
 	<artifactId>cogroo</artifactId>
-	<version>4.0.1-SNAPSHOT</version>
+	<version>4.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Cogroo Parent</name>
@@ -32,15 +32,9 @@
 		<maven>3.0</maven>
 	</prerequisites>
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
-
 	<issueManagement>
-		<system>redmine</system>
-		<url>http://ccsl.ime.usp.br/redmine/projects/cogroo</url>
+		<system>github</system>
+		<url>https://github.com/cogroo/cogroo4/issues</url>
 	</issueManagement>
 
 
@@ -61,6 +55,17 @@
 		<!--<module>cogroo-distr</module>-->
 <!--  		<module>cogroo-eval</module> -->
 	</modules>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
 	<scm>
 		<connection>scm:git:git@github.com:cogroo/cogroo4.git</connection>
@@ -135,6 +140,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
 				<configuration>
 					<show>public</show>
 					<quiet>true</quiet>
@@ -164,14 +170,15 @@
 
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
 				<executions>
 					<execution>
-						<id>create-source-jar</id>
+						<id>attach-sources</id>
 						<goals>
-							<goal>jar</goal>
+							<goal>jar-no-fork</goal>
 						</goals>
-						<phase>package</phase>
 					</execution>
 				</executions>
 			</plugin>
@@ -186,6 +193,17 @@
 				</configuration>
 			</plugin>
 
+		    <plugin>
+			<groupId>org.sonatype.plugins</groupId>
+			<artifactId>nexus-staging-maven-plugin</artifactId>
+			<version>1.6.7</version>
+			<extensions>true</extensions>
+			<configuration>
+				<serverId>ossrh</serverId>
+				<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+				<autoReleaseAfterClose>true</autoReleaseAfterClose>
+			</configuration>
+		    </plugin>
 		</plugins>
 
 		<pluginManagement>
@@ -193,7 +211,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.9</version>
+					<version>2.9.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
