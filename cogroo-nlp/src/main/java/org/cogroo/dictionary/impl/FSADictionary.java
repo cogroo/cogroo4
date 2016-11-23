@@ -59,7 +59,15 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
       }
     }
     synchronized (dictLookup) {
-      List<WordData> data = dictLookup.lookup(word);
+      List<WordData> data = null;
+      try {
+        data = dictLookup.lookup(word);
+      } catch(Exception e) {
+        // sorry this failed. Please submit a bug report.
+        LOGGER.error("Exception in dictionary lookup. Please report the bug. Word: [" + word + "]", e);
+        throw e;
+      }
+      
       if (data.size() > 0) {
         List<String> tags = new ArrayList<String>(data.size());
         for (int i = 0; i < data.size(); i++) {

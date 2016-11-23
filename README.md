@@ -15,6 +15,7 @@ The code is organized as maven subprojects:
   * cogroo-ann: a framework composed of Annotators and Pipes, this allow easy abstraction of Apache OpenNLP
   * cogroo-gc: the grammar checker core, based on the framework from cogroo-ann
   * cogroo-dict: dictionaries and scripst to deal with it (should be removed soon because now it is partially covered by Jspell-ptBR project)
+  * cogroo-ruta-[lang]: the new rule engine based on UIMA RUTA (Thanks to the team @ IME-USP/LabXP2015)
   * cogroo-addon: core of the LO|OO add on (not present in the moment, we need to refactor the pt_Br addon)
   * eval: evaluation related subprojects (used by wcolen to write his master's dissertation)
   * lang: language specific code
@@ -22,6 +23,7 @@ The code is organized as maven subprojects:
           * cogroo-res-[lang]: resources (language models and dictionaries) for language
           * cogroo-ann-[lang]: customization of the framework for language
           * cogroo-gc-[lang]: language specific code and resources for language
+          * cogroo-ruta-[lang]: the new rule engine based on UIMA RUTA
           * cogroo-addon-[lang]: LO|OO addon for language
 
 Building
@@ -31,7 +33,12 @@ Execute `mvn clean install` inside the root folder.
 
 Usage
 -----
-[Using the API](http://ccsl.ime.usp.br/redmine/projects/cogroo/wiki/API_CoGrOO_4x)
+Detailed examples on how to use the API for NLP and grammar checking: 
+[Using the API](https://github.com/cogroo/cogroo4/wiki/API-CoGrOO-4)
+
+CLI
+-----
+
 
 License
 -------
