@@ -35,12 +35,6 @@ public class StringsUtil {
     if(lemmas == null) {
       return "";
     }
-    StringBuilder sb = new StringBuilder();
-    for(int i = 0; i < lemmas.length - 1; i++) {
-      sb.append(lemmas[i]).append(sep);
-    }
-    sb.append(lemmas[lemmas.length-1]);
-    
-    return sb.toString();
+    return String.join(sep, lemmas);
   }
 }

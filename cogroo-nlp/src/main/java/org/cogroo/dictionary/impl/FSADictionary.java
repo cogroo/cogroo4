@@ -15,6 +15,8 @@
  */
 package org.cogroo.dictionary.impl;
 
+import static org.cogroo.util.ByteArrayUtil.toByteArray;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,44 +29,37 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 import org.cogroo.dictionary.LemmaDictionary;
+import org.cogroo.util.CacheWrapper;
 import org.cogroo.util.PairWordPOSTag;
 
 import morfologik.stemming.Dictionary;
 import morfologik.stemming.DictionaryLookup;
 import morfologik.stemming.WordData;
 import opennlp.tools.postag.TagDictionary;
-import opennlp.tools.util.Cache;
-
-import static org.cogroo.util.ByteArrayUtil.toByteArray;
 
 public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<String> {
 
   protected static final Logger LOGGER = Logger.getLogger(FSADictionary.class);
-  private DictionaryLookup dictLookup;
+  private volatile DictionaryLookup dictLookup;
 
 
   private FSADictionary(DictionaryLookup dictLookup) {
     this.dictLookup = dictLookup;
   }
   
-  private Cache tagCache = new Cache(500);
-
-  private String[] tagLookup(String word) {
-    if(word == null || word.isEmpty()) {
-      return null;
-    } else {
-      String[] tags = (String[]) tagCache.get(word);
-      if(tags != null) {
-        return tags;
-      }
-    }
-    synchronized (dictLookup) {
+//  private Cache tagCache = new Cache(500);
+  private CacheWrapper<String[]>  tagCache = new CacheWrapper<String[]>() {
+    
+    @Override
+    public String[] compute(String key) {
       List<WordData> data = null;
+      String lowerKey = key.toLowerCase();
+      
       try {
-        data = dictLookup.lookup(word);
-      } catch(Exception e) {
+        data = dictLookup.lookup(key);
+      } catch(Throwable e) {
         // sorry this failed. Please submit a bug report.
-        LOGGER.error("Exception in dictionary lookup. Please report the bug. Word: [" + word + "]", e);
+        LOGGER.error("Exception in dictionary lookup. Please report the bug. Word: [" + key + "]", e);
         throw e;
       }
       
@@ -77,29 +72,27 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
         }
         if(tags.size() > 0) {
           String[] res = tags.toArray(new String[tags.size()]);
-          tagCache.put(word, res);
           return res;
         }
         return null;
+      } else if(!key.equals(lowerKey)) {
+        return compute(lowerKey);
       }
+      return null;
     }
-    return null;
+  };
+
+  private String[] tagLookup(String word) {
+    return tagCache.get(word);
   }
   
-  private Cache lemmaTagCache = new Cache(500);
-  
-  private List<PairWordPOSTag> lemmaTagLookup(String word) {
-    if(word == null || word.isEmpty()) {
-      return null;
-    } else {
-      List<PairWordPOSTag> tags = (List<PairWordPOSTag>) lemmaTagCache.get(word);
-      if(tags != null) {
-        return tags;
-      }
-    }
-    List<PairWordPOSTag> list;
-    synchronized (dictLookup) {
-      List<WordData> data = dictLookup.lookup(word);
+  private CacheWrapper<List<PairWordPOSTag>> lemmaTagCache = new CacheWrapper<List<PairWordPOSTag>>() {
+    
+    @Override
+    public List<PairWordPOSTag> compute(String key) {
+      String lowerKey = key.toLowerCase();
+      List<PairWordPOSTag> list;
+      List<WordData> data = dictLookup.lookup(key);
       if (data.size() > 0) {
         list = new ArrayList<PairWordPOSTag>(data.size());
         for (int i = 0; i < data.size(); i++) {
@@ -110,11 +103,16 @@ public class FSADictionary implements TagDictionary, LemmaDictionary, Iterable<S
           }
         }
         List<PairWordPOSTag> tags = Collections.unmodifiableList(list);
-        lemmaTagCache.put(word, tags);
         return tags;
+      } else if(!key.equals(lowerKey)) {
+        return compute(lowerKey);
       }
+      return Collections.emptyList();
     }
-    return Collections.emptyList();
+  };
+  
+  private List<PairWordPOSTag> lemmaTagLookup(String word) {
+   return lemmaTagCache.get(word);
   }
 
   private boolean isValid(WordData wd) {
