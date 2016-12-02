@@ -26,19 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import opennlp.tools.cmdline.BasicCmdLineTool;
-import opennlp.tools.cmdline.CmdLineTool;
-import opennlp.tools.cmdline.StreamFactoryRegistry;
-import opennlp.tools.cmdline.TerminateToolException;
-import opennlp.tools.cmdline.TypedCmdLineTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderCrossValidatorTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderEvaluatorTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderTool;
-import opennlp.tools.cmdline.namefind.TokenNameFinderTrainerTool;
-import opennlp.tools.cmdline.postag.POSTaggerCrossValidatorTool;
-import opennlp.tools.cmdline.postag.POSTaggerTrainerTool;
-import opennlp.tools.util.Version;
-
+import org.cogroo.cmdline.chunker2.Chunker2ConverterTool;
 import org.cogroo.cmdline.chunker2.Chunker2CrossValidatorTool;
 import org.cogroo.cmdline.chunker2.Chunker2EvaluatorTool;
 import org.cogroo.cmdline.chunker2.Chunker2Tool;
@@ -57,6 +45,19 @@ import org.cogroo.formats.ad.ADContractionNameSampleStreamFactory;
 import org.cogroo.formats.ad.ADExPOSSampleStreamFactory;
 import org.cogroo.formats.ad.ADExpNameSampleStreamFactory;
 import org.cogroo.formats.ad.ADFeatureSampleStreamFactory;
+
+import opennlp.tools.cmdline.BasicCmdLineTool;
+import opennlp.tools.cmdline.CmdLineTool;
+import opennlp.tools.cmdline.StreamFactoryRegistry;
+import opennlp.tools.cmdline.TerminateToolException;
+import opennlp.tools.cmdline.TypedCmdLineTool;
+import opennlp.tools.cmdline.namefind.TokenNameFinderCrossValidatorTool;
+import opennlp.tools.cmdline.namefind.TokenNameFinderEvaluatorTool;
+import opennlp.tools.cmdline.namefind.TokenNameFinderTool;
+import opennlp.tools.cmdline.namefind.TokenNameFinderTrainerTool;
+import opennlp.tools.cmdline.postag.POSTaggerCrossValidatorTool;
+import opennlp.tools.cmdline.postag.POSTaggerTrainerTool;
+import opennlp.tools.util.Version;
 
 public final class CLI {
 
@@ -93,7 +94,7 @@ public final class CLI {
     tools.add(new Chunker2TrainerTool());
     tools.add(new Chunker2EvaluatorTool());
     tools.add(new Chunker2CrossValidatorTool());
-//    tools.add(new Chunker2ConverterTool());
+    tools.add(new Chunker2ConverterTool());
 
     // Contraction
     tools.add(new AbbreviationDictionaryBuilderTool());
