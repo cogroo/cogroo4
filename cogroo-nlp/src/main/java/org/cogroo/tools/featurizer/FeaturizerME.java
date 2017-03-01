@@ -20,16 +20,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cogroo.tools.chunker2.ChunkerEventStream;
+import org.cogroo.tools.chunker2.TokenTag;
 
 import opennlp.tools.ml.EventTrainer;
 import opennlp.tools.ml.TrainerFactory;
 import opennlp.tools.ml.model.Event;
 import opennlp.tools.ml.model.MaxentModel;
-import opennlp.tools.postag.POSSample;
-import opennlp.tools.util.BeamSearch;
+import opennlp.tools.ml.model.SequenceClassificationModel;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.Sequence;
+import opennlp.tools.util.SequenceValidator;
 import opennlp.tools.util.TrainingParameters;
 
 /**
@@ -41,34 +41,15 @@ public class FeaturizerME implements Featurizer {
 
   public static final int DEFAULT_BEAM_SIZE = 10;
 
-  /**
-   * The beam used to search for sequences of chunk tag assignments.
-   */
-  protected BeamSearch<WordTag> beam;
+  private final FeaturizerContextGenerator contextGenerator;
+  private final SequenceValidator<TokenTag> sequenceValidator;
 
   private Sequence bestSequence;
 
   /**
    * The model used to assign chunk tags to a sequence of tokens.
    */
-  protected MaxentModel model;
-
-  /**
-   * Initializes the current instance with the specified model and the specified
-   * beam size.
-   * 
-   * @param model
-   *          The model for this featurizer.
-   * @param beamSize
-   *          The size of the beam that should be used when decoding sequences.
-   */
-  public FeaturizerME(FeaturizerModel model, int beamSize) {
-    FeaturizerFactory factory = model.getFactory();
-    this.model = model.getFeaturizerModel();
-    beam = new BeamSearch<WordTag>(beamSize,
-        factory.getFeaturizerContextGenerator(), this.model,
-        factory.getSequenceValidator(), 0);
-  }
+  protected SequenceClassificationModel<TokenTag> model;
 
   /**
    * Initializes the current instance with the specified model. The default beam
@@ -77,28 +58,27 @@ public class FeaturizerME implements Featurizer {
    * @param model
    */
   public FeaturizerME(FeaturizerModel model) {
-    this(model, DEFAULT_BEAM_SIZE);
+    FeaturizerFactory factory = model.getFactory();
+    this.model = model.getChunkerSequenceModel();
+    this.contextGenerator = model.getFactory().getFeaturizerContextGenerator();
+    this.sequenceValidator = model.getFactory().getSequenceValidator();
   }
 
   public String[] featurize(String[] toks, String[] tags) {
-    bestSequence = beam.bestSequence(WordTag.create(toks, tags),
-        new Object[] {});
-    if(bestSequence != null) {
-      List<String> c = bestSequence.getOutcomes();
-      return c.toArray(new String[c.size()]);
-    } else
-      throw new RuntimeException("Could not find best sequence for " + new POSSample(toks, tags));
+    bestSequence = model.bestSequence(TokenTag.create(toks,tags), null, contextGenerator, sequenceValidator);
+    List<String> c = bestSequence.getOutcomes();
+    return c.toArray(new String[c.size()]);
   }
 
   public Sequence[] topKSequences(String[] sentence, String[] tags) {
-    return beam.bestSequences(DEFAULT_BEAM_SIZE,
-        WordTag.create(sentence, tags), new Object[] {});
+    return model.bestSequences(DEFAULT_BEAM_SIZE, TokenTag.create(sentence, tags), new Object[] { },
+        contextGenerator, sequenceValidator);
   }
 
   public Sequence[] topKSequences(String[] sentence, String[] tags,
       double minSequenceScore) {
-    return beam.bestSequences(DEFAULT_BEAM_SIZE,
-        WordTag.create(sentence, tags), null, minSequenceScore);
+    return model.bestSequences(DEFAULT_BEAM_SIZE, TokenTag.create(sentence, tags), new Object[] { }, minSequenceScore,
+        contextGenerator, sequenceValidator);
   }
 
   /**

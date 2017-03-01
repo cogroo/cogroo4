@@ -15,11 +15,26 @@
  * limitations under the License.
  */
 
-package org.cogroo.tools.chunker2;
+package org.cogroo.tools;
 
-import org.cogroo.tools.chunker2.ChunkSample;
-import opennlp.tools.util.eval.EvaluationMonitor;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 
-public interface ChunkerEvaluationMonitor extends EvaluationMonitor<ChunkSample> {
+import opennlp.tools.util.InputStreamFactory;
 
+public class ResourceAsStreamFactory implements InputStreamFactory {
+
+  private Class<?> clazz;
+  private String name;
+
+  public ResourceAsStreamFactory(Class<?> clazz, String name) {
+    this.clazz = Objects.requireNonNull(clazz, "callz must not be null");
+    this.name = Objects.requireNonNull(name, "name must not be null");
+  }
+
+  @Override
+  public InputStream createInputStream() throws IOException {
+    return clazz.getResourceAsStream(name);
+  }
 }

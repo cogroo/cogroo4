@@ -34,6 +34,7 @@ import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.UncloseableInputStream;
 
 import org.cogroo.dictionary.FeatureDictionary;
+import org.cogroo.tools.chunker2.TokenTag;
 
 public abstract class FeaturizerFactory extends BaseToolFactory {
 
@@ -131,7 +132,7 @@ public abstract class FeaturizerFactory extends BaseToolFactory {
     return new DefaultFeaturizerContextGenerator(getCGFlags());
   }
 
-  public SequenceValidator<WordTag> getSequenceValidator() {
+  public SequenceValidator<TokenTag> getSequenceValidator() {
     return new DefaultFeaturizerSequenceValidator(getFeatureDictionary(),
         this.getDictionaryPoisonedTags());
   }

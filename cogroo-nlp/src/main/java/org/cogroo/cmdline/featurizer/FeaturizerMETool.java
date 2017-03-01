@@ -17,20 +17,20 @@ package org.cogroo.cmdline.featurizer;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
+import org.cogroo.tools.featurizer.FeatureSample;
+import org.cogroo.tools.featurizer.FeaturizerME;
+import org.cogroo.tools.featurizer.FeaturizerModel;
 
 import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CLI;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.PerformanceMonitor;
+import opennlp.tools.cmdline.SystemInputStreamFactory;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
-
-import org.cogroo.tools.featurizer.FeatureSample;
-import org.cogroo.tools.featurizer.FeaturizerME;
-import org.cogroo.tools.featurizer.FeaturizerModel;
 
 public class FeaturizerMETool extends BasicCmdLineTool {
 
@@ -49,11 +49,15 @@ public class FeaturizerMETool extends BasicCmdLineTool {
       FeaturizerModel model = new FeaturizerModelLoader()
           .load(new File(args[0]));
 
-      FeaturizerME Featurizer = new FeaturizerME(model,
-          FeaturizerME.DEFAULT_BEAM_SIZE);
+      FeaturizerME Featurizer = new FeaturizerME(model);
 
-      ObjectStream<String> lineStream = new PlainTextByLineStream(
-          new InputStreamReader(System.in));
+      ObjectStream<String>  lineStream = null;
+      try {
+        lineStream = new PlainTextByLineStream(new SystemInputStreamFactory(),
+            SystemInputStreamFactory.encoding());
+      } catch (IOException e) {
+        CmdLineUtil.handleStdinIoError(e);
+      }
 
       PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
       perfMon.start();

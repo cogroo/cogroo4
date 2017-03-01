@@ -18,11 +18,16 @@ package org.cogroo.tools.featurizer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Properties;
 
 import org.cogroo.dictionary.FeatureDictionary;
+import org.cogroo.tools.chunker2.TokenTag;
 
+import opennlp.tools.chunker.ChunkerME;
+import opennlp.tools.ml.BeamSearch;
 import opennlp.tools.ml.model.AbstractModel;
 import opennlp.tools.ml.model.MaxentModel;
+import opennlp.tools.ml.model.SequenceClassificationModel;
 import opennlp.tools.util.BaseToolFactory;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.model.ArtifactSerializer;
@@ -88,6 +93,28 @@ public class FeaturizerModel extends BaseModel {
   
   public AbstractModel getFeaturizerModel() {
     return (AbstractModel) artifactMap.get(FEATURIZER_MODEL_ENTRY_NAME);
+  }
+
+  public SequenceClassificationModel<TokenTag> getChunkerSequenceModel() {
+
+    Properties manifest = (Properties) artifactMap.get(MANIFEST_ENTRY);
+
+    if (artifactMap.get(FEATURIZER_MODEL_ENTRY_NAME) instanceof MaxentModel) {
+      String beamSizeString = manifest.getProperty(BeamSearch.BEAM_SIZE_PARAMETER);
+
+      int beamSize = ChunkerME.DEFAULT_BEAM_SIZE;
+      if (beamSizeString != null) {
+        beamSize = Integer.parseInt(beamSizeString);
+      }
+
+      return new BeamSearch<>(beamSize, (MaxentModel) artifactMap.get(FEATURIZER_MODEL_ENTRY_NAME));
+    }
+    else if (artifactMap.get(FEATURIZER_MODEL_ENTRY_NAME) instanceof SequenceClassificationModel) {
+      return (SequenceClassificationModel) artifactMap.get(FEATURIZER_MODEL_ENTRY_NAME);
+    }
+    else {
+      return null;
+    }
   }
 
   /**

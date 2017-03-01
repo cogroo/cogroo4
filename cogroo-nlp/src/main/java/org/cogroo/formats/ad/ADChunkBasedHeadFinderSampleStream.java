@@ -16,7 +16,6 @@
 package org.cogroo.formats.ad;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,7 @@ import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 
 public class ADChunkBasedHeadFinderSampleStream extends ADChunk2SampleStream {
@@ -54,7 +54,7 @@ public class ADChunkBasedHeadFinderSampleStream extends ADChunk2SampleStream {
     return null;
 }
   
-  public ADChunkBasedHeadFinderSampleStream(InputStream in, String charsetName) {
+  public ADChunkBasedHeadFinderSampleStream(InputStreamFactory in, String charsetName) throws IOException {
     super(in, charsetName);
   }
 

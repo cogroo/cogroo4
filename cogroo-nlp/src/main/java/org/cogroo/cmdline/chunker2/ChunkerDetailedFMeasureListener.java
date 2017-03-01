@@ -17,7 +17,7 @@
 
 package org.cogroo.cmdline.chunker2;
 
-import opennlp.tools.chunker.ChunkSample;
+import org.cogroo.tools.chunker2.ChunkSample;
 import opennlp.tools.cmdline.DetailedFMeasureListener;
 import opennlp.tools.util.Span;
 

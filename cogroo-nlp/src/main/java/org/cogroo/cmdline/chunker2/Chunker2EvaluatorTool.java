@@ -21,7 +21,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import opennlp.tools.chunker.ChunkSample;
+import org.cogroo.cmdline.chunker2.Chunker2EvaluatorTool.EvalToolParams;
+import org.cogroo.tools.chunker2.ChunkSample;
+import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
+import org.cogroo.tools.chunker2.ChunkerEvaluator;
+import org.cogroo.tools.chunker2.ChunkerME;
+import org.cogroo.tools.chunker2.ChunkerModel;
+
 import opennlp.tools.cmdline.AbstractEvaluatorTool;
 import opennlp.tools.cmdline.PerformanceMonitor;
 import opennlp.tools.cmdline.TerminateToolException;
@@ -29,12 +35,6 @@ import opennlp.tools.cmdline.params.DetailedFMeasureEvaluatorParams;
 import opennlp.tools.cmdline.params.EvaluatorParams;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.eval.EvaluationMonitor;
-
-import org.cogroo.cmdline.chunker2.Chunker2EvaluatorTool.EvalToolParams;
-import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
-import org.cogroo.tools.chunker2.ChunkerEvaluator;
-import org.cogroo.tools.chunker2.ChunkerME;
-import org.cogroo.tools.chunker2.ChunkerModel;
 
 public final class Chunker2EvaluatorTool
     extends AbstractEvaluatorTool<ChunkSample, EvalToolParams> {
@@ -65,8 +65,7 @@ public final class Chunker2EvaluatorTool
       listeners.add(detailedFMeasureListener);
     }
 
-    ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model,
-        ChunkerME.DEFAULT_BEAM_SIZE),
+    ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model),
         listeners.toArray(new ChunkerEvaluationMonitor[listeners.size()]));
     
     final PerformanceMonitor monitor = new PerformanceMonitor("sent");

@@ -1,11 +1,12 @@
-/**
- * Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,25 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.cogroo.tools.chunker2;
 
 import opennlp.tools.util.SequenceValidator;
 
-import org.cogroo.tools.featurizer.WordTag;
-
-public class DefaultChunkerSequenceValidator implements SequenceValidator<WordTag>{
+public class DefaultChunkerSequenceValidator implements SequenceValidator<TokenTag> {
 
   private boolean validOutcome(String outcome, String prevOutcome) {
     if (outcome.startsWith("I-")) {
       if (prevOutcome == null) {
-        return (false);
+        return false;
       }
       else {
         if (prevOutcome.equals("O")) {
-          return (false);
+          return false;
         }
         if (!prevOutcome.substring(2).equals(outcome.substring(2))) {
-          return (false);
+          return false;
         }
       }
     }
@@ -41,16 +41,13 @@ public class DefaultChunkerSequenceValidator implements SequenceValidator<WordTa
   protected boolean validOutcome(String outcome, String[] sequence) {
     String prevOutcome = null;
     if (sequence.length > 0) {
-      prevOutcome = sequence[sequence.length-1];
+      prevOutcome = sequence[sequence.length - 1];
     }
     return validOutcome(outcome,prevOutcome);
   }
-  
 
-  @Override
-  public boolean validSequence(int i, WordTag[] inputSequence,
-      String[] outcomesSequence, String outcome) {
-    return validOutcome(outcome, outcomesSequence);
+  public boolean validSequence(int i, TokenTag[] sequence, String[] s, String outcome) {
+    return validOutcome(outcome, s);
   }
-  
+
 }

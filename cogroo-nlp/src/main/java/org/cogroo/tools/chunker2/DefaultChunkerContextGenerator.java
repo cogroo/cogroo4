@@ -1,11 +1,12 @@
-/**
- * Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,9 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+
 package org.cogroo.tools.chunker2;
 
-import org.cogroo.tools.featurizer.WordTag;
+import org.cogroo.tools.chunker2.ChunkerContextGenerator;
 
 /** Features based on chunking model described in Fei Sha and Fernando Pereira. Shallow
  *  parsing with conditional random fields. In Proceedings of HLT-NAACL 2003. Association
@@ -28,29 +31,14 @@ public class DefaultChunkerContextGenerator implements ChunkerContextGenerator {
    */
   public DefaultChunkerContextGenerator() {
   }
-  
 
-  @Override
-  public String[] getContext(int index, WordTag[] sequence,
+  public String[] getContext(int index, String[] tokens, String[] postags,
       String[] priorDecisions, Object[] additionalContext) {
-    return getContext(index, sequence, priorDecisions);
-  }
-  
-  @Override
-  public String[] getContext(int index, WordTag[] sequence, String[] priorDecisions) {
-    String[] toks = new String[sequence.length];
-    String[] tags = new String[sequence.length];
-    
-    for (int i = 0; i < sequence.length; i++) {
-      toks[i] = sequence[i].getWord();
-      tags[i] = sequence[i].getPostag();
-    }
-    
-    return getContext(index, toks, tags, priorDecisions);
+    return getContext(index, tokens, postags, priorDecisions);
   }
 
   public String[] getContext(int i, String[] toks, String[] tags, String[] preds) {
-	// Words in a 5-word window
+    // Words in a 5-word window
     String w_2, w_1, w0, w1, w2;
 
     // Tags in a 5-word window
@@ -158,4 +146,11 @@ public class DefaultChunkerContextGenerator implements ChunkerContextGenerator {
     return features;
   }
 
+  @Override
+  public String[] getContext(int index, TokenTag[] sequence, String[] priorDecisions,
+                             Object[] additionalContext) {
+    String[] token = TokenTag.extractTokens(sequence);
+    String[] tags = TokenTag.extractTags(sequence);
+    return getContext(index, token, tags, priorDecisions, additionalContext);
+  }
 }

@@ -26,16 +26,17 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cogroo.formats.ad.ADFeaturizerSampleStream;
+import org.cogroo.interpreters.FlorestaTagInterpreter;
+import org.cogroo.interpreters.JspellTagInterpreter;
+import org.cogroo.tools.featurizer.FeatureSample;
+
 import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.TerminateToolException;
 import opennlp.tools.postag.ExtendedPOSDictionary;
 import opennlp.tools.postag.MyPOSDictionary;
-
-import org.cogroo.formats.ad.ADFeaturizerSampleStream;
-import org.cogroo.interpreters.FlorestaTagInterpreter;
-import org.cogroo.interpreters.JspellTagInterpreter;
-import org.cogroo.tools.featurizer.FeatureSample;
+import opennlp.tools.util.InputStreamFactory;
 
 public class POSDictionaryBuilderTool extends BasicCmdLineTool {
 
@@ -67,9 +68,9 @@ public class POSDictionaryBuilderTool extends BasicCmdLineTool {
     try {
 
       // load corpus tags
-
+      InputStreamFactory sampleDataIn = CmdLineUtil.createInputStreamFactory(corpusFile);
       ADFeaturizerSampleStream sentenceStream = new ADFeaturizerSampleStream(
-          new FileInputStream(corpusFile), "ISO-8859-1", false);
+          sampleDataIn, "ISO-8859-1", false);
       Set<String> knownFeats = new HashSet<String>();
       Set<String> knownPostags = new HashSet<String>();
       FeatureSample sample = sentenceStream.read();

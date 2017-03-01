@@ -17,11 +17,12 @@ package opennlp.tools.formats.ad;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 
+import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.sentdetect.SentenceSample;
 import opennlp.tools.tokenize.TokenSample;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
@@ -48,10 +49,10 @@ public class SentenceTest {
     }
     fromNameSample.close();
 
-    FileInputStream sampleDataIn = new FileInputStream(data);
+    InputStreamFactory sampleDataIn = CmdLineUtil.createInputStreamFactory(data);
 
     ObjectStream<SentenceSample> sampleStream = new ADSentenceSampleStream(
-        new PlainTextByLineStream(sampleDataIn.getChannel(), "ISO-8859-1"),
+        new PlainTextByLineStream(sampleDataIn, "ISO-8859-1"),
         true);
 
     SentenceSample sentSample = sampleStream.read();

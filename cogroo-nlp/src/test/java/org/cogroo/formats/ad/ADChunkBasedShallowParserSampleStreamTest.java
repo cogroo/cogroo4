@@ -15,18 +15,17 @@
  */
 package org.cogroo.formats.ad;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import opennlp.tools.chunker.ChunkSample;
-
-import org.cogroo.formats.ad.ADChunkBasedShallowParserSampleStream;
+import org.cogroo.tools.ResourceAsStreamFactory;
 import org.junit.Before;
 import org.junit.Test;
+
+import opennlp.tools.chunker.ChunkSample;
+
+import static org.junit.Assert.assertEquals;
 
 public class ADChunkBasedShallowParserSampleStreamTest {
 
@@ -56,8 +55,8 @@ public class ADChunkBasedShallowParserSampleStreamTest {
 
   @Before
   public void setup() throws IOException {
-    InputStream in = ADChunkBasedShallowParserSampleStreamTest.class
-        .getResourceAsStream("/br/ccsl/cogroo/formats/ad/ad.sample");
+    ResourceAsStreamFactory in = new ResourceAsStreamFactory(this.getClass(), "/br/ccsl/cogroo/formats/ad/ad.sample");
+
 
     ADChunkBasedShallowParserSampleStream stream = new ADChunkBasedShallowParserSampleStream(
         in, "UTF-8", "SUBJ,P", false, false, false);

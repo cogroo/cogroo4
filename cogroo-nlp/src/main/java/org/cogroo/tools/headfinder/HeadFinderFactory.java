@@ -4,6 +4,7 @@ import opennlp.tools.util.SequenceValidator;
 
 import org.cogroo.tools.chunker2.ChunkerContextGenerator;
 import org.cogroo.tools.chunker2.ChunkerFactory;
+import org.cogroo.tools.chunker2.TokenTag;
 import org.cogroo.tools.featurizer.WordTag;
 
 
@@ -15,7 +16,7 @@ public class HeadFinderFactory extends ChunkerFactory {
   }
   
   @Override
-  public SequenceValidator<WordTag> getSequenceValidator() {
+  public SequenceValidator<TokenTag> getSequenceValidator() {
     return new HeadFinderSequenceValidator();
   }
 

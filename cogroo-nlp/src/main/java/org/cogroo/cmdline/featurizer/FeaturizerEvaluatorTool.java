@@ -60,7 +60,7 @@ public final class FeaturizerEvaluatorTool extends
     }
 
     FeaturizerEvaluator evaluator = new FeaturizerEvaluator(new FeaturizerME(
-        model, FeaturizerME.DEFAULT_BEAM_SIZE),
+        model),
         listeners.toArray(new FeaturizerEvaluationMonitor[listeners.size()]));
 
     final PerformanceMonitor monitor = new PerformanceMonitor("sent");

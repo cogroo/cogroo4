@@ -15,22 +15,21 @@
  */
 package org.cogroo.formats.ad;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.cogroo.tools.ResourceAsStreamFactory;
+import org.junit.Before;
+import org.junit.Test;
+
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
 
-import org.cogroo.formats.ad.ADContractionNameSampleStream;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class ADContractionNameSampleStreamTest {
 
@@ -89,8 +88,8 @@ public class ADContractionNameSampleStreamTest {
 
   @Before
   public void setup() throws IOException {
-    InputStream in = ADContractionNameSampleStreamTest.class
-        .getResourceAsStream("/br/ccsl/cogroo/formats/ad/ad.sample");
+
+    ResourceAsStreamFactory in = new ResourceAsStreamFactory(this.getClass(), "/br/ccsl/cogroo/formats/ad/ad.sample");
 
     ADContractionNameSampleStream stream = new ADContractionNameSampleStream(
         new PlainTextByLineStream(in, "UTF-8"), null);
@@ -102,8 +101,7 @@ public class ADContractionNameSampleStreamTest {
       sample = stream.read();
     }
 
-    in = ADContractionNameSampleStreamTest.class
-        .getResourceAsStream("/br/ccsl/cogroo/formats/ad/ad.sample");
+    in = new ResourceAsStreamFactory(this.getClass(), "/br/ccsl/cogroo/formats/ad/ad.sample");
 
     Set<String> tags = new HashSet<String>();
     tags.add("adv");

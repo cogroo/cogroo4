@@ -26,11 +26,9 @@ import java.util.Map;
 
 import org.cogroo.tools.featurizer.WordTag;
 
-
 import opennlp.tools.dictionary.serializer.Attributes;
-import opennlp.tools.dictionary.serializer.DictionarySerializer;
+import opennlp.tools.dictionary.serializer.DictionaryEntryPersistor;
 import opennlp.tools.dictionary.serializer.Entry;
-import opennlp.tools.dictionary.serializer.EntryInserter;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.StringList;
 import opennlp.tools.util.StringUtil;
@@ -180,7 +178,7 @@ public class ExtendedPOSDictionary implements Iterable<WordTag>,
       }
     };
 
-    DictionarySerializer.serialize(out, entries, caseSensitive);
+    DictionaryEntryPersistor.serialize(out, entries, caseSensitive);
   }
 
 //  @Override
@@ -248,33 +246,30 @@ public class ExtendedPOSDictionary implements Iterable<WordTag>,
 
     final ExtendedPOSDictionary newPosDict = new ExtendedPOSDictionary();
 
-    boolean isCaseSensitive = DictionarySerializer.create(in,
-        new EntryInserter() {
-          public void insert(Entry entry) throws InvalidFormatException {
+    boolean isCaseSensitive = DictionaryEntryPersistor.create(in, entry -> {
 
-            String tagString = entry.getAttributes().getValue(ATTR_TAGS);
-            String lemmaString = entry.getAttributes().getValue(ATTR_LEMMAS);
-            String featString = entry.getAttributes().getValue(ATTR_FEATS);
+          String tagString = entry.getAttributes().getValue(ATTR_TAGS);
+          String lemmaString = entry.getAttributes().getValue(ATTR_LEMMAS);
+          String featString = entry.getAttributes().getValue(ATTR_FEATS);
 
-            String[] tags = tagString.split(" ");
-            String[] lemmas = lemmaString.split(" ");
-            String[] feats = featString.split(" ");
+          String[] tags = tagString.split(" ");
+          String[] lemmas = lemmaString.split(" ");
+          String[] feats = featString.split(" ");
 
-            StringList word = entry.getTokens();
+          StringList word = entry.getTokens();
 
-            if (word.size() != 1)
-              throw new InvalidFormatException(
-                  "Each entry must have exactly one token! " + word);
+          if (word.size() != 1)
+            throw new InvalidFormatException(
+                "Each entry must have exactly one token! " + word);
 
-            if (tags.length != lemmas.length || tags.length != feats.length) {
-              throw new InvalidFormatException(
-                  "Each entry must have exactly number of tags, lemmas and feats! "
-                      + word);
-            }
-
-            addTriple(newPosDict.dictionary, word.getToken(0),
-                createTriple(tags, lemmas, feats));
+          if (tags.length != lemmas.length || tags.length != feats.length) {
+            throw new InvalidFormatException(
+                "Each entry must have exactly number of tags, lemmas and feats! "
+                    + word);
           }
+
+          addTriple(newPosDict.dictionary, word.getToken(0),
+              createTriple(tags, lemmas, feats));
         });
 
     newPosDict.caseSensitive = isCaseSensitive;

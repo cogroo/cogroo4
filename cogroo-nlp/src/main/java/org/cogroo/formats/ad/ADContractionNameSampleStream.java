@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.cogroo.ContractionUtility;
+
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
@@ -31,11 +33,10 @@ import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.formats.ad.PortugueseContractionUtility;
 import opennlp.tools.namefind.NameSample;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
-
-import org.cogroo.ContractionUtility;
 
 /**
  * Parser for Floresta Sita(c)tica Arvores Deitadas corpus, output to for the
@@ -100,8 +101,8 @@ public class ADContractionNameSampleStream implements ObjectStream<NameSample> {
    * @param tags
    *          the tags we are looking for, or null for all
    */
-  public ADContractionNameSampleStream(InputStream in, String charsetName,
-      Set<String> tags) {
+  public ADContractionNameSampleStream(InputStreamFactory in, String charsetName,
+                                       Set<String> tags) throws IOException {
 
     try {
       this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(

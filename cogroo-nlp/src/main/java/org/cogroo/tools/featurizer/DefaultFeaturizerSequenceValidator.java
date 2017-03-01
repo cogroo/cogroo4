@@ -23,11 +23,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.cogroo.dictionary.FeatureDictionary;
+import org.cogroo.tools.chunker2.TokenTag;
 
 import opennlp.tools.util.SequenceValidator;
 
 public class DefaultFeaturizerSequenceValidator implements
-    SequenceValidator<WordTag> {
+    SequenceValidator<TokenTag> {
 
   private FeatureDictionary tagDict = null;
   private Set<String> poisonedTags;
@@ -38,11 +39,11 @@ public class DefaultFeaturizerSequenceValidator implements
     this.poisonedTags = poisonedTags;
   }
 
-  public boolean validSequence(int i, WordTag[] sequence, String[] s,
+  public boolean validSequence(int i, TokenTag[] sequence, String[] s,
       String outcome) {
     
-    String word = sequence[i].getWord();
-    String postag = sequence[i].getPostag();
+    String word = sequence[i].getToken();
+    String postag = sequence[i].getTag();
 
 //    // if isCont, we only validate if this outcome equals to previous
 //    if (postag.startsWith("I-")) {
@@ -85,7 +86,7 @@ public class DefaultFeaturizerSequenceValidator implements
         // we need to find a "que"
         boolean found = false;
         for (int j = i - 1; j >= 0; j--) {
-          String lexeme = sequence[j].getWord().toLowerCase();
+          String lexeme = sequence[j].getToken().toLowerCase();
           if (lexeme.equals("que")) {
             found = true;
             break;

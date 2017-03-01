@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import org.cogroo.tools.chunker2.TokenTag;
+
 import opennlp.tools.util.featuregen.StringPattern;
 import opennlp.tools.util.featuregen.TokenClassFeatureGenerator;
 
@@ -77,11 +79,11 @@ public class DefaultFeaturizerContextGenerator implements
     return suffs;
   }
 
-  public String[] getContext(int index, WordTag[] sequence,
+  public String[] getContext(int index, TokenTag[] sequence,
       String[] priorDecisions, Object[] additionalContext) {
     String[] w = new String[sequence.length];
     String[] t = new String[sequence.length];
-    WordTag.extract(sequence, w, t);
+    TokenTag.extract(sequence, w, t);
     return getContext(index, w, t, priorDecisions);
   }
 

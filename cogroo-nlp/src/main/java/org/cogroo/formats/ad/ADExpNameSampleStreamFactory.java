@@ -16,7 +16,7 @@
 package org.cogroo.formats.ad;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -29,6 +29,7 @@ import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
 import opennlp.tools.formats.LanguageSampleStreamFactory;
 import opennlp.tools.namefind.NameSample;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 
@@ -78,10 +79,15 @@ public class ADExpNameSampleStreamFactory extends
       tagSet.addAll(Arrays.asList(tags.split(",")));
     }
 
-    FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
+    InputStreamFactory sampleDataIn = CmdLineUtil.createInputStreamFactory(params.getData());
 
-    ObjectStream<String> lineStream = new PlainTextByLineStream(
-        sampleDataIn.getChannel(), params.getEncoding());
+    ObjectStream<String> lineStream = null;
+    try {
+      lineStream = new PlainTextByLineStream(
+          sampleDataIn, params.getEncoding());
+    } catch (IOException e) {
+      CmdLineUtil.handleCreateObjectStreamError(e);
+    }
 
     return new ADExpNameSampleStream(lineStream, tagSet, true);
   }

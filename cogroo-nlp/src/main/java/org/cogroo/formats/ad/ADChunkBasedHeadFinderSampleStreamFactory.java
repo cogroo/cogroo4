@@ -16,7 +16,7 @@
 package org.cogroo.formats.ad;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 import opennlp.tools.chunker.ChunkSample;
@@ -26,6 +26,7 @@ import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
 import opennlp.tools.formats.LanguageSampleStreamFactory;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 
@@ -98,10 +99,15 @@ public class ADChunkBasedHeadFinderSampleStreamFactory extends
 
     language = params.getLang();
 
-    FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
-    
-    ObjectStream<String> lineStream = new PlainTextByLineStream(sampleDataIn.getChannel(),
-        params.getEncoding());
+    InputStreamFactory sampleDataIn = CmdLineUtil.createInputStreamFactory(params.getData());
+
+    ObjectStream<String> lineStream = null;
+    try {
+      lineStream = new PlainTextByLineStream(sampleDataIn,
+          params.getEncoding());
+    } catch (IOException e) {
+      CmdLineUtil.handleCreateObjectStreamError(e);
+    }
 
     ADChunkBasedHeadFinderSampleStream sampleStream = new ADChunkBasedHeadFinderSampleStream(
         lineStream);

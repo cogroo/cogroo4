@@ -20,7 +20,7 @@ package org.cogroo.cmdline.chunker2;
 import java.io.File;
 import java.io.IOException;
 
-import opennlp.tools.chunker.ChunkSample;
+import org.cogroo.tools.chunker2.ChunkSample;
 import opennlp.tools.cmdline.AbstractTrainerTool;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.TerminateToolException;

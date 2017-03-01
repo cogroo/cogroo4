@@ -20,11 +20,11 @@ package org.cogroo.cmdline.chunker2;
 import java.util.Arrays;
 import java.util.Random;
 
-import opennlp.tools.chunker.ChunkSample;
-import opennlp.tools.util.Span;
-
+import org.cogroo.tools.chunker2.ChunkSample;
 import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
-import org.cogroo.tools.featurizer.WordTag;
+import org.cogroo.tools.chunker2.TokenTag;
+
+import opennlp.tools.util.Span;
 
 public class ChunkerDetailedFMeasureSizeListener extends
     DetailedFMeasureForSizeListener<ChunkSample> implements ChunkerEvaluationMonitor{
@@ -37,7 +37,8 @@ public class ChunkerDetailedFMeasureSizeListener extends
     String[] chunkTags = new String[size];
     String[] posTags = new String[size];
     String[] lexemes = new String[size];
-    WordTag.extract(WordTag.create(sample), lexemes, posTags, headTags);
+
+    TokenTag.extract(TokenTag.create(sample.getSentence(), sample.getTags()), lexemes, posTags, headTags);
     
     for (int i = 0; i < chunkTags.length; i++) {
       chunkTags[i] = posTags[i].substring(posTags[i].indexOf('|') + 1);

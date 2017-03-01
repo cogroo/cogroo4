@@ -19,20 +19,20 @@ package org.cogroo.cmdline.chunker2;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-import opennlp.tools.chunker.ChunkSample;
+import org.cogroo.tools.chunker2.ChunkSample;
+import org.cogroo.tools.chunker2.ChunkerME;
+import org.cogroo.tools.chunker2.ChunkerModel;
+
 import opennlp.tools.cmdline.BasicCmdLineTool;
 import opennlp.tools.cmdline.CLI;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.PerformanceMonitor;
+import opennlp.tools.cmdline.SystemInputStreamFactory;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
-
-import org.cogroo.tools.chunker2.ChunkerME;
-import org.cogroo.tools.chunker2.ChunkerModel;
 
 public class Chunker2Tool extends BasicCmdLineTool {
 
@@ -50,10 +50,15 @@ public class Chunker2Tool extends BasicCmdLineTool {
     } else {
       ChunkerModel model = new ChunkerModelLoader().load(new File(args[0]));
 
-      ChunkerME chunker = new ChunkerME(model, ChunkerME.DEFAULT_BEAM_SIZE);
+      ChunkerME chunker = new ChunkerME(model);
 
-      ObjectStream<String> lineStream =
-        new PlainTextByLineStream(new InputStreamReader(System.in));
+      ObjectStream<String> lineStream = null;
+      try {
+        lineStream = new PlainTextByLineStream(new SystemInputStreamFactory(),
+            SystemInputStreamFactory.encoding());
+      } catch (IOException e) {
+        CmdLineUtil.handleStdinIoError(e);
+      }
 
       PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
       perfMon.start();

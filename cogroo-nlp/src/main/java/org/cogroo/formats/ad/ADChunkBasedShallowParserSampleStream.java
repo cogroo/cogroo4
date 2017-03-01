@@ -38,6 +38,7 @@ import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.namefind.NameSample;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.Span;
 
@@ -109,9 +110,9 @@ public class ADChunkBasedShallowParserSampleStream extends ADChunk2SampleStream 
    * @param charsetName
    *          the charset of the Arvores Deitadas Corpus
    */
-  public ADChunkBasedShallowParserSampleStream(InputStream in,
+  public ADChunkBasedShallowParserSampleStream(InputStreamFactory in,
       String charsetName, String commaSeparatedFunctTags,
-      boolean isIncludePOSTags, boolean useCGTag, boolean expandME) {
+      boolean isIncludePOSTags, boolean useCGTag, boolean expandME) throws IOException {
     
     super(in, charsetName);
     

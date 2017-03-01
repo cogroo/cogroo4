@@ -1,11 +1,12 @@
-/**
- * Copyright (C) 2012 cogroo <cogroo@cogroo.org>
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,12 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.cogroo.tools.chunker2;
 
 import java.io.IOException;
 
-import opennlp.tools.chunker.ChunkSample;
-import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.TrainingParameters;
 import opennlp.tools.util.eval.CrossValidationPartitioner;
@@ -31,10 +31,10 @@ public class ChunkerCrossValidator {
 
   private FMeasure fmeasure = new FMeasure();
   private ChunkerEvaluationMonitor[] listeners;
-  private ChunkerFactory chunkerFactory;
-  
+  private org.cogroo.tools.chunker2.ChunkerFactory chunkerFactory;
+
   public ChunkerCrossValidator(String languageCode, TrainingParameters params,
-      ChunkerFactory factory, ChunkerEvaluationMonitor... listeners) {
+                               ChunkerFactory factory, ChunkerEvaluationMonitor... listeners) {
     this.chunkerFactory = factory;
     this.languageCode = languageCode;
     this.params = params;
@@ -43,17 +43,17 @@ public class ChunkerCrossValidator {
 
   /**
    * Starts the evaluation.
-   * 
+   *
    * @param samples
    *          the data to train and test
    * @param nFolds
    *          number of folds
-   * 
+   *
    * @throws IOException
    */
   public void evaluate(ObjectStream<ChunkSample> samples, int nFolds)
-      throws IOException, InvalidFormatException, IOException {
-    CrossValidationPartitioner<ChunkSample> partitioner = new CrossValidationPartitioner<ChunkSample>(
+      throws IOException {
+    CrossValidationPartitioner<ChunkSample> partitioner = new CrossValidationPartitioner<>(
         samples, nFolds);
 
     while (partitioner.hasNext()) {
@@ -65,8 +65,7 @@ public class ChunkerCrossValidator {
           params, chunkerFactory);
 
       // do testing
-      ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model,
-          ChunkerME.DEFAULT_BEAM_SIZE), listeners);
+      ChunkerEvaluator evaluator = new ChunkerEvaluator(new ChunkerME(model), listeners);
 
       evaluator.evaluate(trainingSampleStream.getTestSampleStream());
 

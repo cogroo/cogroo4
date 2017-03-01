@@ -32,6 +32,7 @@ import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.formats.ad.PortugueseContractionUtility;
 import opennlp.tools.namefind.NameSample;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
@@ -101,8 +102,8 @@ public class ADExpNameSampleStream implements ObjectStream<NameSample> {
    * @param tags
    *          the tags we are looking for, or null for all
    */
-  public ADExpNameSampleStream(InputStream in, String charsetName,
-      Set<String> tags, boolean useAdaptativeFeatures) {
+  public ADExpNameSampleStream(InputStreamFactory in, String charsetName,
+                               Set<String> tags, boolean useAdaptativeFeatures) throws IOException {
     this.useAdaptativeFeatures = useAdaptativeFeatures;
     try {
       this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(

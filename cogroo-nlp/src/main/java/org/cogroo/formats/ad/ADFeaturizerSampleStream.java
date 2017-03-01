@@ -22,16 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.cogroo.tools.featurizer.FeatureSample;
+
 import opennlp.tools.formats.ad.ADSentenceStream;
 import opennlp.tools.formats.ad.ADSentenceStream.Sentence;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.namefind.NameSample;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
-
-import org.cogroo.tools.featurizer.FeatureSample;
 
 /**
  * Parser for Floresta Sita(c)tica Arvores Deitadas corpus, output to for the
@@ -88,8 +89,8 @@ public class ADFeaturizerSampleStream implements ObjectStream<FeatureSample> {
    * @param charsetName
    *          the charset of the Arvores Deitadas Corpus
    */
-  public ADFeaturizerSampleStream(InputStream in, String charsetName,
-      boolean expandME) {
+  public ADFeaturizerSampleStream(InputStreamFactory in, String charsetName,
+                                  boolean expandME)  throws IOException {
 
     try {
       this.expandME = expandME;

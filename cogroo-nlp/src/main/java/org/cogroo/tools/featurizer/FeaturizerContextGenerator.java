@@ -15,13 +15,15 @@
  */
 package org.cogroo.tools.featurizer;
 
+import org.cogroo.tools.chunker2.TokenTag;
+
 import opennlp.tools.util.BeamSearchContextGenerator;
 
 /**
  * Interface for the context generator used in syntactic chunking.
  */
 public interface FeaturizerContextGenerator extends
-    BeamSearchContextGenerator<WordTag> {
+    BeamSearchContextGenerator<TokenTag> {
 
   /**
    * Returns the contexts for chunking of the specified index.

@@ -1,13 +1,13 @@
 package org.cogroo.tools.headfinder;
 
+import org.cogroo.tools.chunker2.TokenTag;
+
 import opennlp.tools.util.SequenceValidator;
 
-import org.cogroo.tools.featurizer.WordTag;
-
-public class HeadFinderSequenceValidator implements SequenceValidator<WordTag>{
+public class HeadFinderSequenceValidator implements SequenceValidator<TokenTag>{
 
   @Override
-  public boolean validSequence(int i, WordTag[] inputSequence,
+  public boolean validSequence(int i, TokenTag[] inputSequence,
       String[] outcomesSequence, String outcome) {
     
     int size = inputSequence.length;
@@ -15,7 +15,7 @@ public class HeadFinderSequenceValidator implements SequenceValidator<WordTag>{
     String[] posTags = new String[size];
     String[] lexemes = new String[size];
     
-    WordTag.extract(inputSequence, lexemes, posTags, chunkTags);
+    TokenTag.extract(inputSequence, lexemes, posTags, chunkTags);
     
     // if it is boundary, accept any
     if(isBoundary(chunkTags[i])) {

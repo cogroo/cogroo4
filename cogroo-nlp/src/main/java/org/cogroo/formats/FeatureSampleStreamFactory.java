@@ -16,6 +16,10 @@
 package org.cogroo.formats;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.cogroo.tools.featurizer.FeatureSample;
+import org.cogroo.tools.featurizer.FeatureSampleStream;
 
 import opennlp.tools.cmdline.ArgumentParser;
 import opennlp.tools.cmdline.CmdLineUtil;
@@ -24,9 +28,6 @@ import opennlp.tools.cmdline.params.BasicFormatParams;
 import opennlp.tools.formats.AbstractSampleStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
-
-import org.cogroo.tools.featurizer.FeatureSample;
-import org.cogroo.tools.featurizer.FeatureSampleStream;
 
 /**
  * Factory producing OpenNLP {@link FeatureSampleStream}s.
@@ -53,8 +54,12 @@ public class FeatureSampleStreamFactory extends
     CmdLineUtil.checkInputFile("Data", params.getData());
     FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
 
-    ObjectStream<String> lineStream = new PlainTextByLineStream(
-        sampleDataIn.getChannel(), params.getEncoding());
+    ObjectStream<String> lineStream = null;
+    try {
+      lineStream = new PlainTextByLineStream(CmdLineUtil.createInputStreamFactory(params.getData()), params.getEncoding());
+    } catch (IOException e) {
+      CmdLineUtil.handleCreateObjectStreamError(e);
+    }
 
     return new FeatureSampleStream(lineStream);
   }

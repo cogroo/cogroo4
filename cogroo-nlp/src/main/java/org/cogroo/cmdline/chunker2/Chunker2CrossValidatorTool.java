@@ -22,11 +22,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.cogroo.cmdline.chunker2.Chunker2CrossValidatorTool.CVToolParams;
+import org.cogroo.tools.chunker2.ChunkSample;
 import org.cogroo.tools.chunker2.ChunkerCrossValidator;
 import org.cogroo.tools.chunker2.ChunkerEvaluationMonitor;
 import org.cogroo.tools.chunker2.ChunkerFactory;
 
-import opennlp.tools.chunker.ChunkSample;
 import opennlp.tools.cmdline.AbstractCrossValidatorTool;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.TerminateToolException;
@@ -76,8 +76,8 @@ public final class Chunker2CrossValidatorTool
     ChunkerCrossValidator validator;
 
     try {
-      ChunkerFactory chunkerFactory = ChunkerFactory
-          .create(params.getFactory());
+      ChunkerFactory chunkerFactory = ChunkerFactory.create(params.getFactory());
+
 
       validator = new ChunkerCrossValidator(params.getLang(), mlParams,
           chunkerFactory,

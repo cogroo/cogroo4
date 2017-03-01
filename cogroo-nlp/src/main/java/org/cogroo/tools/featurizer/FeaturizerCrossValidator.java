@@ -78,7 +78,7 @@ public class FeaturizerCrossValidator {
 
       // do testing
       FeaturizerEvaluator evaluator = new FeaturizerEvaluator(new FeaturizerME(
-          model, FeaturizerME.DEFAULT_BEAM_SIZE), listeners);
+          model), listeners);
 
       evaluator.evaluate(trainingSampleStream.getTestSampleStream());
 

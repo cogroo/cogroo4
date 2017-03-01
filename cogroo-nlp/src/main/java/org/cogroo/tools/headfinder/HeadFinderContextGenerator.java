@@ -1,25 +1,24 @@
 package org.cogroo.tools.headfinder;
 
 import org.cogroo.tools.chunker2.ChunkerContextGenerator;
-import org.cogroo.tools.featurizer.WordTag;
+import org.cogroo.tools.chunker2.TokenTag;
 
 public class HeadFinderContextGenerator implements ChunkerContextGenerator  {
 
   @Override
-  public String[] getContext(int index, WordTag[] sequence,
+  public String[] getContext(int index, TokenTag[] sequence,
       String[] priorDecisions, Object[] additionalContext) {
     return getContext(index, sequence, priorDecisions);
   }
-  
-  @Override
-  public String[] getContext(int index, WordTag[] sequence, String[] priorDecisions) {
+
+  public String[] getContext(int index, TokenTag[] sequence, String[] priorDecisions) {
     String[] toks = new String[sequence.length];
     String[] tags = new String[sequence.length];
     String[] chunks = new String[sequence.length];
     
     for (int i = 0; i < sequence.length; i++) {
-      toks[i] = sequence[i].getWord();
-      String t = sequence[i].getPostag();
+      toks[i] = sequence[i].getToken();
+      String t = sequence[i].getTag();
       int bar = t.indexOf("|");
       
       tags[i] = t.substring(0, bar);
@@ -27,6 +26,11 @@ public class HeadFinderContextGenerator implements ChunkerContextGenerator  {
     }
     
     return getContext(index, toks, tags, chunks, priorDecisions);
+  }
+
+  @Override
+  public String[] getContext(int i, String[] toks, String[] tags, String[] preds) {
+    return getContext(i, TokenTag.create(toks, tags), preds);
   }
 
   public String[] getContext(int i, String[] toks, String[] tags, String[] chks, String[] preds) {
@@ -184,5 +188,4 @@ public class HeadFinderContextGenerator implements ChunkerContextGenerator  {
 
     return features;
   }
-
 }

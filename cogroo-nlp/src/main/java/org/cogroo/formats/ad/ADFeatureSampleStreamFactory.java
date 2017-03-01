@@ -16,8 +16,10 @@
 package org.cogroo.formats.ad;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
+
+import org.cogroo.tools.featurizer.FeatureSample;
 
 import opennlp.tools.cmdline.ArgumentParser;
 import opennlp.tools.cmdline.ArgumentParser.OptionalParameter;
@@ -25,10 +27,9 @@ import opennlp.tools.cmdline.ArgumentParser.ParameterDescription;
 import opennlp.tools.cmdline.CmdLineUtil;
 import opennlp.tools.cmdline.StreamFactoryRegistry;
 import opennlp.tools.formats.LanguageSampleStreamFactory;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
-
-import org.cogroo.tools.featurizer.FeatureSample;
 
 /**
  * A Factory to create a Arvores Deitadas FeatureSampe from the command line
@@ -79,10 +80,15 @@ public class ADFeatureSampleStreamFactory extends
 
     language = params.getLang();
 
-    FileInputStream sampleDataIn = CmdLineUtil.openInFile(params.getData());
+    InputStreamFactory sampleDataIn = CmdLineUtil.createInputStreamFactory(params.getData());
 
-    ObjectStream<String> lineStream = new PlainTextByLineStream(
-        sampleDataIn.getChannel(), params.getEncoding());
+    ObjectStream<String> lineStream = null;
+    try {
+      lineStream = new PlainTextByLineStream(
+          sampleDataIn, params.getEncoding());
+    } catch (IOException e) {
+      CmdLineUtil.handleCreateObjectStreamError(e);
+    }
 
     ADFeaturizerSampleStream sentenceStream = new ADFeaturizerSampleStream(
         lineStream, params.getExpandME());

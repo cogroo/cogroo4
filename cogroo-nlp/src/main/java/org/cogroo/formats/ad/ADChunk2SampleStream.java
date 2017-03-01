@@ -30,6 +30,7 @@ import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Leaf;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.Node;
 import opennlp.tools.formats.ad.ADSentenceStream.SentenceParser.TreeElement;
 import opennlp.tools.namefind.NameSample;
+import opennlp.tools.util.InputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 
@@ -87,7 +88,7 @@ public class ADChunk2SampleStream implements ObjectStream<ChunkSample> {
      * @param charsetName
      *          the charset of the Arvores Deitadas Corpus
      */
-    public ADChunk2SampleStream(InputStream in, String charsetName) {
+    public ADChunk2SampleStream(InputStreamFactory in, String charsetName) throws IOException {
 
         try {
             this.adSentenceStream = new ADSentenceStream(new PlainTextByLineStream(

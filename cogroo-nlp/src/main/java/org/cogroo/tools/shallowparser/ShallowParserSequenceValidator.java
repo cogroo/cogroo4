@@ -15,8 +15,7 @@ public class ShallowParserSequenceValidator extends DefaultChunkerSequenceValida
         "lhe", "lhes",  "mim", "ti", "comigo", "contigo", "conosco", "convosco", "consigo", "sí"};
     PRONOMES_OBLIQUOS = new HashSet<String>(Arrays.asList(pronomes_obliq));
   }
-  
-  @Override
+
   public boolean validSequence(int i, WordTag[] inputSequence,
       String[] outcomesSequence, String outcome) {
     boolean isValid = validOutcome(outcome, outcomesSequence);
