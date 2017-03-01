@@ -37,6 +37,21 @@
 		<url>https://github.com/cogroo/cogroo4/issues</url>
 	</issueManagement>
 
+	<developers>
+		<developer>
+			<id>wcolen</id>
+			<name>William Colen</name>
+			<email>colen@apache.org</email>
+			<organization>Cogroo</organization>
+			<organizationUrl>http://www.cogroo.org</organizationUrl>
+			<roles>
+				<role>Project-Administrator</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
 
 	<licenses>
 		<license>
