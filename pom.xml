@@ -17,7 +17,7 @@
 
 	<groupId>org.cogroo</groupId>
 	<artifactId>cogroo</artifactId>
-	<version>4.2.0</version>
+	<version>4.2.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Cogroo Parent</name>
@@ -71,7 +71,7 @@
 		<connection>scm:git:git@github.com:cogroo/cogroo4.git</connection>
 		<url>scm:git:git@github.com:cogroo/cogroo4.git</url>
 		<developerConnection>scm:git:git@github.com:cogroo/cogroo4.git</developerConnection>
-	  <tag>cogroo-4.2.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<dependencyManagement>
