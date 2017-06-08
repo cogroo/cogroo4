@@ -1,8 +1,10 @@
 package org.cogroo.tools.headfinder;
 
-import org.cogroo.tools.chunker2.TokenTag;
+
+import org.cogroo.util.TokenTagUtil;
 
 import opennlp.tools.util.SequenceValidator;
+import opennlp.tools.util.TokenTag;
 
 public class HeadFinderSequenceValidator implements SequenceValidator<TokenTag>{
 
@@ -14,9 +16,10 @@ public class HeadFinderSequenceValidator implements SequenceValidator<TokenTag>{
     String[] chunkTags = new String[size];
     String[] posTags = new String[size];
     String[] lexemes = new String[size];
-    
-    TokenTag.extract(inputSequence, lexemes, posTags, chunkTags);
-    
+
+    TokenTagUtil.extract(inputSequence, lexemes, posTags, chunkTags);
+
+
     // if it is boundary, accept any
     if(isBoundary(chunkTags[i])) {
       return true;
@@ -56,4 +59,13 @@ public class HeadFinderSequenceValidator implements SequenceValidator<TokenTag>{
   }
 
 
+  private static String[] extractChunkTags(TokenTag[] tuples) {
+    String[] tokens = new String[tuples.length];
+
+    for(int i = 0; i < tuples.length; ++i) {
+      tokens[i] = tuples[i].getAddtionalData()[0];
+    }
+
+    return tokens;
+  }
 }

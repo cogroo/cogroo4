@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.cogroo.dictionary.FeatureDictionary;
-import org.cogroo.tools.chunker2.TokenTag;
 
 import opennlp.tools.util.SequenceValidator;
+import opennlp.tools.util.TokenTag;
 
 public class DefaultFeaturizerSequenceValidator implements
     SequenceValidator<TokenTag> {

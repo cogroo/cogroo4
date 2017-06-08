@@ -1,0 +1,282 @@
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72169 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72169
+	    Number of Outcomes: 11
+	  Number of Predicates: 391420
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69225/72169) 0.9592068616719089
+  2:  . (70948/72169) 0.9830813784311824
+  3:  . (71404/72169) 0.9893998808352616
+  4:  . (71666/72169) 0.9930302484446231
+  5:  . (71799/72169) 0.9948731449791461
+  6:  . (71881/72169) 0.9960093669026867
+  7:  . (71950/72169) 0.9969654560822514
+  8:  . (71999/72169) 0.9976444179633915
+  9:  . (72031/72169) 0.9980878216408707
+ 10:  . (72039/72169) 0.9981986725602405
+ 20:  . (72138/72169) 0.9995704526874419
+ 30:  . (72149/72169) 0.9997228727015754
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72157/72169) 0.9998337236209452
+...done.
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72428 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72428
+	    Number of Outcomes: 11
+	  Number of Predicates: 392245
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69437/72428) 0.9587038162036782
+  2:  . (71152/72428) 0.9823825040039763
+  3:  . (71649/72428) 0.9892444910807975
+  4:  . (71907/72428) 0.9928066493621251
+  5:  . (72037/72428) 0.9946015353178329
+  6:  . (72141/72428) 0.996037444082399
+  7:  . (72209/72428) 0.9969763075053847
+  8:  . (72259/72428) 0.9976666482575799
+  9:  . (72282/72428) 0.9979842050035898
+ 10:  . (72332/72428) 0.9986745457557851
+ 20:  . (72390/72428) 0.9994753410283316
+ 30:  . (72405/72428) 0.9996824432539901
+ 40:  . (72420/72428) 0.9998895454796487
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72421/72428) 0.9999033522946926
+...done.
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72354 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72354
+	    Number of Outcomes: 11
+	  Number of Predicates: 390669
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69361/72354) 0.9586339386903281
+  2:  . (71114/72354) 0.9828620394173093
+  3:  . (71573/72354) 0.9892058490200957
+  4:  . (71811/72354) 0.992495231777096
+  5:  . (71939/72354) 0.9942643115791802
+  6:  . (72089/72354) 0.9963374519722475
+  7:  . (72117/72354) 0.9967244381789535
+  8:  . (72171/72354) 0.9974707687204577
+  9:  . (72206/72354) 0.9979545014788401
+ 10:  . (72254/72354) 0.9986179064046217
+ 20:  . (72312/72354) 0.9994195206899411
+ 30:  . (72348/72354) 0.9999170743842773
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72346/72354) 0.9998894325123697
+...done.
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72377 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72377
+	    Number of Outcomes: 11
+	  Number of Predicates: 390923
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69444/72377) 0.9594760766541858
+  2:  . (71182/72377) 0.9834892300040068
+  3:  . (71627/72377) 0.989637592052724
+  4:  . (71859/72377) 0.9928430302444147
+  5:  . (71998/72377) 0.9947635298506432
+  6:  . (72067/72377) 0.9957168713817925
+  7:  . (72127/72377) 0.9965458640175746
+  8:  . (72189/72377) 0.9974024897412161
+  9:  . (72246/72377) 0.9981900327452091
+ 10:  . (72277/72377) 0.9986183456070299
+ 20:  . (72343/72377) 0.9995302375063901
+ 30:  . (72357/72377) 0.999723669121406
+ 40:  . (72367/72377) 0.999861834560703
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72364/72377) 0.9998203849289139
+...done.
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72464 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72464
+	    Number of Outcomes: 11
+	  Number of Predicates: 391237
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69504/72464) 0.9591521307131817
+  2:  . (71225/72464) 0.9829018547140649
+  3:  . (71700/72464) 0.9894568337381321
+  4:  . (71971/72464) 0.9931966217708104
+  5:  . (72061/72464) 0.9944386177964231
+  6:  . (72165/72464) 0.9958738132037978
+  7:  . (72233/72464) 0.9968122102009274
+  8:  . (72259/72464) 0.997171009052771
+  9:  . (72329/72464) 0.998137005961581
+ 10:  . (72329/72464) 0.998137005961581
+ 20:  . (72425/72464) 0.9994618017222345
+ 30:  . (72454/72464) 0.9998620004415986
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72441/72464) 0.9996826010156767
+...done.
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72295 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72295
+	    Number of Outcomes: 11
+	  Number of Predicates: 390869
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69385/72295) 0.9597482536828273
+  2:  . (71048/72295) 0.9827512276091016
+  3:  . (71439/72295) 0.9881596237637458
+  4:  . (71801/72295) 0.9931668856767412
+  5:  . (71910/72295) 0.9946745971367315
+  6:  . (72055/72295) 0.9966802683449755
+  7:  . (72089/72295) 0.9971505636627706
+  8:  . (72126/72295) 0.9976623556262535
+  9:  . (72146/72295) 0.9979389999308389
+ 10:  . (72179/72295) 0.9983954630334048
+ 20:  . (72242/72295) 0.9992668925928487
+ 30:  . (72282/72295) 0.9998201812020195
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72286/72295) 0.9998755100629366
+...done.
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72054 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72054
+	    Number of Outcomes: 11
+	  Number of Predicates: 390722
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69105/72054) 0.9590723623948705
+  2:  . (70766/72054) 0.982124517722819
+  3:  . (71229/72054) 0.9885502539761846
+  4:  . (71547/72054) 0.9929636106253643
+  5:  . (71709/72054) 0.9952119243900408
+  6:  . (71760/72054) 0.995919726871513
+  7:  . (71841/72054) 0.9970438837538512
+  8:  . (71873/72054) 0.997487995114775
+  9:  . (71928/72054) 0.9982513115163627
+ 10:  . (71918/72054) 0.9981125267160741
+ 20:  . (72009/72054) 0.999375468398701
+ 30:  . (72044/72054) 0.9998612151997113
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72034/72054) 0.9997224303994227
+...done.
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72200 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72200
+	    Number of Outcomes: 11
+	  Number of Predicates: 391365
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69208/72200) 0.9585595567867036
+  2:  . (70925/72200) 0.9823407202216067
+  3:  . (71469/72200) 0.9898753462603878
+  4:  . (71684/72200) 0.9928531855955679
+  5:  . (71852/72200) 0.9951800554016621
+  6:  . (71928/72200) 0.9962326869806094
+  7:  . (71986/72200) 0.9970360110803325
+  8:  . (72019/72200) 0.9974930747922438
+  9:  . (72010/72200) 0.9973684210526316
+ 10:  . (72070/72200) 0.9981994459833795
+ 20:  . (72147/72200) 0.9992659279778393
+ 30:  . (72185/72200) 0.999792243767313
+ 40:  . (72190/72200) 0.9998614958448754
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72187/72200) 0.9998199445983379
+...done.
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72175 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72175
+	    Number of Outcomes: 11
+	  Number of Predicates: 390784
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69265/72175) 0.9596813301004503
+  2:  . (70929/72175) 0.9827364045722203
+  3:  . (71376/72175) 0.9889296847939038
+  4:  . (71670/72175) 0.9930031174229303
+  5:  . (71819/72175) 0.9950675441634915
+  6:  . (71902/72175) 0.9962175268444753
+  7:  . (71974/72175) 0.997215102182196
+  8:  . (72017/72175) 0.9978108763422238
+  9:  . (71997/72175) 0.9975337720817458
+ 10:  . (72026/72175) 0.9979355732594388
+ 20:  . (72147/72175) 0.9996120540353308
+ 30:  . (72150/72175) 0.9996536196744025
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72146/72175) 0.9995981988223069
+...done.
+Indexing events using cutoff of 0
+
+	Computing event counts...  done. 72103 events
+	Indexing...  done.
+Collecting events... Done indexing.
+Incorporating indexed data for training...  
+done.
+	Number of Event Tokens: 72103
+	    Number of Outcomes: 11
+	  Number of Predicates: 391035
+Computing model parameters...
+Performing 100 iterations.
+  1:  . (69182/72103) 0.9594885094933636
+  2:  . (70850/72103) 0.9826220822989334
+  3:  . (71337/72103) 0.989376308891447
+  4:  . (71595/72103) 0.9929545233901502
+  5:  . (71720/72103) 0.9946881544457234
+  6:  . (71796/72103) 0.9957422021275121
+  7:  . (71896/72103) 0.9971291069719707
+  8:  . (71931/72103) 0.9976145236675311
+  9:  . (71975/72103) 0.9982247617990929
+ 10:  . (71949/72103) 0.9978641665395337
+ 20:  . (72076/72103) 0.9996255356919962
+ 30:  . (72095/72103) 0.9998890476124433
+Stopping: change in training set accuracy less than 1.0E-5
+Stats: (72088/72103) 0.9997919642733312
+...done.
+Evaluated 4212 samples with 49691 entities; found: 49735 entities; correct: 47914.
+       TOTAL: precision:   96,34%;  recall:   96,42%; F1:   96,38%.
+          PP: precision:   98,45%;  recall:   98,56%; F1:   98,51%. [target: 11976; tp: 11804; fp: 186]
+          NP: precision:   96,92%;  recall:   96,83%; F1:   96,88%. [target: 23665; tp: 22915; fp: 727]
+        ADJP: precision:   94,78%;  recall:   94,70%; F1:   94,74%. [target: 3472; tp: 3288; fp: 181]
+          VP: precision:   94,65%;  recall:   94,78%; F1:   94,71%. [target: 8249; tp: 7818; fp: 442]
+        ADVP: precision:   87,99%;  recall:   89,70%; F1:   88,84%. [target: 2329; tp: 2089; fp: 285]
+
+Execution time: 138,148 seconds

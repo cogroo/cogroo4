@@ -20,13 +20,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
+import org.cogroo.dictionary.FeatureDictionary;
+
 import opennlp.tools.postag.ExtendedPOSDictionary;
 import opennlp.tools.postag.POSDictionary;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.UncloseableInputStream;
-
-import org.cogroo.dictionary.FeatureDictionary;
 
 public class DefaultFeaturizerFactory extends FeaturizerFactory {
 

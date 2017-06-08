@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cogroo.tools.chunker2.TokenTag;
-
 import opennlp.tools.ml.EventTrainer;
 import opennlp.tools.ml.TrainerFactory;
 import opennlp.tools.ml.model.Event;
@@ -30,7 +28,10 @@ import opennlp.tools.ml.model.SequenceClassificationModel;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.Sequence;
 import opennlp.tools.util.SequenceValidator;
+import opennlp.tools.util.TokenTag;
 import opennlp.tools.util.TrainingParameters;
+
+
 
 /**
  * The class represents a maximum-entropy-based chunker. Such a chunker can be
@@ -116,7 +117,7 @@ public class FeaturizerME implements Featurizer {
     ObjectStream<Event> es = new FeaturizerEventStream(in, factory.getFeaturizerContextGenerator());
 
     EventTrainer trainer = TrainerFactory.getEventTrainer(
-            mlParams.getSettings(), manifestInfoEntries);
+            mlParams, manifestInfoEntries);
 
     MaxentModel maxentModel = trainer.train(es);
 

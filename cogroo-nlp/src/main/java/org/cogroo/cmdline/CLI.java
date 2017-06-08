@@ -26,11 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.cogroo.cmdline.chunker2.Chunker2ConverterTool;
-import org.cogroo.cmdline.chunker2.Chunker2CrossValidatorTool;
-import org.cogroo.cmdline.chunker2.Chunker2EvaluatorTool;
-import org.cogroo.cmdline.chunker2.Chunker2Tool;
-import org.cogroo.cmdline.chunker2.Chunker2TrainerTool;
 import org.cogroo.cmdline.dictionary.AbbreviationDictionaryBuilderTool;
 import org.cogroo.cmdline.featurizer.FeaturizerConverterTool;
 import org.cogroo.cmdline.featurizer.FeaturizerCrossValidatorTool;
@@ -88,13 +83,6 @@ public final class CLI {
     tools.add(new FeaturizerEvaluatorTool());
     tools.add(new FeaturizerCrossValidatorTool());
     tools.add(new FeaturizerConverterTool());
-    
-    // Chunker2
-    tools.add(new Chunker2Tool());
-    tools.add(new Chunker2TrainerTool());
-    tools.add(new Chunker2EvaluatorTool());
-    tools.add(new Chunker2CrossValidatorTool());
-    tools.add(new Chunker2ConverterTool());
 
     // Contraction
     tools.add(new AbbreviationDictionaryBuilderTool());

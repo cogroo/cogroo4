@@ -1,10 +1,10 @@
 package org.cogroo.tools.shallowparser;
 
-import org.cogroo.tools.chunker2.ChunkerContextGenerator;
-import org.cogroo.tools.chunker2.ChunkerFactory;
-import org.cogroo.tools.chunker2.TokenTag;
 
+import opennlp.tools.chunker.ChunkerContextGenerator;
+import opennlp.tools.chunker.ChunkerFactory;
 import opennlp.tools.util.SequenceValidator;
+import opennlp.tools.util.TokenTag;
 
 public class ShallowParserFactory extends ChunkerFactory {
 

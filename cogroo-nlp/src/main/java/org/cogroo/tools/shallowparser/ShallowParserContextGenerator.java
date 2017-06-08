@@ -3,13 +3,11 @@ package org.cogroo.tools.shallowparser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.cogroo.tools.chunker2.ChunkerContextGenerator;
-import org.cogroo.tools.chunker2.TokenTag;
-
+import opennlp.tools.chunker.ChunkerContextGenerator;
 import opennlp.tools.util.Span;
+import opennlp.tools.util.TokenTag;
 
-public class ShallowParserContextGenerator implements ChunkerContextGenerator  {
+public class ShallowParserContextGenerator implements ChunkerContextGenerator {
 
   @Override
   public String[] getContext(int index, TokenTag[] sequence,

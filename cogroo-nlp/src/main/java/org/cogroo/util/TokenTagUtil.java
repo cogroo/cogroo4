@@ -13,7 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Package related to finding non-recursive syntactic annotation such as noun phrase chunks.
- */
-package org.cogroo.tools.chunker2;
+
+package org.cogroo.util;
+
+import opennlp.tools.util.TokenTag;
+
+
+public class TokenTagUtil {
+
+  public static void extract(TokenTag[] wt, String[] word, String[] tag, String[] chunks) {
+    for (int i = 0; i < wt.length; i++) {
+      word[i] = wt[i].getToken();
+      if(wt[i].getAddtionalData() == null || wt[i].getAddtionalData().length == 0) {
+        String t = wt[i].getTag();
+        int bar = t.indexOf("|");
+
+        tag[i] = t.substring(0, bar);
+        chunks[i] = t.substring(bar+1);
+      } else {
+        tag[i] = wt[i].getTag();
+        chunks[i] = wt[i].getAddtionalData()[0];
+      }
+    }
+  }
+
+
+}

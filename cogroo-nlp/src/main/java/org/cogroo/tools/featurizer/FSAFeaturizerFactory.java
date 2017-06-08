@@ -18,12 +18,12 @@ package org.cogroo.tools.featurizer;
 import java.io.IOException;
 import java.util.Map;
 
-import opennlp.tools.util.model.ArtifactSerializer;
-
 import org.cogroo.dictionary.FeatureDictionary;
 import org.cogroo.dictionary.impl.FSADictionary;
 import org.cogroo.dictionary.impl.FSAFeatureDictionary;
 import org.cogroo.util.serializers.ByteArraySerializer;
+
+import opennlp.tools.util.model.ArtifactSerializer;
 
 public class FSAFeaturizerFactory extends FeaturizerFactory {
 

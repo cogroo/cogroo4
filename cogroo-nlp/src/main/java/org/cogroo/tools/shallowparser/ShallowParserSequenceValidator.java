@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cogroo.tools.chunker2.DefaultChunkerSequenceValidator;
 import org.cogroo.tools.featurizer.WordTag;
+
+import opennlp.tools.chunker.DefaultChunkerSequenceValidator;
 
 public class ShallowParserSequenceValidator extends DefaultChunkerSequenceValidator {
   

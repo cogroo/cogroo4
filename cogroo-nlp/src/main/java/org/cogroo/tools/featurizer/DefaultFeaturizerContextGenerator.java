@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import org.cogroo.tools.chunker2.TokenTag;
-
+import opennlp.tools.util.TokenTag;
 import opennlp.tools.util.featuregen.StringPattern;
 import opennlp.tools.util.featuregen.TokenClassFeatureGenerator;
 
@@ -81,9 +80,10 @@ public class DefaultFeaturizerContextGenerator implements
 
   public String[] getContext(int index, TokenTag[] sequence,
       String[] priorDecisions, Object[] additionalContext) {
-    String[] w = new String[sequence.length];
-    String[] t = new String[sequence.length];
-    TokenTag.extract(sequence, w, t);
+
+    String[] w = TokenTag.extractTokens(sequence);
+    String[] t = TokenTag.extractTags(sequence);
+    
     return getContext(index, w, t, priorDecisions);
   }
 

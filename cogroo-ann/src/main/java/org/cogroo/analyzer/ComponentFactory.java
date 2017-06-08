@@ -34,12 +34,12 @@ import org.cogroo.config.LanguageConfiguration;
 import org.cogroo.config.LanguageConfigurationUtil;
 import org.cogroo.config.Model;
 import org.cogroo.dictionary.impl.FSADictionary;
-import org.cogroo.tools.chunker2.ChunkerME;
-import org.cogroo.tools.chunker2.ChunkerModel;
 import org.cogroo.tools.featurizer.FeaturizerME;
 import org.cogroo.tools.featurizer.FeaturizerModel;
 import org.cogroo.util.Closeables;
 
+import opennlp.tools.chunker.ChunkerME;
+import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.ml.model.MaxentModel;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
@@ -373,7 +373,7 @@ public class ComponentFactory implements ComponentFactoryI {
             .get(Analyzers.SHALLOW_PARSER));
         ChunkerModel model = new ChunkerModel(modelIn);
         logOutcomes(model.getChunkerModel());
-        shallowParser = new ChunkerME(model, 20);
+        shallowParser = new ChunkerME(model);
       } catch (IOException e) {
         LOGGER.fatal("Couldn't load ShallowParser model!", e);
       } finally {

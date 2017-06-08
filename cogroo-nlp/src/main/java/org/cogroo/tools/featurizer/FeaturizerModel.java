@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.cogroo.dictionary.FeatureDictionary;
-import org.cogroo.tools.chunker2.TokenTag;
 
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.ml.BeamSearch;
@@ -30,6 +29,7 @@ import opennlp.tools.ml.model.MaxentModel;
 import opennlp.tools.ml.model.SequenceClassificationModel;
 import opennlp.tools.util.BaseToolFactory;
 import opennlp.tools.util.InvalidFormatException;
+import opennlp.tools.util.TokenTag;
 import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.BaseModel;
 

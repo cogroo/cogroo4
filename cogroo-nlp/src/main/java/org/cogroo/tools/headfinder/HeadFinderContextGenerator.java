@@ -1,9 +1,9 @@
 package org.cogroo.tools.headfinder;
 
-import org.cogroo.tools.chunker2.ChunkerContextGenerator;
-import org.cogroo.tools.chunker2.TokenTag;
+import opennlp.tools.chunker.ChunkerContextGenerator;
+import opennlp.tools.util.TokenTag;
 
-public class HeadFinderContextGenerator implements ChunkerContextGenerator  {
+public class HeadFinderContextGenerator implements ChunkerContextGenerator {
 
   @Override
   public String[] getContext(int index, TokenTag[] sequence,

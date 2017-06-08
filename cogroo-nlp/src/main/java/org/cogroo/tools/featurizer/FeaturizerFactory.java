@@ -25,16 +25,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cogroo.dictionary.FeatureDictionary;
+
 import opennlp.tools.ml.model.AbstractModel;
 import opennlp.tools.util.BaseToolFactory;
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.SequenceValidator;
+import opennlp.tools.util.TokenTag;
 import opennlp.tools.util.ext.ExtensionLoader;
 import opennlp.tools.util.model.ArtifactSerializer;
 import opennlp.tools.util.model.UncloseableInputStream;
-
-import org.cogroo.dictionary.FeatureDictionary;
-import org.cogroo.tools.chunker2.TokenTag;
 
 public abstract class FeaturizerFactory extends BaseToolFactory {
 
