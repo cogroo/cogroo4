@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>cogroo</artifactId>
 		<groupId>org.cogroo</groupId>
-		<version>4.3.1</version>
+		<version>4.3.2-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
