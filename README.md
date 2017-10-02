@@ -2,6 +2,7 @@
 ====================================================================
 
 [![Build Status](https://travis-ci.org/cogroo/cogroo4.svg?branch=master)](https://travis-ci.org/cogroo/cogroo4)
+[![Coverage Status](https://coveralls.io/repos/github/cogroo/cogroo4/badge.svg?branch=master)](https://coveralls.io/github/cogroo/cogroo4?branch=master)
 
 Here you will find the source code of CoGrOO version 4.x.
 
